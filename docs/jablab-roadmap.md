@@ -1,0 +1,84 @@
+# JabLab — Ürün Yol Haritası (G0→G10)
+
+**Tarih:** 2026-07-26 · **Statü:** Kurucu-onaylı çerçeve; oturumlar bu haritayı işler, sapmalar DEFTER'e.
+**Hiyerarşi:** `00-AILE-MIMARISI.md` (D2!) > `20-URETIM-SURECI.md` > `10-ARAC-KATALOGU.md` > bu dosya > `jablab-plan.md`.
+**Ürün dili: İNGİLİZCE.** Aile sırası **2** (dik vücut ama hızlı hareket).
+
+## 1. Kimlik ve Kuzey Yıldızı
+
+**JabLab: Shadow Training** — telefonu karşına koy, ekipmansız boks/shadow-boxing antrenmanında köşendeki antrenör gibi sesli düzeltme al: gard, duruş, sıra, denge. LLM değil; pose + state-machine + uzman kural motoru.
+**Kuzey Yıldızı:** aynı seans içinde düzeltme yapabilen kullanıcı oranı (koçluk döngüsü kanıtı). İkincil: yanlış-pozitif hata oranı, D7/D30, ilk ders tamamlama.
+**Vizyon (tavansız):** Standing Striking Engine — boks V1; kickboks/Muay Thai/karate aynı motora sonraki kollar.
+
+## 2. Konumlandırma ve rakip boşluğu (kanıtlı)
+
+| Rakip | Ne yapıyor | Boşluk |
+|---|---|---|
+| FightCamp ($39/ay) | Torba + giyilebilir tracker | DONANIM zorunlu; kamera-CV değil |
+| PunchLab | Torba modu, sensör | Donanıma yaslanır |
+| Boxx (£39.99/yıl) | "Boks temalı kardiyo" + opsiyonel Punch Pod | Kendi itirafıyla kardiyo; form analizi yok |
+| Shadow Boxing Workout tarzı app'ler | Sesli script'li follow-along | Seni GÖRMÜYOR — gerçek CV yok |
+**Araştırma hükmü: telefon-kamerası-tek, donanımsız, gerçek-zamanlı yumruk-tipi CV koçu PAZARDA YOK** (ticari SDK de yok — Roboflow/akademik alan). Bu beyaz alan aynı zamanda "kopyalanacak kanıtlı mimari de yok" demek — teknik risk bizde (DEFTER'e).
+**Konumlandırma (EN):** *"The boxing coach in your corner — no bag, no sensors, just your phone. Real form feedback on every jab."*
+
+## 3. Teknik mimari kararları
+
+- Pose: MediaPipe **full** (canlı, fps öncelikli); katalog §1-2 köprü mimarisi. Sağ/sol gard merkezi transform (plan §21).
+- **D2 (bağlayıcı):** hız metrikleri ASLA kare-arası pikselden değil; **faz-süresinden** (state-machine timestamp: GUARD_READY→EXTENSION→PEAK→RETRACTION→RECOVERED). Motion-blur literatürü dolaylı destek — pazarlamada "kanıtlanmış hız ölçümü" DENMEZ; "speed estimate / tempo" dili (plan §14).
+- Taksonomi: 6 yumruk = klasik 1-6 (jab, cross, lead hook, rear hook, lead uppercut, rear uppercut) — BoxingVI + kurs literatürü kesişimi. V1 güvenilir çekirdek: 1, 2, 1-2, temel slip/duck; hook/uppercut doğruluk kanıtlayana dek beta bayrağıyla (plan §5).
+- Hata kodları: plan §11'in 15'lik seti; İLK 5 çok-güvenilir hata: REAR_HAND_LOW, LEAD_HAND_NOT_RECOVERED, ELBOW_FLARED, STANCE_TOO_NARROW/WIDE, FEET_CROSSED. Kural = versiyonlu config.
+- Kombinasyon motoru: sıra+zamanlama doğrulaması (WRONG_HAND / ORDER_ERROR / TEMPO_TOO_FAST_FOR_FORM).
+- Sesli koç: tur içinde TEK hata, kısa cümle, cooldown; müzik ducking (katalog §5). Round yapısı: 3dk tur + tur-sonu özet.
+- Cihaz-adaptif fps politikası: V0'da ölçülür; 60fps destekleyen cihazda 60'a çıkma opsiyonu (blur azaltır) — pil/ısı dengesiyle.
+
+## 4. Faz planı
+
+### G0 — Derin araştırma & bilgi kütüphanesi
+1. Rakip elle-doğrulama: PunchLab/Boxx/FightCamp app'lerini gerçekten kur, kamera modu var mı çöz; fiyatları store'dan ekran görüntülü teyit et.
+2. Müfredat kütüphanesi: başlangıç boks müfredatı (stance→jab→cross→1-2→footwork→savunma; plan §15) — saygın koçluk kaynaklarından ORİJİNAL sentez; koçların gerçek hata-taksonomisi (gard düşürme, telegraphing, dirsek açma, ağırlık hatası) → kural-seti tohumu. `movement-science-advisor` ilk geçiş.
+3. Dataset lisans yazışmaları listesi: BoxingVI, ShadowPunch, MPOSE2021 boxing subset, serp-ai repo (BoxMAC KULLANILMAZ — arXiv'den çekildi).
+4. Fizyolojik güvenlik dosyası: omuz/bilek yüklenmesi, ısınma zorunluluğu (Lissom skorlarıyla aile-içi köprü tasarımı — motion_core sözleşmesi).
+
+### G1 — V0 fizibilite kapısı (D2 — ZORUNLU)
+1. Çekim listesi (kurucuya): jab/cross/hook × {yavaş, orta, TAM HIZ} × {iyi ışık, loş} × {30fps, cihaz destekliyorsa 60fps} × 2-3 kişi; ayrıca "bol kıyafet" ve "küçük oda" senaryoları.
+2. Ölçüm: tam-hız yumrukta peak-extension kaç karede? Landmark güveni blur'da ne kadar düşüyor? El landmark'ı kayboluyor mu?
+3. Faz-süresi hız metriği prototipi fixture'da: aynı yumruğun yavaş/hızlı çekimlerinde metrik tutarlılığı; kare-arası piksel yaklaşımıyla KARŞILAŞTIRMALI çürütme kanıtı.
+4. fps politikası önerisi: cihaz-sınıfına göre hedef fps + degrade merdiveni.
+**Kapı çıktısı (kurucuya):** blur/fps profili raporu + hız-metriği tasarım kararı + V1 hareket setinin güvenilirlik sıralaması.
+
+### G2 — PRD + teknik tasarım
+Akışlar (onboarding→güvenlik→orthodox/southpaw→kamera sihirbazı→kalibrasyon→değerlendirme→ders→kontrollü deneme→canlı tur→özet→mikro-drill), veri modeli (plan §16), state-machine spesifikasyonları (jab/cross/slip başlangıç-bitiş-timeout-iptal koşulları), kural-config şeması, round/ders yapısı. `game-design-architect`: tur döngüsü + ilerleme hissi (ölçülebilir beceri kriteri, ders-izleme değil — plan §15).
+
+### G3 — Veri & fixture kütüphanesi
+Fixture seti (katalog §6 şeması): doğru jab/cross/1-2 + 8 hata sınıfı + kadraj-dışı/düşük-güven/blur senaryoları (D2 zorunlu kılıyor). InfiniteRep genel hareket fixture'ları destek; BoxingVI lisans çıkarsa vahşi-koşul doğrulama seti (YouTube kaynaklı — anotasyon-tek dağıtım, ToS'a dikkat). Replay harness motion-core'dan (Lissom kurduysa pinli tüket; kurmadıysa çekirdek kurulumunu bu oturum üstlenir — Lissom G4 listesi).
+
+### G4 — Motor inşası
+Stance/orientation tespiti → gard state-machine → jab/cross state-machine'leri (faz timestamp'leri = hız kaynağı) → savunma (slip/duck) → footwork temel → kombinasyon sıra motoru → hata üretici (severity/confidence/evidence/cooldown/feedback/drill bağı) → skor bileşenleri (guard discipline, punch mechanics, recovery, footwork, balance, timing, combination accuracy, tracking confidence — TEK genel skor YOK).
+**Kapı:** tüm state-machine'ler fixture-replay yeşil; yanlış-pozitif oranı fixture setinde raporlu; "5 çok-güvenilir hata" kanıtlı.
+
+### G5 — İskelet uygulama (alpha, İngilizce)
+Tüm akışlar cilasız: kamera+overlay canlı tur, sesli düzeltme, tur özeti, ders akışı, geçmiş. Impeller benchmark. `mobile-runtime-tester` sweep. Telefon uzakta senaryosu: TÜM kritik geri bildirim SESLİ çalışır (ekrana bakmadan antrenman testi).
+
+### G6 — İçerik üretimi
+Ders müfredatı config'leri (Başlangıç/Orta/Fitness hatları — plan §15) · drill kütüphanesi (hata→düzeltici drill eşlemesi) · sesli koç replikleri (EN; kısa, ritmik, tur içi tek-hata disiplini; ~400-600 satır: teknik cue + count + tebrik + tur yönetimi) → aile voice-pack hattı (harcama kurucu-onaylı) · HIIT/kondisyon turu tasarımları. Boks antrenörü doğrulama ihtiyacı manuel listeye.
+
+### G7 — UI giydirme (Claude Design)
+Enerjik/karanlık "gym" estetiği; canlı tur ekranı = vitrin (overlay + tur saati + combo göstergesi). Token sistemi; polish turu (`visual-polish-critic`); dark/light + büyük font.
+
+### G8 — Sertleştirme
+20-40dk seans termal/pil profili (kritik!) + adaptif degrade kanıtı · cihaz matrisi fps tablosu · a11y (sesli-öncelik zaten avantaj; VoiceOver uyumu) · crash + analytics (geçerli-analiz oranı, yanlış-pozitif proxy'si, seans-içi düzeltme metriği) · offline antrenman kanıtı.
+
+### G9 — Monetizasyon + uyum
+Paywall: ilk ders + ilk değerlendirme ücretsiz (GOWOD deseni) → kurs/tur kütüphanesi + gelişim geçmişi abonelik. Koridor katalog §8; öneri → kurucu. IAP sandbox + Opus doğrulama. Uyum: `privacy-data-guardian` + `store-policy-officer`; güvenlik dili (plan §17): self-defense garantisi YOK, gerçek dövüş güvenliği iddiası YOK; "power" fiziksel güç olarak sunulmaz.
+
+### G10 — Pazarlama & lansman
+ASO: "shadow boxing, boxing workout at home, boxing trainer" seti; ekran görüntüsü anlatısı: kamera kur→canlı düzeltme→tur özeti→gelişim. Reklam kreatifi: gerçek düzeltme anı klibi (izinli); "no bag, no sensors" mesajı. Kreatif üretimde `content-video-producer`. Submission kurucu.
+
+## 5. Riskler / DEFTER tohumları
+J-001 (mevcut): D2 hız örnekleme. Yeni: J-002 kanıtlanmış mimari yokluğu (beyaz alan = ar-ge riski) · J-003 hook/uppercut güvenilirlik eşiği (beta bayrağı politikası) · J-004 60fps cihaz parçalanması · J-005 dataset lisans belirsizlikleri.
+
+## 6. Manuel / kurucu görevleri
+Yumruk fixture çekimleri (liste G1'de) · boks antrenörü doğrulaması · voice-pack harcaması · fiyat onayı · submission · domain (jablab.app $9.99 ✓boş — M-006).
+
+## 7. Oturum örgütlenmesi
+Fable/high ana oturum; `motion-cv-engineer` D2 sahibi; fan-out sonnet; IAP/güvenlik Opus doğrulamalı; /loop. Başlangıç promptu: vault `🚀 Başlangıç Promptu — JabLab`.
