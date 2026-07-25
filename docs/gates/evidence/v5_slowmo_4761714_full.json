@@ -1,0 +1,387 @@
+{
+  "label": "slowmo_4761714_full",
+  "fixture": "slowmo_4761714_full.json",
+  "modelVersion": "pose_landmarker_full.task@sha256:4eaa5eb7a983",
+  "dims": 2,
+  "meta": {
+    "resolution": "2732x1440",
+    "fps": 25.0,
+    "framesProcessed": 336,
+    "framesWithoutPose": 1,
+    "sourceUrl": "https://www.pexels.com/video/a-boxer-speed-in-throwing-punches-4761714/",
+    "license": "Pexels License",
+    "cameraSetup": "front_dark",
+    "lighting": "ring_dark",
+    "hostInferenceMsPerFrame": 10.54
+  },
+  "armLengthPx": {
+    "left": 750.99,
+    "right": 615.1
+  },
+  "summary": {
+    "duration_s": 13.4,
+    "n_punches": 34,
+    "cadence_pps": 2.54,
+    "median_t_ext_ms": 67.81821927728629,
+    "p10_t_ext_ms": 33.359469070703064,
+    "median_t_ret_ms": 57.59976030050234,
+    "median_n_ext_frames": 2.0,
+    "median_e_peak": 1.1991009758490656,
+    "jump_rate": {
+      "left": 0.06906906906906907,
+      "right": 0.1891891891891892
+    },
+    "derived_n_ext_at_30fps": 2.0345465783185888,
+    "derived_n_ext_at_60fps": 4.0690931566371775
+  },
+  "regions": {
+    "fast": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.8048500000000001,
+      "min_median": 0.3961,
+      "drop_median": 0.4419,
+      "below_0_5_ratio": 0.6764705882352942,
+      "below_0_4_ratio": 0.6176470588235294
+    },
+    "guard": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.8416,
+      "min_median": 0.45885,
+      "drop_median": 0.37747500000000006,
+      "below_0_5_ratio": 0.5882352941176471,
+      "below_0_4_ratio": 0.4411764705882353
+    },
+    "trunk": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.9874499999999999,
+      "min_median": 0.0411,
+      "drop_median": 0.9463499999999999,
+      "below_0_5_ratio": 0.9117647058823529,
+      "below_0_4_ratio": 0.9117647058823529
+    },
+    "base": {
+      "inframe_ratio": 0.0,
+      "baseline_median": 0.0063,
+      "min_median": NaN,
+      "drop_median": NaN,
+      "below_0_5_ratio": NaN,
+      "below_0_4_ratio": NaN
+    }
+  },
+  "landmarks": {
+    "left_wrist": {
+      "baseline": 0.8657,
+      "min_median": 0.5212,
+      "drop_median": 0.34450000000000003,
+      "below_0_5_ratio": 0.47058823529411764,
+      "inframe": true
+    },
+    "right_wrist": {
+      "baseline": 0.8315,
+      "min_median": 0.416,
+      "drop_median": 0.41550000000000004,
+      "below_0_5_ratio": 0.6470588235294118,
+      "inframe": true
+    },
+    "left_elbow": {
+      "baseline": 0.91415,
+      "min_median": 0.5993,
+      "drop_median": 0.31484999999999996,
+      "below_0_5_ratio": 0.14705882352941177,
+      "inframe": true
+    },
+    "right_elbow": {
+      "baseline": 0.87645,
+      "min_median": 0.54135,
+      "drop_median": 0.33509999999999995,
+      "below_0_5_ratio": 0.38235294117647056,
+      "inframe": true
+    },
+    "left_index": {
+      "baseline": 0.7787,
+      "min_median": 0.45885,
+      "drop_median": 0.31984999999999997,
+      "below_0_5_ratio": 0.5294117647058824,
+      "inframe": true
+    },
+    "right_index": {
+      "baseline": 0.7584,
+      "min_median": 0.38395,
+      "drop_median": 0.37444999999999995,
+      "below_0_5_ratio": 0.7352941176470589,
+      "inframe": true
+    },
+    "left_shoulder": {
+      "baseline": 0.9981,
+      "min_median": 0.9938,
+      "drop_median": 0.0042999999999999705,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_shoulder": {
+      "baseline": 0.9981,
+      "min_median": 0.99315,
+      "drop_median": 0.00495000000000001,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "left_hip": {
+      "baseline": 0.6930499999999999,
+      "min_median": 0.0428,
+      "drop_median": 0.65025,
+      "below_0_5_ratio": 0.9117647058823529,
+      "inframe": true
+    },
+    "right_hip": {
+      "baseline": 0.71245,
+      "min_median": 0.0411,
+      "drop_median": 0.67135,
+      "below_0_5_ratio": 0.9117647058823529,
+      "inframe": true
+    },
+    "left_ankle": {
+      "baseline": 0.0061,
+      "min_median": 0.0026,
+      "drop_median": 0.0035000000000000005,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "right_ankle": {
+      "baseline": 0.0078,
+      "min_median": 0.0021,
+      "drop_median": 0.0057,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "nose": {
+      "baseline": 0.9961,
+      "min_median": 0.99125,
+      "drop_median": 0.004850000000000021,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    }
+  },
+  "blurTest": {
+    "left": {
+      "n": 13,
+      "wrist_baseline": 0.8657,
+      "rho_speed_vs_drop": -0.16804407713498623,
+      "rho_text_vs_drop": 0.28060549241917204
+    },
+    "right": {
+      "n": 21,
+      "wrist_baseline": 0.8315,
+      "rho_speed_vs_drop": 0.3203125,
+      "rho_text_vs_drop": -0.03381017162966946
+    }
+  },
+  "h3": {
+    "levels": {
+      "1": {
+        "n": 34,
+        "eff_fps": 25.0,
+        "detection_rate": 1.0
+      },
+      "2": {
+        "n": 27,
+        "eff_fps": 12.5,
+        "detection_rate": 0.7941176470588235
+      },
+      "3": {
+        "n": 20,
+        "eff_fps": 8.33,
+        "detection_rate": 0.5882352941176471
+      },
+      "4": {
+        "n": 11,
+        "eff_fps": 6.25,
+        "detection_rate": 0.3235294117647059
+      }
+    },
+    "n_matched_punches": 10,
+    "median_cv_phase": 0.31183841949224334,
+    "median_cv_pixel": 0.5696372054536616,
+    "per_punch": [
+      {
+        "tp": 1913.718688679647,
+        "side": "left",
+        "cv_phase": 0.08770991288353387,
+        "cv_pixel": 0.4664657455272,
+        "t_ext_series": [
+          171.67413921329444,
+          156.77027277762886,
+          138.9137684765417,
+          174.169274318009
+        ],
+        "v_series": [
+          25.666208338821903,
+          14.85116268836597,
+          10.44462621809209,
+          7.709330180960065
+        ]
+      },
+      {
+        "tp": 3221.531664502236,
+        "side": "left",
+        "cv_phase": 0.2308523877480575,
+        "cv_pixel": 0.49127214286565113,
+        "t_ext_series": [
+          55.440962731760465,
+          59.61826888158157,
+          91.71393128898717,
+          92.08118316390573
+        ],
+        "v_series": [
+          20.848832511314196,
+          11.205478869800187,
+          9.08778082871311,
+          5.385776653092109
+        ]
+      },
+      {
+        "tp": 369.43384070652587,
+        "side": "right",
+        "cv_phase": 0.2616979022955592,
+        "cv_pixel": 0.4105786698641161,
+        "t_ext_series": [
+          129.43384070652587,
+          201.85002651115178,
+          193.89112926061333,
+          105.28398540461134
+        ],
+        "v_series": [
+          20.341030381540296,
+          16.44397919973523,
+          11.29987427381161,
+          5.661192858307576
+        ]
+      },
+      {
+        "tp": 925.8781646309548,
+        "side": "right",
+        "cv_phase": 0.33817456007096064,
+        "cv_pixel": 0.685200863525574,
+        "t_ext_series": [
+          36.77323953838197,
+          65.50348217166265,
+          98.47110755272718,
+          95.11376597637036
+        ],
+        "v_series": [
+          35.75065079173447,
+          11.4169049029482,
+          10.31920782750138,
+          8.107553770645659
+        ]
+      },
+      {
+        "tp": 1886.2613092845984,
+        "side": "right",
+        "cv_phase": 0.35535815237756047,
+        "cv_pixel": 0.6920043633228165,
+        "t_ext_series": [
+          149.68257956521916,
+          225.08540002161112,
+          393.8078797566877,
+          232.83672807409653
+        ],
+        "v_series": [
+          44.070335445757856,
+          14.643471603252179,
+          13.38347218050597,
+          8.649101060674909
+        ]
+      },
+      {
+        "tp": 2679.1633872088064,
+        "side": "right",
+        "cv_phase": 0.6089906515528807,
+        "cv_pixel": 0.5814522634038521,
+        "t_ext_series": [
+          68.20274861181815,
+          93.84483982554411,
+          321.10300199082985,
+          163.39837177318532
+        ],
+        "v_series": [
+          31.326979035272977,
+          19.120481060368764,
+          6.8346870477846045,
+          9.191605706321585
+        ]
+      },
+      {
+        "tp": 3581.0997928377924,
+        "side": "right",
+        "cv_phase": 0.2855022789135261,
+        "cv_pixel": 0.6143551895291137,
+        "t_ext_series": [
+          178.96995946431753,
+          199.5886535114414,
+          161.5772232419531,
+          82.27001534888768
+        ],
+        "v_series": [
+          39.786455501437324,
+          21.867724513188715,
+          12.462213934332132,
+          6.991284023551149
+        ]
+      },
+      {
+        "tp": 3850.8449864968584,
+        "side": "right",
+        "cv_phase": 0.8892539857235594,
+        "cv_pixel": 0.42018342692986294,
+        "t_ext_series": [
+          49.48012306022838,
+          62.322038983802486,
+          382.9032636247621,
+          114.19857000564525
+        ],
+        "v_series": [
+          10.331279433832174,
+          7.059552831533424,
+          12.462213934332132,
+          3.2593672152442554
+        ]
+      },
+      {
+        "tp": 4215.934090335557,
+        "side": "right",
+        "cv_phase": 0.09076662347614868,
+        "cv_pixel": 0.5578221475034711,
+        "t_ext_series": [
+          134.96346719527446,
+          140.93114047231666,
+          111.99668482851939,
+          141.42406676149085
+        ],
+        "v_series": [
+          33.555161390891726,
+          18.639712498629294,
+          12.845163328848304,
+          6.588863568254885
+        ]
+      },
+      {
+        "tp": 11073.601818040344,
+        "side": "right",
+        "cv_phase": 0.7486165749181288,
+        "cv_pixel": 0.7847916937661542,
+        "t_ext_series": [
+          57.1081316586733,
+          39.60012715609628,
+          352.3298161081657,
+          283.9992534555022
+        ],
+        "v_series": [
+          55.70968846841162,
+          19.83560671289563,
+          11.67152226403054,
+          8.572950387585633
+        ]
+      }
+    ]
+  }
+}

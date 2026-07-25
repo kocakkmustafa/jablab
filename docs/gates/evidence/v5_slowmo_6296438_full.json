@@ -1,0 +1,297 @@
+{
+  "label": "slowmo_6296438_full",
+  "fixture": "slowmo_6296438_full.json",
+  "modelVersion": "pose_landmarker_full.task@sha256:4eaa5eb7a983",
+  "dims": 2,
+  "meta": {
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "framesProcessed": 550,
+    "framesWithoutPose": 8,
+    "sourceUrl": "https://www.pexels.com/video/a-man-doing-shadow-boxing-at-the-gym-6296438/",
+    "license": "Pexels License",
+    "cameraSetup": "side_handheld",
+    "lighting": "gym_indoor",
+    "hostInferenceMsPerFrame": 10.41
+  },
+  "armLengthPx": {
+    "left": 521.84,
+    "right": 405.44
+  },
+  "summary": {
+    "duration_s": 21.96,
+    "n_punches": 23,
+    "cadence_pps": 1.05,
+    "median_t_ext_ms": 157.59309190447584,
+    "p10_t_ext_ms": 38.99612529010701,
+    "median_t_ret_ms": 280.9970144906947,
+    "median_n_ext_frames": 4.0,
+    "median_e_peak": 0.9454524599837661,
+    "jump_rate": {
+      "left": 0.046468401486988845,
+      "right": 0.10780669144981413
+    },
+    "derived_n_ext_at_30fps": 4.727792757134275,
+    "derived_n_ext_at_60fps": 9.45558551426855
+  },
+  "regions": {
+    "fast": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.8383,
+      "min_median": 0.4427,
+      "drop_median": 0.4421999999999999,
+      "below_0_5_ratio": 0.6521739130434783,
+      "below_0_4_ratio": 0.391304347826087
+    },
+    "guard": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.9781,
+      "min_median": 0.6177,
+      "drop_median": 0.2643000000000001,
+      "below_0_5_ratio": 0.21739130434782608,
+      "below_0_4_ratio": 0.043478260869565216
+    },
+    "trunk": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.99235,
+      "min_median": 0.9256,
+      "drop_median": 0.06674999999999998,
+      "below_0_5_ratio": 0.0,
+      "below_0_4_ratio": 0.0
+    },
+    "base": {
+      "inframe_ratio": 0.0,
+      "baseline_median": 0.01415,
+      "min_median": NaN,
+      "drop_median": NaN,
+      "below_0_5_ratio": NaN,
+      "below_0_4_ratio": NaN
+    }
+  },
+  "landmarks": {
+    "left_wrist": {
+      "baseline": 0.9806,
+      "min_median": 0.8065,
+      "drop_median": 0.17410000000000003,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_wrist": {
+      "baseline": 0.8481,
+      "min_median": 0.4479,
+      "drop_median": 0.40019999999999994,
+      "below_0_5_ratio": 0.6521739130434783,
+      "inframe": true
+    },
+    "left_elbow": {
+      "baseline": 0.9852,
+      "min_median": 0.9475,
+      "drop_median": 0.037699999999999956,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_elbow": {
+      "baseline": 0.8393,
+      "min_median": 0.5556,
+      "drop_median": 0.28370000000000006,
+      "below_0_5_ratio": 0.2608695652173913,
+      "inframe": true
+    },
+    "left_index": {
+      "baseline": 0.9603,
+      "min_median": 0.7218,
+      "drop_median": 0.23850000000000005,
+      "below_0_5_ratio": 0.13043478260869565,
+      "inframe": true
+    },
+    "right_index": {
+      "baseline": 0.8138,
+      "min_median": 0.4333,
+      "drop_median": 0.38049999999999995,
+      "below_0_5_ratio": 0.7391304347826086,
+      "inframe": true
+    },
+    "left_shoulder": {
+      "baseline": 0.9991,
+      "min_median": 0.995,
+      "drop_median": 0.0040999999999999925,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_shoulder": {
+      "baseline": 0.9993,
+      "min_median": 0.9982,
+      "drop_median": 0.0010999999999999899,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "left_hip": {
+      "baseline": 0.955,
+      "min_median": 0.9256,
+      "drop_median": 0.02939999999999998,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_hip": {
+      "baseline": 0.9772,
+      "min_median": 0.9579,
+      "drop_median": 0.019299999999999984,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "left_ankle": {
+      "baseline": 0.0133,
+      "min_median": 0.0369,
+      "drop_median": -0.023600000000000003,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "right_ankle": {
+      "baseline": 0.0104,
+      "min_median": 0.0264,
+      "drop_median": -0.016,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "nose": {
+      "baseline": 0.9994,
+      "min_median": 0.9954,
+      "drop_median": 0.0040000000000000036,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    }
+  },
+  "blurTest": {
+    "left": {
+      "n": 6,
+      "wrist_baseline": 0.9806,
+      "rho_speed_vs_drop": 0.08571428571428572,
+      "rho_text_vs_drop": 0.8857142857142857
+    },
+    "right": {
+      "n": 17,
+      "wrist_baseline": 0.8481,
+      "rho_speed_vs_drop": 0.1442663378545006,
+      "rho_text_vs_drop": 0.20405750937143205
+    }
+  },
+  "h3": {
+    "levels": {
+      "1": {
+        "n": 23,
+        "eff_fps": 25.0,
+        "detection_rate": 1.0
+      },
+      "2": {
+        "n": 15,
+        "eff_fps": 12.5,
+        "detection_rate": 0.6521739130434783
+      },
+      "3": {
+        "n": 11,
+        "eff_fps": 8.33,
+        "detection_rate": 0.4782608695652174
+      },
+      "4": {
+        "n": 9,
+        "eff_fps": 6.25,
+        "detection_rate": 0.391304347826087
+      }
+    },
+    "n_matched_punches": 5,
+    "median_cv_phase": 0.2520987046420527,
+    "median_cv_pixel": 0.38579487340979646,
+    "per_punch": [
+      {
+        "tp": 5548.139290819222,
+        "side": "right",
+        "cv_phase": 0.48867137632094065,
+        "cv_pixel": 0.6132708349100923,
+        "t_ext_series": [
+          136.88687588676476,
+          285.53606257323554,
+          82.85412676548367,
+          330.2813825646854
+        ],
+        "v_series": [
+          44.886999429083126,
+          21.448328964027734,
+          12.230822950942034,
+          10.640332162046693
+        ]
+      },
+      {
+        "tp": 8412.475848286065,
+        "side": "right",
+        "cv_phase": 0.30917695542242823,
+        "cv_pixel": 0.36670128129523194,
+        "t_ext_series": [
+          81.20237921650005,
+          102.52106479895701,
+          159.5551229861194,
+          180.49563394417237
+        ],
+        "v_series": [
+          18.948948160716363,
+          13.356208600841306,
+          10.238642912611642,
+          6.65962618481922
+        ]
+      },
+      {
+        "tp": 8548.688670112168,
+        "side": "right",
+        "cv_phase": 0.2520987046420527,
+        "cv_pixel": 0.36670128129523194,
+        "t_ext_series": [
+          217.41520104260235,
+          102.52106479895701,
+          159.5551229861194,
+          180.49563394417237
+        ],
+        "v_series": [
+          18.948948160716363,
+          13.356208600841306,
+          10.238642912611642,
+          6.65962618481922
+        ]
+      },
+      {
+        "tp": 9759.497201985248,
+        "side": "right",
+        "cv_phase": 0.07716683256177997,
+        "cv_pixel": 0.7597775511974048,
+        "t_ext_series": [
+          381.4032832211742,
+          342.367224923315,
+          319.90625325984183,
+          386.31883757329524
+        ],
+        "v_series": [
+          27.323934475242094,
+          7.711424169885195,
+          10.1722030804493,
+          3.0675551341535066
+        ]
+      },
+      {
+        "tp": 13096.114622665731,
+        "side": "right",
+        "cv_phase": 0.1334273979914675,
+        "cv_pixel": 0.38579487340979646,
+        "t_ext_series": [
+          206.94750543397276,
+          191.77191443705124,
+          173.10156367151285,
+          247.31116024591938
+        ],
+        "v_series": [
+          15.798114652359626,
+          8.393792298551316,
+          5.646300026504026,
+          8.928531586976245
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "label": "bag_full",
+  "fixture": "bag_full.json",
+  "modelVersion": "pose_landmarker_full.task@sha256:4eaa5eb7a983",
+  "dims": 2,
+  "meta": {
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "framesProcessed": 611,
+    "framesWithoutPose": 3,
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Boxing_Heavy_Bag_Analysis.webm",
+    "license": "CC BY 4.0",
+    "cameraSetup": "side_wide_static",
+    "lighting": "gym_indoor",
+    "hostInferenceMsPerFrame": 9.74
+  },
+  "armLengthPx": {
+    "left": 223.19,
+    "right": 206.2
+  },
+  "summary": {
+    "duration_s": 24.4,
+    "n_punches": 16,
+    "cadence_pps": 0.66,
+    "median_t_ext_ms": 119.52642315440744,
+    "p10_t_ext_ms": 65.60309503669214,
+    "median_t_ret_ms": 215.63677369202003,
+    "median_n_ext_frames": 3.0,
+    "median_e_peak": 0.9251878475434445,
+    "jump_rate": {
+      "left": 0.006622516556291391,
+      "right": 0.024834437086092714
+    },
+    "derived_n_ext_at_30fps": 3.5857926946322234,
+    "derived_n_ext_at_60fps": 7.171585389264447
+  },
+  "regions": {
+    "fast": {
+      "inframe_ratio": 0.375,
+      "baseline_median": 0.1026,
+      "min_median": 0.43829999999999997,
+      "drop_median": 0.4584000000000001,
+      "below_0_5_ratio": 0.5,
+      "below_0_4_ratio": 0.5
+    },
+    "guard": {
+      "inframe_ratio": 0.625,
+      "baseline_median": 0.8967,
+      "min_median": 0.3414,
+      "drop_median": 0.5553000000000001,
+      "below_0_5_ratio": 0.6,
+      "below_0_4_ratio": 0.6
+    },
+    "trunk": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.9994,
+      "min_median": 0.9981,
+      "drop_median": 0.0012999999999999678,
+      "below_0_5_ratio": 0.0,
+      "below_0_4_ratio": 0.0
+    },
+    "base": {
+      "inframe_ratio": 1.0,
+      "baseline_median": 0.8746,
+      "min_median": 0.6796,
+      "drop_median": 0.19500000000000006,
+      "below_0_5_ratio": 0.0,
+      "below_0_4_ratio": 0.0
+    }
+  },
+  "landmarks": {
+    "left_wrist": {
+      "baseline": 0.8708,
+      "min_median": 0.3483,
+      "drop_median": 0.5225,
+      "below_0_5_ratio": 0.5625,
+      "inframe": true
+    },
+    "right_wrist": {
+      "baseline": 0.0784,
+      "min_median": 0.0954,
+      "drop_median": -0.017,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "left_elbow": {
+      "baseline": 0.9626,
+      "min_median": 0.5691999999999999,
+      "drop_median": 0.3934000000000001,
+      "below_0_5_ratio": 0.4375,
+      "inframe": true
+    },
+    "right_elbow": {
+      "baseline": 0.1321,
+      "min_median": 0.1522,
+      "drop_median": -0.020100000000000007,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "left_index": {
+      "baseline": 0.8341,
+      "min_median": 0.3414,
+      "drop_median": 0.49269999999999997,
+      "below_0_5_ratio": 0.5625,
+      "inframe": true
+    },
+    "right_index": {
+      "baseline": 0.0781,
+      "min_median": 0.101,
+      "drop_median": -0.022900000000000004,
+      "below_0_5_ratio": 1.0,
+      "inframe": false
+    },
+    "left_shoulder": {
+      "baseline": 0.9999,
+      "min_median": 0.9986,
+      "drop_median": 0.0012999999999999678,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_shoulder": {
+      "baseline": 0.9994,
+      "min_median": 0.9983,
+      "drop_median": 0.0010999999999999899,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "left_hip": {
+      "baseline": 0.9996,
+      "min_median": 0.9984500000000001,
+      "drop_median": 0.0011499999999999844,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_hip": {
+      "baseline": 0.9989,
+      "min_median": 0.9981,
+      "drop_median": 0.0008000000000000229,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "left_ankle": {
+      "baseline": 0.9601,
+      "min_median": 0.9218,
+      "drop_median": 0.0383,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "right_ankle": {
+      "baseline": 0.8307,
+      "min_median": 0.8488,
+      "drop_median": -0.018100000000000005,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    },
+    "nose": {
+      "baseline": 0.9995,
+      "min_median": 0.9951,
+      "drop_median": 0.0044000000000000705,
+      "below_0_5_ratio": 0.0,
+      "inframe": true
+    }
+  },
+  "blurTest": {
+    "left": {
+      "n": 6,
+      "wrist_baseline": 0.8708,
+      "rho_speed_vs_drop": -0.8181818181818182,
+      "rho_text_vs_drop": 0.41194292043554975
+    },
+    "right": {
+      "n": 10,
+      "wrist_baseline": 0.0784,
+      "rho_speed_vs_drop": -0.4601226993865031,
+      "rho_text_vs_drop": -0.29268836799317
+    }
+  },
+  "h3": {
+    "levels": {
+      "1": {
+        "n": 16,
+        "eff_fps": 25.0,
+        "detection_rate": 1.0
+      },
+      "2": {
+        "n": 12,
+        "eff_fps": 12.5,
+        "detection_rate": 0.75
+      },
+      "3": {
+        "n": 11,
+        "eff_fps": 8.33,
+        "detection_rate": 0.6875
+      },
+      "4": {
+        "n": 7,
+        "eff_fps": 6.25,
+        "detection_rate": 0.4375
+      }
+    },
+    "n_matched_punches": 4,
+    "median_cv_phase": 0.29301337009468154,
+    "median_cv_pixel": 0.20978085801265928,
+    "per_punch": [
+      {
+        "tp": 786.4688501577825,
+        "side": "left",
+        "cv_phase": 0.10607110871957351,
+        "cv_pixel": 0.17770715971105575,
+        "t_ext_series": [
+          274.81684574339494,
+          260.487803992977,
+          281.11883483136205,
+          211.59851599665524
+        ],
+        "v_series": [
+          11.297401516204644,
+          8.076610348858184,
+          9.120391046593742,
+          7.031464750617937
+        ]
+      },
+      {
+        "tp": 5142.889976291793,
+        "side": "left",
+        "cv_phase": 0.1989707585269958,
+        "cv_pixel": 0.1264322324102338,
+        "t_ext_series": [
+          145.01453579054578,
+          116.9620828399593,
+          140.7167701728149,
+          84.05359669931931
+        ],
+        "v_series": [
+          9.338686669238742,
+          9.137012981225023,
+          7.5893018359448545,
+          6.86235002068142
+        ]
+      },
+      {
+        "tp": 4423.368129083478,
+        "side": "right",
+        "cv_phase": 0.4995919000636701,
+        "cv_pixel": 0.3674740515274322,
+        "t_ext_series": [
+          23.36812908347838,
+          80.88386857075875,
+          116.79967803365889,
+          146.6652216501261
+        ],
+        "v_series": [
+          7.751426460312925,
+          22.679920852600862,
+          17.270471156898868,
+          12.561990799844658
+        ]
+      },
+      {
+        "tp": 8016.175887092949,
+        "side": "right",
+        "cv_phase": 0.3870559816623672,
+        "cv_pixel": 0.2418545563142628,
+        "t_ext_series": [
+          51.59830133876221,
+          84.05756721126363,
+          125.19549933358303,
+          158.84145044442903
+        ],
+        "v_series": [
+          19.320303532350653,
+          15.927355420385041,
+          10.846906559370405,
+          11.377032327749214
+        ]
+      }
+    ]
+  }
+}
