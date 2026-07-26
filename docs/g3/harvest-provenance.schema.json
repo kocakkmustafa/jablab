@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://yulalab.com/schemas/jablab/harvest-provenance/1.0.0",
+  "title": "JabLab hasat provenance kaydı",
+  "description": "Kurucusuz Veri Fabrikası (10-ARAC-KATALOGU §6.2 / M-F-13) hasat edilen HER klip için ZORUNLU kayıt. M-F-07 provenance aile kuralının hasat tarafındaki karşılığı: bu alanlar olmadan bir klip referans çıkarımına giremez ve zaman-içi karşılaştırmada kullanılamaz. yt-dlp --write-info-json çıktısı 'source' bloğuna eşlenir.",
+  "type": "object",
+  "required": [
+    "harvestId", "source", "license", "access", "content", "capture", "decision"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "harvestId": {
+      "type": "string",
+      "pattern": "^jab-[a-z0-9]{8}$",
+      "description": "Kararlı kimlik; fixture ve referans kayıtları buna atıf yapar."
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["url", "channel", "title"],
+      "additionalProperties": false,
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "channel": { "type": "string" },
+        "channelUrl": { "type": "string", "format": "uri" },
+        "title": { "type": "string" },
+        "uploadDate": { "type": "string", "description": "YYYY-MM-DD" },
+        "durationSec": { "type": "number" }
+      }
+    },
+
+    "license": {
+      "type": "object",
+      "required": ["lane", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "lane": {
+          "type": "string",
+          "enum": [
+            "cc-by", "cc-by-sa", "public-domain", "stock-license",
+            "permission-email", "paid-clip", "standard-youtube"
+          ],
+          "description": "standard-youtube = ToS riski taşıyan şerit; yalnız C-017 kurucu-kabul çerçevesinde kullanılır ve bu alanla İŞARETLENİR — sessizce geçilmez."
+        },
+        "evidence": {
+          "type": "string",
+          "description": "Lisans iddiasının dayanağı: lisans sayfası URL'si, YouTube licence alanı, izin e-postası tarihi, satın alma kaydı."
+        },
+        "attributionRequired": { "type": "boolean" },
+        "attributionText": { "type": "string" },
+        "rightsTransfer": {
+          "type": "boolean",
+          "description": "paid-clip şeridinde hak devri maddesi var mı (M-F-13 yedek yolu)."
+        }
+      }
+    },
+
+    "access": {
+      "type": "object",
+      "required": ["accessedAt", "tool", "toolVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "accessedAt": { "type": "string", "description": "ISO-8601" },
+        "tool": { "type": "string", "examples": ["yt-dlp", "curl", "manual-download"] },
+        "toolVersion": { "type": "string" },
+        "infoJsonPath": { "type": "string", "description": "yt-dlp --write-info-json çıktısının yolu." }
+      }
+    },
+
+    "content": {
+      "type": "object",
+      "required": ["style", "technique", "instructorId"],
+      "additionalProperties": false,
+      "properties": {
+        "style": { "type": "string", "enum": ["boxing", "kickboxing", "muaythai"] },
+        "technique": {
+          "type": "string",
+          "description": "boxing@1.x teknik kimliği veya ön-hasat etiketi.",
+          "examples": ["jab", "cross", "lead_hook", "slip", "footwork_pivot", "teep"]
+        },
+        "instructorId": {
+          "type": "string",
+          "description": "M-C-04 ≥3 bağımsız eğitmen konsensüsünün sayım birimi. AYNI eğitmenin iki videosu tek kaynak sayılır."
+        },
+        "stance": { "type": "string", "enum": ["orthodox", "southpaw", "unknown"] },
+        "consensusGroupId": {
+          "type": "string",
+          "description": "Hangi referans birleştirmesine girdiği (ReferenceBuilder grubu)."
+        },
+        "segments": {
+          "type": "array",
+          "description": "Videonun TAMAMI değil, R1-R8 şartlarını sağlayan aralıklar. Boşsa klip yalnız izleme referansıdır.",
+          "items": {
+            "type": "object",
+            "required": ["startMs", "endMs"],
+            "additionalProperties": false,
+            "properties": {
+              "startMs": { "type": "integer", "minimum": 0 },
+              "endMs": { "type": "integer", "minimum": 0 },
+              "repCount": { "type": "integer" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "capture": {
+      "type": "object",
+      "required": ["fps", "resolution"],
+      "additionalProperties": false,
+      "properties": {
+        "fps": { "type": "number" },
+        "resolution": { "type": "string", "examples": ["1920x1080"] },
+        "slowMotionFactor": {
+          "type": "number",
+          "description": "1.0 = gerçek zaman. >1 = yavaşlatılmış. BİLİNMİYORSA null bırakılmaz — ölçülür (bkz. qualityGates.tExtMedianMs kontrolü)."
+        },
+        "cameraStatic": { "type": "boolean" },
+        "framingAngleDeg": {
+          "type": "number",
+          "description": "Omuz çizgisinin görüntü düzlemine açısı. ADR-003: 25-55 arası kabul, saf ön ve saf yan red."
+        },
+        "fullBody": { "type": "boolean" },
+        "singlePerson": { "type": "boolean" }
+      }
+    },
+
+    "qualityGates": {
+      "type": "object",
+      "description": "mocore hattı çıktısı. Eşikler D2 raporundan.",
+      "additionalProperties": false,
+      "properties": {
+        "poseModelVariant": { "type": "string", "examples": ["pose_landmarker_full"] },
+        "poseModelSha256": { "type": "string" },
+        "jumpRate": { "type": "number", "description": "≤0.05 şartı (D2 §3 kriter 4)." },
+        "trunkVisibilityMedian": { "type": "number", "description": "≥0.8 şartı." },
+        "structuralValidatorClean": {
+          "type": "boolean",
+          "description": "M-019 — ihlalde klip ELENİR (uzuv-etiketi terslemesi yüksek güvenle olabiliyor)."
+        },
+        "tExtMedianMs": {
+          "type": "number",
+          "description": "68-257 ms bandı dışıysa klip yavaşlatılmış/hızlandırılmış demektir (D2 havuz ölçümü) → slowMotionFactor düzeltilir ya da elenir."
+        },
+        "framesWithoutPose": { "type": "integer" }
+      }
+    },
+
+    "decision": {
+      "type": "object",
+      "required": ["status", "reason", "decidedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "enum": ["accepted", "rejected", "pending"] },
+        "reason": {
+          "type": "string",
+          "description": "Eleme KAYNAĞA dayanır, sonuca değil (Gravita D1 dersi): 'skoru düşürdüğü için' geçerli gerekçe DEĞİLDİR; 'R3 açı şartını sağlamıyor' geçerlidir."
+        },
+        "failedCriteria": {
+          "type": "array",
+          "items": { "type": "string", "examples": ["R1", "R3", "structural", "license"] }
+        },
+        "decidedAt": { "type": "string" }
+      }
+    }
+  }
+}

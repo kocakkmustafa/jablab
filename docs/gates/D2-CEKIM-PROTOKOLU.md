@@ -1,8 +1,16 @@
-# D2-D — Kurucu Çekim Protokolü (JabLab)
+# D2-D — Çekim Protokolü (JabLab) — 🗂️ OPSİYONEL ŞABLON
 
-**Amaç:** D2 kapısının açık kalan tek bilimsel sorusunu kapatmak: **görünürlük düşüşü blur'dan mı, kapanmadan mı?**
-**Süre:** ~35 dk · **Gereken:** iPhone + sabit yer (tripod/kitap yığını) + ~2,5 m boş alan
-**Neden sen çekmelisin:** Stok görüntülerin hiçbiri JabLab'ın kurulumu değil (hepsi sinematik yan açı, yarım vücut, 25fps). Ayrıca ship edilecek fixture'lar **lisans olarak temiz kendi kayıtlarımız** olmalı (`10-ARAC-KATALOGU §0/§6`).
+> ## ⚡ BU DOKÜMAN ARTIK BİR ÖNKOŞUL DEĞİLDİR
+> **Kurucu direktifi M-F-13 (2026-07-26): kurucu çekim YAPMAZ.** Kurucu çekimi hiçbir kapının önkoşulu değildir (`10-ARAC-KATALOGU §6.2` — Kurucusuz Veri Fabrikası).
+>
+> - **J-007** (blur↔kapanma) kapanışı artık **kamu slow-mo taramasıyla** denenir; bulunamazsa ücretli klip önerisi kurucu listesine yazılır. Bu protokolün §1 tempo merdiveni o taramanın **arama şartnamesi** olarak yaşamaya devam eder.
+> - **J-011** (cihaz fps + termal) kurucuda **KALIR** — beceri gerektirmez, yalnız telefonu tutup uygulamayı çalıştırmak yeter.
+> - **§5 hata kütüphanesi TAMAMEN KALKTI** (M-C-03 + M-F-13): hatalı örnekler referansın kontrollü bozulmasından sentezlenir.
+>
+> **Bu dosya neden silinmedi:** ileride kurucu ya da bir eğitmen çekim yapmak isterse şartname hazır olsun diye; ayrıca §0 kurulum şartları ve §1 tempo merdiveni tasarımı, **kamu videosu ararken kullandığımız eleme kriterlerinin** kaynağıdır.
+
+**Özgün amaç:** D2 kapısının açık kalan tek bilimsel sorusunu kapatmak: **görünürlük düşüşü blur'dan mı, kapanmadan mı?**
+**Süre:** ~26 dk · **Gereken:** iPhone + sabit yer (tripod/kitap yığını) + ~2,5 m boş alan
 
 ---
 
