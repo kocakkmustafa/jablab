@@ -31,7 +31,16 @@
     "elbowFlareAngle": { "$doc": "Ust kol ile govde duzlemi arasindaki aci (derece)." },
     "trunkLeanAngle": { "$doc": "Govde ekseninin dikeyden sapmasi (derece)." },
     "shoulderRotation": { "$doc": "Omuz cizgisinin kalca cizgisine gore acisi (derece)." },
-    "copOverBase": { "$doc": "Kalca orta noktasinin ayak taban poligonuna gore konumu, ayak mesafesine normalize." }
+    "copOverBase": { "$doc": "Kalca orta noktasinin ayak taban poligonuna gore konumu, ayak mesafesine normalize." },
+    "frontFootLoadRatio": {
+      "$doc": "Kalca orta noktasinin ON<->ARKA ayak ekseni uzerindeki izdusumu (0=tamamen arka ayak, 1=tamamen on ayak). POZ-TABANLI VEKIL — kuvvet/basinc OLCUMU DEGILDIR; 'yuk' dili kullaniciya ve pazarlamaya gecmez, ic metrik olarak kalir.",
+      "normalizeBy": "stanceDepth",
+      "$whyAdded": "Kickboks/MuayThai on-hasat haritasi (M-F-14): bes olculebilir brans farkindan DORDU mevcut olculere dustu, yalnizca on/arka agirlik dagilimi eksikti (boks ~0.50, Muay Thai ~0.30-0.40). ADR-004'un 'brans farki = yeni ESIK, yeni MOTOR degil' iddiasinin tek acigi buydu.",
+      "branchProfiles": {
+        "boxing": { "expected": 0.50, "tolerance": 0.12 },
+        "muaythai": { "expected": 0.35, "tolerance": 0.12, "$status": "hasat sonrasi olculecek — su an literatur/anlatı duzeyinde" }
+      }
+    }
   },
 
   "$filterWarning": {
