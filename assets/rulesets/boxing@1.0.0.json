@@ -32,6 +32,16 @@
     "copOverBase": { "$doc": "Kalca orta noktasinin ayak taban poligonuna gore konumu, ayak mesafesine normalize." }
   },
 
+  "$filterWarning": {
+    "$doc": "AILE DERSI M-C-07 (Choreia) — J-016. Asagidaki faz esikleri HAM landmark uzerinde olculdu; uretim hattinda temporal smoothing var ve bilincli GECIKTIRIR. Somut risk: yumruk biter bitmez duran denemede filtre gard degerine donemez → GUARD_RECOVERED (e<0.62) hic atesnemez → deneme timedOut sayilir ve SESSIZCE kaybolur. Esikler filtrelenmis sinyal uzerinde yeniden olculmeden band A yayinlanmaz.",
+    "status": "acik",
+    "measuredOn": "raw_landmarks_no_smoothing"
+  },
+  "$fixtureRule": {
+    "$doc": "AILE DERSI M-C-06 — fixture, sinadigi TOLERANSTAN BUYUK olmali. 45 derece ELBOW_FLARED esigini 45 derecelik fixture ile sinamak hicbir sey sinamaz; genlik esigin ~1.3 katindan buyuk olmali. Ayrica simetrik (git-gel) fixture gecikmeli hizalamayi ucuzlatir — asimetrik fraz kullan.",
+    "minAmplitudeFactor": 1.3
+  },
+
   "integrity": {
     "$doc": "Anatomik imkansizlik denetimi — aile bulgusu M-019 / J-013. Ihlalde HUKUM YOK.",
     "maxExtensionRatio": 1.05,

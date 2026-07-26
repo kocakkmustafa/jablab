@@ -60,7 +60,13 @@ Deneyin tüm gücü **kurulumun sabit kalmasından** gelir. Tek değişen şey t
 | 13 | `13_saf_yan_60.mov` | Açıyı **90° tam yan** yap, 10× jab — *ön-eğik açının gerçekten gerekli olduğunu kanıtlamak için kontrol çekimi* |
 | 14 | `14_southpaw_60.mov` | **Ters gard** (southpaw) dur, 10× jab — sağ/sol dönüşüm testi |
 
-## 5. HATA KÜTÜPHANESİ — kasten yanlış yap (G3 fixture tohumu)
+## 5. HATA KÜTÜPHANESİ — ⚠️ ARTIK OPSİYONEL (2026-07-26 güncellemesi)
+
+> **Bu bölüm M-C-01/M-C-03 kararlarıyla zorunluluktan çıktı.** Aile kararı: doğru icra referansı kamuya açık eğitmen videolarından çıkarılır; **hatalı örnekler referansın kontrollü bozulmasından sentezlenir** (etiket bedava, çeşitlilik sınırsız). Yani aşağıdaki 8 çekim olmadan da G3 fixture kütüphanesi kurulabilir.
+>
+> **Yine de çekmeye değer olan 3 tanesi var** — çünkü sentetik bozulma *senin vücudunda gerçek hatanın nasıl göründüğünü* göstermez: **#15 (arka el düşük)**, **#17 (dirsek açık)**, **#21 (overreach)**. Bu üçü `ELBOW_FLARED`/`OVERREACH` eşik kalibrasyonunun (J-007) doğrulama seti olur. Diğer 5'i atlayabilirsin.
+>
+> ⚠️ Çekersen: **fixture, sınadığı toleranstan BÜYÜK olmalı** (M-C-06). Hatayı *abartılı* yap — 45° eşiği için 45°'lik dirsek açısı testi hiçbir şey sınamaz.
 
 Her biri 60fps, ~12 sn, **kasten abartılı** hata:
 
@@ -80,6 +86,19 @@ Her biri 60fps, ~12 sn, **kasten abartılı** hata:
 Bir kişi daha bulabilirsen (farklı boy/kilo): `23_kisi2_jab_tamhiz_60.mov` + `24_kisi2_hata_rear_hand_low_60.mov`. Zorunlu değil, ama eşiklerin tek vücuda aşırı-uymasını (overfit) engeller.
 
 ---
+
+## Güncellenmiş süre
+
+| Bölüm | Durum | Süre |
+|---|---|---|
+| §1 tempo merdiveni (1-5) | 🔴 **ZORUNLU** — D2'nin açık sorusunu tek başına kapatır | ~8 dk |
+| §2 ağır çekim (6-7) | 🟠 çok değerli | ~5 dk |
+| §3 30fps karşılaştırma (8) | 🟠 değerli | ~3 dk |
+| §4 stres testleri (9-14) | 🟡 ürün sınırlarını belirler | ~10 dk |
+| §5 hata kütüphanesi | 🟢 **opsiyonel** — 8 yerine 3 çekim yeter (#15/#17/#21) | ~5 dk |
+| §6 ikinci kişi | 🟢 opsiyonel | ~5 dk |
+
+**Toplam: ~36 dk → ~26 dk** (M-C-01/03 kararı 8 çekimi 3'e indirdi).
 
 ## Teslim
 
