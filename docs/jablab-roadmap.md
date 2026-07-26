@@ -4,6 +4,8 @@
 **Hiyerarşi:** `00-AILE-MIMARISI.md` (D2!) > `20-URETIM-SURECI.md` > `10-ARAC-KATALOGU.md` > bu dosya > `jablab-plan.md`.
 **Ürün dili: İNGİLİZCE.** Aile sırası **2** (dik vücut ama hızlı hareket).
 
+> ⚡ **REVİZYON 2026-07-26 (kurucu direktifi — KURUCUSUZ VERİ FABRİKASI + GENİŞ KÜTÜPHANE, M-F-13..16):** Bu haritadaki "kurucu çekimi / fixture çekim listesi kurucuya" varsayımları KALDIRILDI — kurucu çekim YAPMAZ. Birincil veri = kamu-video hasadı + sentetik + gerekirse ücretli klip (katalog §6.2); doğrulama = §6.3 merdiveni; öğretim görselleri = §6.4 katmanlı AI-eğitmen hattı (T1 = iskelet-sürümlü uygulama-içi avatar, $0 ve form-garantili). Kurucudan yalnız cihaz-benchmark'ı + onay/kapı kararları beklenir. **Geniş kütüphane:** 6 yumruk + savunma + footwork + kickboks/Muay Thai ön-hasadı GENİŞ yürür (Precision Striking/Tony Jeffries/ExpertBoxing ≥3 ✓); J-007 tempo-merdiveni kamu slow-mo taramasıyla (tek-kişi 240fps İNCE — spor-bilim kanalları dahil özel tarama görevi); J-011 cihaz-benchmark'ı kurucuda kalır (beceri gerektirmez). Sorularını bu çerçevede kendin karara bağla — kurucuya soru YOK.
+
 ## 1. Kimlik ve Kuzey Yıldızı
 
 **JabLab: Shadow Training** — telefonu karşına koy, ekipmansız boks/shadow-boxing antrenmanında köşendeki antrenör gibi sesli düzeltme al: gard, duruş, sıra, denge. LLM değil; pose + state-machine + uzman kural motoru.
