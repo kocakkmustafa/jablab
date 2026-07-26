@@ -12,6 +12,8 @@
   "rulesetId": "boxing",
   "version": "1.0.0",
   "calibrationPending": true,
+  "thresholdStatus": "raw-signal-pending-revision",
+  "$thresholdStatusDoc": "Koordinator direktifi 2026-07-26: tum faz/aci esikleri HAM landmark uzerinde olculdu. Cekirdegin smoothing modulu koordinator oturumdan cikinca (M-F-03) filtrelenmis sinyal uzerinde YENIDEN OLCULECEK (J-016). O gune dek bu etiket kalir ve band A yayinlanmaz.",
   "calibratedForModel": "pose_landmarker_full",
   "$modelNote": "Gorunurluk esikleri model varyantina ozgudur (aile kurali M-018 / J-014). heavy varyantina gecis = esik yeniden kalibrasyonu.",
 
@@ -230,6 +232,37 @@
     "guardDiscipline", "punchMechanics", "recovery", "footwork",
     "balance", "timing", "combinationAccuracy", "trackingConfidence"
   ],
+
+  "display": {
+    "$doc": "K8 AILE KURALI (M-F-04, kurucu): kalibrasyon kapisi gecilmeden kullaniciya SAYISAL skor gosterilmez. V1 baslangic gosterimi = BANT + ilerleme egrisi; mutlak sayilar JabLab'in kendi kalibrasyon kapisindan (J-007 esik kalibrasyonu) SONRA acilir.",
+    "numericScoresUnlockedBy": "jablab_threshold_calibration",
+    "numericScoresUnlocked": false,
+    "scoreBands": [
+      { "id": "needs_work", "labelKey": "band.needs_work" },
+      { "id": "developing", "labelKey": "band.developing" },
+      { "id": "solid",      "labelKey": "band.solid" },
+      { "id": "strong",     "labelKey": "band.strong" }
+    ],
+    "$bandNote": "Ornek gosterim: 'Guard discipline: solid' + haftalik egri. 'Guard discipline: 72' V1'de YOK.",
+    "trackingConfidenceDisplay": {
+      "$doc": "Istisna DEGIL, kural: dusuk takip guveninde diger bantlar SOLUKLASTIRILIR ve neden soylenir. 'Olcemedim' demek yanlis olcmekten ustundur (00-AILE-MIMARISI §7).",
+      "dimOthersBelow": 0.5
+    },
+    "sideLabelPolicy": {
+      "$doc": "M-F-06 aile kurali: kullaniciya 'left/right' YALNIZ kalibrasyon eslemesi kurulduktan ve StructuralValidator temizken soylenir. Aksi halde taraf-agnostik dil ('lead hand', 'rear hand').",
+      "requiresCalibrationMapping": true,
+      "requiresStructuralValidatorClean": true,
+      "affectedCues": ["cue.footwork_step_left", "cue.footwork_step_right"]
+    }
+  },
+
+  "provenance": {
+    "$doc": "M-F-07 aile kurali — her deneme kaydina yazilir. Zaman-ici karsilastirma bu alanlar olmadan YAPILMAZ; yoksa 'gelisme' model gurultusu olabilir.",
+    "requiredFields": [
+      "poseModelVariant", "poseModelSha256", "ruleSetVersion",
+      "metricConfigVersion", "calibrationProfileId"
+    ]
+  },
 
   "drills": [
     { "id": "drill.guard_discipline", "durationSec": 60, "displayKey": "drill.guard_discipline" },

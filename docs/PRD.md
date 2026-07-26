@@ -38,7 +38,7 @@ D2 ölçümü, kapsamı "ne istiyoruz"a göre değil **"neyi kanıtlayabiliyoruz
 1  Onboarding (ne yapar / ne yapmaz — self-defense ve güç iddiası YOK)
 2  Güvenlik brifingi (alan, zemin, ağrı, sağlık sorunu)
 3  Gard seçimi (orthodox / southpaw)  → lead/rear eşlemesi burada kurulur (ADR-004)
-4  ⛔ KAMERA KURULUM SİHİRBAZI — KAPI (ADR-003). Geçilmeden 6+ adımlarına gidilmez.
+4  ⛔ KAMERA KURULUM SİHİRBAZI — MODA GÖRE KAPI (ADR-003 → aile kuralı M-F-09)
 5  Vücut kalibrasyonu (kol uzunluğu L, omuz genişliği, gard taban duruşu — 3 sn sabit)
 6  Başlangıç değerlendirmesi (10 jab + 10 cross, kendi temponda) → ilk skor kartı
 7  Ders seçimi
@@ -49,6 +49,15 @@ D2 ölçümü, kapsamı "ne istiyoruz"a göre değil **"neyi kanıtlayabiliyoruz
 12 Hata odaklı mikro-drill (60-90 sn)
 13 Gelişim geçmişi
 ```
+
+**Kalibrasyon kapısının mod ayrımı (M-F-09 — ADR-003'ün aile kuralı hâli, benim ADR'imi *genişletiyor*):**
+
+| Mod | Kalibrasyon | Gerekçe |
+|---|---|---|
+| **Değerlendirme / ölçüm** (adım 6, gelişim geçmişine yazan her ölçüm) | 🔴 **SERT KAPI** — geçilmeden analiz başlamaz | Kayda geçen sayı, kadraj bozukken üretilmişse geçmişi kalıcı kirletir |
+| **Serbest pratik / tur** (adım 10-12) | 🟡 öneri + kalıcı uyarı bandı | Kullanıcıyı antrenman yapmaktan alıkoymak, kusurlu ölçümden daha zararlı |
+
+Serbest modda kalibrasyon yoksa: yumruk **sayılır**, form hükmü **verilmez**, uyarı bandı görünür kalır.
 
 **Ücretsiz çekirdek (paywall ÖNCESİ):** 1-6 + bir ders + bir tur. Değer önce kanıtlanır (`10-ARAC-KATALOGU §8`, GOWOD deseni). Ayrıntı G9.
 
@@ -93,16 +102,30 @@ Her hata: `code · severity · confidence · evidence · cooldown · feedbackKey
 - Ducking: müzik kısılır, bastırılmaz (`10-ARAC-KATALOGU §5`). Cue gecikme bütçesi ≤500 ms.
 - V1 ses: sabit repliklerde voice-pack, dinamik sayılarda sistem TTS (hibrit; katalog §5).
 
-## 7. Skorlar
+## 7. Skorlar — ⚠️ K8 aile kuralına göre revize (M-F-04)
 
 Tek "doğruluk" skoru **YOK** (`plan §14`). Bileşenler: `guardDiscipline` · `punchMechanics` · `recovery` · `footwork` · `balance` · `timing` · `combinationAccuracy` · `trackingConfidence`.
 
-`trackingConfidence` **kullanıcıya gösterilir** — düşükse diğer skorlar soluklaştırılır. "Ölçemedim" demek, yanlış ölçmekten üstündür (`00-AILE-MIMARISI §7`).
-"Power" gösterilmez. Hız `speed estimate` sayısı olarak değil **tempo bandı** olarak gösterilir (ADR-001).
+**Kurucu kararı M-F-04 (5 app için bağlayıcı): kalibrasyon kapısı geçilmeden kullanıcıya SAYISAL skor gösterilmez.**
+
+| | V1 başlangıç | Kalibrasyon kapısından sonra |
+|---|---|---|
+| Gösterim | **bant + ilerleme eğrisi** — "Guard discipline: solid" | mutlak sayı açılabilir |
+| Bantlar | `needs_work` · `developing` · `solid` · `strong` | — |
+| Kilidi açan | JabLab eşik kalibrasyonu (J-007, kurucu çekimi) | — |
+
+Bu karar J-008 ile (hız = sayı değil bant) zaten aynı yöndeydi; M-F-04 onu **tüm skor bileşenlerine** genelleştirdi. `boxing@1.0.0 → display.numericScoresUnlocked` bayrağı tek anahtardır.
+
+`trackingConfidence` **kullanıcıya gösterilir** — düşükse diğer bantlar soluklaştırılır ve nedeni söylenir. "Ölçemedim" demek, yanlış ölçmekten üstündür (`00-AILE-MIMARISI §7`).
+"Power" gösterilmez. Hız **tempo bandı** olarak gösterilir (ADR-001).
+
+**Taraf dili (M-F-06 aile kuralı):** kullanıcıya "left/right" **yalnız** kalibrasyon eşlemesi kurulduktan *ve* `StructuralValidator` temizken söylenir. Aksi hâlde taraf-agnostik dil kullanılır ("lead hand", "rear hand"). Bu, footwork cue'larını (`step left/right`) doğrudan kısıtlar — J-019.
 
 ## 8. Veri modeli
 
 `UserProfile · StancePreference · CalibrationProfile(L, shoulderWidth, guardBaseline) · Technique · TechniquePhase · RuleSet · Lesson · Workout · Round · AttemptDigest · AttemptMetric · DetectedIssue · FeedbackEvent · Session · ProgressMetric · SafetyEvent · ModelVersion · RuleSetVersion`
+
+**Provenance zorunlu (M-F-07 aile kuralı).** Her `AttemptDigest` ve `Session` kaydı şunları taşır: `poseModelVariant` · `poseModelSha256` · `ruleSetVersion` · `metricConfigVersion` · `calibrationProfileId`. **Zaman-içi karşılaştırma ("bu hafta jab'in düzeldi") bu alanlar olmadan YAPILMAZ** — model varyantı veya eşik değişmişse "gelişme" model gürültüsü olabilir.
 
 - **Ham video varsayılan olarak kaydedilmez** ve cihazdan çıkmaz.
 - `PoseFrame` **kalıcı değildir**: yalnız `AttemptDigest` (ADR-002) saklanır. Bu hem gizlilik hem depolama kararıdır.
