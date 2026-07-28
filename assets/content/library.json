@@ -1,0 +1,203 @@
+{
+  "$comment": [
+    "IA icerik catisi — standart 30-URUN-BLUEPRINT-STANDARDI §2.",
+    "Kutuphane → Disiplin sayfasi → Kurs → Ders. Her disiplin KENDI sayfasi.",
+    "DURUSTLUK KURALLARI (mekanik olarak test edilir, library_test.dart):",
+    "  1. status=coming_soon olan disiplinde KURS OLAMAZ (sahte kurs listelenmez).",
+    "  2. Her kursun en az 1 dersi olmak zorunda (bos kurs listelenmez).",
+    "  3. Ders, ruleset'te BULUNMAYAN teknige atif yapamaz.",
+    "  4. Her disiplinde honesty bloku ZORUNLU (neler olculur / neler OLCULMEZ).",
+    "  5. Kapsam-disi her madde gerekce tasimak zorunda."
+  ],
+  "schemaVersion": 1,
+  "productName": "JabLab — Solo Combat Training",
+  "language": "en",
+
+  "disciplines": [
+    {
+      "id": "boxing",
+      "displayName": "Boxing",
+      "status": "live",
+      "wave": "V1",
+      "rulesetId": "boxing",
+      "blurb": "Put your phone in front of you and shadow box. Your corner calls out guard, stance, sequence and balance — no bag, no sensors.",
+      "honesty": {
+        "measured": [
+          "Punch events and count",
+          "Combination order and timing",
+          "Stance width, crossed feet, balance",
+          "Guard hand position (with a front-oblique camera)",
+          "Tempo as a band — controlled / brisk / fast"
+        ],
+        "notMeasured": [
+          "Punch force or power — a camera cannot measure force, and we will not pretend otherwise",
+          "Hook and uppercut technique — counted, but the type is not claimed and no form judgement is made",
+          "Head movement quality (slip / duck / roll) — reaction skills need an opponent",
+          "Anything while your body is out of frame or tracking confidence is low — the app says so instead of guessing"
+        ]
+      },
+      "courses": [
+        {
+          "id": "boxing.foundations",
+          "displayName": "Foundations",
+          "level": "beginner",
+          "goal": "Build a stance and a jab you can repeat without thinking.",
+          "estimatedMinutes": 60,
+          "lessons": [
+            {
+              "id": "boxing.foundations.camera",
+              "displayName": "Camera and space",
+              "techniques": [],
+              "focus": "setup",
+              "minutes": 6
+            },
+            {
+              "id": "boxing.foundations.stance",
+              "displayName": "Stance and guard",
+              "techniques": [],
+              "focus": "stance",
+              "errorFocus": ["STANCE_TOO_NARROW", "STANCE_TOO_WIDE", "FEET_CROSSED"],
+              "minutes": 10
+            },
+            {
+              "id": "boxing.foundations.jab",
+              "displayName": "The jab",
+              "techniques": ["jab"],
+              "errorFocus": ["REAR_HAND_LOW", "LEAD_HAND_NOT_RECOVERED"],
+              "minutes": 12
+            },
+            {
+              "id": "boxing.foundations.cross",
+              "displayName": "The cross",
+              "techniques": ["cross"],
+              "errorFocus": ["REAR_HAND_LOW", "TORSO_FALLING_FORWARD"],
+              "minutes": 12
+            },
+            {
+              "id": "boxing.foundations.one_two",
+              "displayName": "The 1-2",
+              "techniques": ["jab", "cross"],
+              "combinations": ["1-2"],
+              "errorFocus": ["WRONG_HAND_FOR_COMBINATION", "COMBINATION_ORDER_ERROR"],
+              "minutes": 12
+            },
+            {
+              "id": "boxing.foundations.first_round",
+              "displayName": "Your first round",
+              "techniques": ["jab", "cross"],
+              "combinations": ["1", "2", "1-2"],
+              "focus": "round",
+              "minutes": 8
+            }
+          ]
+        },
+        {
+          "id": "boxing.conditioning",
+          "displayName": "Rounds & Conditioning",
+          "level": "all",
+          "goal": "Keep your form when you are tired — the round timer runs, the coach keeps watching.",
+          "estimatedMinutes": 30,
+          "lessons": [
+            {
+              "id": "boxing.conditioning.r3",
+              "displayName": "3 x 3 minute rounds",
+              "techniques": ["jab", "cross"],
+              "combinations": ["1", "2", "1-2", "1-1-2"],
+              "focus": "round",
+              "minutes": 12
+            },
+            {
+              "id": "boxing.conditioning.tempo",
+              "displayName": "Tempo control",
+              "techniques": ["jab", "cross"],
+              "errorFocus": ["TEMPO_TOO_FAST_FOR_FORM"],
+              "focus": "round",
+              "minutes": 10
+            }
+          ]
+        }
+      ],
+      "comingSoonInThisDiscipline": [
+        "Defence course (slip / duck / roll) — blocked on reaction-skill limits, see honesty box",
+        "Hooks and uppercuts as judged technique — currently counted only"
+      ]
+    },
+
+    { "id": "kickboxing", "displayName": "Kickboxing", "status": "coming_soon", "wave": "W1",
+      "blurb": "Kicks join the engine. Needs a wider frame and a kick classifier.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] },
+
+    { "id": "tai_chi", "displayName": "Tai Chi", "status": "coming_soon", "wave": "W1",
+      "blurb": "Slow forms are where camera analysis is strongest — no motion blur at all. The 24-form comes first.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] },
+
+    { "id": "karate", "displayName": "Karate — Kihon & Kata", "status": "coming_soon", "wave": "W2",
+      "blurb": "Line drills and the Heian kata series, with stance classes and floor-pattern tracking.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] },
+
+    { "id": "muay_thai", "displayName": "Muay Thai", "status": "coming_soon", "wave": "W2",
+      "blurb": "Teeps, knees and elbows. Clinch work stays out — it needs a partner.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] },
+
+    { "id": "taekwondo", "displayName": "Taekwondo", "status": "coming_soon", "wave": "W3",
+      "blurb": "Taegeuk forms and the kick ladder. Jumping and spinning kicks will carry a visible accuracy warning.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] },
+
+    { "id": "mma_striking", "displayName": "MMA Striking", "status": "coming_soon", "wave": "W3",
+      "blurb": "A free-mix drill mode across boxing, kickboxing and Muay Thai. Striking only — stated plainly.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] },
+
+    { "id": "wing_chun", "displayName": "Wing Chun — Solo Forms", "status": "coming_soon", "wave": "W4",
+      "blurb": "Siu Nim Tao through Biu Jee. The wooden dummy form stays out — it needs equipment.",
+      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
+      "courses": [] }
+  ],
+
+  "whyNotIncluded": {
+    "displayName": "Why isn't my art here?",
+    "intro": "Some things a single phone camera genuinely cannot see. Rather than ship a version that guesses, we leave them out and tell you why.",
+    "items": [
+      {
+        "id": "bjj",
+        "displayName": "Brazilian Jiu-Jitsu",
+        "reason": "Grappling is defined by contact and resistance from another person. A solo camera sees neither, so any score would be invented."
+      },
+      {
+        "id": "wrestling",
+        "displayName": "Wrestling",
+        "reason": "Same reason as BJJ: the technique lives in the connection between two bodies. Solo drilling exists, but grading it would mean grading the half you can see."
+      },
+      {
+        "id": "judo",
+        "displayName": "Judo",
+        "reason": "Throws depend on your partner's balance and reaction. Uchikomi without a partner is a movement rehearsal, not the technique."
+      },
+      {
+        "id": "weapon_arts",
+        "displayName": "Weapon arts (kendo, escrima, HEMA…)",
+        "reason": "The technique is defined by where the weapon is. Pose estimation tracks the body, not the object, so the part that matters most is invisible."
+      },
+      {
+        "id": "clinch_sparring",
+        "displayName": "Clinch and sparring",
+        "reason": "Both need a second person. We support solo drills that prepare you for them, and we say clearly that this is not the same thing."
+      },
+      {
+        "id": "power_measurement",
+        "displayName": "Punch power",
+        "reason": "Force needs a sensor. A camera can estimate timing and tempo — we show those as bands — but we will not print a power number we cannot measure."
+      },
+      {
+        "id": "self_defense_outcome",
+        "displayName": "Self-defence guarantees",
+        "reason": "We can help you train movement. Nobody can promise how a real situation goes, and an app that implies otherwise is doing you harm."
+      }
+    ]
+  }
+}

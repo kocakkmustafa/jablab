@@ -11,6 +11,7 @@
 /// taraf etiketine ham güvenilmez, taraf geometrik kurulur.
 library;
 
+export 'src/library.dart';
 export 'src/measures.dart';
 export 'src/ruleset.dart';
 export 'src/stance.dart';
