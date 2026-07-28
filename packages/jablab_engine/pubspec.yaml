@@ -10,8 +10,16 @@ environment:
   sdk: ^3.9.0
 
 dependencies:
+  # PİNLİ TÜKETİM (M-F-03 + çekirdek 0.1.0 etiketi). Path bağımlılığı
+  # KASITLI olarak terk edildi: paylaşımlı çalışma ağacında path, o an hangi
+  # dal çıkılıysa onu okur — yani bağımlılığımız başka bir oturumun dal
+  # değiştirmesiyle sessizce değişirdi. Tag'e pinleme bunu imkânsız kılar ve
+  # M-F-22 (paylaşımlı ağaçta dal değiştirme yasağı) ile de uyumludur.
   motion_core:
-    path: ../../../../motion-core/lib/packages/motion_core
+    git:
+      url: https://github.com/kocakkmustafa/motion-core.git
+      path: packages/motion_core
+      ref: motion_core-v0.1.0
 
 dev_dependencies:
   test: ^1.25.0

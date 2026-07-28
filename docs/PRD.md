@@ -26,6 +26,14 @@ D2 ölçümü, kapsamı "ne istiyoruz"a göre değil **"neyi kanıtlayabiliyoruz
 | 🟠 **C** | V1'de bant olarak | tempo göstergesi · `TEMPO_TOO_FAST_FOR_FORM` (ADR-001: sayı değil bant) |
 | 🔴 **D** | **V1 DIŞI** | hook / uppercut ayrımı · slip/duck/roll hükmü · pivot · darbe gücü |
 
+### 2.1 Koşullu kapsam kırpması — J-007 tutmazsa (şimdiden yazılı)
+
+`ELBOW_FLARED` ve `OVERREACH`, blur↔kapanma ayrımı (J-007) çözülmeden kalibre edilemez. Kurucu çekimi (M-F-13) ve ücretli klip yedeği (M-F-17b) **ikisi de iptal** olduğu için bu bulgunun hedge'i yok; kalan iki yol (öğretim videolarında normal-hız + ağır-çekim tekrarı hipotezi · MoCap setleri) da tutmayabilir.
+
+**O durumda ne olur, şimdiden karara bağlı:** bu iki kod **V1'den ÇIKARILIR**, "yakında" olarak bile gösterilmez, V1 hata seti **11 → 9**'a iner ve disiplin sayfasının "neler ölçülmez" kutusuna *dirsek açısı ve menzil kontrolü* eklenir.
+
+Gizlenmiş, kalibre edilmemiş eşikle çalışan bir hata kodu yayınlamak seçenek değildir — kullanıcı yanlış düzeltme alır ve bunu fark edemez. **Yarım özellik gizlenmez, kapsamdan çıkarılır** (`20-URETIM-SURECI §5`). Kırpma gerçekleşirse `library.json` dürüstlük kutusu ve store metni aynı turda güncellenir.
+
 **Teknikler V1:** stance (orthodox/southpaw) · guard · **jab** · **cross** · **1-2** · 1-1-2 · temel footwork (ileri/geri/yan). Hook/uppercut *sayılır* (yumruk olayı) ama **tipi iddia edilmez** ve form hükmü verilmez — uzanma-oranı detektörü bu tekniklerde kol tam açılmadığı için çalışmıyor (J-003).
 
 **V1 dışı (plan §20 aynen geçerli):** torba, pad, partner, sparring, silah, grappling, darbe gücü, canlı LLM, avatar, çoklu kamera, sosyal ağ, medikal tavsiye.
