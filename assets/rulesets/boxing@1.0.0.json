@@ -52,6 +52,15 @@
     }
   },
 
+  "signalConditioning": {
+    "$doc": "Yumusatma filtresi ESIKLERIN AYRILMAZ PARCASIDIR (aile dersi M-C-07). Varsayilan 1 Hz kesim, 120 ms'lik bir yumrugu yok ediyor: olculdu — tepe uzanma orani 1.00 yerine 0.776'ya duser (%22 sonumleme) ve ~80 ms gecikir; PEAK esigi (0.85) HIC atesnemez.",
+    "$derivation": "D2 havuz olcumu: medyan uzanma fazi 128 ms, en hizli %10 dilim 54 ms. Bir gecisi korumak icin gereken kesim ~1/(2T): 128 ms icin ~3.9 Hz, 54 ms icin ~9.3 Hz. minCutoff=8 Hz medyani rahat, hizli dilimi buyuk olcude gecirir. beta yukseltilir cunku OneEuro'da beta hizli harekette gecikmeyi azaltir.",
+    "minCutoff": 8.0,
+    "beta": 0.05,
+    "derivativeCutoff": 1.0,
+    "$status": "D2'den TURETILDI, cihazda dogrulanmadi — J-016 yeniden olcumunde birlikte revize edilir (esik ve filtre AYRI AYRI degistirilemez)."
+  },
+
   "$filterWarning": {
     "$doc": "AILE DERSI M-C-07 (Choreia) — J-016. Asagidaki faz esikleri HAM landmark uzerinde olculdu; uretim hattinda temporal smoothing var ve bilincli GECIKTIRIR. Somut risk: yumruk biter bitmez duran denemede filtre gard degerine donemez → GUARD_RECOVERED (e<0.62) hic atesnemez → deneme timedOut sayilir ve SESSIZCE kaybolur. Esikler filtrelenmis sinyal uzerinde yeniden olculmeden band A yayinlanmaz.",
     "status": "acik",
@@ -112,6 +121,8 @@
       "displayKey": "technique.strike",
       "band": "A",
       "$doc": "Hook/uppercut V1'de SAYILIR ama tipi iddia EDILMEZ, form hukmu verilmez (J-003, PRD 2). Uzanma-orani detektoru kol tam acilmadigi icin bu tekniklerde calismiyor.",
+      "fallback": true,
+      "$fallbackNote": "J-026: bir jab AYNI ZAMANDA siniflandirilmamis vurustur — iki faz makinesi de ates eder. fallback:true olan teknik, spesifik bir teknik ayni pencerede tamamlandiginda VEYA bir spesifik makine hala calisirken ozet URETMEZ. Aksi halde her yumruk IKI KEZ sayilir ve sayac/kombinasyon/skor bozulur.",
       "phases": [
         { "id": "GUARD_READY", "enter": { "extensionRatio": { "lt": 0.62 } } },
         { "id": "STRIKE_WINDOW", "enter": { "extensionRatio": { "gt": 0.70 } }, "timeoutMs": 500 },
