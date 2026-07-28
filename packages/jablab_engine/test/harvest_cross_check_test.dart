@@ -14,14 +14,26 @@ import 'package:test/test.dart';
 /// Veri gerçek hasattan: Precision Striking jab dersi, MediaPipe `full`,
 /// şema v2 (13.182/13.332 kare tespitli), 59 kare örneklendi.
 void main() {
+  // İKİ farklı en-boy oranı: 1920×1080 (1,7778) ve 810×480 (1,6875).
+  // Tek oranla test etmek yanıltıcı olurdu — izotropik dönüşüm yanlış
+  // uygulansa bile tek bir oranda tesadüfen tutabilir.
+  for (final String file in <String>[
+    'test/golden/harvest_cross_check.json',
+    'test/golden/harvest_cross_check_2.json',
+  ]) {
+    _runCase(file);
+  }
+}
+
+void _runCase(String path) {
   final Map<String, dynamic> golden =
-      (jsonDecode(File('test/golden/harvest_cross_check.json').readAsStringSync())
-              as Map)
+      (jsonDecode(File(path).readAsStringSync()) as Map)
           .cast<String, dynamic>();
+  final String label = golden['resolution'] as String;
 
   // Şema sürümü kontrolü — M-J-03 dersi: beklemediği sürümde okuyucu
   // sessizce boş dönmemeli, PATLAMALI.
-  test('golden şema sürümü beklenen', () {
+  test('[$label] golden şema sürümü beklenen', () {
     expect(golden['schemaVersion'], 2);
   });
 
@@ -49,7 +61,7 @@ void main() {
     );
   }
 
-  test('gerçek hasat verisinde Dart ölçüleri Python hattıyla UYUŞUR', () {
+  test('[$label] gerçek hasat verisinde Dart ölçüleri Python hattıyla UYUŞUR', () {
     const MeasureCalculator calc = MeasureCalculator();
     final List<String> mismatches = <String>[];
 
