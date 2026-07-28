@@ -137,6 +137,7 @@ final class StrikingEngine {
     this.stanceDetector = const StanceDetector(),
     this.measureCalculator = const MeasureCalculator(),
     this.calibrationMapped = false,
+    this.frameSize,
     this.provenance = const <String, String>{},
   })  : _pipeline = pipeline ??
             PosePipeline(
@@ -167,6 +168,11 @@ final class StrikingEngine {
   /// M-F-09: ölçüm modlarında kalibrasyon SERT KAPI. Motor bunu bilmez ama
   /// taraf etiketinin raporlanabilirliğini (M-F-06) belirler.
   final bool calibrationMapped;
+
+  /// Gerçek kamera karelerinde ZORUNLU (J-028): verilmezse ölçüler sessizce
+  /// en-boy oranı kadar yanlış olur — MediaPipe x'i genişliğe, y'yi yüksekliğe
+  /// AYRI normalize eder. Sentetik fixture'larda null bırakılır.
+  final FrameSize? frameSize;
 
   final Map<String, String> provenance;
 
@@ -221,11 +227,13 @@ final class StrikingEngine {
       calibrationMapped: calibrationMapped,
       structurallyClean: pf.structure.plausible,
       previous: _lastStance,
+      frameSize: frameSize,
     );
     _lastStance = stance.stance;
 
     final MeasureSet m = measureCalculator
-        .compute(pf.smoothed, stance.stance, previous: _previous);
+        .compute(pf.smoothed, stance.stance,
+            previous: _previous, frameSize: frameSize);
     _previous = m;
 
     // --- Hüküm verilebilir mi? Üç kapı, sırayla ------------------------

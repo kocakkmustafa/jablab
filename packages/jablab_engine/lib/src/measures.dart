@@ -61,20 +61,40 @@ final class MeasureSet {
 enum Side { lead, rear }
 
 /// Ölçüleri kareden hesaplar.
+/// Kare boyutu — **en-boy düzeltmesi için zorunlu**.
+///
+/// MediaPipe normalize koordinatları `x`'i GENİŞLİĞE, `y`'yi YÜKSEKLİĞE ayrı
+/// ayrı böler. Bu iki eksen farklı ölçekte olduğu için, piksel uzayına
+/// dönmeden alınan her mesafe ve açı en-boy oranı kadar bozulur (1920×1080'de
+/// dikey mesafeler ~1,78× küçük görünür). Hasat hattı ↔ motor çapraz
+/// doğrulaması bu kusuru yakaladı (J-028).
+typedef FrameSize = ({double width, double height});
+
 final class MeasureCalculator {
   const MeasureCalculator();
 
-  MeasureSet compute(PoseFrame f, Stance stance, {MeasureSet? previous}) {
-    final Vec3 ls = f.point(Lm.leftShoulder);
-    final Vec3 rs = f.point(Lm.rightShoulder);
-    final Vec3 lh = f.point(Lm.leftHip);
-    final Vec3 rh = f.point(Lm.rightHip);
+  /// [frameSize] verilmezse koordinatların TEK ve tutarlı bir uzayda olduğu
+  /// varsayılır (sentetik iskeletler böyledir). Gerçek kamera/hasat karesinde
+  /// **verilmesi zorunludur**, yoksa ölçüler sessizce en-boy oranı kadar yanlış olur.
+  MeasureSet compute(PoseFrame f, Stance stance,
+      {MeasureSet? previous, FrameSize? frameSize}) {
+    final double sx = frameSize?.width ?? 1.0;
+    final double sy = frameSize?.height ?? 1.0;
+    Vec3 pt(int i) {
+      final Vec3 p = f.point(i);
+      return Vec3(p.x * sx, p.y * sy, p.z * sx);
+    }
+
+    final Vec3 ls = pt(Lm.leftShoulder);
+    final Vec3 rs = pt(Lm.rightShoulder);
+    final Vec3 lh = pt(Lm.leftHip);
+    final Vec3 rh = pt(Lm.rightHip);
     final Vec3 shoulderMid = _mid(ls, rs);
     final Vec3 hipMid = _mid(lh, rh);
 
     final double trunkLength = _dist(shoulderMid, hipMid);
     final double shoulderWidth = _dist(ls, rs);
-    final Vec3 nose = f.point(Lm.nose);
+    final Vec3 nose = pt(Lm.nose);
 
     final Map<String, double> v = <String, double>{};
 
@@ -82,9 +102,9 @@ final class MeasureCalculator {
       final int sh = side == Side.lead ? stance.leadShoulder : stance.rearShoulder;
       final int el = side == Side.lead ? stance.leadElbow : stance.rearElbow;
       final int wr = side == Side.lead ? stance.leadWrist : stance.rearWrist;
-      final Vec3 pSh = f.point(sh);
-      final Vec3 pEl = f.point(el);
-      final Vec3 pWr = f.point(wr);
+      final Vec3 pSh = pt(sh);
+      final Vec3 pEl = pt(el);
+      final Vec3 pWr = pt(wr);
 
       // e = |bilek-omuz| / kol uzunluğu. Kol uzunluğu AYNI KAREDEN toplanır
       // (omuz-dirsek + dirsek-bilek), böylece kalibrasyon sabitine gerek yok.
@@ -104,8 +124,8 @@ final class MeasureCalculator {
           _angleBetween(pEl - pSh, hipMid - shoulderMid);
     }
 
-    final Vec3 leadAnkle = f.point(stance.leadAnkle);
-    final Vec3 rearAnkle = f.point(stance.rearAnkle);
+    final Vec3 leadAnkle = pt(stance.leadAnkle);
+    final Vec3 rearAnkle = pt(stance.rearAnkle);
     final double ankleSpan = _dist(leadAnkle, rearAnkle);
 
     v['stanceWidthRatio'] =

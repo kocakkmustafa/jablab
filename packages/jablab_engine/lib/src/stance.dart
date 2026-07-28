@@ -77,11 +77,21 @@ final class StanceDetector {
     required bool calibrationMapped,
     required bool structurallyClean,
     Stance? previous,
+    ({double width, double height})? frameSize,
   }) {
-    final Vec3 ls = frame.point(Lm.leftShoulder);
-    final Vec3 rs = frame.point(Lm.rightShoulder);
-    final Vec3 la = frame.point(Lm.leftAnkle);
-    final Vec3 ra = frame.point(Lm.rightAnkle);
+    // En-boy düzeltmesi ölçülerdekiyle AYNI nedenle zorunlu (J-028):
+    // x genişliğe, y yüksekliğe ayrı normalize edilmiştir.
+    final double sx = frameSize?.width ?? 1.0;
+    final double sy = frameSize?.height ?? 1.0;
+    Vec3 pt(int i) {
+      final Vec3 p = frame.point(i);
+      return Vec3(p.x * sx, p.y * sy, p.z * sx);
+    }
+
+    final Vec3 ls = pt(Lm.leftShoulder);
+    final Vec3 rs = pt(Lm.rightShoulder);
+    final Vec3 la = pt(Lm.leftAnkle);
+    final Vec3 ra = pt(Lm.rightAnkle);
 
     final double shoulderWidth = _dist2(ls, rs);
     if (shoulderWidth <= 1e-6) {
