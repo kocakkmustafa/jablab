@@ -93,4 +93,13 @@ J-022'yi yazarken riski "tek-kişi 240fps footage İNCE" diye kaydetmiştim. Tar
 2. **Kyokushin MoCap setinin LICENSE'ını oku.** Ticari kullanıma açıksa `t_ext` yer-gerçeği bedava gelir.
 3. Olympic Boxing setini **yalnız doğrulama seti** olarak kaydet (referans değil) + Kaggle lisansını oku.
 
-**Ücretli klip yedeği (kurucu listesine, henüz gerekli DEĞİL):** tek kişi · sabit tripod · ön-eğik 35° · tam vücut · aynı kurulumda yavaş/orta/tam hız jab+cross · 240fps · ~2 dk ham materyal · **hak devri maddesi şart**. Bu brief, B.4/1 ve B.4/2 başarısız olursa devreye girer.
+## B.5 ⚠️ Yedek yol KALDIRILDI (M-F-17b)
+
+Bu bölümde daha önce bir "ücretli klip brief'i" duruyordu (Fiverr/Upwork, hak-devri maddeli). **Kurucu kararı 2026-07-26: ücretli klip İPTAL — önerilmez, bütçelenmez** (katalog §6.3 güvenilirlik satırı).
+
+Yerine geçen kaynaklar (katalog §6.3 doğrulama merdiveni):
+- **Güvenilirlik/çeşitlilik:** kamu-video çeşitliliği (farklı vücut tipli eğitmenler) + sentetik vücut-tipi varyasyonu (Unity Perception) + **TestFlight beta kohortu** (kendi rıza akışımızla — ship sonrası)
+- **Doğruluk:** **AIST++** (⚠️ CC-BY olan *anotasyon*; kaynak videolar AYRI lisans) + **MM-Fit** (CC-BY, Zenodo kaydında teyit edilecek)
+- ❌ **Yazılı izinsiz iç-QA'da bile YASAK:** Human3.6M · MPI-INF-3DHP · 3DPW · AMASS · BEDLAM. Fit3D `/legal` okunmadan kullanılmaz.
+
+**Sonucun dürüst kaydı:** kurucu çekimi iptal + ücretli klip iptal ⇒ J-007'nin **hedge'i kalmadı**. Kapanış artık yalnız B.4/1 (öğretim videolarında normal-hız + ağır-çekim tekrarı hipotezi) ve B.4/2 (MoCap setleri) üzerinden mümkün. İkisi de tutmazsa `ELBOW_FLARED` / `OVERREACH` **B-kal bandında kalır** ve V1 hata seti 11 yerine 9 olur — eşikler muhafazakâr değerlerle ve `"cihazda doğrulanacak"` etiketiyle taşınır (M-F-17c). Bu bir itiraz değil, kararın maliyetinin görünür kalması.

@@ -15,6 +15,15 @@
   "thresholdStatus": "raw-signal-pending-revision",
   "$thresholdStatusDoc": "Koordinator direktifi 2026-07-26: tum faz/aci esikleri HAM landmark uzerinde olculdu. Cekirdegin smoothing modulu koordinator oturumdan cikinca (M-F-03) filtrelenmis sinyal uzerinde YENIDEN OLCULECEK (J-016). O gune dek bu etiket kalir ve band A yayinlanmaz.",
   "calibratedForModel": "pose_landmarker_full",
+  "deviceValidation": {
+    "$doc": "M-F-17c: cihaz benchmark'i G8'e alindi (deneme amacli, kurucu). ERKEN FAZLAR BEKLEMEZ — o gune dek muhafazakar fps varsayimiyla ilerlenir.",
+    "status": "cihazda-dogrulanacak",
+    "scheduledPhase": "G8",
+    "conservativeAssumption": {
+      "targetFps": 30,
+      "$why": "60fps varsayimi optimistik olurdu; 30fps'te medyan yumruk 3,8 kare — faz siniri cikarilabiliyor, en hizli %10 dilimde tempo bandi gizlenir (D2 raporu §4.3)."
+    }
+  },
   "$modelNote": "Gorunurluk esikleri model varyantina ozgudur (aile kurali M-018 / J-014). heavy varyantina gecis = esik yeniden kalibrasyonu.",
 
   "measures": {

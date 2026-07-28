@@ -6,6 +6,35 @@
 
 > ⚡ **REVİZYON 2026-07-26 (kurucu direktifi — KURUCUSUZ VERİ FABRİKASI + GENİŞ KÜTÜPHANE, M-F-13..16):** Bu haritadaki "kurucu çekimi / fixture çekim listesi kurucuya" varsayımları KALDIRILDI — kurucu çekim YAPMAZ. Birincil veri = kamu-video hasadı + sentetik (katalog §6.2; ücretli klip İPTAL — M-F-17); doğrulama = §6.3 merdiveni; öğretim görselleri = §6.4 katmanlı AI-eğitmen hattı (T1 = iskelet-sürümlü uygulama-içi avatar, $0 ve form-garantili). Kurucudan yalnız onay/kapı kararları + EN SONDA (G8'de, deneme amaçlı) cihaz-benchmark'ı beklenir — erken fazlar benchmark'ı BEKLEMEZ. **Geniş kütüphane:** 6 yumruk + savunma + footwork + kickboks/Muay Thai ön-hasadı GENİŞ yürür (Precision Striking/Tony Jeffries/ExpertBoxing ≥3 ✓); J-007 tempo-merdiveni kamu slow-mo taramasıyla (tek-kişi 240fps İNCE — spor-bilim kanalları dahil özel tarama görevi); J-011 cihaz-benchmark'ı kurucuda kalır (beceri gerektirmez). Sorularını bu çerçevede kendin karara bağla — kurucuya soru YOK.
 
+## 0. Dalga tablosu (M-F-18 blueprint'inden işlendi — kapsam otoritesi `docs/JABLAB-BLUEPRINT.md`)
+
+**Ürün adı artık dar değil:** JabLab = *Solo Combat Training* — 8 disiplin, her biri kendi sayfasında. Boks V1; kalanlar dalga dalga.
+
+| Dalga | Kapsam | Yeni motor ihtiyacı | Durum |
+|---|---|---|---|
+| **V1** | **Boxing** | mevcut faz-motoru (D2 kapılı) | 🟠 W0 sürüyor |
+| **W1** | Kickboxing · Tai Chi | **paylaşımlı DTW uzun-sekans motoru** (Tai Chi'de kurulur — blur yok) + tekme sınıflandırıcı v1 | ⏳ |
+| **W2** | Karate (kihon+kata) · Muay Thai | duruş-sınıfları + embusen yer-deseni · dirsek/diz/teep sınıflandırıcı | ⏳ |
+| **W3** | Taekwondo (Taegeuk 1-8 + tekmeler) · MMA Striking modu | yüksek-tekme sınıflandırıcı (güven-sönümlemeli) · MMA'de **yeni motor YOK** | ⏳ |
+| **W4** | Wing Chun solo formlar | DTW + hassas üst-uzuv açı ayarı | ⏳ |
+
+**Motor bağımlılık sırası (blueprint §3):** boks motoru → DTW uzun-sekans → tekme ailesi → dirsek/diz → duruş-sınıfı+embusen → round/kombo motorunun tüm disiplinlere parametrelenmesi.
+
+**Kapsam-dışı (kurucu-kesin, "Neden yok?" sayfasında gerekçelenir):** BJJ/güreş/judo (partner teması fiziksel zorunluluk) · silahlı sanatlar (teknik silah-konumuyla tanımlı, pose göremez) · klinç/sparring/darbe-gücü ölçümü. **Çıkarıldı:** Cardio-Kickboxing modu · Krav Maga.
+
+### W0 görev listesi (bu oturumun kapsamı)
+1. Boks V1 motoru (G4) — `boxing@1.0.0` config'inden derlenen faz makineleri + ölçü hesaplayıcıları + hata değerlendirici + kombinasyon sıra motoru; fixture-replay testli.
+2. IA çatısı — 4 seviyeli hiyerarşi (kütüphane → disiplin → kurs → ders); 8 disiplin sayfası (7'si "yakında"); **"Neden yok?" sayfası**. Sahte/boş kurs ASLA listelenmez.
+3. G5 iskelet uygulama + platform katmanı (bir kez, 5 app deseninde).
+4. G6 boks içeriği (müfredat + drill + sesli koç replikleri EN).
+
+### Bu haritayı bağlayan güncel kararlar
+- **M-F-17:** ücretli klip **İPTAL** (bütçelenmez) · cihaz benchmark'ı **G8'de, deneme amaçlı** — erken fazlar beklemez, eşikler `"cihazda doğrulanacak"` etiketiyle taşınır.
+- **M-F-04 (K8):** kalibrasyon kapısı geçilmeden **sayısal skor gösterilmez** — bant + eğri.
+- **M-F-06:** kurallar taraf-agnostik (`lead/rear`); "left/right" yalnız kalibrasyon eşlemesi + `StructuralValidator` temizken.
+- **M-F-09:** kalibrasyon = **ölçüm modlarında sert kapı**, serbest pratikte öneri+uyarı.
+- **M-F-03:** Dart `motion_core` kanonik çekirdek; JabLab ona pinli bağımlıdır, çekirdeğe app mantığı sızmaz.
+
 ## 1. Kimlik ve Kuzey Yıldızı
 
 **JabLab: Shadow Training** — telefonu karşına koy, ekipmansız boks/shadow-boxing antrenmanında köşendeki antrenör gibi sesli düzeltme al: gard, duruş, sıra, denge. LLM değil; pose + state-machine + uzman kural motoru.

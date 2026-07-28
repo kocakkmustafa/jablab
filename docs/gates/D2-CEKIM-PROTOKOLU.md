@@ -3,8 +3,8 @@
 > ## ⚡ BU DOKÜMAN ARTIK BİR ÖNKOŞUL DEĞİLDİR
 > **Kurucu direktifi M-F-13 (2026-07-26): kurucu çekim YAPMAZ.** Kurucu çekimi hiçbir kapının önkoşulu değildir (`10-ARAC-KATALOGU §6.2` — Kurucusuz Veri Fabrikası).
 >
-> - **J-007** (blur↔kapanma) kapanışı artık **kamu slow-mo taramasıyla** denenir; bulunamazsa ücretli klip önerisi kurucu listesine yazılır. Bu protokolün §1 tempo merdiveni o taramanın **arama şartnamesi** olarak yaşamaya devam eder.
-> - **J-011** (cihaz fps + termal) kurucuda **KALIR** — beceri gerektirmez, yalnız telefonu tutup uygulamayı çalıştırmak yeter.
+> - **J-007** (blur↔kapanma) kapanışı artık **kamu slow-mo taramasıyla** denenir. ⚠️ **Ücretli klip yedeği de İPTAL** (M-F-17b) — hedge yok. Bu protokolün §1 tempo merdiveni o taramanın **arama şartnamesi** olarak yaşamaya devam eder.
+> - **J-011** (cihaz fps + termal) kurucuda kalır ama **G8'e alındı, deneme amaçlı** (M-F-17c) — **erken fazlar BEKLEMEZ**; o güne dek muhafazakâr fps varsayımıyla ilerlenir ve eşikler `"cihazda doğrulanacak"` etiketiyle taşınır.
 > - **§5 hata kütüphanesi TAMAMEN KALKTI** (M-C-03 + M-F-13): hatalı örnekler referansın kontrollü bozulmasından sentezlenir.
 >
 > **Bu dosya neden silinmedi:** ileride kurucu ya da bir eğitmen çekim yapmak isterse şartname hazır olsun diye; ayrıca §0 kurulum şartları ve §1 tempo merdiveni tasarımı, **kamu videosu ararken kullandığımız eleme kriterlerinin** kaynağıdır.
