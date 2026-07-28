@@ -61,14 +61,12 @@ final class MeasureSet {
 enum Side { lead, rear }
 
 /// Ölçüleri kareden hesaplar.
-/// Kare boyutu — **en-boy düzeltmesi için zorunlu**.
-///
-/// MediaPipe normalize koordinatları `x`'i GENİŞLİĞE, `y`'yi YÜKSEKLİĞE ayrı
-/// ayrı böler. Bu iki eksen farklı ölçekte olduğu için, piksel uzayına
-/// dönmeden alınan her mesafe ve açı en-boy oranı kadar bozulur (1920×1080'de
-/// dikey mesafeler ~1,78× küçük görünür). Hasat hattı ↔ motor çapraz
-/// doğrulaması bu kusuru yakaladı (J-028).
-typedef FrameSize = ({double width, double height});
+// En-boy düzeltmesi ÇEKİRDEĞE DEVREDİLDİ (M-F-33): `FrameSize` ve
+// `PoseFrame.toIsotropic` artık motion_core 0.3.0'da. Bu dosyadaki yerel
+// kopya kaldırıldı; J-028'in 1e-6 çapraz-doğrulama regresyonu devir kanıtı
+// olarak korunuyor — çekirdeğin dönüşümü (x·en-boy, y sabit) bizimkinden
+// (x·W, y·H) yalnız düzgün bir katsayı kadar farklı ve tüm ölçüler aynı-kare
+// ORANI olduğu için o katsayı sadeleşiyor.
 
 final class MeasureCalculator {
   const MeasureCalculator();
@@ -78,12 +76,8 @@ final class MeasureCalculator {
   /// **verilmesi zorunludur**, yoksa ölçüler sessizce en-boy oranı kadar yanlış olur.
   MeasureSet compute(PoseFrame f, Stance stance,
       {MeasureSet? previous, FrameSize? frameSize}) {
-    final double sx = frameSize?.width ?? 1.0;
-    final double sy = frameSize?.height ?? 1.0;
-    Vec3 pt(int i) {
-      final Vec3 p = f.point(i);
-      return Vec3(p.x * sx, p.y * sy, p.z * sx);
-    }
+    final PoseFrame fr = frameSize == null ? f : f.toIsotropic(frameSize);
+    Vec3 pt(int i) => fr.point(i);
 
     final Vec3 ls = pt(Lm.leftShoulder);
     final Vec3 rs = pt(Lm.rightShoulder);

@@ -77,16 +77,13 @@ final class StanceDetector {
     required bool calibrationMapped,
     required bool structurallyClean,
     Stance? previous,
-    ({double width, double height})? frameSize,
+    FrameSize? frameSize,
   }) {
-    // En-boy düzeltmesi ölçülerdekiyle AYNI nedenle zorunlu (J-028):
-    // x genişliğe, y yüksekliğe ayrı normalize edilmiştir.
-    final double sx = frameSize?.width ?? 1.0;
-    final double sy = frameSize?.height ?? 1.0;
-    Vec3 pt(int i) {
-      final Vec3 p = frame.point(i);
-      return Vec3(p.x * sx, p.y * sy, p.z * sx);
-    }
+    // En-boy düzeltmesi çekirdekten (M-F-33): ölçülerle AYNI uzayda çalışmak
+    // şart, yoksa duruş tespiti ile ölçüler farklı geometriye bakar.
+    final PoseFrame fr =
+        frameSize == null ? frame : frame.toIsotropic(frameSize);
+    Vec3 pt(int i) => fr.point(i);
 
     final Vec3 ls = pt(Lm.leftShoulder);
     final Vec3 rs = pt(Lm.rightShoulder);

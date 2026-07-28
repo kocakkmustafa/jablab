@@ -26,6 +26,23 @@ D2 ölçümü, kapsamı "ne istiyoruz"a göre değil **"neyi kanıtlayabiliyoruz
 | 🟠 **C** | V1'de bant olarak | tempo göstergesi · `TEMPO_TOO_FAST_FOR_FORM` (ADR-001: sayı değil bant) |
 | 🔴 **D** | **V1 DIŞI** | hook / uppercut ayrımı · slip/duck/roll hükmü · pivot · darbe gücü |
 
+### 2.0 Koşullu kapsam kırpması — `cross` kaynak-bekliyor (şimdiden yazılı)
+
+**Durum:** `cross` referansı **üretilemiyor**. M-C-04 en az 3 bağımsız eğitmen istiyor; kaynak genişletmesinden (3→9 kanal, 20→70 kuyruk satırı) sonra bile `cross` 2 net kaynakta kaldı. Sorun kuyruk boyutu değil: sayım birimi **eğitmen**, aynı kanaldan video eklemek konsensüsü ilerletmiyor (J-029). Üstüne triyaj elemesi biniyor — aile kuralı M-F-32 bu yüzden teknik başına **~5** bağımsız eğitmen hedefliyor.
+
+**Plan B (yeni eğitmen bulunamazsa yürürlüğe girer):**
+
+| | Şimdiki V1 çekirdeği | Jab-öncelikli daraltma |
+|---|---|---|
+| Teknikler | jab · cross | **jab** (cross sayılır, form hükmü verilmez) |
+| Kombinasyonlar | `1` · `2` · `1-2` · `1-1-2` | **`1` · `1-1` · `1-1-1`** (jab tekrar ritmi) |
+| Kurs | "The cross" + "The 1-2" dersleri | bu iki ders **listeden çıkar**, yerine "Jab rhythm & recovery" |
+| Dürüstlük kutusu | — | "Cross is counted but not corrected — we don't yet have enough independent instruction sources to build a reference we trust." |
+
+**Geri alınabilir:** üçüncü bağımsız `cross` eğitmeni bulunup triyajı geçtiği gün daraltma kalkar; config + ders listesi + dürüstlük kutusu aynı turda geri açılır. Yeni eğitmen araması **haftalık düşük-öncelikli tarama** olarak sürer; gece bu aramayı beklemez.
+
+**Neden şimdi yazıldı:** J-007 kırpmasıyla aynı gerekçe — kalibre edilmemiş ya da 2 kaynaktan türetilmiş bir referansla ders yayınlamak, kullanıcıya *yanlış düzeltme* verir ve kullanıcı bunu fark edemez. Sessiz delinme yerine açık daraltma.
+
 ### 2.1 Koşullu kapsam kırpması — J-007 tutmazsa (şimdiden yazılı)
 
 `ELBOW_FLARED` ve `OVERREACH`, blur↔kapanma ayrımı (J-007) çözülmeden kalibre edilemez. Kurucu çekimi (M-F-13) ve ücretli klip yedeği (M-F-17b) **ikisi de iptal** olduğu için bu bulgunun hedge'i yok; kalan iki yol (öğretim videolarında normal-hız + ağır-çekim tekrarı hipotezi · MoCap setleri) da tutmayabilir.

@@ -58,7 +58,7 @@ void main() {
       // Orthodox: lead = sol. Golden left/right ile yazıldığı için duruşu
       // sabitliyoruz; sınanan şey ölçü matematiği, duruş tespiti değil.
       final MeasureSet m = calc.compute(frame, Stance.orthodox,
-          frameSize: (width: wh[0].toDouble(), height: wh[1].toDouble()));
+          frameSize: FrameSize(wh[0], wh[1]));
       final Map<String, dynamic> exp =
           (expected[i] as Map).cast<String, dynamic>();
 
