@@ -152,4 +152,48 @@ void main() {
       expect(calibrated.stance.sideLabelsReportable, isTrue);
     });
   });
+
+  group('CueGate — koç konuşurken hüküm kapısı', () {
+    test('cue sırasında YUMRUK SAYILIR ama HÜKÜM VERİLMEZ', () {
+      // JabLab semantiği Ostinato'dan farklı: kamera kirlenmez, ama kullanıcı
+      // bir önceki düzeltmeye tepki veriyordur. Tespit sürer, hüküm susar.
+      final List<PoseFrame> frames = sequence(<SyntheticKeyframe>[
+        SyntheticKeyframe(0, guardPose),
+        SyntheticKeyframe(200000, guardPose),
+        SyntheticKeyframe(320000, extendedPose),
+        SyntheticKeyframe(520000, guardPose),
+        SyntheticKeyframe(750000, guardPose),
+      ]);
+
+      final StrikingEngine e = StrikingEngine(
+        ruleSet: rules,
+        calibrationMapped: true,
+        cueGate: CueGate(),
+      );
+      e.cueStarted(0); // koç tüm seans boyunca konuşuyor
+
+      AttemptDigest? digest;
+      final List<DetectedIssue> allIssues = <DetectedIssue>[];
+      for (final PoseFrame f in frames) {
+        final EngineOutput o = e.process(f);
+        digest ??= o.completedAttempt;
+        allIssues.addAll(o.issues);
+      }
+
+      expect(digest, isNotNull,
+          reason: 'cue sırasında yumruk SAYILMAYI sürdürmeli — '
+              'susan şey hüküm, tespit değil');
+      expect(allIssues, isEmpty,
+          reason: 'koç konuşurken yeni hata kodu üretilmemeli');
+    });
+
+    test('cue bittikten sonra ring-out süresince de hüküm yok', () {
+      final StrikingEngine e = StrikingEngine(ruleSet: rules);
+      e.cueStarted(0);
+      e.cueEnded(100000);
+      // Varsayılan ringOut 300 ms: 200 ms'de hâlâ kapalı, 500 ms'de açık.
+      expect(e.cueGate.isAnalysisClean(200000), isFalse);
+      expect(e.cueGate.isAnalysisClean(500000), isTrue);
+    });
+  });
 }

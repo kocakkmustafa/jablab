@@ -138,8 +138,12 @@ final class StrikingEngine {
     this.measureCalculator = const MeasureCalculator(),
     this.calibrationMapped = false,
     this.frameSize,
+    MotionClock? clock,
+    CueGate? cueGate,
     this.provenance = const <String, String>{},
-  })  : _pipeline = pipeline ??
+  })  : clock = clock ?? StopwatchMotionClock.start(),
+        cueGate = cueGate ?? CueGate(),
+        _pipeline = pipeline ??
             PosePipeline(
               // Filtre config'ten gelir: eşikler ve filtre AYRI AYRI
               // değiştirilemez (M-C-07/J-016). Varsayılan çekirdek filtresi
@@ -174,6 +178,19 @@ final class StrikingEngine {
   /// AYRI normalize eder. Sentetik fixture'larda null bırakılır.
   final FrameSize? frameSize;
 
+  /// Tek monotonik saat — analiz, sesli koç ve kayıt aynı zamanı kullanır.
+  final MotionClock clock;
+
+  /// Koç konuşurken hüküm kapısı.
+  ///
+  /// ⚠️ JabLab semantiği Ostinato'dan FARKLI: orada cue mikrofonu kirletir ve
+  /// TÜM analiz susar. Burada kamera kirlenmez — ama koç konuşurken kullanıcı
+  /// bir ÖNCEKİ düzeltmeye tepki veriyordur; o anda yeni hüküm vermek,
+  /// düzeltmenin ortasındaki insanı yargılamaktır. Bu yüzden **tespit sürer,
+  /// hüküm susar**: yumruk sayılmaya devam eder, yeni hata kodu üretilmez.
+  /// (plan §13 "tur içinde TEK hata" disiplininin motor tarafı.)
+  final CueGate cueGate;
+
   final Map<String, String> provenance;
 
   final Map<String, PhaseStateMachine> _machines = <String, PhaseStateMachine>{};
@@ -187,6 +204,12 @@ final class StrikingEngine {
   MeasureSet? _previous;
   Stance? _lastStance;
   int _lastStanceSampleUs = -1 << 30;
+
+  /// Sesli koç bir cue çalmaya başladı.
+  void cueStarted(int tUs) => cueGate.cueStarted(tUs);
+
+  /// Cue bitti; [CueGate.ringOutUs] kadar daha hüküm verilmez.
+  void cueEnded(int tUs) => cueGate.cueEnded(tUs);
 
   /// Yeni tur: cooldown ve tur-başı sayaçları sıfırlanır.
   void startRound() {
@@ -313,12 +336,20 @@ final class StrikingEngine {
     final AttemptDigest? finished =
         specific ?? (specificRunning ? null : fallback);
 
+    // Koç konuşurken YENİ hüküm yok (yukarıdaki gerekçe). Deneme tespiti ve
+    // sayım etkilenmez — yalnız hata kodu emisyonu susar.
+    final bool verdictsAllowed = cueGate.isAnalysisClean(frame.tUs);
+    if (!verdictsAllowed) issues.clear();
+
     // Duruş örneklemesi: her karede değil, 2 sn'de bir (config STANCE_SAMPLE).
     if (frame.tUs - _lastStanceSampleUs > 2000000) {
       _lastStanceSampleUs = frame.tUs;
-      issues.addAll(_evaluateErrorsAtMarker('STANCE_SAMPLE', m, frame.tUs));
+      if (verdictsAllowed) {
+        issues.addAll(_evaluateErrorsAtMarker('STANCE_SAMPLE', m, frame.tUs));
+      }
     }
     issues.addAll(_evaluateErrorsAtMarker('ANY', m, frame.tUs));
+    if (!verdictsAllowed) issues.clear();
 
     return EngineOutput(
       tUs: frame.tUs,
