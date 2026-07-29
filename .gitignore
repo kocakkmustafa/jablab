@@ -3,3 +3,7 @@
 build/
 *.iml
 .DS_Store
+
+# Flutter'in urettigi eklenti onbellegi — makineye ozel yollar iceriyor,
+# her `pub get`te degisiyor. Izlemek her makinede sahte diff uretir.
+.flutter-plugins-dependencies
