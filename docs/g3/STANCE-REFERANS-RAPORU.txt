@@ -1,6 +1,8 @@
-• yankello       pencere t=375.3s · 30 kare · hareket enerjisi 0.0168
-• kennyweldon    pencere t=482.6s · 30 kare · hareket enerjisi 0.0291
-• mcleodscott    pencere t=105.7s · 30 kare · hareket enerjisi 0.0554
+• yankello       t=375.3s · 30 kare · enerji 0.0168 · ÖNCÜ=SOL (orthodox) (güven 1.00)
+• kennyweldon    t=482.6s · 30 kare · enerji 0.0291 · ÖNCÜ=SOL (orthodox) (güven 1.00)
+• mcleodscott    t=105.7s · 30 kare · enerji 0.0554 · ÖNCÜ=SOL (orthodox) (güven 1.00)
+
+öncü taraf dağılımı  : 3 sol / 0 sağ → TEK YÖNLÜ (hipotez b elendi)
 
 ═══ CANONICAL REFERENCE: stance ═══
 katkı veren take     : 3
@@ -28,6 +30,13 @@ uyum (agreement)     : medyan 0.678 · p10 0.665 · p90 0.708
   left_shin                serbest 9.8° → 14.0°   sıfır 31° → 45°
   right_shin               serbest 14.7° → 14.7°   sıfır 47° → 47°
   trunk_tilt               serbest 12.0° → 14.0°   sıfır 38° → 45°
+
+═══ AYRIŞTIRMA SINAMASI ═══
+kol dispersiyonu  çapasız: 36.7°  → öncü-taraf ÇAPALI: 36.7°
+güvenilmez eklem  çapasız: 5  → çapalı: 5
+ortalama uyum     çapasız: 0.684  → çapalı: 0.684
+
+>>> HÜKÜM: çapalama düzeltmedi — kol ayrışması GERÇEK stil varyansı.
 
 ⚠️  TOLERANS MUHAFAZAKÂR (J-032): n=3 eğitmen, M-F-32 hedefi ~5;
     serbest bant tabanı 8°→14°.

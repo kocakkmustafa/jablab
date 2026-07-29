@@ -23,14 +23,18 @@ void main() {
   ];
 
   final List<ReferenceTake> built = <ReferenceTake>[];
+  final List<_Segment> segs = <_Segment>[];
   for (final ({String id, String file, String source}) t in takes) {
     final _Segment? seg = _bestStanceSegment(File('$lib/${t.file}'));
     if (seg == null) {
       stderr.writeln('⚠️  ${t.id}: kararlı duruş penceresi bulunamadı — ATLANDI');
       continue;
     }
-    stdout.writeln('• ${t.id.padRight(14)} pencere t=${(seg.startMs / 1000).toStringAsFixed(1)}s '
-        '· ${seg.angles.length} kare · hareket enerjisi ${seg.energy.toStringAsFixed(4)}');
+    stdout.writeln('• ${t.id.padRight(14)} t=${(seg.startMs / 1000).toStringAsFixed(1)}s '
+        '· ${seg.angles.length} kare · enerji ${seg.energy.toStringAsFixed(4)} '
+        '· ÖNCÜ=${seg.leadIsLeft ? "SOL (orthodox)" : "SAĞ (southpaw)"} '
+        '(güven ${seg.leadConfidence.toStringAsFixed(2)})');
+    segs.add(seg);
     built.add(ReferenceTake(id: t.id, frames: seg.angles, source: t.source));
   }
 
@@ -40,7 +44,26 @@ void main() {
   }
 
   const ReferenceBuilder builder = ReferenceBuilder();
+
+  // ═══ AYRIŞTIRMA SINAMASI (M-F-37) ═══
+  // Hipotez (b): kol ayrışması artefakt olabilir — take'ler orthodox/southpaw
+  // karışımıysa kollar maksimum ayrışır, bacaklar (görece simetrik) uyumlu
+  // görünür. n=3'te ReferenceBuilder'ın aynalama konsensüsü zayıf; bu yüzden
+  // öncü-taraf ÖNSELİYLE çapalayıp yeniden kuruyoruz.
+  final int leftLead = segs.where((_Segment s) => s.leadIsLeft).length;
+  final bool mixed = leftLead != 0 && leftLead != segs.length;
+  stdout.writeln('\nöncü taraf dağılımı  : $leftLead sol / ${segs.length - leftLead} sağ '
+      '→ ${mixed ? "KARIŞIK (hipotez b canlı)" : "TEK YÖNLÜ (hipotez b elendi)"}');
+
   final CanonicalReference ref = builder.build(built);
+
+  // Çapalı sürüm: azınlık tarafı aynalanır, hepsi aynı öncü tarafa getirilir.
+  final bool anchorLeft = leftLead * 2 >= segs.length;
+  final List<ReferenceTake> anchored = <ReferenceTake>[
+    for (int i = 0; i < built.length; i++)
+      segs[i].leadIsLeft == anchorLeft ? built[i] : built[i].mirrored(),
+  ];
+  final CanonicalReference refAnchored = builder.build(anchored);
 
   stdout.writeln('\n═══ CANONICAL REFERENCE: stance ═══');
   stdout.writeln('katkı veren take     : ${ref.contributingTakes}');
@@ -82,16 +105,59 @@ void main() {
         'sıfır ${(d.zeroAt * radToDeg).toStringAsFixed(0)}° → '
         '${(c.zeroAt * radToDeg).toStringAsFixed(0)}°$flag');
   }
+  // ── Çapalı vs çapasız karşılaştırma ──
+  double armDispersion(CanonicalReference r) {
+    const List<String> arms = <String>[
+      'left_elbow', 'right_elbow', 'left_upper_arm',
+      'right_upper_arm', 'left_forearm', 'right_forearm',
+    ];
+    final int m = r.frames.length ~/ 2;
+    final List<JointSpec> sp = r.frames[m].specs;
+    double sum = 0;
+    int n = 0;
+    for (int j = 0; j < sp.length; j++) {
+      if (!arms.contains(sp[j].id)) continue;
+      final double d = r.dispersion[m][j];
+      if (d.isNaN) continue;
+      sum += d * 180 / math.pi;
+      n++;
+    }
+    return n == 0 ? double.nan : sum / n;
+  }
+
+  stdout.writeln('\n═══ AYRIŞTIRMA SINAMASI ═══');
+  stdout.writeln('kol dispersiyonu  çapasız: ${armDispersion(ref).toStringAsFixed(1)}°  '
+      '→ öncü-taraf ÇAPALI: ${armDispersion(refAnchored).toStringAsFixed(1)}°');
+  stdout.writeln('güvenilmez eklem  çapasız: ${ref.unreliableJoints().length}  '
+      '→ çapalı: ${refAnchored.unreliableJoints().length}');
+  final double a0 = List<double>.generate(
+          ref.frames.length, (int i) => ref.agreementAt(i))
+      .reduce((double a, double b) => a + b) / ref.frames.length;
+  final double a1 = List<double>.generate(
+          refAnchored.frames.length, (int i) => refAnchored.agreementAt(i))
+      .reduce((double a, double b) => a + b) / refAnchored.frames.length;
+  stdout.writeln('ortalama uyum     çapasız: ${a0.toStringAsFixed(3)}  '
+      '→ çapalı: ${a1.toStringAsFixed(3)}');
+  stdout.writeln(armDispersion(refAnchored) < armDispersion(ref) * 0.7
+      ? '\n>>> HÜKÜM: kol ayrışması ARTEFAKTTI — aynalama çözülmemişti.'
+      : '\n>>> HÜKÜM: çapalama düzeltmedi — kol ayrışması GERÇEK stil varyansı.');
+
   stdout.writeln('\n⚠️  TOLERANS MUHAFAZAKÂR (J-032): n=3 eğitmen, M-F-32 hedefi ~5;');
   stdout.writeln('    serbest bant tabanı 8°→${conservativeFloorDeg.toStringAsFixed(0)}°.');
   stdout.writeln('    4./5. eğitmen geldiğinde YENİDEN HESAPLANACAK.');
 }
 
 class _Segment {
-  _Segment(this.startMs, this.angles, this.energy);
+  _Segment(this.startMs, this.angles, this.energy, this.leadIsLeft, this.leadConfidence);
   final double startMs;
   final List<JointAngleVector> angles;
   final double energy;
+
+  /// GEOMETRİK öncü-taraf tespiti (M-F-06: landmark ETİKETİNE güvenilmez).
+  final bool leadIsLeft;
+
+  /// Pencerede tespitin ne kadar tutarlı olduğu (0-1).
+  final double leadConfidence;
 }
 
 /// En kararlı "gard duruşu" penceresini bulur.
@@ -167,10 +233,29 @@ _Segment? _bestStanceSegment(File f) {
   }
   if (bestStart < 0) return null;
 
+  // ÖNCÜ TARAF — geometrik. Omuz çizgisinin yönü hangi omzun önde olduğunu
+  // söyler; öndeki ayak da aynı tarafta olur. Modelin left/right etiketine
+  // DEĞİL, iki noktanın birbirine göre konumuna bakılıyor (M-F-06).
+  int leftLeadVotes = 0;
+  int votes = 0;
+  for (int k = bestStart; k < bestStart + win; k++) {
+    final PoseFrame p = frames[k];
+    final double lsx = p.point(Lm.leftShoulder).x;
+    final double rsx = p.point(Lm.rightShoulder).x;
+    final double lax = p.point(Lm.leftAnkle).x;
+    final double rax = p.point(Lm.rightAnkle).x;
+    if ((lax - rax).abs() < 1e-6) continue;
+    votes++;
+    final bool leftLeads = lsx < rsx ? lax < rax : lax > rax;
+    if (leftLeads) leftLeadVotes++;
+  }
+  final double ratio = votes == 0 ? 0.5 : leftLeadVotes / votes;
+
   final PosePipeline pipe = PosePipeline();
   final List<JointAngleVector> angles = <JointAngleVector>[];
   for (int k = bestStart; k < bestStart + win; k += 3) {
     angles.add(pipe.process(frames[k]).angles);
   }
-  return _Segment(frames[bestStart].tUs / 1000, angles, best);
+  return _Segment(frames[bestStart].tUs / 1000, angles, best,
+      ratio >= 0.5, (ratio - 0.5).abs() * 2);
 }
