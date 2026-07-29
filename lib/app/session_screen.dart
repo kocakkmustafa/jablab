@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
+import 'session_narrator.dart';
 
 /// Canlı seans ekranı — **app'e özgü**, `motion_shell`'e terfi ETMEZ.
 ///
@@ -14,9 +17,12 @@ import '../shell_candidate/shell_models.dart';
 /// kuyruğunda). Ekran bunu **saklamıyor** — sahte bir "analiz ediliyor"
 /// animasyonu yerine hangi parçanın eksik olduğunu yazıyor.
 class SessionScreen extends StatefulWidget {
-  const SessionScreen({super.key, required this.lesson});
+  const SessionScreen({super.key, required this.lesson, required this.cues});
 
   final ShellLesson lesson;
+
+  /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
+  final CueBook cues;
 
   @override
   State<SessionScreen> createState() => _SessionScreenState();
@@ -44,7 +50,7 @@ class _SessionScreenState extends State<SessionScreen> {
       child: switch (_stage) {
         SessionStage.teach => _Teach(lesson: widget.lesson),
         SessionStage.rehearse => const _Rehearse(),
-        SessionStage.live => const _Live(),
+        SessionStage.live => _Live(cues: widget.cues),
         SessionStage.summary => const _Summary(),
       },
     );
@@ -102,20 +108,76 @@ class _Rehearse extends StatelessWidget {
       );
 }
 
-class _Live extends StatelessWidget {
-  const _Live();
+/// Canlı tur: süre AKAR ve anlatı konuşur, hüküm SUSAR.
+///
+/// İkisinin ayrı olması tasarım kararı: turu saymak poza bakmayı gerektirmez.
+/// Kamera bağlı değilken bile "yarıladın" doğru bir cümledir; "gardın düştü"
+/// ise olmayan bir ölçüme dayanırdı.
+class _Live extends StatefulWidget {
+  const _Live({required this.cues});
+
+  final CueBook cues;
+
+  @override
+  State<_Live> createState() => _LiveState();
+}
+
+class _LiveState extends State<_Live> {
+  static const Duration _round = Duration(minutes: 3);
+
+  final SessionNarrator _narrator = SessionNarrator(mode: SessionMode.steady);
+  Timer? _ticker;
+  Duration _elapsed = Duration.zero;
+  String? _line;
+
+  @override
+  void initState() {
+    super.initState();
+    _tick();
+    _ticker = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+  }
+
+  void _tick() {
+    final List<NarrationEvent> events =
+        _narrator.tick(elapsed: _elapsed, total: _round);
+    // Aynı anda birden çok olay düşerse SONUNCUSU söylenir: üst üste iki
+    // cümle sesli koçta anlaşılmaz, kullanıcı ikisini de kaçırır.
+    final String? said =
+        events.isEmpty ? null : widget.cues.say(events.last);
+    if (!mounted) return;
+    setState(() {
+      if (said != null) _line = said;
+      if (_elapsed < _round) _elapsed += const Duration(seconds: 1);
+    });
+  }
+
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Motor hazır ve testli; besleyen kamera köprüsü değil. Bu yüzden yüzey
-    // "noVerdict" durumunda ve SEBEBİ yazılı — ürünün "göremiyorum demek,
-    // yanlış hüküm vermekten üstündür" ilkesinin ilk görünür uygulaması.
-    return const LiveCoachSurface(
-      state: LiveState.noVerdict,
-      eventCount: 0,
-      noVerdictReason:
-          'The camera feed is not connected yet, so nothing is being judged. '
-          'The analysis engine itself is built and tested.',
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: IntervalTimer(elapsed: _elapsed, total: _round),
+        ),
+        Expanded(
+          child: LiveCoachSurface(
+            state: LiveState.noVerdict,
+            eventCount: 0,
+            narration: _line,
+            // Motor hazır ve testli; besleyen kamera köprüsü değil. Hüküm
+            // yuvası bu yüzden susuyor ve SEBEBİ yazılı.
+            noVerdictReason:
+                'The camera feed is not connected yet, so nothing is being '
+                'judged. The round clock and the engine both work.',
+          ),
+        ),
+      ],
     );
   }
 }

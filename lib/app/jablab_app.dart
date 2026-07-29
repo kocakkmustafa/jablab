@@ -4,6 +4,7 @@ import '../shell_candidate/library_pages.dart';
 import '../shell_candidate/shell_models.dart';
 import '../shell_candidate/shell_scaffold.dart';
 import 'content_repository.dart';
+import 'session_narrator.dart';
 import 'session_screen.dart';
 
 /// JabLab uygulaması — kabuğu içerikle bağlar.
@@ -38,14 +39,23 @@ class _Root extends StatefulWidget {
 
 class _RootState extends State<_Root> {
   ShellLibrary? _library;
+  CueBook? _cues;
   Object? _error;
 
   @override
   void initState() {
     super.initState();
-    widget.repository.load().then((({dynamic boxing, dynamic library}) r) {
+    Future.wait<Object>(<Future<Object>>[
+      widget.repository.load(),
+      widget.repository.loadCues(),
+    ]).then((List<Object> r) {
       if (!mounted) return;
-      setState(() => _library = widget.repository.toShell(r.library));
+      final ({dynamic library, dynamic boxing}) content =
+          r[0] as ({dynamic library, dynamic boxing});
+      setState(() {
+        _library = widget.repository.toShell(content.library);
+        _cues = r[1] as CueBook;
+      });
     }).catchError((Object e) {
       if (!mounted) return;
       setState(() => _error = e);
@@ -103,7 +113,8 @@ class _RootState extends State<_Root> {
   }
 
   void _openSession(ShellLesson l) => Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(builder: (_) => SessionScreen(lesson: l)),
+        MaterialPageRoute<void>(
+            builder: (_) => SessionScreen(lesson: l, cues: _cues!)),
       );
 }
 

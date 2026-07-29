@@ -29,6 +29,7 @@ class LiveCoachSurface extends StatelessWidget {
     required this.state,
     required this.eventCount,
     this.cue,
+    this.narration,
     this.noVerdictReason,
     this.preview,
   });
@@ -38,8 +39,16 @@ class LiveCoachSurface extends StatelessWidget {
   /// Sayılan olay adedi (yumruk, tekrar, adım…). Alan-bağımsız.
   final int eventCount;
 
-  /// Tek cümlelik düzeltme metni.
+  /// Tek cümlelik düzeltme metni — **HÜKÜM** yuvası.
   final String? cue;
+
+  /// Zamanlama/ritim anlatısı ("yarıladın", "on saniye").
+  ///
+  /// Hükümden AYRI yuvada durur ve hüküm susturulmuşken bile konuşabilir:
+  /// süre saymak poza bakmayı gerektirmez. Aynı yuvayı paylaşsalardı,
+  /// "göremiyorum" durumundaki kullanıcı ekranda beliren "yarıladın"ı
+  /// sistemin kendisini yargıladığı sanırdı.
+  final String? narration;
 
   /// Hüküm verilemiyorsa kullanıcıya söylenecek sebep.
   final String? noVerdictReason;
@@ -92,6 +101,16 @@ class LiveCoachSurface extends StatelessWidget {
                     key: const Key('live-clean'),
                     style: theme.textTheme.titleMedium),
               },
+              // Anlatı HER durumda görünebilir — hüküm susarken bile.
+              // Ayrı yuva, ayrı ton: ikincil, sessiz, yargı taşımaz.
+              if (narration != null) ...<Widget>[
+                const SizedBox(height: 10),
+                Text(narration!,
+                    key: const Key('live-narration'),
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.labelLarge
+                        ?.copyWith(color: theme.colorScheme.outline)),
+              ],
             ],
           ),
         ),

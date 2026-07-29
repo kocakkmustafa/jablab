@@ -314,7 +314,7 @@
     ]
   },
   "$producers": {
-    "$doc": "Her replik grubunun BUGUN bir ureticisi var mi. Uretici olmayan replik olu icerik demektir; satir hedefini olu icerikle tutturmak metrigi oynamaktir. Uc durum ayri: yuzey YOK olmakla, yuzey VAR ama bagli degil olmak ayni sey degildir.",
+    "$doc": "Her replik grubunun BUGUN bir ureticisi var mi. Durum ANAHTAR duzeyinde de olabilir: bir grup 'awaiting-wiring' iken icindeki birkac anahtar canli olabilir. Grup duzeyinde 'bagli' demek buyuk yalan uretir — sesli koc kutuphanesinde bir anahtarin canli olmasi digerini canli yapmaz.",
     "technique": {
       "by": "errors[].feedbackKey",
       "status": "bound"
@@ -328,32 +328,43 @@
       "status": "bound"
     },
     "counting": {
-      "by": "IntervalTimer",
+      "by": "SessionNarrator → _Live ekrani",
       "status": "awaiting-wiring",
-      "surface": "lib/shell_candidate/session_flow.dart",
-      "$note": "Zamanlayici VAR, sayimi sesli soylemiyor. Baglama G7 giydirme turunda."
+      "surface": "lib/app/session_narrator.dart",
+      "liveKeys": [
+        "cue.halfway",
+        "cue.last_ten",
+        "cue.last_five"
+      ],
+      "$note": "cue.count ve cue.milestone SAYIMA bagli; sayim kameradan gelir, kamera koprusu yok. Tur saati calisiyor ama yumruk sayilmiyor — bu yuzden ayni gruptaki uc anahtar canli, ikisi degil."
     },
     "session": {
-      "by": "SessionFlowScaffold",
+      "by": "SessionNarrator → _Live ekrani",
       "status": "awaiting-wiring",
-      "surface": "lib/shell_candidate/session_flow.dart"
+      "surface": "lib/app/session_narrator.dart",
+      "liveKeys": [
+        "cue.round_start",
+        "cue.round_end"
+      ],
+      "$note": "rest/setup_ok/finished MOTOR tarafindan uretilecek olaylara bagli (seans sinirlari, dinlenme) — ekran su an tek tur kosuyor. round_of/next_up hic eslenmedi: cok turlu seans akisi yok."
     },
     "encouragement": {
-      "by": "LiveCoachSurface",
+      "by": "StrikingEngine düzeltme sinyali",
       "status": "awaiting-wiring",
       "surface": "lib/shell_candidate/live_surface.dart",
-      "$note": "Olumlu sinyal duzeltmenin GORULDUGUNU sart kosar; motor uretiyor, yuzey henuz sesli sinyal vermiyor."
+      "$note": "Olumlu sinyal 'duzeltmeyi GORDUM' der; gormek icin poz gerekir. Kamera koprusu gelene kadar bu grubun tek anahtari bile canli olamaz."
     },
     "summary": {
       "by": "SessionSummaryView",
       "status": "awaiting-wiring",
       "surface": "lib/shell_candidate/live_surface.dart",
-      "$note": "Ozet su an sabit metin. Trend replikleri SEANS GECMISI gelince baglanabilir — gecmis olmadan trend cumlesi soylenemez."
+      "$note": "Ozet sabit metin tasiyor. Trend replikleri SEANS GECMISI ister; gecmis olmadan 'gecen turdan iyi' cumlesi kurulamaz."
     },
     "interval": {
-      "by": "IntervalTimer (HIIT kipi)",
+      "by": "SessionNarrator (interval kipi)",
       "status": "awaiting-wiring",
-      "surface": "lib/shell_candidate/session_flow.dart"
+      "surface": "lib/app/session_narrator.dart",
+      "$note": "Anlatici aralik kipini DESTEKLIYOR ve testli; onu suren HIIT ekrani yok. 'Kod var' ile 'kullanici duyuyor' ayni sey degil."
     },
     "setup": {
       "by": "kamera kurulum sihirbazi",

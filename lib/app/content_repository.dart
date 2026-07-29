@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
+
+import 'session_narrator.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
 import '../shell_candidate/shell_models.dart';
@@ -16,6 +18,14 @@ final class ContentRepository {
 
   static const String libraryAsset = 'assets/content/library.json';
   static const String boxingRuleSetAsset = 'assets/rulesets/boxing@1.0.0.json';
+
+  static const String cuesAsset = 'assets/content/cues.en.json';
+
+  /// Replik kitabı. Yükleme sırasında eşleme doğrulanır: bir olayın repliği
+  /// yoksa [CueBook.fromJson] FIRLATIR. Sessizce boş geçmek, o anı sonsuza
+  /// kadar sessiz bırakırdı ve kullanıcı sessizliği "sorun yok" diye okur.
+  Future<CueBook> loadCues() async => CueBook.fromJson(
+      await rootBundle.loadString(cuesAsset), jabLabCueMapping);
 
   Future<({Library library, RuleSet boxing})> load() async {
     final Library lib = Library.fromJson(
