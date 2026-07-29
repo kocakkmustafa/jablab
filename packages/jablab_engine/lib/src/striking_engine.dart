@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:motion_core/motion_core.dart';
 
 import 'measures.dart';
@@ -198,6 +200,13 @@ final class StrikingEngine {
   final Map<String, int> _firedThisRound = <String, int>{};
   final Map<String, Map<String, MeasureSet>> _snapshots =
       <String, Map<String, MeasureSet>>{};
+  /// Girişim içinde görülen en yüksek uzanma (M-F-60 histerezisi için).
+  final Map<String, double> _peak = <String, double>{};
+
+  /// Girişimi kapanmış ama gard'a henüz dönmemiş teknikler. Yedek tekniğin
+  /// aynı hareketi saymasını engeller — sayım sözleşmesi değişmez.
+  final Set<String> _abortedMotion = <String>{};
+
   final Map<String, Map<String, int>> _transitions = <String, Map<String, int>>{};
 
   late final _Ctx _ctx;
@@ -304,7 +313,51 @@ final class StrikingEngine {
       final PhaseStateMachine machine = _machines[t.id]!;
       final String? before = machine.currentPhase;
       final AttemptRun? run = machine.update(pf.smoothed, pf.angles);
-      final String? after = machine.currentPhase;
+      String? after = machine.currentPhase;
+
+      // --- M-F-60: girişim-kapatma (PEAK'e ulaşmadan geri çekilme) --------
+      final AbortOnRetreat? abort = t.abortOnRetreat;
+      if (abort != null) {
+        final double? ext = m.read('extensionRatio',
+            limb: abort.side == 'lead' ? Side.lead : Side.rear);
+        if (after == null) {
+          // Makine durdu → izleyici sıfırlanır. Gard'a dönüş, yedek
+          // bastırmasını da serbest bırakır.
+          _peak.remove(t.id);
+          _abortedMotion.remove(t.id);
+        } else if (ext != null) {
+          final double peak = math.max(_peak[t.id] ?? 0, ext);
+          _peak[t.id] = peak;
+          final bool reachedTarget = after == abort.beforePhase ||
+              (_transitions[t.id]?.containsKey(abort.beforePhase) ?? false);
+          if (!reachedTarget &&
+              peak >= abort.minPeakExtension &&
+              ext <= peak - abort.hysteresis) {
+            // Girişim burada KAPANIR. Bu, yedek tekniğin olayı değil,
+            // spesifik makinenin KENDİ terminal olayı — bu yüzden yedek
+            // bastırma kuralına takılmaz ve doğrudan söylenir.
+            issues.add(DetectedIssue(
+              code: 'ATTEMPT_ABORTED',
+              severity: 'low',
+              // Koçlanan katman: hüküm değil gözlem. Skora girmez.
+              band: 'coached',
+              confidence: 1,
+              evidence: 'peakExtension=${peak.toStringAsFixed(2)} '
+                  '< ${abort.beforePhase} eşiği; geri çekilme başladı',
+              feedbackKey: abort.feedbackKey,
+              tUs: frame.tUs,
+            ));
+            machine.reset();
+            _snapshots.remove(t.id);
+            _transitions.remove(t.id);
+            _peak.remove(t.id);
+            // Sayım DEĞİŞMESİN: bu hareket için yedek teknik de bastırılır,
+            // yoksa yarım hareket 'sınıflandırılmamış vuruş' olarak sayılırdı.
+            _abortedMotion.add(t.id);
+            after = null;
+          }
+        }
+      }
 
       if (after != null && after != before) {
         _snapshots.putIfAbsent(t.id, () => <String, MeasureSet>{})[after] = m;
@@ -332,7 +385,10 @@ final class StrikingEngine {
     // tamamlanmadı VE hiçbiri hâlâ çalışmıyorken sayılır — çalışan bir makine,
     // birkaç kare sonra tamamlanacak spesifik bir yumruk demektir.
     final bool specificRunning = ruleSet.techniques.any((TechniqueConfig t) =>
-        !t.isFallback && (_machines[t.id]?.isRunning ?? false));
+        !t.isFallback &&
+        ((_machines[t.id]?.isRunning ?? false) ||
+            // Girişimi kapanmış hareket hâlâ sürüyor: yedek onu SAYMAMALI.
+            _abortedMotion.contains(t.id)));
     final AttemptDigest? finished =
         specific ?? (specificRunning ? null : fallback);
 

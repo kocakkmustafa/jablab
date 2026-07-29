@@ -75,3 +75,28 @@ dürüstlüğünü bozar. Kural "sayım cömert DIŞ sınır, hata onun İÇİND
 Test iki parça: ölçülen bandı ÇİVİLEYEN karakterizasyon (geçiyor, band
 sessizce kayarsa kırar) + kapandığında geçmesi gereken katı sürüm (skip,
 gerekçesi yazılı). Çözüm faz makinesi etkileşimi istiyor → koordinatör kuyruğu.
+
+## 2026-07-29 — J-042 KAPANDI: girişim-kapatma sözleşmesi (M-F-60)
+
+PEAK eşiğine ulaşmadan histerezisli geri çekilme başlarsa girişim kapanır ve
+`ATTEMPT_ABORTED(peakExtension)` üretir. Config'te sözleşme olarak duruyor
+(`techniques[].abortOnRetreat`), motorda uygulanıyor.
+
+**Sayım DEĞİŞMEDİ** — sözleşmenin en kolay çiğnenen yarısı buydu. Girişimi
+kapatınca spesifik makine "çalışmıyor" hâle geliyor ve yedek teknik
+(`unclassified_strike`) aynı hareketi saymaya başlıyordu. Bir test bunu
+yakaladı; `_abortedMotion` ile hareket gard'a dönene kadar yedek de
+bastırılıyor. Sayı artıyor olsaydı kimse fark etmezdi — artan sayı iyi görünür.
+
+**Bant `coached`** — "ulaşmadı" bir teknik hükmü değil, gözlem. A/B bandına
+konsaydı puanlanabilir olurdu ve eğitmenlerin uzlaşmadığı bir şeyi puanlardık
+(J-033'ün yeni kılığı). Test bandı zorluyor.
+
+Karakterizasyon testi kendi yazdığı gerekçeyle kırıldı ("sessiz bölge
+kapandıysa bu test ARTIK YANLIŞ") → katı sürümle değiştirildi.
+
+Beyan güncellendi: `cue.strike_not_extended` bir HATA kodundan değil, girişim
+sözleşmesinden geliyor — ayrı yol, ayrı beyan (J-039 kapsamıyordu).
+
+Bekleyen: çekirdek faz-evaluator kancası gelince histerezis tespiti motordan
+oraya taşınacak; sözleşme kelimeleri aynı (`beforePhase`, `peakExtension`).

@@ -160,6 +160,7 @@ final class TechniqueConfig {
     this.band = 'A',
     this.emitsErrors = true,
     this.isFallback = false,
+    this.abortOnRetreat,
     this.trackingLostMs = 500,
     this.abortIfPeakNeverReached = true,
   });
@@ -178,6 +179,10 @@ final class TechniqueConfig {
       band: j['band'] as String? ?? 'A',
       emitsErrors: j['emitsErrors'] as bool? ?? true,
       isFallback: j['fallback'] as bool? ?? false,
+      abortOnRetreat: j['abortOnRetreat'] == null
+          ? null
+          : AbortOnRetreat.fromJson(
+              (j['abortOnRetreat'] as Map).cast<String, dynamic>()),
       trackingLostMs: (abort['trackingLostMs'] as num?)?.toInt() ?? 500,
       abortIfPeakNeverReached: abort['peakNeverReached'] as bool? ?? true,
     );
@@ -195,6 +200,9 @@ final class TechniqueConfig {
   /// Bir jab aynı zamanda "sınıflandırılmamış vuruş"tur; bayrak olmadan her
   /// yumruk iki kez sayılır.
   final bool isFallback;
+
+  /// Girişim-kapatma sözleşmesi (M-F-60). Yoksa teknik erken kapanmaz.
+  final AbortOnRetreat? abortOnRetreat;
 
   final int trackingLostMs;
   final bool abortIfPeakNeverReached;
@@ -378,4 +386,44 @@ final class RuleSet {
     if (thresholdStatus != 'calibrated') out.add('thresholdStatus=$thresholdStatus');
     return out;
   }
+}
+
+
+/// PEAK'e ulaşmadan geri çekilme → girişim kapanır (M-F-60).
+///
+/// **Sayımı değiştirmez.** Dış sınır (PEAK eşiği) yerinde durur ve yedek
+/// teknik de bu hareket için bastırılmış kalır — yarım hareket yumruk
+/// sayılmaz. Değişen tek şey sessizlik: "ulaşmadı" bir teknik hükmü değil,
+/// koçlanan katmandan gelen bir gözlemdir.
+final class AbortOnRetreat {
+  const AbortOnRetreat({
+    required this.beforePhase,
+    required this.side,
+    required this.hysteresis,
+    required this.minPeakExtension,
+    required this.feedbackKey,
+  });
+
+  factory AbortOnRetreat.fromJson(Map<String, dynamic> j) => AbortOnRetreat(
+        beforePhase: j['beforePhase'] as String,
+        side: j['side'] as String,
+        hysteresis: (j['hysteresis'] as num).toDouble(),
+        minPeakExtension: (j['minPeakExtension'] as num).toDouble(),
+        feedbackKey: j['feedbackKey'] as String,
+      );
+
+  /// Bu faza ULAŞILMADAN geri çekilme olursa girişim kapanır.
+  final String beforePhase;
+
+  /// Hangi kolun uzanması izlenir ('lead' | 'rear').
+  final String side;
+
+  /// Tepe değerden bu kadar düşüş "geri çekilme" sayılır. Ölçüm gürültüsünün
+  /// geri çekilme sanılmasını önler.
+  final double hysteresis;
+
+  /// Bu tepeye ulaşmamış hareket hiç girişim sayılmaz — gard titremesini eler.
+  final double minPeakExtension;
+
+  final String feedbackKey;
 }

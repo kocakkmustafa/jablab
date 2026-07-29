@@ -165,6 +165,14 @@
       "abort": {
         "trackingLostMs": 500,
         "peakNeverReached": true
+      },
+      "abortOnRetreat": {
+        "beforePhase": "PEAK",
+        "side": "lead",
+        "hysteresis": 0.05,
+        "minPeakExtension": 0.7,
+        "feedbackKey": "cue.strike_not_extended",
+        "$why": "M-F-60. PEAK esigine ulasmadan histerezisli geri-cekilme baslarsa girisim KAPANIR ve attempt_aborted uretir. SAYIM DEGISMEZ: 0,85 dis siniri durur, yarim hareket yumruk sayilmaz ve yedek teknik de bu hareket icin bastirilmis kalir. Degisen tek sey SESSIZLIK: 'yumrugun ulasmadi' bir teknik hukmu degil, bir GOZLEM — KOCLANAN katmandan gelir. minPeakExtension gard titremesini eler; histerezis, olcum gurultusunun geri-cekilme sanilmasini onler."
       }
     },
     {
@@ -247,6 +255,14 @@
       "abort": {
         "trackingLostMs": 500,
         "peakNeverReached": true
+      },
+      "abortOnRetreat": {
+        "beforePhase": "PEAK",
+        "side": "rear",
+        "hysteresis": 0.05,
+        "minPeakExtension": 0.7,
+        "feedbackKey": "cue.strike_not_extended",
+        "$why": "M-F-60. PEAK esigine ulasmadan histerezisli geri-cekilme baslarsa girisim KAPANIR ve attempt_aborted uretir. SAYIM DEGISMEZ: 0,85 dis siniri durur, yarim hareket yumruk sayilmaz ve yedek teknik de bu hareket icin bastirilmis kalir. Degisen tek sey SESSIZLIK: 'yumrugun ulasmadi' bir teknik hukmu degil, bir GOZLEM — KOCLANAN katmandan gelir. minPeakExtension gard titremesini eler; histerezis, olcum gurultusunun geri-cekilme sanilmasini onler."
       }
     },
     {

@@ -75,32 +75,6 @@ void main() {
   bool speaksAboutDepth(Set<String> cues) =>
       cues.any((String c) => c.contains('extend') || c.contains('reach'));
 
-  test('[J-042] ÖLÇÜLEN SESSİZ BÖLGE — ext 0,68-0,85 sayılmıyor ve konuşmuyor',
-      () {
-    // Bu test kusuru DÜZELTMİYOR, SABİTLİYOR. Ölçülen sınır çiviye vuruluyor
-    // ki bir sonraki değişiklik bandı sessizce büyütür/küçültürse görülsün.
-    //
-    // Ölçüm: kol garddan (ext 0,18) çıkıp 0,83'e kadar uzanıyor — bu gerçek
-    // bir yumruk hareketi. Sayılmıyor (jab PEAK için >0,85 istiyor) ve
-    // derinlik hakkında tek kelime edilmiyor. Kullanıcı yumruk atıyor, ürün
-    // onun için sessiz. Sığ çalışan tam da yeni başlayandır (M-F-57).
-    final List<double> silentDepths = <double>[];
-    for (int i = 0; i <= 20; i++) {
-      final double t = i / 20;
-      final ({bool counted, String? technique, Set<String> cues, double peak})
-          r = throwPunch(t);
-      final bool realPunch = r.peak > 0.68;
-      if (realPunch && !r.counted && !speaksAboutDepth(r.cues)) {
-        silentDepths.add(r.peak);
-      }
-    }
-    expect(silentDepths, isNotEmpty,
-        reason: 'sessiz bölge kapandıysa bu test ARTIK YANLIŞ — J-042 '
-            'kapanmış demektir, testi katı sürümüyle değiştir');
-    expect(silentDepths.first, greaterThan(0.68));
-    expect(silentDepths.last, lessThan(0.85));
-  });
-
   test('[J-042] KAPANDIĞINDA geçmesi gereken katı sürüm', () {
     for (int i = 0; i <= 20; i++) {
       final double t = i / 20;
@@ -111,9 +85,56 @@ void main() {
           reason: 'ext ${r.peak.toStringAsFixed(2)}: ne sayıldı ne derinlik '
               'hakkında bir şey söylendi');
     }
-  }, skip: 'J-042 AÇIK. Denenen çözüm (terk edilmiş denemeye replik) hiç '
-      'ateşlenmedi — faz makinesi bu bantta abort üretmiyor. Ateşlenmeyen bir '
-      'mekanizmayı "düzeltme" diye bırakmaktansa kusuru açık ve ölçülmüş '
-      'tutuyorum. Çözüm faz makinesi etkileşimini gerektiriyor (çekirdeğe '
-      'komşu), koordinatör kuyruğuna.');
+  });
+
+  test('[M-F-60] "ulaşmadı" KOÇLANAN katmandan — skora girmez', () {
+    // Sözleşme: bu bir teknik hükmü değil, bir GÖZLEM. A/B bandına konursa
+    // puanlanabilir hâle gelir ve eğitmenlerin uzlaşmadığı bir şeyi
+    // puanlamış oluruz — J-033'ün aynısı, yeni kılıkta.
+    final StrikingEngine e = StrikingEngine(
+      ruleSet: _rules(),
+      calibrationMapped: true,
+      provenance: const <String, String>{
+        'poseModelVariant': 'synthetic',
+        'calibrationProfileId': 'test',
+      },
+    );
+    final List<PoseFrame> frames = sequence(<SyntheticKeyframe>[
+      SyntheticKeyframe(0, guardPose),
+      SyntheticKeyframe(200000, guardPose),
+      SyntheticKeyframe(320000, punchAt(0.6)),
+      SyntheticKeyframe(520000, guardPose),
+      SyntheticKeyframe(1600000, guardPose),
+    ]);
+    DetectedIssue? aborted;
+    for (final PoseFrame f in frames) {
+      for (final DetectedIssue i in e.process(f).issues) {
+        if (i.code == 'ATTEMPT_ABORTED') aborted ??= i;
+      }
+    }
+    expect(aborted, isNotNull, reason: 'girişim kapatma hiç ateşlenmedi');
+    expect(aborted!.band, 'coached',
+        reason: 'A/B bandına konmuş — gözlem, hükme terfi etmiş');
+    expect(aborted.evidence, contains('peakExtension'),
+        reason: 'sözleşme peakExtension taşımayı şart koşuyor');
+  });
+
+  test('[M-F-60] SAYIM DEĞİŞMEDİ — girişim kapatma yalnız SESSİZLİĞİ bozar', () {
+    // Sözleşmenin en kolay çiğnenen yarısı bu. "Ulaşmadı" repliğini eklerken
+    // yarım hareketi sayıma dahil etmek, sessizliği çözerken sayım
+    // dürüstlüğünü bozmak olurdu — üstelik kimse fark etmezdi, çünkü sayı
+    // artıyor ve artan sayı iyi görünüyor.
+    final List<String> counted = <String>[];
+    for (int i = 0; i <= 20; i++) {
+      final ({bool counted, String? technique, Set<String> cues, double peak})
+          r = throwPunch(i / 20);
+      if (r.counted) counted.add('${r.peak.toStringAsFixed(2)}:${r.technique}');
+    }
+    // Ölçülen dış sınır: yalnız PEAK eşiğini geçen hareketler sayılır ve
+    // hepsi SPESİFİK teknik olarak sayılır (yedeğe düşen yok).
+    expect(counted.every((String c) => c.endsWith(':jab')), isTrue,
+        reason: 'yarım hareket yedek teknik olarak sayılmaya başladı: $counted');
+    expect(counted.length, 7,
+        reason: 'sayılan hareket adedi değişti — dış sınır kaydı: $counted');
+  });
 }

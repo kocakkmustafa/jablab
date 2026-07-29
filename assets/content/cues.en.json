@@ -79,6 +79,12 @@
       "Speed is costing you form.",
       "Ease off.",
       "Slower, cleaner."
+    ],
+    "cue.strike_not_extended": [
+      "That one didn't reach.",
+      "Extend it fully.",
+      "Punch all the way out.",
+      "Short — reach further."
     ]
   },
   "$noVerdictDoc": "Bunlar susmanin ALTERNATIFI. Sessizlik kullaniciya 'her sey yolunda' der; oysa analiz hic calismiyordur. plan 12: 'Bilegini bu acidan goremiyorum' denir, 'yanlis yaptin' DENMEZ.",
@@ -316,8 +322,9 @@
   "$producers": {
     "$doc": "Her replik grubunun BUGUN bir ureticisi var mi. Durum ANAHTAR duzeyinde de olabilir: bir grup 'awaiting-wiring' iken icindeki birkac anahtar canli olabilir. Grup duzeyinde 'bagli' demek buyuk yalan uretir — sesli koc kutuphanesinde bir anahtarin canli olmasi digerini canli yapmaz.",
     "technique": {
-      "by": "errors[].feedbackKey",
-      "status": "bound"
+      "by": "errors[].feedbackKey + techniques[].abortOnRetreat.feedbackKey",
+      "status": "bound",
+      "$note": "cue.strike_not_extended bir HATA kodundan degil, girisim-kapatma sozlesmesinden (M-F-60) geliyor. Ayri yol, ayri beyan: 'technique grubu bagli' demek onu kapsamiyordu."
     },
     "noVerdict": {
       "by": "errors[].feedbackKey + StrikingEngine bastirma kapilari",
