@@ -899,6 +899,194 @@
         "$whyNotBound": "BAGLANMADI, iki bagimsiz sebeple. (1) KURAL 7: artefakt mirrorConfident=false — simetrik-malzeme sinifi; benim tablom lead/rear, yani TARAF-BAGIMLI. Ayna guveni olmayan bir artefakttan taraf-bagimli hukum turetmek yasak. (2) KURAL 8: uc take de 'unattested' (--allow-unattested ile uretildi); eksik olan orneklem degil KAYNAK BEYANI, ve bu provisional'a devredilemez. AYRICA sayilar karsilastirilamaz: CLI tam-videoyu hizaliyor (L-139), benim aracim durusun korundugu 90 karelik pencereyi seciyor — artefakt yurume/konusma karelerini de sayiyor (trunk_tilt 2,9 vs benim 12,0; dizler 2,6-3,8 vs taban 8,0). Ayni uc take, FARKLI orneklem. Artefakt SOZLESME denetimi icin kullanildi, kalibrasyon gercegi olarak DEGIL.",
         "$mirrorDiscrepancy": "COZULDU + CEKIRDEKTE DUZELTILDI (J-046/M-J-09, motion_core-v0.8.2 c1f8ed3). Pencere-farki hipotezi CURUTULMUSTU: ayni 90-kareli pencere verisi prior'suz kosturuldugunda da runnerUpGap=0,0038 (< mirrorMargin 0,02) cikiyordu — DTW-tabanli ayna-ataması genuinely belirsizdi, prior'un 'confident'i kosulsuz true yapmasi yaniltiyordu. Cekirdek onerimi aynen kabul etti: 'confident' semantigi DEGISMEDI (geriye uyumlu), ama artik prior'dan BAGIMSIZ 'searchDecisive'/'mirrorSearchDecisive' alani var (gapMeasured && runnerUpGap > mirrorMargin) — bu artefaktta (--allow-unattested, prior verilmeden uretildigi icin) confident ile mirrorSearchDecisive AYNI deger olmali (ikisi de false); tuketici bundan sonra 'prior'a guvendim' (confident) ile 'DTW aramasi kararliydi' (mirrorSearchDecisive) sorularini AYRI sorabilir. Benim 'guven 1,00' rakamim UCUNCU, farkli bir sinyal: pencere-ici geometrik oncu-taraf oy birligi (leadConfidence), DTW'den bagimsiz — hala gecerli, hala mirrorConfident/mirrorSearchDecisive ile karistirilmamali."
       }
+    },
+    "jab": {
+      "techniqueId": "jab",
+      "builtAt": "2026-07-29",
+      "contributingTakes": 11,
+      "sources": [
+        "Precision Striking",
+        "Tony Jeffries",
+        "World Class Boxing Channel"
+      ],
+      "leadSide": "left_orthodox_all_eleven",
+      "agreementMedian": 0.7896,
+      "toleranceStatus": "provisional",
+      "$toleranceStatusDoc": "M-F-38 yetersiz-orneklem sinifi: 3 BAGIMSIZ KAYNAK / 11 take, hedef ~5 kaynak (M-F-32). 4./5. egitmen gelince YENIDEN HESAPLANIR.",
+      "clusterToleranceDeg": 14.0,
+      "$clusterToleranceWhy": "VARSAYILAN esik. Stance 35 derece gerektirmisti (M-F-51); jab GENISLETME GEREKTIRMEDI. Kumeyi kapatan sey pencere kurali DEGIL ucuncu TEMIZ kaynak oldu: ayni havuz GUARD_READY-baslangicli (loose) pencerelerle de 14 derecede gecti (meanAgreement 0,7813 vs 0,7896). frolov (slow-demo, J-060 intentVariant) DISLANDI — havuzlanmadi, esik genisletilmedi (M-F-66 emsali).",
+      "$windowRule": "Pencereler jablab_engine/tool/segment_punches.dart --strict ile kesildi: punch_fsm mekanizmasi, pencere EXTENSION girisinden baslar (GUARD_READY bekleyisi DISARIDA — M-F-91/J-059). 16 karelik kanonik uzunluk SAF HAREKETI kapsar, bekleyisi degil.",
+      "$splitRule": "Ayrim ANATOMIDEN degil OLCUMDEN turetildi (M-F-41/46). Sonuc RAHATSIZ EDICI ama dogru: jabin KENDISI olan ONCU KOL, egitmenlerin EN COK ayristigi yerdir (lead_forearm 51,5 · lead_elbow 42,2 · lead_upper_arm 37,2 · lead_shoulder 33,0 derece p90) — HICBIR kol eklemi skorlanmaz. Taban ve govde ise siki uyusuyor (trunk_tilt 5,1 · dizler 6,8-10,9 · kalcalar 8,0-9,1). Bu, stancete bulunan \"kollar anlasmiyor\" deseninin UCUNCU bagimsiz tekraridir — capraz-teknik tutarlilik.",
+      "$scoringStatistic": "p90 (MUHAFAZAKAR). Medyan bir eklemi cogu karede siki, birkac karede vahsi olsa da SKORLANIR kovasina atardi. p90 kural 1.2 yonundedir (serbest bant olculen ayrismanin ALTINA inemez). Her eklemde medianDispersionDeg + maxDispersionDeg de yaninda basildi; kovasi degisen tek eklem (rear_upper_arm) $bucketFlip ile isaretli.",
+      "scoredJoints": {
+        "rear_shoulder": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 10.7,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 9.2,
+          "maxDispersionDeg": 12.2
+        },
+        "lead_hip": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 9.1,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 8.5,
+          "maxDispersionDeg": 9.6
+        },
+        "rear_hip": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 8.0,
+          "toleranceSource": "floor",
+          "medianDispersionDeg": 7.2,
+          "maxDispersionDeg": 8.4,
+          "$sourceWhy": "TABANA KIRPILDI. p90 8,0 derecenin altinda — gercek dagilim OLCULMEDI, yalnizca \"8 dereceden KUCUK\" oldugu biliniyor. Kova karari gecerli (taban zaten esigin altinda) ama bu sayi bir olcum degil, olcum gurultusune birakilan paydir."
+        },
+        "lead_knee": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 10.9,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 10.0,
+          "maxDispersionDeg": 14.2
+        },
+        "rear_knee": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 6.8,
+          "toleranceSource": "floor",
+          "medianDispersionDeg": 6.0,
+          "maxDispersionDeg": 7.2,
+          "$sourceWhy": "TABANA KIRPILDI. p90 8,0 derecenin altinda — gercek dagilim OLCULMEDI, yalnizca \"8 dereceden KUCUK\" oldugu biliniyor. Kova karari gecerli (taban zaten esigin altinda) ama bu sayi bir olcum degil, olcum gurultusune birakilan paydir."
+        },
+        "lead_thigh": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 9.6,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 8.5,
+          "maxDispersionDeg": 9.9
+        },
+        "rear_thigh": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 7.8,
+          "toleranceSource": "floor",
+          "medianDispersionDeg": 6.8,
+          "maxDispersionDeg": 8.2,
+          "$sourceWhy": "TABANA KIRPILDI. p90 8,0 derecenin altinda — gercek dagilim OLCULMEDI, yalnizca \"8 dereceden KUCUK\" oldugu biliniyor. Kova karari gecerli (taban zaten esigin altinda) ama bu sayi bir olcum degil, olcum gurultusune birakilan paydir."
+        },
+        "lead_shin": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 10.7,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 7.6,
+          "maxDispersionDeg": 11.1
+        },
+        "rear_shin": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 7.2,
+          "toleranceSource": "floor",
+          "medianDispersionDeg": 6.4,
+          "maxDispersionDeg": 7.4,
+          "$sourceWhy": "TABANA KIRPILDI. p90 8,0 derecenin altinda — gercek dagilim OLCULMEDI, yalnizca \"8 dereceden KUCUK\" oldugu biliniyor. Kova karari gecerli (taban zaten esigin altinda) ama bu sayi bir olcum degil, olcum gurultusune birakilan paydir."
+        },
+        "trunk_tilt": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 5.1,
+          "toleranceSource": "floor",
+          "medianDispersionDeg": 3.9,
+          "maxDispersionDeg": 5.4,
+          "$sourceWhy": "TABANA KIRPILDI. p90 8,0 derecenin altinda — gercek dagilim OLCULMEDI, yalnizca \"8 dereceden KUCUK\" oldugu biliniyor. Kova karari gecerli (taban zaten esigin altinda) ama bu sayi bir olcum degil, olcum gurultusune birakilan paydir."
+        }
+      },
+      "coachedOnlyJoints": {
+        "lead_elbow": {
+          "freeDeg": 42.2,
+          "zeroAtDeg": 135.2,
+          "measuredDispersionDeg": 42.2,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 29.5,
+          "maxDispersionDeg": 57.0
+        },
+        "rear_elbow": {
+          "freeDeg": 29.2,
+          "zeroAtDeg": 93.5,
+          "measuredDispersionDeg": 29.2,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 19.4,
+          "maxDispersionDeg": 32.4
+        },
+        "lead_shoulder": {
+          "freeDeg": 33.0,
+          "zeroAtDeg": 105.5,
+          "measuredDispersionDeg": 33.0,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 20.0,
+          "maxDispersionDeg": 36.4
+        },
+        "lead_upper_arm": {
+          "freeDeg": 37.2,
+          "zeroAtDeg": 119.0,
+          "measuredDispersionDeg": 37.2,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 24.4,
+          "maxDispersionDeg": 40.1
+        },
+        "rear_upper_arm": {
+          "freeDeg": 17.8,
+          "zeroAtDeg": 56.9,
+          "measuredDispersionDeg": 17.8,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 11.4,
+          "maxDispersionDeg": 28.5,
+          "$bucketFlip": "MEDYAN 14 derecenin ALTINDA (11.4) ama p90 USTUNDE (17.8). p90 secildi cunku medyan bu eklemi az sayida karede vahsi olmasina ragmen SKORLANIR kovasina atardi ve o karelerde kullaniciyi HAKSIZ suclardi. Istatistik secimi J-061 yukseltmesinde koordinatore bildirildi."
+        },
+        "lead_forearm": {
+          "freeDeg": 51.5,
+          "zeroAtDeg": 144.0,
+          "measuredDispersionDeg": 51.5,
+          "toleranceSource": "ceiling",
+          "medianDispersionDeg": 35.2,
+          "maxDispersionDeg": 58.3
+        },
+        "rear_forearm": {
+          "freeDeg": 24.6,
+          "zeroAtDeg": 78.6,
+          "measuredDispersionDeg": 24.6,
+          "toleranceSource": "variance",
+          "medianDispersionDeg": 17.0,
+          "maxDispersionDeg": 27.5
+        }
+      },
+      "$productEffect": "Jab sirasinda TABAN ve GOVDE skorlanabilir (govde one dusmesi, denge, diz/kalca cokmesi). GARD/KOL ile ilgili her hukum — ONCU kolun uzanma yolu dahil — KOCLANIR ama SKORA GIRMEZ. Kullaniciya NEDENI soylenir (kural 3): deneyimli egitmenler bu eklemlerde anlasmiyor.",
+      "jointNaming": "lead_rear",
+      "$jointNamingWhy": "J-034 dersi: MUTLAK left_*/right_* adlari kullanmak yasak — cekirdegin GLOBAL ayna atamasi (M-F-48) degisirse tablo sessizce YANLIS tarafa isaret eder. Taraf SOYUT adla yazilir. Bu havuzda esleme OLCULDU: katkı veren 11 takein 11i de %100 orthodox (M-F-06 geometrik durus dedektoru, ortalama guven >=0,936) => left=lead, right=rear. Tek southpaw pencere (yA5WNu-sx34_jab_2) kume kapisi tarafindan ZATEN dislandi — iki bagimsiz mekanizma ayni sonuca vardi.",
+      "bindingStatus": "active",
+      "$bindingHistory": "2026-07-29 (J-061): ILK JAB REFERANSI, VARSAYILAN 14 derece esikte kuruldu. Stance emsali birebir uygulandi: config TABLOSU baglandi, ARTEFAKT baglanmadi (kural 7+8). Jab, stanceten STRIKTLY DAHA GUCLU kanit tasiyor: 14 derece varsayilan (stance 35 gerektirdi), meanAgreement 0,7896 (stance 0,7881), guvenilmez eklem 1 (stance 3).",
+      "sourceArtifact": {
+        "boundTo": null,
+        "inspected": "reference-boxing-jab.json (motion-core/reference@1, motion_core-v0.8.4)",
+        "$whyNotBound": "BAGLANMADI, stance ile AYNI iki bagimsiz sebeple. (1) KURAL 7: artefakt mirrorConfident=false ve mirrorSearchDecisive=false — cekirdegin DTW ayna-aramasi karar veremedi; benim tablom lead/rear, yani TARAF-BAGIMLI. (2) KURAL 8: 11 take de \"unattested\" (--allow-unattested ile uretildi); eksik olan orneklem degil KAYNAK BEYANI ve bu provisionala devredilemez. NOT: kural 7 icin BAGIMSIZ bir olcum var (11/11 orthodox, yukari bkz) — bu olcum cekirdegin bayraginin YERINI ALMAZ, J-061 yukseltmesinde koordinator kararina girdi olarak sunuldu.",
+        "mirrorConfident": false,
+        "mirrorGapMeasured": true,
+        "mirrorSearchDecisive": false,
+        "excludedOutlierIds": [
+          "InSkFbZWoBY_jab_1",
+          "xOeEqDjkaVE_jab_6",
+          "yA5WNu-sx34_jab_2"
+        ],
+        "unreliableJoints": [
+          "left_forearm"
+        ],
+        "measurementProvenance": "PROVISIONAL"
+      },
+      "$report": "docs/g3/JAB-REFERANS-RAPORU.txt"
     }
   },
   "$unreadFields": {

@@ -408,7 +408,7 @@ void _reportHealth(List<_Segment> segs, CanonicalReference ref) {
       '(${(rate * 100).toStringAsFixed(0)}%)');
   stdout.writeln(dropped == 0
       ? '  durum               : ✅ SAĞLIKLI — hiçbir kapı take elemedi'
-      : '  durum               : ⚠️ ${dropped} take elendi — n düştü, '
+      : '  durum               : ⚠️ $dropped take elendi — n düştü, '
           'tolerans bu kayıpla yeniden okunmalı');
 }
 

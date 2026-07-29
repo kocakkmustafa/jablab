@@ -286,6 +286,8 @@ final class RuleSet {
     required this.smoothingBeta,
     required this.smoothingDerivativeCutoff,
     required this.stanceCoachedOnlyJoints,
+    required this.jabCoachedOnlyJoints,
+    required this.jabScoredJoints,
   });
 
   factory RuleSet.fromJson(Map<String, dynamic> j) {
@@ -305,6 +307,15 @@ final class RuleSet {
             .cast<String, dynamic>();
     final Map<String, dynamic> stanceCoached =
         ((stanceRef['coachedOnlyJoints'] as Map?) ?? const <String, dynamic>{})
+            .cast<String, dynamic>();
+    final Map<String, dynamic> jabRef =
+        ((references['jab'] as Map?) ?? const <String, dynamic>{})
+            .cast<String, dynamic>();
+    final Map<String, dynamic> jabCoached =
+        ((jabRef['coachedOnlyJoints'] as Map?) ?? const <String, dynamic>{})
+            .cast<String, dynamic>();
+    final Map<String, dynamic> jabScored =
+        ((jabRef['scoredJoints'] as Map?) ?? const <String, dynamic>{})
             .cast<String, dynamic>();
 
     final Map<String, ({double? minMs, double? maxMs})> tempo =
@@ -344,6 +355,8 @@ final class RuleSet {
           (sc['derivativeCutoff'] as num?)?.toDouble() ?? 1.0,
       stanceCoachedOnlyJoints:
           stanceCoached.keys.toList(growable: false)..sort(),
+      jabCoachedOnlyJoints: jabCoached.keys.toList(growable: false)..sort(),
+      jabScoredJoints: jabScored.keys.toList(growable: false)..sort(),
     );
   }
 
@@ -378,6 +391,16 @@ final class RuleSet {
   /// kararı değişince (ör. M-F-51 yeniden hesabı) metnin sessizce
   /// bayatlamasını engeller.
   final List<String> stanceCoachedOnlyJoints;
+
+  /// `references.jab.coachedOnlyJoints` anahtarları (J-061). Jab'da HİÇBİR kol
+  /// eklemi skorlanmaz: öncü kol, eğitmenlerin en çok ayrıştığı yerdir
+  /// (lead_forearm 51,5° p90) — yani tekniğin kendisi ölçülebilir ama
+  /// yargılanamaz. Ürün yüzeyi bu listeyi kopyalamaz, buradan okur (J-047).
+  final List<String> jabCoachedOnlyJoints;
+
+  /// `references.jab.scoredJoints` anahtarları — jab sırasında hüküm
+  /// verilebilen eklemler (taban + gövde).
+  final List<String> jabScoredJoints;
 
   TechniqueConfig? technique(String id) {
     for (final TechniqueConfig t in techniques) {

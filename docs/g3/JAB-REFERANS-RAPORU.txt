@@ -1,0 +1,85 @@
+═══ JAB REFERANSI — ÖLÇÜM RAPORU (J-061) ═══
+
+Kanonik CLI: motion_core-v0.8.4 (eb28039) · build_reference.dart
+Pencere kesici: jablab_engine/tool/segment_punches.dart --strict (punch_fsm)
+Küme eşiği     : 14,0° — VARSAYILAN. Genişletme YAPILMADI (stance 35° gerektirmişti).
+Üretim         : 2026-07-29T21:20:38.606047Z
+measurementProvenance: PROVISIONAL
+
+─── katkı veren take'ler (11) ───
+• umI6jNMVG-s_jab_1      Precision Striking            20 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• umI6jNMVG-s_jab_2      Precision Striking            17 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• umI6jNMVG-s_jab_3      Precision Striking            19 kare · 30fps · duruş=orthodox (100%, güven 0.936) · unattested
+• xOeEqDjkaVE_jab_1      Tony Jeffries                 16 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• xOeEqDjkaVE_jab_2      Tony Jeffries                 16 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• xOeEqDjkaVE_jab_3      Tony Jeffries                 16 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• xOeEqDjkaVE_jab_4      Tony Jeffries                 18 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• xOeEqDjkaVE_jab_5      Tony Jeffries                 14 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• xOeEqDjkaVE_jab_7      Tony Jeffries                 16 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• xOeEqDjkaVE_jab_8      Tony Jeffries                 16 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
+• yA5WNu-sx34_jab_1      World Class Boxing Channel    58 kare · 60fps · duruş=orthodox (100%, güven 1.000) · unattested
+
+─── isimli DIŞLAMALAR (3) ───
+• InSkFbZWoBY_jab_1      Sören                        küme-aykırısı (>14°) · duruş=orthodox (100%)
+• xOeEqDjkaVE_jab_6      Tony Jeffries                küme-aykırısı (>14°) · duruş=orthodox (100%)
+• yA5WNu-sx34_jab_2      World Class Boxing Channel   küme-aykırısı (>14°) · duruş=southpaw (78%) ⚠ TEK SOUTHPAW PENCERE — küme kapısı onu bağımsız olarak da attı
+
+─── ayna (kural 7) durumu ───
+mirrorConfident        : False
+mirrorGapMeasured      : True
+mirrorSearchDecisive   : False   ← çekirdeğin DTW ayna-aramasi karar veremedi
+aynalanan take         : yok
+BAĞIMSIZ KANIT (M-F-06 geometrik duruş dedektörü, JabLab'a özel):
+  katkı veren 11 take'in 11'i de %100 ORTHODOX, ortalama güven >= 0,936.
+  Tek southpaw pencere (yA5WNu-sx34_jab_2) küme kapısı tarafından
+  ZATEN dışlandı — iki bağımsız mekanizma aynı sonuca vardı.
+  => left = LEAD, right = REAR eşlemesi bu havuz için ÖLÇÜLMÜŞ gerçektir.
+  (Kural 7'nin lafzı çekirdeğin bayrağına atıf yapıyor; bu ölçüm onun
+   yerini almaz, KOORDİNATÖR KARARINA girdi olur — J-061 yükseltmesi.)
+
+─── küme/uyum ───
+kaynak sayısı          : 3 (Precision Striking · Tony Jeffries · World Class Boxing Channel)
+referans kare sayısı   : 16
+uyum (meanAgreement)   : 0.7896   [stance: 0,7881 · 35°-zorlamalı jab: 0,711/0,695]
+güvenilmez eklemler    : left_forearm
+
+─── LOOSE (GUARD_READY-başlangıçlı) KONTROL KOŞUMU ───
+takes=12 sources=3 meanAgreement=0.7813 unreliable=left_forearm kare=39
+İKİSİ DE 14°'de GEÇTİ. Fark marjinal (0,7896 vs 0,7813) → kümeyi kapatan
+şey pencere kuralı DEĞİL, ÜÇÜNCÜ TEMİZ KAYNAK. J-060'ın 'pencere-içeriği
+artefaktı değil' hükmü bir kez daha doğrulandı. Ship edilen: --strict
+(daha yüksek uyum + 16 karelik pencere saf hareketi kapsıyor, gard-bekleyişini değil).
+
+─── eklem tablosu: p90 (MUHAFAZAKÂR) ile 14° kovalama ───
+eklem(lead/rear)    medyan°     p90°    maks°    kaynak  KOVA
+lead_elbow             29.5     42.2     57.0  variance  koçlanır
+rear_elbow             19.4     29.2     32.4  variance  koçlanır
+lead_shoulder          20.0     33.0     36.4  variance  koçlanır
+rear_shoulder           9.2     10.7     12.2  variance  SKORLANIR
+lead_hip                8.5      9.1      9.6  variance  SKORLANIR
+rear_hip                7.2      8.0      8.4     floor  SKORLANIR
+lead_knee              10.0     10.9     14.2  variance  SKORLANIR
+rear_knee               6.0      6.8      7.2     floor  SKORLANIR
+lead_upper_arm         24.4     37.2     40.1  variance  koçlanır
+rear_upper_arm         11.4     17.8     28.5  variance  koçlanır  ⚠ medyan/p90 KOVA DEĞİŞTİRİYOR
+lead_forearm           35.2     51.5     58.3  variance  koçlanır
+rear_forearm           17.0     24.6     27.5  variance  koçlanır
+lead_thigh              8.5      9.6      9.9  variance  SKORLANIR
+rear_thigh              6.8      7.8      8.2     floor  SKORLANIR
+lead_shin               7.6     10.7     11.1     floor  SKORLANIR
+rear_shin               6.4      7.2      7.4     floor  SKORLANIR
+trunk_tilt              3.9      5.1      5.4     floor  SKORLANIR
+
+İSTATİSTİK SEÇİMİ: p90. Medyan bir eklemi 14 karede sıkı, 2 karede vahşi
+olsa da SKORLANIR kovasına atardı ve o 2 karede kullanıcıyı haksız suçlardı.
+p90 MUHAFAZAKÂR yöndedir (kural 1.2: serbest bant ölçülen ayrışmanın ALTINA
+inemez). Medyan da yanına basıldı; kovası değişen tek eklem işaretli.
+
+═══ ÜRÜN ANLAMI (rahatsız edici ama DOĞRU) ═══
+Jab'ın KENDİSİ olan ÖNCÜ KOL, eğitmenlerin EN ÇOK ayrıştığı yerdir:
+  lead_forearm 51,5° · lead_elbow 42,2° · lead_upper_arm 37,2° · lead_shoulder 33,0° (p90)
+Taban ve gövde ise sıkı uyuşuyor: trunk_tilt 5,1° · dizler 6,8-10,9° · kalçalar 8,0-9,1°
+=> JabLab bir jab'da TABANI ve GÖVDEYİ skorlayabilir, KOLU skorlayamaz.
+   Kol GÖSTERİLİR ve SÖYLENİR (coached_only), PUANLANMAZ — nedeni kullanıcıya
+   açıklanır (kural 3). Bu, stance'te bulunan 'kollar anlaşmıyor' deseninin
+   ÜÇÜNCÜ bağımsız tekrarıdır (stance · 35°-jab · bu) — çapraz-teknik tutarlılık.

@@ -51,11 +51,18 @@ final class ContentRepository {
   /// bir anahtar, kovalar arasında bir eklem taşındığında fark edilmeden
   /// metnin bayatlamasını önlemek için burada FIRLATIR.
   List<String> coachedNotScoredLabels(RuleSet boxing) =>
-      boxing.stanceCoachedOnlyJoints.map((String key) {
+      _labelsFor(boxing.stanceCoachedOnlyJoints);
+
+  /// Jab'ın "coached but not scored" listesi (J-061). Duruştan AYRI tutulur
+  /// çünkü kovalar farklı: jab'da öncü kol da koçlanan tarafta — tekniğin
+  /// kendisi ölçülüyor ama eğitmen uzlaşısı olmadığı için yargılanmıyor.
+  List<String> jabCoachedNotScoredLabels(RuleSet boxing) =>
+      _labelsFor(boxing.jabCoachedOnlyJoints);
+
+  List<String> _labelsFor(List<String> keys) => keys.map((String key) {
         final String? label = _jointLabels[key];
         if (label == null) {
-          throw StateError(
-              'coachedOnlyJoints eklemi "$key" için etiket yok — '
+          throw StateError('coachedOnlyJoints eklemi "$key" için etiket yok — '
               'ContentRepository._jointLabels güncellenmeli');
         }
         return label;
