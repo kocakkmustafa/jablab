@@ -911,8 +911,8 @@
       ],
       "leadSide": "left_orthodox_all_eleven",
       "agreementMedian": 0.7896,
-      "toleranceStatus": "provisional",
-      "$toleranceStatusDoc": "M-F-38 yetersiz-orneklem sinifi: 3 BAGIMSIZ KAYNAK / 11 take, hedef ~5 kaynak (M-F-32). 4./5. egitmen gelince YENIDEN HESAPLANIR.",
+      "toleranceStatus": "attested-provisional",
+      "$toleranceStatusDoc": "KAYNAK BEYANI TAM (11/11 attested) ama ORNEKLEM hala kucuk: 3 bagimsiz kaynak, hedef ~5 (M-F-32). Yani \"provisional\" artik KAYNAK-UYGUNLUGU degil yalnizca ORNEKLEM zayifligini isaretliyor — M-F-46 kural 8 ayrimi (istatistiksel zayiflik vs sistematik yanlilik) bu iki durumu ayirt etmeyi gerektiriyor. 4./5. egitmen gelince YENIDEN HESAPLANIR.",
       "clusterToleranceDeg": 14.0,
       "$clusterToleranceWhy": "VARSAYILAN esik. Stance 35 derece gerektirmisti (M-F-51); jab GENISLETME GEREKTIRMEDI. Kumeyi kapatan sey pencere kurali DEGIL ucuncu TEMIZ kaynak oldu: ayni havuz GUARD_READY-baslangicli (loose) pencerelerle de 14 derecede gecti (meanAgreement 0,7813 vs 0,7896). frolov (slow-demo, J-060 intentVariant) DISLANDI — havuzlanmadi, esik genisletilmedi (M-F-66 emsali).",
       "$windowRule": "Pencereler jablab_engine/tool/segment_punches.dart --strict ile kesildi: punch_fsm mekanizmasi, pencere EXTENSION girisinden baslar (GUARD_READY bekleyisi DISARIDA — M-F-91/J-059). 16 karelik kanonik uzunluk SAF HAREKETI kapsar, bekleyisi degil.",
@@ -1068,11 +1068,10 @@
       "jointNaming": "lead_rear",
       "$jointNamingWhy": "J-034 dersi: MUTLAK left_*/right_* adlari kullanmak yasak — cekirdegin GLOBAL ayna atamasi (M-F-48) degisirse tablo sessizce YANLIS tarafa isaret eder. Taraf SOYUT adla yazilir. Bu havuzda esleme OLCULDU: katkı veren 11 takein 11i de %100 orthodox (M-F-06 geometrik durus dedektoru, ortalama guven >=0,936) => left=lead, right=rear. Tek southpaw pencere (yA5WNu-sx34_jab_2) kume kapisi tarafindan ZATEN dislandi — iki bagimsiz mekanizma ayni sonuca vardi.",
       "bindingStatus": "active",
-      "$bindingHistory": "2026-07-29 (J-061): ILK JAB REFERANSI, VARSAYILAN 14 derece esikte kuruldu. Stance emsali birebir uygulandi: config TABLOSU baglandi, ARTEFAKT baglanmadi (kural 7+8). Jab, stanceten STRIKTLY DAHA GUCLU kanit tasiyor: 14 derece varsayilan (stance 35 gerektirdi), meanAgreement 0,7896 (stance 0,7881), guvenilmez eklem 1 (stance 3).",
+      "$bindingHistory": "2026-07-29 (J-061): ILK JAB REFERANSI, VARSAYILAN 14 derece esikte kuruldu. Stance emsali birebir uygulandi: config TABLOSU baglandi, ARTEFAKT baglanmadi (kural 7+8). Jab, stanceten STRIKTLY DAHA GUCLU kanit tasiyor: 14 derece varsayilan (stance 35 gerektirdi), meanAgreement 0,7896 (stance 0,7881), guvenilmez eklem 1 (stance 3). | 2026-07-30 (J-065): ARTEFAKT BAGLANDI — jab UCUNCU TAM-ZINCIR. Once kural 7 (prior), sonra kural 8 (rom_mode ucuncu boslugu + M-F-138 taze uygunluk). Eklem tablosu DEGISMEDI: 17/17 eklemde p90 birebir ayni (geometri hic degismedi, yalnız provenance ATTESTED oldu) — tablo yeniden hesaplanmadi cunku hesaplanacak yeni sey yok.",
       "sourceArtifact": {
-        "boundTo": null,
+        "boundTo": "reference-boxing-jab.json",
         "inspected": "reference-boxing-jab.json (motion-core/reference@1, motion_core-v0.8.4)",
-        "$whyNotBound": "BAGLANMADI — ama sebep artik TEK: KURAL 8 (attestation). Kural 7 M-J-06 on kapisiyla SAGLANDI (bkz. $mirrorConfidentVia). Kalan blokaj: 11 take de \"unattested\". ATTESTATION DENENDI VE DURUM KOTULESTI (J-064): 4 kaynagin ATLANMIS transcribe+romMode adimi tamamlandi (faster-whisper kurulmadan once hasat edilmislerdi) — 2 kaynak attest edildi (Tony Jeffries, World Class Boxing Channel: active/eligible), ama 2 kaynak \"unknown\" dondu => referenceEligible:false => HARD BLOCK (override YOK). Precision Striking + Soren dislandi.",
         "mirrorConfident": true,
         "mirrorGapMeasured": true,
         "mirrorSearchDecisive": false,
@@ -1084,12 +1083,12 @@
         "unreliableJoints": [
           "left_forearm"
         ],
-        "measurementProvenance": "PROVISIONAL",
+        "measurementProvenance": "ATTESTED",
         "$mirrorConfidentVia": "M-J-06 ON KAPISI (J-064): artefakt --lead-side-prior ile YENIDEN kuruldu. Prior, 11/11-orthodox geometrik olcumunden turetildi (hepsi false = hicbir take aynalanmaz). Sonuc: mirrorConfident=TRUE (dayanak PRIOR), mirrorSearchDecisive=false (DURUSTCE korunuyor — cekirdegin DTW ayna-aramasi hala kararsiz; 0.8.2 ayrimi tam bunun icin var). frames.meanRad BIT-OZDES ve mirroredTakeIds=[] — prior veriyi DEGISTIRMEDI, yalniz guven iddiasini olcume dayandirdi. KURAL 7 boylece ON KAPIDAN saglandi; post-hoc ikame YAPILMADI.",
-        "$reproducibilityWarning": "⚠️ BU ARTEFAKT SU AN YENIDEN KURULAMAZ. Guncel fixture durumunda kanonik CLI REDDEDIYOR: \"14 fixture -> 10 usable take from 2 source(s) (need 3/3)\". Asagidaki tablo, kaynaklar unattested (referenceEligible alani YOK) iken kurulmus artefakttan turetildi ve sayilari GECERLI — ama zincir tekrar kosulamiyor. Sebep bir kaynak kusuru DEGIL, siniflandirici bosluguna KUVVETLI SUPHE: Precision Striking transkriptinde 15 emir kipi + 88 \"you + fiil\" yapisi var (\"you gotta get back to the jab\"), Soren transkriptinde 13 + 77; ACTIVE_MARKERS yalnizca PT-tarzi \"(raise|lift|reach|bring) your\" tanıyor. Bu, frolov vakasinin (M-F-104, birinci-sahis gosterim) UCUNCU kardesi: IKINCI-SAHIS KOCLUK EMIR KIPI. Siniflandiriciyi KENDI artefaktimi gecirmek icin DEGISTIRMEDIM — aile kapisi, koordinator karari.",
-        "$staleEligibilityFinding": "YAN BULGU (J-064, aile-geneli): segment_punches gibi araclarla kesilen TUREV pencere fixtureilari provenance\"i KESIM ANINDA snapshotluyor. Kaynak fixture\"in referenceEligible\"i sonradan degisse bile eski pencereler ESKI degeri tasiyor ve kapidan gecmeye devam ediyor. Bu bir kapi-atlatma yolu: uygunluk TUREV artefaktta BAYATLIYOR. Ilk build\"im tam bu yuzden gecmisti; yeniden kesince reddedildi.",
-        "$builtFromPreAttestationWindows": "⚠️ DIKKAT (J-064): diskteki artefakt, kaynak fixtureilarin referenceEligible alani DOLDURULMADAN ONCE kesilmis pencerelerden uretildi — yani 11 take \"unattested\" olarak kabul edildi (--allow-unattested). Attestation adimi tamamlandiktan sonra YENIDEN KESILEN pencerelerle ayni kosum REDDEDILIYOR (2 kaynak hard-block). BU YUZDEN ARTEFAKT BAGLANMIYOR: baglamak, bildirdigim bayat-uygunluk kapi-atlatma yolunun uzerine urun kurmak olurdu ($staleEligibilityFinding). Kural 7 gecerli ve olculmustur; kural 8 sinifladirici bosluu cozulunce saglanabilir — o gun artefakt YENIDEN uretilip baglanir.",
-        "$priorDisagreementsNote": "Bu artefaktta priorDisagreements 11 take listeliyor ve YANILTICI okunabilir: yakin-beraberede (searchDecisive=false) builder chosenMask\"i zaten 0\"a cekiyor, yani prior builder\"in FIILEN yaptigiyla AYNI fikirde. Uyusmazlik yalnizca builder\"in kendisinin guvenilmez bulup ATTIGI bestMask ile. Cekirdek semantigi — koordinator incelemesinde."
+        "$priorDisagreementsNote": "Bu artefaktta priorDisagreements 11 take listeliyor ve YANILTICI okunabilir: yakin-beraberede (searchDecisive=false) builder chosenMask\"i zaten 0\"a cekiyor, yani prior builder\"in FIILEN yaptigiyla AYNI fikirde. Uyusmazlik yalnizca builder\"in kendisinin guvenilmez bulup ATTIGI bestMask ile. Cekirdek semantigi — koordinator incelemesinde.",
+        "priorDisagreements": [],
+        "$boundWhy": "BAGLANDI (J-065). Iki kural da SAGLANDI: KURAL 7 → M-J-06 on kapisi; artefakt --lead-side-prior ile kuruldu, prior 11/11-orthodox geometrik olcumden turetildi (M-F-06 durus dedektoru, guven >=0,936) => mirrorConfident=TRUE (dayanak PRIOR), mirrorSearchDecisive DURUSTCE false (cekirdegin DTW aramasi hala kararsiz — 0.8.2 ayrimi tam bunun icin). priorDisagreements BOS: koordinatorun J-063 semantik duzeltmesinden sonra uyusmazlik yalniz KARARLI aramaya karsi sayiliyor. KURAL 8 → 11 take de ATTESTED; build --allow-unattested OLMADAN kosuldu. Attestation, rom_mode UCUNCU BOSLUGU (ikinci-sahis kocluk emir kipi, M-F-137) kapandiktan sonra geldi: iki bloklu kaynak (Precision Striking + Soren) gercek yonergeleriyle geri kazanildi.",
+        "$staleEligibilityClosed": "M-F-138 UYGULANDI: pencereler --manifests ile kesildi, uygunluk KARAR ANINDA kaynagin GUNCEL kaydindan cozuldu (14/14 pencere taze, eligibilityStale damgasi YOK). Onceki turda bu artefakt kesim-anindaki BAYAT uygunlukla kurulmustu ve bu yuzden BAGLANMAMISTI — kapi-atlatma yolunun uzerine urun kurmamak icin. O yol artik kapali."
       },
       "$report": "docs/g3/JAB-REFERANS-RAPORU.txt"
     }

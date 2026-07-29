@@ -112,25 +112,94 @@ void main() {
     expect(sa[r'$mirrorConfidentVia'], contains('PRIOR'));
   });
 
-  test('[kural 8] artefakt HÂLÂ BAĞLANMADI ve kalan tek sebep isimli', () {
+  test('[kural 8] artefakt BAĞLANDI — kaynak beyanı TAM', () {
+    // J-065: attestation, rom_mode üçüncü boşluğu (ikinci-şahıs koçluk emir
+    // kipi) kapandıktan sonra geldi. Artık `--allow-unattested` OLMADAN
+    // kuruluyor; bloklanan iki kaynak GERÇEK yönergeleriyle geri kazanıldı.
     final Map<String, dynamic> sa =
         (ref['sourceArtifact'] as Map).cast<String, dynamic>();
-    expect(sa['boundTo'], isNull,
-        reason: 'kaynak beyanı olmadan artefakttan hüküm türetilemez');
-    expect(sa[r'$whyNotBound'], contains('KURAL 8'));
+    expect(sa['boundTo'], 'reference-boxing-jab.json');
+    expect(sa['measurementProvenance'], 'ATTESTED');
+    expect(sa[r'$boundWhy'], contains('KURAL 7'));
+    expect(sa[r'$boundWhy'], contains('KURAL 8'));
+    expect(ref['bindingStatus'], 'active');
   });
 
-  test('yeniden-kurulamazlık SESSİZ KALMIYOR', () {
-    // J-064: attestation denemesi 2 kaynağı hard-block'a düşürdü ve artefakt
-    // güncel fixture durumunda YENİDEN KURULAMIYOR. Tablo geçerli ama zincir
-    // koşulamıyor — bunu yazmamak, "üretildi" ile "üretilebilir"i karıştırmak
-    // olurdu (J-039 "beyan ≠ canlı" sınıfının artefakt karşılığı).
+  test('[M-F-138] bayat-uygunluk yolunun KAPANDIĞI yazılı', () {
+    // Bir tur önce bu artefakt kesim-anındaki BAYAT uygunlukla kurulmuştu ve
+    // tam bu yüzden bağlanmamıştı: kapı-atlatma yolunun üzerine ürün
+    // kurulmaz. Yolun kapandığını yazmamak, bağlamanın NEDEN artık meşru
+    // olduğunu okunamaz kılardı.
     final Map<String, dynamic> sa =
         (ref['sourceArtifact'] as Map).cast<String, dynamic>();
-    expect(sa[r'$reproducibilityWarning'], isNotNull);
-    expect(sa[r'$reproducibilityWarning'], contains('YENIDEN KURULAMAZ'));
-    expect(sa[r'$staleEligibilityFinding'], isNotNull,
-        reason: 'türev pencerede uygunluk bayatlaması bulgusu kayıtlı olmalı');
+    expect(sa[r'$staleEligibilityClosed'], isNotNull);
+    expect(sa[r'$staleEligibilityClosed'], contains('M-F-138'));
+    // Eski blokaj notları KALMAMALI — bağlanmış bir artefaktta
+    // "bağlanmadı çünkü..." metni bırakmak, config'i kendisiyle çelişik
+    // bırakmak olurdu (J-047 sınıfı bayatlama).
+    expect(sa[r'$whyNotBound'], isNull);
+    expect(sa[r'$reproducibilityWarning'], isNull);
+  });
+
+  test('provisional artık YALNIZCA örneklem zayıflığını işaretliyor', () {
+    // M-F-46 kural 8: `provisional` İSTATİSTİKSEL zayıflığı işaretler,
+    // SİSTEMATİK yanlılığı (kaynak-uygunluğu) işaretlemez. Kaynak beyanı
+    // tamamlandığına göre iki durumu ayırt eden bir ad gerekiyor.
+    expect(ref['toleranceStatus'], 'attested-provisional');
+    expect(ref[r'$toleranceStatusDoc'], contains('ORNEKLEM'));
+    expect((ref['sources'] as List).toSet().length, lessThan(5),
+        reason: '≥5 kaynağa ulaşınca tablo yeniden hesaplanır');
+  });
+
+  group('GERÇEK artefakt ↔ config tablosu (bağlandığına göre okunabilir)', () {
+    final File artifactFile = File('/Users/mustafakaankocak/Documents/'
+        'YULAlab-AI/ventures/motion-core/workspace/artifacts/'
+        'reference-boxing-jab.json');
+
+    test('artefakt diskte VAR ve config onu gösteriyor', () {
+      expect(artifactFile.existsSync(), isTrue,
+          reason: 'boundTo bir dosyayı gösteriyor ama dosya yok');
+    });
+
+    test('artefaktın bayrakları config iddiasıyla BİREBİR', () {
+      // Bir tur önce tam bu ikisi ÇELİŞMİŞTİ (config true, artefakt false) —
+      // "beyan ≠ canlı"nın artefakt karşılığı, kaynağı bendim. Bu test o
+      // driftin sessizce geri gelmesini engelliyor.
+      final Map<String, dynamic> art =
+          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+              .cast<String, dynamic>();
+      final Map<String, dynamic> r =
+          (art['result'] as Map).cast<String, dynamic>();
+      final Map<String, dynamic> sa =
+          (ref['sourceArtifact'] as Map).cast<String, dynamic>();
+
+      expect(art['measurementProvenance'], sa['measurementProvenance']);
+      expect(r['mirrorConfident'], sa['mirrorConfident']);
+      expect(r['mirrorSearchDecisive'], sa['mirrorSearchDecisive']);
+      expect(r['priorDisagreements'], isEmpty,
+          reason: 'prior yakın-beraberede builder ile AYNI fikirde; '
+              'uyuşmazlık yalnız KARARLI aramaya karşı sayılır');
+      expect((r['sources'] as List).toSet().length, ref['contributingTakes'] as int > 0 ? 3 : 3);
+    });
+
+    test('her take ATTESTED — tek bir unattested bile kalmadı', () {
+      final Map<String, dynamic> art =
+          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+              .cast<String, dynamic>();
+      final Set<String> elig = <String>{
+        for (final dynamic t in art['takes'] as List)
+          (t as Map)['eligibility'] as String,
+      };
+      expect(elig, <String>{'attested'});
+    });
+
+    test('eşik VARSAYILANDA kaldı — attestation onu değiştirmedi', () {
+      final Map<String, dynamic> art =
+          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+              .cast<String, dynamic>();
+      expect(
+          ((art['gates'] as Map)['clusterToleranceDeg'] as num).toDouble(), 14.0);
+    });
   });
 
   test('[J-034] taraf SOYUT adla yazılır — mutlak left_/right_ yasak', () {
@@ -144,7 +213,10 @@ void main() {
 
   test('[kural 6] provisional + n<5 kaynak yeniden-hesap gününü hatırlatır',
       () {
-    expect(ref['toleranceStatus'], 'provisional');
+    // J-065'te ad `attested-provisional` oldu: kaynak beyanı TAMAMLANDI, ama
+    // örneklem hâlâ küçük. Kural 6'nın istediği "yeniden-hesap hatırlatıcısı"
+    // örneklem tarafında DEVAM ediyor.
+    expect(ref['toleranceStatus'], contains('provisional'));
     expect((ref['sources'] as List).toSet().length, lessThan(5),
         reason: '≥5 bağımsız kaynağa ulaşıldığında tablo YENİDEN HESAPLANIR '
             've bu test o günü hatırlatır');

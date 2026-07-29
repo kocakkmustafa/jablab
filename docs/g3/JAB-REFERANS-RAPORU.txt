@@ -4,7 +4,7 @@ Kanonik CLI: motion_core-v0.8.4 (eb28039) · build_reference.dart
 Pencere kesici: jablab_engine/tool/segment_punches.dart --strict (punch_fsm)
 Küme eşiği     : 14,0° — VARSAYILAN. Genişletme YAPILMADI (stance 35° gerektirmişti).
 Üretim         : 2026-07-29T21:20:38.606047Z
-measurementProvenance: PROVISIONAL
+measurementProvenance: ATTESTED  (J-065: kaynak beyani TAMAMLANDI)
 
 ─── katkı veren take'ler (11) ───
 • umI6jNMVG-s_jab_1      Precision Striking            20 kare · 30fps · duruş=orthodox (100%, güven 1.000) · unattested
@@ -24,7 +24,22 @@ measurementProvenance: PROVISIONAL
 • xOeEqDjkaVE_jab_6      Tony Jeffries                küme-aykırısı (>14°) · duruş=orthodox (100%)
 • yA5WNu-sx34_jab_2      World Class Boxing Channel   küme-aykırısı (>14°) · duruş=southpaw (78%) ⚠ TEK SOUTHPAW PENCERE — küme kapısı onu bağımsız olarak da attı
 
-─── ayna (kural 7) durumu ───
+═══ J-065 GÜNCELLEMESİ — ARTEFAKT BAĞLANDI, JAB ÜÇÜNCÜ TAM-ZİNCİR ═══
+Kural 7 → M-J-06 ON KAPISI: artefakt --lead-side-prior ile kuruldu.
+          mirrorConfident=TRUE (dayanak PRIOR) · searchDecisive=false (DURUSTCE)
+          priorDisagreements=[] (koordinatorun J-063 semantik duzeltmesi sonrasi)
+Kural 8 → 11/11 take ATTESTED; build --allow-unattested OLMADAN kosuldu.
+          rom_mode UCUNCU BOSLUGU (ikinci-sahis kocluk emir kipi, M-F-137)
+          kapandi; 2 bloklu kaynak gercek yonergeleriyle geri kazanildi:
+            umI6jNMVG-s  "keep your hands up, chin down"
+            InSkFbZWoBY  "tuck your chin" / "drop your hands" / "throw your punches"
+M-F-138 → pencereler --manifests ile kesildi; uygunluk KARAR ANINDA kaynagin
+          GUNCEL kaydindan cozuldu (14/14 taze, bayat damgasi YOK).
+EKLEM TABLOSU DEGISMEDI: 17/17 eklemde p90 BIREBIR ayni. Geometri hic
+degismedi — degisen yalnizca kaynak beyaninin tamamlanmasi.
+Esik VARSAYILANDA kaldi (14 derece).
+
+─── ayna (kural 7) durumu — ILK TURDAKI (prior YOKKEN) OLCUM ───
 mirrorConfident        : False
 mirrorGapMeasured      : True
 mirrorSearchDecisive   : False   ← çekirdeğin DTW ayna-aramasi karar veremedi

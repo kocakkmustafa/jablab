@@ -26,11 +26,29 @@ import 'package:motion_core/motion_core.dart';
 /// eğitmende bu, uzun bir GUARD_READY bekleyişini pencereye katıp DTW'nin
 /// "yumruk" ile "bekleyiş+yumruk"u hizalamasına (L-139 sınıfı sessiz-yanlış)
 /// yol açabilir — --strict bunu ayırt etmek için var, "doğru" mod değil.
+///
+/// M-F-138 (J-065): uygunluk türev pencerede BAYATLAR. Kesici, kaynağın
+/// provenance'ını olduğu gibi kopyalarsa uygunluğu KESİM ANINDA snapshot'lar
+/// ve kaynak sonradan bloklansa bile eski pencereler kanonik kapıdan geçmeye
+/// devam eder — ölçülmüş bir kapı-atlatma yolu (J-064: jab referansı tam bu
+/// yüzden bir kez "geçti"). Bu yüzden pencere yazılırken uygunluk KAYNAĞIN
+/// GÜNCEL manifestinden tazelenir; kesim anındaki değer `eligibilitySnapshot`
+/// altında TARİHÇE olarak durur.
+///
+/// `--manifests <dizin>`: kaynak manifestlerinin bulunduğu dizin. VERİLMEZSE
+/// tazeleme YAPILMAZ ve pencerelere `eligibilityStale: true` damgası
+/// basılır — sessizce bayat üretmek yerine bayatlığı İTİRAF etmek, çünkü
+/// damgasız bayat pencere ile taze pencere birbirinden ayırt edilemez.
+const String _manifestsFlag = '--manifests';
+
 void main(List<String> args) {
   final String srcPath = args[0];
   final String techniqueId = args[1];
   final String outDir = args[2];
   final bool strict = args.contains('--strict');
+  final int mfIdx = args.indexOf(_manifestsFlag);
+  final String? manifestsDir =
+      mfIdx >= 0 && mfIdx + 1 < args.length ? args[mfIdx + 1] : null;
 
   final Map<String, dynamic> raw =
       (jsonDecode(File(srcPath).readAsStringSync()) as Map)
@@ -101,8 +119,9 @@ void main(List<String> args) {
 
     final Map<String, dynamic> outJson = Map<String, dynamic>.from(raw);
     outJson['frames'] = slice;
-    final Map<String, dynamic> prov =
+    Map<String, dynamic> prov =
         Map<String, dynamic>.from((raw['provenance'] as Map?) ?? const {});
+    prov = _refreshEligibility(prov, srcPath, manifestsDir);
     prov['windowRule'] = <String, dynamic>{
       'tool': 'jablab_engine/tool/segment_punches.dart',
       'mechanism': 'punch_fsm',
@@ -121,4 +140,91 @@ void main(List<String> args) {
         '${f.digest.extensionMs?.toStringAsFixed(0)}ms uzanma, '
         '${f.digest.tempoBand})');
   }
+}
+
+/// Uygunluğu kaynağın GÜNCEL manifestinden tazeler (M-F-138).
+///
+/// Python tarafındaki `tools/harvest_rig/eligibility.py` ile AYNI sözleşme:
+/// karar alanları tazelenir, kesim anındaki değerler `eligibilitySnapshot`
+/// altına taşınır, fark `eligibilityRefreshed` ile işaretlenir. İki dilde iki
+/// uygulama olması hoş değil ama kesiciler iki dilde yaşıyor; sözleşmenin
+/// AYNI olması ve ikisinin de testli olması bunu taşınabilir kılıyor.
+Map<String, dynamic> _refreshEligibility(
+  Map<String, dynamic> prov,
+  String srcPath,
+  String? manifestsDir,
+) {
+  const List<String> fields = <String>[
+    'referenceEligible',
+    'romMode',
+    'contextTags',
+    'contextSource',
+  ];
+  final Map<String, dynamic> out = Map<String, dynamic>.from(prov);
+
+  if (manifestsDir == null) {
+    // Damgasız bayat pencere, taze pencereden ayırt edilemez. Sessizce
+    // üretmek yerine bayatlığı İTİRAF ediyoruz.
+    out['eligibilityStale'] = true;
+    out[r'$eligibilityStaleWhy'] =
+        'Kesim sırasında $_manifestsFlag verilmedi; uygunluk KAYNAKTAN '
+        'tazelenmedi ve bu pencerenin taşıdığı değer KESİM ANINA aittir '
+        '(M-F-138). Kanonik kapıya sunulmadan önce tazelenmeli.';
+    return out;
+  }
+
+  final String id =
+      srcPath.split('/').last.replaceAll('.full.json', '').replaceAll('.json', '');
+  final File mf = File('$manifestsDir/$id.json');
+  if (!mf.existsSync()) {
+    // FAIL-CLOSED: kaynağı bulamadıysak bayat değerle devam etmek kuralı
+    // iptal eder. Pencere üretilmez.
+    throw StateError('kaynak manifesti yok: ${mf.path} — uygunluk '
+        'tazelenemez, pencere kapıya SUNULMAMALI (M-F-138 fail-closed)');
+  }
+  final Map<String, dynamic> m =
+      (jsonDecode(mf.readAsStringSync()) as Map).cast<String, dynamic>();
+  final Map<String, dynamic> fresh = <String, dynamic>{
+    'referenceEligible': m['reference_eligible'],
+    'romMode': m['rom_mode'],
+    'contextTags': m['context_tags'] ?? <dynamic>[],
+    'contextSource': m['context_source'],
+  };
+
+  final Map<String, dynamic> snapshot = <String, dynamic>{
+    for (final String k in fields)
+      if (prov.containsKey(k)) k: prov[k],
+  };
+  bool changed = false;
+  for (final String k in fields) {
+    final Object? a = prov[k];
+    final Object? b = fresh[k];
+    // `contextTags`ta YOK ile BOŞ LİSTE aynıdır (gürültü uyarıyı işlevsiz
+    // kılar). `referenceEligible`ta YOK ile `false` AYNI DEĞİLDİR: yokluk
+    // "henüz sınıflandırılmadı", `false` "BLOKLU" — J-064'ün çekirdeği.
+    if (k == 'contextTags') {
+      final int an = (a as List<dynamic>?)?.length ?? 0;
+      final int bn = (b as List<dynamic>?)?.length ?? 0;
+      if (an != bn) changed = true;
+      continue;
+    }
+    if (a != b) changed = true;
+  }
+
+  out.addAll(fresh);
+  if (snapshot.isNotEmpty) {
+    out['eligibilitySnapshot'] = <String, dynamic>{
+      ...snapshot,
+      r'$doc': 'KESİM ANINDAKİ değerler — yalnız TARİHÇE (M-F-138). Kapı bu '
+          'alanları OKUMAZ; karar kaynağın güncel kaydından gelir.',
+    };
+  }
+  out['eligibilityRefreshed'] = changed;
+  if (changed) {
+    out[r'$eligibilityRefreshedWhy'] =
+        'Kaynağın uygunluk kaydı, bu pencere kesildikten SONRA değişti. '
+        'Kapıya TAZE değer sunuluyor; kesim anındaki değer '
+        'eligibilitySnapshot altında duruyor.';
+  }
+  return out;
 }
