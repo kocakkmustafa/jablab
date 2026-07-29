@@ -17,7 +17,14 @@ import '../shell_candidate/shell_models.dart';
 /// `motion_shell`'e terfi ettiğinde boks kural motorunu da beraberinde
 /// taşırdı. Alan → kabuk dönüşümü **yalnız burada** olur.
 final class ContentRepository {
-  const ContentRepository();
+  const ContentRepository({this.storeOverride});
+
+  /// Denetim/testte gerçek dosya sistemine gitmeden depo enjekte etmek için
+  /// (J-070). Üretimde `null` — `openStore()` o zaman gerçek JSONL deposunu
+  /// açar. Bu alan olmadan uçtan-uca ship denetimi kaydı DOĞRULAYAMAZ:
+  /// `path_provider` widget testinde çalışmaz ve seans akışı kayıtsız koşar,
+  /// yani denetim en kritik bacağı ölçmeden "geçti" derdi.
+  final SessionStore? storeOverride;
 
   static const String libraryAsset = 'assets/content/library.json';
   static const String boxingRuleSetAsset = 'assets/rulesets/boxing@1.0.0.json';
@@ -77,6 +84,8 @@ final class ContentRepository {
   /// biçiminin kendisi uygulamada (append-only JSONL). Üçüncü-taraf DB
   /// bilerek yok — sorgu ihtiyacı ÖLÇÜLDÜĞÜNDE gelir.
   Future<SessionStore> openStore() async {
+    final SessionStore? injected = storeOverride;
+    if (injected != null) return injected;
     final Directory dir = await getApplicationSupportDirectory();
     return JsonlSessionStore(File('${dir.path}/sessions.jsonl'));
   }

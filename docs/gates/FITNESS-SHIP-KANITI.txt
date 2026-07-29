@@ -1,0 +1,119 @@
+═══════════════════════════════════════════════════════════════
+FITNESS-TRACK SHIP DENETİMİ — KOŞUM ÇIKTISI (J-070)
+Bu dosya elle yazılmadı: `test/fitness_ship_audit_test.dart`
+koşumunun stdout'udur. Beyan değil kanıt (J-062 dersi).
+═══════════════════════════════════════════════════════════════
+
+Kapsam İÇERİKTEN sürüldü — ders listesi elle yazılmadı.
+canlı süreli ders : 9
+kilitli ders      : 3
+
+── boxing.foundations.first_round
+   yapı        : 1×180sn tur + 0×0sn dinlenme
+   toplam      : 180sn (3.0 dk)
+   çalışma     : 180sn  ·  kapı: 180sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.foundations → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : — (tek segment)
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 180sn çalışma · 1/1 segment · tamamlandı
+
+── boxing.conditioning.r3
+   yapı        : 3×180sn tur + 2×90sn dinlenme
+   toplam      : 720sn (12.0 dk)
+   çalışma     : 540sn  ·  kapı: 540sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : ✓ gösteriliyor
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 540sn çalışma · 3/3 segment · tamamlandı
+
+── boxing.conditioning.tempo
+   yapı        : 1×600sn tur + 0×0sn dinlenme
+   toplam      : 600sn (10.0 dk)
+   çalışma     : 600sn  ·  kapı: 600sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : — (tek segment)
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 600sn çalışma · 1/1 segment · tamamlandı
+
+── boxing.conditioning.r5
+   yapı        : 1×300sn tur + 0×0sn dinlenme
+   toplam      : 300sn (5.0 dk)
+   çalışma     : 300sn  ·  kapı: 300sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : — (tek segment)
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 300sn çalışma · 1/1 segment · tamamlandı
+
+── boxing.conditioning.r10
+   yapı        : 3×200sn tur + 2×100sn dinlenme
+   toplam      : 800sn (13.3 dk)
+   çalışma     : 600sn  ·  kapı: 600sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : ✓ gösteriliyor
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 600sn çalışma · 3/3 segment · tamamlandı
+
+── boxing.conditioning.r20
+   yapı        : 6×200sn tur + 5×60sn dinlenme
+   toplam      : 1500sn (25.0 dk)
+   çalışma     : 1200sn  ·  kapı: 1200sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : ✓ gösteriliyor
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 1200sn çalışma · 6/6 segment · tamamlandı
+
+── boxing.conditioning.hiit
+   yapı        : 12×(30+30)sn aralık
+   toplam      : 720sn (12.0 dk)
+   çalışma     : 360sn  ·  kapı: 360sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : ✓ gösteriliyor
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 360sn çalışma · 12/12 segment · tamamlandı
+
+── boxing.conditioning.technique_round
+   yapı        : 3×180sn tur + 2×90sn dinlenme
+   toplam      : 720sn (12.0 dk)
+   çalışma     : 540sn  ·  kapı: 540sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.conditioning → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : ✓ gösteriliyor
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 540sn çalışma · 3/3 segment · tamamlandı
+
+── boxing.intermediate.fatigue
+   yapı        : 4×300sn tur + 3×60sn dinlenme
+   toplam      : 1380sn (23.0 dk)
+   çalışma     : 1200sn  ·  kapı: 1200sn  ✓ BİREBİR
+   ulaşılabilir: ✓ kütüphane → boxing.intermediate → ders
+   4 aşama     : öğret=✓ dene=✓ canlı=✓ özet=✓
+   konum       : ✓ gösteriliyor
+   hüküm       : ✓ SUSUYOR + sebebi yazılı
+   ✓ kayıt 1200sn çalışma · 4/4 segment · tamamlandı
+
+── ilerleme sayfası (seans sonrası)
+   kaydedilen bölüm : ✓ görünüyor
+   "kapı açılmıyor" : ✓ yazılı
+   hüküm bantları   : ✓ hâlâ SUSUYOR (—)
+
+── KİLİTLİ DERSLER (3) — hepsi ÖLÇÜM sınıfı
+   🔒 boxing.intermediate.combinations
+      Hooks and uppercuts are counted but not classified, so we can't judge combination order here yet.
+   🔒 boxing.intermediate.counter
+      Answering a defence needs an opponent to answer. Shadow work can't provide one, so we won't score it.
+   🔒 boxing.intermediate.footwork_combo
+      We can spot crossed feet, but we haven't measured what good footwork looks like across enough coaches to grade it.
+
+═══════════════════════════════════════════════════════════════
+SONUÇ: 9/9 canlı süreli ders uçtan uca YÜRÜDÜ.
+Her dersin çalışma süresi kendi ilerleme kapısına BİREBİR eşit;
+kayıt hattı kamera OLMADAN çalışıyor; hüküm yuvası susuyor ve
+sebebini söylüyor. Fitness-track için kalan TEK sınıf: KAMERA.
+═══════════════════════════════════════════════════════════════
