@@ -16,6 +16,29 @@ dependencies:
   # uygulamanın kendisinde (append-only JSONL, `lib/app/session_store.dart`).
   # 3. taraf DB BİLEREK YOK: sorgu ihtiyacı ölçülünce gelir.
   path_provider: ^2.1.0
+  # KAMERA KÖPRÜSÜ (J-071). TAG'e pinli git-dep (M-F-154 rejimi + M-F-03):
+  # path bağımlılığı paylaşımlı ağaçta o an hangi dal çıkılıysa onu okur,
+  # yani bağımlılığımız başka bir oturumun dal değiştirmesiyle sessizce
+  # değişirdi.
+  #
+  # ⚠️ PİN EŞİTLİĞİ ZORUNLU: bu plugin `motion_core`u PATH ile çekiyor
+  # (aynı repo). `motion_camera-v0.1.0` ve `motion_core-v0.8.8` AYNI
+  # COMMIT (03ff936) — bu yüzden `jablab_engine` de v0.8.8'e yükseltildi.
+  # Farklı ref'ler olsaydı pub aynı paket için iki kaynak görüp çözemezdi.
+  # `test/dependency_pin_test.dart` bu eşitliği zorluyor.
+  motion_camera:
+    git:
+      url: https://github.com/kocakkmustafa/motion-core.git
+      path: packages/motion_camera
+      # GECICI — DAL COMMIT'I, tag DEGIL (J-071).
+      # motion_camera-v0.1.0'in iOS Swift katmani 0.10.21'e karsi
+      # DERLENMIYORDU (ImageProcessingOptions tipi o surumde YOK). Duzeltme
+      # fix/motion-camera-ios-0.10.21-api dalinda, MERGE KOORDINATORDE.
+      # Tag'te kalip pub-cache'i elle duzeltmek "benim makinemde calisiyor"
+      # tuzagi olurdu; bagimlilik bu yuzden ACIKCA dal commit'ini gosteriyor.
+      # MERGE + YENI TAG gelince buraya tag yazilacak ve asagidaki
+      # jablab_engine core pini de o tag'in commit'ine doner.
+      ref: 5b86df5c927763a195b526c976be10fb8ffebb1c
 
 dev_dependencies:
   flutter_test:

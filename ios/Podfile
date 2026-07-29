@@ -1,5 +1,7 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '13.0'
+# KAMERA KÖPRÜSÜ (J-071): `motion_camera` podspec'i `s.platform = :ios,
+# '14.0'` beyan ediyor (MediaPipeTasksVision 0.10.21 pini gereği). Platform
+# satırı yorumdayken pod install eklentinin tabanını çözemez.
+platform :ios, '14.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -28,7 +30,14 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  use_frameworks!
+  # KAMERA KÖPRÜSÜ (J-071): MediaPipeTasksVision 0.10.21 STATİK bir
+  # xcframework dağıtıyor. Çıplak `use_frameworks!` (dinamik) ile CocoaPods
+  # bunu reddediyor:
+  #   "[!] The 'Pods-Runner' target has transitive dependencies that include
+  #    statically linked binaries: .../MediaPipeTasksVision.xcframework"
+  # Statik linkleme MediaPipe pinini VERİLDİĞİ GİBİ tüketmenin yolu — pin
+  # M-L-02 gereği sabit, o yüzden çözüm bizim tarafta.
+  use_frameworks! :linkage => :static
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
