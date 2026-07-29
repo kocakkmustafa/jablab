@@ -54,9 +54,23 @@ void main() {
       'encouragement': 5,
       'session': 6,
       'summary': 20,       // tur sonu, dinlenirken okunur/duyulur
+      'interval': 5,       // HIIT: yalnız ritim ve sayım
+      'setup': 10,         // kamera dersi: kullanıcı hareketsiz, dinliyor
+      'drill': 8,          // drill BAŞLAMADAN, kullanıcı dururken
     };
+
+    // Yeni bir grup eklendiğinde bu haritaya yazılmazsa uzunluk kuralından
+    // SESSİZCE kaçardı — ve tam olarak öyle bir grupta kural en çok gerekir
+    // (yeni grup = henüz kimsenin sesli dinlemediği replikler).
+    final Set<String> covered = limits.keys.toSet();
+    for (final MapEntry<String, dynamic> g in cues.entries) {
+      if (g.key.startsWith(r'$') || g.value is! Map) continue;
+      expect(covered, contains(g.key),
+          reason: '"${g.key}" grubu uzunluk sınırı tanımlamamış — sınırdan kaçıyor');
+    }
     for (final MapEntry<String, int> lim in limits.entries) {
       for (final MapEntry<String, dynamic> e in group(lim.key).entries) {
+        if (e.key.startsWith(r'$')) continue; // grup içi belge notu
         for (final String line in (e.value as List<dynamic>).cast<String>()) {
           final int words = line.split(RegExp(r'\s+')).length;
           expect(words, lessThanOrEqualTo(lim.value),
@@ -99,6 +113,75 @@ void main() {
       for (final MapEntry<String, dynamic> e in group(g).entries) {
         expect((e.value as List<dynamic>), isNotEmpty, reason: e.key);
       }
+    }
+  });
+
+  test('[J-039] her replik grubunun ÜRETİCİSİ beyan edilmiş', () {
+    // Üreticisi olmayan replik ölü içeriktir. Satır hedefini ölü içerikle
+    // tutturmak metriği oynamaktır; bu yüzden her grup ya bugün bir şey
+    // tarafından söylenebilir olmalı ya da neden söylenemediğini yazmalı.
+    final Map<String, dynamic> producers =
+        (cues[r'$producers'] as Map).cast<String, dynamic>();
+    for (final MapEntry<String, dynamic> g in cues.entries) {
+      if (g.key.startsWith(r'$') || g.value is! Map) continue;
+      final Map<String, dynamic>? pr =
+          (producers[g.key] as Map?)?.cast<String, dynamic>();
+      expect(pr, isNotNull,
+          reason: '"${g.key}" grubunun üreticisi beyan edilmemiş — '
+              'kimsenin söyleyemediği replikler sessizce birikir');
+      expect(
+          <String>['bound', 'awaiting-wiring', 'awaiting-surface']
+              .contains(pr!['status']),
+          isTrue,
+          reason: '${g.key}: tanınmayan durum "${pr['status']}"');
+    }
+  });
+
+  test('[J-039] SARKAN ATIF yok — beyan edilen yüzey gerçekten var', () {
+    // "awaiting-wiring" iddiası, yüzeyin VAR olduğunu söyler. Yüzey silinmiş
+    // veya adı değişmişse iddia sessizce yalana döner ve grup sonsuza kadar
+    // "bir sonraki tur bağlanacak" durumunda asılı kalır.
+    final Map<String, dynamic> producers =
+        (cues[r'$producers'] as Map).cast<String, dynamic>();
+    for (final MapEntry<String, dynamic> e in producers.entries) {
+      if (e.key.startsWith(r'$')) continue;
+      final Map<String, dynamic> pr = (e.value as Map).cast<String, dynamic>();
+      final String? surface = pr['surface'] as String?;
+      if (pr['status'] == 'awaiting-wiring') {
+        expect(surface, isNotNull,
+            reason: '${e.key}: yüzey var deniyor ama yolu yazılmamış');
+        expect(File('../../$surface').existsSync(), isTrue,
+            reason: '${e.key}: beyan edilen yüzey $surface YOK — sarkan atıf');
+      }
+      if (pr['status'] == 'awaiting-surface') {
+        expect(surface, isNull,
+            reason: '${e.key}: yüzey yok deniyor ama bir yol gösteriyor');
+      }
+    }
+  });
+
+  test('[J-039] drill giriş replikleri GERÇEKTEN bağlı', () {
+    // "bound" en güçlü iddia: bugün bir şey bunu söyleyebilir. İddiayı
+    // taşıyan tek grup drill; bağ çift yönlü zorlanıyor.
+    final Map<String, dynamic> cur = (jsonDecode(
+                File('../../assets/content/curriculum.json').readAsStringSync())
+            as Map)
+        .cast<String, dynamic>();
+    final Map<String, dynamic> drills =
+        (cur['drills'] as Map).cast<String, dynamic>();
+    final Map<String, dynamic> drillCues = group('drill');
+    for (final MapEntry<String, dynamic> d in drills.entries) {
+      final String? intro = (d.value as Map)['introCue'] as String?;
+      expect(intro, isNotNull, reason: '${d.key}: giriş repliği yok');
+      expect(drillCues.containsKey(intro), isTrue,
+          reason: '${d.key} → $intro: böyle bir replik yok (sarkan atıf)');
+    }
+    for (final String k in drillCues.keys) {
+      if (k.startsWith(r'$')) continue;
+      final bool used = drills.values.any(
+          (dynamic d) => (d as Map)['introCue'] == k);
+      expect(used, isTrue,
+          reason: '$k hiçbir drill tarafından kullanılmıyor — ölü replik');
     }
   });
 }

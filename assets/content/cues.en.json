@@ -7,72 +7,103 @@
     "cue.rear_hand_low": [
       "Rear hand up.",
       "Protect your chin.",
-      "Hand back to your cheek."
+      "Hand back to your cheek.",
+      "Right hand home.",
+      "That hand keeps dropping.",
+      "Guard it."
     ],
     "cue.lead_hand_not_recovered": [
       "Snap it back.",
       "Hand home faster.",
-      "Return on the same line."
+      "Return on the same line.",
+      "Don't leave it out there.",
+      "Bring it back."
     ],
     "cue.elbow_flared": [
       "Elbow in.",
       "Keep it tight.",
-      "Punch through the line."
+      "Punch through the line.",
+      "Elbow stays down."
     ],
     "cue.overreach": [
       "Don't lean in.",
       "Stay over your feet.",
-      "Shorten the reach."
+      "Shorten the reach.",
+      "You're reaching.",
+      "Let it come to you."
     ],
     "cue.torso_forward": [
       "Chest up.",
-      "Stack over your hips."
+      "Stack over your hips.",
+      "Stand tall.",
+      "Lift your chest."
     ],
     "cue.stance_narrow": [
       "Feet wider.",
-      "Give yourself a base."
+      "Give yourself a base.",
+      "Widen up.",
+      "More width."
     ],
     "cue.stance_wide": [
       "Bring your feet in.",
-      "Too wide to move."
+      "Too wide to move.",
+      "Narrow it up.",
+      "Shorten the base."
     ],
     "cue.feet_crossed": [
       "Don't cross your feet.",
-      "Step, don't cross."
+      "Step, don't cross.",
+      "Feet crossed.",
+      "Reset your feet."
     ],
     "cue.balance_loss": [
       "Stay balanced.",
-      "Weight between your feet."
+      "Weight between your feet.",
+      "Find your base.",
+      "Settle."
     ],
     "cue.wrong_hand": [
       "Other hand.",
-      "That was the wrong hand."
+      "That was the wrong hand.",
+      "Wrong hand that time.",
+      "Switch hands."
     ],
     "cue.combo_order": [
       "Watch the order.",
-      "One, then two."
+      "One, then two.",
+      "Order slipped.",
+      "Jab first."
     ],
     "cue.slow_down": [
       "Slow down.",
-      "Speed is costing you form."
+      "Speed is costing you form.",
+      "Ease off.",
+      "Slower, cleaner."
     ]
   },
   "$noVerdictDoc": "Bunlar susmanin ALTERNATIFI. Sessizlik kullaniciya 'her sey yolunda' der; oysa analiz hic calismiyordur. plan 12: 'Bilegini bu acidan goremiyorum' denir, 'yanlis yaptin' DENMEZ.",
   "noVerdict": {
     "cue.out_of_frame": [
       "Step back into frame.",
-      "I can only see part of you."
+      "I can only see part of you.",
+      "Move back — you're out of frame.",
+      "I've lost your legs."
     ],
     "cue.low_confidence": [
       "I can't see you clearly enough to judge.",
-      "Losing track of you."
+      "Losing track of you.",
+      "Tracking isn't clean — holding off.",
+      "Not confident enough to call that."
     ],
     "cue.low_light": [
-      "Too dark to read your form."
+      "Too dark to read your form.",
+      "Not enough light in here.",
+      "I need more light to judge."
     ],
     "cue.structural": [
       "My tracking looks wrong — holding off.",
-      "Not confident in what I'm seeing."
+      "Not confident in what I'm seeing.",
+      "Something's off in my read. Staying quiet."
     ]
   },
   "counting": {
@@ -80,37 +111,77 @@
       "{n}"
     ],
     "cue.halfway": [
-      "Halfway."
+      "Halfway.",
+      "Half done."
     ],
     "cue.last_ten": [
-      "Ten seconds."
+      "Ten seconds.",
+      "Last ten."
+    ],
+    "cue.last_five": [
+      "Five.",
+      "Last five."
+    ],
+    "cue.milestone": [
+      "{n} in.",
+      "{n} down."
     ]
   },
   "encouragement": {
     "cue.corrected": [
       "That's it.",
       "Better.",
-      "Yes — keep that."
+      "Yes — keep that.",
+      "There it is.",
+      "Held it that time."
     ],
     "cue.streak": [
       "Clean set.",
-      "Nice and tight."
+      "Nice and tight.",
+      "That's the shape.",
+      "Staying with it."
+    ],
+    "cue.settled": [
+      "Good base.",
+      "You've settled.",
+      "Feet look right."
     ]
   },
   "session": {
     "cue.round_start": [
-      "Hands up. Go."
+      "Hands up. Go.",
+      "Round one. Go.",
+      "Let's work.",
+      "Guard up. Begin."
     ],
     "cue.round_end": [
-      "Time. Breathe."
+      "Time. Breathe.",
+      "That's the round.",
+      "Time.",
+      "Round done. Breathe."
     ],
     "cue.rest": [
       "Rest.",
-      "Shake it out."
+      "Shake it out.",
+      "Breathe. Loose arms.",
+      "Recover."
     ],
     "cue.setup_ok": [
       "I can see you. Ready?",
-      "Got you. Whenever you are."
+      "Got you. Whenever you are.",
+      "You're in frame. Ready?"
+    ],
+    "cue.round_of": [
+      "Round {n} of {total}."
+    ],
+    "cue.next_up": [
+      "Next: {name}.",
+      "Coming up: {name}."
+    ],
+    "cue.finished": [
+      "Session done.",
+      "That's the session.",
+      "Done. Good work."
     ]
   },
   "$scoringHonesty": "J-033: egitmenler gard/kol pozisyonunda 36,7 derece ayrisiyor. Bu basliklar KOCLANIR ama SKORLANMAZ; tur sonunda kullaniciya soylenir.",
@@ -120,6 +191,174 @@
     ],
     "cue.not_measured_power": [
       "We don't measure punch power — a camera can't."
+    ],
+    "cue.trend_improving": [
+      "Your guard dropped less this round than last. That's your own trend, not a score."
+    ],
+    "cue.trend_worse": [
+      "Guard dropped more often this round. Usually that's fatigue, not technique."
+    ],
+    "cue.trend_flat": [
+      "About the same as last round."
+    ],
+    "cue.no_trend_yet": [
+      "Not enough rounds yet to call a trend."
+    ],
+    "cue.partial_analysis": [
+      "I could only read {pct} percent of this round. The rest isn't counted either way."
+    ],
+    "cue.scored_topics": [
+      "Graded this round: {list}."
+    ],
+    "cue.coached_topics": [
+      "Flagged but not graded: {list}."
     ]
+  },
+  "interval": {
+    "$groupDoc": "HIIT araligi. Bu grup calisirken FORM repliklerinin susturuldugunu varsayar: yuksek tempoyu urun istedi, sonra 'formun bozuldu' demek kendi tasarimimiza ceza kesmek olur. Burada yalnizca ritim ve sayim konusulur.",
+    "cue.burst_start": [
+      "Go. Hard.",
+      "Burst — go.",
+      "All out."
+    ],
+    "cue.burst_end": [
+      "Ease off.",
+      "Off the gas."
+    ],
+    "cue.recover": [
+      "Recover.",
+      "Breathe it back.",
+      "Loose. Breathe."
+    ],
+    "cue.next_burst": [
+      "Ten seconds to go.",
+      "Get ready.",
+      "Next one coming."
+    ]
+  },
+  "setup": {
+    "$groupDoc": "Kamera ve alan dersi. Kullanici hareketsiz ve dinliyor, bu yuzden sinir tur-ici repliklerden genis. Bu grup KURULUM kosulunu tarif eder; form hukmu VERMEZ.",
+    "cue.setup_step_back": [
+      "Step back until I can see your feet.",
+      "A bit further back.",
+      "I need your whole body in frame."
+    ],
+    "cue.setup_center": [
+      "Move to the middle of the frame.",
+      "Centre yourself.",
+      "Slide over a little."
+    ],
+    "cue.setup_angle": [
+      "Turn slightly toward me.",
+      "A front-oblique angle reads your guard best.",
+      "Angle yourself about forty-five degrees."
+    ],
+    "cue.setup_light": [
+      "Face the light if you can.",
+      "Try not to stand against a window."
+    ],
+    "cue.setup_phone": [
+      "Prop the phone at hip height.",
+      "Waist height works best.",
+      "Lean it somewhere stable."
+    ],
+    "cue.setup_space": [
+      "Give yourself two steps in every direction.",
+      "Clear a little space around you."
+    ],
+    "cue.setup_done": [
+      "That's a good setup. Remember this spot."
+    ]
+  },
+  "drill": {
+    "$groupDoc": "Drill baslangic replikleri. Drill BASLAMADAN once, kullanici dururken soylenir — bu yuzden tur-ici sinirdan genis. Her drill'in hedefi tek.",
+    "cue.drill.guard_discipline": [
+      "Slow jabs. Only the other hand matters.",
+      "Forget speed. Watch the hand that stays home."
+    ],
+    "cue.drill.snap_back": [
+      "Throw and bring it straight back.",
+      "The return is the rep, not the punch."
+    ],
+    "cue.drill.stance_reset": [
+      "Reset your stance between each one.",
+      "Step out, step back, find the base."
+    ],
+    "cue.drill.footwork_basics": [
+      "Step and slide. Never cross.",
+      "Small steps. Feet never meet."
+    ],
+    "cue.drill.balance": [
+      "Punch, then hold your finish.",
+      "Freeze at the end of each one."
+    ],
+    "cue.drill.posture_reset": [
+      "Chest tall. Punch without folding.",
+      "Stay stacked through the shot."
+    ],
+    "cue.drill.combo_slow": [
+      "One, then two. No rush.",
+      "Half speed. Order over speed."
+    ],
+    "cue.drill.controlled_tempo": [
+      "Match my count. Not faster.",
+      "Stay on the beat."
+    ],
+    "cue.drill.straight_line": [
+      "Punch along a straight line.",
+      "Elbow follows the fist."
+    ],
+    "cue.drill.range_control": [
+      "Stay planted. Don't chase.",
+      "Punch from where you stand."
+    ]
+  },
+  "$producers": {
+    "$doc": "Her replik grubunun BUGUN bir ureticisi var mi. Uretici olmayan replik olu icerik demektir; satir hedefini olu icerikle tutturmak metrigi oynamaktir. Uc durum ayri: yuzey YOK olmakla, yuzey VAR ama bagli degil olmak ayni sey degildir.",
+    "technique": {
+      "by": "errors[].feedbackKey",
+      "status": "bound"
+    },
+    "noVerdict": {
+      "by": "errors[].feedbackKey + StrikingEngine bastirma kapilari",
+      "status": "bound"
+    },
+    "drill": {
+      "by": "curriculum.drills[].introCue",
+      "status": "bound"
+    },
+    "counting": {
+      "by": "IntervalTimer",
+      "status": "awaiting-wiring",
+      "surface": "lib/shell_candidate/session_flow.dart",
+      "$note": "Zamanlayici VAR, sayimi sesli soylemiyor. Baglama G7 giydirme turunda."
+    },
+    "session": {
+      "by": "SessionFlowScaffold",
+      "status": "awaiting-wiring",
+      "surface": "lib/shell_candidate/session_flow.dart"
+    },
+    "encouragement": {
+      "by": "LiveCoachSurface",
+      "status": "awaiting-wiring",
+      "surface": "lib/shell_candidate/live_surface.dart",
+      "$note": "Olumlu sinyal duzeltmenin GORULDUGUNU sart kosar; motor uretiyor, yuzey henuz sesli sinyal vermiyor."
+    },
+    "summary": {
+      "by": "SessionSummaryView",
+      "status": "awaiting-wiring",
+      "surface": "lib/shell_candidate/live_surface.dart",
+      "$note": "Ozet su an sabit metin. Trend replikleri SEANS GECMISI gelince baglanabilir — gecmis olmadan trend cumlesi soylenemez."
+    },
+    "interval": {
+      "by": "IntervalTimer (HIIT kipi)",
+      "status": "awaiting-wiring",
+      "surface": "lib/shell_candidate/session_flow.dart"
+    },
+    "setup": {
+      "by": "kamera kurulum sihirbazi",
+      "status": "awaiting-surface",
+      "$note": "Sihirbazin KENDISI yok (shell_candidate/README 'Henuz yok' listesinde). Kamera dersi canli ama rehberlik metinleri sessiz."
+    }
   }
 }

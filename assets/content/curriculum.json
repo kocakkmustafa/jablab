@@ -15,7 +15,8 @@
         "REAR_HAND_LOW"
       ],
       "$gateableWhy": "KAPI KURULAMAZ — REAR_HAND_LOW: B bandi (tespit kamera acisina bagli). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
-      "reportsAs": "trend"
+      "reportsAs": "trend",
+      "introCue": "cue.drill.guard_discipline"
     },
     "drill.snap_back": {
       "displayName": "Snap back",
@@ -29,7 +30,8 @@
         "LEAD_HAND_NOT_RECOVERED"
       ],
       "$gateableWhy": "KAPI KURULAMAZ — LEAD_HAND_NOT_RECOVERED: B bandi (tespit kamera acisina bagli). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
-      "reportsAs": "trend"
+      "reportsAs": "trend",
+      "introCue": "cue.drill.snap_back"
     },
     "drill.stance_reset": {
       "displayName": "Stance reset",
@@ -45,7 +47,8 @@
         "STANCE_TOO_WIDE"
       ],
       "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
-      "reportsAs": "gate"
+      "reportsAs": "gate",
+      "introCue": "cue.drill.stance_reset"
     },
     "drill.footwork_basics": {
       "displayName": "Footwork basics",
@@ -59,7 +62,8 @@
         "FEET_CROSSED"
       ],
       "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
-      "reportsAs": "gate"
+      "reportsAs": "gate",
+      "introCue": "cue.drill.footwork_basics"
     },
     "drill.balance": {
       "displayName": "Balance",
@@ -73,7 +77,8 @@
         "BALANCE_LOSS"
       ],
       "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
-      "reportsAs": "gate"
+      "reportsAs": "gate",
+      "introCue": "cue.drill.balance"
     },
     "drill.posture_reset": {
       "displayName": "Posture reset",
@@ -87,7 +92,8 @@
         "TORSO_FALLING_FORWARD"
       ],
       "$gateableWhy": "KAPI KURULAMAZ — TORSO_FALLING_FORWARD: trunkLeanAngle → trunk_tilt KOCLANAN (egitmenler ayrisiyor). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
-      "reportsAs": "trend"
+      "reportsAs": "trend",
+      "introCue": "cue.drill.posture_reset"
     },
     "drill.combo_slow": {
       "displayName": "Combination, slowly",
@@ -103,7 +109,8 @@
         "COMBINATION_ORDER_ERROR"
       ],
       "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
-      "reportsAs": "gate"
+      "reportsAs": "gate",
+      "introCue": "cue.drill.combo_slow"
     },
     "drill.controlled_tempo": {
       "displayName": "Controlled tempo",
@@ -117,7 +124,8 @@
         "TEMPO_TOO_FAST_FOR_FORM"
       ],
       "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
-      "reportsAs": "gate"
+      "reportsAs": "gate",
+      "introCue": "cue.drill.controlled_tempo"
     },
     "drill.straight_line": {
       "displayName": "Straight line",
@@ -132,7 +140,8 @@
         "ELBOW_FLARED"
       ],
       "$gateableWhy": "KAPI KURULAMAZ — ELBOW_FLARED: B bandi (tespit kamera acisina bagli). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
-      "reportsAs": "trend"
+      "reportsAs": "trend",
+      "introCue": "cue.drill.straight_line"
     },
     "drill.range_control": {
       "displayName": "Range control",
@@ -147,7 +156,8 @@
         "OVERREACH"
       ],
       "$gateableWhy": "KAPI KURULAMAZ — OVERREACH: B bandi (tespit kamera acisina bagli) · OVERREACH: trunkLeanAngle → trunk_tilt KOCLANAN (egitmenler ayrisiyor). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
-      "reportsAs": "trend"
+      "reportsAs": "trend",
+      "introCue": "cue.drill.range_control"
     }
   },
   "progression": {
