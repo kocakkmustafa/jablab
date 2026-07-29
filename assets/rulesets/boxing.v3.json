@@ -1,0 +1,448 @@
+{
+  "schemaVersion": "3.0",
+  "metrics": {
+    "extensionRatio": {
+      "unit": "ratio",
+      "range": [
+        0,
+        1.2
+      ],
+      "noiseBand": 0.02,
+      "baseline": 0.55,
+      "cutoffHz": 8.0
+    },
+    "stanceWidthRatio": {
+      "unit": "ratio",
+      "range": [
+        0,
+        4.0
+      ],
+      "noiseBand": 0.05,
+      "baseline": 1.4
+    },
+    "guardHeightDelta": {
+      "unit": "ratio",
+      "range": [
+        -1.5,
+        1.5
+      ],
+      "noiseBand": 0.03,
+      "baseline": -0.1
+    },
+    "elbowFlareAngle": {
+      "unit": "deg",
+      "range": [
+        0,
+        180
+      ],
+      "noiseBand": 4.0,
+      "baseline": 20.0,
+      "cutoffHz": 8.0
+    },
+    "trunkLeanAngle": {
+      "unit": "deg",
+      "range": [
+        0,
+        90
+      ],
+      "noiseBand": 3.0,
+      "baseline": 8.0
+    },
+    "shoulderRotation": {
+      "unit": "deg",
+      "range": [
+        0,
+        90
+      ],
+      "noiseBand": 4.0,
+      "baseline": 10.0,
+      "cutoffHz": 8.0
+    },
+    "copOverBase": {
+      "unit": "ratio",
+      "range": [
+        0,
+        2.0
+      ],
+      "noiseBand": 0.04,
+      "baseline": 0.0
+    },
+    "frontFootLoadRatio": {
+      "unit": "ratio",
+      "range": [
+        0,
+        1.0
+      ],
+      "noiseBand": 0.05,
+      "baseline": 0.5
+    }
+  },
+  "techniques": [
+    {
+      "id": "jab",
+      "limb": "lead_arm",
+      "sideResolution": "visible",
+      "phases": [
+        {
+          "id": "GUARD_READY",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "lt",
+            "value": 0.62
+          },
+          "timeoutMs": 4000,
+          "requiredLandmarks": [
+            "lead_wrist",
+            "lead_elbow",
+            "lead_shoulder",
+            "rear_wrist"
+          ]
+        },
+        {
+          "id": "EXTENSION",
+          "enter": {
+            "kind": "all",
+            "of": [
+              {
+                "kind": "metric",
+                "metric": "extensionRatio",
+                "op": "gt",
+                "value": 0.68
+              },
+              {
+                "kind": "delta",
+                "metric": "extensionRatio",
+                "op": "gt",
+                "valuePerSecond": 0
+              }
+            ]
+          },
+          "timeoutMs": 400
+        },
+        {
+          "id": "PEAK",
+          "enter": {
+            "kind": "all",
+            "of": [
+              {
+                "kind": "metric",
+                "metric": "extensionRatio",
+                "op": "gt",
+                "value": 0.85
+              },
+              {
+                "kind": "localMax",
+                "metric": "extensionRatio"
+              }
+            ]
+          },
+          "timeoutMs": 150,
+          "quality": {
+            "elbowFlareAngle": 45.0
+          }
+        },
+        {
+          "id": "RETRACTION",
+          "enter": {
+            "kind": "all",
+            "of": [
+              {
+                "kind": "metric",
+                "metric": "extensionRatio",
+                "op": "lt",
+                "value": 0.8
+              },
+              {
+                "kind": "delta",
+                "metric": "extensionRatio",
+                "op": "lt",
+                "valuePerSecond": 0
+              }
+            ]
+          },
+          "timeoutMs": 600
+        },
+        {
+          "id": "GUARD_RECOVERED",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "lt",
+            "value": 0.62
+          },
+          "terminal": true
+        }
+      ],
+      "errors": [
+        {
+          "code": "REAR_HAND_LOW",
+          "evaluateAt": {
+            "kind": "phase",
+            "phaseId": "PEAK"
+          },
+          "condition": {
+            "kind": "metric",
+            "metric": "guardHeightDelta",
+            "op": "gt",
+            "value": 0.08
+          },
+          "cooldownMs": 8000,
+          "maxPerRound": 3,
+          "priority": "quality"
+        },
+        {
+          "code": "TORSO_FALLING_FORWARD",
+          "evaluateAt": {
+            "kind": "phase",
+            "phaseId": "PEAK"
+          },
+          "condition": {
+            "kind": "metric",
+            "metric": "trunkLeanAngle",
+            "op": "gt",
+            "value": 25
+          },
+          "cooldownMs": 8000,
+          "maxPerRound": 3,
+          "priority": "safety"
+        },
+        {
+          "code": "STANCE_TOO_NARROW",
+          "evaluateAt": {
+            "kind": "periodic",
+            "everyMs": 2000
+          },
+          "condition": {
+            "kind": "metric",
+            "metric": "stanceWidthRatio",
+            "op": "lt",
+            "value": 0.9
+          },
+          "cooldownMs": 20000,
+          "maxPerRound": 2,
+          "priority": "quality"
+        },
+        {
+          "code": "LOW_TRACKING_CONFIDENCE",
+          "evaluateAt": {
+            "kind": "phase",
+            "phaseId": "GUARD_READY"
+          },
+          "condition": {
+            "kind": "confidence",
+            "op": "lt",
+            "value": 0.5
+          },
+          "suppressesJudgement": true,
+          "cooldownMs": 15000,
+          "priority": "blocking"
+        }
+      ]
+    },
+    {
+      "id": "cross",
+      "limb": "rear_arm",
+      "sideResolution": "visible",
+      "phases": [
+        {
+          "id": "GUARD_READY",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "lt",
+            "value": 0.62
+          },
+          "timeoutMs": 4000
+        },
+        {
+          "id": "REAR_SHOULDER_ROTATION",
+          "enter": {
+            "kind": "metric",
+            "metric": "shoulderRotation",
+            "op": "gt",
+            "value": 12
+          },
+          "timeoutMs": 250
+        },
+        {
+          "id": "EXTENSION",
+          "enter": {
+            "kind": "all",
+            "of": [
+              {
+                "kind": "metric",
+                "metric": "extensionRatio",
+                "op": "gt",
+                "value": 0.68
+              },
+              {
+                "kind": "delta",
+                "metric": "extensionRatio",
+                "op": "gt",
+                "valuePerSecond": 0
+              }
+            ]
+          },
+          "timeoutMs": 400
+        },
+        {
+          "id": "PEAK",
+          "enter": {
+            "kind": "all",
+            "of": [
+              {
+                "kind": "metric",
+                "metric": "extensionRatio",
+                "op": "gt",
+                "value": 0.85
+              },
+              {
+                "kind": "localMax",
+                "metric": "extensionRatio"
+              }
+            ]
+          },
+          "timeoutMs": 150,
+          "quality": {
+            "elbowFlareAngle": 45.0
+          }
+        },
+        {
+          "id": "RETRACTION",
+          "enter": {
+            "kind": "all",
+            "of": [
+              {
+                "kind": "metric",
+                "metric": "extensionRatio",
+                "op": "lt",
+                "value": 0.8
+              },
+              {
+                "kind": "delta",
+                "metric": "extensionRatio",
+                "op": "lt",
+                "valuePerSecond": 0
+              }
+            ]
+          },
+          "timeoutMs": 600
+        },
+        {
+          "id": "GUARD_RECOVERED",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "lt",
+            "value": 0.62
+          },
+          "terminal": true
+        }
+      ],
+      "errors": [
+        {
+          "code": "REAR_HAND_LOW",
+          "evaluateAt": {
+            "kind": "phase",
+            "phaseId": "PEAK"
+          },
+          "condition": {
+            "kind": "metric",
+            "metric": "guardHeightDelta",
+            "op": "gt",
+            "value": 0.08
+          },
+          "cooldownMs": 8000,
+          "maxPerRound": 3,
+          "priority": "quality"
+        },
+        {
+          "code": "TORSO_FALLING_FORWARD",
+          "evaluateAt": {
+            "kind": "phase",
+            "phaseId": "PEAK"
+          },
+          "condition": {
+            "kind": "metric",
+            "metric": "trunkLeanAngle",
+            "op": "gt",
+            "value": 25
+          },
+          "cooldownMs": 8000,
+          "maxPerRound": 3,
+          "priority": "safety"
+        },
+        {
+          "code": "STANCE_TOO_NARROW",
+          "evaluateAt": {
+            "kind": "periodic",
+            "everyMs": 2000
+          },
+          "condition": {
+            "kind": "metric",
+            "metric": "stanceWidthRatio",
+            "op": "lt",
+            "value": 0.9
+          },
+          "cooldownMs": 20000,
+          "maxPerRound": 2,
+          "priority": "quality"
+        },
+        {
+          "code": "LOW_TRACKING_CONFIDENCE",
+          "evaluateAt": {
+            "kind": "phase",
+            "phaseId": "GUARD_READY"
+          },
+          "condition": {
+            "kind": "confidence",
+            "op": "lt",
+            "value": 0.5
+          },
+          "suppressesJudgement": true,
+          "cooldownMs": 15000,
+          "priority": "blocking"
+        }
+      ]
+    },
+    {
+      "id": "unclassified_strike",
+      "limb": "lead_arm",
+      "sideResolution": "visible",
+      "fallback": true,
+      "phases": [
+        {
+          "id": "GUARD_READY",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "lt",
+            "value": 0.62
+          },
+          "timeoutMs": 4000
+        },
+        {
+          "id": "STRIKE_WINDOW",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "gt",
+            "value": 0.7
+          },
+          "timeoutMs": 500
+        },
+        {
+          "id": "GUARD_RECOVERED",
+          "enter": {
+            "kind": "metric",
+            "metric": "extensionRatio",
+            "op": "lt",
+            "value": 0.62
+          },
+          "terminal": true
+        }
+      ]
+    }
+  ]
+}

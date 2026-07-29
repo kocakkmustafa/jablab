@@ -229,7 +229,7 @@ final class StrikingEngine {
   }
 
   List<PhaseDefinition> _compile(TechniqueConfig t) {
-    return t.phases.map((PhaseConfig p) {
+    return t.phases.map((TechniquePhase p) {
       return PhaseDefinition(
         id: p.id,
         enter: (PhaseContext _) {

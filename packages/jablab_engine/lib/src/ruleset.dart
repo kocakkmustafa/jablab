@@ -124,8 +124,8 @@ final class Condition {
   }
 }
 
-final class PhaseConfig {
-  const PhaseConfig({
+final class TechniquePhase {
+  const TechniquePhase({
     required this.id,
     required this.enter,
     this.timeoutMs,
@@ -133,7 +133,7 @@ final class PhaseConfig {
     this.requiredLandmarks = const <String>[],
   });
 
-  factory PhaseConfig.fromJson(Map<String, dynamic> j) => PhaseConfig(
+  factory TechniquePhase.fromJson(Map<String, dynamic> j) => TechniquePhase(
         id: j['id'] as String,
         enter: Condition.fromJson((j['enter'] as Map?)?.cast<String, dynamic>()),
         timeoutMs: (j['timeoutMs'] as num?)?.toInt(),
@@ -171,7 +171,7 @@ final class TechniqueConfig {
       id: j['id'] as String,
       limb: (j['limb'] as String?) == 'rear_arm' ? Side.rear : Side.lead,
       phases: ((j['phases'] as List?) ?? const <dynamic>[])
-          .map((dynamic p) => PhaseConfig.fromJson((p as Map).cast<String, dynamic>()))
+          .map((dynamic p) => TechniquePhase.fromJson((p as Map).cast<String, dynamic>()))
           .toList(growable: false),
       displayKey: j['displayKey'] as String?,
       number: (j['number'] as num?)?.toInt(),
@@ -185,7 +185,7 @@ final class TechniqueConfig {
 
   final String id;
   final Side limb;
-  final List<PhaseConfig> phases;
+  final List<TechniquePhase> phases;
   final String? displayKey;
   final int? number;
   final String band;
