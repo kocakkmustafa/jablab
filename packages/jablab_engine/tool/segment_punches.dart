@@ -12,16 +12,25 @@ import 'package:motion_core/motion_core.dart';
 /// ve `windowRule: punch_fsm` provenance'ıyla ayrı fixture'lar yazar.
 ///
 /// Kullanım:
-///   dart run tool/segment_punches.dart ham-fixture.json technique-id out-dir
+///   dart run tool/segment_punches.dart ham-fixture.json technique-id out-dir [--strict]
 ///
 /// Çıktılar kanonik CLI'ya (`build_reference.dart --technique` ile)
 /// beslenmeye hazırdır. M-C-04 (≥3 bağımsız kaynak) gerektiği gibi
 /// zorlanır — 2 kaynaktan gelen pencereler isimli-sebepli REDDEDİLİR
 /// (bu bir kusur değil, hedefli-hasat ihtiyacının ölçülmüş kanıtıdır).
+///
+/// `--strict`: pencere GUARD_READY girişinden değil EXTENSION girişinden
+/// başlar (M-F-91/J-059 — extensionMs'in GUARD_READY beklemesini kapsadığı
+/// beyanının pencereleme karşılığı). Varsayılan (strict OLMAYAN) davranış
+/// tüm deneme aralığını (ilk faz→son faz) kapsar; "yavaş gösterim" bir
+/// eğitmende bu, uzun bir GUARD_READY bekleyişini pencereye katıp DTW'nin
+/// "yumruk" ile "bekleyiş+yumruk"u hizalamasına (L-139 sınıfı sessiz-yanlış)
+/// yol açabilir — --strict bunu ayırt etmek için var, "doğru" mod değil.
 void main(List<String> args) {
   final String srcPath = args[0];
   final String techniqueId = args[1];
   final String outDir = args[2];
+  final bool strict = args.contains('--strict');
 
   final Map<String, dynamic> raw =
       (jsonDecode(File(srcPath).readAsStringSync()) as Map)
@@ -63,7 +72,10 @@ void main(List<String> args) {
     final List<int> ts = d.transitions.values.toList(growable: false);
     if (ts.isEmpty) continue;
     ts.sort();
-    found.add((start: ts.first, end: ts.last, digest: d));
+    final int? extensionUs = d.transitions['EXTENSION'];
+    final int start =
+        strict && extensionUs != null ? extensionUs : ts.first;
+    found.add((start: start, end: ts.last, digest: d));
   }
 
   stdout.writeln('${srcPath.split('/').last}: $techniqueId — '
@@ -94,6 +106,7 @@ void main(List<String> args) {
     prov['windowRule'] = <String, dynamic>{
       'tool': 'jablab_engine/tool/segment_punches.dart',
       'mechanism': 'punch_fsm',
+      'windowStart': strict ? 'EXTENSION' : 'firstTransition',
       'rulesetVersion': '${rules.rulesetId}@${rules.version}',
       'technique': techniqueId,
       'transitions': f.digest.transitions,
