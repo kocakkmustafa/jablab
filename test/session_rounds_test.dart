@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/session_narrator.dart';
 import 'package:jablab/app/session_screen.dart';
+import 'package:jablab/app/session_store.dart';
 import 'package:jablab/shell_candidate/session_flow.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
 import 'package:jablab_engine/jablab_engine.dart';
@@ -33,6 +34,7 @@ void main() {
   Future<void> pumpLive(
     WidgetTester t, {
     required RoundPlan? plan,
+    SessionStore? store,
   }) async {
     late final CueBook cues;
     await t.runAsync(() async {
@@ -44,6 +46,7 @@ void main() {
         cues: cues,
         coachedNotScored: const <String>['Rear guard hand position'],
         plan: plan,
+        store: store,
       ),
     ));
     await t.pumpAndSettle();
@@ -157,4 +160,103 @@ void main() {
     // cümle GÖRÜNÜYOR olması yeterli kanıt (sessizlik yok).
     expect(firstRoundLine, isNotEmpty);
   });
+
+  group('kayıt (J-064)', () {
+    testWidgets('tamamlanan seans ÇALIŞMA süresiyle kaydedilir — '
+        'dinlenme SAYILMAZ', (WidgetTester t) async {
+      // Kapı çalışma süresini soruyor; dinlenmeyi de eklemek kullanıcıyı
+      // kapıdan hak etmeden geçirirdi.
+      final _FakeStore store = _FakeStore();
+      const RoundPlan plan = RoundPlan(
+        rounds: 3,
+        roundSeconds: 4,
+        restSeconds: 2,
+        planProvenance: 'test',
+      );
+      await pumpLive(t, plan: plan, store: store);
+      // Tüm seansı koştur: 3×4 çalışma + 2×2 dinlenme.
+      await t.pump(const Duration(seconds: 30));
+      // canlı → özet: kayıt burada yazılır
+      await t.tap(find.byKey(const Key('advance-button')));
+      await t.pumpAndSettle();
+
+      expect(store.written.length, 1, reason: 'seans kaydedilmedi');
+      final SessionRecord r = store.written.single;
+      expect(r.lessonId, 'x');
+      expect(r.roundsCompleted, 3);
+      expect(r.plannedRounds, 3);
+      expect(r.isComplete, isTrue);
+      expect(r.workedSeconds, 12,
+          reason: 'çalışma 3×4=12sn olmalı; 16 çıkarsa dinlenme de sayılmış');
+    });
+
+    testWidgets('YARIDA bırakılan seans da kaydedilir, tamamlanmamış işaretli',
+        (WidgetTester t) async {
+      final _FakeStore store = _FakeStore();
+      const RoundPlan plan = RoundPlan(
+        rounds: 6,
+        roundSeconds: 4,
+        restSeconds: 2,
+        planProvenance: 'test',
+      );
+      await pumpLive(t, plan: plan, store: store);
+      await t.pump(const Duration(seconds: 5)); // 1. tur bitti, dinlenmede
+      await t.tap(find.byKey(const Key('advance-button')));
+      await t.pumpAndSettle();
+
+      final SessionRecord r = store.written.single;
+      expect(r.isComplete, isFalse);
+      expect(r.roundsCompleted, 1);
+      expect(r.plannedRounds, 6);
+      expect(r.workedSeconds, 4,
+          reason: 'tek tur çalışıldı (4sn); dinlenmede geçen süre sayılmamalı');
+    });
+
+    testWidgets('plansız derste KAYIT YAZILMAZ', (WidgetTester t) async {
+      // Sıfır saniyelik kayıt, geçmişi anlamsız satırlarla doldurmak olurdu.
+      final _FakeStore store = _FakeStore();
+      await pumpLive(t, plan: null, store: store);
+      await t.pump(const Duration(seconds: 10));
+      await t.tap(find.byKey(const Key('advance-button')));
+      await t.pumpAndSettle();
+      expect(store.written, isEmpty);
+    });
+
+    testWidgets('depo YOKKEN akış çalışmaya devam eder', (WidgetTester t) async {
+      // Depolama hatası antrenmanı engellememeli.
+      const RoundPlan plan = RoundPlan(
+        rounds: 2,
+        roundSeconds: 3,
+        restSeconds: 1,
+        planProvenance: 'test',
+      );
+      await pumpLive(t, plan: plan);
+      await t.pump(const Duration(seconds: 20));
+      await t.tap(find.byKey(const Key('advance-button')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const Key('coached-not-scored-note')), findsOneWidget,
+          reason: 'depo yokken özet aşamasına geçilemedi');
+    });
+  });
+}
+
+/// Bellekte tutan sahte depo — kalıcılık davranışı `session_store_test`'te
+/// sınanıyor; burada sınanan şey EKRANIN NE KAYDETTİĞİ.
+class _FakeStore implements SessionStore {
+  final List<SessionRecord> written = <SessionRecord>[];
+
+  @override
+  Future<void> append(SessionRecord record) async => written.add(record);
+
+  @override
+  Future<List<SessionRecord>> recent({int? limit}) async => written;
+
+  @override
+  Future<int> workedSecondsFor(String lessonId) async {
+    int total = 0;
+    for (final SessionRecord r in written) {
+      if (r.lessonId == lessonId) total += r.workedSeconds;
+    }
+    return total;
+  }
 }

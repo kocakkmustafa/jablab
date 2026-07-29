@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
 
 import 'session_narrator.dart';
+import 'session_store.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
 import '../shell_candidate/shell_models.dart';
@@ -67,6 +70,16 @@ final class ContentRepository {
         }
         return label;
       }).toList(growable: false);
+
+  /// Seans geçmişi deposunu açar (J-064).
+  ///
+  /// `path_provider` yalnız uygulama-özel dizini bulmak için; depolama
+  /// biçiminin kendisi uygulamada (append-only JSONL). Üçüncü-taraf DB
+  /// bilerek yok — sorgu ihtiyacı ÖLÇÜLDÜĞÜNDE gelir.
+  Future<SessionStore> openStore() async {
+    final Directory dir = await getApplicationSupportDirectory();
+    return JsonlSessionStore(File('${dir.path}/sessions.jsonl'));
+  }
 
   /// Bir dersin tur planını alan kütüphanesinden arar (J-063).
   ///

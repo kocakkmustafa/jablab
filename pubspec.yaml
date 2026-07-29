@@ -11,6 +11,11 @@ dependencies:
     sdk: flutter
   jablab_engine:
     path: packages/jablab_engine
+  # F-3/J-064: seans geçmişi Fitness vaadinin ("çalıştığını kaydet") VERİ
+  # KATMANI. Yalnız uygulama-özel dizini bulmak için — depolama biçimi
+  # uygulamanın kendisinde (append-only JSONL, `lib/app/session_store.dart`).
+  # 3. taraf DB BİLEREK YOK: sorgu ihtiyacı ölçülünce gelir.
+  path_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:

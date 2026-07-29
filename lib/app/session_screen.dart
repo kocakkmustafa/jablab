@@ -7,6 +7,7 @@ import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
 import 'session_narrator.dart';
+import 'session_store.dart';
 
 /// Canlı seans ekranı — **app'e özgü**, `motion_shell`'e terfi ETMEZ.
 ///
@@ -24,6 +25,7 @@ class SessionScreen extends StatefulWidget {
     required this.cues,
     required this.coachedNotScored,
     required this.plan,
+    this.store,
   });
 
   final ShellLesson lesson;
@@ -37,6 +39,10 @@ class SessionScreen extends StatefulWidget {
   /// doğrudan gidilirse görünür. Sessizce bir süre uydurmak yerine
   /// görünür kalması bilinçli.
   final RoundPlan? plan;
+
+  /// Seans geçmişi (J-064). `null` iken akış aynen çalışır, yalnız KAYIT
+  /// tutulmaz — testlerde ve plansız (öğretme) derslerinde böyle.
+  final SessionStore? store;
 
   /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
   final CueBook cues;
@@ -53,13 +59,39 @@ class SessionScreen extends StatefulWidget {
 class _SessionScreenState extends State<SessionScreen> {
   SessionStage _stage = SessionStage.teach;
 
+  /// Canlı aşamanın bildirdiği son durum — özet aşamasına geçerken
+  /// kaydedilir. Canlı bileşenin içinde tutulup orada yazmak, ekran
+  /// dispose edilirken async yazma yapmak olurdu.
+  int _workedSeconds = 0;
+  int _roundsCompleted = 0;
+
   void _advance() {
+    final bool leavingLive = _stage == SessionStage.live;
     final int i = SessionStage.values.indexOf(_stage);
     if (i + 1 < SessionStage.values.length) {
       setState(() => _stage = SessionStage.values[i + 1]);
     } else {
       Navigator.of(context).pop();
     }
+    // Kayıt canlı aşamadan ÇIKARKEN yazılır — seans sonuna ulaşılmasa bile.
+    // "Yarıda bıraktı" bir veridir; yalnız tamamlananı kaydetmek, kullanıcının
+    // gerçekten yaptığı işi görünmez kılardı.
+    if (leavingLive) unawaited(_record());
+  }
+
+  Future<void> _record() async {
+    final SessionStore? store = widget.store;
+    final RoundPlan? plan = widget.plan;
+    // Plansız (öğretme) derste çalışma süresi diye bir şey YOK — sıfır
+    // saniyelik kayıt yazmak, geçmişi anlamsız satırlarla doldurmak olurdu.
+    if (store == null || plan == null || _workedSeconds <= 0) return;
+    await store.append(SessionRecord(
+      lessonId: widget.lesson.id,
+      completedAt: DateTime.now(),
+      workedSeconds: _workedSeconds,
+      roundsCompleted: _roundsCompleted,
+      plannedRounds: plan.rounds,
+    ));
   }
 
   @override
@@ -72,8 +104,14 @@ class _SessionScreenState extends State<SessionScreen> {
       child: switch (_stage) {
         SessionStage.teach => _Teach(lesson: widget.lesson),
         SessionStage.rehearse => const _Rehearse(),
-        SessionStage.live =>
-          _Live(cues: widget.cues, plan: widget.plan),
+        SessionStage.live => _Live(
+            cues: widget.cues,
+            plan: widget.plan,
+            onProgress: (int rounds, int worked) {
+              _roundsCompleted = rounds;
+              _workedSeconds = worked;
+            },
+          ),
         SessionStage.summary => _Summary(coachedNotScored: widget.coachedNotScored),
       },
     );
@@ -137,10 +175,17 @@ class _Rehearse extends StatelessWidget {
 /// Kamera bağlı değilken bile "yarıladın" doğru bir cümledir; "gardın düştü"
 /// ise olmayan bir ölçüme dayanırdı.
 class _Live extends StatefulWidget {
-  const _Live({required this.cues, required this.plan});
+  const _Live({
+    required this.cues,
+    required this.plan,
+    required this.onProgress,
+  });
 
   final CueBook cues;
   final RoundPlan? plan;
+
+  /// (tamamlanan tur, ÇALIŞILAN saniye) — dinlenme sayılmaz.
+  final void Function(int roundsCompleted, int workedSeconds) onProgress;
 
   @override
   State<_Live> createState() => _LiveState();
@@ -222,6 +267,20 @@ class _LiveState extends State<_Live> {
       if (said != null) _line = said;
       _elapsed = next;
     });
+
+    // ÇALIŞILAN süre: tamamlanan turlar + içinde bulunulan turun geçen
+    // kısmı. Dinlenme HİÇ sayılmaz — ilerleme kapısı çalışma süresini
+    // soruyor, dinlenmeyi de eklemek kapıyı hak etmeden geçirmek olurdu.
+    // DİNLENMEDEYKEN biten tur SAYILIR. `_roundIndex` dinlenme BİTİNCE
+    // artıyor; onu doğrudan kullanmak, dinlenme sırasında bırakılan seansı
+    // "hiç çalışmadı" diye kaydediyordu (testin yakaladığı gerçek kusur).
+    final int completed = _finished
+        ? plan.rounds
+        : (_resting ? _roundIndex + 1 : _roundIndex);
+    final int inRound = (_resting || _finished)
+        ? 0
+        : _elapsed.inSeconds.clamp(0, plan.roundSeconds);
+    widget.onProgress(completed, completed * plan.roundSeconds + inRound);
   }
 
   @override

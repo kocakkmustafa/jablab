@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
@@ -6,6 +8,7 @@ import '../shell_candidate/shell_models.dart';
 import '../shell_candidate/shell_scaffold.dart';
 import 'content_repository.dart';
 import 'session_narrator.dart';
+import 'session_store.dart';
 import 'session_screen.dart';
 
 /// JabLab uygulaması — kabuğu içerikle bağlar.
@@ -47,11 +50,24 @@ class _RootState extends State<_Root> {
   /// "round" alan sözlüğüdür, README sözleşmesi) — plan burada, app
   /// katmanında aranıp canlı ekrana verilir.
   Library? _domain;
+
+  /// Seans geçmişi (J-064). Kurulumu async olduğu için `null` başlar; henüz
+  /// gelmemişken seans açılırsa akış çalışır, yalnız o seans KAYDEDİLMEZ —
+  /// açılışı bloklamak, kayıt için kullanıcıyı bekletmek olurdu.
+  SessionStore? _store;
   Object? _error;
 
   @override
   void initState() {
     super.initState();
+    unawaited(widget.repository.openStore().then((SessionStore s) {
+      if (mounted) setState(() => _store = s);
+    }).catchError((Object e) {
+      // Kalıcılık kurulamazsa uygulama ÇALIŞMAYA DEVAM EDER, yalnız kayıt
+      // tutmaz. Depolama hatası yüzünden antrenmanı engellemek, çözümü
+      // sorundan kötü yapardı.
+      if (mounted) setState(() => _store = null);
+    }));
     Future.wait<Object>(<Future<Object>>[
       widget.repository.load(),
       widget.repository.loadCues(),
@@ -129,6 +145,7 @@ class _RootState extends State<_Root> {
                   coachedNotScored:
                       widget.repository.coachedNotScoredLabels(_boxing!),
                   plan: widget.repository.roundPlanFor(_domain!, l.id),
+                  store: _store,
                 )),
       );
 }
