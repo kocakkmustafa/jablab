@@ -183,6 +183,8 @@ class _RootState extends State<_Root> {
                   coachedNotScored:
                       widget.repository.coachedNotScoredLabels(_boxing!),
                   plan: widget.repository.roundPlanFor(_domain!, l.id),
+                  intervalPlan:
+                      widget.repository.intervalPlanFor(_domain!, l.id),
                   store: _store,
                 )),
       // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce

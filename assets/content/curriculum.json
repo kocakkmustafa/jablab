@@ -306,6 +306,16 @@
         }
       ],
       "$deferredRampingGateWhy": "Onceki `tempoSwitch` kapisi ARTAN-tempo tasarimina aitti; M-F-144 v1 icin SABIT tempo sectigi icin o olay uretilmiyor ve kapi YAPISAL olarak gecilemez hale gelirdi (kamera gelse bile). Silinmedi: artan tempo v1.x kilidi olarak planli, o gun geri tasinir."
+    },
+    "boxing.conditioning.hiit": {
+      "gates": [
+        {
+          "sessionMinutes": 6,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "CALISMA suresi = yalniz patlamalar (12 x 30sn = 6 dk); toparlanma SAYILMAZ. Eski kapi 12 idi ve dersin `minutes:12` TOPLAM beyaniyla celisiyordu (calisma+dinlenme > 12 olurdu, J-067) — M-F-149 toplam-otorite kararindan sonra kapi 6\"ya indi ve plan artik kendi kapisini TAM gecirir (J-063 degismezi). HIIT\"te form geri bildirimi SUSTURULUR: yuksek tempoyu urun istedi, sonra \"formun bozuldu\" demek kendi tasarladigimiz egzersiz icin ceza kesmektir."
+        }
+      ],
+      "signals": []
     }
   }
 }

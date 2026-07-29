@@ -64,8 +64,13 @@ void main() {
       for (final Lesson l in allLessons()) {
         final bool timed = l.focus == 'round' || l.focus == 'conditioning';
         if (!timed || l.isLocked) continue;
-        expect(l.roundPlan, isNotNull,
-            reason: '${l.id}: açık süreli ders ama planı yok');
+        // Ders ya TURLU ya ARALIKLI olabilir; ikisi de "süreyi koşabiliyor"
+        // demektir. İkisi BİRDEN olamaz (validate reddediyor) — canlı ekran
+        // hangi saati koşacağını bilemezdi.
+        expect(l.roundPlan != null || l.intervalPlan != null, isTrue,
+            reason: '${l.id}: açık süreli ders ama ne tur ne aralık planı var');
+        expect(l.roundPlan != null && l.intervalPlan != null, isFalse,
+            reason: '${l.id}: hem tur hem aralık planı taşıyor');
         checked.add(l.id);
       }
       // Testin kendisi boşa dönmesin: sıfır ders kontrol edildiyse yukarıdaki

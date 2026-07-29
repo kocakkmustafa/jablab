@@ -34,6 +34,7 @@ void main() {
   Future<void> pumpLive(
     WidgetTester t, {
     required RoundPlan? plan,
+    IntervalPlan? intervalPlan,
     SessionStore? store,
   }) async {
     late final CueBook cues;
@@ -46,6 +47,7 @@ void main() {
         cues: cues,
         coachedNotScored: const <String>['Rear guard hand position'],
         plan: plan,
+        intervalPlan: intervalPlan,
         store: store,
       ),
     ));
@@ -236,6 +238,83 @@ void main() {
       await t.pumpAndSettle();
       expect(find.byKey(const Key('coached-not-scored-note')), findsOneWidget,
           reason: 'depo yokken özet aşamasına geçilemedi');
+    });
+  });
+
+  group('aralık kipi (J-068)', () {
+    // 3 patlama × 4sn + 3 toparlanma × 2sn = 18sn TOPLAM (son toparlanma
+    // DAHİL — turdan yapısal fark burada).
+    const IntervalPlan ivl = IntervalPlan(
+      bursts: 3,
+      burstSeconds: 4,
+      recoverSeconds: 2,
+      planProvenance: 'test',
+    );
+
+    String pos(WidgetTester t) =>
+        t.widget<Text>(find.byKey(const Key('live-burst-position'))).data!;
+
+    testWidgets('patlama → toparlanma → patlama döngüsü YÜRÜYOR',
+        (WidgetTester t) async {
+      await pumpLive(t, plan: null, intervalPlan: ivl);
+      expect(pos(t), 'Burst 1 of 3');
+
+      await t.pump(const Duration(seconds: 5));
+      expect(pos(t), 'Recover — burst 2 of 3 next',
+          reason: 'patlama bitti ama toparlanmaya geçilmedi');
+
+      await t.pump(const Duration(seconds: 3));
+      expect(pos(t), 'Burst 2 of 3',
+          reason: 'toparlanma bitti ama 2. patlama başlamadı');
+
+      await t.pump(const Duration(seconds: 5));
+      await t.pump(const Duration(seconds: 3));
+      expect(pos(t), 'Burst 3 of 3');
+    });
+
+    testWidgets('SON patlamadan sonra da toparlanma KOŞAR (turdan fark)',
+        (WidgetTester t) async {
+      // `RoundPlan` son turdan sonra dinlenme saymaz; aralıkta soğuma
+      // döngünün parçası. İki tipin ayrı olmasının sebebi tam bu.
+      await pumpLive(t, plan: null, intervalPlan: ivl);
+      // 3. patlamanın sonuna kadar ilerlet
+      for (int i = 0; i < 2; i++) {
+        await t.pump(const Duration(seconds: 5));
+        await t.pump(const Duration(seconds: 3));
+      }
+      expect(pos(t), 'Burst 3 of 3');
+      await t.pump(const Duration(seconds: 5));
+      expect(pos(t), contains('Recover'),
+          reason: 'son patlamadan sonra toparlanma koşmadı');
+      // toparlanma bitince seans biter, 4. patlama UYDURULMAZ
+      await t.pump(const Duration(seconds: 30));
+      expect(pos(t), isNot(contains('Burst 4')));
+    });
+
+    testWidgets('aralık replikleri KONUŞUYOR (kip interval seçildi)',
+        (WidgetTester t) async {
+      // `SessionMode.steady` bırakılsaydı `interval()` boş döner ve
+      // cue.burst_start/recover hiç duyulmazdı ("kod var, kullanıcı duymuyor").
+      await pumpLive(t, plan: null, intervalPlan: ivl);
+      await t.pump(const Duration(seconds: 5));
+      expect(find.byKey(const Key('live-narration')), findsOneWidget,
+          reason: 'toparlanmaya geçişte hiçbir replik söylenmedi');
+    });
+
+    testWidgets('ÇALIŞMA süresi yalnız PATLAMALARI sayar',
+        (WidgetTester t) async {
+      final _FakeStore store = _FakeStore();
+      await pumpLive(t, plan: null, intervalPlan: ivl, store: store);
+      await t.pump(const Duration(seconds: 60));
+      await t.tap(find.byKey(const Key('advance-button')));
+      await t.pumpAndSettle();
+
+      final SessionRecord r = store.written.single;
+      expect(r.workedSeconds, 12,
+          reason: 'çalışma 3×4=12sn olmalı; 18 çıkarsa toparlanma da sayılmış');
+      expect(r.roundsCompleted, 3);
+      expect(r.plannedRounds, 3);
+      expect(r.isComplete, isTrue);
     });
   });
 }

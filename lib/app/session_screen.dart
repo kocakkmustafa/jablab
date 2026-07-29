@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:jablab_engine/jablab_engine.dart' show RoundPlan;
+import 'package:jablab_engine/jablab_engine.dart'
+    show IntervalPlan, RoundPlan;
 
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
@@ -25,6 +26,7 @@ class SessionScreen extends StatefulWidget {
     required this.cues,
     required this.coachedNotScored,
     required this.plan,
+    this.intervalPlan,
     this.store,
   });
 
@@ -39,6 +41,10 @@ class SessionScreen extends StatefulWidget {
   /// doğrudan gidilirse görünür. Sessizce bir süre uydurmak yerine
   /// görünür kalması bilinçli.
   final RoundPlan? plan;
+
+  /// Aralık planı (J-068). `plan` ile aynı anda dolu olamaz — `validate`
+  /// bunu içerik tarafında reddediyor.
+  final IntervalPlan? intervalPlan;
 
   /// Seans geçmişi (J-064). `null` iken akış aynen çalışır, yalnız KAYIT
   /// tutulmaz — testlerde ve plansız (öğretme) derslerinde böyle.
@@ -84,13 +90,17 @@ class _SessionScreenState extends State<SessionScreen> {
     final RoundPlan? plan = widget.plan;
     // Plansız (öğretme) derste çalışma süresi diye bir şey YOK — sıfır
     // saniyelik kayıt yazmak, geçmişi anlamsız satırlarla doldurmak olurdu.
-    if (store == null || plan == null || _workedSeconds <= 0) return;
+    if (store == null ||
+        (plan == null && widget.intervalPlan == null) ||
+        _workedSeconds <= 0) {
+      return;
+    }
     await store.append(SessionRecord(
       lessonId: widget.lesson.id,
       completedAt: DateTime.now(),
       workedSeconds: _workedSeconds,
       roundsCompleted: _roundsCompleted,
-      plannedRounds: plan.rounds,
+      plannedRounds: plan?.rounds ?? widget.intervalPlan!.bursts,
     ));
   }
 
@@ -107,6 +117,7 @@ class _SessionScreenState extends State<SessionScreen> {
         SessionStage.live => _Live(
             cues: widget.cues,
             plan: widget.plan,
+            intervalPlan: widget.intervalPlan,
             onProgress: (int rounds, int worked) {
               _roundsCompleted = rounds;
               _workedSeconds = worked;
@@ -178,11 +189,13 @@ class _Live extends StatefulWidget {
   const _Live({
     required this.cues,
     required this.plan,
+    required this.intervalPlan,
     required this.onProgress,
   });
 
   final CueBook cues;
   final RoundPlan? plan;
+  final IntervalPlan? intervalPlan;
 
   /// (tamamlanan tur, ÇALIŞILAN saniye) — dinlenme sayılmaz.
   final void Function(int roundsCompleted, int workedSeconds) onProgress;
@@ -192,7 +205,13 @@ class _Live extends StatefulWidget {
 }
 
 class _LiveState extends State<_Live> {
-  final SessionNarrator _narrator = SessionNarrator(mode: SessionMode.steady);
+  /// Kip PLANA göre seçilir — `interval()` yalnız `SessionMode.interval`de
+  /// olay üretir, `steady`de sessizce boş döner. Sabit `steady` bırakmak,
+  /// aralık repliklerini hiç duyulmaz kılardı (kodu var, kullanıcı duymuyor).
+  late final SessionNarrator _narrator = SessionNarrator(
+      mode: widget.intervalPlan != null
+          ? SessionMode.interval
+          : SessionMode.steady);
   Timer? _ticker;
 
   /// O anki turun (ya da dinlenmenin) İÇİNDEKİ konum — toplam değil.
@@ -205,20 +224,32 @@ class _LiveState extends State<_Live> {
   String? _line;
 
   RoundPlan? get _plan => widget.plan;
+  IntervalPlan? get _ivl => widget.intervalPlan;
 
-  Duration get _segment => _resting
-      ? Duration(seconds: _plan!.restSeconds)
-      : Duration(seconds: _plan!.roundSeconds);
+  Duration get _segment {
+    final IntervalPlan? ip = _ivl;
+    if (ip != null) {
+      return Duration(
+          seconds: _resting ? ip.recoverSeconds : ip.burstSeconds);
+    }
+    return _resting
+        ? Duration(seconds: _plan!.restSeconds)
+        : Duration(seconds: _plan!.roundSeconds);
+  }
 
   @override
   void initState() {
     super.initState();
-    if (_plan == null) return;
+    if (_plan == null && _ivl == null) return;
     _tick();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
   }
 
   void _tick() {
+    if (_ivl != null) {
+      _tickInterval(_ivl!);
+      return;
+    }
     final RoundPlan plan = _plan!;
     if (_finished) return;
 
@@ -283,6 +314,67 @@ class _LiveState extends State<_Live> {
     widget.onProgress(completed, completed * plan.roundSeconds + inRound);
   }
 
+  /// Aralık kipi (J-068): patla → topla → patla ... son toparlanma DAHİL.
+  ///
+  /// Turlu kipten iki yapısal fark var ve ikisi de bilinçli:
+  ///  * SON patlamadan sonra da toparlanma koşar (soğuma döngünün parçası);
+  ///    `RoundPlan` tam tersini yapar ve bu yüzden ayrı tipler.
+  ///  * Form repliklerinin sustuğu tek kip budur (`cues.en.json` grup notu):
+  ///    yüksek tempoyu ürün istedi, sonra "formun bozuldu" demek kendi
+  ///    tasarladığımız egzersiz için ceza kesmek olurdu.
+  void _tickInterval(IntervalPlan plan) {
+    if (_finished) return;
+
+    final bool wasInBurst = !_resting;
+    Duration next = _elapsed + const Duration(seconds: 1);
+    final bool segmentOver = next > _segment;
+    bool nowResting = _resting;
+
+    if (segmentOver) {
+      if (!_resting) {
+        nowResting = true;
+        next = Duration.zero;
+      } else if (_roundIndex + 1 < plan.bursts) {
+        nowResting = false;
+        _roundIndex++;
+        next = Duration.zero;
+      } else {
+        // Son toparlanmanın sonu = SEANS sonu.
+        _finished = true;
+        next = _segment;
+        _ticker?.cancel();
+      }
+    }
+
+    final Duration untilNext = _segment - next;
+    final List<NarrationEvent> events = <NarrationEvent>[
+      ..._narrator.interval(
+        inBurst: !nowResting,
+        wasInBurst: wasInBurst,
+        untilNext: nowResting ? untilNext : Duration.zero,
+      ),
+      if (_finished) NarrationEvent.sessionEnd,
+    ];
+
+    final String? said = events.isEmpty ? null : widget.cues.say(events.last);
+    if (!mounted) return;
+    setState(() {
+      if (said != null) _line = said;
+      _resting = nowResting;
+      _elapsed = next;
+    });
+
+    // ÇALIŞMA = yalnız PATLAMALAR. Toparlanmayı da saymak kullanıcıyı
+    // kapıdan hak etmeden geçirirdi (turdaki dinlenmeyle aynı ilke).
+    final int done = _finished
+        ? plan.bursts
+        : (_resting ? _roundIndex + 1 : _roundIndex);
+    final int inBurst = (_resting || _finished)
+        ? 0
+        : _elapsed.inSeconds.clamp(0, plan.burstSeconds);
+    widget.onProgress(done, done * plan.burstSeconds + inBurst);
+  }
+
   @override
   void dispose() {
     _ticker?.cancel();
@@ -292,6 +384,7 @@ class _LiveState extends State<_Live> {
   @override
   Widget build(BuildContext context) {
     final RoundPlan? plan = _plan;
+    final IntervalPlan? ivl = _ivl;
 
     return Column(
       children: <Widget>[
@@ -300,10 +393,18 @@ class _LiveState extends State<_Live> {
         // olmayan bir yapıyı varmış gibi gösterirdi. Süreli bir dersin
         // plansız AÇIK kalması `Library.validate` tarafından reddediliyor,
         // yani bu dal "planı yazılmamış tur" anlamına gelmez.
-        if (plan != null)
+        if (plan != null || ivl != null)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: IntervalTimer(elapsed: _elapsed, total: _segment),
+          ),
+        if (ivl != null)
+          Text(
+            _resting
+                ? 'Recover — burst ${_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2} of ${ivl.bursts} next'
+                : 'Burst ${_roundIndex + 1} of ${ivl.bursts}',
+            key: const Key('live-burst-position'),
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         // Tur konumu YAZILI. Çok turlu bir seansta hangi turda olduğunu
         // bilmemek, süreyi hiç bilmemekle aynı: kullanıcı ne kadar kaldığını

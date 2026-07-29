@@ -86,11 +86,18 @@ final class ContentRepository {
   /// Kabuk modeli planı taşımaz — kabukta "round" alan sözlüğüdür ve
   /// `shell_candidate/README.md` sözleşmesi onu yasaklıyor. Çeviri katmanının
   /// işi tam bu: kabuk nötr kalır, plan app tarafında çözülür.
-  RoundPlan? roundPlanFor(Library lib, String lessonId) {
+  RoundPlan? roundPlanFor(Library lib, String lessonId) =>
+      _lessonFor(lib, lessonId)?.roundPlan;
+
+  /// Aralık planı (J-068) — aynı çeviri katmanı, aynı sebep.
+  IntervalPlan? intervalPlanFor(Library lib, String lessonId) =>
+      _lessonFor(lib, lessonId)?.intervalPlan;
+
+  Lesson? _lessonFor(Library lib, String lessonId) {
     for (final Discipline d in lib.disciplines) {
       for (final Course c in d.courses) {
         for (final Lesson l in c.lessons) {
-          if (l.id == lessonId) return l.roundPlan;
+          if (l.id == lessonId) return l;
         }
       }
     }

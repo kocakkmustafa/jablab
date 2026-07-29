@@ -1,12 +1,17 @@
 import 'ruleset.dart';
 
-/// Bilgi mimarisi modeli — standart §2 (Kütüphane → Disiplin → Kurs → Ders).
-///
-/// **Bu dosyanın asıl işi doğrulamaktır.** Ürün sözü net: "yarım özellik
-/// gizlenmez, kapsamdan çıkarılır" ve "SAHTE/boş kurs asla listelenmez".
-/// Bunlar niyet beyanı olarak kalırsa ilk içerik dalgasında delinir; burada
-/// **mekanik değişmez** olarak kodlanır ve testte zorlanır (standart §5:
-/// mekanik denetim betikle yapılır, LLM denetimiyle değil).
+// Bilgi mimarisi modeli — standart §2 (Kütüphane → Disiplin → Kurs → Ders).
+//
+// BU DOSYANIN ASIL İŞİ DOĞRULAMAKTIR. Ürün sözü net: "yarım özellik
+// gizlenmez, kapsamdan çıkarılır" ve "SAHTE/boş kurs asla listelenmez".
+// Bunlar niyet beyanı olarak kalırsa ilk içerik dalgasında delinir; burada
+// mekanik değişmez olarak kodlanır ve testte zorlanır (standart §5: mekanik
+// denetim betikle yapılır, LLM denetimiyle değil).
+//
+// NOT: bu blok bilinçli olarak `//` — `///` olduğunda altına eklenen ilk
+// sınıfın dokümanı oluyordu (J-068'de RoundPlan'a yapıştı ve dosyayı
+// anlatan metin bir plan sınıfını anlatır göründü).
+
 /// Bir dersin TUR PLANI — kaç tur, ne kadar, arada ne kadar dinlenme (J-063).
 ///
 /// **Neden içerikte, kodda değil:** ADR-004 gereği motor hiçbir boks sayısını
@@ -54,6 +59,45 @@ final class RoundPlan {
   bool get isSingleRound => rounds == 1;
 }
 
+/// ARALIK planı — patla/topla döngüsü (J-068).
+///
+/// **Neden [RoundPlan] DEĞİL, ayrı bir tip:** ikisinin toplam-süre matematiği
+/// YAPISAL olarak farklı. `RoundPlan` son turdan sonra dinlenme SAYMAZ (seans
+/// biter); aralıkta ise son patlamadan sonra da toparlanma VARDIR — soğuma o
+/// döngünün parçası. Aynı tipe sığdırmak ya `RoundPlan`ın değişmezini kırar
+/// ya aralığın toplamını yanlış hesaplar; ikisi de sessiz-yanlış üretir.
+/// Bu yüzden `bursts * (burst + recover)` — eksiltme yok.
+///
+/// **Neden çalışma süresi yalnız PATLAMA:** ilerleme kapısı çalışılan süreyi
+/// sorar; toparlanmayı da eklemek kullanıcıyı kapıdan hak etmeden geçirirdi
+/// (turdaki dinlenme ile aynı ilke).
+final class IntervalPlan {
+  const IntervalPlan({
+    required this.bursts,
+    required this.burstSeconds,
+    required this.recoverSeconds,
+    required this.planProvenance,
+  });
+
+  factory IntervalPlan.fromJson(Map<String, dynamic> j) => IntervalPlan(
+        bursts: (j['bursts'] as num).toInt(),
+        burstSeconds: (j['burstSeconds'] as num).toInt(),
+        recoverSeconds: (j['recoverSeconds'] as num).toInt(),
+        planProvenance: j['planProvenance'] as String? ?? '',
+      );
+
+  final int bursts;
+  final int burstSeconds;
+  final int recoverSeconds;
+  final String planProvenance;
+
+  /// Patlama + toparlanma çiftlerinin toplamı. Son toparlanma DAHİL.
+  int get totalSeconds => bursts * (burstSeconds + recoverSeconds);
+
+  /// Kapının saydığı süre — yalnız patlamalar.
+  int get workSeconds => bursts * burstSeconds;
+}
+
 final class Lesson {
   const Lesson({
     required this.id,
@@ -65,6 +109,7 @@ final class Lesson {
     this.minutes = 0,
     this.lockedReason,
     this.roundPlan,
+    this.intervalPlan,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -87,6 +132,10 @@ final class Lesson {
         roundPlan: j['roundPlan'] == null
             ? null
             : RoundPlan.fromJson((j['roundPlan'] as Map).cast<String, dynamic>()),
+        intervalPlan: j['intervalPlan'] == null
+            ? null
+            : IntervalPlan.fromJson(
+                (j['intervalPlan'] as Map).cast<String, dynamic>()),
       );
 
   final String id;
@@ -99,6 +148,11 @@ final class Lesson {
 
   /// Doluysa ders KİLİTLİ ve bu cümle sebebidir (kullanıcıya gösterilir).
   final String? lockedReason;
+
+  /// Aralık planı (patla/topla). `roundPlan` ile AYNI ANDA dolu olamaz —
+  /// bir ders ya turludur ya aralıklı; ikisi birden, canlı ekranın hangi
+  /// saati koşacağını belirsiz bırakır. `validate` bunu reddeder.
+  final IntervalPlan? intervalPlan;
 
   /// Süreli çalışma dersinin tur planı; yoksa canlı aşama SÜRE KOŞAMAZ.
   /// `Library.validate` süreli-odaklı bir dersin plansız AÇIK kalmasını
@@ -314,7 +368,34 @@ final class Library {
   /// biraz uzatalım" demek, planı düzeltmeden mümkün olmamalı.
   static void _validateRoundPlan(Lesson l, List<String> errs) {
     final RoundPlan? p = l.roundPlan;
+    final IntervalPlan? ip = l.intervalPlan;
     final bool timed = l.focus == 'round' || l.focus == 'conditioning';
+
+    if (p != null && ip != null) {
+      errs.add('${l.id}: HEM tur HEM aralık planı var — canlı ekran hangi '
+          'saati koşacağını bilemez');
+      return;
+    }
+
+    if (ip != null) {
+      if (ip.bursts < 1 || ip.burstSeconds < 1) {
+        errs.add('${l.id}: aralık planı geçersiz (patlama ${ip.bursts}× '
+            '${ip.burstSeconds}sn)');
+      }
+      if (ip.recoverSeconds < 1) {
+        errs.add('${l.id}: aralıkta toparlanma 1sn\'den küçük olamaz — '
+            'toparlanmasız "aralık" sürekli çalışmadır, farklı bir ders');
+      }
+      if (ip.planProvenance.trim().isEmpty) {
+        errs.add('${l.id}: aralık planı planProvenance BOŞ');
+      }
+      if (l.minutes > 0 && ip.totalSeconds != l.minutes * 60) {
+        errs.add('${l.id}: aralık toplamı ${ip.totalSeconds}sn ama ders '
+            '${l.minutes} dk beyan ediyor — kullanıcıya söylenen süre ile '
+            'koşulan süre AYNI olmalı');
+      }
+      return;
+    }
 
     if (p == null) {
       // Kilitli ders planı taşımak zorunda değil — kilidin kendisi zaten

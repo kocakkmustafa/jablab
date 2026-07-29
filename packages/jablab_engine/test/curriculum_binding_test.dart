@@ -191,7 +191,8 @@ void main() {
       for (final Course c in d.courses) {
         for (final Lesson l in c.lessons) {
           final RoundPlan? p = l.roundPlan;
-          if (p == null) continue;
+          final IntervalPlan? ip = l.intervalPlan;
+          if (p == null && ip == null) continue;
           final Map<String, dynamic>? node =
               (progression[l.id] as Map?)?.cast<String, dynamic>();
           final List<dynamic> gates =
@@ -201,7 +202,11 @@ void main() {
                 (g as Map).cast<String, dynamic>();
             final num? need = gate['sessionMinutes'] as num?;
             if (need == null) continue;
-            final int workSeconds = p.rounds * p.roundSeconds;
+            // ARALIKTA çalışma = yalnız patlamalar (toparlanma sayılmaz),
+            // TURDA = yalnız turlar (dinlenme sayılmaz). Aynı ilke, iki
+            // farklı toplam matematiği.
+            final int workSeconds =
+                ip != null ? ip.workSeconds : p!.rounds * p.roundSeconds;
             expect(workSeconds, need.toInt() * 60,
                 reason: '${l.id}: plan ${workSeconds}sn ÇALIŞMA veriyor ama '
                     'kapı ${need.toInt()} dk (${need.toInt() * 60}sn) '
