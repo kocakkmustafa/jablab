@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:jablab_engine/jablab_engine.dart';
 import 'package:test/test.dart';
 
 /// Müfredat ↔ hata kataloğu bağlarının değişmezleri (G6).
@@ -27,6 +28,10 @@ void main() {
       (cur['drills'] as Map).cast<String, dynamic>();
   final Map<String, dynamic> progression =
       (cur['progression'] as Map).cast<String, dynamic>();
+  final Library lib = Library.fromJson((jsonDecode(
+              File('../../assets/content/library.json').readAsStringSync())
+          as Map)
+      .cast<String, dynamic>());
   final Map<String, dynamic> measures =
       (cfg['measures'] as Map).cast<String, dynamic>();
   final Set<String> coachedJoints =
@@ -169,6 +174,46 @@ void main() {
     }
     expect(locked, greaterThan(0),
         reason: 'kilitli ders kalmadıysa bu testin koruduğu şey de kalmamış');
+  });
+
+  test('[J-063] tur planı dersin KENDİ KAPISINI geçirebiliyor mu', () {
+    // ÖLÇÜLEN KUSUR: üç dersin tur planı, o dersin ilerleme kapısının
+    // istediği çalışma süresinden AZ veriyordu — kullanıcı dersi sonuna
+    // kadar koşsa bile kapısını ASLA geçemezdi (r10 7,5 vs 10 dk · r20 15 vs
+    // 20 · technique_round 6 vs 9). Sessiz bir çıkmaz sokak: ders bitiyor,
+    // ilerleme gelmiyor, sebebi hiçbir yerde yazmıyor.
+    //
+    // `minutes` alanı bu kontrole UYGUN DEĞİL: anlamı derse göre değişiyor
+    // (r3'te çalışma+dinlenme, r10'da yalnız çalışma, Foundations'ta ders
+    // süresi). Otorite kapının kendisi — ölçtüğü şey ilerlemeyi veren şey.
+    int checked = 0;
+    for (final Discipline d in lib.disciplines) {
+      for (final Course c in d.courses) {
+        for (final Lesson l in c.lessons) {
+          final RoundPlan? p = l.roundPlan;
+          if (p == null) continue;
+          final Map<String, dynamic>? node =
+              (progression[l.id] as Map?)?.cast<String, dynamic>();
+          final List<dynamic> gates =
+              (node?['gates'] as List?) ?? const <dynamic>[];
+          for (final dynamic g in gates) {
+            final Map<String, dynamic> gate =
+                (g as Map).cast<String, dynamic>();
+            final num? need = gate['sessionMinutes'] as num?;
+            if (need == null) continue;
+            final int workSeconds = p.rounds * p.roundSeconds;
+            expect(workSeconds, need.toInt() * 60,
+                reason: '${l.id}: plan ${workSeconds}sn ÇALIŞMA veriyor ama '
+                    'kapı ${need.toInt()} dk (${need.toInt() * 60}sn) '
+                    'istiyor — kullanıcı bu dersin kapısını asla geçemez');
+            checked++;
+          }
+        }
+      }
+    }
+    expect(checked, greaterThan(0),
+        reason: 'hiç plan/kapı çifti kontrol edilmedi — test kendini '
+            'kandırıyor');
   });
 
   test('[J-035] koçlanan eklem ya dispersiyonla ya AÇIKLIKLA düşer', () {

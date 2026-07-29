@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:jablab_engine/jablab_engine.dart' show RoundPlan;
 
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
@@ -22,9 +23,20 @@ class SessionScreen extends StatefulWidget {
     required this.lesson,
     required this.cues,
     required this.coachedNotScored,
+    required this.plan,
   });
 
   final ShellLesson lesson;
+
+  /// Dersin tur planı (J-063). `null` ise canlı aşama SÜRE KOŞMAZ ve bunu
+  /// söyler — eskiden burada sabit 3 dakika koşuluyordu ve "Twenty minutes"
+  /// yazan ders 3 dakikada bitiyordu (J-062, `beyan ≠ canlı`).
+  ///
+  /// Bugün plansız bir dersin AÇIK olması `Library.validate` tarafından
+  /// reddediliyor; yani bu yol pratikte yalnız kilitli/plansız bir derse
+  /// doğrudan gidilirse görünür. Sessizce bir süre uydurmak yerine
+  /// görünür kalması bilinçli.
+  final RoundPlan? plan;
 
   /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
   final CueBook cues;
@@ -60,7 +72,8 @@ class _SessionScreenState extends State<SessionScreen> {
       child: switch (_stage) {
         SessionStage.teach => _Teach(lesson: widget.lesson),
         SessionStage.rehearse => const _Rehearse(),
-        SessionStage.live => _Live(cues: widget.cues),
+        SessionStage.live =>
+          _Live(cues: widget.cues, plan: widget.plan),
         SessionStage.summary => _Summary(coachedNotScored: widget.coachedNotScored),
       },
     );
@@ -124,40 +137,90 @@ class _Rehearse extends StatelessWidget {
 /// Kamera bağlı değilken bile "yarıladın" doğru bir cümledir; "gardın düştü"
 /// ise olmayan bir ölçüme dayanırdı.
 class _Live extends StatefulWidget {
-  const _Live({required this.cues});
+  const _Live({required this.cues, required this.plan});
 
   final CueBook cues;
+  final RoundPlan? plan;
 
   @override
   State<_Live> createState() => _LiveState();
 }
 
 class _LiveState extends State<_Live> {
-  static const Duration _round = Duration(minutes: 3);
-
   final SessionNarrator _narrator = SessionNarrator(mode: SessionMode.steady);
   Timer? _ticker;
+
+  /// O anki turun (ya da dinlenmenin) İÇİNDEKİ konum — toplam değil.
+  /// `IntervalTimer` bir aralığın ilerlemesini gösterir; toplam seansı
+  /// göstermek "son 10 saniye" anlatısını anlamsız yapardı.
   Duration _elapsed = Duration.zero;
+  int _roundIndex = 0;
+  bool _resting = false;
+  bool _finished = false;
   String? _line;
+
+  RoundPlan? get _plan => widget.plan;
+
+  Duration get _segment => _resting
+      ? Duration(seconds: _plan!.restSeconds)
+      : Duration(seconds: _plan!.roundSeconds);
 
   @override
   void initState() {
     super.initState();
+    if (_plan == null) return;
     _tick();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
   }
 
   void _tick() {
-    final List<NarrationEvent> events =
-        _narrator.tick(elapsed: _elapsed, total: _round);
+    final RoundPlan plan = _plan!;
+    if (_finished) return;
+
+    final List<NarrationEvent> events = <NarrationEvent>[];
+    if (_resting) {
+      // Dinlenme anlatılmaz saniye saniye; başında bir kez söylenir.
+      if (_elapsed <= Duration.zero) events.add(NarrationEvent.rest);
+    } else {
+      events.addAll(_narrator.tick(elapsed: _elapsed, total: _segment));
+    }
+
+    Duration next = _elapsed + const Duration(seconds: 1);
+    bool segmentOver = next > _segment;
+
+    if (segmentOver) {
+      if (_resting) {
+        // Dinlenme bitti → sıradaki tur. `startRound()` olay setini
+        // sıfırlar; yoksa "yarıladın" yalnız ilk turda söylenirdi.
+        _resting = false;
+        _roundIndex++;
+        _narrator.startRound();
+        next = Duration.zero;
+      } else if (_roundIndex + 1 < plan.rounds) {
+        if (plan.restSeconds > 0) {
+          _resting = true;
+          next = Duration.zero;
+        } else {
+          _roundIndex++;
+          _narrator.startRound();
+          next = Duration.zero;
+        }
+      } else {
+        // Son turun sonu = SEANS sonu. Son turdan sonra dinlenme YOKTUR.
+        _finished = true;
+        events.add(NarrationEvent.sessionEnd);
+        next = _segment;
+        _ticker?.cancel();
+      }
+    }
+
     // Aynı anda birden çok olay düşerse SONUNCUSU söylenir: üst üste iki
     // cümle sesli koçta anlaşılmaz, kullanıcı ikisini de kaçırır.
-    final String? said =
-        events.isEmpty ? null : widget.cues.say(events.last);
+    final String? said = events.isEmpty ? null : widget.cues.say(events.last);
     if (!mounted) return;
     setState(() {
       if (said != null) _line = said;
-      if (_elapsed < _round) _elapsed += const Duration(seconds: 1);
+      _elapsed = next;
     });
   }
 
@@ -169,12 +232,31 @@ class _LiveState extends State<_Live> {
 
   @override
   Widget build(BuildContext context) {
+    final RoundPlan? plan = _plan;
+
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: IntervalTimer(elapsed: _elapsed, total: _round),
-        ),
+        // SAAT YALNIZ PLANLI DERSTE AKAR. Öğretme dersleri (kamera, duruş,
+        // jab...) süreli çalışma DEĞİL — onlarda bir tur saati göstermek
+        // olmayan bir yapıyı varmış gibi gösterirdi. Süreli bir dersin
+        // plansız AÇIK kalması `Library.validate` tarafından reddediliyor,
+        // yani bu dal "planı yazılmamış tur" anlamına gelmez.
+        if (plan != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: IntervalTimer(elapsed: _elapsed, total: _segment),
+          ),
+        // Tur konumu YAZILI. Çok turlu bir seansta hangi turda olduğunu
+        // bilmemek, süreyi hiç bilmemekle aynı: kullanıcı ne kadar kaldığını
+        // hesaplayamaz.
+        if (plan != null && plan.rounds > 1)
+          Text(
+            _resting
+                ? 'Rest — round ${_roundIndex + 2} of ${plan.rounds} next'
+                : 'Round ${_roundIndex + 1} of ${plan.rounds}',
+            key: const Key('live-round-position'),
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         Expanded(
           child: LiveCoachSurface(
             state: LiveState.noVerdict,

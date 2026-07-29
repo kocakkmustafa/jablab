@@ -1072,8 +1072,8 @@
       "sourceArtifact": {
         "boundTo": null,
         "inspected": "reference-boxing-jab.json (motion-core/reference@1, motion_core-v0.8.4)",
-        "$whyNotBound": "BAGLANMADI, stance ile AYNI iki bagimsiz sebeple. (1) KURAL 7: artefakt mirrorConfident=false ve mirrorSearchDecisive=false — cekirdegin DTW ayna-aramasi karar veremedi; benim tablom lead/rear, yani TARAF-BAGIMLI. (2) KURAL 8: 11 take de \"unattested\" (--allow-unattested ile uretildi); eksik olan orneklem degil KAYNAK BEYANI ve bu provisionala devredilemez. NOT: kural 7 icin BAGIMSIZ bir olcum var (11/11 orthodox, yukari bkz) — bu olcum cekirdegin bayraginin YERINI ALMAZ, J-061 yukseltmesinde koordinator kararina girdi olarak sunuldu.",
-        "mirrorConfident": false,
+        "$whyNotBound": "BAGLANMADI — ama sebep artik TEK: KURAL 8 (attestation). Kural 7 M-J-06 on kapisiyla SAGLANDI (bkz. $mirrorConfidentVia). Kalan blokaj: 11 take de \"unattested\". ATTESTATION DENENDI VE DURUM KOTULESTI (J-064): 4 kaynagin ATLANMIS transcribe+romMode adimi tamamlandi (faster-whisper kurulmadan once hasat edilmislerdi) — 2 kaynak attest edildi (Tony Jeffries, World Class Boxing Channel: active/eligible), ama 2 kaynak \"unknown\" dondu => referenceEligible:false => HARD BLOCK (override YOK). Precision Striking + Soren dislandi.",
+        "mirrorConfident": true,
         "mirrorGapMeasured": true,
         "mirrorSearchDecisive": false,
         "excludedOutlierIds": [
@@ -1084,7 +1084,10 @@
         "unreliableJoints": [
           "left_forearm"
         ],
-        "measurementProvenance": "PROVISIONAL"
+        "measurementProvenance": "PROVISIONAL",
+        "$mirrorConfidentVia": "M-J-06 ON KAPISI (J-064): artefakt --lead-side-prior ile YENIDEN kuruldu. Prior, 11/11-orthodox geometrik olcumunden turetildi (hepsi false = hicbir take aynalanmaz). Sonuc: mirrorConfident=TRUE (dayanak PRIOR), mirrorSearchDecisive=false (DURUSTCE korunuyor — cekirdegin DTW ayna-aramasi hala kararsiz; 0.8.2 ayrimi tam bunun icin var). frames.meanRad BIT-OZDES ve mirroredTakeIds=[] — prior veriyi DEGISTIRMEDI, yalniz guven iddiasini olcume dayandirdi. KURAL 7 boylece ON KAPIDAN saglandi; post-hoc ikame YAPILMADI.",
+        "$reproducibilityWarning": "⚠️ BU ARTEFAKT SU AN YENIDEN KURULAMAZ. Guncel fixture durumunda kanonik CLI REDDEDIYOR: \"14 fixture -> 10 usable take from 2 source(s) (need 3/3)\". Asagidaki tablo, kaynaklar unattested (referenceEligible alani YOK) iken kurulmus artefakttan turetildi ve sayilari GECERLI — ama zincir tekrar kosulamiyor. Sebep bir kaynak kusuru DEGIL, siniflandirici bosluguna KUVVETLI SUPHE: Precision Striking transkriptinde 15 emir kipi + 88 \"you + fiil\" yapisi var (\"you gotta get back to the jab\"), Soren transkriptinde 13 + 77; ACTIVE_MARKERS yalnizca PT-tarzi \"(raise|lift|reach|bring) your\" tanıyor. Bu, frolov vakasinin (M-F-104, birinci-sahis gosterim) UCUNCU kardesi: IKINCI-SAHIS KOCLUK EMIR KIPI. Siniflandiriciyi KENDI artefaktimi gecirmek icin DEGISTIRMEDIM — aile kapisi, koordinator karari.",
+        "$staleEligibilityFinding": "YAN BULGU (J-064, aile-geneli): segment_punches gibi araclarla kesilen TUREV pencere fixtureilari provenance\"i KESIM ANINDA snapshotluyor. Kaynak fixture\"in referenceEligible\"i sonradan degisse bile eski pencereler ESKI degeri tasiyor ve kapidan gecmeye devam ediyor. Bu bir kapi-atlatma yolu: uygunluk TUREV artefaktta BAYATLIYOR. Ilk build\"im tam bu yuzden gecmisti; yeniden kesince reddedildi."
       },
       "$report": "docs/g3/JAB-REFERANS-RAPORU.txt"
     }

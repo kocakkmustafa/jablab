@@ -95,17 +95,42 @@ void main() {
     }
   });
 
-  test('[kural 7+8] artefakt BAĞLANMADI ve sebebi isimli', () {
+  test('[kural 7] ÖN KAPIDAN sağlandı: prior ile mirrorConfident, ama '
+      'searchDecisive DÜRÜSTÇE false kaldı', () {
+    // M-J-06: app-side ölçüm çekirdeğin bayrağını post-hoc İKAME EDEMEZ;
+    // build ANINDA prior geçmek resmi kanaldır. İkisini ayırt eden şey
+    // `searchDecisive`: prior güveni sağlar, DTW aramasını KARARLI YAPMAZ.
+    // Bu ayrım silinirse "ölçtüm" ile "çekirdek çözdü" karışır.
+    final Map<String, dynamic> sa =
+        (ref['sourceArtifact'] as Map).cast<String, dynamic>();
+    expect(sa['mirrorConfident'], isTrue);
+    expect(sa['mirrorSearchDecisive'], isFalse,
+        reason: 'prior güven verir ama aramayı kararlı YAPMAZ — 0.8.2 ayrımı '
+            'tam bunun için var');
+    expect(sa[r'$mirrorConfidentVia'], isNotNull,
+        reason: 'mirrorConfident=true iken dayanağı YAZILI olmalı');
+    expect(sa[r'$mirrorConfidentVia'], contains('PRIOR'));
+  });
+
+  test('[kural 8] artefakt HÂLÂ BAĞLANMADI ve kalan tek sebep isimli', () {
     final Map<String, dynamic> sa =
         (ref['sourceArtifact'] as Map).cast<String, dynamic>();
     expect(sa['boundTo'], isNull,
-        reason: 'ayna güveni ve kaynak beyanı olmadan artefakttan '
-            'taraf-bağımlı hüküm türetilemez');
-    expect(sa['mirrorConfident'], isFalse);
-    expect(sa['mirrorSearchDecisive'], isFalse);
-    expect(sa[r'$whyNotBound'], isNotEmpty);
-    expect(sa[r'$whyNotBound'], contains('KURAL 7'));
+        reason: 'kaynak beyanı olmadan artefakttan hüküm türetilemez');
     expect(sa[r'$whyNotBound'], contains('KURAL 8'));
+  });
+
+  test('yeniden-kurulamazlık SESSİZ KALMIYOR', () {
+    // J-064: attestation denemesi 2 kaynağı hard-block'a düşürdü ve artefakt
+    // güncel fixture durumunda YENİDEN KURULAMIYOR. Tablo geçerli ama zincir
+    // koşulamıyor — bunu yazmamak, "üretildi" ile "üretilebilir"i karıştırmak
+    // olurdu (J-039 "beyan ≠ canlı" sınıfının artefakt karşılığı).
+    final Map<String, dynamic> sa =
+        (ref['sourceArtifact'] as Map).cast<String, dynamic>();
+    expect(sa[r'$reproducibilityWarning'], isNotNull);
+    expect(sa[r'$reproducibilityWarning'], contains('YENIDEN KURULAMAZ'));
+    expect(sa[r'$staleEligibilityFinding'], isNotNull,
+        reason: 'türev pencerede uygunluk bayatlaması bulgusu kayıtlı olmalı');
   });
 
   test('[J-034] taraf SOYUT adla yazılır — mutlak left_/right_ yasak', () {

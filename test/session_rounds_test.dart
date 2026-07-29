@@ -1,0 +1,160 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:jablab/app/content_repository.dart';
+import 'package:jablab/app/session_narrator.dart';
+import 'package:jablab/app/session_screen.dart';
+import 'package:jablab/shell_candidate/session_flow.dart';
+import 'package:jablab/shell_candidate/shell_models.dart';
+import 'package:jablab_engine/jablab_engine.dart';
+
+/// Çok turlu seans saatinin GERÇEKTEN turları koştuğu (J-063).
+///
+/// J-062'nin ölçtüğü kusur tam buradaydı: canlı ekran sabit 3 dakika
+/// koşuyordu ve "Twenty minutes / Six rounds" dersi 3 dakikada bitiyordu.
+/// Aşağıdaki testler saatin turdan tura ve dinlenmeye geçtiğini SANAL SAATİ
+/// İLERLETEREK kanıtlıyor — "widget çiziliyor mu" değil, "süre koşuyor mu".
+void main() {
+  setUp(() {
+    final TestWidgetsFlutterBinding b =
+        TestWidgetsFlutterBinding.ensureInitialized();
+    b.platformDispatcher.views.first.physicalSize = const Size(1200, 2400);
+    b.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final TestWidgetsFlutterBinding b =
+        TestWidgetsFlutterBinding.ensureInitialized();
+    b.platformDispatcher.views.first.resetPhysicalSize();
+    b.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
+  /// Canlı aşamayı doğrudan kurar — kütüphane gezinmesini tekrarlamaya gerek
+  /// yok, sınanan şey saat.
+  Future<void> pumpLive(
+    WidgetTester t, {
+    required RoundPlan? plan,
+  }) async {
+    late final CueBook cues;
+    await t.runAsync(() async {
+      cues = await const ContentRepository().loadCues();
+    });
+    await t.pumpWidget(MaterialApp(
+      home: SessionScreen(
+        lesson: const ShellLesson(id: 'x', title: 'Test lesson', minutes: 12),
+        cues: cues,
+        coachedNotScored: const <String>['Rear guard hand position'],
+        plan: plan,
+      ),
+    ));
+    await t.pumpAndSettle();
+    // teach → rehearse → live
+    await t.tap(find.byKey(const Key('advance-button')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('advance-button')));
+    await t.pump();
+  }
+
+  testWidgets('çok turlu plan: tur konumu yazılı ve TURDAN TURA GEÇİYOR',
+      (WidgetTester t) async {
+    // Kısa ama gerçek yapı: 3 tur × 4sn + 2 dinlenme × 2sn = 16sn.
+    const RoundPlan plan = RoundPlan(
+      rounds: 3,
+      roundSeconds: 4,
+      restSeconds: 2,
+      planProvenance: 'test',
+    );
+    await pumpLive(t, plan: plan);
+
+    // Konum YUVASINDAN okunur. `textContaining('Rest')` kullanmak yanlış
+    // olurdu: anlatı yuvası da "Rest." diyor ve iki eşleşme çıkıyor —
+    // tam olarak "anlatı ile hüküm/konum AYRI yuva" tasarımının kanıtı.
+    String position() =>
+        t.widget<Text>(find.byKey(const Key('live-round-position'))).data!;
+
+    expect(position(), 'Round 1 of 3');
+
+    // 1. tur bitene kadar ilerlet → dinlenmeye geçmeli
+    await t.pump(const Duration(seconds: 5));
+    expect(position(), 'Rest — round 2 of 3 next',
+        reason: 'tur bitti ama dinlenmeye geçilmedi');
+
+    // dinlenme bitince 2. tur
+    await t.pump(const Duration(seconds: 3));
+    expect(position(), 'Round 2 of 3',
+        reason: 'dinlenme bitti ama 2. tur başlamadı');
+
+    // 2. tur + dinlenme + 3. tura geç
+    await t.pump(const Duration(seconds: 5));
+    expect(position(), 'Rest — round 3 of 3 next');
+    await t.pump(const Duration(seconds: 3));
+    expect(position(), 'Round 3 of 3', reason: 'son tura ulaşılmadı');
+
+    // Son turun sonu = seans sonu. SON TURDAN SONRA DİNLENME YOK.
+    await t.pump(const Duration(seconds: 6));
+    expect(position(), 'Round 3 of 3',
+        reason: 'son turdan sonra dinlenme gösterildi ya da 4. tur uyduruldu — '
+            'seans bitmeliydi');
+
+    // Saat durmuş olmalı: daha fazla ilerletmek 4. tur uydurmamalı.
+    await t.pump(const Duration(seconds: 30));
+    expect(position(), 'Round 3 of 3');
+  });
+
+  testWidgets('tek turlu planda tur konumu GÖSTERİLMEZ',
+      (WidgetTester t) async {
+    // "Round 1 of 1" bir bilgi değil, gürültü.
+    const RoundPlan plan = RoundPlan(
+      rounds: 1,
+      roundSeconds: 5,
+      restSeconds: 0,
+      planProvenance: 'test',
+    );
+    await pumpLive(t, plan: plan);
+    expect(find.byKey(const Key('live-round-position')), findsNothing);
+    expect(find.byKey(const Key('live-no-verdict')), findsOneWidget);
+  });
+
+  testWidgets('plansız (öğretme) derste SAAT HİÇ AKMAZ, hüküm yuvası konuşur',
+      (WidgetTester t) async {
+    // Öğretme dersleri süreli çalışma DEĞİL; olmayan bir tur yapısını
+    // varmış gibi göstermek J-062 kusurunun aynadaki hâli olurdu.
+    await pumpLive(t, plan: null);
+    expect(find.byType(IntervalTimer), findsNothing,
+        reason: 'plansız derste tur saati gösterilmemeli');
+    expect(find.byKey(const Key('live-round-position')), findsNothing);
+    expect(find.byKey(const Key('live-no-verdict')), findsOneWidget,
+        reason: 'kamera yok beyanı plansız derste de görünmeli');
+  });
+
+  testWidgets('anlatı her turda YENİDEN konuşuyor (startRound sıfırlaması)',
+      (WidgetTester t) async {
+    // startRound() olay setini sıfırlamazsa "yarıladın" yalnız ilk turda
+    // söylenir ve sonraki turlar sessiz geçer — sesli koçta sessizlik
+    // "sorun yok" diye okunur.
+    const RoundPlan plan = RoundPlan(
+      rounds: 2,
+      roundSeconds: 6,
+      restSeconds: 2,
+      planProvenance: 'test',
+    );
+    await pumpLive(t, plan: plan);
+
+    // 1. turun yarısını geç → bir replik görünmüş olmalı
+    await t.pump(const Duration(seconds: 4));
+    final Finder cue = find.byKey(const Key('live-narration'));
+    expect(cue, findsOneWidget,
+        reason: 'ilk turda hiç replik söylenmedi');
+    final String firstRoundLine = t.widget<Text>(cue).data!;
+
+    // 2. tura geç: 1. turu bitir (6sn) → dinlenme (2sn) → 2. tur.
+    await t.pump(const Duration(seconds: 3)); // t≈7 → tur bitti, dinlenme
+    await t.pump(const Duration(seconds: 3)); // dinlenme bitti → 2. tur
+    expect(find.text('Round 2 of 2'), findsOneWidget);
+    await t.pump(const Duration(seconds: 4));
+    expect(find.byKey(const Key('live-narration')), findsOneWidget,
+        reason: '2. turda anlatı sustu — startRound sıfırlaması çalışmıyor');
+    // Varyant döndürmesi gereği aynı olay farklı cümle verir; en azından bir
+    // cümle GÖRÜNÜYOR olması yeterli kanıt (sessizlik yok).
+    expect(firstRoundLine, isNotEmpty);
+  });
+}

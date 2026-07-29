@@ -42,6 +42,11 @@ class _RootState extends State<_Root> {
   ShellLibrary? _library;
   CueBook? _cues;
   RuleSet? _boxing;
+
+  /// Alan kütüphanesi de tutulur: kabuk modeli tur planını TAŞIMAZ (kabukta
+  /// "round" alan sözlüğüdür, README sözleşmesi) — plan burada, app
+  /// katmanında aranıp canlı ekrana verilir.
+  Library? _domain;
   Object? _error;
 
   @override
@@ -55,6 +60,7 @@ class _RootState extends State<_Root> {
       final ({dynamic library, dynamic boxing}) content =
           r[0] as ({dynamic library, dynamic boxing});
       setState(() {
+        _domain = content.library as Library;
         _library = widget.repository.toShell(content.library);
         _boxing = content.boxing as RuleSet;
         _cues = r[1] as CueBook;
@@ -122,6 +128,7 @@ class _RootState extends State<_Root> {
                   cues: _cues!,
                   coachedNotScored:
                       widget.repository.coachedNotScoredLabels(_boxing!),
+                  plan: widget.repository.roundPlanFor(_domain!, l.id),
                 )),
       );
 }

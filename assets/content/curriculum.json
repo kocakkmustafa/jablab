@@ -253,22 +253,6 @@
       ],
       "signals": []
     },
-    "boxing.conditioning.tempo": {
-      "gates": [
-        {
-          "event": "tempoSwitch",
-          "minCorrectSequences": 10,
-          "$why": "Tempo BANT olarak raporlanir (C bandi), sayi olarak degil. Kapi 'dogru bandi tutturdu mu' sayar; 'ne kadar hizli' diye sormaz — o sayiyi olcemiyoruz."
-        }
-      ],
-      "signals": [
-        {
-          "cue": "cue.slow_down",
-          "direction": "decreasing",
-          "$why": "KAPI DEGIL: C bandi, form-hiz odunlesmesi kisiye gore degisir."
-        }
-      ]
-    },
     "boxing.conditioning.r5": {
       "gates": [
         {
@@ -298,42 +282,6 @@
         }
       ],
       "signals": []
-    },
-    "boxing.conditioning.hiit": {
-      "gates": [
-        {
-          "sessionMinutes": 12,
-          "withValidAnalysisRatio": 0.7,
-          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '12 dakika calistin' demek icin egitmen uzlasisi gerekmiyor. HIIT'te ayrica form geri bildirimi SUSTURULUR: yuksek tempoyu biz istedik, sonra 'formun bozuldu' demek kendi tasarladigimiz egzersiz icin ceza kesmektir."
-        }
-      ],
-      "signals": []
-    },
-    "boxing.conditioning.technique_round": {
-      "gates": [
-        {
-          "sessionMinutes": 9,
-          "withValidAnalysisRatio": 0.7,
-          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '9 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
-        }
-      ],
-      "signals": []
-    },
-    "boxing.intermediate.fatigue": {
-      "gates": [
-        {
-          "sessionMinutes": 20,
-          "withValidAnalysisRatio": 0.7,
-          "$why": "Sure kapisi. Yorgunlukta form 'bozulmasi' beklenen seydir, kapi olamaz."
-        }
-      ],
-      "signals": [
-        {
-          "cue": "cue.rear_hand_low",
-          "direction": "decreasing",
-          "$why": "DERSIN KENDISI bu trend. Gard eklemleri KOCLANAN (egitmenler ayrisiyor) — kapi kurulamaz; ama kullanicinin KENDI hata orani zaman icinde karsilastirilabilir. Kendine gore kiyas, baskasina gore kiyastan daha az iddia tasir."
-        }
-      ]
     }
   }
 }

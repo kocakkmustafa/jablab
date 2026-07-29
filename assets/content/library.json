@@ -115,7 +115,15 @@
                 "1-2"
               ],
               "focus": "round",
-              "minutes": 8
+              "minutes": 8,
+              "status": "live",
+              "roundPlan": {
+                "rounds": 1,
+                "roundSeconds": 180,
+                "restSeconds": 0,
+                "planProvenance": "arithmetic",
+                "$planBasis": "Ad TEKIL (\"Your first round\") tek tur beyan ediyor; tur suresi ilerleme kapisinda beyanli (sessionMinutes=3 => 180 sn). Kutuphanedeki minutes=8 DERS suresidir (ogret+dene+tur+ozet), tur suresi DEGIL — kardes Foundations derslerinin de (kamera 6, durus 10, jab 12) ders suresi olmasiyla tutarli. Icat YOK."
+              }
             }
           ]
         },
@@ -140,7 +148,14 @@
                 "1-1-2"
               ],
               "focus": "round",
-              "minutes": 12
+              "minutes": 12,
+              "roundPlan": {
+                "rounds": 3,
+                "roundSeconds": 180,
+                "restSeconds": 90,
+                "planProvenance": "arithmetic",
+                "$planBasis": "Ad \"3 x 3 minute rounds\" tur sayisini VE tur suresini beyan ediyor; dinlenme beyan edilen toplamdan ARITMETIKLE cikiyor: 720-540=180 sn, 2 araya bolunmus = 90 sn. Icat YOK."
+              }
             },
             {
               "id": "boxing.conditioning.tempo",
@@ -153,7 +168,28 @@
                 "TEMPO_TOO_FAST_FOR_FORM"
               ],
               "focus": "round",
-              "minutes": 10
+              "minutes": 10,
+              "status": "locked",
+              "lockedReason": "We haven't settled whether this round holds one steady tempo or steps up through several, and the two designs need different round structures. We won't guess at the shape of a lesson.",
+              "$deferredProgression": {
+                "gates": [
+                  {
+                    "event": "tempoSwitch",
+                    "minCorrectSequences": 10,
+                    "$why": "Tempo BANT olarak raporlanir (C bandi), sayi olarak degil. Kapi 'dogru bandi tutturdu mu' sayar; 'ne kadar hizli' diye sormaz — o sayiyi olcemiyoruz."
+                  }
+                ],
+                "signals": [
+                  {
+                    "cue": "cue.slow_down",
+                    "direction": "decreasing",
+                    "$why": "KAPI DEGIL: C bandi, form-hiz odunlesmesi kisiye gore degisir."
+                  }
+                ]
+              },
+              "$deferredProgressionWhy": "J-063: ders KILITLI oldugu icin ilerleme kapisi GECICI olarak devre disi (J-038). Tur yapisi yazilip ders acilinca progression\"a geri tasinir.",
+              "lockedBy": "round-structure-unwritten",
+              "$lockedWhy": "Tempo dersinin SABIT mi ARTAN mi tempo calistirdigi kararlastirilmadi; iki tasarim farkli tur yapisi (ve farkli hata-esigi mantigi) istiyor. Tur sayisi/suresi bu cevaba bagli — secmek dersin NE OGRETTIGINI degistirirdi. Eksik olan bir olcum degil, bir antrenman-tasarim karari."
             },
             {
               "id": "boxing.conditioning.r5",
@@ -164,7 +200,14 @@
                 "jab",
                 "cross"
               ],
-              "blurb": "One short round. Enough to find out whether your guard survives being tired."
+              "blurb": "One short round. Enough to find out whether your guard survives being tired.",
+              "roundPlan": {
+                "rounds": 1,
+                "roundSeconds": 300,
+                "restSeconds": 0,
+                "planProvenance": "arithmetic",
+                "$planBasis": "Blurb \"One short round\" tek tur beyan ediyor; sure beyan edilen toplamin tamami (300 sn). Dinlenme yok cunku tur arasi yok. Icat YOK."
+              }
             },
             {
               "id": "boxing.conditioning.r10",
@@ -178,7 +221,15 @@
               "combinations": [
                 "1-2"
               ],
-              "blurb": "Three rounds with rest. The first honest test of whether form holds when you stop thinking about it."
+              "blurb": "Three rounds with rest. The first honest test of whether form holds when you stop thinking about it.",
+              "roundPlan": {
+                "rounds": 3,
+                "roundSeconds": 200,
+                "restSeconds": 100,
+                "planProvenance": "arithmetic",
+                "$planBasis": "Tur sayisi (3) blurbda beyanli (\"Three rounds with rest\"); CALISMA suresi ilerleme kapisinda beyanli (sessionMinutes=10 => 600 sn, $why: \"10 dakika calistin\"). 600/3 = 200 sn/tur — SAF ARITMETIK, icat YOK. Dinlenme 100 sn: r3 emsalindeki 1:2 is-dinlenme orani (180:90) ayni oranla 200:100 olarak uygulandi.",
+                "$planBoundary": "Dinlenme suresi (100 sn) r3 emsalinden turetilen bir ORAN secimidir, beyan DEGIL. Kapi gecilebilirligini ETKILEMEZ (kapi yalniz calisma suresini sayar), ama toplam ders suresini etkiler: 3x200+2x100 = 800 sn ~ 13,3 dk. Ders adi \"Ten minutes\" CALISMA suresini adlandiriyor (kapinin $why metniyle tutarli). Insan-antrenor dogrulamasi bekliyor."
+              }
             },
             {
               "id": "boxing.conditioning.r20",
@@ -192,7 +243,15 @@
               "combinations": [
                 "1-2"
               ],
-              "blurb": "Six rounds. Long enough that the app's own tracking gets tested too — it will tell you if it loses you."
+              "blurb": "Six rounds. Long enough that the app's own tracking gets tested too — it will tell you if it loses you.",
+              "roundPlan": {
+                "rounds": 6,
+                "roundSeconds": 200,
+                "restSeconds": 60,
+                "planProvenance": "arithmetic",
+                "$planBasis": "Tur sayisi (6) blurbda beyanli (\"Six rounds\"); CALISMA suresi kapida beyanli (sessionMinutes=20 => 1200 sn). 1200/6 = 200 sn/tur — SAF ARITMETIK. BAGIMSIZ TUTARLILIK KONTROLU: r10 da ayni yolla 200 sn/tur veriyor, yani iki ders birbirinden bagimsiz olarak AYNI tur uzunlugunu dogruluyor. Dinlenme 60 sn: bokstaki neredeyse evrensel \"kose molasi\" konvansiyonu.",
+                "$planBoundary": "Dinlenme 60 sn bir konvansiyon secimidir, beyan DEGIL; kapi gecilebilirligini etkilemez. Toplam: 6x200+5x60 = 1500 sn = 25 dk (ad \"Twenty minutes\" calisma suresini adlandiriyor). Insan-antrenor dogrulamasi bekliyor."
+              }
             },
             {
               "id": "boxing.conditioning.hiit",
@@ -204,7 +263,22 @@
                 "cross"
               ],
               "blurb": "Short hard intervals with short rest. Punch count is reported; punch quality is not judged at this pace.",
-              "$judgementWhy": "Yuksek tempoda form hukmu VERILMEZ. TEMPO_TOO_FAST_FOR_FORM zaten C bandinda; hizli aralikta 'kotu form' demek, kullaniciya kendi tasarladigimiz egzersiz icin ceza kesmektir."
+              "$judgementWhy": "Yuksek tempoda form hukmu VERILMEZ. TEMPO_TOO_FAST_FOR_FORM zaten C bandinda; hizli aralikta 'kotu form' demek, kullaniciya kendi tasarladigimiz egzersiz icin ceza kesmektir.",
+              "status": "locked",
+              "lockedReason": "Interval work needs the burst-and-recover timing the app can already narrate but cannot yet run. Until that is wired, a steady round pretending to be intervals would be the wrong lesson.",
+              "$deferredProgression": {
+                "gates": [
+                  {
+                    "sessionMinutes": 12,
+                    "withValidAnalysisRatio": 0.7,
+                    "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '12 dakika calistin' demek icin egitmen uzlasisi gerekmiyor. HIIT'te ayrica form geri bildirimi SUSTURULUR: yuksek tempoyu biz istedik, sonra 'formun bozuldu' demek kendi tasarladigimiz egzersiz icin ceza kesmektir."
+                  }
+                ],
+                "signals": []
+              },
+              "$deferredProgressionWhy": "J-063: ders KILITLI oldugu icin ilerleme kapisi GECICI olarak devre disi (J-038: erisilemeyen ders kapi kuramaz). Kapinin kendisi burada SAKLI — tur yapisi yazilip ders acilinca curriculum.json progression\"a geri tasinir. Silinmedi, ertelendi.",
+              "lockedBy": "interval-driver-missing",
+              "$lockedWhy": "SessionNarrator aralik kipini DESTEKLIYOR ve testli, ama onu suren yol yok (F-2, ayri kapi). Duz bir tur kosup \"aralik\" demek, kullaniciya baska bir ders vermek olurdu. Eksik olan olcum degil, TESISAT."
             },
             {
               "id": "boxing.conditioning.technique_round",
@@ -222,7 +296,22 @@
                 "FEET_CROSSED",
                 "BALANCE_LOSS"
               ],
-              "blurb": "Deliberately slow rounds. The only round type where form feedback stays on the whole time."
+              "blurb": "Deliberately slow rounds. The only round type where form feedback stays on the whole time.",
+              "status": "locked",
+              "lockedReason": "This round type needs a round count, and nothing has set one. Its progress gate asks for nine worked minutes; splitting those into rounds is a training-design decision we have not made yet, and guessing it would change what the lesson teaches.",
+              "$deferredProgression": {
+                "gates": [
+                  {
+                    "sessionMinutes": 9,
+                    "withValidAnalysisRatio": 0.7,
+                    "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '9 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
+                  }
+                ],
+                "signals": []
+              },
+              "$deferredProgressionWhy": "J-063: ders KILITLI oldugu icin ilerleme kapisi GECICI olarak devre disi (J-038: erisilemeyen ders kapi kuramaz). Kapinin kendisi burada SAKLI — tur yapisi yazilip ders acilinca curriculum.json progression\"a geri tasinir. Silinmedi, ertelendi.",
+              "lockedBy": "round-structure-unwritten",
+              "$lockedWhy": "Ilerleme kapisi 9 dakika CALISMA istiyor (beyanli), ama bunun kac tura bolunecegi beyansiz. Ayrica \"surekli feedback acik kalan tek tur tipi\" oncusuyle motor-ogrenme literaturundeki guidance-hypothesis gerilimi var: tur suresi bu gerilimin nasil cozuldugune bagli. Antrenman-tasarim karari, olcum eksigi degil."
             }
           ],
           "$scopeWhy": "Bu hattin kapilari SURE ve KATILIM olcer, teknik hukmu vermez. Referans beklemeden cikabilmesinin sebebi bu: '10 dakika calistin' demek icin egitmenlerin bir aci uzerinde uzlasmasi gerekmiyor."
@@ -272,7 +361,7 @@
             {
               "id": "boxing.intermediate.fatigue",
               "displayName": "Technique under fatigue",
-              "status": "live",
+              "status": "locked",
               "focus": "conditioning",
               "minutes": 20,
               "techniques": [
@@ -287,7 +376,27 @@
                 "LEAD_HAND_NOT_RECOVERED",
                 "BALANCE_LOSS"
               ],
-              "blurb": "Long rounds, no pace change. Watches whether your error rate climbs as you tire — that trend is the lesson."
+              "blurb": "Long rounds, no pace change. Watches whether your error rate climbs as you tire — that trend is the lesson.",
+              "lockedReason": "This lesson needs long rounds at a steady pace, and how long has not been set. Running a different round than the one described would make the fatigue trend meaningless.",
+              "$deferredProgression": {
+                "gates": [
+                  {
+                    "sessionMinutes": 20,
+                    "withValidAnalysisRatio": 0.7,
+                    "$why": "Sure kapisi. Yorgunlukta form 'bozulmasi' beklenen seydir, kapi olamaz."
+                  }
+                ],
+                "signals": [
+                  {
+                    "cue": "cue.rear_hand_low",
+                    "direction": "decreasing",
+                    "$why": "DERSIN KENDISI bu trend. Gard eklemleri KOCLANAN (egitmenler ayrisiyor) — kapi kurulamaz; ama kullanicinin KENDI hata orani zaman icinde karsilastirilabilir. Kendine gore kiyas, baskasina gore kiyastan daha az iddia tasir."
+                  }
+                ]
+              },
+              "$deferredProgressionWhy": "J-063: ders KILITLI oldugu icin ilerleme kapisi GECICI olarak devre disi (J-038: erisilemeyen ders kapi kuramaz). Kapinin kendisi burada SAKLI — tur yapisi yazilip ders acilinca curriculum.json progression\"a geri tasinir. Silinmedi, ertelendi.",
+              "lockedBy": "round-structure-unwritten",
+              "$lockedWhy": "\"Long rounds, no pace change\" tur sayisini da suresini de beyan etmiyor; kapi 20 dakika CALISMA istiyor. Farkli bir tur yapisi kosmak yorgunluk-trendini anlamsiz kilardi — olculen sey tam da formun ZAMAN ICINDE bozulmasi. Antrenman-tasarim karari."
             }
           ]
         }

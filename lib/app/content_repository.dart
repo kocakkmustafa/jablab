@@ -68,6 +68,22 @@ final class ContentRepository {
         return label;
       }).toList(growable: false);
 
+  /// Bir dersin tur planını alan kütüphanesinden arar (J-063).
+  ///
+  /// Kabuk modeli planı taşımaz — kabukta "round" alan sözlüğüdür ve
+  /// `shell_candidate/README.md` sözleşmesi onu yasaklıyor. Çeviri katmanının
+  /// işi tam bu: kabuk nötr kalır, plan app tarafında çözülür.
+  RoundPlan? roundPlanFor(Library lib, String lessonId) {
+    for (final Discipline d in lib.disciplines) {
+      for (final Course c in d.courses) {
+        for (final Lesson l in c.lessons) {
+          if (l.id == lessonId) return l.roundPlan;
+        }
+      }
+    }
+    return null;
+  }
+
   /// Replik kitabı. Yükleme sırasında eşleme doğrulanır: bir olayın repliği
   /// yoksa [CueBook.fromJson] FIRLATIR. Sessizce boş geçmek, o anı sonsuza
   /// kadar sessiz bırakırdı ve kullanıcı sessizliği "sorun yok" diye okur.

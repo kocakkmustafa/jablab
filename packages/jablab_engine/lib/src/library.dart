@@ -7,6 +7,53 @@ import 'ruleset.dart';
 /// Bunlar niyet beyanı olarak kalırsa ilk içerik dalgasında delinir; burada
 /// **mekanik değişmez** olarak kodlanır ve testte zorlanır (standart §5:
 /// mekanik denetim betikle yapılır, LLM denetimiyle değil).
+/// Bir dersin TUR PLANI — kaç tur, ne kadar, arada ne kadar dinlenme (J-063).
+///
+/// **Neden içerikte, kodda değil:** ADR-004 gereği motor hiçbir boks sayısını
+/// gömmez. Ama asıl sebep daha keskin: plan olmadığında canlı ekran sabit bir
+/// 3 dakika koşuyordu ve "Twenty minutes" yazan ders 3 dakikada bitiyordu
+/// (J-062, `beyan ≠ canlı`). Plan içerikte olduğu için artık beyanla
+/// aritmetik olarak KARŞILAŞTIRILABİLİR — [totalSeconds] o karşılaştırmanın
+/// zeminidir ve `Library.validate` onu zorlar.
+///
+/// [planProvenance] sayıların NEREDEN geldiğini taşır ve boş olamaz:
+///  * `arithmetic` — tur sayısı/süresi içerikte beyanlı, kalan tek bilinmeyen
+///    toplam süreden tam çıkıyor (icat yok);
+///  * `advisor-draft-<tarih>` — antrenman-tasarımı danışmanının ilk-geçiş
+///    taslağı; her sayının dayanağı var ama BAĞLAYICI doğrulama insan
+///    antrenörüdür. Bu durumda `$planBoundary` neyin beklendiğini yazar.
+///
+/// Kaynağı beyan etmeyen bir plan, uydurulmuş bir planla aynı görünür — bu
+/// alanın zorunlu olması, ikisini ayırt edilebilir tutan tek şey.
+final class RoundPlan {
+  const RoundPlan({
+    required this.rounds,
+    required this.roundSeconds,
+    required this.restSeconds,
+    required this.planProvenance,
+  });
+
+  factory RoundPlan.fromJson(Map<String, dynamic> j) => RoundPlan(
+        rounds: (j['rounds'] as num).toInt(),
+        roundSeconds: (j['roundSeconds'] as num).toInt(),
+        restSeconds: (j['restSeconds'] as num?)?.toInt() ?? 0,
+        planProvenance: j['planProvenance'] as String? ?? '',
+      );
+
+  final int rounds;
+  final int roundSeconds;
+  final int restSeconds;
+  final String planProvenance;
+
+  /// Çalışma + tur ARASI dinlenmeler. Son turdan sonra dinlenme YOKTUR —
+  /// seans biter; `rounds * (round + rest)` yazmak her derse fazladan bir
+  /// dinlenme ekler ve toplam beyanı sessizce aşar.
+  int get totalSeconds =>
+      rounds * roundSeconds + (rounds - 1) * restSeconds;
+
+  bool get isSingleRound => rounds == 1;
+}
+
 final class Lesson {
   const Lesson({
     required this.id,
@@ -17,6 +64,7 @@ final class Lesson {
     this.focus,
     this.minutes = 0,
     this.lockedReason,
+    this.roundPlan,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -36,6 +84,9 @@ final class Lesson {
         lockedReason:
             j['status'] == 'locked' ? j['lockedReason'] as String : null,
         minutes: (j['minutes'] as num?)?.toInt() ?? 0,
+        roundPlan: j['roundPlan'] == null
+            ? null
+            : RoundPlan.fromJson((j['roundPlan'] as Map).cast<String, dynamic>()),
       );
 
   final String id;
@@ -48,6 +99,11 @@ final class Lesson {
 
   /// Doluysa ders KİLİTLİ ve bu cümle sebebidir (kullanıcıya gösterilir).
   final String? lockedReason;
+
+  /// Süreli çalışma dersinin tur planı; yoksa canlı aşama SÜRE KOŞAMAZ.
+  /// `Library.validate` süreli-odaklı bir dersin plansız AÇIK kalmasını
+  /// reddeder — plansız ders, beyan ettiği süreyi koşamayan derstir (J-062).
+  final RoundPlan? roundPlan;
 
   bool get isLocked => lockedReason != null;
 }
@@ -219,6 +275,7 @@ final class Library {
           errs.add('${c.id}: boş kurs listelenemez');
         }
         for (final Lesson l in c.lessons) {
+          _validateRoundPlan(l, errs);
           if (rs == null) continue;
           for (final String t in l.techniques) {
             if (rs.technique(t) == null) {
@@ -246,5 +303,56 @@ final class Library {
     }
 
     return errs;
+  }
+
+  /// J-062/J-063: süreli çalışma dersi beyan ettiği süreyi KOŞABİLMELİ.
+  ///
+  /// Bu denetimin varlık sebebi ölçülmüş bir kusurdur: canlı ekran sabit 3
+  /// dakika koşarken 7 kondisyon dersinin 7'si de kendi beyanından farklı
+  /// çalışıyordu ve hiçbir test bunu görmüyordu. Beyan ile plan arasındaki
+  /// aritmetik artık burada zorlanıyor — bir sonraki içerik turunda "süreyi
+  /// biraz uzatalım" demek, planı düzeltmeden mümkün olmamalı.
+  static void _validateRoundPlan(Lesson l, List<String> errs) {
+    final RoundPlan? p = l.roundPlan;
+    final bool timed = l.focus == 'round' || l.focus == 'conditioning';
+
+    if (p == null) {
+      // Kilitli ders planı taşımak zorunda değil — kilidin kendisi zaten
+      // "bu dersi koşamıyoruz" beyanıdır ve sebebi kullanıcıya yazılıdır.
+      if (timed && !l.isLocked) {
+        errs.add('${l.id}: süreli çalışma dersi ama TUR PLANI YOK — beyan '
+            'ettiği ${l.minutes} dakikayı koşamaz (J-062). Plan yaz ya da '
+            'dersi isimli sebeple kilitle.');
+      }
+      return;
+    }
+
+    if (p.rounds < 1) {
+      errs.add('${l.id}: tur sayısı ${p.rounds} — en az 1 olmalı');
+    }
+    if (p.roundSeconds < 1) {
+      errs.add('${l.id}: tur süresi ${p.roundSeconds}sn — en az 1 olmalı');
+    }
+    if (p.restSeconds < 0) {
+      errs.add('${l.id}: dinlenme ${p.restSeconds}sn negatif olamaz');
+    }
+    if (p.rounds == 1 && p.restSeconds != 0) {
+      errs.add('${l.id}: tek turlu derste tur ARASI dinlenme olamaz '
+          '(${p.restSeconds}sn) — hiç ara yok');
+    }
+    if (p.planProvenance.trim().isEmpty) {
+      errs.add('${l.id}: planProvenance BOŞ — sayıların nereden geldiği '
+          'beyan edilmeyen bir plan, uydurulmuş planla aynı görünür');
+    }
+    // `minutes` ile plan toplamı KASITLI olarak karşılaştırılmıyor.
+    // Ölçüldü (J-063): `minutes` alanının tek bir anlamı YOK — bazı derste
+    // çalışma+dinlenme (r3: 12), bazısında yalnız çalışma (r10: 10),
+    // Foundations'ta ise DERS süresi (first_round: 8, turu 3 dakika).
+    // Kurs düzeyinde alanın adı zaten `estimatedMinutes`. Bu yüzden otorite
+    // `minutes` değil, dersin KENDİ İLERLEME KAPISI'dır (curriculum.json
+    // `sessionMinutes`) — çapraz-dosya olduğu için `curriculum_binding_test`
+    // içinde zorlanıyor: plan ÇALIŞMA süresi kapının istediğini vermezse
+    // kullanıcı o dersin kapısını ASLA geçemez. Üç derste tam bu kusur
+    // bulundu ve ship'ten önce düzeltildi.
   }
 }
