@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:motion_core/motion_core.dart';
@@ -43,5 +44,25 @@ void main() {
       expect(t.limb, anyOf(isNull, matches(RegExp(r'^(lead|rear)_'))),
           reason: '${t.id}: taraf soyut adla yazılmalı');
     }
+  });
+
+  test('gerekçe notları serbest AMA yazım hatası hâlâ SERT hata', () {
+    // M-J-07(3): `\$`-önekli anahtar her düzeyde yok sayılır — "sayı kendi
+    // gerekçesini taşır" ilkesi config'te yaşayabilsin diye. Katılığın
+    // gevşemediğini kanıtlamak bu testin ASIL işi: iddiaya güvenmek yerine
+    // kasıtlı bir typo ile sınıyoruz.
+    final String src =
+        File('../../assets/rulesets/boxing.v3.json').readAsStringSync();
+    expect(src.contains(r'"$doc"'), isTrue,
+        reason: 'gerekçe notları config\'te yaşamalı');
+    expect(src.contains(r'"$cutoffWhy"'), isTrue);
+
+    final Map<String, dynamic> doc =
+        (jsonDecode(src) as Map).cast<String, dynamic>();
+    final List<dynamic> phases =
+        ((doc['techniques'] as List<dynamic>).first as Map)['phases'] as List<dynamic>;
+    (phases[1] as Map<String, dynamic>)['timeoutMS'] = 400; // kasıtlı typo
+    expect(() => const PhaseConfigParser().parse(doc), throwsA(isA<PhaseConfigError>()),
+        reason: 'yazım hatası sessizce yutulursa kural 8 delinmiş olur');
   });
 }

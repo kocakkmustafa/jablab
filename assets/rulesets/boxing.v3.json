@@ -9,7 +9,9 @@
       ],
       "noiseBand": 0.02,
       "baseline": 0.55,
-      "cutoffHz": 8.0
+      "cutoffHz": 8.0,
+      "$doc": "|bilek-omuz| / kol uzunlugu — AYNI-KARE orani, kamera mesafesinden yapisi geregi bagimsiz.",
+      "$cutoffWhy": "J-027: cekirdegin 1 Hz varsayilani 120 ms'lik yumrugun tepesini %22 sondurup PEAK'i hic atesnemiyordu. 8 Hz D2'den TURETILDI: bir gecisi korumak icin kesim ~1/(2T); medyan 128 ms -> 3.9 Hz, en hizli %10 54 ms -> 9.3 Hz."
     },
     "stanceWidthRatio": {
       "unit": "ratio",
@@ -18,7 +20,8 @@
         4.0
       ],
       "noiseBand": 0.05,
-      "baseline": 1.4
+      "baseline": 1.4,
+      "$doc": "Ayak acikligi / omuz genisligi. baseline 1.40 = dengeli boks durusu."
     },
     "guardHeightDelta": {
       "unit": "ratio",
@@ -27,7 +30,8 @@
         1.5
       ],
       "noiseBand": 0.03,
-      "baseline": -0.1
+      "baseline": -0.1,
+      "$doc": "(bilek.y - burun.y) / govde boyu. Negatif = el burnun ustunde (gard yukarida)."
     },
     "elbowFlareAngle": {
       "unit": "deg",
@@ -37,7 +41,9 @@
       ],
       "noiseBand": 4.0,
       "baseline": 20.0,
-      "cutoffHz": 8.0
+      "cutoffHz": 8.0,
+      "$doc": "Ust kolun govde eksenine gore sapmasi. Dirsek yapisikken kucuk, disa acildikca 90'a yaklasir.",
+      "$cutoffWhy": "Hizli-gecisli metrik: yumruk kolu tepe hizinda."
     },
     "trunkLeanAngle": {
       "unit": "deg",
@@ -46,7 +52,8 @@
         90
       ],
       "noiseBand": 3.0,
-      "baseline": 8.0
+      "baseline": 8.0,
+      "$doc": "Govde ekseninin dikeyden sapmasi."
     },
     "shoulderRotation": {
       "unit": "deg",
@@ -56,7 +63,9 @@
       ],
       "noiseBand": 4.0,
       "baseline": 10.0,
-      "cutoffHz": 8.0
+      "cutoffHz": 8.0,
+      "$doc": "Omuz cizgisi ile kalca cizgisi arasindaki aci — govde rotasyonu VEKILI. 2B izdusum: gercek transvers rotasyonun ALT SINIRI.",
+      "$cutoffWhy": "Hizli-gecisli metrik: cross rotasyonu uzanmadan once tamamlaniyor."
     },
     "copOverBase": {
       "unit": "ratio",
@@ -65,7 +74,8 @@
         2.0
       ],
       "noiseBand": 0.04,
-      "baseline": 0.0
+      "baseline": 0.0,
+      "$doc": "Kalca orta noktasinin ayak taban poligonundan tasma miktari."
     },
     "frontFootLoadRatio": {
       "unit": "ratio",
@@ -74,7 +84,8 @@
         1.0
       ],
       "noiseBand": 0.05,
-      "baseline": 0.5
+      "baseline": 0.5,
+      "$doc": "On/arka ayak yuk dagilimi VEKILI — kuvvet olcumu DEGIL. Brans farkinin tek eksik olcusuydu (kickboks on-hasadi)."
     }
   },
   "techniques": [
@@ -118,7 +129,8 @@
               }
             ]
           },
-          "timeoutMs": 400
+          "timeoutMs": 400,
+          "$doc": "J-009: timeout'suz 'uzatip bekleme' yumruk sayiliyordu — D2 olcumunde torbaya yaslanan boksor 736 ms'lik sahte yumruk uretti."
         },
         {
           "id": "PEAK",
@@ -140,7 +152,8 @@
           "timeoutMs": 150,
           "quality": {
             "elbowFlareAngle": 45.0
-          }
+          },
+          "$doc": "D2 ayrimi: enter = 'bu faza girdim mi' (sayim sorusu), quality = 'iyi yaptim mi' (hukum sorusu). Ikisi ayri yazilir."
         },
         {
           "id": "RETRACTION",
@@ -189,7 +202,8 @@
           },
           "cooldownMs": 8000,
           "maxPerRound": 3,
-          "priority": "quality"
+          "priority": "quality",
+          "$doc": "J-033: egitmenler gard/kol pozisyonunda 36,7 derece ayrisiyor -> KOCLANIR ama SKORLANMAZ."
         },
         {
           "code": "TORSO_FALLING_FORWARD",
@@ -236,7 +250,8 @@
           },
           "suppressesJudgement": true,
           "cooldownMs": 15000,
-          "priority": "blocking"
+          "priority": "blocking",
+          "$doc": "plan 12: dusuk guvende TEKNIK HUKUM VERILMEZ. 'Bilegini bu acidan goremiyorum' denir, 'yanlis yaptin' denmez."
         }
       ]
     },
@@ -263,7 +278,8 @@
             "op": "gt",
             "value": 12
           },
-          "timeoutMs": 250
+          "timeoutMs": 250,
+          "$doc": "Rotasyon yoksa teknik 'rear jab' olarak siniflanir — bu bir HATA degil, siniflandirmadir."
         },
         {
           "id": "EXTENSION",
@@ -284,7 +300,8 @@
               }
             ]
           },
-          "timeoutMs": 400
+          "timeoutMs": 400,
+          "$doc": "J-009: timeout'suz 'uzatip bekleme' yumruk sayiliyordu — D2 olcumunde torbaya yaslanan boksor 736 ms'lik sahte yumruk uretti."
         },
         {
           "id": "PEAK",
@@ -306,7 +323,8 @@
           "timeoutMs": 150,
           "quality": {
             "elbowFlareAngle": 45.0
-          }
+          },
+          "$doc": "D2 ayrimi: enter = 'bu faza girdim mi' (sayim sorusu), quality = 'iyi yaptim mi' (hukum sorusu). Ikisi ayri yazilir."
         },
         {
           "id": "RETRACTION",
@@ -355,7 +373,8 @@
           },
           "cooldownMs": 8000,
           "maxPerRound": 3,
-          "priority": "quality"
+          "priority": "quality",
+          "$doc": "J-033: egitmenler gard/kol pozisyonunda 36,7 derece ayrisiyor -> KOCLANIR ama SKORLANMAZ."
         },
         {
           "code": "TORSO_FALLING_FORWARD",
@@ -402,7 +421,8 @@
           },
           "suppressesJudgement": true,
           "cooldownMs": 15000,
-          "priority": "blocking"
+          "priority": "blocking",
+          "$doc": "plan 12: dusuk guvende TEKNIK HUKUM VERILMEZ. 'Bilegini bu acidan goremiyorum' denir, 'yanlis yaptin' denmez."
         }
       ]
     },
@@ -442,7 +462,11 @@
           },
           "terminal": true
         }
-      ]
+      ],
+      "$doc": "Hook/uppercut V1'de SAYILIR ama tipi iddia EDILMEZ (J-003): uzanma-orani detektoru kol tam acilmadigi icin bu tekniklerde calismiyor.",
+      "$fallbackWhy": "J-026: bir jab AYNI ZAMANDA siniflandirilmamis vurustur; iki faz makinesi de tamamlanir. Bayrak olmadan her yumruk IKI KEZ sayilir ve sayac/kombinasyon/skor bozulur."
     }
-  ]
+  ],
+  "$doc": "boxing@1.0.0'in MUHURLU v3 semasina cevirisi (M-F-35). Kaynak config calismaya devam eder; bu dosya cekirdek PhaseConfigValidator'ina karsi dogrulanir.",
+  "$why": "Kendi yorumlayicim kendi config'imi elbette kabul eder. Semaya gercekten uyup uymadigimi ancak BASKASININ yazdigi kati linter soyleyebilir."
 }
