@@ -98,8 +98,12 @@ void main() {
         final Map<String, dynamic> gate = (g as Map).cast<String, dynamic>();
         final bool measurable = gate.keys.any((String k) => const <String>[
               'minCompletedAttempts', 'minCorrectSequences',
-              'withinToleranceRatio', 'sessionMinutes',
+              'withinToleranceRatio', 'sessionMinutes', 'minSeconds',
             ].contains(k));
+        // minSeconds = KATILIM kapısı (J-036). Duruşun "doğruluğu" üzerine
+        // kapı kurulamadığında (eğitmenler 0,72-1,85 ayrışıyor) geriye dürüst
+        // olarak ölçülebilen tek şey kalır: duruşta geçirilen süre. Ölçemediğimiz
+        // bir şeyi ölçmüş gibi puanlamaktansa ölçebildiğimizi saymak.
         expect(measurable, isTrue,
             reason: '${lesson.key}: kapı ölçülebilir bir büyüklüğe bağlı değil');
       }

@@ -48,11 +48,19 @@ void main() {
               'eğitmenlerin anlaşmadığı bir eklemi skorlamak haksız puan üretir');
     }
     for (final MapEntry<String, dynamic> e in coached.entries) {
-      final double d =
-          ((e.value as Map)['measuredDispersionDeg'] as num).toDouble();
-      expect(d, greaterThan(floorDeg),
-          reason: '${e.key} koçlanan listesinde ama dispersiyonu tabanda — '
-              'skorlanabilirken skorlanmıyor, kapsam gereksiz daralıyor');
+      final Map<String, dynamic> j = (e.value as Map).cast<String, dynamic>();
+      final double d = (j['measuredDispersionDeg'] as num).toDouble();
+      if (d <= floorDeg) {
+        // J-035: sd tabanın altında olduğu hâlde koçlanan tek meşru yol,
+        // take AÇIKLIĞIYLA düşürülmüş olmaktır. sd n=3'te dayanıklı değil;
+        // {-1,9 · -3,8 · -28,4} sd 12,0° verir ama uzlaşı değil bölünmedir.
+        // Gerekçenin niteliği curriculum_binding_test'te ayrıca zorlanıyor.
+        expect(j['demotedBy'], 'takeSpread',
+            reason: '${e.key} koçlanan listesinde ama dispersiyonu tabanda — '
+                'gerekçesiz düşürülmüş, kapsam sessizce daralıyor');
+        continue;
+      }
+      expect(d, greaterThan(floorDeg));
     }
   });
 

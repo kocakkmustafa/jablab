@@ -9,7 +9,13 @@
       "instruction": "Throw slow jabs. The only thing that matters is the other hand staying home.",
       "targets": [
         "cue.rear_hand_low"
-      ]
+      ],
+      "gateable": false,
+      "targetErrors": [
+        "REAR_HAND_LOW"
+      ],
+      "$gateableWhy": "KAPI KURULAMAZ — REAR_HAND_LOW: B bandi (tespit kamera acisina bagli). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
+      "reportsAs": "trend"
     },
     "drill.snap_back": {
       "displayName": "Snap back",
@@ -17,7 +23,13 @@
       "instruction": "Jab and pull it straight back on the same line.",
       "targets": [
         "cue.lead_hand_not_recovered"
-      ]
+      ],
+      "gateable": false,
+      "targetErrors": [
+        "LEAD_HAND_NOT_RECOVERED"
+      ],
+      "$gateableWhy": "KAPI KURULAMAZ — LEAD_HAND_NOT_RECOVERED: B bandi (tespit kamera acisina bagli). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
+      "reportsAs": "trend"
     },
     "drill.stance_reset": {
       "displayName": "Stance reset",
@@ -26,7 +38,14 @@
       "targets": [
         "cue.stance_narrow",
         "cue.stance_wide"
-      ]
+      ],
+      "gateable": true,
+      "targetErrors": [
+        "STANCE_TOO_NARROW",
+        "STANCE_TOO_WIDE"
+      ],
+      "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
+      "reportsAs": "gate"
     },
     "drill.footwork_basics": {
       "displayName": "Footwork basics",
@@ -34,7 +53,13 @@
       "instruction": "Step forward, back, side. Never let your feet cross.",
       "targets": [
         "cue.feet_crossed"
-      ]
+      ],
+      "gateable": true,
+      "targetErrors": [
+        "FEET_CROSSED"
+      ],
+      "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
+      "reportsAs": "gate"
     },
     "drill.balance": {
       "displayName": "Balance",
@@ -42,7 +67,13 @@
       "instruction": "Throw, then hold your stance for two seconds.",
       "targets": [
         "cue.balance_loss"
-      ]
+      ],
+      "gateable": true,
+      "targetErrors": [
+        "BALANCE_LOSS"
+      ],
+      "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
+      "reportsAs": "gate"
     },
     "drill.posture_reset": {
       "displayName": "Posture reset",
@@ -50,7 +81,13 @@
       "instruction": "Punch without letting your chest fall forward.",
       "targets": [
         "cue.torso_forward"
-      ]
+      ],
+      "gateable": false,
+      "targetErrors": [
+        "TORSO_FALLING_FORWARD"
+      ],
+      "$gateableWhy": "KAPI KURULAMAZ — TORSO_FALLING_FORWARD: trunkLeanAngle → trunk_tilt KOCLANAN (egitmenler ayrisiyor). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
+      "reportsAs": "trend"
     },
     "drill.combo_slow": {
       "displayName": "Combination, slowly",
@@ -59,7 +96,14 @@
       "targets": [
         "cue.wrong_hand",
         "cue.combo_order"
-      ]
+      ],
+      "gateable": true,
+      "targetErrors": [
+        "WRONG_HAND_FOR_COMBINATION",
+        "COMBINATION_ORDER_ERROR"
+      ],
+      "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
+      "reportsAs": "gate"
     },
     "drill.controlled_tempo": {
       "displayName": "Controlled tempo",
@@ -67,7 +111,13 @@
       "instruction": "Slow enough that every punch looks the same.",
       "targets": [
         "cue.slow_down"
-      ]
+      ],
+      "gateable": true,
+      "targetErrors": [
+        "TEMPO_TOO_FAST_FOR_FORM"
+      ],
+      "$gateableWhy": "Kapi kurulabilir: hedef hatalarin tespiti A bandinda VE dayandiklari eklemlerde egitmenler uzlasiyor.",
+      "reportsAs": "gate"
     },
     "drill.straight_line": {
       "displayName": "Straight line",
@@ -76,7 +126,13 @@
       "targets": [
         "cue.elbow_flared"
       ],
-      "$note": "ELBOW_FLARED su an B-kal bandinda (J-007 kalibre edilemedi) ve PEAK fazi checkpoint — yani bu drill KOCLAMA olarak verilir, skor kapisi kurmaz."
+      "$note": "ELBOW_FLARED su an B-kal bandinda (J-007 kalibre edilemedi) ve PEAK fazi checkpoint — yani bu drill KOCLAMA olarak verilir, skor kapisi kurmaz.",
+      "gateable": false,
+      "targetErrors": [
+        "ELBOW_FLARED"
+      ],
+      "$gateableWhy": "KAPI KURULAMAZ — ELBOW_FLARED: B bandi (tespit kamera acisina bagli). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
+      "reportsAs": "trend"
     },
     "drill.range_control": {
       "displayName": "Range control",
@@ -85,20 +141,31 @@
       "targets": [
         "cue.overreach"
       ],
-      "$note": "OVERREACH de B-kal — koclama, skor degil."
+      "$note": "OVERREACH de B-kal — koclama, skor degil.",
+      "gateable": false,
+      "targetErrors": [
+        "OVERREACH"
+      ],
+      "$gateableWhy": "KAPI KURULAMAZ — OVERREACH: B bandi (tespit kamera acisina bagli) · OVERREACH: trunkLeanAngle → trunk_tilt KOCLANAN (egitmenler ayrisiyor). Iki bagimsiz kisit: tespit guvenilir mi (band) ve egitmenler uzlasiyor mu (referans). Biri bile dusunce kapi degil TREND.",
+      "reportsAs": "trend"
     }
   },
   "progression": {
     "boxing.foundations.stance": {
       "gates": [
         {
-          "metric": "stanceWidthRatio",
-          "withinToleranceRatio": 0.8,
-          "overLastSessions": 2,
-          "$why": "stanceWidthRatio SKORLANAN olculerden (dispersiyon 8 derece, tabanda) — kapi kurabilir."
+          "event": "stanceHold",
+          "minSeconds": 60,
+          "$why": "Kapi olcum degil KATILIM sayiyor: 60 sn gard duruşunu koruma. Duruşun 'dogrulugu' uzerine kapi kurulamiyor (yukari bak), ama duruşta gecirilen sure olculebilir ve durustur — kullaniciya olcemedigimiz bir seyi olcmus gibi puan vermez."
         }
       ],
-      "signals": []
+      "signals": [
+        {
+          "metric": "stanceWidthRatio",
+          "direction": "stabilizing",
+          "$why": "KAPI DEGILDI, KAPI OLAMAZ (J-036). Uc egitmen 0,72 / 1,17 / 1,85 olctu — medyanin %96,7'si kadar yayilim. M-C-04'e gore tolerans bu varyansi kapsamak zorunda; 0,72-1,85'i kabul eden bir bant 'dogru durus' ile 'yanlis durus'u ayirt edemez. Eski gerekce 'dispersiyon 8 derece' diyordu — o sayi bir EKLEM ACISINDAN odunc alinmisti; oran olculeri eklem tablosunda YOK. Sinyal olarak kalir: kullanicinin kendi degeri oturuyor mu, ona bakilir."
+        }
+      ]
     },
     "boxing.foundations.jab": {
       "gates": [

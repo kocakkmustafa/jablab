@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:jablab_engine/jablab_engine.dart';
 import 'package:motion_core/motion_core.dart';
 
 /// `stance` kanonik referansını üç bağımsız eğitmen hasadından üretir.
@@ -174,12 +175,21 @@ void main() {
   stdout.writeln('\n⚠️  TOLERANS MUHAFAZAKÂR (J-032): n=3 eğitmen, M-F-32 hedefi ~5;');
   stdout.writeln('    serbest bant tabanı 8°→${conservativeFloorDeg.toStringAsFixed(0)}°.');
   stdout.writeln('    4./5. eğitmen geldiğinde YENİDEN HESAPLANACAK.');
+
+  _diagnoseJoint(segs, built, 'trunk_tilt');
+  _reportRatioMeasures(segs, takes.map((t) => t.id).toList(growable: false));
+  _reportHealth(segs, ref);
 }
 
 class _Segment {
-  _Segment(this.startMs, this.angles, this.energy, this.leadIsLeft, this.leadConfidence);
+  _Segment(this.startMs, this.angles, this.frames, this.energy, this.leadIsLeft,
+      this.leadConfidence);
   final double startMs;
   final List<JointAngleVector> angles;
+
+  /// Ham kareler. Eklem tablosu YALNIZCA açı dağılımını ölçer; oran ölçüleri
+  /// (stanceWidthRatio gibi) açı vektöründen türetilemez, kareyi ister.
+  final List<PoseFrame> frames;
   final double energy;
 
   /// GEOMETRİK öncü-taraf tespiti (M-F-06: landmark ETİKETİNE güvenilmez).
@@ -285,6 +295,182 @@ _Segment? _bestStanceSegment(File f) {
   for (int k = bestStart; k < bestStart + win; k += 3) {
     angles.add(pipe.process(frames[k]).angles);
   }
-  return _Segment(frames[bestStart].tUs / 1000, angles, best,
+  return _Segment(frames[bestStart].tUs / 1000, angles,
+      frames.sublist(bestStart, bestStart + win), best,
       ratio >= 0.5, (ratio - 0.5).abs() * 2);
+}
+
+
+/// ORAN ÖLÇÜLERİ — eklem tablosunun KAPSAMADIĞI ölçüler.
+///
+/// Eklem tablosu yalnızca **açı** dağılımını verir. `stanceWidthRatio` bir
+/// oran; dispersiyonu o tabloda YOKTUR. Bir ilerleme kapısını oran ölçüsüne
+/// kurup gerekçesinde eklem açısı sayısı göstermek, ölçülmemiş bir iddiayı
+/// ölçülmüş gibi sunmaktır — kapı disiplininin var oluş sebebi tam olarak bu.
+/// Bu yüzden oran ölçüleri BURADA, kendi birimlerinde ölçülür.
+void _reportRatioMeasures(List<_Segment> segs, List<String> names) {
+  const MeasureCalculator calc = MeasureCalculator();
+  const List<String> tracked = <String>['stanceWidthRatio', 'trunkLeanAngle'];
+
+  stdout.writeln('\n─── ORAN/AÇI ÖLÇÜLERİ — take'"'"'ler arası dağılım ───');
+  stdout.writeln('    (eklem tablosu bunları KAPSAMAZ; kapı kurmadan önce buraya bakılır)');
+
+  final Map<String, List<double>> perTake = <String, List<double>>{
+    for (final String m in tracked) m: <double>[],
+  };
+  for (int i = 0; i < segs.length; i++) {
+    final _Segment seg = segs[i];
+    final Stance stance = seg.leadIsLeft ? Stance.orthodox : Stance.southpaw;
+    final Map<String, List<double>> samples = <String, List<double>>{
+      for (final String m in tracked) m: <double>[],
+    };
+    for (final PoseFrame f in seg.frames) {
+      final MeasureSet ms = calc.compute(f, stance);
+      for (final String m in tracked) {
+        final double? v = ms.all[m];
+        if (v != null) samples[m]!.add(v);
+      }
+    }
+    for (final String m in tracked) {
+      perTake[m]!.add(_median(samples[m]!));
+    }
+  }
+
+  for (final String m in tracked) {
+    final List<double> vals = perTake[m]!;
+    final double lo = vals.reduce(math.min);
+    final double hi = vals.reduce(math.max);
+    final double spread = hi - lo;
+    final double mid = _median(List<double>.of(vals));
+    final String rel = mid.abs() < 1e-9
+        ? '—'
+        : '${(spread / mid * 100).toStringAsFixed(1)}%';
+    final String per = <String>[
+      for (int i = 0; i < vals.length; i++)
+        '${names[i]}=${vals[i].toStringAsFixed(2)}'
+    ].join(' · ');
+    stdout.writeln('  $m');
+    stdout.writeln('    take'"'"'ler: $per');
+    stdout.writeln('    medyan ${mid.toStringAsFixed(2)} · yayılım '
+        '${spread.toStringAsFixed(2)} (medyanın $rel'"'"'i)');
+  }
+  stdout.writeln('  ⚠️ n=3. Bu sayılar KAPI EŞİĞİ DEĞİL, kapı kurulabilir mi'
+      ' sorusunun kanıtı.');
+
+  // KAMERA EĞİMİ AYIRT EDİCİSİ.
+  // trunkLeanAngle dünya-dikeyine göre tanımlı, yani kameranın eğimini HATA
+  // olarak içine alır. Gerçek öne düşme gövdeyi eğer, bacak eksenini eğmez;
+  // kamera eğimi İKİSİNİ BİRDEN eğer. Fark yoksa ölçtüğümüz şey postür değil,
+  // tripod. Bu ayrımı yapmadan "gövde öne düşüyor" demek kullanıcıyı kendi
+  // kamerasının açısı için suçlamaktır.
+  stdout.writeln('\n  — kamera eğimi ayırt edicisi (gövde ekseni vs bacak ekseni) —');
+  for (int i = 0; i < segs.length; i++) {
+    final List<double> trunk = <double>[];
+    final List<double> leg = <double>[];
+    for (final PoseFrame f in segs[i].frames) {
+      final Vec3 hipMid = (f.point(Lm.leftHip) + f.point(Lm.rightHip)) * 0.5;
+      final Vec3 shMid =
+          (f.point(Lm.leftShoulder) + f.point(Lm.rightShoulder)) * 0.5;
+      final Vec3 ankMid = (f.point(Lm.leftAnkle) + f.point(Lm.rightAnkle)) * 0.5;
+      trunk.add(_vertAngle(shMid - hipMid));
+      leg.add(_vertAngle(hipMid - ankMid));
+    }
+    final double t = _median(trunk);
+    final double l = _median(leg);
+    stdout.writeln('    ${names[i].padRight(14)} gövde ${t.toStringAsFixed(1)}° · '
+        'bacak ${l.toStringAsFixed(1)}° · fark ${(t - l).toStringAsFixed(1)}°'
+        '${(t.abs() > 10 && (t - l).abs() < 5) ? "  ⚠️ ORTAK EĞİM → kamera şüphesi" : ""}');
+  }
+}
+
+/// Bir vektörün dünya-dikeyinden sapması (derece, işaretsiz).
+double _vertAngle(Vec3 v) {
+  final double len = math.sqrt(v.x * v.x + v.y * v.y);
+  if (len < 1e-9) return 0;
+  final double cos = (-v.y) / len;
+  return math.acos(cos.clamp(-1.0, 1.0)) * 180 / math.pi;
+}
+
+/// SAĞLIK METRİĞİ — dışlama oranı (M-F-52, Ostinato önerisi).
+///
+/// Kapıların kaçının take eledeğini tek bakışta gösterir. Yüksek dışlama
+/// "referans temiz" demek değildir; "kapılar örneklemi yiyor" demektir ve
+/// n=3'te sessizce n=2'ye düşmek referansı çürütür.
+void _reportHealth(List<_Segment> segs, CanonicalReference ref) {
+  final int total = segs.length;
+  final int kept = ref.contributingTakes;
+  final int dropped = total - kept;
+  final double rate = total == 0 ? 0 : dropped / total;
+  stdout.writeln('\n─── SAĞLIK: dışlama oranı ───');
+  stdout.writeln('  aday take           : $total');
+  stdout.writeln('  referansa giren     : $kept');
+  stdout.writeln('  dışlanan            : $dropped '
+      '(${(rate * 100).toStringAsFixed(0)}%)');
+  stdout.writeln(dropped == 0
+      ? '  durum               : ✅ SAĞLIKLI — hiçbir kapı take elemedi'
+      : '  durum               : ⚠️ ${dropped} take elendi — n düştü, '
+          'tolerans bu kayıpla yeniden okunmalı');
+}
+
+double _median(List<double> xs) {
+  if (xs.isEmpty) return 0;
+  final List<double> s = List<double>.of(xs)..sort();
+  final int n = s.length;
+  return n.isOdd ? s[n ~/ 2] : (s[n ~/ 2 - 1] + s[n ~/ 2]) / 2;
+}
+
+
+/// Dairesel ortalama (radyan girer, derece çıkar). Sarmalı doğru ele alır.
+double _circMeanDeg(List<double> rad) {
+  if (rad.isEmpty) return double.nan;
+  double sx = 0, sy = 0;
+  for (final double a in rad) {
+    sx += math.cos(a);
+    sy += math.sin(a);
+  }
+  return math.atan2(sy / rad.length, sx / rad.length) * 180 / math.pi;
+}
+
+/// İki açı arasındaki EN KISA yol (derece, 0-180).
+double _wrappedDiffDeg(double a, double b) {
+  double d = (a - b).abs() % 360;
+  return d > 180 ? 360 - d : d;
+}
+
+
+
+/// TEK EKLEM TEŞHİSİ — take'ler arası ayrışmayı take-İÇİ kararlılıkla birlikte
+/// gösterir. Take-içi sapma küçük + take'ler arası fark büyükse ayrışma
+/// GERÇEKTİR (herkes kendi içinde tutarlı, birbirleriyle anlaşmıyorlar).
+///
+/// ⚠️ YALNIZCA `trunk_tilt` için geçerli. Diğer eklemlerin açıları gövde
+/// eksenine göre normalize edilir; take'ler arası ham karşılaştırma orada
+/// ayrışmayı değil KAMERA YÖNELİMİNİ ölçer (iç açılar 8-14° verirken segment
+/// yönleri 60-160° veriyordu — imza buydu). trunk_tilt çekirdekte bilerek HAM
+/// tutulur (normalize edilse tanımı gereği hep sıfır okurdu), bu yüzden burada
+/// karşılaştırma anlamlıdır.
+void _diagnoseJoint(List<_Segment> segs, List<ReferenceTake> built, String id) {
+  final int j = built.first.frames.first.specs.indexWhere(
+      (JointSpec sp) => sp.id == id);
+  if (j < 0) return;
+  stdout.writeln('\n─── TEŞHİS: $id (sd ↔ açıklık çelişkisi) ───');
+  for (int i = 0; i < segs.length; i++) {
+    final List<double> rad = <double>[
+      for (final JointAngleVector av in segs[i].angles)
+        if (!av.values[j].isNaN) av.values[j]
+    ];
+    if (rad.isEmpty) {
+      stdout.writeln('  take $i: ÖLÇÜLEMEDİ (hepsi NaN)');
+      continue;
+    }
+    final double mean = _circMeanDeg(rad);
+    double worst = 0;
+    for (final double a in rad) {
+      final double d = _wrappedDiffDeg(a * 180 / math.pi, mean);
+      if (d > worst) worst = d;
+    }
+    stdout.writeln('  take $i: n=${rad.length} · dairesel ort '
+        '${mean.toStringAsFixed(1)}° · TAKE-İÇİ en büyük sapma '
+        '${worst.toStringAsFixed(1)}°');
+  }
 }

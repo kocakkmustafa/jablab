@@ -48,3 +48,29 @@ ortalama uyum     çapasız: 0.684  → çapalı: 0.684
 ⚠️  TOLERANS MUHAFAZAKÂR (J-032): n=3 eğitmen, M-F-32 hedefi ~5;
     serbest bant tabanı 8°→14°.
     4./5. eğitmen geldiğinde YENİDEN HESAPLANACAK.
+
+─── TEŞHİS: trunk_tilt (sd ↔ açıklık çelişkisi) ───
+  take 0: n=30 · dairesel ort -1.9° · TAKE-İÇİ en büyük sapma 2.2°
+  take 1: n=30 · dairesel ort -3.8° · TAKE-İÇİ en büyük sapma 0.9°
+  take 2: n=30 · dairesel ort -28.4° · TAKE-İÇİ en büyük sapma 0.3°
+
+─── ORAN/AÇI ÖLÇÜLERİ — take'ler arası dağılım ───
+    (eklem tablosu bunları KAPSAMAZ; kapı kurmadan önce buraya bakılır)
+  stanceWidthRatio
+    take'ler: yankello=1.17 · kennyweldon=0.72 · mcleodscott=1.85
+    medyan 1.17 · yayılım 1.13 (medyanın 96.7%'i)
+  trunkLeanAngle
+    take'ler: yankello=2.14 · kennyweldon=3.50 · mcleodscott=28.38
+    medyan 3.50 · yayılım 26.24 (medyanın 749.2%'i)
+  ⚠️ n=3. Bu sayılar KAPI EŞİĞİ DEĞİL, kapı kurulabilir mi sorusunun kanıtı.
+
+  — kamera eğimi ayırt edicisi (gövde ekseni vs bacak ekseni) —
+    yankello       gövde 2.1° · bacak 7.6° · fark -5.5°
+    kennyweldon    gövde 3.5° · bacak 9.5° · fark -6.0°
+    mcleodscott    gövde 28.4° · bacak 7.9° · fark 20.5°
+
+─── SAĞLIK: dışlama oranı ───
+  aday take           : 3
+  referansa giren     : 3
+  dışlanan            : 0 (0%)
+  durum               : ✅ SAĞLIKLI — hiçbir kapı take elemedi
