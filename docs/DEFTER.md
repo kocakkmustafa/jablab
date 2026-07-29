@@ -45,3 +45,33 @@ ham tutuyor, orada karşılaştırma geçerli ve iki bağımsız yolla doğrulan
 **Ders:** kapı yetkisi İKİ bağımsız kısıt ister — tespit güvenilir mi (band)
 VE eğitmenler uzlaşıyor mu (referans). Yalnız birine bakan türetme, önce
 `posture_reset`'i yanlış sınıflandırdı.
+
+## 2026-07-29 — J-042: sayım ile hata arasında ÖLÇÜLEN sessiz bölge (AÇIK)
+
+M-F-57 sınıfını kendi FSM'imde aradım ve **buldum**. Derinlik süpürmesi
+(sentetik yumruk, kol açısı 0→1, 21 adım):
+
+| ext (tepe) | sayıldı | derinlik hakkında replik |
+|---|---|---|
+| 0,18–0,67 | hayır | — (doğru: yumruk yok) |
+| **0,72–0,83** | **hayır** | **— (KUSUR)** |
+| 0,87–0,99 | evet, jab | — |
+
+0,72–0,83 bandında kol garddan (0,18) çıkıp %83 uzanıyor: bu gerçek bir
+yumruk. jab PEAK için >0,85 istiyor, `unclassified_strike` de tahkimde
+eleniyor (spesifik makine hâlâ "çalışıyor" sayıldığı için yedek bastırılıyor).
+Sonuç: sıfır sayım, sıfır derinlik geri bildirimi. Çıkan replikler duruş/gard
+hakkında — kullanıcı hiç yumruk atmazken de çıkıyorlar, yani bilgi taşımıyorlar.
+
+**Denenen ve GERİ ALINAN çözüm:** terk edilmiş denemeye replik (config
+`abandonedFeedbackKey` + motor dalı). Hiç ateşlenmedi — faz makinesi bu bantta
+abort üretmiyor. Ateşlenmeyen bir mekanizmayı "düzeltme" diye bırakmak, bütün
+gece yakaladığım sınıfın (beyan ≠ canlı) ta kendisi olurdu; sildim.
+
+**Neden sayımı gevşetmiyorum:** yarım hareketi yumruk saymak sayım
+dürüstlüğünü bozar. Kural "sayım cömert DIŞ sınır, hata onun İÇİNDEKİ kalite
+çizgisi" — burada eksik olan kalite çizgisi, dış sınır değil.
+
+Test iki parça: ölçülen bandı ÇİVİLEYEN karakterizasyon (geçiyor, band
+sessizce kayarsa kırar) + kapandığında geçmesi gereken katı sürüm (skip,
+gerekçesi yazılı). Çözüm faz makinesi etkileşimi istiyor → koordinatör kuyruğu.
