@@ -1,0 +1,125 @@
+{
+  "$doc": "Sesli koc replikleri (EN). plan 13 disiplini: AYNI ANDA TEK duzeltme, kisa cumle, kombinasyon ortasinda uzun anlatim yok, kullanici duzeltince olumlu sinyal, tur sonunda ayrinti.",
+  "$lengthRule": "Replikler <=8 kelime / ~1,5 sn. Telefon uzakta ve kullanici hareket halinde; uzun cumle duyulmaz, duyulsa uygulanamaz.",
+  "schemaVersion": 1,
+  "language": "en",
+  "technique": {
+    "cue.rear_hand_low": [
+      "Rear hand up.",
+      "Protect your chin.",
+      "Hand back to your cheek."
+    ],
+    "cue.lead_hand_not_recovered": [
+      "Snap it back.",
+      "Hand home faster.",
+      "Return on the same line."
+    ],
+    "cue.elbow_flared": [
+      "Elbow in.",
+      "Keep it tight.",
+      "Punch through the line."
+    ],
+    "cue.overreach": [
+      "Don't lean in.",
+      "Stay over your feet.",
+      "Shorten the reach."
+    ],
+    "cue.torso_forward": [
+      "Chest up.",
+      "Stack over your hips."
+    ],
+    "cue.stance_narrow": [
+      "Feet wider.",
+      "Give yourself a base."
+    ],
+    "cue.stance_wide": [
+      "Bring your feet in.",
+      "Too wide to move."
+    ],
+    "cue.feet_crossed": [
+      "Don't cross your feet.",
+      "Step, don't cross."
+    ],
+    "cue.balance_loss": [
+      "Stay balanced.",
+      "Weight between your feet."
+    ],
+    "cue.wrong_hand": [
+      "Other hand.",
+      "That was the wrong hand."
+    ],
+    "cue.combo_order": [
+      "Watch the order.",
+      "One, then two."
+    ],
+    "cue.slow_down": [
+      "Slow down.",
+      "Speed is costing you form."
+    ]
+  },
+  "$noVerdictDoc": "Bunlar susmanin ALTERNATIFI. Sessizlik kullaniciya 'her sey yolunda' der; oysa analiz hic calismiyordur. plan 12: 'Bilegini bu acidan goremiyorum' denir, 'yanlis yaptin' DENMEZ.",
+  "noVerdict": {
+    "cue.out_of_frame": [
+      "Step back into frame.",
+      "I can only see part of you."
+    ],
+    "cue.low_confidence": [
+      "I can't see you clearly enough to judge.",
+      "Losing track of you."
+    ],
+    "cue.low_light": [
+      "Too dark to read your form."
+    ],
+    "cue.structural": [
+      "My tracking looks wrong — holding off.",
+      "Not confident in what I'm seeing."
+    ]
+  },
+  "counting": {
+    "cue.count": [
+      "{n}"
+    ],
+    "cue.halfway": [
+      "Halfway."
+    ],
+    "cue.last_ten": [
+      "Ten seconds."
+    ]
+  },
+  "encouragement": {
+    "cue.corrected": [
+      "That's it.",
+      "Better.",
+      "Yes — keep that."
+    ],
+    "cue.streak": [
+      "Clean set.",
+      "Nice and tight."
+    ]
+  },
+  "session": {
+    "cue.round_start": [
+      "Hands up. Go."
+    ],
+    "cue.round_end": [
+      "Time. Breathe."
+    ],
+    "cue.rest": [
+      "Rest.",
+      "Shake it out."
+    ],
+    "cue.setup_ok": [
+      "I can see you. Ready?",
+      "Got you. Whenever you are."
+    ]
+  },
+  "$scoringHonesty": "J-033: egitmenler gard/kol pozisyonunda 36,7 derece ayrisiyor. Bu basliklar KOCLANIR ama SKORLANMAZ; tur sonunda kullaniciya soylenir.",
+  "summary": {
+    "cue.coached_not_scored": [
+      "Experienced coaches disagree on this, so we flag it but don't grade it."
+    ],
+    "cue.not_measured_power": [
+      "We don't measure punch power — a camera can't."
+    ]
+  }
+}

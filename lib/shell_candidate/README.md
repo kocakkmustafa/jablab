@@ -16,6 +16,12 @@ Bu klasördeki her şey, 5 app'in de kullanacağı **alan-bağımsız** kabuk pa
 3. **Tema token üzerinden.** Sabit renk/ölçü yazılmaz; `Theme.of(context)` kullanılır.
 4. **Bağımlılık yönü tek yönlü:** `app → shell_candidate`, asla tersi. Bir dosya `lib/app/`'e veya `jablab_engine`'e bağımlıysa **terfi edemez** — olsaydı `motion_shell` Ostinato'ya boks kural motorunu da taşırdı.
 
+> ## 🔒 ENVANTER DONDURULDU (2026-07-29)
+> Koordinatör sabah turunda bu 13 bileşeni `motion_shell`'e taşıyacak.
+> **Bu klasöre yeni bileşen EKLENMEZ** — yeni kabuk-adayı parçalar terfi
+> tamamlanana dek `lib/app/` altında yaşar ve sonraki turda taşınır.
+> Mevcut bileşenlerde düzeltme serbest; ekleme değil.
+
 ## Bileşen listesi (terfi kapsamı)
 
 | Dosya | Bileşen | Rolü | Terfi |
