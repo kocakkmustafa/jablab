@@ -134,11 +134,11 @@ packages:
     dependency: transitive
     description:
       path: "packages/motion_core"
-      ref: "motion_core-v0.8.0"
-      resolved-ref: "3c310fe396c59185e1365667b9568bd8f72da6a5"
+      ref: "motion_core-v0.8.2"
+      resolved-ref: c1f8ed395eb5343ebfca0194f92458984b063477
       url: "https://github.com/kocakkmustafa/motion-core.git"
     source: git
-    version: "0.8.0"
+    version: "0.8.2"
   path:
     dependency: transitive
     description:
