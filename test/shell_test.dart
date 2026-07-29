@@ -120,8 +120,16 @@ void main() {
     await t.tap(find.byKey(const Key('advance-button')));
     await t.pumpAndSettle();
     // Özet: skorlanmayan başlıklar kullanıcıya AÇIKÇA söyleniyor (J-033).
+    // Liste config'in stanceCoachedOnlyJoints'inden TÜRETİLİR (elle
+    // kopyalanmaz) — bkz. ContentRepository.coachedNotScoredLabels.
     expect(find.byKey(const Key('coached-not-scored-note')), findsOneWidget);
-    expect(find.textContaining('Guard hand position'), findsOneWidget);
+    expect(find.textContaining('Rear guard hand position'), findsOneWidget);
+    expect(find.textContaining('Rear elbow angle'), findsOneWidget);
+    // Regresyon: lead_hip/lead_thigh scoredJoints'te — "Lead hip and thigh
+    // placement" eski hardcoded metindi ve config'in aktif kararıyla
+    // ÇELİŞİYORDU (coachedOnlyJoints'te rear_hip/rear_thigh var, lead değil).
+    expect(find.textContaining('Rear hip position'), findsOneWidget);
+    expect(find.textContaining('Lead hip and thigh placement'), findsNothing);
   });
 
   testWidgets('[J-038] KİLİTLİ ders görünür ama AÇILMAZ, sebebi yazılı',

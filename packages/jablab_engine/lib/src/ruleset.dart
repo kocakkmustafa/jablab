@@ -285,6 +285,7 @@ final class RuleSet {
     required this.smoothingMinCutoff,
     required this.smoothingBeta,
     required this.smoothingDerivativeCutoff,
+    required this.stanceCoachedOnlyJoints,
   });
 
   factory RuleSet.fromJson(Map<String, dynamic> j) {
@@ -296,6 +297,14 @@ final class RuleSet {
         ((j['tempoBands'] as Map?) ?? const <String, dynamic>{}).cast<String, dynamic>();
     final Map<String, dynamic> sc =
         ((j['signalConditioning'] as Map?) ?? const <String, dynamic>{})
+            .cast<String, dynamic>();
+    final Map<String, dynamic> references =
+        ((j['references'] as Map?) ?? const <String, dynamic>{}).cast<String, dynamic>();
+    final Map<String, dynamic> stanceRef =
+        ((references['stance'] as Map?) ?? const <String, dynamic>{})
+            .cast<String, dynamic>();
+    final Map<String, dynamic> stanceCoached =
+        ((stanceRef['coachedOnlyJoints'] as Map?) ?? const <String, dynamic>{})
             .cast<String, dynamic>();
 
     final Map<String, ({double? minMs, double? maxMs})> tempo =
@@ -333,6 +342,8 @@ final class RuleSet {
       smoothingBeta: (sc['beta'] as num?)?.toDouble() ?? 0.05,
       smoothingDerivativeCutoff:
           (sc['derivativeCutoff'] as num?)?.toDouble() ?? 1.0,
+      stanceCoachedOnlyJoints:
+          stanceCoached.keys.toList(growable: false)..sort(),
     );
   }
 
@@ -360,6 +371,13 @@ final class RuleSet {
   final double smoothingMinCutoff;
   final double smoothingBeta;
   final double smoothingDerivativeCutoff;
+
+  /// `references.stance.coachedOnlyJoints` anahtarları — eğitmenlerin
+  /// anlaşmadığı, bu yüzden koçlanan ama SKORLANMAYAN eklemler (M-F-41).
+  /// Ürün yüzeyinin bu listeyi kopyalamak yerine buradan okuması, kova
+  /// kararı değişince (ör. M-F-51 yeniden hesabı) metnin sessizce
+  /// bayatlamasını engeller.
+  final List<String> stanceCoachedOnlyJoints;
 
   TechniqueConfig? technique(String id) {
     for (final TechniqueConfig t in techniques) {

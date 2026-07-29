@@ -21,6 +21,46 @@ final class ContentRepository {
 
   static const String cuesAsset = 'assets/content/cues.en.json';
 
+  /// Eklem anahtarı → kullanıcıya gösterilen ad. `RuleSet.stanceCoachedOnlyJoints`
+  /// bu sözlükten okunmadan ürüne çıkamaz (bkz. [coachedNotScoredLabels]) —
+  /// bir eklem kovası değişince (M-F-51 türü yeniden hesap) metnin eski
+  /// kovayı anlatmaya devam etmesini engelleyen tek şey bu zorunluluk.
+  static const Map<String, String> _jointLabels = <String, String>{
+    'lead_hip': 'Lead hip position',
+    'lead_knee': 'Lead knee position',
+    'rear_knee': 'Rear knee position',
+    'lead_thigh': 'Lead thigh placement',
+    'rear_shin': 'Rear shin angle',
+    'lead_shoulder': 'Lead shoulder position',
+    'lead_shin': 'Lead shin angle',
+    'rear_shoulder': 'Rear shoulder position',
+    'rear_hip': 'Rear hip position',
+    'rear_thigh': 'Rear thigh placement',
+    'lead_elbow': 'Lead elbow angle',
+    'rear_elbow': 'Rear elbow angle',
+    'lead_upper_arm': 'Lead upper arm angle',
+    'rear_upper_arm': 'Rear upper arm angle',
+    'lead_forearm': 'Lead guard hand position',
+    'rear_forearm': 'Rear guard hand position',
+    'trunk_tilt': 'Torso lean',
+  };
+
+  /// Seans özetinin "coached but not scored" listesi — config'in
+  /// `stanceCoachedOnlyJoints`'inden TÜRETİLİR, elle kopyalanmaz (J-033/
+  /// rule 9). Beyansız eklem sessizce atlanmaz: sözlükte karşılığı olmayan
+  /// bir anahtar, kovalar arasında bir eklem taşındığında fark edilmeden
+  /// metnin bayatlamasını önlemek için burada FIRLATIR.
+  List<String> coachedNotScoredLabels(RuleSet boxing) =>
+      boxing.stanceCoachedOnlyJoints.map((String key) {
+        final String? label = _jointLabels[key];
+        if (label == null) {
+          throw StateError(
+              'coachedOnlyJoints eklemi "$key" için etiket yok — '
+              'ContentRepository._jointLabels güncellenmeli');
+        }
+        return label;
+      }).toList(growable: false);
+
   /// Replik kitabı. Yükleme sırasında eşleme doğrulanır: bir olayın repliği
   /// yoksa [CueBook.fromJson] FIRLATIR. Sessizce boş geçmek, o anı sonsuza
   /// kadar sessiz bırakırdı ve kullanıcı sessizliği "sorun yok" diye okur.

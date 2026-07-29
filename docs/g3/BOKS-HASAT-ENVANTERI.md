@@ -90,6 +90,7 @@ J-022'yi yazarken riski "tek-kişi 240fps footage İNCE" diye kaydetmiştim. Tar
 ## B.4 Sıradaki üç adım (sırayla)
 
 1. **Envanterdeki jab/cross videolarını izle** ve "aynı videoda normal hız + ağır çekim tekrarı var mı" sorusunu işaretle. Varsa J-007 kurucu çekimi olmadan kapanır.
+   - **2026-07-29 (gece devamı, J-049):** FightCamp "How To Throw The Cross \| Step by Step Breakdown \| Slow Motion" (`1VPwjCd3DeU`) indirilip ffmpeg contact-sheet'le izlendi — **NEGATİF**: video baştan sona yavaş-çekim + kademeli grafik overlay, gerçek-hızlı bir tekrar yok. Bu aday KAPANDI, tekrar denenmesin. **Yeni umut verici, henüz izlenmemiş aday:** `E6QdhRGUoNM` (1STIMPACT/@TEAM1STIMPACT, "What a Punch REALLY Does — 240 FPS Slow Motion", 206sn, gerçek yüksek-fps çekim iddiası "breakdown" formatından farklı olabilir).
 2. **Kyokushin MoCap setinin LICENSE'ını oku.** Ticari kullanıma açıksa `t_ext` yer-gerçeği bedava gelir.
 3. Olympic Boxing setini **yalnız doğrulama seti** olarak kaydet (referans değil) + Kaggle lisansını oku.
 

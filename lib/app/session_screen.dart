@@ -17,12 +17,22 @@ import 'session_narrator.dart';
 /// kuyruğunda). Ekran bunu **saklamıyor** — sahte bir "analiz ediliyor"
 /// animasyonu yerine hangi parçanın eksik olduğunu yazıyor.
 class SessionScreen extends StatefulWidget {
-  const SessionScreen({super.key, required this.lesson, required this.cues});
+  const SessionScreen({
+    super.key,
+    required this.lesson,
+    required this.cues,
+    required this.coachedNotScored,
+  });
 
   final ShellLesson lesson;
 
   /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
   final CueBook cues;
+
+  /// `ContentRepository.coachedNotScoredLabels` — config'in
+  /// `stanceCoachedOnlyJoints`'inden türetilir (J-033/rule 9); burada
+  /// elle kopyalanmaz ki kova kararı değişince metin sessizce bayatlamasın.
+  final List<String> coachedNotScored;
 
   @override
   State<SessionScreen> createState() => _SessionScreenState();
@@ -51,7 +61,7 @@ class _SessionScreenState extends State<SessionScreen> {
         SessionStage.teach => _Teach(lesson: widget.lesson),
         SessionStage.rehearse => const _Rehearse(),
         SessionStage.live => _Live(cues: widget.cues),
-        SessionStage.summary => const _Summary(),
+        SessionStage.summary => _Summary(coachedNotScored: widget.coachedNotScored),
       },
     );
   }
@@ -183,24 +193,23 @@ class _LiveState extends State<_Live> {
 }
 
 class _Summary extends StatelessWidget {
-  const _Summary();
+  const _Summary({required this.coachedNotScored});
+
+  final List<String> coachedNotScored;
 
   @override
-  Widget build(BuildContext context) => const SessionSummaryView(
+  Widget build(BuildContext context) => SessionSummaryView(
         eventCount: 0,
         // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayı yok — bant bile
         // ölçüm olmadığı için boş.
-        bands: <String, String>{
+        bands: const <String, String>{
           'Stance': '—',
           'Balance': '—',
           'Footwork': '—',
         },
-        // J-033: eğitmenler gard/kol pozisyonunda 36,7° ayrışıyor → koçlanır
-        // ama SKORLANMAZ. Kullanıcı neden puan almadığını bilmeli.
-        coachedNotScored: <String>[
-          'Guard hand position',
-          'Elbow angle',
-          'Lead hip and thigh placement',
-        ],
+        // J-033: eğitmenler gard/kol pozisyonunda ayrışıyor → koçlanır ama
+        // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
+        // yazılmaz — bkz. widget dokümanı.
+        coachedNotScored: coachedNotScored,
       );
 }

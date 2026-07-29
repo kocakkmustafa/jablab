@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jablab_engine/jablab_engine.dart';
 
 import '../shell_candidate/library_pages.dart';
 import '../shell_candidate/shell_models.dart';
@@ -40,6 +41,7 @@ class _Root extends StatefulWidget {
 class _RootState extends State<_Root> {
   ShellLibrary? _library;
   CueBook? _cues;
+  RuleSet? _boxing;
   Object? _error;
 
   @override
@@ -54,6 +56,7 @@ class _RootState extends State<_Root> {
           r[0] as ({dynamic library, dynamic boxing});
       setState(() {
         _library = widget.repository.toShell(content.library);
+        _boxing = content.boxing as RuleSet;
         _cues = r[1] as CueBook;
       });
     }).catchError((Object e) {
@@ -114,7 +117,12 @@ class _RootState extends State<_Root> {
 
   void _openSession(ShellLesson l) => Navigator.of(context).push<void>(
         MaterialPageRoute<void>(
-            builder: (_) => SessionScreen(lesson: l, cues: _cues!)),
+            builder: (_) => SessionScreen(
+                  lesson: l,
+                  cues: _cues!,
+                  coachedNotScored:
+                      widget.repository.coachedNotScoredLabels(_boxing!),
+                )),
       );
 }
 
