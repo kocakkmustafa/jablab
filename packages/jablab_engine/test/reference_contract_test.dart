@@ -11,11 +11,16 @@ import 'package:test/test.dart';
 ///   (b) **kendi config'im** — ürettiğim referansı sunarken sözleşmeyi
 ///       çiğniyor muyum.
 ///
-/// ⚠️ **Kapsam sınırı:** kanonik metin (`docs/50-REFERANS-TUKETIM-SOZLESMESI.md`,
-/// 10 kural) bu ağaçta YOK. Aşağıdakiler koordinatörün açıkça adını verdiği
-/// kurallar + kendi testlerimin taşıdıklarıdır. "10 kuralın hepsi denetlendi"
-/// DEMİYORUM — okumadığım bir metne uyum beyan etmek, denetimin kendisini
-/// süse çevirir.
+/// Kanonik metin okundu (M-F-63 teslimatı): `coordinator-main/docs/
+/// 50-REFERANS-TUKETIM-SOZLESMESI.md`, 10 kural. Kural numaraları aşağıda
+/// ve kardeş dosyalarda açıkça anılıyor:
+///   1,2,3 → `reference_binding_test.dart` (kural 1/2/3 başlıklı testler)
+///   4     → `reference_binding_test.dart` (PEAK checkpoint)
+///   5     → kapsam dışı: JabLab'ın stance referansı TEK duruş, çevrim yok
+///   6     → `reference_binding_test.dart` (provisional + n<5 hatırlatıcı)
+///   7,8   → bu dosya (ayna güveni · PROVISIONAL ≠ sistematik yanlılık)
+///   9     → `shell_test.dart` (özet coached-not-scored başlığı + sebebi)
+///   10    → `cues_test.dart` (power/force/kph replikte geçemez)
 void main() {
   final File artifactFile = File('/Users/mustafakaankocak/Documents/'
       'YULAlab-AI/ventures/motion-core/workspace/artifacts/'
@@ -295,6 +300,81 @@ void main() {
       expect(integrity[r'$maxInterFrameWristTravelUnits'] as String,
           contains('dt-NORMALIZE'),
           reason: 'bağlanınca dt-normalize şartı beyanda geçmeli');
+    });
+  });
+
+  group('gerçek stance artefaktı — sözleşme kuralları', () {
+    final File real = File('/Users/mustafakaankocak/Documents/YULAlab-AI/'
+        'ventures/motion-core/workspace/artifacts/reference-boxing-stance.json');
+
+    Map<String, dynamic> load() =>
+        (jsonDecode(real.readAsStringSync()) as Map).cast<String, dynamic>();
+
+    test('[kural 7] mirrorConfident=false → TARAF-BAĞIMLI hüküm YASAK', () {
+      final Map<String, dynamic> result =
+          (load()['result'] as Map).cast<String, dynamic>();
+      expect(result['mirrorConfident'], isFalse,
+          reason: 'artefakt değişmiş — bu testin dayandığı durum kalkmış');
+
+      // Sözleşme: bu artefakttan türeyen hiçbir lead/rear hükmü verilemez.
+      // Ürün config'i bu artefakta BAĞLI DEĞİL (kendi pencere-seçici aracımla
+      // üretildi), ve bağlanmadığı config'te açıkça yazılı olmalı — yoksa bir
+      // sonraki oturum "referans artefaktı var" deyip bağlar.
+      final Map<String, dynamic> src =
+          (stance['sourceArtifact'] as Map?)?.cast<String, dynamic>() ??
+              <String, dynamic>{};
+      expect(src['boundTo'], isNot('reference-boxing-stance.json'),
+          reason: 'taraf-bağımlı tablo, ayna güveni olmayan artefakta bağlanmış');
+      expect(src[r'$whyNotBound'], isNotNull,
+          reason: 'artefakt neden bağlanmadığı yazılmamış');
+    });
+
+    test('[kural 8] PROVISIONAL istatistikseldir, UYGUNLUĞU örtmez', () {
+      final Map<String, dynamic> a = load();
+      expect(a['measurementProvenance'], 'PROVISIONAL');
+      // Kural 8: kaynak-uygunluk referans KURULMADAN çözülür, provisional'a
+      // devredilemez. Bu artefakt --allow-unattested ile üretildi: üç take de
+      // `unattested`. Yani provisional etiketi burada İKİ ayrı eksiği birden
+      // taşıyor gibi görünüyor — tüketici bunu ayırt etmek zorunda.
+      final List<dynamic> takes = a['takes'] as List<dynamic>;
+      final int unattested = takes
+          .where((dynamic t) => (t as Map)['eligibility'] == 'unattested')
+          .length;
+      expect(unattested, takes.length,
+          reason: 'artefakt değişmiş — uygunluk beyanı gelmiş olabilir');
+      // Bu yüzden ürüne bağlanamaz: eksik olan örneklem değil, KAYNAK BEYANI.
+      final Map<String, dynamic> src =
+          (stance['sourceArtifact'] as Map?)?.cast<String, dynamic>() ??
+              <String, dynamic>{};
+      expect(src[r'$whyNotBound'] as String, contains('unattested'));
+    });
+
+    test('[kural 6] provisional artefakt KESİN hüküm iddiası taşımaz', () {
+      final Map<String, dynamic> a = load();
+      expect((a['result'] as Map)['contributingTakes'], lessThan(5),
+          reason: 'n≥5 olduysa yeniden-hesap günü gelmiş');
+      expect((a['gates'] as Map)['minSources'], greaterThanOrEqualTo(3),
+          reason: 'M-C-04: ≥3 bağımsız kaynak');
+    });
+
+    test('[kural 3] güvenilmez eklem coached_only tarafında karşılanıyor', () {
+      final List<dynamic> unreliable =
+          ((load()['result'] as Map)['unreliableJoints'] as List<dynamic>);
+      final Map<String, dynamic> coached =
+          (stance['coachedOnlyJoints'] as Map).cast<String, dynamic>();
+      for (final dynamic j in unreliable) {
+        final String name = (j as String)
+            .replaceFirst('left_', 'lead_')
+            .replaceFirst('right_', 'rear_');
+        final String alt = j
+            .replaceFirst('left_', 'rear_')
+            .replaceFirst('right_', 'lead_');
+        // Ayna güveni yok: iki eşleme de kabul edilir. Hangisi olursa olsun
+        // eklem KOÇLANAN tarafta olmalı — güvenilmez bir eklemin skorlanması
+        // taraf sorusundan bağımsız olarak yasak.
+        expect(coached.containsKey(name) || coached.containsKey(alt), isTrue,
+            reason: '$j artefaktta güvenilmez ama üründe skorlanıyor olabilir');
+      }
     });
   });
 }

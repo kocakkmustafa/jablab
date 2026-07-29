@@ -135,3 +135,30 @@ taşıdıkları. "10 kuralın hepsi denetlendi" DEMİYORUM.
 **Stance fixture yolları (CLI için):** `~/motion-harvest/jablab/landmarks/`
 altında `yA5WNu-sx34.full.json` (Tom Yankello) · `InSkFbZWoBY.full.json`
 (Kenny Weldon) · `ZzqFgVBttIc.full.json` (Sam McLeod).
+
+## 2026-07-29 — Gerçek stance artefaktı: BAĞLANMADI (kural 7 + kural 8)
+
+Sözleşme metni okundu (10 kural). Kural eşlemesi testlerde açıkça anılıyor:
+1/2/3/4/6 → `reference_binding_test`, 7/8 → `reference_contract_test`,
+9 → `shell_test`, 10 → `cues_test`. **Kural 5 kapsam dışı**: JabLab'ın stance
+referansı tek duruş, çevrim yok.
+
+**Artefakt ürüne BAĞLANMADI, iki bağımsız sebeple:**
+- **Kural 7:** `mirrorConfident=false` (simetrik-malzeme sınıfı). Benim tablom
+  lead/rear, yani taraf-bağımlı. Ayna güveni olmayan artefakttan taraf-bağımlı
+  hüküm türetmek yasak.
+- **Kural 8:** üç take de `unattested`. Eksik olan örneklem değil KAYNAK
+  BEYANI, ve kural 8 bunun provisional'a devredilemeyeceğini söylüyor.
+
+**Sayılar zaten karşılaştırılamaz.** CLI tam-videoyu hizalıyor (L-139), benim
+aracım duruşun korunduğu 90 karelik pencereyi seçiyor. Artefakt yürüme/konuşma
+karelerini de sayıyor: trunk_tilt 2,9° (benim 12,0°), dizler 2,6-3,8° (benim
+tabanım 8,0°). Aynı üç take, farklı örneklem.
+
+**Açık soru — ayna çelişkisi.** Benim aracım "ayna kararı güvenli: true"
+(3/3 orthodox, güven 1,00); CLI `mirrorConfident=false`. Aynı pencere farkıyla
+açıklanabilir (benimki gardın korunduğu an, CLI'ınki denek dönüp yürürken de
+ölçüyor) ama DOĞRULANMADI. Koordinatöre açık soru.
+
+Kural 3 çapraz kontrolü GEÇTİ: artefaktın güvenilmez saydığı üç eklem
+(left_elbow, iki forearm) üründe her iki ayna eşlemesinde de koçlanan tarafta.

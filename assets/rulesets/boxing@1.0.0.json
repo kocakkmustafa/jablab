@@ -892,7 +892,13 @@
       "$clusterToleranceWhy": "M-F-51 ara hukmu: take-kapisi KABA 'ayni hareket mi' sorusudur, skorlama yetkisi DEGILDIR (yetki eklem-bazlidir, M-F-41/46). stance take'leri 22,8-29,5 derece ayri — ayni hareketi yapiyorlar, yalnizca gard STILLERI farkli. 35 derece kaba soruyu rahat gecirir; ince ayrimi eklem tablosu yapar. 35 ve 60 derece esikleriyle uretilen eklem tablolari BIREBIR AYNI cikti — yani kume esigi ayrimi etkilemiyor, dogru yerde duruyor.",
       "$bindingHistory": "2026-07-29: M-F-47 kapisi kumeyi reddedince blocked'a alindi; M-F-51 ara hukmuyle 35 derece esikle acildi. Koordinator eklem-bazli ince kapiyi DENEDI ve farkli-hareket aykirilarina kor ciktigini olctu — bu yuzden kaba take-kapisi + ince eklem-yetkisi ikilisi korundu.",
       "$scoringStatistic": "toleranceAt STANDART SAPMA kullanir. n=3'te sd tek aykiriyi yumusatir; bu yuzden ham-tanimli eklemlerde take yayilimi da kontrol edilir (takeSpreadDeg). Normalize edilen eklemlerde take'ler arasi HAM karsilastirma yapilamaz — orada olculen sey ayrisma degil kamera yonelimidir (ic acilar 8-14° verirken segment yonleri 60-160° veriyordu). trunk_tilt cekirdekte bilerek ham tutulur, kontrol orada gecerlidir.",
-      "$tolerancePresentation": "floor|variance|ceiling ayrimi ZORUNLU. Kirpilmis bir sinir olcum degildir; 'measuredDispersionDeg' adi tek basina 17 eklemin 6'sinda yaniltiyordu. Kova kararlari DEGISMEDI — degisen, ne bildigimizi nasil sundugumuz."
+      "$tolerancePresentation": "floor|variance|ceiling ayrimi ZORUNLU. Kirpilmis bir sinir olcum degildir; 'measuredDispersionDeg' adi tek basina 17 eklemin 6'sinda yaniltiyordu. Kova kararlari DEGISMEDI — degisen, ne bildigimizi nasil sundugumuz.",
+      "sourceArtifact": {
+        "boundTo": null,
+        "inspected": "reference-boxing-stance.json (motion-core/reference@1)",
+        "$whyNotBound": "BAGLANMADI, iki bagimsiz sebeple. (1) KURAL 7: artefakt mirrorConfident=false — simetrik-malzeme sinifi; benim tablom lead/rear, yani TARAF-BAGIMLI. Ayna guveni olmayan bir artefakttan taraf-bagimli hukum turetmek yasak. (2) KURAL 8: uc take de 'unattested' (--allow-unattested ile uretildi); eksik olan orneklem degil KAYNAK BEYANI, ve bu provisional'a devredilemez. AYRICA sayilar karsilastirilamaz: CLI tam-videoyu hizaliyor (L-139), benim aracim durusun korundugu 90 karelik pencereyi seciyor — artefakt yurume/konusma karelerini de sayiyor (trunk_tilt 2,9 vs benim 12,0; dizler 2,6-3,8 vs taban 8,0). Ayni uc take, FARKLI orneklem. Artefakt SOZLESME denetimi icin kullanildi, kalibrasyon gercegi olarak DEGIL.",
+        "$mirrorDiscrepancy": "Benim aracim 'ayna karari guvenli: true' (3/3 orthodox, guven 1.00) dedi; CLI mirrorConfident=false diyor. Celiski gibi gorunuyor ama ayni pencere-farkiyla aciklanabilir: benim olcumum gardin korundugu ani, CLI'inki tum videoyu kapsiyor ve orada denek donuyor/yuruyorsa taraf sinyali silikleşir. COZULMEDI — koordinatore acik soru olarak birakiliyor."
+      }
     }
   },
   "$unreadFields": {
@@ -914,7 +920,8 @@
     "references.stance.*.zeroAtDeg": "skorlama acilmadan tuketilmiyor (K8)",
     "techniques.*.scheduledPhase": "faz siralamasi makinede; alan belge amacli",
     "drills.*.durationSec": "sure UI'da sabit; config'ten okunmuyor",
-    "references.stance.leadSide": "referansin uretildigi oncu taraf (3/3 orthodox). Kod okumuyor: motor oncu tarafi HER KARE geometrik olarak kendisi cozuyor (M-F-06), referanstan devralmiyor — devralsaydi southpaw kullanici yanlis tarafa gore olculurdu."
+    "references.stance.leadSide": "referansin uretildigi oncu taraf (3/3 orthodox). Kod okumuyor: motor oncu tarafi HER KARE geometrik olarak kendisi cozuyor (M-F-06), referanstan devralmiyor — devralsaydi southpaw kullanici yanlis tarafa gore olculurdu.",
+    "references.stance.sourceArtifact.inspected": "denetlenen artefaktin adi — koken kaydi; kod okumuyor, test yalnizca boundTo ve gerekce alanlarini zorluyor."
   },
   "$testEnforcedFields": {
     "$doc": "YALNIZ TESTIN okudugu alanlar. Olu DEGILLER — bir degismezi mekanik olarak zorluyorlar; ama urun davranisini da SURMUYORLAR. Ucuncu durum olarak ayri tutuluyor cunku ikisini karistirmak iki yonde de yanlis: bunlari 'olu' sayip silmek kapiyi kaldirir, 'canli' sayip guvenmek ise calismayan bir davranisa guvenmek olur.",
