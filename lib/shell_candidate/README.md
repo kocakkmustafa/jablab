@@ -29,8 +29,12 @@ Bu klasördeki her şey, 5 app'in de kullanacağı **alan-bağımsız** kabuk pa
 | `library_pages.dart` | `CoursePage` | Ders listesi | ✅ hazır |
 | `library_pages.dart` | `WhyNotPage` | Kapsam-dışı gerekçe sayfası | ✅ hazır |
 | `honesty_box.dart` | `HonestyBox` | "Neler ölçülür / neler ÖLÇÜLMEZ"; `notMeasured` boşsa **assert ile patlar** | ✅ hazır |
+| `session_flow.dart` | `SessionStage` + `SessionFlowScaffold` | Ders akışı: öğret → dene → canlı → özet. `stage.judges` yalnız `live`'da true — öğrenme anında puanlamak öğrenmeyi cezalandırır | ✅ hazır |
+| `session_flow.dart` | `IntervalTimer` | Süreli çalışma aralığı. **Adı bilerek "round" değil**: boks turu, dans kombosu, kata tekrarı ve enstrüman pasajı aynı şey | ✅ hazır |
+| `live_surface.dart` | `LiveState` + `LiveCoachSurface` | Canlı seans yüzeyi (ürünün yıldızı): tek düzeltme, ses birincil, **"göremiyorum" ayrı bir durum** — sessizlik "her şey yolunda" derdi | ✅ hazır |
+| `live_surface.dart` | `SessionSummaryView` | Bant özeti + **koçlanan-ama-skorlanmayan** başlıklar; kullanıcı neden puan almadığını bilmeli (J-033) | ✅ hazır |
 
-**Henüz yok (sıradaki dalgalarda buraya eklenecek):** arama + filtre (seviye/süre/ekipman) · "tüm kurslar" dizini · streak/rozet · hatırlatıcı ayarları · hesap silme akışı · paylaşım kartı · onboarding + hedef akışı · kamera kurulum sihirbazı çatısı (⚠️ *sihirbazın kendisi* app-özel eşiklerle çalışır; kabuğa yalnız **akış iskeleti** çıkar, kabul kriterleri app'ten enjekte edilir).
+**Henüz yok (sıradaki dalgalarda buraya eklenecek):** kamera önizleme yuvası (app-özel içerik enjekte edilir) · arama + filtre (seviye/süre/ekipman) · "tüm kurslar" dizini · streak/rozet · hatırlatıcı ayarları · hesap silme akışı · paylaşım kartı · onboarding + hedef akışı · kamera kurulum sihirbazı çatısı (⚠️ *sihirbazın kendisi* app-özel eşiklerle çalışır; kabuğa yalnız **akış iskeleti** çıkar, kabul kriterleri app'ten enjekte edilir).
 
 ## Terfi şartları
 

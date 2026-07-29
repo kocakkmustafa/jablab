@@ -89,9 +89,39 @@ void main() {
 
     await t.tap(find.byKey(const Key('lesson-boxing.foundations.jab')));
     await t.pumpAndSettle();
-    // Kamera hattı bağlı değil ve ekran BUNU SÖYLÜYOR — sahte "analiz
-    // ediliyor" ekranı göstermiyoruz.
-    expect(find.byKey(const Key('session-not-ready')), findsOneWidget);
+    // Ders akışı öğret→dene→canlı→özet sırasıyla açılır.
+    expect(find.byKey(const Key('stage-teach')), findsOneWidget);
+    expect(find.byKey(const Key('teach-no-analysis')), findsOneWidget,
+        reason: 'öğrenme aşamasında analiz YAPILMADIĞI söylenmeli');
+  });
+
+  testWidgets('seans akışı: öğret → dene → canlı → özet', (WidgetTester t) async {
+    await pumpApp(t);
+    await t.tap(find.byKey(const Key('tab-library')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('item-boxing')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('course-boxing.foundations')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('lesson-boxing.foundations.jab')));
+    await t.pumpAndSettle();
+
+    await t.tap(find.byKey(const Key('advance-button')));
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('rehearse-copy')), findsOneWidget);
+
+    await t.tap(find.byKey(const Key('advance-button')));
+    await t.pumpAndSettle();
+    // Kamera bağlı değil → yüzey "göremiyorum" durumunda ve SEBEBİ yazılı.
+    // Sessiz kalmak "her şey yolunda" derdi; oysa analiz hiç çalışmıyor.
+    expect(find.byKey(const Key('live-no-verdict')), findsOneWidget);
+    expect(find.byKey(const Key('live-cue')), findsNothing);
+
+    await t.tap(find.byKey(const Key('advance-button')));
+    await t.pumpAndSettle();
+    // Özet: skorlanmayan başlıklar kullanıcıya AÇIKÇA söyleniyor (J-033).
+    expect(find.byKey(const Key('coached-not-scored-note')), findsOneWidget);
+    expect(find.textContaining('Guard hand position'), findsOneWidget);
   });
 
   testWidgets('K8: ilerleme sayfası SAYI göstermez, bant gösterir',
