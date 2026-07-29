@@ -169,27 +169,13 @@
               ],
               "focus": "round",
               "minutes": 10,
-              "status": "locked",
-              "lockedReason": "We haven't settled whether this round holds one steady tempo or steps up through several, and the two designs need different round structures. We won't guess at the shape of a lesson.",
-              "$deferredProgression": {
-                "gates": [
-                  {
-                    "event": "tempoSwitch",
-                    "minCorrectSequences": 10,
-                    "$why": "Tempo BANT olarak raporlanir (C bandi), sayi olarak degil. Kapi 'dogru bandi tutturdu mu' sayar; 'ne kadar hizli' diye sormaz — o sayiyi olcemiyoruz."
-                  }
-                ],
-                "signals": [
-                  {
-                    "cue": "cue.slow_down",
-                    "direction": "decreasing",
-                    "$why": "KAPI DEGIL: C bandi, form-hiz odunlesmesi kisiye gore degisir."
-                  }
-                ]
-              },
-              "$deferredProgressionWhy": "J-063: ders KILITLI oldugu icin ilerleme kapisi GECICI olarak devre disi (J-038). Tur yapisi yazilip ders acilinca progression\"a geri tasinir.",
-              "lockedBy": "round-structure-unwritten",
-              "$lockedWhy": "Tempo dersinin SABIT mi ARTAN mi tempo calistirdigi kararlastirilmadi; iki tasarim farkli tur yapisi (ve farkli hata-esigi mantigi) istiyor. Tur sayisi/suresi bu cevaba bagli — secmek dersin NE OGRETTIGINI degistirirdi. Eksik olan bir olcum degil, bir antrenman-tasarim karari."
+              "roundPlan": {
+                "rounds": 1,
+                "roundSeconds": 600,
+                "restSeconds": 0,
+                "planProvenance": "arithmetic",
+                "$planBasis": "KOORDINATOR KARARI (M-F-144): v1 = SABIT tempo. Sabit tempoda tur alt-bolumlemesi YOK; sure beyan edilen toplamin tamami (600 sn) ve ilerleme kapisi da 10 dakika CALISMA istiyor — ikisi ayni sayi, icat YOK. Ara dinlenme KASTEN yok: dinlenme yorgunluk-kaynakli tempo kaymasini SIFIRLAR, oysa olculmek istenen sey tam o kaymadir (r5 emsali: 1 tur = toplam sure, dinlenmesiz)."
+              }
             },
             {
               "id": "boxing.conditioning.r5",
@@ -265,7 +251,7 @@
               "blurb": "Short hard intervals with short rest. Punch count is reported; punch quality is not judged at this pace.",
               "$judgementWhy": "Yuksek tempoda form hukmu VERILMEZ. TEMPO_TOO_FAST_FOR_FORM zaten C bandinda; hizli aralikta 'kotu form' demek, kullaniciya kendi tasarladigimiz egzersiz icin ceza kesmektir.",
               "status": "locked",
-              "lockedReason": "Interval work needs the burst-and-recover timing the app can already narrate but cannot yet run. Until that is wired, a steady round pretending to be intervals would be the wrong lesson.",
+              "lockedReason": "Interval work needs burst and recovery lengths, and ours do not add up yet: the lesson says twelve minutes while its gate asks for twelve WORKED minutes, and \"short rest\" has to go somewhere. We will not invent the interval you train to.",
               "$deferredProgression": {
                 "gates": [
                   {
@@ -277,8 +263,8 @@
                 "signals": []
               },
               "$deferredProgressionWhy": "J-063: ders KILITLI oldugu icin ilerleme kapisi GECICI olarak devre disi (J-038: erisilemeyen ders kapi kuramaz). Kapinin kendisi burada SAKLI — tur yapisi yazilip ders acilinca curriculum.json progression\"a geri tasinir. Silinmedi, ertelendi.",
-              "lockedBy": "interval-driver-missing",
-              "$lockedWhy": "SessionNarrator aralik kipini DESTEKLIYOR ve testli, ama onu suren yol yok (F-2, ayri kapi). Duz bir tur kosup \"aralik\" demek, kullaniciya baska bir ders vermek olurdu. Eksik olan olcum degil, TESISAT."
+              "lockedBy": "interval-numbers-inconsistent",
+              "$lockedWhy": "J-067: aralik SURUCUSU eksik degil — SAYILAR TUTARSIZ. Kapi 12 dakika CALISMA istiyor, ders `minutes: 12` beyan ediyor, blurb 'short rest' diyor: ucu birden dogru olamaz (calisma+dinlenme > 12). Ayrica burst/recover sureleri HICBIR YERDE beyanli degil (ruleset/curriculum/cues taramasi: 0 parametre). Bu yuzden ne aritmetikle turetilebilir ne de icat edilebilir — TEK bir urun karari gerekiyor: (a) hangi sayi otorite (minutes mi kapi mi), (b) burst/recover suresi. Karar gelince surucu kucuk bir istir; `SessionNarrator.interval()` uygulanmis ve testli, replikler (`cue.burst_start/burst_end/recover/next_burst`) yazili. Surucuyu SIMDI eklemedim: hicbir dersin duremeyecegi bir surucu, cues.en.json'un kendi elestirdigi 'kod var ama kullanici duymuyor' durumunu yeniden uretirdi."
             },
             {
               "id": "boxing.conditioning.technique_round",

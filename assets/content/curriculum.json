@@ -282,6 +282,30 @@
         }
       ],
       "signals": []
+    },
+    "boxing.conditioning.tempo": {
+      "gates": [
+        {
+          "sessionMinutes": 10,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani — kardes kondisyon derslerinin AYNI kapi sekli. SABIT tempoda olculen sey \"10 dakika boyunca tuttugun tempo\"dur; teknik hukmu kapiya GIRMEZ."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.slow_down",
+          "direction": "decreasing",
+          "$why": "KAPI DEGIL: C bandi, form-hiz odunlesmesi kisiye gore degisir."
+        }
+      ],
+      "$deferredRampingGate": [
+        {
+          "event": "tempoSwitch",
+          "minCorrectSequences": 10,
+          "$why": "Tempo BANT olarak raporlanir (C bandi), sayi olarak degil. Kapi 'dogru bandi tutturdu mu' sayar; 'ne kadar hizli' diye sormaz — o sayiyi olcemiyoruz."
+        }
+      ],
+      "$deferredRampingGateWhy": "Onceki `tempoSwitch` kapisi ARTAN-tempo tasarimina aitti; M-F-144 v1 icin SABIT tempo sectigi icin o olay uretilmiyor ve kapi YAPISAL olarak gecilemez hale gelirdi (kamera gelse bile). Silinmedi: artan tempo v1.x kilidi olarak planli, o gun geri tasinir."
     }
   }
 }
