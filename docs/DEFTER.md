@@ -100,3 +100,38 @@ sözleşmesinden geliyor — ayrı yol, ayrı beyan (J-039 kapsamıyordu).
 
 Bekleyen: çekirdek faz-evaluator kancası gelince histerezis tespiti motordan
 oraya taşınacak; sözleşme kelimeleri aynı (`beforePhase`, `peakExtension`).
+
+## 2026-07-29 — M-F-63: sözleşme denetimi + tüketici envanteri
+
+**floor|variance bulgusu (kendi config'imde).** 17 eklemin **6'sında**
+`measuredDispersionDeg` bir ölçüm değil, kırpma sonucuydu: 4'ü tam 8,0°
+(taban), 2'si tam 45,0° (tavan). Gerçek dağılım "8'den küçük" / "45'ten
+büyük" — o kadar. Kova kararları DEĞİŞMEDİ (taban zaten eşiğin altında,
+tavan üstünde); değişen, ne bildiğimizi nasıl sunduğumuz. `toleranceSource`
+eklendi, test kırpılmış değerin "ölçülen" diye sunulmasını yasaklıyor.
+
+**Tüketici envanteri (M-F-63-iii).** J-039 "bunu kim söyleyecek" diye
+sormuştu; bu onun tüketici tarafı: "bunu kim okuyor". 78 config alanı →
+50'sini ürün kodu okuyor, 11'ini yalnız test, **17'sini kimse**. İçlerinde
+`boneLengthTolerance` ve `onViolation` vardı: `integrity` bloğunda üç denetim
+duruyor, biri çalışıyordu. Config'i okuyan üçünün de aktif olduğunu sanardı.
+
+**Üç durum ayrı tutuluyor** — "yalnız test okuyor" ölü DEĞİL (bir değişmezi
+zorluyor) ama ürün davranışını da sürmüyor. İkisini karıştırmak iki yönde de
+yanlış: ölü sayıp silmek kapıyı kaldırır, canlı sayıp güvenmek çalışmayan bir
+davranışa güvenmek olur.
+
+**Birim beyanı.** `maxInterFrameWristTravel` kare-cinsinden ve bugün ölü;
+bağlanırsa dt-normalize ZORUNLU. 30fps'te kalibre edildi, 60fps'te aynı
+hareket kare başına yarı mesafe üretir ve denetim sessizce iki kat gevşer.
+Gevşemiş bir bütünlük denetimi hiç olmayandan kötüdür: "kontrol var" diye
+güven verir.
+
+**Kapsam sınırı — beyan ediyorum:** kanonik `50-REFERANS-TUKETIM-SOZLESMESI.md`
+bu ağaçta YOK. Testlerimin başlığı ona atıf yapıyor ama okuyamıyorum.
+Denetlenen kurallar: koordinatörün adını verdikleri + kendi testlerimin
+taşıdıkları. "10 kuralın hepsi denetlendi" DEMİYORUM.
+
+**Stance fixture yolları (CLI için):** `~/motion-harvest/jablab/landmarks/`
+altında `yA5WNu-sx34.full.json` (Tom Yankello) · `InSkFbZWoBY.full.json`
+(Kenny Weldon) · `ZzqFgVBttIc.full.json` (Sam McLeod).
