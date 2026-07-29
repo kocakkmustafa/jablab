@@ -71,6 +71,50 @@ abstract interface class SessionStore {
   Future<int> workedSecondsFor(String lessonId);
 }
 
+/// Kaydedilmiş seansların OLGU özeti (F-4/J-066).
+///
+/// Hüküm YOK: burada "iyi/kötü" diyen tek alan bile bulunmaz. Alanların
+/// hepsi kameradan bağımsız ölçülebilen şeyler — bu yüzden K8 kilidi
+/// bunları kapatmaz (K8 SKORU kapatır, olguyu değil).
+final class RecordedSummary {
+  const RecordedSummary({
+    required this.sessions,
+    required this.completed,
+    required this.workedSeconds,
+  });
+
+  final int sessions;
+  final int completed;
+  final int workedSeconds;
+
+  int get stoppedEarly => sessions - completed;
+
+  /// İnsan-okur süre. Saniye GÖSTERİLMEZ: bir antrenman süresinde saniye
+  /// hassasiyeti bilgi taşımaz, yalnız kesinlik izlenimi verir.
+  String get workedLabel {
+    final int m = workedSeconds ~/ 60;
+    if (m < 60) return '$m min';
+    final int h = m ~/ 60;
+    final int rem = m % 60;
+    return rem == 0 ? '${h}h' : '${h}h ${rem}m';
+  }
+
+  static Future<RecordedSummary> from(SessionStore store) async {
+    final List<SessionRecord> all = await store.recent();
+    int worked = 0;
+    int done = 0;
+    for (final SessionRecord r in all) {
+      worked += r.workedSeconds;
+      if (r.isComplete) done++;
+    }
+    return RecordedSummary(
+      sessions: all.length,
+      completed: done,
+      workedSeconds: worked,
+    );
+  }
+}
+
 /// Append-only JSONL deposu (koordinatör hükmü: 3. taraf DB YOK).
 ///
 /// **Neden JSONL ve neden append-only:** seans kaydı bir OLAY akışıdır, sorgu

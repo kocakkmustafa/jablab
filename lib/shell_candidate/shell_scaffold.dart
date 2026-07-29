@@ -71,10 +71,28 @@ class ProgressPage extends StatelessWidget {
   const ProgressPage({
     super.key,
     required this.bands,
+    this.recorded = const <String, String>{},
+    this.recordedNote,
     this.numericUnlocked = false,
   });
 
   final Map<String, String> bands;
+
+  /// KAYDEDİLEN olgular — hüküm DEĞİL (F-4).
+  ///
+  /// [bands] "yargımız" bölümüdür ve kalibrasyon gelmeden susar. Bu ise
+  /// "ne olduğunu kaydettik" bölümü: süre, seans sayısı gibi ölçmek için
+  /// hüküm gerektirmeyen şeyler. **İkisi AYRI bölümde durur** çünkü
+  /// karışırlarsa kullanıcı bir olguyu (24 dakika çalıştın) bir notla
+  /// (gardın iyi) aynı otoritede okur — canlı ekrandaki anlatı/hüküm
+  /// ayrımının ilerleme sayfasındaki karşılığı.
+  final Map<String, String> recorded;
+
+  /// Kaydedilenin ne İŞE YARAMADIĞINI söyleyen cümle. Boş bırakılamaz
+  /// olması istenmez ama verildiğinde gösterilir: biriken süreyi görüp
+  /// hiçbir şeyin açılmadığını fark eden kullanıcı, sebebini burada bulur.
+  final String? recordedNote;
+
   final bool numericUnlocked;
 
   @override
@@ -103,6 +121,36 @@ class ProgressPage extends StatelessWidget {
               title: Text(e.key),
               trailing: Text(e.value, style: theme.textTheme.titleSmall),
             )),
+        if (recorded.isNotEmpty) ...<Widget>[
+          const Divider(height: 32),
+          Text('What we recorded',
+              key: const Key('recorded-heading'),
+              style: theme.textTheme.titleSmall),
+          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'These are measurements, not marks. Nothing here is a judgement '
+              'about how well you moved.',
+              key: const Key('recorded-vs-judged-note'),
+              style: theme.textTheme.bodySmall,
+            ),
+          ),
+          ...recorded.entries.map((MapEntry<String, String> e) => ListTile(
+                key: Key('recorded-${e.key}'),
+                title: Text(e.key),
+                trailing: Text(e.value, style: theme.textTheme.titleSmall),
+              )),
+          if (recordedNote != null)
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(recordedNote!,
+                    key: const Key('recorded-note'),
+                    style: theme.textTheme.bodySmall),
+              ),
+            ),
+        ],
       ],
     );
   }

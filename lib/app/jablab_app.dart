@@ -55,13 +55,20 @@ class _RootState extends State<_Root> {
   /// gelmemişken seans açılırsa akış çalışır, yalnız o seans KAYDEDİLMEZ —
   /// açılışı bloklamak, kayıt için kullanıcıyı bekletmek olurdu.
   SessionStore? _store;
+
+  /// KAYDEDİLEN olgu özeti (F-4). Boşken ilerleme sayfası yalnız bantları
+  /// gösterir — sıfır satırlık bir "kaydedilenler" bölümü, hiç seans
+  /// yapmamış kullanıcıya boş bir tablo göstermek olurdu.
+  RecordedSummary? _recorded;
   Object? _error;
 
   @override
   void initState() {
     super.initState();
-    unawaited(widget.repository.openStore().then((SessionStore s) {
-      if (mounted) setState(() => _store = s);
+    unawaited(widget.repository.openStore().then((SessionStore s) async {
+      if (!mounted) return;
+      setState(() => _store = s);
+      await _refreshRecorded();
     }).catchError((Object e) {
       // Kalıcılık kurulamazsa uygulama ÇALIŞMAYA DEVAM EDER, yalnız kayıt
       // tutmaz. Depolama hatası yüzünden antrenmanı engellemek, çözümü
@@ -85,6 +92,13 @@ class _RootState extends State<_Root> {
       if (!mounted) return;
       setState(() => _error = e);
     });
+  }
+
+  Future<void> _refreshRecorded() async {
+    final SessionStore? s = _store;
+    if (s == null) return;
+    final RecordedSummary sum = await RecordedSummary.from(s);
+    if (mounted) setState(() => _recorded = sum);
   }
 
   @override
@@ -126,15 +140,39 @@ class _RootState extends State<_Root> {
         ),
       ),
       // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayısal skor YOK.
-      progress: const ProgressPage(
-        bands: <String, String>{
+      // Bantlar SUSAR; kaydedilen OLGULAR ayrı bölümde konuşur (F-4).
+      progress: ProgressPage(
+        bands: const <String, String>{
           'Guard discipline': '—',
           'Punch mechanics': '—',
           'Balance': '—',
         },
+        recorded: _recordedRows(),
+        recordedNote: _recorded == null || _recorded!.sessions == 0
+            ? null
+            : 'Recorded time does not unlock lessons yet. Every progress gate '
+                'also asks how much of the session the camera could actually '
+                'analyse, and the camera is not connected — so these minutes '
+                'are your history, not credit toward the next lesson. We would '
+                'rather say that than let a number quietly mean nothing.',
       ),
       profile: const _ProfilePage(),
     );
+  }
+
+  Map<String, String> _recordedRows() {
+    final RecordedSummary? r = _recorded;
+    if (r == null || r.sessions == 0) return const <String, String>{};
+    // Hiçbir değer ÇIPLAK SAYI değil — K8 kapısı (`shell_test`) sayfadaki
+    // her metni `^\d{1,3}%?$`e karşı tarıyor. Seans sayısı bir skor DEĞİL,
+    // ama kapıyı kendi rahatım için gevşetmek yerine değerleri birimiyle
+    // yazıyorum: kapı sıkı kalır, cümle de daha okunur olur.
+    return <String, String>{
+      'Time worked': r.workedLabel,
+      'Sessions': r.stoppedEarly == 0
+          ? '${r.sessions} recorded'
+          : '${r.sessions} recorded, ${r.stoppedEarly} stopped early',
+    };
   }
 
   void _openSession(ShellLesson l) => Navigator.of(context).push<void>(
@@ -147,7 +185,10 @@ class _RootState extends State<_Root> {
                   plan: widget.repository.roundPlanFor(_domain!, l.id),
                   store: _store,
                 )),
-      );
+      // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce
+      // yaptığı işi ilerleme sayfasında göremez ve kaydın çalışmadığını
+      // sanar (çalışıyor ama görünmüyor, en kötü kombinasyon).
+      ).then((_) => _refreshRecorded());
 }
 
 class _TodayPage extends StatelessWidget {
