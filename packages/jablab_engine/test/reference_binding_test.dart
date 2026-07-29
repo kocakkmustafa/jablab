@@ -71,8 +71,8 @@ void main() {
     // eğitmen ayrışması. Skorlanan listede kol eklemi belirirse ikisi de
     // çiğnenmiş olur.
     const List<String> armJoints = <String>[
-      'left_elbow', 'right_elbow', 'left_upper_arm', 'right_upper_arm',
-      'left_forearm', 'right_forearm',
+      'lead_elbow', 'rear_elbow', 'lead_upper_arm', 'rear_upper_arm',
+      'lead_forearm', 'rear_forearm',
     ];
     for (final String a in armJoints) {
       expect(scored.containsKey(a), isFalse,
@@ -82,11 +82,28 @@ void main() {
   });
 
   test('"kollar vs bacaklar" basitleştirmesi config\'te YOK', () {
-    // Ölçüm bu sanıyı çürüttü: öne çıkan (lead) tarafın kalça ve uyluğu da
-    // ~27° ayrışıyor, arka omuz 13,3°'de uyuşuyor. Ayrım anatomik değil.
-    expect(coached.containsKey('left_hip'), isTrue);
-    expect(coached.containsKey('left_thigh'), isTrue);
-    expect(scored.containsKey('right_shoulder'), isTrue);
+    // Ölçüm bu sanıyı çürüttü: bir taraf kalça/uyluk ~27° ayrışıyor, karşı
+    // omuz 13,3°'de uyuşuyor. Ayrım anatomik değil, ölçülmüş.
+    expect(coached.containsKey('rear_hip'), isTrue);
+    expect(coached.containsKey('rear_thigh'), isTrue);
+    expect(scored.containsKey('lead_shoulder'), isTrue);
+  });
+
+  test('[J-034] eklem adları LEAD/REAR — mutlak taraf adı YASAK', () {
+    // Referansın "sol"u, hangi take'lerin aynalandığına bağlıdır; builder'ın
+    // ayna ataması değişince mutlak ad sessizce yanlış tarafa işaret eder.
+    // M-F-06'nın referans katmanındaki karşılığı.
+    expect(ref['jointNaming'], 'lead_rear');
+    for (final String k in <String>[...scored.keys, ...coached.keys]) {
+      expect(k.startsWith('left_') || k.startsWith('right_'), isFalse,
+          reason: '$k mutlak taraf adı taşıyor — ayna ataması değişince kayar');
+    }
+  });
+
+  test('[M-F-47] anlaşma kapısı geçilmeden referans ÜRÜNE BAĞLI SAYILMAZ', () {
+    // Kapı bu kümeyi reddediyor (22,8-29,5° > 14°). Skor akmamalı,
+    // ders kapısı kurulmamalı — çözüm M-J-08'de.
+    expect(ref['bindingStatus'], 'blocked');
   });
 
   test('[kural 4] kalibre edilmemiş metrik SKORLANMAZ — PEAK checkpoint', () {

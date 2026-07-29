@@ -746,27 +746,27 @@
       "$toleranceStatusDoc": "M-F-38 yetersiz-orneklem sinifi: n=3, hedef ~5 (M-F-32). Serbest bant tabani 8->14 derece yukseltildi (J-032). 4./5. egitmen gelince YENIDEN HESAPLANIR.",
       "$splitRule": "Ayrim ANATOMIDEN degil OLCUMDEN turetildi: dispersiyonu muhafazakar tabanda (<=14 derece) kalan eklem SKORLANIR, ustundeki KOCLANIR. 'Kollar vs bacaklar' sanisi yanlis cikti — one-cikan taraf (sol/lead) kalca ve uyluk da 27 derece ayrisiyor, arka omuz 13.3 derecede uyusuyor.",
       "scoredJoints": {
-        "right_hip": {
+        "lead_hip": {
           "freeDeg": 14.0,
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 8.0
         },
-        "left_knee": {
+        "lead_knee": {
           "freeDeg": 14.0,
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 8.0
         },
-        "right_knee": {
+        "rear_knee": {
           "freeDeg": 14.0,
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 8.0
         },
-        "right_thigh": {
+        "lead_thigh": {
           "freeDeg": 14.0,
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 8.0
         },
-        "left_shin": {
+        "rear_shin": {
           "freeDeg": 14.0,
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 9.8
@@ -776,55 +776,49 @@
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 12.0
         },
-        "right_shoulder": {
+        "lead_shoulder": {
           "freeDeg": 14.0,
           "zeroAtDeg": 44.8,
           "measuredDispersionDeg": 13.3
         }
       },
       "coachedOnlyJoints": {
-        "right_shin": {
-          "measuredDispersionDeg": 14.7,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "lead_shin": {
+          "measuredDispersionDeg": 14.7
         },
-        "left_elbow": {
-          "measuredDispersionDeg": 18.2,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "rear_shoulder": {
+          "measuredDispersionDeg": 28.2
         },
-        "left_forearm": {
-          "measuredDispersionDeg": 20.6,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "rear_hip": {
+          "measuredDispersionDeg": 27.2
         },
-        "left_hip": {
-          "measuredDispersionDeg": 27.2,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "rear_thigh": {
+          "measuredDispersionDeg": 27.6
         },
-        "left_thigh": {
-          "measuredDispersionDeg": 27.6,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "lead_elbow": {
+          "measuredDispersionDeg": 18.2
         },
-        "left_shoulder": {
-          "measuredDispersionDeg": 28.2,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "rear_elbow": {
+          "measuredDispersionDeg": 45.0
         },
-        "right_upper_arm": {
-          "measuredDispersionDeg": 32.3,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "lead_upper_arm": {
+          "measuredDispersionDeg": 40.1
         },
-        "left_upper_arm": {
-          "measuredDispersionDeg": 40.1,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "rear_upper_arm": {
+          "measuredDispersionDeg": 32.3
         },
-        "right_elbow": {
-          "measuredDispersionDeg": 45.0,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "lead_forearm": {
+          "measuredDispersionDeg": 20.6
         },
-        "right_forearm": {
-          "measuredDispersionDeg": 45.0,
-          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        "rear_forearm": {
+          "measuredDispersionDeg": 45.0
         }
       },
-      "$productEffect": "STANCE_TOO_NARROW/WIDE, FEET_CROSSED, BALANCE_LOSS, TORSO_FALLING_FORWARD skorlanabilir. REAR_HAND_LOW ve gard/kol ile ilgili her hukum KOCLANIR ama SKORA girmez — D2 (blur/kapanma) ve referans-varyansi BAGIMSIZ iki yoldan ayni siniri gosterdi."
+      "$productEffect": "STANCE_TOO_NARROW/WIDE, FEET_CROSSED, BALANCE_LOSS, TORSO_FALLING_FORWARD skorlanabilir. REAR_HAND_LOW ve gard/kol ile ilgili her hukum KOCLANIR ama SKORA girmez — D2 (blur/kapanma) ve referans-varyansi BAGIMSIZ iki yoldan ayni siniri gosterdi.",
+      "jointNaming": "lead_rear",
+      "$jointNamingWhy": "J-034: ilk baglamada MUTLAK left_*/right_* adlari kullanmistim. 0.5.0'in GLOBAL ayna atamasi (M-F-48) take aynalamasini degistirince tablo taraf degistirdi ve baglamam sessizce YANLIS tarafa isaret eder oldu. Referansin 'sol'u, hangi take'lerin aynalandigina bagli — mutlak degil. M-F-06'nin referans katmanindaki karsiligi: taraf soyut adla yazilir. Uc take de orthodox: left=lead, right=rear.",
+      "bindingStatus": "blocked",
+      "$bindingStatusWhy": "M-F-47 anlasma kapisi bu kumeyi REDDEDIYOR: take'ler 22,8-29,5 derece ayri, esik 14. Eklem-bazli tablo bacaklarin 8 derecede anlastigini gosteriyor ama kapi TAKE-BUTUNU olcuyor. Cozum gelene dek (M-J-08) bu referans URUNE BAGLI SAYILMAZ; skor akmaz, ders kapisi kurulmaz."
     }
   }
 }

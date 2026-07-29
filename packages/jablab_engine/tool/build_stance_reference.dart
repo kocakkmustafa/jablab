@@ -55,7 +55,30 @@ void main() {
   stdout.writeln('\nöncü taraf dağılımı  : $leftLead sol / ${segs.length - leftLead} sağ '
       '→ ${mixed ? "KARIŞIK (hipotez b canlı)" : "TEK YÖNLÜ (hipotez b elendi)"}');
 
-  final CanonicalReference ref = builder.build(built);
+  // M-J-06 (0.5.0): ölçülmüş öncü-taraf ÖNSELİ konsensüsü ezer. Kendi
+  // geometrik tespitimizi prior olarak veriyoruz — "düzeltme değil sigorta":
+  // n<5'te konsensüs zayıftır ve yanlış çözüldüğünde SESSİZDİR.
+  final Map<String, bool> prior = <String, bool>{
+    for (int i = 0; i < built.length; i++) built[i].id: segs[i].leadIsLeft,
+  };
+  // M-F-47 anlasma kapisi bu kumeyi REDDEDIYOR (22,8-29,5 derece). Kapinin
+  // ne gorduğunu anlamak icin gevsetilmis esikle de kuruyoruz — eklem-bazli
+  // tablonun degisip degismedigi asil soru.
+  CanonicalReference? gated;
+  try {
+    gated = builder.build(built, leadSidePrior: prior);
+  } on Object catch (e) {
+    stdout.writeln('\n⛔ M-F-47 ANLASMA KAPISI: $e');
+  }
+  final CanonicalReference ref =
+      gated ?? builder.build(built, leadSidePrior: prior, clusterToleranceDeg: 60);
+
+  stdout.writeln('\n─── 0.5.0 kapıları ───');
+  stdout.writeln('önselle uyuşmayan take : '
+      '${ref.priorDisagreements.isEmpty ? "yok" : ref.priorDisagreements.join(", ")}');
+  stdout.writeln('ayna kararı güvenli mi : ${ref.mirrorConfident}');
+  stdout.writeln('anlaşma kapısı dışladı : '
+      '${ref.excludedOutlierIds.isEmpty ? "yok" : ref.excludedOutlierIds.join(", ")}');
 
   // Çapalı sürüm: azınlık tarafı aynalanır, hepsi aynı öncü tarafa getirilir.
   final bool anchorLeft = leftLead * 2 >= segs.length;
@@ -63,7 +86,8 @@ void main() {
     for (int i = 0; i < built.length; i++)
       segs[i].leadIsLeft == anchorLeft ? built[i] : built[i].mirrored(),
   ];
-  final CanonicalReference refAnchored = builder.build(anchored);
+  final CanonicalReference refAnchored = builder.build(anchored,
+      leadSidePrior: prior, clusterToleranceDeg: 60);
 
   stdout.writeln('\n═══ CANONICAL REFERENCE: stance ═══');
   stdout.writeln('katkı veren take     : ${ref.contributingTakes}');
