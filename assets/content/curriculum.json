@@ -316,6 +316,32 @@
         }
       ],
       "signals": []
+    },
+    "boxing.conditioning.technique_round": {
+      "gates": [
+        {
+          "sessionMinutes": 9,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '9 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.intermediate.fatigue": {
+      "gates": [
+        {
+          "sessionMinutes": 20,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure kapisi. Yorgunlukta form 'bozulmasi' beklenen seydir, kapi olamaz."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.rear_hand_low",
+          "direction": "decreasing",
+          "$why": "DERSIN KENDISI bu trend. Gard eklemleri KOCLANAN (egitmenler ayrisiyor) — kapi kurulamaz; ama kullanicinin KENDI hata orani zaman icinde karsilastirilabilir. Kendine gore kiyas, baskasina gore kiyastan daha az iddia tasir."
+        }
+      ]
     }
   }
 }

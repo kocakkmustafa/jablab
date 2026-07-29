@@ -155,16 +155,31 @@ void main() {
       }
     });
 
-    test('KİLİTLİ her süreli ders sebebini yazar', () {
-      int locked = 0;
+    test('KİLİTLİ her ders sebebini yazar ve sebep ÖLÇÜM eksiği', () {
+      // F-1(A) sonrası (J-069) yapı-kaynaklı kilit KALMADI: geriye yalnız
+      // ÖLÇÜMÜ olmayan dersler kilitli. Bu ayrım korunmalı — "tur yapısı
+      // yazılmadı" giderilebilir bir borçtu, "rakip yok" ise ölçülemeyen
+      // bir şeydir ve giderilemez.
+      const Set<String> structureLocks = <String>{
+        'round-structure-unwritten',
+        'interval-numbers-inconsistent',
+        'interval-driver-missing',
+      };
+      final Map<String, String> locked = <String, String>{};
       for (final Lesson l in allLessons()) {
         if (!l.isLocked) continue;
-        locked++;
         expect(l.lockedReason!.trim().length, greaterThan(30),
             reason: '${l.id}: kilit sebebi fazla kısa — sebepsiz kilit '
                 'pazarlama rozetine dönüşür');
+        locked[l.id] = _lockedByOf(libJson, l.id);
       }
-      expect(locked, greaterThanOrEqualTo(4));
+      expect(locked, isNotEmpty,
+          reason: 'kilitli ders kalmadıysa bu testin koruduğu şey de kalmamış');
+      for (final MapEntry<String, String> e in locked.entries) {
+        expect(structureLocks.contains(e.value), isFalse,
+            reason: '${e.key}: hâlâ YAPI-kaynaklı kilitli (${e.value}) — '
+                'F-1(A) bunları kapatmıştı, geri gelmiş');
+      }
     });
   });
 
@@ -237,4 +252,17 @@ void main() {
       expect(errsFor(doc), isEmpty);
     });
   });
+}
+
+/// Ham JSON'dan `lockedBy` okur — alan-modeli onu taşımıyor (ürün yüzeyine
+/// çıkmıyor, yalnız içerik-denetimi için var).
+String _lockedByOf(Map<String, dynamic> libJson, String lessonId) {
+  for (final dynamic d in libJson['disciplines'] as List) {
+    for (final dynamic c in ((d as Map)['courses'] as List? ?? const [])) {
+      for (final dynamic l in (c as Map)['lessons'] as List) {
+        if ((l as Map)['id'] == lessonId) return l['lockedBy'] as String? ?? '';
+      }
+    }
+  }
+  return '';
 }
