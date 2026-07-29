@@ -1,0 +1,160 @@
+{
+  "$doc": "Mufredat: ders -> drill eslemesi + OLCULEBILIR ilerleme kriterleri. plan 15: 'Ders tamamlamak tek basina ilerleme sayilmamalidir.'",
+  "schemaVersion": 1,
+  "$gateDoc": "KRITIK AYRIM (tuketim sozlesmesi kural 9: 'skor yalniz SKORLANAN eklemlerden akar'). Ilerleme bir hukum bicimidir; kalibre edilmemis ya da koclanan-ama-skorlanmayan bir sinyalle KAPI kurmak, skoru baska adla vermek olur. Bu yuzden iki ayri kovamiz var: gates = kapi kurabilen SKORLANAN olcumler · signals = kullaniciya gosterilen ama KAPI KURMAYAN koçluk-sikligi gostergeleri.",
+  "drills": {
+    "drill.guard_discipline": {
+      "displayName": "Guard discipline",
+      "durationSec": 60,
+      "instruction": "Throw slow jabs. The only thing that matters is the other hand staying home.",
+      "targets": [
+        "cue.rear_hand_low"
+      ]
+    },
+    "drill.snap_back": {
+      "displayName": "Snap back",
+      "durationSec": 60,
+      "instruction": "Jab and pull it straight back on the same line.",
+      "targets": [
+        "cue.lead_hand_not_recovered"
+      ]
+    },
+    "drill.stance_reset": {
+      "displayName": "Stance reset",
+      "durationSec": 45,
+      "instruction": "Step, settle, check your base. Repeat.",
+      "targets": [
+        "cue.stance_narrow",
+        "cue.stance_wide"
+      ]
+    },
+    "drill.footwork_basics": {
+      "displayName": "Footwork basics",
+      "durationSec": 90,
+      "instruction": "Step forward, back, side. Never let your feet cross.",
+      "targets": [
+        "cue.feet_crossed"
+      ]
+    },
+    "drill.balance": {
+      "displayName": "Balance",
+      "durationSec": 60,
+      "instruction": "Throw, then hold your stance for two seconds.",
+      "targets": [
+        "cue.balance_loss"
+      ]
+    },
+    "drill.posture_reset": {
+      "displayName": "Posture reset",
+      "durationSec": 60,
+      "instruction": "Punch without letting your chest fall forward.",
+      "targets": [
+        "cue.torso_forward"
+      ]
+    },
+    "drill.combo_slow": {
+      "displayName": "Combination, slowly",
+      "durationSec": 90,
+      "instruction": "Half speed. Right order, right hand, every time.",
+      "targets": [
+        "cue.wrong_hand",
+        "cue.combo_order"
+      ]
+    },
+    "drill.controlled_tempo": {
+      "displayName": "Controlled tempo",
+      "durationSec": 90,
+      "instruction": "Slow enough that every punch looks the same.",
+      "targets": [
+        "cue.slow_down"
+      ]
+    },
+    "drill.straight_line": {
+      "displayName": "Straight line",
+      "durationSec": 75,
+      "instruction": "Punch straight out and straight back. Elbow follows the line.",
+      "targets": [
+        "cue.elbow_flared"
+      ],
+      "$note": "ELBOW_FLARED su an B-kal bandinda (J-007 kalibre edilemedi) ve PEAK fazi checkpoint — yani bu drill KOCLAMA olarak verilir, skor kapisi kurmaz."
+    },
+    "drill.range_control": {
+      "displayName": "Range control",
+      "durationSec": 75,
+      "instruction": "Stay at the edge of your reach. Don't lean to land it.",
+      "targets": [
+        "cue.overreach"
+      ],
+      "$note": "OVERREACH de B-kal — koclama, skor degil."
+    }
+  },
+  "progression": {
+    "boxing.foundations.stance": {
+      "gates": [
+        {
+          "metric": "stanceWidthRatio",
+          "withinToleranceRatio": 0.8,
+          "overLastSessions": 2,
+          "$why": "stanceWidthRatio SKORLANAN olculerden (dispersiyon 8 derece, tabanda) — kapi kurabilir."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.foundations.jab": {
+      "gates": [
+        {
+          "event": "jab",
+          "minCompletedAttempts": 30,
+          "$why": "Olay sayimi A bandinda (tespit orani %100, D2) — kapi kurabilir."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.rear_hand_low",
+          "direction": "decreasing",
+          "$why": "KAPI DEGIL: gard eli koclanan-ama-skorlanmayan (J-033, 36,7 derece ayrisma). Kullaniciya 'daha az hatirlatmam gerekti' diye gosterilir, ilerleme KILIDI acmaz."
+        }
+      ]
+    },
+    "boxing.foundations.cross": {
+      "gates": [
+        {
+          "event": "cross",
+          "minCompletedAttempts": 30
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.torso_forward",
+          "direction": "decreasing"
+        }
+      ],
+      "$blocked": "J-031: cross referansi 2 kaynakta — kapi ETKIN DEGIL, ders jab-oncelikli daraltmada listeden cikar."
+    },
+    "boxing.foundations.one_two": {
+      "gates": [
+        {
+          "combination": "1-2",
+          "minCorrectSequences": 20,
+          "$why": "Kombinasyon SIRASI A bandinda: olay sirasi blur'dan bagimsiz."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.combo_order",
+          "direction": "decreasing"
+        }
+      ]
+    },
+    "boxing.conditioning.r3": {
+      "gates": [
+        {
+          "sessionMinutes": 9,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Gecerli-analiz orani veri kalitesi kapisi: kadraj bozukken gecen sure sayilmaz."
+        }
+      ],
+      "signals": []
+    }
+  }
+}

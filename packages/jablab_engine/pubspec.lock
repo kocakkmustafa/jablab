@@ -173,11 +173,11 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/motion_core"
-      ref: "motion_core-v0.4.2"
-      resolved-ref: defcbde4f0bf9f0befa370476c50608e500f0a42
+      ref: "motion_core-v0.4.3"
+      resolved-ref: a92edb55a63ed6caddda017adfe2b1a855c4bc40
       url: "https://github.com/kocakkmustafa/motion-core.git"
     source: git
-    version: "0.4.2"
+    version: "0.4.3"
   node_preamble:
     dependency: transitive
     description:
