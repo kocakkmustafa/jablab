@@ -150,10 +150,9 @@
             ]
           },
           "timeoutMs": 150,
-          "quality": {
-            "elbowFlareAngle": 45.0
-          },
-          "$doc": "D2 ayrimi: enter = 'bu faza girdim mi' (sayim sorusu), quality = 'iyi yaptim mi' (hukum sorusu). Ikisi ayri yazilir."
+          "$doc": "D2 ayrimi: enter = 'bu faza girdim mi' (sayim sorusu), quality = 'iyi yaptim mi' (hukum sorusu). Ikisi ayri yazilir.",
+          "checkpoint": true,
+          "$checkpointWhy": "Tuketim sozlesmesi kural 4 + aile kurali 'blur'lu fazlar checkpoint'. PEAK'te skorlanabilecek tek hukum elbowFlareAngle idi, ama J-007 (blur<->kapanma ayrilamadi) o esigi KALIBRE EDILEMEZ birakti. Genis bant koyup skorlamak, olculmemis bir seyi olculmus gibi gostermek olurdu. J-007 kapaninca quality geri gelir ve checkpoint kalkar."
         },
         {
           "id": "RETRACTION",
@@ -321,10 +320,9 @@
             ]
           },
           "timeoutMs": 150,
-          "quality": {
-            "elbowFlareAngle": 45.0
-          },
-          "$doc": "D2 ayrimi: enter = 'bu faza girdim mi' (sayim sorusu), quality = 'iyi yaptim mi' (hukum sorusu). Ikisi ayri yazilir."
+          "$doc": "D2 ayrimi: enter = 'bu faza girdim mi' (sayim sorusu), quality = 'iyi yaptim mi' (hukum sorusu). Ikisi ayri yazilir.",
+          "checkpoint": true,
+          "$checkpointWhy": "Tuketim sozlesmesi kural 4 + aile kurali 'blur'lu fazlar checkpoint'. PEAK'te skorlanabilecek tek hukum elbowFlareAngle idi, ama J-007 (blur<->kapanma ayrilamadi) o esigi KALIBRE EDILEMEZ birakti. Genis bant koyup skorlamak, olculmemis bir seyi olculmus gibi gostermek olurdu. J-007 kapaninca quality geri gelir ve checkpoint kalkar."
         },
         {
           "id": "RETRACTION",
