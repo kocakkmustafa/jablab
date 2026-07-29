@@ -34,6 +34,16 @@ final class AttemptDigest {
   final Map<String, MeasureSet> snapshots;
 
   /// ADR-001: hız/tempo YALNIZ buradan türetilir, kare-arası pikselden DEĞİL.
+  ///
+  /// M-F-91 alan-adı beyanı: bu, faz makinesinin İLK faz girişinden (bu
+  /// teknik için GUARD_READY — bir sonraki hareket beklenirken burada
+  /// dakikalarca kalabilir) PEAK girişine kadarki süredir; SALT `EXTENSION`
+  /// fazının süresi DEĞİLDİR. Segmentasyon/pencere araçlarının (ör.
+  /// `tool/segment_punches.dart`) bastığı "extension-süresi" bu yüzden
+  /// GUARD_READY bekleme süresini kapsayabilir (834-3804ms gibi fiziksel
+  /// olarak imkânsız görünen değerler böyle çıkar) — kusur değil, tanım.
+  /// Bir tüketici SALT-uzanma zamanlaması türetecekse `transitions['EXTENSION']`
+  /// ile `transitions['PEAK']` farkını kullanmalı, bu alanı değil.
   final double? extensionMs;
 
   /// ADR-001: kullanıcıya sayı değil BANT gösterilir.
