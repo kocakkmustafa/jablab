@@ -222,6 +222,108 @@
         }
       ],
       "signals": []
+    },
+    "boxing.foundations.camera": {
+      "gates": [
+        {
+          "event": "setupCheckPassed",
+          "minOccurrences": 1,
+          "$why": "Kurulum kapisi OLCUM DEGIL, KOSUL: kullanici cerceveye sigdi ve izleme guveni esigi gecti. Bunu gecemeyen biri sonraki derslerde zaten hukum ALMAZ (motor susar), yani dersi acik birakmak ona calisan bir urun oldugunu dusundururdu."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.foundations.first_round": {
+      "gates": [
+        {
+          "sessionMinutes": 3,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Ilk tur KATILIM kapisi: 3 dakika ve karelerin %70'inde gecerli analiz. Form kalitesi kapiya girmez — ilk turda amac tamamlamak, puan almak degil."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.conditioning.tempo": {
+      "gates": [
+        {
+          "event": "tempoSwitch",
+          "minCorrectSequences": 10,
+          "$why": "Tempo BANT olarak raporlanir (C bandi), sayi olarak degil. Kapi 'dogru bandi tutturdu mu' sayar; 'ne kadar hizli' diye sormaz — o sayiyi olcemiyoruz."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.slow_down",
+          "direction": "decreasing",
+          "$why": "KAPI DEGIL: C bandi, form-hiz odunlesmesi kisiye gore degisir."
+        }
+      ]
+    },
+    "boxing.conditioning.r5": {
+      "gates": [
+        {
+          "sessionMinutes": 5,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '5 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.conditioning.r10": {
+      "gates": [
+        {
+          "sessionMinutes": 10,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '10 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.conditioning.r20": {
+      "gates": [
+        {
+          "sessionMinutes": 20,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '20 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.conditioning.hiit": {
+      "gates": [
+        {
+          "sessionMinutes": 12,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '12 dakika calistin' demek icin egitmen uzlasisi gerekmiyor. HIIT'te ayrica form geri bildirimi SUSTURULUR: yuksek tempoyu biz istedik, sonra 'formun bozuldu' demek kendi tasarladigimiz egzersiz icin ceza kesmektir."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.conditioning.technique_round": {
+      "gates": [
+        {
+          "sessionMinutes": 9,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure + gecerli-analiz orani. Bu hatta teknik hukmu kapiya GIRMEZ — '9 dakika calistin' demek icin egitmen uzlasisi gerekmiyor."
+        }
+      ],
+      "signals": []
+    },
+    "boxing.intermediate.fatigue": {
+      "gates": [
+        {
+          "sessionMinutes": 20,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "Sure kapisi. Yorgunlukta form 'bozulmasi' beklenen seydir, kapi olamaz."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.rear_hand_low",
+          "direction": "decreasing",
+          "$why": "DERSIN KENDISI bu trend. Gard eklemleri KOCLANAN (egitmenler ayrisiyor) — kapi kurulamaz; ama kullanicinin KENDI hata orani zaman icinde karsilastirilabilir. Kendine gore kiyas, baskasina gore kiyastan daha az iddia tasir."
+        }
+      ]
     }
   }
 }

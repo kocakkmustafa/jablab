@@ -69,6 +69,7 @@ final class ContentRepository {
                             subtitle: l.techniques.isEmpty
                                 ? ''
                                 : l.techniques.join(' · '),
+                            lockedReason: l.lockedReason,
                           ))
                       .toList(growable: false),
                 ))

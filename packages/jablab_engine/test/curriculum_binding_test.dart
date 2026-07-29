@@ -132,6 +132,45 @@ void main() {
     }
   });
 
+  test('[J-038] KİLİTLİ ders kapı taşımaz, CANLI ders kapısız kalmaz', () {
+    // Kapsamı baştan göstermek (kilitli ders kartta durur) ile ölçemediğimizi
+    // vaat etmek ayrı şeyler. Kilitli bir dersin kapısı olsaydı, o kapı
+    // ölçülemeyen bir beceriyi puanlıyor olurdu; kapısız canlı bir ders ise
+    // "dersi izledin, geçtin" derdi — plan §15 bunu açıkça yasaklıyor.
+    final Map<String, dynamic> lib = (jsonDecode(
+                File('../../assets/content/library.json').readAsStringSync())
+            as Map)
+        .cast<String, dynamic>();
+    final List<dynamic> disciplines = lib['disciplines'] as List<dynamic>;
+    final Map<String, dynamic> boxing = disciplines
+        .cast<Map<String, dynamic>>()
+        .firstWhere((Map<String, dynamic> d) => d['id'] == 'boxing');
+
+    int locked = 0;
+    for (final dynamic c in boxing['courses'] as List<dynamic>) {
+      for (final dynamic raw in (c as Map)['lessons'] as List<dynamic>) {
+        final Map<String, dynamic> les = (raw as Map).cast<String, dynamic>();
+        final String id = les['id'] as String;
+        final bool isLocked = les['status'] == 'locked';
+        if (isLocked) {
+          locked++;
+          expect(progression.containsKey(id), isFalse,
+              reason: '$id kilitli ama kapısı var — ölçülemeyen beceri puanlanıyor');
+          expect(les['lockedBy'], isNotNull,
+              reason: '$id kilitli ama SEBEBİ yok; kilit "yakında" rozetine dönüşmüş');
+          expect(les[r'$lockedWhy'], isNotNull,
+              reason: '$id: eksik ÖLÇÜMÜN adı yazılmamış');
+        } else {
+          expect(progression.containsKey(id), isTrue,
+              reason: '$id canlı ama ilerleme kapısı yok — "dersi izledi" '
+                  'ilerleme sayılırdı (plan §15)');
+        }
+      }
+    }
+    expect(locked, greaterThan(0),
+        reason: 'kilitli ders kalmadıysa bu testin koruduğu şey de kalmamış');
+  });
+
   test('[J-035] koçlanan eklem ya dispersiyonla ya AÇIKLIKLA düşer', () {
     // sd n=3'te dayanıklı değil: {-1,9 · -3,8 · -28,4} → sd 12,0° (tabanın
     // altında) ama ortada uzlaşı değil bimodal bölünme var. Bu yüzden 14°

@@ -124,6 +124,30 @@ void main() {
     expect(find.textContaining('Guard hand position'), findsOneWidget);
   });
 
+  testWidgets('[J-038] KİLİTLİ ders görünür ama AÇILMAZ, sebebi yazılı',
+      (WidgetTester t) async {
+    // Kilitli dersi gizlemek kapsamı saklardı; açmak ölçemediğimiz bir
+    // beceriye seans vermek olurdu. Üçüncü yol: göster, açma, sebebini yaz.
+    await pumpApp(t);
+    await t.tap(find.byKey(const Key('tab-library')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('item-boxing')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('course-boxing.intermediate')));
+    await t.pumpAndSettle();
+
+    const String locked = 'boxing.intermediate.counter';
+    expect(find.byKey(const Key('lesson-$locked')), findsOneWidget,
+        reason: 'kilitli ders listeden gizlenmiş — kapsam saklanıyor');
+    expect(find.byKey(const Key('locked-why-$locked')), findsOneWidget,
+        reason: 'kilit sebepsiz — "yakında" rozetine dönüşmüş');
+
+    await t.tap(find.byKey(const Key('lesson-$locked')));
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('stage-teach')), findsNothing,
+        reason: 'kilitli ders seans açtı — ölçemediğimiz beceriye hüküm yolu');
+  });
+
   testWidgets('K8: ilerleme sayfası SAYI göstermez, bant gösterir',
       (WidgetTester t) async {
     await pumpApp(t);

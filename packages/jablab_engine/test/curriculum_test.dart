@@ -99,6 +99,7 @@ void main() {
         final bool measurable = gate.keys.any((String k) => const <String>[
               'minCompletedAttempts', 'minCorrectSequences',
               'withinToleranceRatio', 'sessionMinutes', 'minSeconds',
+              'minOccurrences',
             ].contains(k));
         // minSeconds = KATILIM kapısı (J-036). Duruşun "doğruluğu" üzerine
         // kapı kurulamadığında (eğitmenler 0,72-1,85 ayrışıyor) geriye dürüst

@@ -16,6 +16,7 @@ final class Lesson {
     this.errorFocus = const <String>[],
     this.focus,
     this.minutes = 0,
+    this.lockedReason,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -28,6 +29,12 @@ final class Lesson {
         errorFocus:
             ((j['errorFocus'] as List?) ?? const <dynamic>[]).cast<String>(),
         focus: j['focus'] as String?,
+        // Kilit, İÇERİĞİN kendi beyanı. Bir dersi kilitlemek "yakında" demek
+        // değil: o dersin hükmünü verecek ÖLÇÜM yok demek. Sebep kullanıcıya
+        // gösterilmek üzere burada taşınır; sebepsiz kilit sessizce pazarlama
+        // rozetine dönüşür.
+        lockedReason:
+            j['status'] == 'locked' ? j['lockedReason'] as String : null,
         minutes: (j['minutes'] as num?)?.toInt() ?? 0,
       );
 
@@ -38,6 +45,11 @@ final class Lesson {
   final List<String> errorFocus;
   final String? focus;
   final int minutes;
+
+  /// Doluysa ders KİLİTLİ ve bu cümle sebebidir (kullanıcıya gösterilir).
+  final String? lockedReason;
+
+  bool get isLocked => lockedReason != null;
 }
 
 final class Course {

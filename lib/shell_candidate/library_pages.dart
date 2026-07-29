@@ -160,15 +160,26 @@ class CoursePage extends StatelessWidget {
           if (course.goal.isNotEmpty)
             Text(course.goal, style: theme.textTheme.bodyMedium),
           const SizedBox(height: 16),
+          // Kilitli ders LİSTEDE KALIR ama açılmaz. Gizlemek kapsamı
+          // saklardı; açmak ölçemediğimiz bir beceriye seans vermek olurdu.
+          // Üçüncü yol: göster, açma, SEBEBİNİ yaz.
           ...course.lessons.map((ShellLesson l) => Card(
                 child: ListTile(
                   key: Key('lesson-${l.id}'),
-                  leading: const Icon(Icons.play_circle_outline),
+                  enabled: !l.isLocked,
+                  leading: Icon(l.isLocked
+                      ? Icons.lock_outline
+                      : Icons.play_circle_outline),
                   title: Text(l.title),
-                  subtitle: l.subtitle.isEmpty ? null : Text(l.subtitle),
+                  subtitle: l.isLocked
+                      ? Text(l.lockedReason!,
+                          key: Key('locked-why-${l.id}'),
+                          style: theme.textTheme.bodySmall)
+                      : (l.subtitle.isEmpty ? null : Text(l.subtitle)),
+                  isThreeLine: l.isLocked,
                   trailing:
                       l.minutes == 0 ? null : Text('${l.minutes} min'),
-                  onTap: () => onStart(l),
+                  onTap: l.isLocked ? null : () => onStart(l),
                 ),
               )),
         ],

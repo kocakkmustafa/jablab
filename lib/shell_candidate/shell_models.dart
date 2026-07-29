@@ -62,12 +62,22 @@ final class ShellLesson {
     required this.title,
     this.minutes = 0,
     this.subtitle = '',
+    this.lockedReason,
   });
 
   final String id;
   final String title;
   final String subtitle;
   final int minutes;
+
+  /// Doluysa öğe açılamaz ve bu cümle SEBEBİ olarak gösterilir.
+  ///
+  /// Kabuk için gerekli: bir öğeyi kilitleyip sebebini söylememek, kilidi
+  /// pazarlama rozetine çevirir. Sebebi taşımayı zorunlu kılan şey alan
+  /// bilgisi değil, ürünün "ölçemediğimizi vaat etmeyiz" sözü.
+  final String? lockedReason;
+
+  bool get isLocked => lockedReason != null;
 }
 
 /// Kapsam-dışı madde — "Neden yok?" sayfası.

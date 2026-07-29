@@ -12,7 +12,6 @@
   "schemaVersion": 1,
   "productName": "JabLab — Solo Combat Training",
   "language": "en",
-
   "disciplines": [
     {
       "id": "boxing",
@@ -56,36 +55,65 @@
               "displayName": "Stance and guard",
               "techniques": [],
               "focus": "stance",
-              "errorFocus": ["STANCE_TOO_NARROW", "STANCE_TOO_WIDE", "FEET_CROSSED"],
+              "errorFocus": [
+                "STANCE_TOO_NARROW",
+                "STANCE_TOO_WIDE",
+                "FEET_CROSSED"
+              ],
               "minutes": 10
             },
             {
               "id": "boxing.foundations.jab",
               "displayName": "The jab",
-              "techniques": ["jab"],
-              "errorFocus": ["REAR_HAND_LOW", "LEAD_HAND_NOT_RECOVERED"],
+              "techniques": [
+                "jab"
+              ],
+              "errorFocus": [
+                "REAR_HAND_LOW",
+                "LEAD_HAND_NOT_RECOVERED"
+              ],
               "minutes": 12
             },
             {
               "id": "boxing.foundations.cross",
               "displayName": "The cross",
-              "techniques": ["cross"],
-              "errorFocus": ["REAR_HAND_LOW", "TORSO_FALLING_FORWARD"],
+              "techniques": [
+                "cross"
+              ],
+              "errorFocus": [
+                "REAR_HAND_LOW",
+                "TORSO_FALLING_FORWARD"
+              ],
               "minutes": 12
             },
             {
               "id": "boxing.foundations.one_two",
               "displayName": "The 1-2",
-              "techniques": ["jab", "cross"],
-              "combinations": ["1-2"],
-              "errorFocus": ["WRONG_HAND_FOR_COMBINATION", "COMBINATION_ORDER_ERROR"],
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1-2"
+              ],
+              "errorFocus": [
+                "WRONG_HAND_FOR_COMBINATION",
+                "COMBINATION_ORDER_ERROR"
+              ],
               "minutes": 12
             },
             {
               "id": "boxing.foundations.first_round",
               "displayName": "Your first round",
-              "techniques": ["jab", "cross"],
-              "combinations": ["1", "2", "1-2"],
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1",
+                "2",
+                "1-2"
+              ],
               "focus": "round",
               "minutes": 8
             }
@@ -93,26 +121,173 @@
         },
         {
           "id": "boxing.conditioning",
-          "displayName": "Rounds & Conditioning",
+          "displayName": "Rounds and conditioning",
           "level": "all",
-          "goal": "Keep your form when you are tired — the round timer runs, the coach keeps watching.",
-          "estimatedMinutes": 30,
+          "goal": "Work rounds without a bag. The app keeps time, counts what it can see, and stays quiet about what it can't.",
+          "estimatedMinutes": 54,
           "lessons": [
             {
               "id": "boxing.conditioning.r3",
               "displayName": "3 x 3 minute rounds",
-              "techniques": ["jab", "cross"],
-              "combinations": ["1", "2", "1-2", "1-1-2"],
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1",
+                "2",
+                "1-2",
+                "1-1-2"
+              ],
               "focus": "round",
               "minutes": 12
             },
             {
               "id": "boxing.conditioning.tempo",
               "displayName": "Tempo control",
-              "techniques": ["jab", "cross"],
-              "errorFocus": ["TEMPO_TOO_FAST_FOR_FORM"],
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "errorFocus": [
+                "TEMPO_TOO_FAST_FOR_FORM"
+              ],
               "focus": "round",
               "minutes": 10
+            },
+            {
+              "id": "boxing.conditioning.r5",
+              "displayName": "Five minutes",
+              "focus": "conditioning",
+              "minutes": 5,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "blurb": "One short round. Enough to find out whether your guard survives being tired."
+            },
+            {
+              "id": "boxing.conditioning.r10",
+              "displayName": "Ten minutes",
+              "focus": "conditioning",
+              "minutes": 10,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1-2"
+              ],
+              "blurb": "Three rounds with rest. The first honest test of whether form holds when you stop thinking about it."
+            },
+            {
+              "id": "boxing.conditioning.r20",
+              "displayName": "Twenty minutes",
+              "focus": "conditioning",
+              "minutes": 20,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1-2"
+              ],
+              "blurb": "Six rounds. Long enough that the app's own tracking gets tested too — it will tell you if it loses you."
+            },
+            {
+              "id": "boxing.conditioning.hiit",
+              "displayName": "Interval burst",
+              "focus": "conditioning",
+              "minutes": 12,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "blurb": "Short hard intervals with short rest. Punch count is reported; punch quality is not judged at this pace.",
+              "$judgementWhy": "Yuksek tempoda form hukmu VERILMEZ. TEMPO_TOO_FAST_FOR_FORM zaten C bandinda; hizli aralikta 'kotu form' demek, kullaniciya kendi tasarladigimiz egzersiz icin ceza kesmektir."
+            },
+            {
+              "id": "boxing.conditioning.technique_round",
+              "displayName": "Technique round",
+              "focus": "conditioning",
+              "minutes": 9,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1-2"
+              ],
+              "errorFocus": [
+                "FEET_CROSSED",
+                "BALANCE_LOSS"
+              ],
+              "blurb": "Deliberately slow rounds. The only round type where form feedback stays on the whole time."
+            }
+          ],
+          "$scopeWhy": "Bu hattin kapilari SURE ve KATILIM olcer, teknik hukmu vermez. Referans beklemeden cikabilmesinin sebebi bu: '10 dakika calistin' demek icin egitmenlerin bir aci uzerinde uzlasmasi gerekmiyor."
+        },
+        {
+          "id": "boxing.intermediate",
+          "displayName": "Intermediate",
+          "level": "intermediate",
+          "goal": "Combinations, tempo control and recovery under fatigue.",
+          "estimatedMinutes": 63,
+          "$scopeWhy": "Bu kursun cogu ders KILITLI ve kilidin sebebi her derste yazili. Kilit bir 'yakinda' pazarlama rozeti degil: o dersin kapisini kurabilmek icin eksik olan OLCUM adiyla yaziliyor. Kapsami bastan gostermek ile olcemedigimizi vaat etmek ayni sey degil.",
+          "lessons": [
+            {
+              "id": "boxing.intermediate.combinations",
+              "displayName": "Longer combinations",
+              "status": "locked",
+              "focus": "combination",
+              "minutes": 14,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "lockedBy": "technique-coverage",
+              "$lockedWhy": "1-2 disindaki kombinasyonlar kanca/uppercut ister. Kural setinde bu iki teknik SINIFLANDIRILMIYOR (unclassified_strike'a dusuyor) — sira dogrulugu hakkinda hukum veremeyiz. Sayabiliriz, yargilayamayiz.",
+              "lockedReason": "Hooks and uppercuts are counted but not classified, so we can't judge combination order here yet."
+            },
+            {
+              "id": "boxing.intermediate.counter",
+              "displayName": "Answering after defence",
+              "status": "locked",
+              "focus": "defence",
+              "minutes": 14,
+              "lockedBy": "no-opponent",
+              "$lockedWhy": "Savunma sonrasi cevap, bir SALDIRIYA cevaptir. Golge calismasinda saldiri yok; olcebilecegimiz sey yalnizca kullanicinin kendi kendine yaptigi hareket sirasi olurdu. Bunu 'savunma refleksi' diye sunmak yalan olur.",
+              "lockedReason": "Answering a defence needs an opponent to answer. Shadow work can't provide one, so we won't score it."
+            },
+            {
+              "id": "boxing.intermediate.footwork_combo",
+              "displayName": "Footwork with combinations",
+              "status": "locked",
+              "focus": "footwork",
+              "minutes": 15,
+              "lockedBy": "missing-reference",
+              "$lockedWhy": "Adim kalitesi icin referans YOK: uc bagimsiz egitmenden footwork take'i toplanmadi (M-C-04). FEET_CROSSED tespit edilebiliyor ama 'iyi adim' olculemez — hata yakalamak ile beceri puanlamak ayni sey degil.",
+              "lockedReason": "We can spot crossed feet, but we haven't measured what good footwork looks like across enough coaches to grade it."
+            },
+            {
+              "id": "boxing.intermediate.fatigue",
+              "displayName": "Technique under fatigue",
+              "status": "live",
+              "focus": "conditioning",
+              "minutes": 20,
+              "techniques": [
+                "jab",
+                "cross"
+              ],
+              "combinations": [
+                "1-2"
+              ],
+              "errorFocus": [
+                "REAR_HAND_LOW",
+                "LEAD_HAND_NOT_RECOVERED",
+                "BALANCE_LOSS"
+              ],
+              "blurb": "Long rounds, no pace change. Watches whether your error rate climbs as you tire — that trend is the lesson."
             }
           ]
         }
@@ -122,43 +297,105 @@
         "Hooks and uppercuts as judged technique — currently counted only"
       ]
     },
-
-    { "id": "kickboxing", "displayName": "Kickboxing", "status": "coming_soon", "wave": "W1",
+    {
+      "id": "kickboxing",
+      "displayName": "Kickboxing",
+      "status": "coming_soon",
+      "wave": "W1",
       "blurb": "Kicks join the engine. Needs a wider frame and a kick classifier.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] },
-
-    { "id": "tai_chi", "displayName": "Tai Chi", "status": "coming_soon", "wave": "W1",
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    },
+    {
+      "id": "tai_chi",
+      "displayName": "Tai Chi",
+      "status": "coming_soon",
+      "wave": "W1",
       "blurb": "Slow forms are where camera analysis is strongest — no motion blur at all. The 24-form comes first.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] },
-
-    { "id": "karate", "displayName": "Karate — Kihon & Kata", "status": "coming_soon", "wave": "W2",
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    },
+    {
+      "id": "karate",
+      "displayName": "Karate — Kihon & Kata",
+      "status": "coming_soon",
+      "wave": "W2",
       "blurb": "Line drills and the Heian kata series, with stance classes and floor-pattern tracking.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] },
-
-    { "id": "muay_thai", "displayName": "Muay Thai", "status": "coming_soon", "wave": "W2",
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    },
+    {
+      "id": "muay_thai",
+      "displayName": "Muay Thai",
+      "status": "coming_soon",
+      "wave": "W2",
       "blurb": "Teeps, knees and elbows. Clinch work stays out — it needs a partner.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] },
-
-    { "id": "taekwondo", "displayName": "Taekwondo", "status": "coming_soon", "wave": "W3",
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    },
+    {
+      "id": "taekwondo",
+      "displayName": "Taekwondo",
+      "status": "coming_soon",
+      "wave": "W3",
       "blurb": "Taegeuk forms and the kick ladder. Jumping and spinning kicks will carry a visible accuracy warning.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] },
-
-    { "id": "mma_striking", "displayName": "MMA Striking", "status": "coming_soon", "wave": "W3",
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    },
+    {
+      "id": "mma_striking",
+      "displayName": "MMA Striking",
+      "status": "coming_soon",
+      "wave": "W3",
       "blurb": "A free-mix drill mode across boxing, kickboxing and Muay Thai. Striking only — stated plainly.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] },
-
-    { "id": "wing_chun", "displayName": "Wing Chun — Solo Forms", "status": "coming_soon", "wave": "W4",
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    },
+    {
+      "id": "wing_chun",
+      "displayName": "Wing Chun — Solo Forms",
+      "status": "coming_soon",
+      "wave": "W4",
       "blurb": "Siu Nim Tao through Biu Jee. The wooden dummy form stays out — it needs equipment.",
-      "honesty": { "measured": [], "notMeasured": ["Nothing yet — this discipline is not open"] },
-      "courses": [] }
+      "honesty": {
+        "measured": [],
+        "notMeasured": [
+          "Nothing yet — this discipline is not open"
+        ]
+      },
+      "courses": []
+    }
   ],
-
   "whyNotIncluded": {
     "displayName": "Why isn't my art here?",
     "intro": "Some things a single phone camera genuinely cannot see. Rather than ship a version that guesses, we leave them out and tell you why.",
