@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:jablab_engine/jablab_engine.dart';
+import 'package:motion_core/motion_core.dart';
+
 /// M-F-87 deseni: tekrar-sınıfı malzemede (yumruk) en iyi kesici ürünün
 /// KENDİ FSM'idir — `hold_isolator`ın duruş/tutuş sınıfı için yaptığının
 /// yumruk karşılığı. Ham hasat fixture'ını `StrikingEngine`den geçirir,
@@ -6,18 +12,12 @@
 /// ve `windowRule: punch_fsm` provenance'ıyla ayrı fixture'lar yazar.
 ///
 /// Kullanım:
-///   dart run tool/segment_punches.dart <ham-fixture.json> <technique-id> <out-dir>
+///   dart run tool/segment_punches.dart ham-fixture.json technique-id out-dir
 ///
-/// Çıktılar kanonik CLI'ya (`build_reference.dart --technique <id>`)
+/// Çıktılar kanonik CLI'ya (`build_reference.dart --technique` ile)
 /// beslenmeye hazırdır. M-C-04 (≥3 bağımsız kaynak) gerektiği gibi
 /// zorlanır — 2 kaynaktan gelen pencereler isimli-sebepli REDDEDİLİR
 /// (bu bir kusur değil, hedefli-hasat ihtiyacının ölçülmüş kanıtıdır).
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:jablab_engine/jablab_engine.dart';
-import 'package:motion_core/motion_core.dart';
-
 void main(List<String> args) {
   final String srcPath = args[0];
   final String techniqueId = args[1];
