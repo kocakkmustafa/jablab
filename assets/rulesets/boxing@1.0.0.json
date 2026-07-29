@@ -25,33 +25,48 @@
     }
   },
   "$modelNote": "Gorunurluk esikleri model varyantina ozgudur (aile kurali M-018 / J-014). heavy varyantina gecis = esik yeniden kalibrasyonu.",
-
   "measures": {
     "extensionRatio": {
       "$doc": "e = |lead|rear wrist - ayni taraf omuz| / L. L kalibrasyonda olculur.",
       "normalizeBy": "calibratedArmLength",
       "dims": 3
     },
-    "stanceWidthRatio": { "normalizeBy": "shoulderWidth" },
+    "stanceWidthRatio": {
+      "normalizeBy": "shoulderWidth"
+    },
     "guardHeightDelta": {
       "$doc": "Bilek yuksekligi ile cene yuksekligi farki, govde boyuna normalize.",
       "normalizeBy": "trunkLength"
     },
-    "elbowFlareAngle": { "$doc": "Ust kol ile govde duzlemi arasindaki aci (derece)." },
-    "trunkLeanAngle": { "$doc": "Govde ekseninin dikeyden sapmasi (derece)." },
-    "shoulderRotation": { "$doc": "Omuz cizgisinin kalca cizgisine gore acisi (derece)." },
-    "copOverBase": { "$doc": "Kalca orta noktasinin ayak taban poligonuna gore konumu, ayak mesafesine normalize." },
+    "elbowFlareAngle": {
+      "$doc": "Ust kol ile govde duzlemi arasindaki aci (derece)."
+    },
+    "trunkLeanAngle": {
+      "$doc": "Govde ekseninin dikeyden sapmasi (derece)."
+    },
+    "shoulderRotation": {
+      "$doc": "Omuz cizgisinin kalca cizgisine gore acisi (derece)."
+    },
+    "copOverBase": {
+      "$doc": "Kalca orta noktasinin ayak taban poligonuna gore konumu, ayak mesafesine normalize."
+    },
     "frontFootLoadRatio": {
       "$doc": "Kalca orta noktasinin ON<->ARKA ayak ekseni uzerindeki izdusumu (0=tamamen arka ayak, 1=tamamen on ayak). POZ-TABANLI VEKIL — kuvvet/basinc OLCUMU DEGILDIR; 'yuk' dili kullaniciya ve pazarlamaya gecmez, ic metrik olarak kalir.",
       "normalizeBy": "stanceDepth",
       "$whyAdded": "Kickboks/MuayThai on-hasat haritasi (M-F-14): bes olculebilir brans farkindan DORDU mevcut olculere dustu, yalnizca on/arka agirlik dagilimi eksikti (boks ~0.50, Muay Thai ~0.30-0.40). ADR-004'un 'brans farki = yeni ESIK, yeni MOTOR degil' iddiasinin tek acigi buydu.",
       "branchProfiles": {
-        "boxing": { "expected": 0.50, "tolerance": 0.12 },
-        "muaythai": { "expected": 0.35, "tolerance": 0.12, "$status": "hasat sonrasi olculecek — su an literatur/anlatı duzeyinde" }
+        "boxing": {
+          "expected": 0.5,
+          "tolerance": 0.12
+        },
+        "muaythai": {
+          "expected": 0.35,
+          "tolerance": 0.12,
+          "$status": "hasat sonrasi olculecek — su an literatur/anlatı duzeyinde"
+        }
       }
     }
   },
-
   "signalConditioning": {
     "$doc": "Yumusatma filtresi ESIKLERIN AYRILMAZ PARCASIDIR (aile dersi M-C-07). Varsayilan 1 Hz kesim, 120 ms'lik bir yumrugu yok ediyor: olculdu — tepe uzanma orani 1.00 yerine 0.776'ya duser (%22 sonumleme) ve ~80 ms gecikir; PEAK esigi (0.85) HIC atesnemez.",
     "$derivation": "D2 havuz olcumu: medyan uzanma fazi 128 ms, en hizli %10 dilim 54 ms. Bir gecisi korumak icin gereken kesim ~1/(2T): 128 ms icin ~3.9 Hz, 54 ms icin ~9.3 Hz. minCutoff=8 Hz medyani rahat, hizli dilimi buyuk olcude gecirir. beta yukseltilir cunku OneEuro'da beta hizli harekette gecikmeyi azaltir.",
@@ -60,7 +75,6 @@
     "derivativeCutoff": 1.0,
     "$status": "D2'den TURETILDI, cihazda dogrulanmadi — J-016 yeniden olcumunde birlikte revize edilir (esik ve filtre AYRI AYRI degistirilemez)."
   },
-
   "$filterWarning": {
     "$doc": "AILE DERSI M-C-07 (Choreia) — J-016. Asagidaki faz esikleri HAM landmark uzerinde olculdu; uretim hattinda temporal smoothing var ve bilincli GECIKTIRIR. Somut risk: yumruk biter bitmez duran denemede filtre gard degerine donemez → GUARD_RECOVERED (e<0.62) hic atesnemez → deneme timedOut sayilir ve SESSIZCE kaybolur. Esikler filtrelenmis sinyal uzerinde yeniden olculmeden band A yayinlanmaz.",
     "status": "acik",
@@ -70,7 +84,6 @@
     "$doc": "AILE DERSI M-C-06 — fixture, sinadigi TOLERANSTAN BUYUK olmali. 45 derece ELBOW_FLARED esigini 45 derecelik fixture ile sinamak hicbir sey sinamaz; genlik esigin ~1.3 katindan buyuk olmali. Ayrica simetrik (git-gel) fixture gecikmeli hizalamayi ucuzlatir — asimetrik fraz kullan.",
     "minAmplitudeFactor": 1.3
   },
-
   "integrity": {
     "$doc": "Anatomik imkansizlik denetimi — aile bulgusu M-019 / J-013. Ihlalde HUKUM YOK.",
     "maxExtensionRatio": 1.05,
@@ -78,7 +91,6 @@
     "boneLengthTolerance": 0.25,
     "onViolation": "suppressJudgement"
   },
-
   "techniques": [
     {
       "id": "jab",
@@ -87,16 +99,69 @@
       "limb": "lead_arm",
       "band": "A",
       "phases": [
-        { "id": "GUARD_READY", "enter": { "extensionRatio": { "lt": 0.62 } },
-          "requiredLandmarks": ["lead_wrist", "lead_elbow", "lead_shoulder", "rear_wrist"] },
-        { "id": "EXTENSION", "enter": { "extensionRatio": { "gt": 0.68 }, "extensionRatioDelta": { "gt": 0 } },
+        {
+          "id": "GUARD_READY",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.62
+            }
+          },
+          "requiredLandmarks": [
+            "lead_wrist",
+            "lead_elbow",
+            "lead_shoulder",
+            "rear_wrist"
+          ]
+        },
+        {
+          "id": "EXTENSION",
+          "enter": {
+            "extensionRatio": {
+              "gt": 0.68
+            },
+            "extensionRatioDelta": {
+              "gt": 0
+            }
+          },
           "timeoutMs": 400,
-          "$timeoutNote": "J-009: bu timeout olmadan 'uzatip bekleme' yumruk sanilir — olcumde 736ms'lik sahte yumruk uretti." },
-        { "id": "PEAK", "enter": { "extensionRatio": { "gt": 0.85, "localMax": true } }, "timeoutMs": 150 },
-        { "id": "RETRACTION", "enter": { "extensionRatio": { "lt": 0.80 }, "extensionRatioDelta": { "lt": 0 } }, "timeoutMs": 600 },
-        { "id": "GUARD_RECOVERED", "enter": { "extensionRatio": { "lt": 0.62 } }, "terminal": true }
+          "$timeoutNote": "J-009: bu timeout olmadan 'uzatip bekleme' yumruk sanilir — olcumde 736ms'lik sahte yumruk uretti."
+        },
+        {
+          "id": "PEAK",
+          "enter": {
+            "extensionRatio": {
+              "gt": 0.85,
+              "localMax": true
+            }
+          },
+          "timeoutMs": 150
+        },
+        {
+          "id": "RETRACTION",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.8
+            },
+            "extensionRatioDelta": {
+              "lt": 0
+            }
+          },
+          "timeoutMs": 600
+        },
+        {
+          "id": "GUARD_RECOVERED",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.62
+            }
+          },
+          "terminal": true
+        }
       ],
-      "abort": { "trackingLostMs": 500, "peakNeverReached": true }
+      "abort": {
+        "trackingLostMs": 500,
+        "peakNeverReached": true
+      }
     },
     {
       "id": "cross",
@@ -105,16 +170,80 @@
       "limb": "rear_arm",
       "band": "A",
       "phases": [
-        { "id": "GUARD_READY", "enter": { "extensionRatio": { "lt": 0.62 } },
-          "requiredLandmarks": ["rear_wrist", "rear_elbow", "rear_shoulder", "lead_wrist", "left_hip", "right_hip"] },
-        { "id": "REAR_SHOULDER_ROTATION", "enter": { "shoulderRotation": { "gt": 12 } }, "timeoutMs": 250,
-          "$note": "Rotasyon yoksa teknik 'rear jab' olarak siniflanir — bu bir HATA degil, siniflandirmadir." },
-        { "id": "EXTENSION", "enter": { "extensionRatio": { "gt": 0.68 }, "extensionRatioDelta": { "gt": 0 } }, "timeoutMs": 400 },
-        { "id": "PEAK", "enter": { "extensionRatio": { "gt": 0.85, "localMax": true } }, "timeoutMs": 150 },
-        { "id": "RETRACTION", "enter": { "extensionRatio": { "lt": 0.80 }, "extensionRatioDelta": { "lt": 0 } }, "timeoutMs": 600 },
-        { "id": "GUARD_RECOVERED", "enter": { "extensionRatio": { "lt": 0.62 } }, "terminal": true }
+        {
+          "id": "GUARD_READY",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.62
+            }
+          },
+          "requiredLandmarks": [
+            "rear_wrist",
+            "rear_elbow",
+            "rear_shoulder",
+            "lead_wrist",
+            "left_hip",
+            "right_hip"
+          ]
+        },
+        {
+          "id": "REAR_SHOULDER_ROTATION",
+          "enter": {
+            "shoulderRotation": {
+              "gt": 12
+            }
+          },
+          "timeoutMs": 250,
+          "$note": "Rotasyon yoksa teknik 'rear jab' olarak siniflanir — bu bir HATA degil, siniflandirmadir."
+        },
+        {
+          "id": "EXTENSION",
+          "enter": {
+            "extensionRatio": {
+              "gt": 0.68
+            },
+            "extensionRatioDelta": {
+              "gt": 0
+            }
+          },
+          "timeoutMs": 400
+        },
+        {
+          "id": "PEAK",
+          "enter": {
+            "extensionRatio": {
+              "gt": 0.85,
+              "localMax": true
+            }
+          },
+          "timeoutMs": 150
+        },
+        {
+          "id": "RETRACTION",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.8
+            },
+            "extensionRatioDelta": {
+              "lt": 0
+            }
+          },
+          "timeoutMs": 600
+        },
+        {
+          "id": "GUARD_RECOVERED",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.62
+            }
+          },
+          "terminal": true
+        }
       ],
-      "abort": { "trackingLostMs": 500, "peakNeverReached": true }
+      "abort": {
+        "trackingLostMs": 500,
+        "peakNeverReached": true
+      }
     },
     {
       "id": "unclassified_strike",
@@ -124,153 +253,404 @@
       "fallback": true,
       "$fallbackNote": "J-026: bir jab AYNI ZAMANDA siniflandirilmamis vurustur — iki faz makinesi de ates eder. fallback:true olan teknik, spesifik bir teknik ayni pencerede tamamlandiginda VEYA bir spesifik makine hala calisirken ozet URETMEZ. Aksi halde her yumruk IKI KEZ sayilir ve sayac/kombinasyon/skor bozulur.",
       "phases": [
-        { "id": "GUARD_READY", "enter": { "extensionRatio": { "lt": 0.62 } } },
-        { "id": "STRIKE_WINDOW", "enter": { "extensionRatio": { "gt": 0.70 } }, "timeoutMs": 500 },
-        { "id": "GUARD_RECOVERED", "enter": { "extensionRatio": { "lt": 0.62 } }, "terminal": true }
+        {
+          "id": "GUARD_READY",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.62
+            }
+          }
+        },
+        {
+          "id": "STRIKE_WINDOW",
+          "enter": {
+            "extensionRatio": {
+              "gt": 0.7
+            }
+          },
+          "timeoutMs": 500
+        },
+        {
+          "id": "GUARD_RECOVERED",
+          "enter": {
+            "extensionRatio": {
+              "lt": 0.62
+            }
+          },
+          "terminal": true
+        }
       ],
       "emitsErrors": false
     }
   ],
-
   "combinations": [
-    { "id": "1",     "sequence": ["jab"],                  "displayKey": "combo.1" },
-    { "id": "2",     "sequence": ["cross"],                "displayKey": "combo.2" },
-    { "id": "1-2",   "sequence": ["jab", "cross"],         "displayKey": "combo.1_2",   "maxGapMs": 900 },
-    { "id": "1-1-2", "sequence": ["jab", "jab", "cross"],  "displayKey": "combo.1_1_2", "maxGapMs": 900 }
+    {
+      "id": "1",
+      "sequence": [
+        "jab"
+      ],
+      "displayKey": "combo.1"
+    },
+    {
+      "id": "2",
+      "sequence": [
+        "cross"
+      ],
+      "displayKey": "combo.2"
+    },
+    {
+      "id": "1-2",
+      "sequence": [
+        "jab",
+        "cross"
+      ],
+      "displayKey": "combo.1_2",
+      "maxGapMs": 900
+    },
+    {
+      "id": "1-1-2",
+      "sequence": [
+        "jab",
+        "jab",
+        "cross"
+      ],
+      "displayKey": "combo.1_1_2",
+      "maxGapMs": 900
+    }
   ],
-
   "errors": [
     {
-      "code": "REAR_HAND_LOW", "band": "B", "severity": "high",
-      "evaluateAt": ["EXTENSION", "PEAK"],
-      "condition": { "rear.guardHeightDelta": { "gt": 0.08 } },
-      "requiredLandmarks": ["rear_wrist"], "minConfidence": 0.6,
-      "cooldownMs": 8000, "maxPerRound": 3,
-      "feedbackKey": "cue.rear_hand_low", "drillId": "drill.guard_discipline",
+      "code": "REAR_HAND_LOW",
+      "band": "B",
+      "severity": "high",
+      "evaluateAt": [
+        "EXTENSION",
+        "PEAK"
+      ],
+      "condition": {
+        "rear.guardHeightDelta": {
+          "gt": 0.08
+        }
+      },
+      "requiredLandmarks": [
+        "rear_wrist"
+      ],
+      "minConfidence": 0.6,
+      "cooldownMs": 8000,
+      "maxPerRound": 3,
+      "feedbackKey": "cue.rear_hand_low",
+      "drillId": "drill.guard_discipline",
       "$bandNote": "B: guvenilirligi kamera acisina bagli (J-006/ADR-003). Kurulum kapisi gecilmediyse SUSAR."
     },
     {
-      "code": "LEAD_HAND_NOT_RECOVERED", "band": "B", "severity": "high",
-      "evaluateAt": ["RETRACTION"],
-      "condition": { "phaseDurationMs.RETRACTION": { "gt": 320 } },
-      "requiredLandmarks": ["lead_wrist"], "minConfidence": 0.6,
-      "cooldownMs": 8000, "maxPerRound": 3,
-      "feedbackKey": "cue.lead_hand_not_recovered", "drillId": "drill.snap_back"
+      "code": "LEAD_HAND_NOT_RECOVERED",
+      "band": "B",
+      "severity": "high",
+      "evaluateAt": [
+        "RETRACTION"
+      ],
+      "condition": {
+        "phaseDurationMs.RETRACTION": {
+          "gt": 320
+        }
+      },
+      "requiredLandmarks": [
+        "lead_wrist"
+      ],
+      "minConfidence": 0.6,
+      "cooldownMs": 8000,
+      "maxPerRound": 3,
+      "feedbackKey": "cue.lead_hand_not_recovered",
+      "drillId": "drill.snap_back"
     },
     {
-      "code": "ELBOW_FLARED", "band": "B-kal", "severity": "medium",
-      "evaluateAt": ["EXTENSION", "PEAK"],
-      "condition": { "elbowFlareAngle": { "gt": 45 } },
-      "requiredLandmarks": ["lead_elbow", "rear_elbow"], "minConfidence": 0.7,
-      "cooldownMs": 10000, "maxPerRound": 2,
-      "feedbackKey": "cue.elbow_flared", "drillId": "drill.straight_line",
+      "code": "ELBOW_FLARED",
+      "band": "B-kal",
+      "severity": "medium",
+      "evaluateAt": [
+        "EXTENSION",
+        "PEAK"
+      ],
+      "condition": {
+        "elbowFlareAngle": {
+          "gt": 45
+        }
+      },
+      "requiredLandmarks": [
+        "lead_elbow",
+        "rear_elbow"
+      ],
+      "minConfidence": 0.7,
+      "cooldownMs": 10000,
+      "maxPerRound": 2,
+      "feedbackKey": "cue.elbow_flared",
+      "drillId": "drill.straight_line",
       "$calibration": "J-007 — yumruk kolu blur/kapanma ayrimi cozulmeden yayinlanmaz."
     },
     {
-      "code": "OVERREACH", "band": "B-kal", "severity": "medium",
-      "evaluateAt": ["PEAK"],
-      "condition": { "trunkLeanAngle": { "gt": 18 }, "extensionRatio": { "gt": 0.95 } },
-      "minConfidence": 0.7, "cooldownMs": 10000, "maxPerRound": 2,
-      "feedbackKey": "cue.overreach", "drillId": "drill.range_control",
+      "code": "OVERREACH",
+      "band": "B-kal",
+      "severity": "medium",
+      "evaluateAt": [
+        "PEAK"
+      ],
+      "condition": {
+        "trunkLeanAngle": {
+          "gt": 18
+        },
+        "extensionRatio": {
+          "gt": 0.95
+        }
+      },
+      "minConfidence": 0.7,
+      "cooldownMs": 10000,
+      "maxPerRound": 2,
+      "feedbackKey": "cue.overreach",
+      "drillId": "drill.range_control",
       "$calibration": "J-007"
     },
     {
-      "code": "TORSO_FALLING_FORWARD", "band": "A", "severity": "high",
-      "evaluateAt": ["PEAK", "RETRACTION"],
-      "condition": { "trunkLeanAngle": { "gt": 25 } },
-      "requiredLandmarks": ["left_shoulder", "right_shoulder", "left_hip", "right_hip"],
-      "minConfidence": 0.75, "cooldownMs": 8000, "maxPerRound": 3,
-      "feedbackKey": "cue.torso_forward", "drillId": "drill.posture_reset"
+      "code": "TORSO_FALLING_FORWARD",
+      "band": "A",
+      "severity": "high",
+      "evaluateAt": [
+        "PEAK",
+        "RETRACTION"
+      ],
+      "condition": {
+        "trunkLeanAngle": {
+          "gt": 25
+        }
+      },
+      "requiredLandmarks": [
+        "left_shoulder",
+        "right_shoulder",
+        "left_hip",
+        "right_hip"
+      ],
+      "minConfidence": 0.75,
+      "cooldownMs": 8000,
+      "maxPerRound": 3,
+      "feedbackKey": "cue.torso_forward",
+      "drillId": "drill.posture_reset"
     },
     {
-      "code": "STANCE_TOO_NARROW", "band": "A", "severity": "medium",
-      "evaluateAt": ["STANCE_SAMPLE"],
-      "condition": { "stanceWidthRatio": { "lt": 0.9 } },
-      "requiredLandmarks": ["left_ankle", "right_ankle"], "minConfidence": 0.75,
-      "cooldownMs": 20000, "maxPerRound": 2,
-      "feedbackKey": "cue.stance_narrow", "drillId": "drill.stance_reset"
+      "code": "STANCE_TOO_NARROW",
+      "band": "A",
+      "severity": "medium",
+      "evaluateAt": [
+        "STANCE_SAMPLE"
+      ],
+      "condition": {
+        "stanceWidthRatio": {
+          "lt": 0.9
+        }
+      },
+      "requiredLandmarks": [
+        "left_ankle",
+        "right_ankle"
+      ],
+      "minConfidence": 0.75,
+      "cooldownMs": 20000,
+      "maxPerRound": 2,
+      "feedbackKey": "cue.stance_narrow",
+      "drillId": "drill.stance_reset"
     },
     {
-      "code": "STANCE_TOO_WIDE", "band": "A", "severity": "low",
-      "evaluateAt": ["STANCE_SAMPLE"],
-      "condition": { "stanceWidthRatio": { "gt": 1.9 } },
-      "requiredLandmarks": ["left_ankle", "right_ankle"], "minConfidence": 0.75,
-      "cooldownMs": 20000, "maxPerRound": 2,
-      "feedbackKey": "cue.stance_wide", "drillId": "drill.stance_reset"
+      "code": "STANCE_TOO_WIDE",
+      "band": "A",
+      "severity": "low",
+      "evaluateAt": [
+        "STANCE_SAMPLE"
+      ],
+      "condition": {
+        "stanceWidthRatio": {
+          "gt": 1.9
+        }
+      },
+      "requiredLandmarks": [
+        "left_ankle",
+        "right_ankle"
+      ],
+      "minConfidence": 0.75,
+      "cooldownMs": 20000,
+      "maxPerRound": 2,
+      "feedbackKey": "cue.stance_wide",
+      "drillId": "drill.stance_reset"
     },
     {
-      "code": "FEET_CROSSED", "band": "A", "severity": "high",
-      "evaluateAt": ["STANCE_SAMPLE", "FOOTWORK_STEP"],
-      "condition": { "feetCrossed": true },
-      "requiredLandmarks": ["left_ankle", "right_ankle", "left_foot_index", "right_foot_index"],
-      "minConfidence": 0.7, "cooldownMs": 12000, "maxPerRound": 3,
-      "feedbackKey": "cue.feet_crossed", "drillId": "drill.footwork_basics"
+      "code": "FEET_CROSSED",
+      "band": "A",
+      "severity": "high",
+      "evaluateAt": [
+        "STANCE_SAMPLE",
+        "FOOTWORK_STEP"
+      ],
+      "condition": {
+        "feetCrossed": true
+      },
+      "requiredLandmarks": [
+        "left_ankle",
+        "right_ankle",
+        "left_foot_index",
+        "right_foot_index"
+      ],
+      "minConfidence": 0.7,
+      "cooldownMs": 12000,
+      "maxPerRound": 3,
+      "feedbackKey": "cue.feet_crossed",
+      "drillId": "drill.footwork_basics"
     },
     {
-      "code": "BALANCE_LOSS", "band": "A", "severity": "high",
-      "evaluateAt": ["RETRACTION", "GUARD_RECOVERED", "FOOTWORK_STEP"],
-      "condition": { "copOverBase": { "outsideBy": 0.15 } },
-      "minConfidence": 0.7, "cooldownMs": 10000, "maxPerRound": 3,
-      "feedbackKey": "cue.balance_loss", "drillId": "drill.balance"
+      "code": "BALANCE_LOSS",
+      "band": "A",
+      "severity": "high",
+      "evaluateAt": [
+        "RETRACTION",
+        "GUARD_RECOVERED",
+        "FOOTWORK_STEP"
+      ],
+      "condition": {
+        "copOverBase": {
+          "outsideBy": 0.15
+        }
+      },
+      "minConfidence": 0.7,
+      "cooldownMs": 10000,
+      "maxPerRound": 3,
+      "feedbackKey": "cue.balance_loss",
+      "drillId": "drill.balance"
     },
     {
-      "code": "WRONG_HAND_FOR_COMBINATION", "band": "A", "severity": "medium",
-      "evaluateAt": ["COMBINATION_END"],
-      "condition": { "sequenceMismatch": "limb" },
-      "minConfidence": 0.8, "cooldownMs": 6000, "maxPerRound": 4,
-      "feedbackKey": "cue.wrong_hand", "drillId": "drill.combo_slow"
+      "code": "WRONG_HAND_FOR_COMBINATION",
+      "band": "A",
+      "severity": "medium",
+      "evaluateAt": [
+        "COMBINATION_END"
+      ],
+      "condition": {
+        "sequenceMismatch": "limb"
+      },
+      "minConfidence": 0.8,
+      "cooldownMs": 6000,
+      "maxPerRound": 4,
+      "feedbackKey": "cue.wrong_hand",
+      "drillId": "drill.combo_slow"
     },
     {
-      "code": "COMBINATION_ORDER_ERROR", "band": "A", "severity": "medium",
-      "evaluateAt": ["COMBINATION_END"],
-      "condition": { "sequenceMismatch": "order" },
-      "minConfidence": 0.8, "cooldownMs": 6000, "maxPerRound": 4,
-      "feedbackKey": "cue.combo_order", "drillId": "drill.combo_slow"
+      "code": "COMBINATION_ORDER_ERROR",
+      "band": "A",
+      "severity": "medium",
+      "evaluateAt": [
+        "COMBINATION_END"
+      ],
+      "condition": {
+        "sequenceMismatch": "order"
+      },
+      "minConfidence": 0.8,
+      "cooldownMs": 6000,
+      "maxPerRound": 4,
+      "feedbackKey": "cue.combo_order",
+      "drillId": "drill.combo_slow"
     },
     {
-      "code": "TEMPO_TOO_FAST_FOR_FORM", "band": "C", "severity": "low",
-      "evaluateAt": ["COMBINATION_END"],
-      "condition": { "tempoBand": "fast", "errorRateInWindow": { "gt": 0.4 } },
-      "minConfidence": 0.6, "cooldownMs": 25000, "maxPerRound": 1,
-      "feedbackKey": "cue.slow_down", "drillId": "drill.controlled_tempo",
+      "code": "TEMPO_TOO_FAST_FOR_FORM",
+      "band": "C",
+      "severity": "low",
+      "evaluateAt": [
+        "COMBINATION_END"
+      ],
+      "condition": {
+        "tempoBand": "fast",
+        "errorRateInWindow": {
+          "gt": 0.4
+        }
+      },
+      "minConfidence": 0.6,
+      "cooldownMs": 25000,
+      "maxPerRound": 1,
+      "feedbackKey": "cue.slow_down",
+      "drillId": "drill.controlled_tempo",
       "$note": "ADR-001: tempo SAYI degil BANT. Bu kural bandi kullanir, ms esigi kullanmaz."
     },
     {
-      "code": "OUT_OF_FRAME", "band": "A", "severity": "blocking",
-      "evaluateAt": ["ANY"], "condition": { "requiredRegionOutOfFrame": true },
-      "minConfidence": 0.0, "cooldownMs": 5000,
-      "feedbackKey": "cue.out_of_frame", "suppressesJudgement": true
+      "code": "OUT_OF_FRAME",
+      "band": "A",
+      "severity": "blocking",
+      "evaluateAt": [
+        "ANY"
+      ],
+      "condition": {
+        "requiredRegionOutOfFrame": true
+      },
+      "minConfidence": 0.0,
+      "cooldownMs": 5000,
+      "feedbackKey": "cue.out_of_frame",
+      "suppressesJudgement": true
     },
     {
-      "code": "LOW_TRACKING_CONFIDENCE", "band": "A", "severity": "blocking",
-      "evaluateAt": ["ANY"], "condition": { "frameQuality": { "lt": 0.5 } },
-      "minConfidence": 0.0, "cooldownMs": 15000,
-      "feedbackKey": "cue.low_confidence", "suppressesJudgement": true,
+      "code": "LOW_TRACKING_CONFIDENCE",
+      "band": "A",
+      "severity": "blocking",
+      "evaluateAt": [
+        "ANY"
+      ],
+      "condition": {
+        "frameQuality": {
+          "lt": 0.5
+        }
+      },
+      "minConfidence": 0.0,
+      "cooldownMs": 15000,
+      "feedbackKey": "cue.low_confidence",
+      "suppressesJudgement": true,
       "$note": "plan 12: dusuk guvende TEKNIK HUKUM VERILMEZ. 'Bileğini bu acidan goremiyorum' denir, 'yanlis yaptin' denmez."
     }
   ],
-
   "tempoBands": {
     "$doc": "ADR-001 — faz suresinden turetilir, piksel hizindan DEGIL. Sinirlar D2 havuz olcumunden (medyan 128ms, en hizli %10 54ms).",
-    "controlled": { "extensionMsMin": 160 },
-    "brisk": { "extensionMsMin": 95, "extensionMsMax": 160 },
-    "fast": { "extensionMsMax": 95 }
+    "controlled": {
+      "extensionMsMin": 160
+    },
+    "brisk": {
+      "extensionMsMin": 95,
+      "extensionMsMax": 160
+    },
+    "fast": {
+      "extensionMsMax": 95
+    }
   },
-
   "scoreComponents": [
-    "guardDiscipline", "punchMechanics", "recovery", "footwork",
-    "balance", "timing", "combinationAccuracy", "trackingConfidence"
+    "guardDiscipline",
+    "punchMechanics",
+    "recovery",
+    "footwork",
+    "balance",
+    "timing",
+    "combinationAccuracy",
+    "trackingConfidence"
   ],
-
   "display": {
     "$doc": "K8 AILE KURALI (M-F-04, kurucu): kalibrasyon kapisi gecilmeden kullaniciya SAYISAL skor gosterilmez. V1 baslangic gosterimi = BANT + ilerleme egrisi; mutlak sayilar JabLab'in kendi kalibrasyon kapisindan (J-007 esik kalibrasyonu) SONRA acilir.",
     "numericScoresUnlockedBy": "jablab_threshold_calibration",
     "numericScoresUnlocked": false,
     "scoreBands": [
-      { "id": "needs_work", "labelKey": "band.needs_work" },
-      { "id": "developing", "labelKey": "band.developing" },
-      { "id": "solid",      "labelKey": "band.solid" },
-      { "id": "strong",     "labelKey": "band.strong" }
+      {
+        "id": "needs_work",
+        "labelKey": "band.needs_work"
+      },
+      {
+        "id": "developing",
+        "labelKey": "band.developing"
+      },
+      {
+        "id": "solid",
+        "labelKey": "band.solid"
+      },
+      {
+        "id": "strong",
+        "labelKey": "band.strong"
+      }
     ],
     "$bandNote": "Ornek gosterim: 'Guard discipline: solid' + haftalik egri. 'Guard discipline: 72' V1'de YOK.",
     "trackingConfidenceDisplay": {
@@ -281,28 +661,170 @@
       "$doc": "M-F-06 aile kurali: kullaniciya 'left/right' YALNIZ kalibrasyon eslemesi kurulduktan ve StructuralValidator temizken soylenir. Aksi halde taraf-agnostik dil ('lead hand', 'rear hand').",
       "requiresCalibrationMapping": true,
       "requiresStructuralValidatorClean": true,
-      "affectedCues": ["cue.footwork_step_left", "cue.footwork_step_right"]
+      "affectedCues": [
+        "cue.footwork_step_left",
+        "cue.footwork_step_right"
+      ]
     }
   },
-
   "provenance": {
     "$doc": "M-F-07 aile kurali — her deneme kaydina yazilir. Zaman-ici karsilastirma bu alanlar olmadan YAPILMAZ; yoksa 'gelisme' model gurultusu olabilir.",
     "requiredFields": [
-      "poseModelVariant", "poseModelSha256", "ruleSetVersion",
-      "metricConfigVersion", "calibrationProfileId"
+      "poseModelVariant",
+      "poseModelSha256",
+      "ruleSetVersion",
+      "metricConfigVersion",
+      "calibrationProfileId"
     ]
   },
-
   "drills": [
-    { "id": "drill.guard_discipline", "durationSec": 60, "displayKey": "drill.guard_discipline" },
-    { "id": "drill.snap_back",        "durationSec": 60, "displayKey": "drill.snap_back" },
-    { "id": "drill.straight_line",    "durationSec": 75, "displayKey": "drill.straight_line" },
-    { "id": "drill.range_control",    "durationSec": 75, "displayKey": "drill.range_control" },
-    { "id": "drill.posture_reset",    "durationSec": 60, "displayKey": "drill.posture_reset" },
-    { "id": "drill.stance_reset",     "durationSec": 45, "displayKey": "drill.stance_reset" },
-    { "id": "drill.footwork_basics",  "durationSec": 90, "displayKey": "drill.footwork_basics" },
-    { "id": "drill.balance",          "durationSec": 60, "displayKey": "drill.balance" },
-    { "id": "drill.combo_slow",       "durationSec": 90, "displayKey": "drill.combo_slow" },
-    { "id": "drill.controlled_tempo", "durationSec": 90, "displayKey": "drill.controlled_tempo" }
-  ]
+    {
+      "id": "drill.guard_discipline",
+      "durationSec": 60,
+      "displayKey": "drill.guard_discipline"
+    },
+    {
+      "id": "drill.snap_back",
+      "durationSec": 60,
+      "displayKey": "drill.snap_back"
+    },
+    {
+      "id": "drill.straight_line",
+      "durationSec": 75,
+      "displayKey": "drill.straight_line"
+    },
+    {
+      "id": "drill.range_control",
+      "durationSec": 75,
+      "displayKey": "drill.range_control"
+    },
+    {
+      "id": "drill.posture_reset",
+      "durationSec": 60,
+      "displayKey": "drill.posture_reset"
+    },
+    {
+      "id": "drill.stance_reset",
+      "durationSec": 45,
+      "displayKey": "drill.stance_reset"
+    },
+    {
+      "id": "drill.footwork_basics",
+      "durationSec": 90,
+      "displayKey": "drill.footwork_basics"
+    },
+    {
+      "id": "drill.balance",
+      "durationSec": 60,
+      "displayKey": "drill.balance"
+    },
+    {
+      "id": "drill.combo_slow",
+      "durationSec": 90,
+      "displayKey": "drill.combo_slow"
+    },
+    {
+      "id": "drill.controlled_tempo",
+      "durationSec": 90,
+      "displayKey": "drill.controlled_tempo"
+    }
+  ],
+  "references": {
+    "$doc": "Uretilmis kanonik referanslar. v3 semasinin quality(SKORLANAN) / hata-katmani(KOCLANAN) normatif ayriminin ilk gercek ornegi.",
+    "stance": {
+      "techniqueId": "stance",
+      "builtAt": "2026-07-29",
+      "contributingTakes": 3,
+      "sources": [
+        "Tom Yankello",
+        "Kenny Weldon",
+        "Sam McLeod"
+      ],
+      "leadSide": "left_orthodox_all_three",
+      "agreementMedian": 0.678,
+      "toleranceStatus": "provisional",
+      "$toleranceStatusDoc": "M-F-38 yetersiz-orneklem sinifi: n=3, hedef ~5 (M-F-32). Serbest bant tabani 8->14 derece yukseltildi (J-032). 4./5. egitmen gelince YENIDEN HESAPLANIR.",
+      "$splitRule": "Ayrim ANATOMIDEN degil OLCUMDEN turetildi: dispersiyonu muhafazakar tabanda (<=14 derece) kalan eklem SKORLANIR, ustundeki KOCLANIR. 'Kollar vs bacaklar' sanisi yanlis cikti — one-cikan taraf (sol/lead) kalca ve uyluk da 27 derece ayrisiyor, arka omuz 13.3 derecede uyusuyor.",
+      "scoredJoints": {
+        "right_hip": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 8.0
+        },
+        "left_knee": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 8.0
+        },
+        "right_knee": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 8.0
+        },
+        "right_thigh": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 8.0
+        },
+        "left_shin": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 9.8
+        },
+        "trunk_tilt": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 12.0
+        },
+        "right_shoulder": {
+          "freeDeg": 14.0,
+          "zeroAtDeg": 44.8,
+          "measuredDispersionDeg": 13.3
+        }
+      },
+      "coachedOnlyJoints": {
+        "right_shin": {
+          "measuredDispersionDeg": 14.7,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "left_elbow": {
+          "measuredDispersionDeg": 18.2,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "left_forearm": {
+          "measuredDispersionDeg": 20.6,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "left_hip": {
+          "measuredDispersionDeg": 27.2,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "left_thigh": {
+          "measuredDispersionDeg": 27.6,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "left_shoulder": {
+          "measuredDispersionDeg": 28.2,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "right_upper_arm": {
+          "measuredDispersionDeg": 32.3,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "left_upper_arm": {
+          "measuredDispersionDeg": 40.1,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "right_elbow": {
+          "measuredDispersionDeg": 45.0,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        },
+        "right_forearm": {
+          "measuredDispersionDeg": 45.0,
+          "$why": "dispersiyon muhafazakar tabanin ustunde — egitmenler anlasmiyor, skor haksiz olur"
+        }
+      },
+      "$productEffect": "STANCE_TOO_NARROW/WIDE, FEET_CROSSED, BALANCE_LOSS, TORSO_FALLING_FORWARD skorlanabilir. REAR_HAND_LOW ve gard/kol ile ilgili her hukum KOCLANIR ama SKORA girmez — D2 (blur/kapanma) ve referans-varyansi BAGIMSIZ iki yoldan ayni siniri gosterdi."
+    }
+  }
 }
