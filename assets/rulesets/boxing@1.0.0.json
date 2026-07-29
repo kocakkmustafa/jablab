@@ -817,8 +817,10 @@
       "$productEffect": "STANCE_TOO_NARROW/WIDE, FEET_CROSSED, BALANCE_LOSS, TORSO_FALLING_FORWARD skorlanabilir. REAR_HAND_LOW ve gard/kol ile ilgili her hukum KOCLANIR ama SKORA girmez — D2 (blur/kapanma) ve referans-varyansi BAGIMSIZ iki yoldan ayni siniri gosterdi.",
       "jointNaming": "lead_rear",
       "$jointNamingWhy": "J-034: ilk baglamada MUTLAK left_*/right_* adlari kullanmistim. 0.5.0'in GLOBAL ayna atamasi (M-F-48) take aynalamasini degistirince tablo taraf degistirdi ve baglamam sessizce YANLIS tarafa isaret eder oldu. Referansin 'sol'u, hangi take'lerin aynalandigina bagli — mutlak degil. M-F-06'nin referans katmanindaki karsiligi: taraf soyut adla yazilir. Uc take de orthodox: left=lead, right=rear.",
-      "bindingStatus": "blocked",
-      "$bindingStatusWhy": "M-F-47 anlasma kapisi bu kumeyi REDDEDIYOR: take'ler 22,8-29,5 derece ayri, esik 14. Eklem-bazli tablo bacaklarin 8 derecede anlastigini gosteriyor ama kapi TAKE-BUTUNU olcuyor. Cozum gelene dek (M-J-08) bu referans URUNE BAGLI SAYILMAZ; skor akmaz, ders kapisi kurulmaz."
+      "bindingStatus": "active",
+      "clusterToleranceDeg": 35,
+      "$clusterToleranceWhy": "M-F-51 ara hukmu: take-kapisi KABA 'ayni hareket mi' sorusudur, skorlama yetkisi DEGILDIR (yetki eklem-bazlidir, M-F-41/46). stance take'leri 22,8-29,5 derece ayri — ayni hareketi yapiyorlar, yalnizca gard STILLERI farkli. 35 derece kaba soruyu rahat gecirir; ince ayrimi eklem tablosu yapar. 35 ve 60 derece esikleriyle uretilen eklem tablolari BIREBIR AYNI cikti — yani kume esigi ayrimi etkilemiyor, dogru yerde duruyor.",
+      "$bindingHistory": "2026-07-29: M-F-47 kapisi kumeyi reddedince blocked'a alindi; M-F-51 ara hukmuyle 35 derece esikle acildi. Koordinator eklem-bazli ince kapiyi DENEDI ve farkli-hareket aykirilarina kor ciktigini olctu — bu yuzden kaba take-kapisi + ince eklem-yetkisi ikilisi korundu."
     }
   }
 }

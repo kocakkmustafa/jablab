@@ -61,17 +61,15 @@ void main() {
   final Map<String, bool> prior = <String, bool>{
     for (int i = 0; i < built.length; i++) built[i].id: segs[i].leadIsLeft,
   };
-  // M-F-47 anlasma kapisi bu kumeyi REDDEDIYOR (22,8-29,5 derece). Kapinin
-  // ne gorduğunu anlamak icin gevsetilmis esikle de kuruyoruz — eklem-bazli
-  // tablonun degisip degismedigi asil soru.
-  CanonicalReference? gated;
-  try {
-    gated = builder.build(built, leadSidePrior: prior);
-  } on Object catch (e) {
-    stdout.writeln('\n⛔ M-F-47 ANLASMA KAPISI: $e');
-  }
-  final CanonicalReference ref =
-      gated ?? builder.build(built, leadSidePrior: prior, clusterToleranceDeg: 60);
+  // M-F-51 ara hükmü: take-kapısı KABA "aynı hareket mi" sorusudur, skorlama
+  // yetkisi DEĞİLDİR. Skorlama yetkisi eklem-bazlıdır (M-F-41/46). stance
+  // take'leri 22,8-29,5° ayrı — aynı hareketi yapıyorlar, yalnız gard stilleri
+  // farklı; 35° eşiği kaba soruyu rahat geçer, ince ayrımı eklem tablosu yapar.
+  const double clusterTolerance = 35;
+  final CanonicalReference ref = builder.build(built,
+      leadSidePrior: prior, clusterToleranceDeg: clusterTolerance);
+  stdout.writeln('\nküme eşiği (M-F-51)  : ${clusterTolerance.toStringAsFixed(0)}° '
+      '— kaba "aynı hareket mi" sorusu');
 
   stdout.writeln('\n─── 0.5.0 kapıları ───');
   stdout.writeln('önselle uyuşmayan take : '
@@ -87,7 +85,7 @@ void main() {
       segs[i].leadIsLeft == anchorLeft ? built[i] : built[i].mirrored(),
   ];
   final CanonicalReference refAnchored = builder.build(anchored,
-      leadSidePrior: prior, clusterToleranceDeg: 60);
+      leadSidePrior: prior, clusterToleranceDeg: clusterTolerance);
 
   stdout.writeln('\n═══ CANONICAL REFERENCE: stance ═══');
   stdout.writeln('katkı veren take     : ${ref.contributingTakes}');
@@ -123,7 +121,14 @@ void main() {
     final Tolerance c =
         ref.toleranceAt(mid, j, freeFloorDeg: conservativeFloorDeg);
     final String flag = unreliableSet.contains(specs[j].id) ? '  ⚠️' : '';
-    stdout.writeln('  ${specs[j].id.padRight(24)} '
+    // J-034: rapor MUTLAK taraf adı basmaz. Referansın "sol"u hangi take'lerin
+    // aynalandığına bağlıdır; mutlak ad, ayna ataması değişince sessizce
+    // yanlış ekleme işaret eder. Öncü taraf ölçüldüğü için burada çevrilir.
+    final bool leadIsLeft = segs.first.leadIsLeft;
+    final String id = specs[j].id
+        .replaceFirst('left_', leadIsLeft ? 'lead_' : 'rear_')
+        .replaceFirst('right_', leadIsLeft ? 'rear_' : 'lead_');
+    stdout.writeln('  ${id.padRight(24)} '
         'serbest ${(d.free * radToDeg).toStringAsFixed(1)}° → '
         '${(c.free * radToDeg).toStringAsFixed(1)}°   '
         'sıfır ${(d.zeroAt * radToDeg).toStringAsFixed(0)}° → '

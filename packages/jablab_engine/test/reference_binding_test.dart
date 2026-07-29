@@ -100,10 +100,17 @@ void main() {
     }
   });
 
-  test('[M-F-47] anlaşma kapısı geçilmeden referans ÜRÜNE BAĞLI SAYILMAZ', () {
-    // Kapı bu kümeyi reddediyor (22,8-29,5° > 14°). Skor akmamalı,
-    // ders kapısı kurulmamalı — çözüm M-J-08'de.
-    expect(ref['bindingStatus'], 'blocked');
+  test('[M-F-51] take-kapısı KABA soru, skorlama yetkisi eklem-bazlı', () {
+    // Ara hüküm: take-kapısı "aynı hareket mi" diye sorar; "hangi eklem
+    // skorlanır" sorusunu SORMAZ. stance take'leri aynı hareketi yapıyor,
+    // yalnız gard stilleri farklı → 35° kaba soruyu geçirir, ince ayrımı
+    // eklem tablosu yapar.
+    expect(ref['bindingStatus'], 'active');
+    expect(ref['clusterToleranceDeg'], 35);
+    // Kanıt: 35° ve 60° eşikleriyle üretilen eklem tabloları birebir aynı —
+    // küme eşiği ayrımı etkilemiyor, doğru yerde duruyor.
+    expect(scored.length + coached.length, 17,
+        reason: 'eklem tablosu küme eşiğinden bağımsız olmalı');
   });
 
   test('[kural 4] kalibre edilmemiş metrik SKORLANMAZ — PEAK checkpoint', () {
