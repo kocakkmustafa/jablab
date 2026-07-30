@@ -30,7 +30,7 @@
         ],
         "notMeasured": [
           "Punch force or power — a camera cannot measure force, and we will not pretend otherwise",
-          "Hook and uppercut technique — counted, but the type is not claimed and no form judgement is made",
+          "Hook and uppercut technique — not modelled. We ran one hook lesson through the app and it registered almost nothing: it does not miscount hooks as jabs, it simply does not see them. So it stays silent about them rather than counting them.",
           "Head movement quality (slip / duck / roll) — reaction skills need an opponent",
           "Anything while your body is out of frame or tracking confidence is low — the app says so instead of guessing"
         ]
@@ -307,10 +307,11 @@
                 "jab",
                 "cross"
               ],
-              "lockedBy": "technique-misclassified",
-              "$lockedWhy": "1-2 disindaki kombinasyonlar kanca/uppercut ister ve kural seti bu iki teknigi HIC modellemiyor. ONCEKI gerekce 'unclassified_strike'a dusuyor, sayabiliriz ama yargilayamayiz' diyordu; J-073 OLCUMU bunu yanlisladi: bir lead-hook ogretim videosunda (pVvOF2kQuIQ) FSM 3 'jab' + 3 'cross' TAMAMLANDI sayisi uretti ve unclassified_strike 6/6 kez HIC tetiklenmedi. Yani kanca sayilmiyor-ama-siniflandirilmiyor DEGIL, jab/cross diye YANLIS sayiliyor. Ikisi ayni kusur degil: birincisinde kullanici eksik geri bildirim alir, ikincisinde YANLIS geri bildirim alir ve rakam ekranda dogru gorunur. Kilidin sebebi artik kapsam eksigi degil, olculmus bir yanlis-pozitif. Kanit: docs/g3/YUMRUK-TIPI-IMZA-OLCUMU.md",
-              "$lockedWhyMeasurement": "Ayni olcum imza tarafini da kapatti: katalogtaki nicelikler kanca ile jab'i AYIRMIYOR (shoulderRotation 10,0 vs 10,6 derece; egitmen-arasi yayilim teknik-arasi farktan buyuk). Yani bu kilit bir esik ayariyla acilmaz, once pencere tanimi + fixture tabani (kanca >=3 egitmen, uppercut >=1 kaynak; bugun uppercut fixture'i SIFIR) gerekiyor.",
-              "lockedReason": "Hooks and uppercuts aren't modelled yet — worse, we measured that this app currently miscounts them as jabs and crosses. We won't judge combination order until that's fixed."
+              "lockedBy": "technique-invisible",
+              "$lockedWhy": "1-2 disindaki kombinasyonlar kanca/uppercut ister ve kural seti bu iki teknigi HIC modellemiyor. Bu alan iki kez duzeltildi, ikisi de OLCUMLE. (1) EN ESKI gerekce 'unclassified_strike'a dusuyor, sayabiliriz ama yargilayamayiz' diyordu — fallback'in tetiklendigi VARSAYILMISTI, olculmemisti. (2) Benim ILK duzeltmem 'jab/cross diye YANLIS sayiliyor' dedi — bu da FAZLA IDDIAYDI. Olculen su: 24,8 dakikalik bir lead-hook ogretim videosunda (pVvOF2kQuIQ; onlarca kanca icerir) FSM 1488 saniyede yalnizca 6 TAMAMLANMA ve 0 YARIDA-KESILME uretti, unclassified_strike 6/6 kez tetiklenmedi. Kancalar jab diye sayiliyor olsaydi sayi duzinelerce olurdu; sifir yarida-kesilme ise kancanin GUARD_READY->EXTENSION gecisini HIC tetiklemedigini gosteriyor. Yani kanca ne sayiliyor ne yanlis sayiliyor: faz makinesi icin GORUNMEZ. Kanit: docs/g3/YUMRUK-TIPI-IMZA-OLCUMU.md",
+              "$lockedWhyMeasurement": "Imza tarafi HENUZ OLCULEMEDI ve bu AYRI bir eksik: o 6 tamamlanmanin kanca OLDUGU dogrulanmadi (olay-basi ground truth yok) ve siki pencerede kinematikleri duz yumruga benziyor (trunkLean Delta 1,3 vs jab 4,8-7,8 derece; bilek yatay gezinmesi 0,77 vs 1,35-1,56 omuz genisligi) — yani muhtemelen egitmenin arada attigi GERCEK duz yumruklar. Dogrulanmis kanca olayi olmadan 'katalog nicelikleri kanca ile jab'i ayirmiyor' DENEMEZ. Kilit bir esik ayariyla acilmaz: once etiketli kanca fixture'i (>=3 egitmen) + uppercut kaynagi (bugun SIFIR) gerekiyor.",
+              "$lockedReasonWhyWorded": "Kullaniciya 'yanlis sayiyoruz' demek de 'sayiyoruz ama siniflandirmiyoruz' demek de olculenden FAZLASINI soylerdi. Olculen tek sey: gormuyor.",
+              "lockedReason": "Hooks and uppercuts aren't modelled here. We measured that this app doesn't see them at all — it isn't judging them wrongly, it just misses them. Until it can see them, we won't pretend to score combination order."
             },
             {
               "id": "boxing.intermediate.counter",

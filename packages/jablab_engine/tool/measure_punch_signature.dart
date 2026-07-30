@@ -147,9 +147,23 @@ void _measure(String path, String label, RuleSet rules) {
       continue;
     }
 
-    final List<int> ts = d.transitions.values.toList(growable: false)..sort();
-    if (ts.isEmpty) continue;
-    final int lo = ts.first, hi = ts.last;
+    // PENCERE = `EXTENSION` → `GUARD_RECOVERED` (J-076 ile SIKILAŞTIRILDI).
+    //
+    // İlk sürüm `transitions.values.first/last` kullanıyordu, yani
+    // GUARD_READY girişinden başlıyordu. `AttemptDigest.extensionMs`in kendi
+    // doküman notu (M-F-91) tam bunu uyarıyor: faz makinesi bir sonraki
+    // hareketi beklerken GUARD_READY'de dakikalarca kalabilir. Ölçüldü:
+    // gevşek pencere jab'de 434-3937 ms (9× yayılım), sıkı pencere
+    // 167-501 ms (3× yayılım, medyan 334 ms). Yani ilk turun Δ değerleri
+    // yumruğu değil yumruk + gard beklemesini ölçüyordu.
+    //
+    // `EXTENSION→PEAK` (salt uzanma) BİLEREK kullanılmadı: ölçülen dağılım
+    // 33-334 ms ve 29,97 fps'te 33 ms = TEK kare. O pencere örnekleme
+    // tabanında, imza ölçümüne yetecek kare vermiyor.
+    final int? ext = d.transitions['EXTENSION'];
+    final int? end = d.transitions['GUARD_RECOVERED'];
+    if (ext == null || end == null || end <= ext) continue;
+    final int lo = ext, hi = end;
     final Map<String, _Span> spans = <String, _Span>{
       for (final String k in _tracked) k: _Span(),
     };
