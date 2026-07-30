@@ -26,27 +26,45 @@ dependencies:
   # COMMIT (03ff936) — bu yüzden `jablab_engine` de v0.8.8'e yükseltildi.
   # Farklı ref'ler olsaydı pub aynı paket için iki kaynak görüp çözemezdi.
   # `test/dependency_pin_test.dart` bu eşitliği zorluyor.
+  # `motion_core` DOĞRUDAN da bildiriliyor: harness `BodyOrientation`ı
+  # doğrudan kullanıyor ve transitif bir paketten tip almak
+  # (depend_on_referenced_packages) bağımlılığı görünmez kılar — plugin
+  # yarın core'u bırakırsa app sessizce kırılırdı. Pin motion_camera ile
+  # AYNI commit olmak zorunda (descriptor eşitliği, J-071).
+  motion_core:
+    git:
+      url: https://github.com/kocakkmustafa/motion-core.git
+      path: packages/motion_core
+      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
   motion_camera:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_camera
-      # GECICI — DAL COMMIT'I, tag DEGIL (J-071).
-      # motion_camera-v0.1.0'in iOS Swift katmani 0.10.21'e karsi
-      # DERLENMIYORDU (ImageProcessingOptions tipi o surumde YOK). Duzeltme
-      # fix/motion-camera-ios-0.10.21-api dalinda, MERGE KOORDINATORDE.
-      # Tag'te kalip pub-cache'i elle duzeltmek "benim makinemde calisiyor"
-      # tuzagi olurdu; bagimlilik bu yuzden ACIKCA dal commit'ini gosteriyor.
-      # MERGE + YENI TAG gelince buraya tag yazilacak ve asagidaki
-      # jablab_engine core pini de o tag'in commit'ine doner.
-      ref: 5b86df5c927763a195b526c976be10fb8ffebb1c
+      # TAG'IN COMMIT'I (M-F-154 zeyli, J-071 bulgusu): tag ADI yazilamaz.
+      # Plugin `motion_core`u PATH ile cekiyor; pub onun transitif core'unu
+      # COZULMUS SHA olarak, buradaki pini TAG ADI olarak gorur ve ayni
+      # commit olsalar bile descriptor'lari FARKLI sayar:
+      #   "motion_camera from git is incompatible with jablab_engine from path"
+      # Bu yuzden pin daima tag'in COMMIT'i olarak yazilir; hangi tag oldugu
+      # yorumda durur ve `dependency_pin_test` esitligi zorlar.
+      #   f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69 == motion_camera-v0.1.1
+      # (v0.1.0'in iOS Swift katmani 0.10.21'e karsi DERLENMIYORDU — J-071;
+      #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
+      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  crypto: ^3.0.7
 
 flutter:
   uses-material-design: true
   assets:
     - assets/content/
+    # PİNLİ poz modeli (§6 / M-L-01). Dosyanın KENDİSİ git'te DEĞİL — aile
+    # kuralı `.task` ikililerini izlemiyor; `tool/fetch_pose_model.sh`
+    # indirir/kopyalar ve SHA-256 doğrular. `model_pin_test` dosya varsa
+    # hash'i zorlar, yoksa İSİMLİ sebeple atlar (sessiz geçmez).
+    - assets/models/
     - assets/rulesets/

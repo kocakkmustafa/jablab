@@ -19,22 +19,10 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_core
-      # ⚠️ SHA, tag DEĞİL — ve sebebi tesisat, tercih değil (J-071 ölçümü):
-      # app `motion_camera`yı git-dep ile çekiyor, o plugin ise `motion_core`u
-      # PATH ile çekiyor (aynı repo). pub, plugin'in transitif core'unu
-      # ÇÖZÜLMÜŞ SHA olarak görüyor ("...at 03ff936... in packages/motion_core"),
-      # buradaki pini ise TAG ADI olarak. Aynı commit olsalar bile iki
-      # DESCRIPTOR farklı sayılıyor ve çözüm başarısız oluyor:
-      #   "motion_camera from git is incompatible with jablab_engine from path"
-      # Bu yüzden ref SHA'ya sabitlendi. Okunabilirlik kaybını yorum kapatıyor:
-      #   03ff936 == motion_core-v0.8.8 == motion_camera-v0.1.0 (aynı commit)
-      # Tag rejimi (M-F-03) TERK EDİLMEDİ — tag'in işaret ettiği commit
-      # yazılıyor; pin hâlâ değişmez ve `dependency_pin_test` eşitliği zorluyor.
-      # GECICI: motion_camera dal commit'iyle AYNI olmak ZORUNDA (pin
-      # esitligi, J-071). Icerik motion_core-v0.8.8 ile BIREBIR AYNI —
-      # dalin tek degisikligi plugin'in Swift dosyasi. Merge+retag sonrasi
-      # tag'e doner.
-      ref: 5b86df5c927763a195b526c976be10fb8ffebb1c
+      # TAG'IN COMMIT'I — motion_camera pini ile AYNI olmak ZORUNDA
+      # (pin esitligi; yukarıdaki nota bkz). == motion_camera-v0.1.1
+      # ve o commit'teki motion_core surumu 0.8.8.
+      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
 
 dev_dependencies:
   test: ^1.25.0

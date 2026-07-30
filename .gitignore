@@ -7,3 +7,9 @@ build/
 # Flutter'in urettigi eklenti onbellegi — makineye ozel yollar iceriyor,
 # her `pub get`te degisiyor. Izlemek her makinede sahte diff uretir.
 .flutter-plugins-dependencies
+
+# PİNLİ poz modeli ikilisi (9,4 MB) — aile kuralıyla hizalı
+# (motion-core/.gitignore da `.task` izlemiyor). Pin URL + SHA olarak yaşar:
+# `tool/fetch_pose_model.sh` + `test/model_pin_test.dart`. `latest` YASAK
+# (M-L-01: full varyantında latest≠1, aynı boyut farklı hash).
+assets/models/*.task

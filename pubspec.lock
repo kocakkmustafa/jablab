@@ -58,7 +58,7 @@ packages:
     source: hosted
     version: "1.19.1"
   crypto:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: crypto
       sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
@@ -206,17 +206,17 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/motion_camera"
-      ref: "5b86df5c927763a195b526c976be10fb8ffebb1c"
-      resolved-ref: "5b86df5c927763a195b526c976be10fb8ffebb1c"
+      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
+      resolved-ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
       url: "https://github.com/kocakkmustafa/motion-core.git"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   motion_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "packages/motion_core"
-      ref: "5b86df5c927763a195b526c976be10fb8ffebb1c"
-      resolved-ref: "5b86df5c927763a195b526c976be10fb8ffebb1c"
+      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
+      resolved-ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
       url: "https://github.com/kocakkmustafa/motion-core.git"
     source: git
     version: "0.8.8"

@@ -6,6 +6,7 @@ import 'package:jablab_engine/jablab_engine.dart';
 import '../shell_candidate/library_pages.dart';
 import '../shell_candidate/shell_models.dart';
 import '../shell_candidate/shell_scaffold.dart';
+import 'camera_harness_screen.dart';
 import 'content_repository.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
@@ -243,6 +244,28 @@ class _ProfilePage extends StatelessWidget {
                 'The first assessment and the first course are free — you see '
                 'what the coaching is actually like before anything is asked of you.',
           ),
+          // DEV HARNESS girişi — YALNIZ debug derlemede (J-072). Release'de
+          // bu satır hiç render edilmez: bir dev-harness'ın yayın
+          // derlemesinde erişilebilir kalması, "kamera var" izlenimini
+          // kullanıcıya sızdırmanın en kolay yolu olurdu (§7.8 ruhu).
+          if (CameraHarnessScreen.isAvailable) ...<Widget>[
+            const SizedBox(height: 24),
+            const Divider(),
+            Builder(
+              builder: (BuildContext context) => ListTile(
+                key: const Key('open-camera-harness'),
+                leading: const Icon(Icons.biotech_outlined),
+                title: const Text('Camera bridge — dev harness'),
+                subtitle: const Text(
+                    'Debug build only. Raw bridge metrics, no preview, '
+                    'no judgement.'),
+                onTap: () => Navigator.of(context).push<void>(
+                  MaterialPageRoute<void>(
+                      builder: (_) => const CameraHarnessScreen()),
+                ),
+              ),
+            ),
+          ],
         ],
       );
 }
