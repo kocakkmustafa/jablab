@@ -7,6 +7,8 @@ import '../shell_candidate/library_pages.dart';
 import '../shell_candidate/shell_models.dart';
 import '../shell_candidate/shell_scaffold.dart';
 import 'camera_harness_screen.dart';
+import 'content_failure.dart';
+import 'content_failure_screen.dart';
 import 'content_repository.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
@@ -61,11 +63,16 @@ class _RootState extends State<_Root> {
   /// gösterir — sıfır satırlık bir "kaydedilenler" bölümü, hiç seans
   /// yapmamış kullanıcıya boş bir tablo göstermek olurdu.
   RecordedSummary? _recorded;
-  Object? _error;
+
+  /// İçerik yükleme başarısızlığı — TİPLİ (J-079). Eskiden burada ham `Object`
+  /// duruyordu ve ekrana `'$_error'` basılıyordu; kullanıcı Türkçe bir
+  /// `StateError` gövdesi görüyordu.
+  ContentFailure? _failure;
 
   @override
   void initState() {
     super.initState();
+    _loadContent();
     unawaited(widget.repository.openStore().then((SessionStore s) async {
       if (!mounted) return;
       setState(() => _store = s);
@@ -76,10 +83,23 @@ class _RootState extends State<_Root> {
       // sorundan kötü yapardı.
       if (mounted) setState(() => _store = null);
     }));
-    Future.wait<Object>(<Future<Object>>[
-      widget.repository.load(),
-      widget.repository.loadCues(),
-    ]).then((List<Object> r) {
+  }
+
+  /// İçeriği yükler. **Yeniden çağrılabilir** olması J-079'un gereği: hata
+  /// ekranı yalnız `unreadable` sınıfında "Try again" sunuyor ve o düğmenin
+  /// gerçekten bir şey yapması gerekiyor — çalışmayan bir retry, retry
+  /// olmamasından kötüdür.
+  Future<void> _loadContent() async {
+    // KOŞUL ŞART: bu metod `initState`ten de çağrılıyor ve orada henüz
+    // `setState` çağrılamaz (State yaşam döngüsü `created` aşamasında —
+    // "setState() called in constructor"). İlk çağrıda `_failure` zaten null
+    // olduğu için bu satır atlanır; yalnız RETRY yolunda çalışır.
+    if (_failure != null && mounted) setState(() => _failure = null);
+    try {
+      final List<Object> r = await Future.wait<Object>(<Future<Object>>[
+        widget.repository.load(),
+        widget.repository.loadCues(),
+      ]);
       if (!mounted) return;
       final ({dynamic library, dynamic boxing}) content =
           r[0] as ({dynamic library, dynamic boxing});
@@ -89,10 +109,11 @@ class _RootState extends State<_Root> {
         _boxing = content.boxing as RuleSet;
         _cues = r[1] as CueBook;
       });
-    }).catchError((Object e) {
+    } on Object catch (e) {
       if (!mounted) return;
-      setState(() => _error = e);
-    });
+      // Sınıflandırma tek yerde (ContentFailure.from), ekranda DEĞİL.
+      setState(() => _failure = ContentFailure.from(e));
+    }
   }
 
   Future<void> _refreshRecorded() async {
@@ -104,15 +125,9 @@ class _RootState extends State<_Root> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) {
-      return Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Text('$_error', key: const Key('content-error')),
-          ),
-        ),
-      );
+    final ContentFailure? failure = _failure;
+    if (failure != null) {
+      return ContentFailureScreen(failure: failure, onRetry: _loadContent);
     }
     final ShellLibrary? lib = _library;
     if (lib == null) {

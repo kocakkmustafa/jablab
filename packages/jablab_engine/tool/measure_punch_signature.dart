@@ -24,7 +24,7 @@ import 'package:motion_core/motion_core.dart';
 ///     yoksa YOKLUĞU da bir bulgudur.
 ///
 /// Kullanım:
-///   dart run tool/measure_punch_signature.dart <fixture.json> <etiket> [...]
+///   `dart run tool/measure_punch_signature.dart fixture.json etiket [...]`
 void main(List<String> args) {
   if (args.length < 2 || args.length.isOdd) {
     stderr.writeln('usage: measure_punch_signature.dart '

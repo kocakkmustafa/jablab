@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
 
+import 'content_failure.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
 import 'package:jablab_engine/jablab_engine.dart';
@@ -17,7 +18,21 @@ import '../shell_candidate/shell_models.dart';
 /// `motion_shell`'e terfi ettiğinde boks kural motorunu da beraberinde
 /// taşırdı. Alan → kabuk dönüşümü **yalnız burada** olur.
 final class ContentRepository {
-  const ContentRepository({this.storeOverride});
+  const ContentRepository({this.storeOverride, this.loadStringOverride});
+
+  /// Asset okuma dikişi — YALNIZ test için, `storeOverride` ile aynı gerekçe.
+  ///
+  /// Neden var: dürüst hata ekranının (J-079) uçtan uca sınanması "bozuk bir
+  /// içerik güncellemesi cihaza ulaştı" hâlini kurmayı gerektiriyor.
+  /// Alternatif olarak `flutter/assets` kanalı taklit edilmişti ve **çalışmadı
+  /// — ölçüldü:** kanal yalnız bizim üç asset'imizi değil, framework'ün
+  /// istediği her şeyi (font/manifest) taşıyor; hepsini dosyadan servis
+  /// etmeye çalışan taklit, uygulamayı sonsuz yükleme hâlinde bırakıyordu.
+  /// Bu dikiş üretimde `null` ve tek bir yerde okunuyor ([_loadString]).
+  final Future<String> Function(String assetKey)? loadStringOverride;
+
+  Future<String> _loadString(String key) =>
+      loadStringOverride?.call(key) ?? rootBundle.loadString(key);
 
   /// Denetim/testte gerçek dosya sistemine gitmeden depo enjekte etmek için
   /// (J-070). Üretimde `null` — `openStore()` o zaman gerçek JSONL deposunu
@@ -117,14 +132,14 @@ final class ContentRepository {
   /// yoksa [CueBook.fromJson] FIRLATIR. Sessizce boş geçmek, o anı sonsuza
   /// kadar sessiz bırakırdı ve kullanıcı sessizliği "sorun yok" diye okur.
   Future<CueBook> loadCues() async => CueBook.fromJson(
-      await rootBundle.loadString(cuesAsset), jabLabCueMapping);
+      await _loadString(cuesAsset), jabLabCueMapping);
 
   Future<({Library library, RuleSet boxing})> load() async {
     final Library lib = Library.fromJson(
-        (jsonDecode(await rootBundle.loadString(libraryAsset)) as Map)
+        (jsonDecode(await _loadString(libraryAsset)) as Map)
             .cast<String, dynamic>());
     final RuleSet boxing = RuleSet.fromJson(
-        (jsonDecode(await rootBundle.loadString(boxingRuleSetAsset)) as Map)
+        (jsonDecode(await _loadString(boxingRuleSetAsset)) as Map)
             .cast<String, dynamic>());
 
     // Dürüstlük değişmezleri çalışma zamanında da denetlenir: bozuk bir
@@ -132,7 +147,11 @@ final class ContentRepository {
     // sahte kurs göstermek yerine burada patlar.
     final List<String> errs = lib.validate(<String, RuleSet>{'boxing': boxing});
     if (errs.isNotEmpty) {
-      throw StateError('İçerik dürüstlük denetimi başarısız:\n${errs.join("\n")}');
+      // TİPLİ fırlatma (J-079): eskiden bu bir `StateError`'dı ve UI katmanı
+      // onu `'$e'` diye ekrana basıyordu. Hata ekranının davranışı sınıfa
+      // göre değişmek zorunda (bütünlük hatasında "yine dene" yalan olur),
+      // ve sınıfı hata METNİNDEN çıkarmak sessizce kırılacak bir bağ olurdu.
+      throw ContentIntegrityException(errs);
     }
     return (library: lib, boxing: boxing);
   }

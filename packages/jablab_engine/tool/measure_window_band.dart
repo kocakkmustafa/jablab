@@ -27,7 +27,7 @@ import 'package:motion_core/motion_core.dart';
 /// Bandı bu dağılımdan okumak insanın (koordinatörün) işi.
 ///
 /// Kullanım:
-///   dart run tool/measure_window_band.dart <fixture.json> <etiket> [...]
+///   `dart run tool/measure_window_band.dart fixture.json etiket [...]`
 void main(List<String> args) {
   if (args.length < 2 || args.length.isOdd) {
     stderr.writeln('usage: measure_window_band.dart '
