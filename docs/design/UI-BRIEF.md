@@ -123,7 +123,7 @@ Bugün uygulama doğrudan kabuğa açılıyor. Tasarım ihtiyacı:
 | normal | 8 disiplin ızgarası: **1 canlı** (Boxing) + **7 "yakında"** dalga rozetli (W1-W4) |
 | "yakında" öğe | rozet + tıklanır ama **kurs listesi RENDER EDİLMEZ** (boş kurs göstermek yalan olurdu) |
 | yükleniyor | `CircularProgressIndicator` (asset yüklemesi, çok kısa) |
-| hata | ⚠️ içerik dürüstlük denetimi başarısızsa uygulama **PATLAR** (`StateError`) — sahte kurs göstermemek için bilinçli. **Tasarım gereksinimi: bunun kullanıcıya dönük dürüst bir hata ekranı olması.** Bugün ham crash. |
+| hata | ✅ **YAPILDI (J-079).** Dürüst hata ekranı bağlı: `ContentFailureScreen`. İki sınıf ayrı — **integrity** (içerik kendi içinde tutarsız; "We stopped ourselves", retry YOK çünkü aynı asset aynı sonucu verir) ve **unreadable** (okunamadı; retry VAR, yeniden kurmayı önerir). Kaçış kapısı YOK, geliştirici ayrıntısı katlanmış hâlde. **Tasarımcıya kalan:** ekranın görsel dili — bugün sade Material. Kural: kaçış kapısı eklenemez, ayrıntı birincil metne çıkamaz. |
 | "Neden yok?" girişi | her zaman görünür — kapsamın sınırı gizlenmez |
 
 ### 3.4 ItemPage (disiplin sayfası)
@@ -198,7 +198,9 @@ Bugün uygulama doğrudan kabuğa açılıyor. Tasarım ihtiyacı:
    anlatmak bu ürünün en zor tasarım problemi.
 2. **Öğretici içerik yuvası** (teach aşaması) — "watch first" diyor, izlenecek
    şey yok.
-3. **Dürüst hata ekranı** — bugün içerik denetimi başarısız olunca ham crash.
+3. ~~**Dürüst hata ekranı**~~ ✅ **yapı katmanı BİTTİ (J-079)** — geriye
+   yalnız görsel dil kaldı (bkz. §3.3 "hata" satırı). Kusur kayıtta yazandan
+   sinsiydi: crash değil, kullanıcıya basılan Türkçe `StateError` gövdesiydi.
 4. **Kilit görsel dili** — ceza değil beyan gibi görünmeli (3 ders kilitli).
 5. **Canlı ekranın uzaktan-okunur tipografisi** — 2-3 m mesafe.
 
