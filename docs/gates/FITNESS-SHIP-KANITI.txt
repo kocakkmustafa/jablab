@@ -105,7 +105,7 @@ kilitli ders      : 3
 
 ── KİLİTLİ DERSLER (3) — hepsi ÖLÇÜM sınıfı
    🔒 boxing.intermediate.combinations
-      Hooks and uppercuts aren't modelled here. We measured that this app doesn't see them at all — it isn't judging them wrongly, it just misses them. Until it can see them, we won't pretend to score combination order.
+      Hooks and uppercuts aren't modelled here. We ran a real hook lesson through the app: it missed almost all of them, and the few it did register it labelled as jabs or crosses. Either way the number would be wrong, so we don't score combination order.
    🔒 boxing.intermediate.counter
       Answering a defence needs an opponent to answer. Shadow work can't provide one, so we won't score it.
    🔒 boxing.intermediate.footwork_combo

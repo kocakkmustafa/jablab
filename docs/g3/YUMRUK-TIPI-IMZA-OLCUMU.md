@@ -14,7 +14,8 @@ sınıflandırıcı DEĞİL, bir ÖLÇÜM. **Eşik önerilmiyor.**
 >
 > | ilk iddia | düzeltme | neden düştü |
 > |---|---|---|
-> | "hook malzemesi jab/cross diye YANLIŞ sayılıyor" | **kanca FSM için GÖRÜNMEZ** — ne sayılıyor ne yanlış sayılıyor | 24,8 dk'lık kanca dersinde yalnız 6 tamamlanma + **0 yarıda-kesilme** |
+> | "hook malzemesi jab/cross diye YANLIŞ sayılıyor" | 6 tamamlanma + **0 abort** → çoğu kanca hiç deneme başlatmıyor | yoğunluk + abort sayacı atlanmıştı |
+> | "kanca GÖRÜNMEZ, o 6 olay demo jab'di" (J-077) | **bu da düştü (J-081):** transkriptte hook 61 / jab 1 → demo-jab açıklaması ayakta duramaz. **Artık mekanizma iddia edilmiyor** | damgalı altyazı |
 > | "katalog nicelikleri hook↔jab ayırmıyor" | **ölçülemedi** — doğrulanmış tek bir kanca olayım yok | kıyasladığım "hook" olayları muhtemelen kanca değil |
 >
 > Ayakta kalan: **`unclassified_strike` hiç tetiklenmedi** (fallback ölü) ve
@@ -36,7 +37,7 @@ M-C-04 (≥3 bağımsız eğitmen) çok altında. Buradan hiçbir eşik çıkmaz
 
 ---
 
-## 1. FSM hook malzemesinde ne okuyor: **GÖRMÜYOR**
+## 1. FSM hook malzemesinde ne okuyor: **neredeyse hiçbir şey — ve okuduğu azı yanlış etiketliyor**
 
 `pVvOF2kQuIQ` = 24,8 dakikalık lead-hook öğretim videosu (44.423 kare,
 %40,6 hüküm verilebilir). Bir kanca dersi **onlarca kanca** içerir. Sonuç:
@@ -49,30 +50,56 @@ unclassified_strike:                    → 6/6 kez tetiklenmedi
 
 Üç sayı birlikte okunmalı:
 
-* **6 tamamlanma / 24,8 dk.** Kancalar jab diye sayılıyor olsaydı sayı
-  düzinelerce olurdu. Olmadı.
-* **0 yarıda-kesilme.** Bu daha keskin: bir kanca `GUARD_READY → EXTENSION`
-  geçişini tetikleyip sonra elenmiş DEĞİL — **hiç deneme başlatmıyor.**
-* **Fallback hiç tetiklenmedi.** Yani `unclassified_strike` dekoratif; ama
-  sebebi "girdi en yakın sınıfa tamamlanıyor" DEĞİL, "girdi hiç sınıflandırma
-  yoluna girmiyor".
+* **6 tamamlanma / 24,8 dk.** Düzinelerce kancanın atıldığı bir derste bu,
+  kancaların **büyük çoğunluğunun hiç deneme başlatmadığı** anlamına gelir.
+* **0 yarıda-kesilme.** Bir kanca `GUARD_READY → EXTENSION` geçişini
+  tetikleyip sonra elenmiş DEĞİL — o geçiş hiç olmuyor.
+* **Fallback hiç tetiklenmedi**, ama tetiklenen 6 olay da boşluğa gitmedi:
+  **jab/cross etiketi aldılar.**
 
-**Sonuç: kanca faz makinesi için görünmezdir.** Bu, kilidin en eski
-gerekçesini ("sayılıyor ama sınıflandırılmıyor") ve benim ilk düzeltmemi
-("jab diye yanlış sayılıyor") birlikte yanlışlar.
+**Ölçülen bu; MEKANİZMA İDDİA EDİLMİYOR** (aşağıda: üç kez iddia ettim, üçü
+de düştü). Kullanıcı açısından iki kusur aynı kapıya çıkıyor: kancaların
+çoğu sayılmaz, sayılan azı yanlış sayılır.
 
-### O 6 olay neydi?
+⚠️ Üçüncü bir olasılık da elenmedi: %40,6 hüküm-verilebilirlik, bu kaynakta
+kancaların bir kısmının **görünürlük kapısında** düşmüş olabileceği anlamına
+geliyor — yani "teknik tanınmıyor" ile "kare yargılanamıyor" bu ölçümde
+ayrışmıyor.
 
-Doğrulanmadı — olay-başı ground truth yok. **Ama sıkı pencerede kinematikleri
-düz yumruğa benziyor** (§2): `trunkLeanAngle` Δ 1,3° ve bilek yatay gezinmesi
-0,77 omuz genişliği, iki jab kaynağının ikisinden de daha düşük. En muhtemel
-açıklama: eğitmenin anlatırken arada attığı **gerçek düz yumruklar** — bir
-koç referans olarak sürekli jab atar. Yani bunlar yanlış-pozitif bile
-olmayabilir.
+### O 6 olay neydi? — açıklamam TRANSKRİPTLE düştü (J-081)
 
-Bunu kesinleştirecek ölçüm: o altı zaman damgasına (t = 265,2 · 481,5 · 625,9
-· 859,5 · 882,4 · 1113,7 s) videoda bakmak. **Kurucu-manuel kalemi** — 6
-zaman damgası, her biri saniyeler.
+J-077'de *"muhtemelen eğitmenin anlatırken attığı gerçek düz yumruklar"*
+demiştim. Kaynağın damgalı altyazısı çekildi (613 olay, 1491 s) ve bu
+açıklama ayakta duramıyor:
+
+| kelime | anma |
+|---|---|
+| **hook** | **61** |
+| **jab** | **1** |
+| cross / straight | 4 |
+| uppercut | 2 |
+| shadow 0 · bag/mitt | 2 |
+
+25 dakikada **tek bir jab anması** olan bir videoda "o 6 olay demo jab'di"
+denemez. Kaynak baştan sona kanca.
+
+Ayrıca bir gözlemi **kullanmadan attım**: "6 olayın 3'ü hook konuşmasına
+yakın" doğru ama **taban orana normalize edilince bilgi taşımıyor** —
+±12 s pencerelerin birleşimi videonun **%57'sini** kaplıyor, 3/6 = %50,
+yani tesadüften ayrılamaz. (Aynı normalizasyon hatası J-073'ün manşetini
+düşürmüştü; bu kez ölçtüm.)
+
+**Geriye kalan okuma — ve MEKANİZMA İDDİA ETMİYORUM.** Üç kez mekanizma
+iddia ettim, üçü de ölçümle düştü. Ölçülen şu: düzinelerce kancanın olduğu
+24,8 dakikada FSM **6 tamamlanma + 0 abort** üretti ve fallback'i hiç
+kullanmadı. Yani kancaların **büyük çoğunluğu hiç deneme başlatmıyor**;
+tetiklenen az sayıdaki olay da **jab/cross etiketi alıyor**. Kullanıcı
+açısından ikisi aynı kapıya çıkıyor: yanlış sayı.
+
+**Hâlâ eksik:** o 6 anda gerçekten bir yumruk atıldığının doğrulanması.
+Transkript **KONU** veriyor, **HAREKET OLAYI** vermiyor — eğitmen
+konuşurken çoğu zaman duruyor. Kurucu göz-doğrulaması kuyrukta
+(t = 265,2 · 481,5 · 625,9 · 859,5 · 882,4 · 1113,7 s).
 
 ## 2. İmza: **ölçülemedi**, çünkü doğrulanmış kanca olayı yok
 
@@ -87,10 +114,13 @@ Sıkı pencereyle (§3) yeniden ölçülen değerler:
 | `wrist.dxOverShoulder` | 0,77 | 1,35 | 1,56 |
 
 İlk turda bu tabloyu *"katalog nicelikleri kanca ile jab'ı ayırmıyor"* diye
-okumuştum. **O okuma geçersiz:** sol kolon kanca değil, "kanca videosunda
-FSM'in jab dediği şey". §1'e göre o şeyler muhtemelen gerçek jab. Yani tablo
-"kanca ayrışmıyor" demiyor, **"jab jab'a benziyor"** diyor — beklenen sonuç,
-bilgi değil.
+okumuştum. **O okuma geçersiz — ama J-077'de yazdığım gerekçeyle DEĞİL.**
+J-077 "sol kolon muhtemelen gerçek jab" diyordu; transkript bunu düşürdü
+(hook 61 / jab 1). Geçersizliğin gerçek sebebi daha basit ve daha sağlam:
+**sol kolonun ne olduğunu BİLMİYORUM.** Doğrulanmış bir kanca olayı
+olmadan, o üç olayın kanca mı, kısmi bir gösterim mi, yoksa başka bir
+hareket mi olduğu açık değil. Etiketsiz bir kolonla yapılan karşılaştırma
+"ayrım yok" sonucunu veremez; **"ölçüm yapılmadı"** sonucunu verir.
 
 **Ayakta kalan tek gözlem** (ve o da yalnız jab içinde, iki DOĞRULANMIŞ jab
 kaynağı arasında): `lead.elbowFlareAngle` Δ 60,3° ↔ 77,0°, `rear.elbowFlareAngle`
