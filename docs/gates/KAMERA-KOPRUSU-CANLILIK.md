@@ -33,10 +33,30 @@ xcframework dağıtıyor) · `ios/Flutter/Profile.xcconfig` **yoktu** → §7.3-
 perf sayıları Profile yapısından geleceği için oluşturuldu.
 
 ⚠️ **iOS CİHAZ paketleme ayrı bir engel:** codesign "detritus" hatası
-(macOS 26 + Xcode 26 aile gotcha'sı). `~/.local/bin/codesign` wrapper'ı PATH'e
-alınsa da Flutter'ın kendi script'i onu atlıyor. §7.1'in sorusu "Swift
-derleniyor mu" olduğu için pod-target derlemesiyle kanıtlandı; **cihaz
-koşumu günü bu çözülmeli** (kurucu-manuel kalemi).
+(macOS 26 + Xcode 26 aile gotcha'sı). §7.1'in sorusu "Swift derleniyor mu"
+olduğu için pod-target derlemesiyle kanıtlandı; **cihaz koşumu günü bu
+çözülmeli** (kurucu-manuel kalemi).
+
+**PANZEHİR — ÇİFTE EMSALLİ, cihaz gününün İLK adımı** (koordinatör M-F-197;
+Gravita iOS aynı duvara çarptı, LifeOS kaydıyla aynı kök):
+
+> Çözüm **wrapper DEĞİL** — `~/.local/bin/codesign` tek başına yetmiyor,
+> ölçüldü. Gerçek kök: tüm motion app'leri `~/Documents` altında ve orası
+> iCloud'a senkronlanıyor; iCloud'un `build/` içine koyduğu artıklar
+> codesign'a "detritus" olarak görünüyor.
+
+```bash
+cd ventures/jablab/app
+rm -rf build && ln -s ~/jablab_buildout build && flutter clean
+```
+
+Emsaller diskte **doğrulandı**: `~/gravita_buildout` ve `~/lifeos_buildout`
+ikisi de mevcut. İkinci tuzak: **bayat `native_assets`** — `flutter clean`
+o yüzden aynı adımda.
+
+**Symlink ŞİMDİ kurulmadı, bilinçli:** `build/` git-yoksayılı ama paylaşımlı
+workspace'te eşzamanlı bir oturum derleme yapıyor olabilir ve altından dizin
+çekmek onu kırar. Cihaz günü tek komut, yukarıda hazır.
 
 ## ✅ §7.2 — Android: Gradle çözer, Kotlin derlenir
 
