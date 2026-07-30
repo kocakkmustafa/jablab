@@ -307,9 +307,10 @@
                 "jab",
                 "cross"
               ],
-              "lockedBy": "technique-coverage",
-              "$lockedWhy": "1-2 disindaki kombinasyonlar kanca/uppercut ister. Kural setinde bu iki teknik SINIFLANDIRILMIYOR (unclassified_strike'a dusuyor) — sira dogrulugu hakkinda hukum veremeyiz. Sayabiliriz, yargilayamayiz.",
-              "lockedReason": "Hooks and uppercuts are counted but not classified, so we can't judge combination order here yet."
+              "lockedBy": "technique-misclassified",
+              "$lockedWhy": "1-2 disindaki kombinasyonlar kanca/uppercut ister ve kural seti bu iki teknigi HIC modellemiyor. ONCEKI gerekce 'unclassified_strike'a dusuyor, sayabiliriz ama yargilayamayiz' diyordu; J-073 OLCUMU bunu yanlisladi: bir lead-hook ogretim videosunda (pVvOF2kQuIQ) FSM 3 'jab' + 3 'cross' TAMAMLANDI sayisi uretti ve unclassified_strike 6/6 kez HIC tetiklenmedi. Yani kanca sayilmiyor-ama-siniflandirilmiyor DEGIL, jab/cross diye YANLIS sayiliyor. Ikisi ayni kusur degil: birincisinde kullanici eksik geri bildirim alir, ikincisinde YANLIS geri bildirim alir ve rakam ekranda dogru gorunur. Kilidin sebebi artik kapsam eksigi degil, olculmus bir yanlis-pozitif. Kanit: docs/g3/YUMRUK-TIPI-IMZA-OLCUMU.md",
+              "$lockedWhyMeasurement": "Ayni olcum imza tarafini da kapatti: katalogtaki nicelikler kanca ile jab'i AYIRMIYOR (shoulderRotation 10,0 vs 10,6 derece; egitmen-arasi yayilim teknik-arasi farktan buyuk). Yani bu kilit bir esik ayariyla acilmaz, once pencere tanimi + fixture tabani (kanca >=3 egitmen, uppercut >=1 kaynak; bugun uppercut fixture'i SIFIR) gerekiyor.",
+              "lockedReason": "Hooks and uppercuts aren't modelled yet — worse, we measured that this app currently miscounts them as jabs and crosses. We won't judge combination order until that's fixed."
             },
             {
               "id": "boxing.intermediate.counter",
