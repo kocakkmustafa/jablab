@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart' show BodyOrientation;
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'pose_model.dart';
 
@@ -81,6 +82,20 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
       _error = null;
     });
     try {
+      // İZNİ APP İSTER, PLUGIN İSTEMEZ (sözleşme §1 katman sınırı): plugin
+      // `camera-permission-denied` diye isimli bir retle döner ve UX'i
+      // buraya bırakır. Bu adım YOKKEN emülatör smoke'u tam bu retle
+      // düştü — yani boşluk gerçekti ve cihaz gününde de aynı yerde
+      // patlayacaktı.
+      final PermissionStatus perm = await Permission.camera.request();
+      if (!perm.isGranted) {
+        setState(() {
+          _error = 'camera permission not granted ($perm) — the bridge '
+              'refuses by design; grant it in system settings and retry';
+          _starting = false;
+        });
+        return;
+      }
       final String path = await _materializeModel();
       final CameraSessionInfo info = await _camera.start(
         modelPath: path,
@@ -252,13 +267,27 @@ class _MetricRows extends StatelessWidget {
         for (final MapEntry<String, String> e in rows.entries)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
+            // Değer SARILABİLİR olmak zorunda: zarfın taşıdığı model kimliği
+            // uzun bir dize ("mp-android-0.10.29+pose_landmarker_full/
+            // float16/1") ve sabit bir Row'da 480 px genişlikte 348 px
+            // taşırıyordu — emülatör smoke'unda ölçüldü. Kırpmak yerine
+            // sarıyoruz: bu ekranın işi sayıyı TAM göstermek, ve kırpılmış
+            // bir model kimliği tam olarak yanlış okunacak şeydir.
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(e.key, style: mono),
-                Text(e.value,
+                Expanded(flex: 4, child: Text(e.key, style: mono)),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 6,
+                  child: Text(
+                    e.value,
                     key: Key('metric-${e.key}'),
-                    style: mono?.copyWith(fontWeight: FontWeight.bold)),
+                    textAlign: TextAlign.right,
+                    softWrap: true,
+                    style: mono?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
           ),

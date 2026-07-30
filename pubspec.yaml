@@ -51,9 +51,14 @@ dependencies:
       # (v0.1.0'in iOS Swift katmani 0.10.21'e karsi DERLENMIYORDU — J-071;
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
       ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
+  permission_handler: ^12.0.3
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  # CİHAZDA koşan smoke için (J-072): köprünün gerçek native katmanı yalnız
+  # gerçek bir cihaz/emülatörde çalışır; widget testi onu göremez.
+  integration_test:
     sdk: flutter
   flutter_lints: ^5.0.0
   crypto: ^3.0.7

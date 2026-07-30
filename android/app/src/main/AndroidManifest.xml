@@ -1,4 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- KAMERA KÖPRÜSÜ (J-072). Plugin izni KENDİ İSTEMEZ: isimli hata
+         (camera-permission-denied) döndürür ve izin UX'ini app'e bırakır
+         (sözleşme §1 katman sınırı). Beyan olmadan köprü hiç başlamaz. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Kamera OLMAYAN cihaz kurulumu ENGELLENMEZ: Fitness hattı (süre,
+         kayıt, sesli anlatı) kamerasız TAM çalışıyor ve kanıtlı
+         (docs/gates/FITNESS-SHIP-KANITI.txt). `required="true"` yazmak
+         çalışan bir ürünü kullanamayacak cihazlara kapatmak olurdu. -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
     <application
         android:label="jablab"
         android:name="${applicationName}"
