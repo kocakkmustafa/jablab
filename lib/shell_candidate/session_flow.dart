@@ -22,8 +22,26 @@ enum SessionStage {
 }
 
 extension SessionStageLabel on SessionStage {
+  /// ⚠️ `teach` etiketi **'Watch' DEĞİL** — J-094'te simülatörde yakalandı.
+  ///
+  /// Ekranın gövdesi *"izlenecek materyal yok"* derken üstteki sekme hâlâ
+  /// **"Watch"** diyordu: aynı ekranda, aynı anda, birbiriyle çelişen iki
+  /// cümle. Materyal yuvası düzeltilirken bu etiket gözden kaçmıştı ve
+  /// **hiçbir widget testi göremezdi** — testler iki metnin varlığını
+  /// görür, aralarındaki çelişkiyi değil (aynı vardiyada ikinci kez:
+  /// ilki ilerleme sayfasındaki yapışık paragraftı).
+  ///
+  /// **'Learn' seçildi çünkü ORTAMDAN bağımsız.** "Watch" bir MEDYA vaadidir
+  /// ve materyal video değilse (metin, çizim) ya da hiç yoksa yalan olur;
+  /// "Learn" aşamanın AMACINI söyler ve üç durumda da doğrudur. Kabuk
+  /// zaten materyalin varlığını bilmiyor ve bilmemeli — o app'in işi; bu
+  /// yüzden çözüm etiketi duruma göre değiştirmek değil, **her durumda
+  /// doğru olan** etiketi seçmek.
+  ///
+  /// Ostinato/Choreia için de aynı (terfi şartı #3): çello pasajını
+  /// "izlemek" ile salsa adımını "izlemek" farklı ortamlar, öğrenmek ortak.
   String get label => switch (this) {
-        SessionStage.teach => 'Watch',
+        SessionStage.teach => 'Learn',
         SessionStage.rehearse => 'Try it',
         SessionStage.live => 'Live',
         SessionStage.summary => 'Summary',

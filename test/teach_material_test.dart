@@ -56,6 +56,19 @@ void main() {
     }
   });
 
+  testWidgets('AŞAMA ETİKETİ de talimat vermiyor — gövdeyle ÇELİŞMİYOR',
+      (WidgetTester t) async {
+    // Simülatörde yakalandı (J-094): gövde "izlenecek materyal yok" derken
+    // üstteki sekme hâlâ "Watch" diyordu — aynı ekranda çelişen iki cümle.
+    // Widget testleri iki metnin VARLIĞINI görür, aralarındaki ÇELİŞKİYİ
+    // görmez; bu nöbet o boşluğu kapatıyor.
+    await pumpTeach(t, const TeachMaterialNone(reason: 'yok'));
+    expect(find.text('Watch'), findsNothing,
+        reason: 'aşama etiketi bir MEDYA vaadi veriyor; materyal video '
+            'olmayabilir ya da hiç olmayabilir');
+    expect(find.text('Learn'), findsOneWidget);
+  });
+
   testWidgets('POZİTİF İKİZ: materyal VARKEN gövde çizilir, yokluk beyanı YOK',
       (WidgetTester t) async {
     // Gotcha #5: yukarıdaki iki "X yok" iddiası, materyal dalı HİÇ

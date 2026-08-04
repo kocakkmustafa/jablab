@@ -142,8 +142,10 @@ Bugün uygulama doğrudan kabuğa açılıyor. Tasarım ihtiyacı:
 ### 3.6 Seans — ① teach
 | durum | içerik |
 |---|---|
-| normal | ders başlığı + alt başlık + *"Nothing is being analysed yet — watch first."* |
-| **eksik** | 🔴 **öğretici görsel/video yuvası YOK.** "Watch first" diyor ama izlenecek bir şey yok. Tasarımın en büyük içerik boşluğu. |
+| materyal YOK (bugün **her ders**) | ders başlığı + alt başlık + **yokluk beyanı** (*"There is no lesson material to watch or read here yet — we have not made it…"*) + *"Nothing is being analysed yet."* |
+| materyal VAR | aynı çerçeve, beyan yerine **materyal gövdesi** (`teach-material`); hüküm-susuyor cümlesi YİNE durur |
+| ders bulunamadı | ayrı gerekçe (*"We could not find this lesson in the library…"*) — iki durum aynı cümleye düşmesin diye |
+| **kalan** | 🟡 **görsel dil + içeriğin kendisi.** Yapı testli (J-094); "watch first" yalanı KALDIRILDI. Tasarımın işi: materyal varken nasıl görünür (oynatıcı/çizim/animasyon) ve yokluk beyanı nasıl durur. |
 
 ### 3.7 Seans — ② rehearse
 | durum | içerik |
@@ -196,8 +198,20 @@ Bugün uygulama doğrudan kabuğa açılıyor. Tasarım ihtiyacı:
 **🔴 Tasarım gerektiren, kod beklemeyen (şimdi yapılabilir):**
 1. **Onboarding akışı** — hiç yok. Dürüstlük ön-beyanını sıkıcı olmadan
    anlatmak bu ürünün en zor tasarım problemi.
-2. **Öğretici içerik yuvası** (teach aşaması) — "watch first" diyor, izlenecek
-   şey yok.
+2. **Öğretici içerik yuvası** (teach aşaması) — 🟢 **YAPI KATMANI BİTTİ
+   (J-094)**, geriye yalnız görsel dil + içeriğin kendisi kaldı.
+   Kusur kayıtta yazandan daha ciddiydi: ekran *"watch first"* diyordu ve
+   izlenecek hiçbir şey **yoktu** — `Lesson` modelinde materyal alanı bile
+   bulunmuyor, yani kullanıcıya **yapamayacağı bir eylem** söyleniyordu.
+   Bugün ekran materyali `ContentRepository.teachMaterialFor()`den TÜRETİYOR
+   ve yokluğu gerekçesiyle beyan ediyor.
+   **Tasarımcıya kalan:** materyal VARKEN nasıl görünecek (video oynatıcı mı,
+   adım-adım çizim mi, animasyon mu) ve yokluk beyanının görsel dili.
+   Zengin biçimler `TeachMaterial` hiyerarşisine **yeni varyant** olarak
+   girer — bugün yalnız `Text` var, çünkü comp'suz dürüstçe render
+   edebildiğimiz tek biçim o. Spekülatif alan (videoUrl, poster, süre)
+   **bilerek yazılmadı**: tasarımın kararını kodun tahminiyle doldurmak,
+   J-044'ün "17 okunmayan alan" kutusunu büyütmek olurdu.
 3. ~~**Dürüst hata ekranı**~~ ✅ **yapı katmanı BİTTİ (J-079)** — geriye
    yalnız görsel dil kaldı (bkz. §3.3 "hata" satırı). Kusur kayıtta yazandan
    sinsiydi: crash değil, kullanıcıya basılan Türkçe `StateError` gövdesiydi.
