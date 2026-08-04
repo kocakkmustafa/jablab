@@ -41,7 +41,7 @@ void main() {
       LiveJabController(
         ruleSet: ruleSet,
         cues: cues,
-        modelPath: '/dev/null/model.task',
+        modelPath: () async => '/dev/null/model.task',
         modelId: 'test-model',
         camera: cam,
         requestPermission: permission,

@@ -6,10 +6,15 @@ import 'package:jablab_engine/jablab_engine.dart';
 import '../shell_candidate/library_pages.dart';
 import '../shell_candidate/shell_models.dart';
 import '../shell_candidate/shell_scaffold.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'camera_harness_screen.dart';
 import 'content_failure.dart';
 import 'content_failure_screen.dart';
 import 'content_repository.dart';
+import 'live_jab_controller.dart';
+import 'live_session_failure.dart';
+import 'pose_model.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
 import 'session_screen.dart';
@@ -293,7 +298,58 @@ class _RootState extends State<_Root> {
     };
   }
 
-  void _openSession(ShellLesson l) => Navigator.of(context).push<void>(
+  /// Ders kamera kullanıyorsa canlı hattı kurar (J-096).
+  ///
+  /// Karar İÇERİKTEN gelir (`Lesson.usesCamera`), burada bir ders kimliği
+  /// listesi YOK: kodda bir `if (id == ...)` bırakmak, içerik değişince
+  /// sessizce bayatlayan bir eşleme olurdu (J-047 sınıfı).
+  /// Dönen çift: hat KURULDUYSA controller, KURULAMADIYSA tipli hâl.
+  ///
+  /// ⚠️ **Kurulum hatası dersi AÇILMAZ yapmamalı** — ilk yazışımda tam bunu
+  /// yapıyordu: `materializePoseModel()` patlayınca `_openSession` hiç
+  /// navigasyon yapmıyordu ve kullanıcı derse dokunuyor, hiçbir şey
+  /// olmuyordu. **Sessiz çıkmaz sokak**; testler yakaladı.
+  ///
+  /// `null` controller + `null` hata = ders KAMERASIZ (normal hâl).
+  /// `null` controller + hata = ders kameralı ama hat kurulamadı → seans
+  /// yine AÇILIR, saat koşar, analiz yokluğu BEYAN EDİLİR.
+  ({LiveJabController? controller, LiveSessionFailure? failure}) _liveJabFor(
+      String lessonId) {
+    final Library? lib = _domain;
+    final RuleSet? rules = _boxing;
+    if (lib == null || rules == null) {
+      return (controller: null, failure: null);
+    }
+    if (!widget.repository.usesCamera(lib, lessonId)) {
+      return (controller: null, failure: null);
+    }
+    try {
+      return (controller: _buildLiveJab(rules), failure: null);
+    } on Object catch (e) {
+      return (controller: null, failure: LiveSetupFailed(e));
+    }
+  }
+
+  LiveJabController _buildLiveJab(RuleSet rules) {
+    return LiveJabController(
+      ruleSet: rules,
+      cues: _cues!,
+      modelPath: widget.repository.materializePoseModel,
+      modelId: PoseModelPin.modelId,
+      requestPermission: () async =>
+          (await Permission.camera.request()).isGranted,
+      permissionPermanentlyDenied: () async =>
+          await Permission.camera.isPermanentlyDenied,
+    );
+  }
+
+  Future<void> _openSession(ShellLesson l) async {
+    // Hat SENKRON kurulur ve model yolu GEÇ çözülür: ders açılışını 9 MB'lık
+    // bir asset çıkarmasına bağlamak, kullanıcının derse dokunup hiçbir şey
+    // olmamasını izlemesi demekti (testler yakaladı).
+    final ({LiveJabController? controller, LiveSessionFailure? failure}) live =
+        _liveJabFor(l.id);
+    await Navigator.of(context).push<void>(
         MaterialPageRoute<void>(
             builder: (_) => SessionScreen(
                   lesson: l,
@@ -308,11 +364,18 @@ class _RootState extends State<_Root> {
                   teachMaterial:
                       widget.repository.teachMaterialFor(_domain!, l.id),
                   store: _store,
-                )),
-      // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce
-      // yaptığı işi ilerleme sayfasında göremez ve kaydın çalışmadığını
-      // sanar (çalışıyor ama görünmüyor, en kötü kombinasyon).
-      ).then((_) => _refreshRecorded());
+                  liveJab: live.controller,
+                  liveJabSetupFailure: live.failure,
+                )));
+    // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce yaptığı
+    // işi ilerleme sayfasında göremez ve kaydın çalışmadığını sanar
+    // (çalışıyor ama görünmüyor, en kötü kombinasyon).
+    await _refreshRecorded();
+    // Kamera hattı EKRANLA BİRLİKTE ölür; burada ayrıca kapatmak, açık
+    // kalan bir oturumun sonraki dersi `already-running` ile kırmasını
+    // önler (plugin tek oturuma izin veriyor).
+    await live.controller?.dispose();
+  }
 }
 
 class _TodayPage extends StatelessWidget {

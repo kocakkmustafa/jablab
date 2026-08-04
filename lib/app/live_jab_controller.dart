@@ -61,7 +61,13 @@ final class LiveJabController {
   /// Enjekte ediliyor ki testler içerikten bağımsız koşabilsin.
   final CueBook cues;
 
-  final String modelPath;
+  /// Model yolu **GEÇ çözülür** — `start()` içinde, ders açılışında değil.
+  ///
+  /// İlk yazışımda `String` idi ve çağıran onu ders açılmadan ÖNCE
+  /// hazırlıyordu: 9 MB'lık asset diske çıkarılana kadar kullanıcı derse
+  /// dokunuyor ve HİÇBİR ŞEY olmuyordu. Maliyet, gerçekten gerektiği ana
+  /// (canlı aşama) ertelendi.
+  final Future<String> Function() modelPath;
   final String modelId;
 
   final MotionCameraController _camera;
@@ -105,7 +111,7 @@ final class LiveJabController {
       }
 
       final CameraSessionInfo info = await _camera.start(
-        modelPath: modelPath,
+        modelPath: await modelPath(),
         modelId: modelId,
         lens: CameraLens.front,
         // Jab DİK bir teknik: ters-geçiş planlamak her kare için ikinci bir

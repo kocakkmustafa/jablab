@@ -72,7 +72,9 @@
                 "REAR_HAND_LOW",
                 "LEAD_HAND_NOT_RECOVERED"
               ],
-              "minutes": 12
+              "minutes": 12,
+              "usesCamera": true,
+              "$cameraBasis": "Bu ders KAMERA hattini acar (J-096): teknik listesi tam olarak ['jab'] ve jab modellenmis TEK teknik. Kanca/uppercut modellenmedigi icin kombinasyon dersleri kamerayi ACMAZ - acsalardi kullanici izin verir, pil yanar ve sayim yanlis cikardi."
             },
             {
               "id": "boxing.foundations.cross",

@@ -8,6 +8,8 @@ import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
 import 'session_narrator.dart';
+import 'live_jab_controller.dart';
+import 'live_session_failure.dart';
 import 'session_store.dart';
 import 'teach_material.dart';
 
@@ -30,6 +32,8 @@ class SessionScreen extends StatefulWidget {
     required this.teachMaterial,
     this.intervalPlan,
     this.store,
+    this.liveJab,
+    this.liveJabSetupFailure,
   });
 
   final ShellLesson lesson;
@@ -54,6 +58,20 @@ class SessionScreen extends StatefulWidget {
 
   /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
   final CueBook cues;
+
+  /// KAMERA hattı (J-096) — `null` ise ders kamerasız koşar.
+  ///
+  /// Opsiyonel olması bir geçici çözüm DEĞİL, kalıcı tasarım: Fitness
+  /// dersleri kamerasız TAM çalışıyor ve kanıtlı. Kamerayı zorunlu kılmak
+  /// çalışan bir hattı olmayan bir donanıma bağımlı yapardı.
+  final LiveJabController? liveJab;
+
+  /// Hat KURULAMADI (model çıkarılamadı, I/O…) — ama ders yine AÇILIR.
+  ///
+  /// Kurulum hatasının dersi açılmaz yapması sessiz bir çıkmaz sokaktı:
+  /// kullanıcı derse dokunuyor ve hiçbir şey olmuyordu. Saat kamerasız da
+  /// koşuyor; eksik olan analiz ve o BEYAN EDİLİYOR.
+  final LiveSessionFailure? liveJabSetupFailure;
 
   /// Öğretme aşamasının materyali (J-094) —
   /// `ContentRepository.teachMaterialFor` üretir, ekran ondan TÜRETİR.
@@ -146,6 +164,8 @@ class _SessionScreenState extends State<SessionScreen> {
             cues: widget.cues,
             plan: widget.plan,
             intervalPlan: widget.intervalPlan,
+            liveJab: widget.liveJab,
+            liveJabSetupFailure: widget.liveJabSetupFailure,
             onProgress: (int rounds, int worked) {
               _roundsCompleted = rounds;
               _workedSeconds = worked;
@@ -240,11 +260,15 @@ class _Live extends StatefulWidget {
     required this.plan,
     required this.intervalPlan,
     required this.onProgress,
+    this.liveJab,
+    this.liveJabSetupFailure,
   });
 
   final CueBook cues;
   final RoundPlan? plan;
   final IntervalPlan? intervalPlan;
+  final LiveJabController? liveJab;
+  final LiveSessionFailure? liveJabSetupFailure;
 
   /// (tamamlanan tur, ÇALIŞILAN saniye) — dinlenme sayılmaz.
   final void Function(int roundsCompleted, int workedSeconds) onProgress;
@@ -262,6 +286,11 @@ class _LiveState extends State<_Live> {
           ? SessionMode.interval
           : SessionMode.steady);
   Timer? _ticker;
+
+  /// Kamera hattının son bildirdiği hâl — `null` iken ders kamerasız.
+  LiveJabState? _jab;
+  StreamSubscription<LiveJabState>? _jabSub;
+  late LiveSessionFailure? _jabFailure = widget.liveJabSetupFailure;
 
   /// O anki turun (ya da dinlenmenin) İÇİNDEKİ konum — toplam değil.
   /// `IntervalTimer` bir aralığın ilerlemesini gösterir; toplam seansı
@@ -289,9 +318,27 @@ class _LiveState extends State<_Live> {
   @override
   void initState() {
     super.initState();
+    unawaited(_startCamera());
     if (_plan == null && _ivl == null) return;
     _tick();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+  }
+
+  /// Kamerayı başlatır. **Saat kameradan BAĞIMSIZ koşar**: kamera açılmasa
+  /// bile tur saati ve anlatı çalışmaya devam eder — süre saymak poza
+  /// bakmayı gerektirmez ve bir izin reddi antrenmanı durdurmamalı.
+  Future<void> _startCamera() async {
+    final LiveJabController? live = widget.liveJab;
+    if (live == null) return;
+    _jabSub = live.states.listen((LiveJabState st) {
+      if (!mounted) return;
+      setState(() {
+        _jab = st;
+        if (st is LiveJabFailed) _jabFailure = st.failure;
+      });
+    });
+    final LiveSessionFailure? f = await live.start();
+    if (f != null && mounted) setState(() => _jabFailure = f);
   }
 
   void _tick() {
@@ -427,6 +474,11 @@ class _LiveState extends State<_Live> {
   @override
   void dispose() {
     _ticker?.cancel();
+    unawaited(_jabSub?.cancel());
+    // Kamerayı KAPAT: açık bırakmak modeli ve kamerayı ekran kapandıktan
+    // sonra da meşgul tutardı ve plugin tek oturuma izin veriyor — sonraki
+    // ders `already-running` ile açılamazdı.
+    unawaited(widget.liveJab?.stop());
     super.dispose();
   }
 
@@ -466,21 +518,79 @@ class _LiveState extends State<_Live> {
             key: const Key('live-round-position'),
             style: Theme.of(context).textTheme.labelLarge,
           ),
-        Expanded(
-          child: LiveCoachSurface(
-            state: LiveState.noVerdict,
-            eventCount: 0,
-            narration: _line,
-            // Motor hazır ve testli; besleyen kamera köprüsü değil. Hüküm
-            // yuvası bu yüzden susuyor ve SEBEBİ yazılı.
-            noVerdictReason:
-                'The camera feed is not connected yet, so nothing is being '
-                'judged. The round clock and the engine both work.',
-          ),
-        ),
+        Expanded(child: _coachSurface()),
       ],
     );
   }
+}
+
+/// Canlı yüzey — kameralı ve kamerasız dersin AYNI yuvası, farklı içerikle.
+extension on _LiveState {
+  Widget _coachSurface() {
+    final LiveSessionFailure? failure = _jabFailure;
+    if (failure != null) {
+      // KURULUM hatası: seans başlamadı. Saat koşmaya devam ediyor (yukarıda)
+      // ama analiz yok ve bu SÖYLENİYOR — "yine de devam et" düğmesi YOK,
+      // çünkü kamera dersinin vaadi analizdir.
+      return LiveCoachSurface(
+        state: LiveState.noVerdict,
+        eventCount: 0,
+        narration: _line,
+        noVerdictReason: _failureSentence(failure),
+      );
+    }
+
+    final LiveJabState? jab = _jab;
+    if (widget.liveJab == null) {
+      // KAMERASIZ ders — hâlâ doğru olan eski cümle.
+      return LiveCoachSurface(
+        state: LiveState.noVerdict,
+        eventCount: 0,
+        narration: _line,
+        noVerdictReason:
+            'This lesson runs on the clock — nothing is being judged. '
+            'The round timer and the voice coach both work.',
+      );
+    }
+    if (jab == null || jab is LiveJabStarting) {
+      // Henüz hiçbir kare gelmedi. SIFIR GÖSTERİLMİYOR: sıfır "hiç yumruk
+      // atmadın" demektir, oysa daha hiçbir şey ölçülmedi.
+      return LiveCoachSurface(
+        state: LiveState.noVerdict,
+        eventCount: 0,
+        narration: _line,
+        noVerdictReason: 'Getting the camera ready…',
+      );
+    }
+
+    final LiveJabRunning r = jab as LiveJabRunning;
+    return LiveCoachSurface(
+      state: r.surface,
+      eventCount: r.completedCount,
+      cue: r.cue,
+      narration: _line,
+      noVerdictReason: r.noVerdictReason,
+    );
+  }
+
+  /// Tipli hâl → kullanıcı cümlesi. **Ham `detail` KULLANILMIYOR** (doc-75/5
+  /// kamera tarafı): teşhis dizesi geliştirici içindir.
+  String _failureSentence(LiveSessionFailure f) => switch (f) {
+        LivePermissionDenied(permanentlyDenied: final bool permanent) =>
+          permanent
+              // "Tekrar dene" demek anlamsız: sistem bir daha sormayacak.
+              ? 'Camera access is off for JabLab, and the system will not ask '
+                  'again. You can turn it on in Settings. The round clock '
+                  'still runs without it.'
+              : 'We need the camera to watch your jab. Nothing is analysed '
+                  'without it — the round clock still runs.',
+        LiveCameraUnavailable() =>
+          'We could not open the camera on this device, so nothing is being '
+              'analysed. The round clock still runs.',
+        LiveSetupFailed() =>
+          'Something went wrong setting up the camera, so nothing is being '
+              'analysed. The round clock still runs.',
+      };
 }
 
 class _Summary extends StatelessWidget {

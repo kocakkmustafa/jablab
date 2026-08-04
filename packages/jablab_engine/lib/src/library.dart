@@ -110,6 +110,7 @@ final class Lesson {
     this.lockedReason,
     this.roundPlan,
     this.intervalPlan,
+    this.usesCamera = false,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -129,6 +130,7 @@ final class Lesson {
         lockedReason:
             j['status'] == 'locked' ? j['lockedReason'] as String : null,
         minutes: (j['minutes'] as num?)?.toInt() ?? 0,
+        usesCamera: j['usesCamera'] as bool? ?? false,
         roundPlan: j['roundPlan'] == null
             ? null
             : RoundPlan.fromJson((j['roundPlan'] as Map).cast<String, dynamic>()),
@@ -158,6 +160,18 @@ final class Lesson {
   /// `Library.validate` süreli-odaklı bir dersin plansız AÇIK kalmasını
   /// reddeder — plansız ders, beyan ettiği süreyi koşamayan derstir (J-062).
   final RoundPlan? roundPlan;
+
+  /// Ders KAMERA hattını açar mı (J-096).
+  ///
+  /// İÇERİKTEN gelir, kodda listelenmez: "hangi dersler kamera kullanır"
+  /// bir ürün kararıdır ve kural = versiyonlu config. Kodda bir `if
+  /// (id == 'boxing.foundations.jab')` bırakmak, içerik değiştiğinde
+  /// sessizce bayatlayan bir eşleme olurdu (J-047 sınıfı).
+  ///
+  /// Varsayılan **false** ve bu bilinçli: kamerayı yanlışlıkla açmak,
+  /// kullanıcıdan gereksiz izin istemek ve pil yakmaktır. Açmak AÇIK bir
+  /// beyan gerektirir.
+  final bool usesCamera;
 
   bool get isLocked => lockedReason != null;
 }
