@@ -174,13 +174,21 @@ class ProgressPage extends StatelessWidget {
           ),
           // Nitelik satırlardan ÖNCE: toplamlar okunmadan önce eksik oldukları
           // bilinmeli.
-          if (historyIncomplete != null)
+          //
+          // ⚠️ Boşluk simülatörde eklendi (J-092): testler yeşilken ekranda bu
+          // paragraf üstündeki "ölçüm, not değil" cümlesine YAPIŞIK duruyordu
+          // ve ikisi tek blok gibi okunuyordu — ayrı bir uyarı olduğu
+          // kaybolmuştu. Widget testi iki metnin varlığını görür, aralarındaki
+          // mesafeyi görmez (Gravita G-100 dersinin aynısı).
+          if (historyIncomplete != null) ...<Widget>[
+            const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(historyIncomplete!,
                   key: const Key('recorded-incomplete'),
                   style: theme.textTheme.bodySmall),
             ),
+          ],
           ...recorded.entries.map((MapEntry<String, String> e) => ListTile(
                 key: Key('recorded-${e.key}'),
                 title: Text(e.key),
