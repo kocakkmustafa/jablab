@@ -22,8 +22,10 @@ dependencies:
   # değişirdi.
   #
   # ⚠️ PİN EŞİTLİĞİ ZORUNLU: bu plugin `motion_core`u PATH ile çekiyor
-  # (aynı repo). `motion_camera-v0.1.0` ve `motion_core-v0.8.8` AYNI
-  # COMMIT (03ff936) — bu yüzden `jablab_engine` de v0.8.8'e yükseltildi.
+  # (aynı repo). `motion_camera-v0.1.2` ve `motion_core-v0.11.0` AYNI
+  # COMMIT (f13bdc9) — bu yüzden `jablab_engine` de 0.11.0'a yükseltildi.
+  # (Tag'ler ayrı commit'lerde duruyor ama f13bdc9 İKİSİNİ birden taşıyor;
+  # tek pin, çift-kaynak çatışması yok — M-F-260.)
   # Farklı ref'ler olsaydı pub aynı paket için iki kaynak görüp çözemezdi.
   # `test/dependency_pin_test.dart` bu eşitliği zorluyor.
   # `motion_core` DOĞRUDAN da bildiriliyor: harness `BodyOrientation`ı
@@ -35,7 +37,7 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_core
-      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
+      ref: f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d
   motion_camera:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
@@ -47,10 +49,10 @@ dependencies:
       #   "motion_camera from git is incompatible with jablab_engine from path"
       # Bu yuzden pin daima tag'in COMMIT'i olarak yazilir; hangi tag oldugu
       # yorumda durur ve `dependency_pin_test` esitligi zorlar.
-      #   f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69 == motion_camera-v0.1.1
+      #   f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d == motion_camera-v0.1.2
       # (v0.1.0'in iOS Swift katmani 0.10.21'e karsi DERLENMIYORDU — J-071;
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
-      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
+      ref: f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d
   permission_handler: ^12.0.3
 
 dev_dependencies:

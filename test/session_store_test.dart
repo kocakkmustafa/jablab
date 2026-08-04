@@ -4,12 +4,18 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/session_store.dart';
 
-/// Seans geçmişi değişmezleri (J-064).
+/// ADOPSİYON TESTLERİ — motion_core 0.11.0 (J-095).
 ///
-/// Kalıcılık Fitness vaadinin ("çalıştığını kaydet") VERİ KATMANI. Bir
-/// antrenman kaydını kaybetmek, kullanıcının yaptığı işi yok saymaktır — bu
-/// yüzden buradaki testler "yazıyor mu" değil, **hangi arıza altında ne
-/// kaybediyoruz** sorusunu sınıyor.
+/// `JsonlSessionStore`un kendi değişmezleri (append-only, atomiklik, bozuk
+/// satır atlama, sürüm damgası) artık ÇEKİRDEKTE test ediliyor ve burada
+/// tekrarlanmıyor: aynı iddiayı iki yerde tutmak, biri değişince diğerinin
+/// sessizce bayatlaması demek.
+///
+/// Burada kalan tek şey **JabLab'a ÖZGÜ adopsiyon riski**: bu app'in diskinde
+/// `v:1` satırlar var (kendi yazdığım şema) ve çekirdek `v:2` yazıyor. Göç
+/// yanlış çalışırsa her eski kayıt "okunamadı" sayılır ve kullanıcı geçmişini
+/// **kısmen kayıp** görür — yani J-092'de düzeltmek için kurduğum mekanizma
+/// kendi kurbanı olur. Bu dosya tam o senaryoyu sınıyor.
 void main() {
   late Directory tmp;
   late File file;
@@ -25,168 +31,130 @@ void main() {
     if (await tmp.exists()) await tmp.delete(recursive: true);
   });
 
-  SessionRecord rec(
-    String lesson, {
-    int worked = 540,
-    int rounds = 3,
-    int planned = 3,
-    int dayOffset = 0,
-  }) =>
-      SessionRecord(
-        lessonId: lesson,
-        completedAt: DateTime.utc(2026, 7, 30).add(Duration(days: dayOffset)),
-        workedSeconds: worked,
-        roundsCompleted: rounds,
-        plannedRounds: planned,
+  /// JabLab'ın 0.11.0 ÖNCESİ yazdığı satır — elle değil, o günkü şemayla.
+  String v1Line(String lesson,
+          {int worked = 540, int rounds = 3, int planned = 3, int day = 0}) =>
+      jsonEncode(<String, dynamic>{
+        'v': 1,
+        'lessonId': lesson,
+        'completedAt':
+            DateTime.utc(2026, 7, 30).add(Duration(days: day)).toIso8601String(),
+        'workedSeconds': worked,
+        'roundsCompleted': rounds,
+        'plannedRounds': planned,
+      });
+
+  group('v1 GÖÇÜ — eski kayıtlar KAYIP DEĞİL', () {
+    test('v1 satırları OKUNUYOR ve kayıp SAYILMIYOR', () async {
+      await file.writeAsString('${v1Line('a')}\n${v1Line('b', day: 1)}\n');
+
+      expect((await store.recent()).length, 2,
+          reason: 'eski kayıtlar okunamadı — adopsiyon geçmişi siler');
+      expect(await store.unreadableRecords(), 0,
+          reason: 'OKUNABİLİR satırı kayıp saymak, olmayan bir kaybı '
+              'uydurmaktır (aşırı-katı ikiz)');
+    });
+
+    test('v1 alan eşlemesi: roundsCompleted → unitsCompleted', () async {
+      await file.writeAsString('${v1Line('r6', rounds: 2, planned: 6)}\n');
+      final SessionRecord r = (await store.recent()).single;
+      expect(r.unitsCompleted, 2);
+      expect(r.plannedUnits, 6);
+      expect(r.isComplete, isFalse,
+          reason: 'yarıda bırakılmış eski seans tamamlanmış görünüyor');
+      expect(r.workedSeconds, 540);
+    });
+
+    test('v1 kaydı PUANLI okunmaz — sınıfı yok', () async {
+      // En-az-yetki (M-F-193 §3): yalnız `'scored'` puanlı okunur. Göç
+      // eski kayda sınıf UYDURAMAZ; uydursaydı, kamera hiç bağlı değilken
+      // yazılmış seanslar bir gün "puanlanmış" diye okunurdu.
+      await file.writeAsString('${v1Line('a')}\n');
+      expect((await store.recent()).single.isScoredClass, isFalse);
+    });
+
+    test('KARIŞIK dosya: v1 + v2 birlikte okunur, kayıp yok', () async {
+      // Gerçek adopsiyon günü senaryosu: eski satırların üstüne yeni
+      // sürümün yazması.
+      await file.writeAsString('${v1Line('eski')}\n');
+      await store.append(SessionRecord(
+        lessonId: 'yeni',
+        completedAt: DateTime.utc(2026, 8, 4),
+        workedSeconds: 300,
+        unitsCompleted: 12,
+        plannedUnits: 12,
+        unitLabel: 'interval',
+        lessonClass: 'unscored',
+      ));
+      expect((await store.recent()).map((SessionRecord r) => r.lessonId),
+          <String>['yeni', 'eski'],
+          reason: 'en yeni önce sıralaması göç sonrası bozuldu');
+      expect(await store.unreadableRecords(), 0);
+    });
+
+    test('POZİTİF İKİZ: BİLİNMEYEN sürüm kayıp SAYILIR', () async {
+      // Yukarıdaki "kayıp yok" iddiaları, sayaç her koşulda 0 dönse de
+      // geçerdi. Bu ikiz sayacın gerçekten saydığını kanıtlıyor.
+      await file.writeAsString('${v1Line('a')}\n'
+          '${jsonEncode(<String, dynamic>{'v': 999, 'lessonId': 'gelecek'})}\n');
+      expect((await store.recent()).length, 1);
+      expect(await store.unreadableRecords(), 1);
+    });
+  });
+
+  group('yüzeyin okuduğu hâl — doc-75 test asgarisi', () {
+    test('temiz depo → HistoryOk (yüzey SUSAR)', () async {
+      await store.append(SessionRecord(
+        lessonId: 'a',
+        completedAt: DateTime.utc(2026, 8, 4),
+        workedSeconds: 540,
+        unitsCompleted: 3,
+        plannedUnits: 3,
+        unitLabel: 'round',
+        lessonClass: 'unscored',
+      ));
+      final RecordedSummary s = await RecordedSummary.from(store);
+      expect(s.status, isA<HistoryOk>());
+      expect(s.sessions, 1);
+    });
+
+    test('bozuk satır → HistoryPartial(n), SAYIYLA', () async {
+      // Enjeksiyon store'un KENDİ yazdığı dosyaya yapılıyor (doc-75:
+      // "şema anahtarını elle yazma — gerçek yazıcıyı kullan").
+      await store.append(SessionRecord(
+        lessonId: 'a',
+        completedAt: DateTime.utc(2026, 8, 4),
+        workedSeconds: 540,
+        unitsCompleted: 3,
+        plannedUnits: 3,
+        unitLabel: 'round',
+        lessonClass: 'unscored',
+      ));
+      await file.writeAsString('{bozuk-1\n{bozuk-2\n', mode: FileMode.append);
+
+      final RecordedSummary s = await RecordedSummary.from(store);
+      expect(s.status, isA<HistoryPartial>());
+      expect((s.status as HistoryPartial).unreadable, 2);
+      expect(s.sessions, 1, reason: 'sağlam kayıt da götürüldü');
+    });
+
+    test('AÇILAMAYAN geçmiş FIRLATIR — sıfır-dolu özet DÖNMEZ', () async {
+      // doc-75/2 (totals-nullable): yol var ama dosya değil. Sessizce boş
+      // özet dönmek, dosya-açamamayı "0 seans, 0 dk" diye render ettirirdi.
+      final Directory asFile = Directory('${tmp.path}/dizin.jsonl');
+      await asFile.create();
+      await expectLater(
+        RecordedSummary.from(JsonlSessionStore(File(asFile.path))),
+        throwsA(isA<FileSystemException>()),
       );
+    });
 
-  test('boş depo boş liste döner — dosya yokluğu HATA DEĞİL', () async {
-    // İlk açılışta dosya yok. Bunu hata sayan bir depo, kullanıcıyı ilk
-    // seansından önce bir çökmeyle karşılardı.
-    expect(await store.recent(), isEmpty);
-    expect(await store.workedSecondsFor('x'), 0);
-    expect(await file.exists(), isFalse);
-  });
-
-  test('ekleme kalıcı, okuma EN YENİ ÖNCE', () async {
-    await store.append(rec('a', dayOffset: 0));
-    await store.append(rec('b', dayOffset: 2));
-    await store.append(rec('c', dayOffset: 1));
-
-    final List<SessionRecord> all = await store.recent();
-    expect(all.map((SessionRecord r) => r.lessonId), <String>['b', 'c', 'a']);
-
-    // Yeni bir örnek AYNI dosyayı okur — kalıcılık bellekte değil diskte.
-    final List<SessionRecord> reread =
-        await JsonlSessionStore(file).recent(limit: 2);
-    expect(reread.map((SessionRecord r) => r.lessonId), <String>['b', 'c']);
-  });
-
-  test('APPEND-ONLY: eski satırlar korunur, üzerine yazılmaz', () async {
-    await store.append(rec('a'));
-    await store.append(rec('b'));
-    await store.append(rec('c'));
-    final List<String> lines = (await file.readAsString())
-        .split('\n')
-        .where((String l) => l.trim().isNotEmpty)
-        .toList();
-    expect(lines.length, 3, reason: 'ekleme önceki satırları yok etti');
-  });
-
-  test('çalışma süresi ders bazında TOPLANIR', () async {
-    await store.append(rec('r3', worked: 540));
-    await store.append(rec('r3', worked: 300, dayOffset: 1));
-    await store.append(rec('r5', worked: 300, dayOffset: 2));
-    expect(await store.workedSecondsFor('r3'), 840);
-    expect(await store.workedSecondsFor('r5'), 300);
-    expect(await store.workedSecondsFor('yok'), 0);
-  });
-
-  test('her satır ŞEMA SÜRÜMÜNÜ taşır', () async {
-    // Dosya düzeyinde tek sürüm yazmak, eski satırların hangi kurala göre
-    // yazıldığını okunamaz kılar; göç günü ya tüm dosya yeniden yazılır ya
-    // tahmin edilir.
-    await store.append(rec('a'));
-    final Map<String, dynamic> line =
-        (jsonDecode((await file.readAsString()).trim()) as Map)
-            .cast<String, dynamic>();
-    expect(line['v'], JsonlSessionStore.schemaVersion);
-    expect(line['lessonId'], 'a');
-  });
-
-  test('BİLİNMEYEN sürümlü satır ATLANIR, gerisi okunur', () async {
-    // Kullanıcı uygulamayı geri de kurabilir. Gelecekten gelen bir satır
-    // yüzünden tüm geçmişi okunamaz ilan etmek, veriyi kaybetmekle aynı.
-    await store.append(rec('gecerli'));
-    await file.writeAsString(
-      '${jsonEncode(<String, dynamic>{'v': 999, 'lessonId': 'gelecek'})}\n',
-      mode: FileMode.append,
-    );
-    final List<SessionRecord> all = await store.recent();
-    expect(all.map((SessionRecord r) => r.lessonId), <String>['gecerli']);
-    // ...ama SESSİZCE atlanmaz (J-092). Satır sağlam olabilir; bu sürüm onu
-    // okuyamıyor — kullanıcı açısından sonuç aynı: özet eksik.
-    expect(await store.unreadableRecords(), 1);
-  });
-
-  test('BOZUK satır tüm geçmişi silmez', () async {
-    await store.append(rec('once'));
-    await file.writeAsString('{bu geçerli json değil\n',
-        mode: FileMode.append);
-    await store.append(rec('sonra', dayOffset: 1));
-
-    final List<SessionRecord> all = await store.recent();
-    expect(all.map((SessionRecord r) => r.lessonId), <String>['sonra', 'once'],
-        reason: 'ortadaki bozuk satır sağlam kayıtları da götürdü');
-    expect(await store.unreadableRecords(), 1,
-        reason: 'atlamak DOĞRU karar; atlamayı gizlemek "az yaptın" yalanı');
-  });
-
-  test('POZİTİF İKİZ: sağlam dosyada kayıp SIFIR', () async {
-    // Gotcha #5: yukarıdaki "1 kayıp" iddiaları, sayaç her koşulda 1 dönse
-    // de geçerdi. Bu ikiz sayacın gerçekten SAYDIĞINI kanıtlıyor.
-    await store.append(rec('a'));
-    await store.append(rec('b', dayOffset: 1));
-    expect((await store.recent()).length, 2);
-    expect(await store.unreadableRecords(), 0);
-  });
-
-  test('KAYIP SAYISI gerçekten sayılıyor — üç bozuk satır ÜÇ döner', () async {
-    // Tek-bozuk testleri, sayacın "sıfırdan farklı" dönmesiyle de geçerdi;
-    // eksik özetin BÜYÜKLÜĞÜ kullanıcıya söylenen cümlenin kendisi.
-    await store.append(rec('saglam'));
-    for (int i = 0; i < 3; i++) {
-      await file.writeAsString('{bozuk-$i\n', mode: FileMode.append);
-    }
-    expect((await store.recent()).length, 1);
-    expect(await store.unreadableRecords(), 3);
-  });
-
-  test('YARIM yazılmış son satır sağlam kayıtları götürmez', () async {
-    // Mobilde işletim sistemi uygulamayı her an öldürebilir. Doğrudan
-    // append sırasında ölüm, dosyanın sonunda yarım satır bırakır.
-    await store.append(rec('tam'));
-    await file.writeAsString('{"v":1,"lessonId":"yarim","worked',
-        mode: FileMode.append);
-    final List<SessionRecord> all = await store.recent();
-    expect(all.map((SessionRecord r) => r.lessonId), <String>['tam']);
-    expect(await store.unreadableRecords(), 1);
-  });
-
-  test('ATOMİKLİK: yazma sonrası geçici dosya KALMAZ', () async {
-    await store.append(rec('a'));
-    await store.append(rec('b'));
-    final List<String> leftovers = tmp
-        .listSync()
-        .map((FileSystemEntity e) => e.path.split('/').last)
-        .where((String n) => n.endsWith('.tmp'))
-        .toList();
-    expect(leftovers, isEmpty,
-        reason: 'geçici dosya sızdı — rename yapılmamış olabilir');
-    expect(await file.exists(), isTrue);
-  });
-
-  test('yarıda bırakılan seans da KAYDEDİLİR ve ayırt edilebilir', () async {
-    // "Bıraktı" bir veridir, silinmesi gereken bir utanç değil.
-    await store.append(rec('r20', worked: 400, rounds: 2, planned: 6));
-    final SessionRecord r = (await store.recent()).single;
-    expect(r.isComplete, isFalse);
-    expect(r.roundsCompleted, 2);
-    expect(r.plannedRounds, 6);
-    expect(r.workedSeconds, 400);
-  });
-
-  test('tamamlanmış seans isComplete', () async {
-    await store.append(rec('r3', rounds: 3, planned: 3));
-    expect((await store.recent()).single.isComplete, isTrue);
-  });
-
-  test('zaman UTC olarak yazılır ve gidiş-dönüş korunur', () async {
-    // Yerel saatle yazmak, kullanıcı saat dilimi değiştirince geçmişi
-    // yeniden sıralar; "dün" birden "bugün" olur.
-    await store.append(rec('a'));
-    final String raw = (await file.readAsString()).trim();
-    expect(raw, contains('2026-07-30T00:00:00.000Z'));
-    expect((await store.recent()).single.completedAt.isUtc, isTrue);
+    test('İLK AÇILIŞ (dosya YOK) → ok/0, kayıp DEĞİL', () async {
+      // "Hiç yazılmadı" ile "yazıldı ama okunamıyor" ayrı şeyler.
+      final RecordedSummary s = await RecordedSummary.from(
+          JsonlSessionStore(File('${tmp.path}/hic-yok.jsonl')));
+      expect(s.status, isA<HistoryOk>());
+      expect(s.sessions, 0);
+    });
   });
 }

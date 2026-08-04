@@ -174,23 +174,37 @@ void main() {
           lessonId: 'x',
           completedAt: DateTime.utc(2026, 7, 30),
           workedSeconds: worked,
-          roundsCompleted: rounds,
-          plannedRounds: planned,
+          unitsCompleted: rounds,
+          plannedUnits: planned,
+          unitLabel: 'round',
+          lessonClass: 'unscored',
         );
 
     test('süre etiketi SANİYE göstermez', () {
       // Antrenman süresinde saniye hassasiyeti bilgi taşımaz, yalnız
       // kesinlik izlenimi verir.
       expect(
-          const RecordedSummary(sessions: 1, completed: 1, workedSeconds: 545)
+          const RecordedSummary(
+                  sessions: 1,
+                  completed: 1,
+                  workedSeconds: 545,
+                  status: HistoryOk())
               .workedLabel,
           '9 min');
       expect(
-          const RecordedSummary(sessions: 1, completed: 1, workedSeconds: 3600)
+          const RecordedSummary(
+                  sessions: 1,
+                  completed: 1,
+                  workedSeconds: 3600,
+                  status: HistoryOk())
               .workedLabel,
           '1h');
       expect(
-          const RecordedSummary(sessions: 1, completed: 1, workedSeconds: 5040)
+          const RecordedSummary(
+                  sessions: 1,
+                  completed: 1,
+                  workedSeconds: 5040,
+                  status: HistoryOk())
               .workedLabel,
           '1h 24m');
     });
@@ -214,16 +228,16 @@ void main() {
       final RecordedSummary sum = await RecordedSummary.from(
           _MemStore(<SessionRecord>[rec()], unreadable: 2));
       expect(sum.sessions, 1);
-      expect(sum.unreadableRecords, 2);
-      expect(sum.isPartial, isTrue,
+      expect(sum.status, isA<HistoryPartial>());
+      expect((sum.status as HistoryPartial).unreadable, 2,
           reason: 'gösterilen toplam bir ölçüm değil ALT SINIR');
     });
 
     test('POZİTİF İKİZ: kayıp yokken özet KISMİ DEĞİL', () async {
       final RecordedSummary sum =
           await RecordedSummary.from(_MemStore(<SessionRecord>[rec()]));
-      expect(sum.unreadableRecords, 0);
-      expect(sum.isPartial, isFalse);
+      expect(sum.status, isA<HistoryOk>(),
+          reason: 'sıfır kayıplı "kısmi" beyanı yalandır (doc-75/1)');
     });
 
     test('boş depoda her şey sıfır, patlamıyor', () async {
