@@ -169,3 +169,24 @@ ilk işi.
 
 **Kural aynen duruyor: ön-izleme bağlanmadan hiçbir app "kamera çalışıyor"
 DEMEZ.** Bu doküman da demiyor.
+
+---
+
+## 🧪 Simülatörde veri enjeksiyonu — BAYAT CONTAINER TUZAĞI (J-095)
+
+Cihaz doğrulaması için uygulamanın kutusuna dosya yazarken:
+
+```bash
+C=$(xcrun simctl get_app_container <UDID> com.yulalab.jablab data)
+```
+
+**Yolu bir kere alıp saklama.** Uygulama her yeniden KURULDUĞUNDA (yani her
+`flutter run`da) container UUID'si DEĞİŞİYOR. J-095 doğrulamasında tam bu
+oldu: enjeksiyonum `D9D5981E…`e gitti, canlı uygulama `F1F251D6…`i okuyordu
+ve ekran "kayıt yok" gösterdi. **Ekran doğruydu; yanlış olan doğrulama
+yöntemiydi** — ve bu, bir doğrulamanın sessizce YANLIŞ ŞEYİ kanıtlaması
+sınıfının kendisi: hiçbir hata mesajı çıkmaz, yalnız beklenmedik bir ekran
+görürsün ve kolayca "kod bozuk" diye okursun.
+
+Kural: enjeksiyondan **hemen önce** `get_app_container` çağır, çıktısını
+kullan, sonra `terminate` + `launch` yap.
