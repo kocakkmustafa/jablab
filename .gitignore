@@ -1,6 +1,11 @@
 .dart_tool/
 .packages
 build/
+# iCloud CATISMA KOPYASI. Bu proje ~/Documents altinda ve orasi iCloud'a
+# senkronlaniyor; codesign panzehiri `build`i bir symlink yapinca iCloud onun
+# kopyasini uretti ("build 3" -> ayni hedef, 0 bayt). Zararsiz ama `build/`
+# deseni bosluklu adi kapsamadigi icin `git status`ta kalici gurultu yapardi.
+build [0-9]*
 *.iml
 .DS_Store
 
