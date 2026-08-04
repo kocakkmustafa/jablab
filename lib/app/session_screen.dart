@@ -9,6 +9,7 @@ import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
+import 'teach_material.dart';
 
 /// Canlı seans ekranı — **app'e özgü**, `motion_shell`'e terfi ETMEZ.
 ///
@@ -26,6 +27,7 @@ class SessionScreen extends StatefulWidget {
     required this.cues,
     required this.coachedNotScored,
     required this.plan,
+    required this.teachMaterial,
     this.intervalPlan,
     this.store,
   });
@@ -52,6 +54,14 @@ class SessionScreen extends StatefulWidget {
 
   /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
   final CueBook cues;
+
+  /// Öğretme aşamasının materyali (J-094) —
+  /// `ContentRepository.teachMaterialFor` üretir, ekran ondan TÜRETİR.
+  ///
+  /// Zorunlu ve nullable DEĞİL: `null` geçilebilse "materyal yok" ile
+  /// "kimse sormadı" aynı değere düşerdi ve ekran ikisini ayırt edemezdi —
+  /// bu ekranın düzelttiği kusurun ta kendisi.
+  final TeachMaterial teachMaterial;
 
   /// `ContentRepository.coachedNotScoredLabels` — config'in
   /// `stanceCoachedOnlyJoints`'inden türetilir (J-033/rule 9); burada
@@ -112,7 +122,8 @@ class _SessionScreenState extends State<SessionScreen> {
       advanceLabel: _stage == SessionStage.summary ? 'Done' : 'Continue',
       onAdvance: _advance,
       child: switch (_stage) {
-        SessionStage.teach => _Teach(lesson: widget.lesson),
+        SessionStage.teach =>
+            _Teach(lesson: widget.lesson, material: widget.teachMaterial),
         SessionStage.rehearse => const _Rehearse(),
         SessionStage.live => _Live(
             cues: widget.cues,
@@ -130,9 +141,12 @@ class _SessionScreenState extends State<SessionScreen> {
 }
 
 class _Teach extends StatelessWidget {
-  const _Teach({required this.lesson});
+  const _Teach({required this.lesson, required this.material});
 
   final ShellLesson lesson;
+
+  /// Materyal DIŞARIDAN gelir — ekran kendi içeriğini icat etmez.
+  final TeachMaterial material;
 
   @override
   Widget build(BuildContext context) {
@@ -149,10 +163,28 @@ class _Teach extends StatelessWidget {
           if (lesson.subtitle.isNotEmpty)
             Text(lesson.subtitle, style: theme.textTheme.bodyMedium),
           const SizedBox(height: 20),
+          // MATERYAL — ekran KENDİSİ karar vermez, `ContentRepository`den
+          // türetir (J-094). Eskiden burada elle yazılmış *"watch first"*
+          // duruyordu ve izlenecek hiçbir şey yoktu: kullanıcıya
+          // yapamayacağı bir eylem söyleniyordu.
+          switch (material) {
+            TeachMaterialText(body: final String body) => Text(
+                body,
+                key: const Key('teach-material'),
+                style: theme.textTheme.bodyMedium,
+              ),
+            TeachMaterialNone(reason: final String reason) => Text(
+                reason,
+                key: const Key('teach-material-none'),
+                style: theme.textTheme.bodySmall,
+              ),
+          },
+          const SizedBox(height: 12),
+          // Bu cümle materyalden BAĞIMSIZ ve her hâlde doğru: hüküm
+          // aşamanın kendisinde susuyor (`SessionStage.teach.judges == false`).
           Text(
-            'Nothing is being analysed yet — watch first. '
-            'Scoring you while you are still learning the shape would '
-            'punish learning.',
+            'Nothing is being analysed yet. Scoring you while you are still '
+            'learning the shape would punish learning.',
             key: const Key('teach-no-analysis'),
             style: theme.textTheme.bodySmall,
           ),

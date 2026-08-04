@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'content_failure.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
+import 'teach_material.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
 import '../shell_candidate/shell_models.dart';
@@ -116,6 +117,31 @@ final class ContentRepository {
   /// Aralık planı (J-068) — aynı çeviri katmanı, aynı sebep.
   IntervalPlan? intervalPlanFor(Library lib, String lessonId) =>
       _lessonFor(lib, lessonId)?.intervalPlan;
+
+  /// Dersin anlatım materyali (J-094) — **tek karar noktası**.
+  ///
+  /// Ekran bu soruyu kendisi cevaplamaz. Eskiden cevabı ekranın içinde elle
+  /// yazılmış bir cümle veriyordu (*"watch first"*) ve o cümle hiçbir içerik
+  /// tarafından desteklenmiyordu; J-047'de aynı sınıftan bir kusur (elle
+  /// kopyalanmış `coachedNotScored` listesi) config'le çelişerek yakalanmıştı.
+  ///
+  /// Bugün **hiçbir derste materyal yok** ve bu bir varsayım değil ölçülebilir
+  /// bir olgu: `Lesson` modelinde materyal alanı bulunmuyor. Comp geldiğinde
+  /// değişecek TEK yer burası — ekran zaten türetiyor.
+  TeachMaterial teachMaterialFor(Library lib, String lessonId) {
+    // Ders bulunamazsa da YOKLUK döner, fırlatmaz: seans akışı bir içerik
+    // arama hatası yüzünden kesilmemeli — ama sebep AYRI yazılır, yoksa iki
+    // farklı durum ("materyal yok" / "ders yok") aynı cümleye düşerdi.
+    if (_lessonFor(lib, lessonId) == null) {
+      return const TeachMaterialNone(
+          reason: 'We could not find this lesson in the library, so there is '
+              'nothing to show here.');
+    }
+    return const TeachMaterialNone(
+        reason: 'There is no lesson material to watch or read here yet — we '
+            'have not made it. The session still works: the next step is you '
+            'moving, and nothing is scored while you learn the shape.');
+  }
 
   Lesson? _lessonFor(Library lib, String lessonId) {
     for (final Discipline d in lib.disciplines) {

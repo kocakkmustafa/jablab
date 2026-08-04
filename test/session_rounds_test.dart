@@ -4,6 +4,7 @@ import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/session_narrator.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/session_store.dart';
+import 'package:jablab/app/teach_material.dart';
 import 'package:jablab/shell_candidate/session_flow.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
 import 'package:jablab_engine/jablab_engine.dart';
@@ -49,6 +50,8 @@ void main() {
         plan: plan,
         intervalPlan: intervalPlan,
         store: store,
+        teachMaterial:
+            const TeachMaterialNone(reason: 'test: materyal yok'),
       ),
     ));
     await t.pumpAndSettle();

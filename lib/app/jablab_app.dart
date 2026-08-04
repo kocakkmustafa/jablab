@@ -283,6 +283,10 @@ class _RootState extends State<_Root> {
                   plan: widget.repository.roundPlanFor(_domain!, l.id),
                   intervalPlan:
                       widget.repository.intervalPlanFor(_domain!, l.id),
+                  // J-094: materyal kararı TEK yerde (repository), ekranda
+                  // değil. Comp geldiğinde değişecek yer orası.
+                  teachMaterial:
+                      widget.repository.teachMaterialFor(_domain!, l.id),
                   store: _store,
                 )),
       // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce
