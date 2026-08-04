@@ -92,6 +92,7 @@ final class EngineOutput {
     required this.judgeable,
     required this.stance,
     this.measures,
+    this.activePhase,
     this.suppressionReason,
     this.completedAttempt,
     this.issues = const <DetectedIssue>[],
@@ -102,6 +103,17 @@ final class EngineOutput {
   /// false iken TEKNİK HÜKÜM VERİLMEZ (plan §12). Sebep [suppressionReason].
   final bool judgeable;
   final StanceReading stance;
+
+  /// Faz makinesinin O ANDAKİ fazı — canlı geri bildirim için (J-096).
+  ///
+  /// `AttemptDigest.transitions` yalnız deneme BİTİNCE gelir; canlı ekran
+  /// ise deneme sürerken "neredesin" diyebilmeli. `null` = hiçbir teknik
+  /// makinesi açık değil (gard bekliyor ya da hiç başlamadı) — bu bir hata
+  /// değil, sık ve normal bir hâl.
+  ///
+  /// Bir HÜKÜM DEĞİL: fazın adı ölçüm değil durum bildirimidir, o yüzden
+  /// K8 kalibrasyon kapısına takılmaz.
+  final String? activePhase;
   final MeasureSet? measures;
   final String? suppressionReason;
   final AttemptDigest? completedAttempt;
@@ -424,7 +436,22 @@ final class StrikingEngine {
       measures: m,
       completedAttempt: finished,
       issues: issues,
+      activePhase: _activePhase(),
     );
+  }
+
+  /// Açık olan İLK teknik makinesinin fazı.
+  ///
+  /// Birden çok teknik aynı anda açık olamaz gibi görünse de kural seti buna
+  /// izin veriyor (kombinasyonlar); ilkini almak keyfi değil, `techniques`
+  /// sırası config'in kendi önceliği — ve iki fazı aynı anda göstermek
+  /// kullanıcıya okuyamayacağı bir şey vermek olurdu.
+  String? _activePhase() {
+    for (final TechniqueConfig t in ruleSet.techniques) {
+      final String? p = _machines[t.id]?.currentPhase;
+      if (p != null) return p;
+    }
+    return null;
   }
 
   AttemptDigest _buildDigest(TechniqueConfig t, AttemptRun run) {

@@ -113,7 +113,8 @@ class SessionNarrator {
 /// cümleyi arka arkaya iki kez verebilir ve tam da kaçınmak istediğimiz şey
 /// bu. Tekrar körlüğü pratikte susmaya eşdeğerdir.
 class CueBook {
-  CueBook(this._lines);
+  CueBook(this._lines, {Map<String, List<String>> byKey = const <String, List<String>>{}})
+      : _byKey = byKey;
 
   factory CueBook.fromJson(String source, Map<NarrationEvent, String> mapping) {
     final Map<String, dynamic> doc =
@@ -136,11 +137,31 @@ class CueBook {
       }
       byEvent[m.key] = lines;
     }
-    return CueBook(byEvent);
+    return CueBook(byEvent, byKey: flat);
   }
 
   final Map<NarrationEvent, List<String>> _lines;
   final Map<NarrationEvent, int> _cursor = <NarrationEvent, int>{};
+
+  /// Anahtar → replik (düz harita). Olay tabanlı [_lines] yalnız anlatı
+  /// olaylarını kapsıyor; motorun ürettiği HATA KODLARI (J-096) da bir
+  /// cümleye çevrilmek zorunda ve onlar bir `NarrationEvent` değil.
+  final Map<String, List<String>> _byKey;
+  final Map<String, int> _keyCursor = <String, int>{};
+
+  /// Replik anahtarından cümle — varyant DÖNDÜRÜLEREK, [say] ile aynı kural.
+  ///
+  /// `null` dönerse çağıran **ham anahtarı göstermemeli**: içerik eksikse
+  /// kullanıcıya `REAR_HAND_LOW` yazmak, teşhis dizesini yüzeye sızdırmaktır.
+  String? sayKey(String key) {
+    final List<String>? lines = _byKey[key];
+    if (lines == null || lines.isEmpty) return null;
+    final int i = _keyCursor.update(key, (int v) => (v + 1) % lines.length,
+        ifAbsent: () => 0);
+    return lines[i];
+  }
+
+  bool hasKey(String key) => _byKey.containsKey(key);
 
   bool covers(NarrationEvent e) => _lines.containsKey(e);
 
@@ -189,4 +210,54 @@ const Map<NarrationEvent, String> jabLabCueMapping = <NarrationEvent, String>{
   NarrationEvent.corrected: 'cue.corrected',
   NarrationEvent.streak: 'cue.streak',
   NarrationEvent.settled: 'cue.settled',
+};
+
+/// MOTOR HATA KODU → REPLİK ANAHTARI (J-096). **Mekanik değil, ELLE.**
+///
+/// ## Neden `cue.${code.toLowerCase()}` DEĞİL
+///
+/// O kısayol açık ara en kolay yoldu ve **14 kodun 7'sinde sessizce
+/// tutmuyor**: `TEMPO_TOO_FAST_FOR_FORM` → `cue.slow_down`,
+/// `WRONG_HAND_FOR_COMBINATION` → `cue.wrong_hand`,
+/// `COMBINATION_ORDER_ERROR` → `cue.combo_order`, `STANCE_TOO_NARROW` →
+/// `cue.stance_narrow`, `TORSO_FALLING_FORWARD` → `cue.torso_forward`,
+/// `LOW_TRACKING_CONFIDENCE` → `cue.low_confidence`, `STANCE_TOO_WIDE` →
+/// `cue.stance_wide`.
+///
+/// Yazsaydım düzeltmelerin YARISI ham kod olarak yüzeye sızardı — ve yalnız
+/// SEYREK hatalarda, yani elle denerken fark edilmezdi. Kod adı bir
+/// TEŞHİS dizesidir; kullanıcıya gösterilmesi doc-75/5 sınıfının kamera
+/// tarafıdır.
+///
+/// Eksiksizlik iki yönden testle zorlanıyor (`live_cue_mapping_test.dart`):
+/// kural setindeki her kod BURADA olmalı **ve** buradaki her anahtar
+/// `cues.en.json`da bulunmalı. Tek yön yeterli değil: sarkan atıf da,
+/// eşlenmemiş kod da sessizce ham koda düşürürdü.
+const Map<String, String> jabLabIssueCueMapping = <String, String>{
+  // — teknik düzeltmeleri —
+  'REAR_HAND_LOW': 'cue.rear_hand_low',
+  'LEAD_HAND_NOT_RECOVERED': 'cue.lead_hand_not_recovered',
+  'ELBOW_FLARED': 'cue.elbow_flared',
+  'OVERREACH': 'cue.overreach',
+  'TORSO_FALLING_FORWARD': 'cue.torso_forward',
+  'STANCE_TOO_NARROW': 'cue.stance_narrow',
+  'STANCE_TOO_WIDE': 'cue.stance_wide',
+  'FEET_CROSSED': 'cue.feet_crossed',
+  'BALANCE_LOSS': 'cue.balance_loss',
+  'WRONG_HAND_FOR_COMBINATION': 'cue.wrong_hand',
+  'COMBINATION_ORDER_ERROR': 'cue.combo_order',
+  'TEMPO_TOO_FAST_FOR_FORM': 'cue.slow_down',
+  // — görünürlük/hüküm-verilemez —
+  // Bunlar bir TEKNİK kusuru değil: kullanıcı yanlış bir şey yapmıyor,
+  // biz göremiyoruz. Yüzeyde de `noVerdict` yuvasına gider, düzeltme
+  // yuvasına değil — ikisini karıştırmak kullanıcıyı olmayan bir hatayı
+  // düzeltmeye çalıştırmak olurdu.
+  'OUT_OF_FRAME': 'cue.out_of_frame',
+  'LOW_TRACKING_CONFIDENCE': 'cue.low_confidence',
+};
+
+/// Görünürlük sınıfı kodları — düzeltme DEĞİL, "göremiyorum" sebebi.
+const Set<String> jabLabVisibilityIssueCodes = <String>{
+  'OUT_OF_FRAME',
+  'LOW_TRACKING_CONFIDENCE',
 };
