@@ -104,6 +104,9 @@ void main() {
     );
     final List<SessionRecord> all = await store.recent();
     expect(all.map((SessionRecord r) => r.lessonId), <String>['gecerli']);
+    // ...ama SESSİZCE atlanmaz (J-092). Satır sağlam olabilir; bu sürüm onu
+    // okuyamıyor — kullanıcı açısından sonuç aynı: özet eksik.
+    expect(await store.unreadableRecords(), 1);
   });
 
   test('BOZUK satır tüm geçmişi silmez', () async {
@@ -115,6 +118,28 @@ void main() {
     final List<SessionRecord> all = await store.recent();
     expect(all.map((SessionRecord r) => r.lessonId), <String>['sonra', 'once'],
         reason: 'ortadaki bozuk satır sağlam kayıtları da götürdü');
+    expect(await store.unreadableRecords(), 1,
+        reason: 'atlamak DOĞRU karar; atlamayı gizlemek "az yaptın" yalanı');
+  });
+
+  test('POZİTİF İKİZ: sağlam dosyada kayıp SIFIR', () async {
+    // Gotcha #5: yukarıdaki "1 kayıp" iddiaları, sayaç her koşulda 1 dönse
+    // de geçerdi. Bu ikiz sayacın gerçekten SAYDIĞINI kanıtlıyor.
+    await store.append(rec('a'));
+    await store.append(rec('b', dayOffset: 1));
+    expect((await store.recent()).length, 2);
+    expect(await store.unreadableRecords(), 0);
+  });
+
+  test('KAYIP SAYISI gerçekten sayılıyor — üç bozuk satır ÜÇ döner', () async {
+    // Tek-bozuk testleri, sayacın "sıfırdan farklı" dönmesiyle de geçerdi;
+    // eksik özetin BÜYÜKLÜĞÜ kullanıcıya söylenen cümlenin kendisi.
+    await store.append(rec('saglam'));
+    for (int i = 0; i < 3; i++) {
+      await file.writeAsString('{bozuk-$i\n', mode: FileMode.append);
+    }
+    expect((await store.recent()).length, 1);
+    expect(await store.unreadableRecords(), 3);
   });
 
   test('YARIM yazılmış son satır sağlam kayıtları götürmez', () async {
@@ -125,6 +150,7 @@ void main() {
         mode: FileMode.append);
     final List<SessionRecord> all = await store.recent();
     expect(all.map((SessionRecord r) => r.lessonId), <String>['tam']);
+    expect(await store.unreadableRecords(), 1);
   });
 
   test('ATOMİKLİK: yazma sonrası geçici dosya KALMAZ', () async {

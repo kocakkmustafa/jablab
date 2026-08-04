@@ -331,6 +331,11 @@ class _AuditStore implements SessionStore {
   Future<List<SessionRecord>> recent({int? limit}) async =>
       written.reversed.toList();
 
+  /// Bellek deposu kayıp ÜRETEMEZ — sıfır bir varsayım değil, bu uygulamanın
+  /// ölçülmüş gerçeği (J-092).
+  @override
+  Future<int> unreadableRecords() async => 0;
+
   @override
   Future<int> workedSecondsFor(String lessonId) async {
     int total = 0;

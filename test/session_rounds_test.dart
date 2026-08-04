@@ -331,6 +331,9 @@ class _FakeStore implements SessionStore {
   Future<List<SessionRecord>> recent({int? limit}) async => written;
 
   @override
+  Future<int> unreadableRecords() async => 0;
+
+  @override
   Future<int> workedSecondsFor(String lessonId) async {
     int total = 0;
     for (final SessionRecord r in written) {

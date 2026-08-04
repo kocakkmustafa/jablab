@@ -64,6 +64,13 @@ class _RootState extends State<_Root> {
   /// yapmamış kullanıcıya boş bir tablo göstermek olurdu.
   RecordedSummary? _recorded;
 
+  /// Geçmiş OKUNAMADI (J-092) — bloklamaz, BEYAN EDİLİR.
+  ///
+  /// `null` iki farklı şey demek DEĞİL: burada `null` yalnız "okuma sorunu
+  /// yok" demektir; "hiç kayıt yok" bilgisi [_recorded]'da yaşar. Bu ayrımı
+  /// tek alana yıkmak tam da düzeltilen kusurdu.
+  HistoryFailure? _historyFailure;
+
   /// İçerik yükleme başarısızlığı — TİPLİ (J-079). Eskiden burada ham `Object`
   /// duruyordu ve ekrana `'$_error'` basılıyordu; kullanıcı Türkçe bir
   /// `StateError` gövdesi görüyordu.
@@ -81,7 +88,16 @@ class _RootState extends State<_Root> {
       // Kalıcılık kurulamazsa uygulama ÇALIŞMAYA DEVAM EDER, yalnız kayıt
       // tutmaz. Depolama hatası yüzünden antrenmanı engellemek, çözümü
       // sorundan kötü yapardı.
-      if (mounted) setState(() => _store = null);
+      //
+      // ⚠️ AMA SESSİZ KALMAZ (J-092). Eskiden yalnız `_store = null` yazıyordu
+      // ve ilerleme sayfası "kaydedilenler" bölümünü hiç çizmiyordu — ekran,
+      // hiç antrenman yapmamış kullanıcınınkiyle BİREBİR aynı görünüyordu.
+      if (mounted) {
+        setState(() {
+          _store = null;
+          _historyFailure = HistoryFailure(e.toString());
+        });
+      }
     }));
   }
 
@@ -116,11 +132,34 @@ class _RootState extends State<_Root> {
     }
   }
 
+  /// Özeti tazeler. **Okuma hatası burada yakalanır** — eskiden yakalanmıyordu
+  /// ve `_openSession(...).then(...)` yolundan gelen bir okuma hatası
+  /// sahipsiz bir async hata olarak kayboluyordu: ekranda BAYAT sayılar
+  /// kalıyor, kullanıcı onları güncel sanıyordu (J-092).
   Future<void> _refreshRecorded() async {
     final SessionStore? s = _store;
     if (s == null) return;
-    final RecordedSummary sum = await RecordedSummary.from(s);
-    if (mounted) setState(() => _recorded = sum);
+    try {
+      final RecordedSummary sum = await RecordedSummary.from(s);
+      if (mounted) {
+        // Başarılı okuma önceki beyanı KALDIRIR: geçici bir I/O hatasından
+        // sonra "geçmişini okuyamıyorum" cümlesini ekranda bırakmak, artık
+        // doğru olmayan bir şeyi söylemeye devam etmek olurdu.
+        setState(() {
+          _recorded = sum;
+          _historyFailure = null;
+        });
+      }
+    } on Object catch (e) {
+      // Elde BAYAT bir özet varsa onu da düşürüyoruz: yanında "okuyamadım"
+      // yazan eski sayılar, iki çelişik iddiayı aynı anda göstermek olurdu.
+      if (mounted) {
+        setState(() {
+          _recorded = null;
+          _historyFailure = HistoryFailure(e.toString());
+        });
+      }
+    }
   }
 
   @override
@@ -164,6 +203,8 @@ class _RootState extends State<_Root> {
           'Balance': '—',
         },
         recorded: _recordedRows(),
+        historyUnavailable: _historyUnavailableText(),
+        historyIncomplete: _historyIncompleteText(),
         recordedNote: _recorded == null || _recorded!.sessions == 0
             ? null
             : 'Recorded time does not unlock lessons yet. Every progress gate '
@@ -174,6 +215,47 @@ class _RootState extends State<_Root> {
       ),
       profile: const _ProfilePage(),
     );
+  }
+
+  /// Geçmiş HİÇ okunamadıysa gösterilecek cümle (J-092), yoksa `null`.
+  ///
+  /// İKİ AYRI yol buraya çıkıyor ve ikisi AYNI cümleyi hak etmiyor:
+  /// dosya açılamadı (depo kurulamadı ya da okuma fırlattı) — ve dosya
+  /// açıldı ama **içindeki her kayıt** okunamadı. İkincisi ilk bakışta
+  /// "kısmi" görünür, oysa okunabilen sıfır kayıtla özet BOŞTUR ve boş özet
+  /// ekranda "hiç yapmadın"a dönüşür: tam kapattığımız yalan, uç değerinden
+  /// geri sızardı.
+  ///
+  /// "Try again" bilerek sunulmuyor: kullanıcının yapabileceği bir şey yok ve
+  /// çalışmayan bir düğme, düğme olmamasından kötüdür (J-079 dersi).
+  String? _historyUnavailableText() {
+    if (_historyFailure != null) {
+      return 'We could not read your saved sessions on this device. As far as '
+          'we know your training is still there — we simply cannot open the '
+          'file right now, so we are not going to show you numbers we did '
+          'not measure. Nothing is blocked: you can start a session as usual.';
+    }
+    final RecordedSummary? r = _recorded;
+    if (r != null && r.sessions == 0 && r.isPartial) {
+      return 'Your history file is there but none of it could be read, so we '
+          'have no totals to show. This is not the same as never having '
+          'trained, and we would rather say so than show you a zero. New '
+          'sessions will be recorded normally.';
+    }
+    return null;
+  }
+
+  /// Geçmiş KISMEN okunduysa, sayıların ALT SINIR olduğunu söyleyen cümle.
+  ///
+  /// Okunabilen kayıt yoksa `null` döner — o durum yukarıdaki "hiç okunamadı"
+  /// dalına ait; ikisi birden çizilirse bölüm hem "sayı yok" hem "sayılar
+  /// eksik" der.
+  String? _historyIncompleteText() {
+    final RecordedSummary? r = _recorded;
+    if (r == null || !r.isPartial || r.sessions == 0) return null;
+    return 'Some saved sessions could not be read (${r.unreadableRecords} of '
+        'them), so the totals below are a floor, not a full count — you did '
+        'at least this much.';
   }
 
   Map<String, String> _recordedRows() {

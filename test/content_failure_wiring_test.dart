@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' show FileSystemException;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -6,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_failure_screen.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/session_store.dart';
 
 /// BAĞLANTI testi (J-079): bozuk içerik GERÇEKTEN dürüst hata ekranını açıyor
 /// mu?
@@ -104,4 +106,88 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
     expect(find.byKey(const Key('tab-library')), findsOneWidget);
   });
+
+  /// ⭐ J-092 ZİNCİRİ — geçmiş okunamıyor, ama İÇERİK sağlam.
+  ///
+  /// `progress_recorded_test` bölümü tek başına sınıyor; burada sınanan şey
+  /// HATTIN BAĞLI OLDUĞU: depo fırlatıyor → `_refreshRecorded` yakalıyor →
+  /// `HistoryFailure` → ilerleme sekmesi beyan ediyor. Bileşen kusursuz olup
+  /// `_Root` onu hiç beslemiyor olabilirdi ve bileşen testi bunu göremezdi
+  /// (aynı gerekçe: J-079 zinciri).
+  group('⭐ J-092 zinciri', () {
+    Future<void> openProgress(WidgetTester t, ContentRepository repo) async {
+      await pumpApp(t, repo);
+      await t.tap(find.byKey(const Key('tab-progress')));
+      await t.pumpAndSettle();
+    }
+
+    testWidgets('depo okuması FIRLATIRSA ilerleme sekmesi BEYAN ediyor',
+        (WidgetTester t) async {
+      await openProgress(
+          t, ContentRepository(storeOverride: _ThrowingStore()));
+
+      // İçerik sağlam → bloklanmadı: kabuk ayakta, dersler açılabilir.
+      expect(find.byType(NavigationBar), findsOneWidget);
+      // ...ama sessiz de değil.
+      expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
+      expect(find.byType(ContentFailureScreen), findsNothing,
+          reason: 'depolama hatası yüzünden antrenmanı engellemek, çözümü '
+              'sorundan kötü yapardı — bu sınıf BLOKLAMAZ');
+    });
+
+    testWidgets('POZİTİF İKİZ: depo SAĞLAMKEN beyan hiç çizilmiyor',
+        (WidgetTester t) async {
+      // Yukarıdaki test, beyanı HER koşulda çizen bir kusuru da "geçti"
+      // sayardı.
+      //
+      // ⚠️ İkiz ÇALIŞAN bir depo enjekte etmek ZORUNDA: varsayılan
+      // `ContentRepository` burada `getApplicationSupportDirectory()`e gider
+      // ve widget testinde `path_provider` eklentisi yoktur — yani varsayılan
+      // depo test ortamında GERÇEKTEN açılamıyor ve beyan HAKLI olarak
+      // çıkıyor. İlk yazdığımda ikizi varsayılanla kurmuştum ve test düştü;
+      // düşme sebebi kusur değil, hattın çalıştığının kanıtıydı.
+      await openProgress(t, ContentRepository(storeOverride: _WorkingStore()));
+      expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
+      expect(find.byKey(const Key('bands-only-note')), findsOneWidget,
+          reason: 'ilerleme sekmesinin gerçekten açıldığına pozitif kanıt');
+    });
+  });
+}
+
+/// Sorunsuz çalışan boş depo — ikizin "beyan yok" iddiasının anlamlı olması
+/// için hattın diğer ucunun GERÇEKTEN sağlam olması gerekiyor.
+class _WorkingStore implements SessionStore {
+  final List<SessionRecord> _all = <SessionRecord>[];
+
+  @override
+  Future<void> append(SessionRecord record) async => _all.add(record);
+
+  @override
+  Future<List<SessionRecord>> recent({int? limit}) async => _all;
+
+  @override
+  Future<int> unreadableRecords() async => 0;
+
+  @override
+  Future<int> workedSecondsFor(String lessonId) async => 0;
+}
+
+/// Okuması FIRLAYAN depo — gerçek sahada karşılığı: izin hatası, bozulmuş
+/// dosya sistemi, `path_provider`ın döndürdüğü dizinin kaybolması.
+class _ThrowingStore implements SessionStore {
+  @override
+  Future<void> append(SessionRecord record) async =>
+      throw const FileSystemException('append');
+
+  @override
+  Future<List<SessionRecord>> recent({int? limit}) async =>
+      throw const FileSystemException('recent');
+
+  @override
+  Future<int> unreadableRecords() async =>
+      throw const FileSystemException('unreadableRecords');
+
+  @override
+  Future<int> workedSecondsFor(String lessonId) async =>
+      throw const FileSystemException('workedSecondsFor');
 }

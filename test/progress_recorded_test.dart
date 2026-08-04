@@ -15,6 +15,8 @@ void main() {
     WidgetTester t, {
     Map<String, String> recorded = const <String, String>{},
     String? note,
+    String? unavailable,
+    String? incomplete,
   }) async {
     await t.pumpWidget(MaterialApp(
       // `ListTile` bir Material ata ister; gerçek uygulamada bunu
@@ -27,6 +29,8 @@ void main() {
         },
         recorded: recorded,
         recordedNote: note,
+        historyUnavailable: unavailable,
+        historyIncomplete: incomplete,
       )),
     ));
     await t.pumpAndSettle();
@@ -83,6 +87,87 @@ void main() {
     expect(find.byKey(const Key('recorded-note')), findsOneWidget);
   });
 
+  group('⭐ J-092 — "hiç yapmadın" ≠ "bilmiyorum" (M-F-209, Gravita G-102)', () {
+    testWidgets('geçmiş okunamadıysa bölüm ÇİZİLİR ve sayı YERİNE beyan var',
+        (WidgetTester t) async {
+      // Kusurun kendisi buydu: `openStore()` patlayınca özet hiç gelmiyor,
+      // `recorded` boş kalıyor ve bölüm HİÇ çizilmiyordu — ekran, hiç
+      // antrenman yapmamış kullanıcınınkiyle birebir aynı görünüyordu.
+      await pumpProgress(t,
+          unavailable: 'We could not read your saved sessions on this device.');
+      expect(find.byKey(const Key('recorded-heading')), findsOneWidget);
+      expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
+      // Sayı satırı YOK: bilmediğimizi sıfır yazmayız.
+      expect(find.byKey(const Key('recorded-Time worked')), findsNothing);
+      expect(find.byKey(const Key('recorded-note')), findsNothing,
+          reason: '"kaydedilen süre ders açmıyor" notu, kaydedilen süre '
+              'okunamazken anlamsız — söyleyecek sayı yok');
+    });
+
+    testWidgets('POZİTİF İKİZ: geçmiş SAĞLAMKEN beyan YOK, sayılar VAR',
+        (WidgetTester t) async {
+      // Gotcha #5: yukarıdaki "X yok" iddiaları, o anahtarlar hiç
+      // çizilmiyorsa da geçerdi. Bu ikiz o boşluğu kapatıyor.
+      await pumpProgress(t,
+          recorded: <String, String>{'Time worked': '24 min'},
+          note: 'Recorded time does not unlock lessons yet.');
+      expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
+      expect(find.byKey(const Key('recorded-Time worked')), findsOneWidget);
+      expect(find.byKey(const Key('recorded-note')), findsOneWidget);
+    });
+
+    testWidgets('beyan hiçbir SAYI göstermiyor', (WidgetTester t) async {
+      await pumpProgress(t,
+          unavailable: 'We could not read your saved sessions on this device.');
+      final RegExp anyCount =
+          RegExp(r'\b\d+\s*(min|h|m|sessions?|recorded)\b', caseSensitive: false);
+      for (final Text w in t.widgetList<Text>(find.byType(Text))) {
+        expect(anyCount.hasMatch(w.data ?? ''), isFalse,
+            reason: 'geçmiş okunamazken sayı gösterildi: "${w.data}"');
+      }
+    });
+
+    testWidgets('KISMİ kayıp: sayılar VAR ama ALT SINIR olduğu SATIRLARDAN '
+        'ÖNCE söyleniyor', (WidgetTester t) async {
+      // JabLab deltası: depo bozuk satırı bilerek atlıyor, yani "hiç
+      // yapmadın"ın yanında bir de "az yaptın" yalanı mümkün.
+      await pumpProgress(t,
+          recorded: <String, String>{'Time worked': '24 min'},
+          incomplete: 'Some saved sessions could not be read (2 of them).');
+      expect(find.byKey(const Key('recorded-incomplete')), findsOneWidget);
+      expect(find.byKey(const Key('recorded-Time worked')), findsOneWidget);
+
+      // Sıra iddiası: nitelik, nitelediği sayıdan ÖNCE okunmalı. Altında
+      // dursaydı kullanıcı toplamı önce tam sanar, sonra düzeltirdi.
+      final double caveatY =
+          t.getTopLeft(find.byKey(const Key('recorded-incomplete'))).dy;
+      final double rowY =
+          t.getTopLeft(find.byKey(const Key('recorded-Time worked'))).dy;
+      expect(caveatY, lessThan(rowY));
+    });
+
+    testWidgets('POZİTİF İKİZ: kayıp YOKKEN kısmi-beyan çizilmiyor',
+        (WidgetTester t) async {
+      await pumpProgress(t,
+          recorded: <String, String>{'Time worked': '24 min'});
+      expect(find.byKey(const Key('recorded-incomplete')), findsNothing);
+      expect(find.byKey(const Key('recorded-Time worked')), findsOneWidget);
+    });
+
+    testWidgets('beyan varken satır YOLU KAPALI — ikisi aynı anda çizilemez',
+        (WidgetTester t) async {
+      // "Okuyamadım" ile bir sayı listesi aynı ekranda dururlarsa hangisine
+      // inanılacağı belirsiz kalır; yapı bunu mümkün kılmamalı.
+      await pumpProgress(t,
+          unavailable: 'We could not read your saved sessions.',
+          recorded: <String, String>{'Time worked': '24 min'},
+          incomplete: 'partial');
+      expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
+      expect(find.byKey(const Key('recorded-Time worked')), findsNothing);
+      expect(find.byKey(const Key('recorded-incomplete')), findsNothing);
+    });
+  });
+
   group('RecordedSummary', () {
     SessionRecord rec({int worked = 540, int rounds = 3, int planned = 3}) =>
         SessionRecord(
@@ -124,6 +209,23 @@ void main() {
               'yapılmıştır');
     });
 
+    test('okunamayan kayıt özete TAŞINIYOR ve özet KISMİ işaretleniyor',
+        () async {
+      final RecordedSummary sum = await RecordedSummary.from(
+          _MemStore(<SessionRecord>[rec()], unreadable: 2));
+      expect(sum.sessions, 1);
+      expect(sum.unreadableRecords, 2);
+      expect(sum.isPartial, isTrue,
+          reason: 'gösterilen toplam bir ölçüm değil ALT SINIR');
+    });
+
+    test('POZİTİF İKİZ: kayıp yokken özet KISMİ DEĞİL', () async {
+      final RecordedSummary sum =
+          await RecordedSummary.from(_MemStore(<SessionRecord>[rec()]));
+      expect(sum.unreadableRecords, 0);
+      expect(sum.isPartial, isFalse);
+    });
+
     test('boş depoda her şey sıfır, patlamıyor', () async {
       final RecordedSummary sum =
           await RecordedSummary.from(_MemStore(<SessionRecord>[]));
@@ -135,15 +237,19 @@ void main() {
 }
 
 class _MemStore implements SessionStore {
-  _MemStore(this._all);
+  _MemStore(this._all, {int unreadable = 0}) : _unreadable = unreadable;
 
   final List<SessionRecord> _all;
+  final int _unreadable;
 
   @override
   Future<void> append(SessionRecord record) async => _all.add(record);
 
   @override
   Future<List<SessionRecord>> recent({int? limit}) async => _all;
+
+  @override
+  Future<int> unreadableRecords() async => _unreadable;
 
   @override
   Future<int> workedSecondsFor(String lessonId) async {
