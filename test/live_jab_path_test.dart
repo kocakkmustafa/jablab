@@ -5,7 +5,9 @@ import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/live_jab_controller.dart';
 import 'package:jablab/app/live_session_failure.dart';
 import 'package:jablab/app/session_narrator.dart';
-import 'package:jablab/shell_candidate/live_surface.dart' show LiveState;
+import 'package:flutter/material.dart';
+import 'package:jablab/shell_candidate/live_surface.dart'
+    show LiveCoachSurface, LiveState;
 import 'package:jablab_engine/jablab_engine.dart';
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart';
@@ -95,6 +97,8 @@ void main() {
       expect(cam.startCalls, 1);
     });
   });
+
+  group('sayı yuvası', _countSlotTests);
 
   group('canlı hat', () {
     test('SENTETİK jab SAYILIYOR ve faz bildiriliyor', () async {
@@ -191,6 +195,40 @@ void main() {
       }
       await c.dispose();
     });
+  });
+}
+
+/// SAYI YUVASI — "henüz sayılmıyor" ile "sıfır" AYRI (J-096).
+///
+/// Simülatörde bulundu: analiz hiç başlamamışken ekranda kocaman bir **0**
+/// duruyordu, yani "sıfır yumruk attın". J-092'nin canlı ekrandaki birebir
+/// tekrarı — ve hiçbir widget testi görmüyordu çünkü hepsi metnin VARLIĞINI
+/// sınıyordu, ANLAMINI değil.
+void _countSlotTests() {
+  testWidgets('analiz başlamamışken SAYI GÖSTERİLMİYOR',
+      (WidgetTester t) async {
+    await t.pumpWidget(const MaterialApp(
+      home: Scaffold(
+        body: LiveCoachSurface(
+          state: LiveState.noVerdict,
+          eventCount: null,
+          noVerdictReason: 'camera off',
+        ),
+      ),
+    ));
+    expect(find.byKey(const Key('event-count')), findsNothing);
+  });
+
+  testWidgets('POZİTİF İKİZ: koşan seansta SAYI gösteriliyor (0 dahil)',
+      (WidgetTester t) async {
+    // Koşan bir seansta 0 DOĞRUDUR: ölçüyoruz ve henüz yumruk yok.
+    await t.pumpWidget(const MaterialApp(
+      home: Scaffold(
+        body: LiveCoachSurface(state: LiveState.clean, eventCount: 0),
+      ),
+    ));
+    expect(find.byKey(const Key('event-count')), findsOneWidget);
+    expect(find.text('0'), findsOneWidget);
   });
 }
 

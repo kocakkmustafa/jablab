@@ -37,7 +37,17 @@ class LiveCoachSurface extends StatelessWidget {
   final LiveState state;
 
   /// Sayılan olay adedi (yumruk, tekrar, adım…). Alan-bağımsız.
-  final int eventCount;
+  ///
+  /// **`null` = HENÜZ SAYILMIYOR** ve bu ayrım J-096'da simülatörde
+  /// bulundu: analiz hiç başlamamışken (izin reddi, kamera açılamadı, ilk
+  /// kare gelmedi) ekranda kocaman bir **0** duruyordu — yani "sıfır yumruk
+  /// attın". Oysa hiçbir şey ÖLÇÜLMEDİ. J-092'nin ("hiç yapmadın ≠
+  /// bilmiyorum") canlı ekrandaki birebir tekrarı.
+  ///
+  /// Koşan bir seansta geçici olarak hüküm verilemiyorsa sayı YİNE gösterilir
+  /// — o sayı gerçek: "3 attın, şimdi göremiyorum". İkisi farklı hâller ve
+  /// tek bir `int` ikisini de anlatamıyordu.
+  final int? eventCount;
 
   /// Tek cümlelik düzeltme metni — **HÜKÜM** yuvası.
   final String? cue;
@@ -73,10 +83,14 @@ class LiveCoachSurface extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              Text('$eventCount',
-                  key: const Key('event-count'),
-                  style: theme.textTheme.displayMedium),
-              const SizedBox(height: 12),
+              // SAYI YOKSA YUVA DA YOK. `0` çizmek "sıfır yaptın" demektir
+              // ve analiz hiç başlamamışken bu bir ölçüm değil, bir yalandır.
+              if (eventCount != null) ...<Widget>[
+                Text('$eventCount',
+                    key: const Key('event-count'),
+                    style: theme.textTheme.displayMedium),
+                const SizedBox(height: 12),
+              ],
               switch (state) {
                 LiveState.correcting => Text(
                     cue ?? '',

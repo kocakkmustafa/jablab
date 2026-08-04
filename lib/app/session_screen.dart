@@ -534,7 +534,9 @@ extension on _LiveState {
       // çünkü kamera dersinin vaadi analizdir.
       return LiveCoachSurface(
         state: LiveState.noVerdict,
-        eventCount: 0,
+        // Analiz HİÇ başlamadı → sayı YOK. `0` yazmak "sıfır yumruk attın"
+        // demektir ve hiçbir şey ölçülmedi (J-096, simülatörde bulundu).
+        eventCount: null,
         narration: _line,
         noVerdictReason: _failureSentence(failure),
       );
@@ -545,7 +547,7 @@ extension on _LiveState {
       // KAMERASIZ ders — hâlâ doğru olan eski cümle.
       return LiveCoachSurface(
         state: LiveState.noVerdict,
-        eventCount: 0,
+        eventCount: null,
         narration: _line,
         noVerdictReason:
             'This lesson runs on the clock — nothing is being judged. '
@@ -557,7 +559,7 @@ extension on _LiveState {
       // atmadın" demektir, oysa daha hiçbir şey ölçülmedi.
       return LiveCoachSurface(
         state: LiveState.noVerdict,
-        eventCount: 0,
+        eventCount: null,
         narration: _line,
         noVerdictReason: 'Getting the camera ready…',
       );
