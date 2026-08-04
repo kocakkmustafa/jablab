@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show ByteData, rootBundle;
 import 'package:path_provider/path_provider.dart';
 
 import 'content_failure.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
+import 'pose_model.dart';
 import 'teach_material.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
@@ -117,6 +118,29 @@ final class ContentRepository {
   /// Aralık planı (J-068) — aynı çeviri katmanı, aynı sebep.
   IntervalPlan? intervalPlanFor(Library lib, String lessonId) =>
       _lessonFor(lib, lessonId)?.intervalPlan;
+
+  /// Ders KAMERA hattını açar mı — İÇERİKTEN (J-096).
+  bool usesCamera(Library lib, String lessonId) =>
+      _lessonFor(lib, lessonId)?.usesCamera ?? false;
+
+  /// Poz modelini asset'ten diske çıkarır — MediaPipe bir DOSYA YOLU
+  /// istiyor, asset bundle'ı okuyamıyor (J-096).
+  ///
+  /// Dev-harness'tan buraya taşındı: canlı ders ve harness AYNI yolu
+  /// kullanmalı, yoksa iki kopya çıkar ve biri güncellenmeyi unutur.
+  /// SHA doğrulaması `tool/fetch_pose_model.sh` + `model_pin_test`te;
+  /// burada her açılışta yeniden hash'lemek çıkarma maliyetini ikiye
+  /// katlardı.
+  Future<String> materializePoseModel() async {
+    final Directory dir = await getApplicationSupportDirectory();
+    final File out =
+        File('${dir.path}/${PoseModelPin.assetPath.split('/').last}');
+    if (!out.existsSync()) {
+      final ByteData data = await rootBundle.load(PoseModelPin.assetPath);
+      await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
+    }
+    return out.path;
+  }
 
   /// Dersin anlatım materyali (J-094) — **tek karar noktası**.
   ///
