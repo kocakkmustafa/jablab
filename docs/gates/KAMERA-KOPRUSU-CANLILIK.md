@@ -47,16 +47,30 @@ Gravita iOS aynı duvara çarptı, LifeOS kaydıyla aynı kök):
 
 ```bash
 cd ventures/jablab/app
-rm -rf build && ln -s ~/jablab_buildout build && flutter clean
+mkdir -p ~/jablab_buildout
+rm -rf build && flutter clean          # ÖNCE temizle
+ln -s ~/jablab_buildout build          # SONRA symlink — sıra ÖNEMLİ
 ```
 
 Emsaller diskte **doğrulandı**: `~/gravita_buildout` ve `~/lifeos_buildout`
 ikisi de mevcut. İkinci tuzak: **bayat `native_assets`** — `flutter clean`
 o yüzden aynı adımda.
 
-**Symlink ŞİMDİ kurulmadı, bilinçli:** `build/` git-yoksayılı ama paylaşımlı
-workspace'te eşzamanlı bir oturum derleme yapıyor olabilir ve altından dizin
-çekmek onu kırar. Cihaz günü tek komut, yukarıda hazır.
+> ⚠️ **SIRA DÜZELTİLDİ (2026-08-04, J-092 koşumunda ölçüldü).** Önceki hâli
+> `rm -rf build && ln -s … && flutter clean` idi ve **kendi symlink'ini
+> siliyordu**: `flutter clean` `build`i bir dizin sanıp kaldırıyor, symlink
+> dahil. Komut hatasız bitiyor, `ls -ld build` "No such file or directory"
+> diyor ve bir sonraki derleme panzehir HİÇ uygulanmamış gibi codesign'da
+> düşüyor. Sessiz-kırılma sınıfı: çıktı temiz, sonuç yok.
+
+**Panzehir 2026-08-04'te UYGULANDI ve İŞE YARADI** (artık "cihaz günü
+bekliyor" değil): symlink öncesi `flutter run -d <sim>` → *"Command CodeSign
+failed"* + *"Command Libtool failed"*; symlink sonrası aynı komut → uygulama
+iPhone 17 Pro Max simülatöründe **koştu**. Yani bu duvar iOS **simülatöründe
+de** çıkıyor, yalnız gerçek cihazda değil — ve panzehir ikisinde de aynı.
+
+`build/` şu an `~/jablab_buildout`a bağlı ve öyle kalıyor. Eski "symlink
+bilinçli kurulmadı (eşzamanlı oturum riski)" notu artık geçersiz.
 
 ## ✅ §7.2 — Android: Gradle çözer, Kotlin derlenir
 
