@@ -78,3 +78,38 @@ final class ContentFailure {
   /// Geliştirici ayrıntısı. Kullanıcıya İKİNCİL olarak, katlanmış hâlde.
   final String detail;
 }
+
+/// GEÇMİŞ okunamadı — ama İÇERİK sağlam (J-092, aile kuralı M-F-209).
+///
+/// Emsal Gravita'nın `HistoryFailure`'ı (G-102) ve JabLab burada üçüncü
+/// tüketici. Kusurun JabLab'daki hâli aynı sınıftandı: `openStore()`
+/// başarısız olunca `_store = null` kalıyor, özet hiç gelmiyor ve ilerleme
+/// sayfası "What we recorded" bölümünü **hiç çizmiyordu** — yani ekran, hiç
+/// antrenman yapmamış kullanıcınınkiyle BİREBİR AYNI görünüyordu. Sessizlik
+/// burada bir cümle kuruyor ve o cümle *"hiç yapmadın"*.
+///
+/// **Bloklayıcı DEĞİL** ([ContentFailureKind.integrity]'nin aksine): içerik
+/// sağlamsa dersler açılabilir, antrenman yapılabilir. Depolama hatası
+/// yüzünden antrenmanı engellemek çözümü sorundan kötü yapardı. Ama
+/// **beyan edilmek zorunda** ve beyan edilirken **sayı gösterilmez** —
+/// bilmediğimizi sıfır yazmayız.
+///
+/// ## ⭐ JABLAB DELTASI — ikili değil, ÜÇ hâl
+///
+/// Gravita'da geçmiş ya okunur ya okunmaz: tüm okuma tek `try`/`catch`
+/// içinde. JabLab'ın deposu bozuk satırı **bilerek atlıyor** ve atlamak doğru
+/// karar (bkz. `session_store.dart`) — bu, Gravita'da KARŞILIĞI OLMAYAN bir
+/// üçüncü hâl doğuruyor: *kısmen okundu.* Orada "hiç yapmadın" yalanı vardı,
+/// burada bir de **"az yaptın"** yalanı mümkün: özet yine sayı gösterir, ama
+/// gösterdiği sayı bir toplam değil bir ALT SINIRDIR.
+///
+/// Bu yüzden JabLab'ın modeli bu sınıf + [RecordedSummary.unreadableRecords]
+/// çiftidir. Sadece bu sınıf terfi ettirilirse (ikili hâliyle) JabLab onu
+/// devraldığı gün kırmak zorunda kalır — terfi hakemliği için ölçülmüş fark
+/// budur.
+final class HistoryFailure {
+  const HistoryFailure(this.detail);
+
+  /// Geliştirici ayrıntısı — kullanıcıya birincil metin olarak gösterilmez.
+  final String detail;
+}

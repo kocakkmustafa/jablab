@@ -69,6 +69,20 @@ abstract interface class SessionStore {
 
   /// Bir dersin toplam çalışma süresi — ilerleme kapısı bunu sorar.
   Future<int> workedSecondsFor(String lessonId);
+
+  /// **Okunamayan kayıt sayısı** — J-092, M-F-209'un JabLab deltası.
+  ///
+  /// Neden arayüzde ve neden VARSAYILANI YOK: bu depo bozuk satırı bilerek
+  /// ATLIYOR ([JsonlSessionStore._readAll]) ve atlamak DOĞRU karar — tek bozuk
+  /// satır yüzünden aylarca birikmiş geçmişi okunamaz ilan etmek, veriyi
+  /// kaybetmekle aynı sonucu verir. Ama atlamayı SESSİZ yapmak, "az yaptın"
+  /// diyen bir yalan üretir: 50 satırın 40'ı atlanınca özet "10 seans" der ve
+  /// bunu gerçekten 10 seans yapılmış gibi aynı güvenle söyler.
+  ///
+  /// Varsayılan `0` vermek, veri kaybedebilen bir uygulamanın soruyu hiç
+  /// cevaplamadan sessiz kalmasına izin verirdi. "Kaç tanesini kaybettin?"
+  /// **kaçınılmaz** olmak zorunda — o yüzden zorunlu üye.
+  Future<int> unreadableRecords();
 }
 
 /// Kaydedilmiş seansların OLGU özeti (F-4/J-066).
@@ -81,11 +95,23 @@ final class RecordedSummary {
     required this.sessions,
     required this.completed,
     required this.workedSeconds,
+    this.unreadableRecords = 0,
   });
 
   final int sessions;
   final int completed;
   final int workedSeconds;
+
+  /// Okunamadığı için bu özetin DIŞINDA kalan kayıt sayısı (J-092).
+  ///
+  /// Sıfırdan büyükse aşağıdaki üç sayının hepsi **alt sınırdır**, ölçüm
+  /// değil. Bunu söylemeden göstermek, eksik bir toplamı tam bir toplam
+  /// gibi sunmak olur.
+  final int unreadableRecords;
+
+  /// Özet EKSİK mi? "Hiç yapmadın" ile "bilmiyorum" arasındaki üçüncü hâl:
+  /// *biraz biliyorum, ne kadarını bilmediğimi de biliyorum.*
+  bool get isPartial => unreadableRecords > 0;
 
   int get stoppedEarly => sessions - completed;
 
@@ -111,6 +137,7 @@ final class RecordedSummary {
       sessions: all.length,
       completed: done,
       workedSeconds: worked,
+      unreadableRecords: await store.unreadableRecords(),
     );
   }
 }
@@ -161,7 +188,7 @@ final class JsonlSessionStore implements SessionStore {
 
   @override
   Future<List<SessionRecord>> recent({int? limit}) async {
-    final List<SessionRecord> all = await _readAll();
+    final List<SessionRecord> all = (await _readAll()).records;
     all.sort((SessionRecord a, SessionRecord b) =>
         b.completedAt.compareTo(a.completedAt));
     if (limit == null || limit >= all.length) return all;
@@ -171,18 +198,30 @@ final class JsonlSessionStore implements SessionStore {
   @override
   Future<int> workedSecondsFor(String lessonId) async {
     int total = 0;
-    for (final SessionRecord r in await _readAll()) {
+    for (final SessionRecord r in (await _readAll()).records) {
       if (r.lessonId == lessonId) total += r.workedSeconds;
     }
     return total;
   }
 
-  Future<List<SessionRecord>> _readAll() async {
+  @override
+  Future<int> unreadableRecords() async => (await _readAll()).unreadable;
+
+  /// Kayıtlar VE atlananların sayısı — ikisi AYNI okumadan gelmek zorunda.
+  ///
+  /// Ayrı ayrı okusaydım (bir tarama kayıt için, bir tarama sayaç için) iki
+  /// tarama arasında dosyaya yazılan bir seans, "3 kayıt + 1 kayıp" gibi
+  /// birbirini tutmayan bir çift üretebilirdi. Beyan, beyan ettiği sayıyla
+  /// aynı anda ölçülmüş olmalı.
+  Future<({List<SessionRecord> records, int unreadable})> _readAll() async {
     // DEĞİŞTİRİLEBİLİR liste dönmek zorunlu: `recent()` sonucu yerinde
     // sıralıyor. `const []` dönmek boş-geçmiş yolunu — yani İLK AÇILIŞI —
     // çökertiyordu; testin yakaladığı gerçek kusur.
-    if (!await _file.exists()) return <SessionRecord>[];
+    if (!await _file.exists()) {
+      return (records: <SessionRecord>[], unreadable: 0);
+    }
     final List<SessionRecord> out = <SessionRecord>[];
+    int skipped = 0;
     for (final String raw in (await _file.readAsString()).split('\n')) {
       final String line = raw.trim();
       if (line.isEmpty) continue;
@@ -190,16 +229,27 @@ final class JsonlSessionStore implements SessionStore {
       // gelen bir satır yüzünden kullanıcının aylarca birikmiş kaydını
       // okunamaz ilan etmek, veriyi kaybetmekle aynı sonucu verir —
       // o satır atlanır, gerisi okunur.
+      //
+      // ⚠️ AMA SESSİZ ATLAMAZ (J-092). Atlananlar sayılıyor ve yüzeye kadar
+      // taşınıyor: dayanıklılık kararı doğru, dayanıklılığı gizlemek yanlış.
+      // Sessiz hâlinde 50 satırın 40'ı bozulunca özet "10 seans" der ve bunu
+      // gerçekten 10 seans yapılmış gibi aynı güvenle söylerdi.
       try {
         final Map<String, dynamic> j =
             (jsonDecode(line) as Map).cast<String, dynamic>();
         final int v = (j['v'] as num?)?.toInt() ?? 0;
-        if (v != schemaVersion) continue;
+        // Sürüm uyuşmazlığı da bir KAYIPTIR: satır sağlam olabilir ama bu
+        // sürüm onu okuyamıyor — kullanıcı açısından sonuç aynı, eksik özet.
+        if (v != schemaVersion) {
+          skipped++;
+          continue;
+        }
         out.add(SessionRecord.fromJson(j));
       } on Object catch (_) {
+        skipped++;
         continue;
       }
     }
-    return out;
+    return (records: out, unreadable: skipped);
   }
 }

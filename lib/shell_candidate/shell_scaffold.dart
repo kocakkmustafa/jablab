@@ -73,6 +73,8 @@ class ProgressPage extends StatelessWidget {
     required this.bands,
     this.recorded = const <String, String>{},
     this.recordedNote,
+    this.historyUnavailable,
+    this.historyIncomplete,
     this.numericUnlocked = false,
   });
 
@@ -92,6 +94,26 @@ class ProgressPage extends StatelessWidget {
   /// olması istenmez ama verildiğinde gösterilir: biriken süreyi görüp
   /// hiçbir şeyin açılmadığını fark eden kullanıcı, sebebini burada bulur.
   final String? recordedNote;
+
+  /// Geçmiş HİÇ okunamadı — bölüm sayı yerine bu cümleyi gösterir (J-092).
+  ///
+  /// Bu alan olmadan boş [recorded] iki BAMBAŞKA durumu aynı ekrana çeviriyordu:
+  /// *"henüz hiç çalışmadın"* ve *"çalıştıklarını okuyamıyorum"*. İkincisinde
+  /// bölümü hiç çizmemek, kullanıcının aylarca birikmiş işini yok saymaktır.
+  /// Sessizlik burada da bir cümle kurar; kurduğu cümle yanlıştır.
+  ///
+  /// Ostinato/Choreia karşılığı birebir aynı (terfi şartı #3): geçmiş
+  /// okunamadığında "hiç çalgı çalmadın" demek de aynı yalandır.
+  final String? historyUnavailable;
+
+  /// Geçmiş KISMEN okundu — [recorded] gösterilir ama ALT SINIR olduğu
+  /// söylenerek (J-092 JabLab deltası).
+  ///
+  /// Ayrı alan olmasının sebebi: bu bir hata bildirimi değil, gösterilen
+  /// sayıların **anlamını değiştiren** bir nitelik. Cümle sayıların ALTINDA
+  /// dursaydı kullanıcı toplamları önce tam sanıp sonra düzeltirdi — o yüzden
+  /// başlığın hemen altında, satırlardan ÖNCE çizilir.
+  final String? historyIncomplete;
 
   final bool numericUnlocked;
 
@@ -121,7 +143,21 @@ class ProgressPage extends StatelessWidget {
               title: Text(e.key),
               trailing: Text(e.value, style: theme.textTheme.titleSmall),
             )),
-        if (recorded.isNotEmpty) ...<Widget>[
+        // Geçmiş okunamadığında bölüm YİNE çizilir — sayısız. Onu gizlemek,
+        // hiç çalışmamış kullanıcının ekranıyla aynı şeyi göstermek olurdu.
+        if (historyUnavailable != null) ...<Widget>[
+          const Divider(height: 32),
+          Text('What we recorded',
+              key: const Key('recorded-heading'),
+              style: theme.textTheme.titleSmall),
+          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(historyUnavailable!,
+                key: const Key('recorded-unavailable'),
+                style: theme.textTheme.bodySmall),
+          ),
+        ] else if (recorded.isNotEmpty) ...<Widget>[
           const Divider(height: 32),
           Text('What we recorded',
               key: const Key('recorded-heading'),
@@ -136,6 +172,15 @@ class ProgressPage extends StatelessWidget {
               style: theme.textTheme.bodySmall,
             ),
           ),
+          // Nitelik satırlardan ÖNCE: toplamlar okunmadan önce eksik oldukları
+          // bilinmeli.
+          if (historyIncomplete != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(historyIncomplete!,
+                  key: const Key('recorded-incomplete'),
+                  style: theme.textTheme.bodySmall),
+            ),
           ...recorded.entries.map((MapEntry<String, String> e) => ListTile(
                 key: Key('recorded-${e.key}'),
                 title: Text(e.key),
