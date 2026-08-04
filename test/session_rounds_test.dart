@@ -188,8 +188,8 @@ void main() {
       expect(store.written.length, 1, reason: 'seans kaydedilmedi');
       final SessionRecord r = store.written.single;
       expect(r.lessonId, 'x');
-      expect(r.roundsCompleted, 3);
-      expect(r.plannedRounds, 3);
+      expect(r.unitsCompleted, 3);
+      expect(r.plannedUnits, 3);
       expect(r.isComplete, isTrue);
       expect(r.workedSeconds, 12,
           reason: 'çalışma 3×4=12sn olmalı; 16 çıkarsa dinlenme de sayılmış');
@@ -211,8 +211,8 @@ void main() {
 
       final SessionRecord r = store.written.single;
       expect(r.isComplete, isFalse);
-      expect(r.roundsCompleted, 1);
-      expect(r.plannedRounds, 6);
+      expect(r.unitsCompleted, 1);
+      expect(r.plannedUnits, 6);
       expect(r.workedSeconds, 4,
           reason: 'tek tur çalışıldı (4sn); dinlenmede geçen süre sayılmamalı');
     });
@@ -315,8 +315,8 @@ void main() {
       final SessionRecord r = store.written.single;
       expect(r.workedSeconds, 12,
           reason: 'çalışma 3×4=12sn olmalı; 18 çıkarsa toparlanma da sayılmış');
-      expect(r.roundsCompleted, 3);
-      expect(r.plannedRounds, 3);
+      expect(r.unitsCompleted, 3);
+      expect(r.plannedUnits, 3);
       expect(r.isComplete, isTrue);
     });
   });

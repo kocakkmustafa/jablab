@@ -79,6 +79,14 @@ final class ContentFailure {
   final String detail;
 }
 
+/// ⚠️ **EMEKLİ (J-095).** Bu sınıfın yerini `motion_core` 0.11.0'ın
+/// `HistoryUnavailable`ı aldı — üç hat aynı semantiğe yakınsadı, sözleşme
+/// çekirdeğe terfi etti (M-F-254) ve yerel kopyayı tutmak "aynı kuralın iki
+/// yerde yaşaması" olurdu. Aşağıdaki gerekçe TARİHSEL kayıt olarak duruyor:
+/// çekirdek tipin neden var olduğunu anlatan ölçülmüş vaka budur.
+///
+/// ---
+///
 /// GEÇMİŞ okunamadı — ama İÇERİK sağlam (J-092, aile kuralı M-F-209).
 ///
 /// Emsal Gravita'nın `HistoryFailure`'ı (G-102) ve JabLab burada üçüncü
@@ -107,9 +115,4 @@ final class ContentFailure {
 /// çiftidir. Sadece bu sınıf terfi ettirilirse (ikili hâliyle) JabLab onu
 /// devraldığı gün kırmak zorunda kalır — terfi hakemliği için ölçülmüş fark
 /// budur.
-final class HistoryFailure {
-  const HistoryFailure(this.detail);
-
-  /// Geliştirici ayrıntısı — kullanıcıya birincil metin olarak gösterilmez.
-  final String detail;
-}
+// (sınıf gövdesi kaldırıldı — çekirdek `HistoryUnavailable` kullanılıyor)

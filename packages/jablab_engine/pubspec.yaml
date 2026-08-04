@@ -20,9 +20,9 @@ dependencies:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_core
       # TAG'IN COMMIT'I — motion_camera pini ile AYNI olmak ZORUNDA
-      # (pin esitligi; yukarıdaki nota bkz). == motion_camera-v0.1.1
-      # ve o commit'teki motion_core surumu 0.8.8.
-      ref: f34acd87765b35bcb4f2a0c6dedbc28c48f8ee69
+      # (pin esitligi; yukarıdaki nota bkz). == motion_camera-v0.1.2
+      # ve o commit'teki motion_core surumu 0.11.0.
+      ref: f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d
 
 dev_dependencies:
   test: ^1.25.0

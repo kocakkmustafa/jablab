@@ -202,8 +202,8 @@ void main() {
           failures.add('${l.id}: çalışma ${expectedWork}sn ama kapı ${gate}sn');
         }
         recordVerdict = '${workOk ? "✓" : "✗"} kayıt '
-            '${r.workedSeconds}sn çalışma · ${r.roundsCompleted}/'
-            '${r.plannedRounds} segment · '
+            '${r.workedSeconds}sn çalışma · ${r.unitsCompleted}/'
+            '${r.plannedUnits} segment · '
             '${r.isComplete ? "tamamlandı" : "yarıda"}';
       }
 

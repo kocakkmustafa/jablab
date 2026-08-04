@@ -109,8 +109,25 @@ class _SessionScreenState extends State<SessionScreen> {
       lessonId: widget.lesson.id,
       completedAt: DateTime.now(),
       workedSeconds: _workedSeconds,
-      roundsCompleted: _roundsCompleted,
-      plannedRounds: plan?.rounds ?? widget.intervalPlan!.bursts,
+      unitsCompleted: _roundsCompleted,
+      plannedUnits: plan?.rounds ?? widget.intervalPlan!.bursts,
+      // Birim KAYIT BAŞINA (çekirdek sözleşmesi): aynı ilerleme ekranında
+      // tur-birimli ve aralık-birimli ders yan yana durabilir.
+      unitLabel: plan != null ? 'round' : 'interval',
+      // SINIF, YAZMA ANINDA (J-095). Bugün JabLab'ta hiçbir ders
+      // puanlanmıyor: kalibrasyon kapısı (K8) geçilmedi ve kamera bağlı
+      // değil. `'unscored'` bunu yazma anında mühürlüyor — ders yarın terfi
+      // ederse YENİ kayıtlar farklı sınıf taşır ve bugünküler doğru şekilde
+      // puansız kalır. Sınıfı sonradan HESAPLAMAK geçmişi sessizce yeniden
+      // yorumlamak olurdu (çekirdeğin kendi uyarısı).
+      //
+      // Ayrıca en-az-yetki: yalnız `'scored'` puanlı okunur, bu değer değil.
+      lessonClass: 'unscored',
+      // `unmeasuredUnits` SIFIR ve bu bir varsayım değil: o alan "motorun
+      // GÖRDÜĞÜ ama yargılayamadığı" birimler için (kadraj/ışık/takip).
+      // JabLab'ta kamera HİÇ yok — tur sayısı saatten gelen bir olgu, kamera
+      // ölçümü değil. Yargılanmamışlığı taşıyan alan `lessonClass`; buraya
+      // yazmak iki farklı olguyu karıştırırdı.
     ));
   }
 

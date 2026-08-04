@@ -64,12 +64,17 @@ class _RootState extends State<_Root> {
   /// yapmamış kullanıcıya boş bir tablo göstermek olurdu.
   RecordedSummary? _recorded;
 
-  /// Geçmiş OKUNAMADI (J-092) — bloklamaz, BEYAN EDİLİR.
+  /// Geçmiş AÇILAMADI (J-092; tip artık çekirdekten — J-095).
   ///
-  /// `null` iki farklı şey demek DEĞİL: burada `null` yalnız "okuma sorunu
+  /// `null` iki farklı şey demek DEĞİL: burada `null` yalnız "açılma sorunu
   /// yok" demektir; "hiç kayıt yok" bilgisi [_recorded]'da yaşar. Bu ayrımı
   /// tek alana yıkmak tam da düzeltilen kusurdu.
-  HistoryFailure? _historyFailure;
+  ///
+  /// **Ayrı alan olmasının sebebi doc-75/2 (totals-nullable):** açılamayan
+  /// geçmişten sayı DOĞMAZ, o yüzden bu hâlde [_recorded] hiç kurulmaz —
+  /// hâl bilgisi `RecordedSummary.status` içinde taşınamaz, çünkü o nesne
+  /// yoktur.
+  HistoryUnavailable? _historyUnavailable;
 
   /// İçerik yükleme başarısızlığı — TİPLİ (J-079). Eskiden burada ham `Object`
   /// duruyordu ve ekrana `'$_error'` basılıyordu; kullanıcı Türkçe bir
@@ -95,7 +100,7 @@ class _RootState extends State<_Root> {
       if (mounted) {
         setState(() {
           _store = null;
-          _historyFailure = HistoryFailure(e.toString());
+          _historyUnavailable = HistoryUnavailable(e.toString());
         });
       }
     }));
@@ -147,7 +152,7 @@ class _RootState extends State<_Root> {
         // doğru olmayan bir şeyi söylemeye devam etmek olurdu.
         setState(() {
           _recorded = sum;
-          _historyFailure = null;
+          _historyUnavailable = null;
         });
       }
     } on Object catch (e) {
@@ -155,8 +160,11 @@ class _RootState extends State<_Root> {
       // yazan eski sayılar, iki çelişik iddiayı aynı anda göstermek olurdu.
       if (mounted) {
         setState(() {
+          // doc-75/2: açılamayan geçmişten SAYI DOĞMAZ. Bayat bir özeti
+          // "okuyamadım" cümlesinin yanında bırakmak iki çelişik iddiayı
+          // aynı anda göstermek olurdu.
           _recorded = null;
-          _historyFailure = HistoryFailure(e.toString());
+          _historyUnavailable = HistoryUnavailable(e.toString());
         });
       }
     }
@@ -229,14 +237,19 @@ class _RootState extends State<_Root> {
   /// "Try again" bilerek sunulmuyor: kullanıcının yapabileceği bir şey yok ve
   /// çalışmayan bir düğme, düğme olmamasından kötüdür (J-079 dersi).
   String? _historyUnavailableText() {
-    if (_historyFailure != null) {
+    if (_historyUnavailable != null) {
+      // Ham `detail` yüzeye SIZMAZ (doc-75/5): kullanıcı metni app'in
+      // sesiyle yazılır, teşhis dizesi geliştirici içindir.
       return 'We could not read your saved sessions on this device. As far as '
           'we know your training is still there — we simply cannot open the '
           'file right now, so we are not going to show you numbers we did '
           'not measure. Nothing is blocked: you can start a session as usual.';
     }
     final RecordedSummary? r = _recorded;
-    if (r != null && r.sessions == 0 && r.isPartial) {
+    if (r != null && r.sessions == 0 && r.status is HistoryPartial) {
+      // ⚠️ doc-75/4: bu uçta "taban" DİLİ KULLANILMAZ. Taban sıfırken
+      // "en az bu kadar" demek doğru ve işe yaramaz — o yüzden bu metin
+      // `at least` TAŞIMAZ ve testte ikiziyle sınanır.
       return 'Your history file is there but none of it could be read, so we '
           'have no totals to show. This is not the same as never having '
           'trained, and we would rather say so than show you a zero. New '
@@ -252,8 +265,15 @@ class _RootState extends State<_Root> {
   /// eksik" der.
   String? _historyIncompleteText() {
     final RecordedSummary? r = _recorded;
-    if (r == null || !r.isPartial || r.sessions == 0) return null;
-    return 'Some saved sessions could not be read (${r.unreadableRecords} of '
+    if (r == null || r.sessions == 0) return null;
+    final HistoryReadStatus status = r.status;
+    // Hâl-başına AYRI yol (doc-75/5): `HistoryOk` buradan HİÇBİR cümle
+    // üretmez — koşulsuz uyaran bir yüzey temiz-hâl ikizini geçemez (doc-75/6).
+    if (status is! HistoryPartial) return null;
+    // Kayıp SAYISI metne girer: sayısız bir "bazıları okunamadı" beyanı
+    // kullanıcıya eksiğin BÜYÜKLÜĞÜNÜ vermez (doc-75 test asgarisi: metin
+    // testi sayıyı arar — interpolasyon-kaçağı sınıfı).
+    return 'Some saved sessions could not be read (${status.unreadable} of '
         'them), so the totals below are a floor, not a full count — you did '
         'at least this much.';
   }
