@@ -1,0 +1,32 @@
+{
+  "$comment": [
+    "JabLab'ın D1 kapısı alan sözlüğü. Çekirdekteki d1_gate.py alan-bağımsızdır",
+    "ve tek boks terimi taşımaz; terimler BURADAN gelir (motion-core",
+    "tools/harvest_rig/d1_gate.py --lexicon). Hedef değişince bu dosya",
+    "kopyalanıp `target` değiştirilir — araç değişmez.",
+    "",
+    "KÖK-BULMA YOK: araç kelime-sınırlı tam eşleşme yapar ('hooked' eşleşmez).",
+    "Hangi çekimlerin sayılacağı BU DOSYANIN kararıdır, aracın gizli davranışı",
+    "değil — gizli kök-bulma, sözlüğü yazanın göremediği eşleşmeler üretirdi.",
+    "",
+    "AÇIKLAMA YALNIZ BURAYA: `others`/`variants` içine metin koymak yasak ve",
+    "araç bunu reddediyor — bir dize terim listesi sanılıp HARFLERE bölünür,",
+    "regex tek harflerden kurulur ve her kaynak her şeyle eşleşir. (Bu dosyayı",
+    "yazarken tam bu tuzağa düştüm; yükleyici o yüzden sıkılaştırıldı.)",
+    "",
+    "M-F-175 varyant taraması: torbaya/mitte atılan yumruk FARKLI TEKNİKTİR",
+    "(temas, yavaşlama profili, duruş). Sıfırdan büyük sayım OTO-RET DEĞİL —",
+    "göz-doğrulamasını zorunlu kılar."
+  ],
+  "target": {
+    "hook": ["hook", "hooks", "hooking"]
+  },
+  "others": {
+    "jab": ["jab", "jabs", "jabbing"],
+    "cross": ["cross", "crosses", "straight"],
+    "uppercut": ["uppercut", "uppercuts"]
+  },
+  "variants": {
+    "bag_or_mitt": ["bag", "bags", "mitt", "mitts", "pad", "pads", "partner"]
+  }
+}

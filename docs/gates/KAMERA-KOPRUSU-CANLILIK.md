@@ -72,6 +72,12 @@ de** çıkıyor, yalnız gerçek cihazda değil — ve panzehir ikisinde de ayn�
 `build/` şu an `~/jablab_buildout`a bağlı ve öyle kalıyor. Eski "symlink
 bilinçli kurulmadı (eşzamanlı oturum riski)" notu artık geçersiz.
 
+> 🧹 **Yan kalıntı:** iCloud, kurulan symlink'in **kopyasını** üretiyor —
+> koşumdan sonra `build 3 -> ~/jablab_buildout` diye ikinci bir symlink
+> belirdi (0 bayt, aynı hedef). Zararsız ama `.gitignore` yalnız `build/`
+> kapsadığı için `git status`ta kalıcı gürültü yapar. Görürsen sil; iCloud'un
+> `build/`i senkronlamaya çalışmasının aynı kökten bir belirtisi.
+
 ## ✅ §7.2 — Android: Gradle çözer, Kotlin derlenir
 
 Gradle `tasks-vision:0.10.29` pinini çözdü, Kotlin derlendi, APK üretildi —
