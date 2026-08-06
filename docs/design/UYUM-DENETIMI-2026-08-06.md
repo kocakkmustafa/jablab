@@ -37,3 +37,34 @@ tek-yönlü doğrulanabildi).
 
 Ders ekranı + Sayfa A/B turu açıldığında bu tablo GENİŞLETİLECEK, üzerine
 yazılmayacak — N/A satırları o turda gerçek sonuca dönüşecek.
+
+---
+
+## Ek — 2026-08-06/07: 4 parçanın TAMAMI kapandı, N/A satırları GERÇEK sonuca döndü
+
+> Kapsam artık TÜM app-özgü yüzey: Ayarlar (`677849c`+`1a5a565`) + yıldız
+> ekran (`5fc2d65`) + Sayfa B (`4945895`) + Sayfa A (`7d6e707`). Kapsam
+> DIŞI kalan (bilinçli, frozen/dev-only): `WhyNotPage`, `ContentFailureScreen`,
+> `CameraHarnessScreen` — ne bu tur ne önceki turlar bunlara dokundu; genel
+> MaterialApp temasıyla render ediyorlar, bu bir İHLAL değil kapsam sınırı.
+
+| # | Madde | Sınıf | Kanıt |
+|---|---|---|---|
+| ④ | Çok maddeli yeşil form-checklist yok | uygun | Ders ekranında/hiçbir yerde "form doğru" ima eden bir checklist YOK — `HonestyBox`un "What this measures/doesn't" listesi checklist DEĞİL, ölçüm-kapsamı beyanı (K8'in kendisi bunu engelliyor) |
+| ⑨ | Analiz başlamamışken çıplak "0" yok | **uygun, TESTLİ** | `LiveCoachSurface`in `if (eventCount != null)` kapısı korundu; `live_jab_path_test.dart`'ın "BAŞLANGIÇ hâli ayrı" testi + `_countSlotTests` bunu doğruluyor, bu turda BOZULMADI |
+| ⑫ | Seçim ekranı her doluluk seviyesinde kasıtlı | **uygun** | `ItemStatus.live` (kurs listesi + expand/collapse) vs `!live` (Soon rozeti + coming-soon-note) görsel olarak AYRI kalıplardan geçiyor (`GlassPanel` normal vs `UnknownGlassPanel` kesikli) — simülatörde 8 disiplinin hepsi doğrulandı (5 "Soon", 1 "3 courses" — Boxing) |
+| ⑭ | Kurs sayfası üç geçmiş hâli ayrı | **uygun (metinle ayrışıyor)** | `historyUnavailable` → `UnknownGlassPanel` (yapısal olarak AYRI tier); "incomplete" ve "complete" AYNI `GlassTier.observation` panelini paylaşıyor ama `historyIncomplete` metni sayılardan ÖNCE, ayrı bir satır olarak giriyor (J-092 sırası) — ayrışma RENK değil METİN üzerinden, aile emsaliyle tutarlı (bu ailede metin zaten birincil sinyal) |
+| ⑮ | Canlı ekranda beş(-sekiz) dürüst hâl ayrı | **kısmen uygun — bilinçli AÇIK kalem** | `clean`/`correcting`/`noVerdict` üç YÜZEY-sınıfı ikon+tipografi ile ayrışıyor (bkz. `LiveCoachSurface`) ama `noVerdict`in KENDİ İÇİNDEKİ 8 alt-sebebi (izin reddi/kamera hatası/kadraj-dışı/düşük-güven/gövde-referansı vb.) TEK şablondan geçiyor, yalnız METİN farklı — renk/ikon farkı YOK. `DESIGN-AHEAD-OF-CODE.md`ye zaten not düşüldü, bu turun kapsamı DEĞİLDİ (koordinatöre soru olarak bırakıldı) |
+| ⑯ | Anlatı/hüküm yuvası görsel ayrı | **uygun** | `jablabSessionTheme`de `narration` KENDİ yuvası (`labelLarge` → mono, cool-toned) `cue`/`noVerdictReason`den (`titleLarge` → Familjen Grotesk, correction-stili) AYRI bir FONT AİLESİNDEN bile geçiyor — hüküm susarken bile anlatının farklı bir "ses" taşıdığı görsel olarak kanıtlı |
+
+## Genel özet (4 parça TAMAMLANDI)
+
+**İhlal: 0** — dört parçanın hiçbirinde bir madde ihlal edilmedi.
+**N/A kalan: 0** — önceki turun 6 N/A satırının (④⑨⑫⑭⑮⑯) HEPSİ gerçek
+sonuca döndü (5 uygun, 1 kısmen-uygun-bilinçli-açık).
+**Belirsiz/açık: 2** (değişmedi) — ⑰ portrait kilidi bu turda da
+ölçülmedi/uygulanmadı (kod tarafı hâlâ dokunulmadı) · ⑱ kardeş-ayrışması
+hâlâ yalnız tek-yönlü doğrulanabiliyor (4 kardeşin gerçek ekranı görülmedi).
+**Bilinçli AÇIK (yeni sınıf, bu ekte tanıtıldı):** ⑮ — İHLAL değil, koordinatöre
+bırakılmış bir tasarım sorusu (8 alt-sebebin görsel ayrışması gerekip
+gerekmediği).
