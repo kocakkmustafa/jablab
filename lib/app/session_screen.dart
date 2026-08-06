@@ -7,10 +7,12 @@ import 'package:jablab_engine/jablab_engine.dart'
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
+import 'design_tokens.dart';
 import 'session_narrator.dart';
 import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
 import 'session_store.dart';
+import 'skeleton_overlay.dart';
 import 'teach_material.dart';
 
 /// Canlı seans ekranı — **app'e özgü**, `motion_shell`'e terfi ETMEZ.
@@ -18,10 +20,16 @@ import 'teach_material.dart';
 /// Kabuk parçaları (`SessionFlowScaffold`, `LiveCoachSurface`,
 /// `SessionSummaryView`, `IntervalTimer`) buradan besleniyor; boksa özgü olan
 /// yalnız içerik: cue metinleri, sayılan olayın adı, kamera önizlemesi.
+/// Görsel giydirme `jablabSessionTheme`den (design_tokens.dart) — kabuk
+/// parçaları frozen olduğu için `Theme(data:, child:)` sarmalıyla dışarıdan
+/// besleniyor (design turu Parça 2, 2026-08-06).
 ///
-/// ⚠️ Kamera hattı henüz bağlı değil (native köprü ADR-002, koordinatör
-/// kuyruğunda). Ekran bunu **saklamıyor** — sahte bir "analiz ediliyor"
-/// animasyonu yerine hangi parçanın eksik olduğunu yazıyor.
+/// ⚠️ Kamera GÖRÜNTÜSÜ (piksel akışı) henüz bağlı değil — Texture tabanlı
+/// önizleme bilinçli ertelendi (`docs/70-KAMERA-KOPRUSU-SOZLESMESI.md`).
+/// Ekran bunu **saklamıyor**: `skeleton_overlay.dart`'ın kamera-yer-tutucusu
+/// bunu açıkça yazıyor. **Kamera ANALİZİ** (poz çıkarımı, `LiveJabController`)
+/// bundan AYRI ve BAĞLI — motor kişiyi görüyor, yalnız o görüntüyü ekrana
+/// basmıyoruz; iskelet çizimi bunun kanıtı (gerçek koordinatlardan).
 class SessionScreen extends StatefulWidget {
   const SessionScreen({
     super.key,
@@ -151,28 +159,35 @@ class _SessionScreenState extends State<SessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SessionFlowScaffold(
-      title: widget.lesson.title,
-      stage: _stage,
-      advanceLabel: _stage == SessionStage.summary ? 'Done' : 'Continue',
-      onAdvance: _advance,
-      child: switch (_stage) {
-        SessionStage.teach =>
-            _Teach(lesson: widget.lesson, material: widget.teachMaterial),
-        SessionStage.rehearse => const _Rehearse(),
-        SessionStage.live => _Live(
-            cues: widget.cues,
-            plan: widget.plan,
-            intervalPlan: widget.intervalPlan,
-            liveJab: widget.liveJab,
-            liveJabSetupFailure: widget.liveJabSetupFailure,
-            onProgress: (int rounds, int worked) {
-              _roundsCompleted = rounds;
-              _workedSeconds = worked;
-            },
-          ),
-        SessionStage.summary => _Summary(coachedNotScored: widget.coachedNotScored),
-      },
+    // Theme(sarma): kabuk parçaları (SessionFlowScaffold + içindekiler)
+    // frozen — `JColors`/`JText`i doğrudan okuyamaz, yalnız
+    // `Theme.of(context)` üzerinden beslenir (bkz. sınıf dokümanı +
+    // design_tokens.dart'taki `jablabSessionTheme` yorumu).
+    return Theme(
+      data: jablabSessionTheme,
+      child: SessionFlowScaffold(
+        title: widget.lesson.title,
+        stage: _stage,
+        advanceLabel: _stage == SessionStage.summary ? 'Done' : 'Continue',
+        onAdvance: _advance,
+        child: switch (_stage) {
+          SessionStage.teach =>
+              _Teach(lesson: widget.lesson, material: widget.teachMaterial),
+          SessionStage.rehearse => const _Rehearse(),
+          SessionStage.live => _Live(
+              cues: widget.cues,
+              plan: widget.plan,
+              intervalPlan: widget.intervalPlan,
+              liveJab: widget.liveJab,
+              liveJabSetupFailure: widget.liveJabSetupFailure,
+              onProgress: (int rounds, int worked) {
+                _roundsCompleted = rounds;
+                _workedSeconds = worked;
+              },
+            ),
+          SessionStage.summary => _Summary(coachedNotScored: widget.coachedNotScored),
+        },
+      ),
     );
   }
 }
@@ -556,12 +571,14 @@ extension on _LiveState {
     }
     if (jab == null || jab is LiveJabStarting) {
       // Henüz hiçbir kare gelmedi. SIFIR GÖSTERİLMİYOR: sıfır "hiç yumruk
-      // atmadın" demektir, oysa daha hiçbir şey ölçülmedi.
+      // atmadın" demektir, oysa daha hiçbir şey ölçülmedi. İskelet de YOK
+      // (henüz çözülmüş bir kare yok) — yalnız yer tutucu görünür.
       return LiveCoachSurface(
         state: LiveState.noVerdict,
         eventCount: null,
         narration: _line,
         noVerdictReason: 'Getting the camera ready…',
+        preview: const SkeletonPreview(state: LiveState.noVerdict),
       );
     }
 
@@ -572,6 +589,7 @@ extension on _LiveState {
       cue: r.cue,
       narration: _line,
       noVerdictReason: r.noVerdictReason,
+      preview: SkeletonPreview(state: r.surface, skeleton: r.skeleton),
     );
   }
 

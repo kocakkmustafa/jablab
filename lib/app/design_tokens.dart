@@ -101,6 +101,63 @@ class JText {
   static TextStyle mono = GoogleFonts.ibmPlexMono(fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink3);
 }
 
+/// Ders akışının frozen kabuk parçalarını (`SessionFlowScaffold`,
+/// `LiveCoachSurface`, `SessionSummaryView`, `IntervalTimer` —
+/// `shell_candidate/`, `motion_shell` adayı) DEĞİŞTİRMEDEN dışarıdan
+/// giydirmek için. Settings/Sayfa A/B'nin aksine bu parçalar `JColors`/
+/// `JText`i DOĞRUDAN okuyamaz — yalnız `Theme.of(context)` üzerinden
+/// beslenirler, o yüzden token'lar burada bir `ThemeData`ya eşleniyor ve
+/// `Theme(data: jablabSessionTheme, child: ...)` ile o alt ağaca sarılıyor
+/// (bkz. `session_screen.dart`). Eşleme yalnız o dört bileşenin GERÇEKTEN
+/// okuduğu alanları kapsıyor — kullanılmayan bir `TextTheme` girişi icat
+/// edilmedi.
+final ThemeData jablabSessionTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: JColors.ground,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: JColors.accent,
+    brightness: Brightness.dark,
+  ).copyWith(
+    primaryContainer: JColors.ember.withValues(alpha: .28),
+    error: JColors.ember,
+    outline: JColors.ink3,
+    surfaceContainerHighest: JColors.deep,
+  ),
+  textTheme: TextTheme(
+    // `_Teach`in ders başlığı (session_screen.dart).
+    headlineSmall: JText.pageTitle.copyWith(fontSize: 26, letterSpacing: -.8),
+    // `LiveCoachSurface`in DÜZELTME yuvası — JText.correction'ın ta kendisi
+    // için var olduğu yer (§ TYPE SCALE dokümanı).
+    titleLarge: JText.correction,
+    // "Keep going" (temiz hâl).
+    titleMedium: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 17),
+    // Özet bant değerleri + "Coached but not scored" başlığı.
+    titleSmall: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
+    bodyMedium: JText.body,
+    bodySmall: JText.bodyMuted,
+    // Anlatı (narration) — GÖZLEM tonlu, hüküm değil.
+    labelLarge: JText.mono.copyWith(color: JColors.cool2, fontSize: 13),
+    labelMedium: JText.label,
+    // `IntervalTimer`in geri sayımı — SAYAÇ, mono ailesinin tam da var
+    // olduğu yer.
+    displaySmall: JText.clock.copyWith(fontSize: 44, letterSpacing: -1.6),
+    // Yumruk/olay sayacı (canlı VE özet) — aynı gerekçe.
+    displayMedium: JText.clock,
+  ),
+  // ⚠️ ÖLÇÜLDÜ (simülatör, design turu Parça 2, 2026-08-06): `Chip`
+  // (`SessionFlowScaffold`in aşama rozetleri — Learn/Try/Live/Summary)
+  // VARSAYILAN olarak `textTheme.labelLarge`i okuyor — bu, narration için
+  // BİLEREK mono seçilen stille AYNI yuva. Sonuç: "Learn"/"Live" rozetlerde
+  // KIRPILIYORDU ("Lear"/"Liv") — mono harfler aynı punto boyutunda daha
+  // GENİŞ, sabit rozet genişliğine sığmadı. `chipTheme` AÇIKÇA ayrılıyor ki
+  // narration'ın mono kimliği (JText'in "yalnız ÖLÇÜLEN şeyler" kuralı)
+  // aşama ETİKETLERİNE (ölçüm değil, gezinme) sızmasın.
+  chipTheme: ChipThemeData(
+    labelStyle: JText.body.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+  ),
+);
+
 /// § MOTION TOKENS — "No curve overshoots. JabLab arrives and stops."
 class JMotion {
   JMotion._();

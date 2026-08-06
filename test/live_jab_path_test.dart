@@ -195,7 +195,165 @@ void main() {
       }
       await c.dispose();
     });
+
+    test('İSKELET hükümden BAĞIMSIZ — çözülen karede HER ZAMAN var', () async {
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+      final List<LiveJabState> seen = <LiveJabState>[];
+      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+      await c.start();
+      for (final PoseFrame f in _jabSequence()) {
+        cam.emit(_envelope(f));
+      }
+      await Future<void>.delayed(Duration.zero);
+      await sub.cancel();
+
+      final List<LiveJabRunning> runs = seen.whereType<LiveJabRunning>().toList();
+      expect(runs, isNotEmpty);
+      for (final LiveJabRunning r in runs) {
+        expect(r.skeleton, isNotNull,
+            reason: 'çözülmüş bir kare varken iskelet YOK olamaz — '
+                '`skeleton_overlay.dart` çizecek bir şey bulamaz');
+        // Lm.count == 33 (MediaPipe Pose Landmarker topolojisi) — motorun
+        // içindeki bir sabiti burada TEKRAR yazmak yerine ham uzunluk
+        // doğrudan kontrol ediliyor, bu paketin kendi kontratı zaten
+        // `landmark_index.dart`ta sabit.
+        expect(r.skeleton!.length, 33);
+      }
+      await c.dispose();
+    });
+
+    test('KİMSE YOK iken İSKELET de YOK — çizecek koordinat icat edilmez',
+        () async {
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+      final List<LiveJabState> seen = <LiveJabState>[];
+      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+      await c.start();
+      cam.emit(_envelope(null));
+      await Future<void>.delayed(Duration.zero);
+      await sub.cancel();
+
+      final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+      expect(r.surface, LiveState.noVerdict);
+      expect(r.skeleton, isNull);
+      await c.dispose();
+    });
+
+    group('BASTIRMA yolu — suppressionReason ÇEVRİLİYOR (J-099)', () {
+      // Bu grup `_jabSequence()`in hiç dokunmadığı dalı hedefler: motorun
+      // `!judgeable` dediği kare. Taramanın bulduğu bulgu tam burada —
+      // `noVerdictReason: out.suppressionReason` ham teşhis dizesini
+      // DOĞRUDAN yüzeye yazıyordu. `_jabSequence()`in "HAM KOD" testi bu
+      // dalı hiç ÇALIŞTIRMADIĞI için kusuru YAKALAYAMAZDI — burada gerçek
+      // motor, gerçek eşiklerle, bu dalı BİLEREK tetikliyoruz.
+
+      test('gövde landmarkı DÜŞÜK GÜVEN → torsoUnreliable, AYRI cümle',
+          () async {
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        // ConfidenceGate.torsoThreshold=0.6 — gövde bunun ALTINA düşünce
+        // her şeyden ÖNCE (kol/bacak güveninden bile önce) kontrol ediliyor.
+        for (final PoseFrame f in SyntheticNoise.occlude(
+            _steadyFrames(), <int>[Lm.leftShoulder], visibility: 0.3)) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
+
+        final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+        expect(r.surface, LiveState.noVerdict);
+        expect(r.noVerdictReason, isNot(contains('torsoUnreliable')),
+            reason: 'ham motor kodu sızdı');
+        expect(r.noVerdictReason, isNot(contains(':')),
+            reason: 'ham teşhis dizesi biçimi ("kategori:detay") sızdı');
+        expect(r.noVerdictReason,
+            "I can't get a steady read on your torso — square up so your "
+            'shoulders and hips are both visible.');
+        await c.dispose();
+      });
+
+      test('bilek DÜŞÜK GÜVEN (gövde temiz) → cue.low_confidence GERÇEK metni',
+          () async {
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        // Gövde (torso) tam güvende kalıyor — yalnız bilek düşük, böylece
+        // ConfidenceGate `lowTrackingConfidence`e düşüyor, `torsoUnreliable`e
+        // değil (sıra: gövde → kadraj-dışı → düşük-güven, evaluate() içinde).
+        for (final PoseFrame f in SyntheticNoise.occlude(
+            _steadyFrames(), <int>[Lm.leftWrist], visibility: 0.2)) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
+
+        final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+        expect(r.surface, LiveState.noVerdict);
+        expect(_lowConfidencePhrases.contains(r.noVerdictReason), isTrue,
+            reason: '`cue.low_confidence`in bilinen 4 varyantından biri '
+                'değil — ham teşhis dizesi sızmış olabilir: '
+                '"${r.noVerdictReason}"');
+        await c.dispose();
+      });
+
+      // ⚠️ `structural:` öneki (`cue.structural`) BURADA canlı-hat üzerinden
+      // GERÇEK bir sentetik yapısal-kusurla tetiklenip test EDİLEMEDİ — dört
+      // ayrı fixture denendi (aşırı bacak kısaltma, yalnız kol uzatma, büyük
+      // kemik sıçraması, eşik-sınırı kemik sıçraması) ve HEPSİ, motora hiç
+      // ulaşmadan, `resolution.usable=false`e (BAŞKA bir hardcoded cümleye)
+      // düştü. Kaynağı OKUYUNCA sebep netleşti — kusur DEĞİL, mimari:
+      // `OrientationAwarePoseSource._run` (motion_core) HER karede KENDİ
+      // `StructuralValidator`ını çalıştırıyor ve `OrientationCandidate.usable
+      // => structural.plausible` diyor (orientation_aware_source.dart:42) —
+      // yani motorun `StrikingEngine.process()`teki `structural:` bastırması
+      // (striking_engine.dart:295-297) ile TAMAMEN AYNI koşulu, TAMAMEN AYNI
+      // `StructuralValidator` sınıfıyla, motor daha kareyi GÖRMEDEN önce
+      // kontrol ediyor. Zaman-bağımsız kusurlar için (limbProportionImplausible,
+      // bilateralAsymmetry) bu iki kontrol MATEMATİKSEL OLARAK AYNI kareyi,
+      // aynı formülle değerlendiriyor — yani `structural:` bastırması canlı
+      // hatta YAPISAL OLARAK ERİŞİLEMEZ, motion_core'un kendi kapısı her zaman
+      // önce davranıyor ve FARKLI bir mesajla kapatıyor. Bu üçüncü bir "ölü
+      // dal" bulgusu — `docs/design/REPLIK-ERISILEBILIRLIK-TARAMASI-2026-08-06.md`nin
+      // "cue.structural ölü" satırına bir SEVİYE daha derin bir açıklama
+      // ekliyor (içerik-eksikliği değil, erişilemezlik). `_suppressionSentence`
+      // içindeki `structural:` dalı yine de KORUNUYOR — savunma amaçlı
+      // (motion_core'un kapı sırası bir gün değişirse ham dize sızmasın) ve
+      // doğruluğu diğer iki dalla AYNI kod-örüntüsüyle inşa edildiği için
+      // teftişle (inspection) doğrulanıyor, canlı-hat testiyle değil.
+    });
   });
+}
+
+/// `assets/content/cues.en.json`'daki `cue.low_confidence` varyantları —
+/// içerik değişirse bu test de değişsin diye ELLE senkron tutuluyor
+/// (dosyayı runtime'da okumak yerine sabit liste: yanlış dosyadan okumak
+/// gibi bir hataya kapalı).
+const List<String> _lowConfidencePhrases = <String>[
+  "I can't see you clearly enough to judge.",
+  'Losing track of you.',
+  "Tracking isn't clean — holding off.",
+  'Not confident enough to call that.',
+];
+
+/// Hareketsiz, nötr bir duruş — yalnız güven/yapı kapılarını tetiklemek
+/// için var, `_jabSequence()`in aksine bir TEKNİK saymayı hedeflemiyor.
+List<PoseFrame> _steadyFrames({
+  SyntheticBody body = SyntheticBody.average,
+  double visibility = 1.0,
+  int count = 8,
+}) {
+  const int stepUs = 33333; // ~30 fps
+  return <PoseFrame>[
+    for (int i = 0; i < count; i++)
+      SyntheticPoseBuilder(body: body).build(SyntheticPose.neutral,
+          tUs: i * stepUs, visibility: visibility),
+  ];
 }
 
 /// SAYI YUVASI — "henüz sayılmıyor" ile "sıfır" AYRI (J-096).

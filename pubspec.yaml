@@ -68,6 +68,10 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   crypto: ^3.0.7
+  # test/flutter_test_config.dart'ın google_fonts ön-ısınması için — TRANSITIVE
+  # bir bağımlılıktı (path_provider üzerinden), doğrudan import edildiği için
+  # burada AÇIKÇA listelendi (depend_on_referenced_packages).
+  path_provider_platform_interface: ^2.1.2
 
 flutter:
   uses-material-design: true

@@ -154,7 +154,9 @@ final class LiveJabController {
 
     if (!resolution.usable) {
       // Model kimseyi göremedi. HATA DEĞİL — canlı bir hâl; seans koşmaya
-      // devam ediyor ve kendi kendine düzelebilir.
+      // devam ediyor ve kendi kendine düzelebilir. İskelet YOK: çizilecek
+      // hiçbir koordinat yok, boş bir figür çizmek görmediğimiz bir şeyi
+      // görüyormuş gibi yapardı.
       _states.add(LiveJabState.live(
         surface: LiveState.noVerdict,
         completedCount: _completed,
@@ -164,6 +166,13 @@ final class LiveJabController {
       return;
     }
 
+    // İSKELET, HÜKÜMDEN BAĞIMSIZ: "ne gördüğüm" ile "ne yargıladığım" ayrı
+    // katmanlar (aynen `narration`ın hüküm susarken bile konuşabilmesi gibi).
+    // Motor hüküm veremese BİLE (aşağıdaki `!judgeable` dalı) çözülmüş bir
+    // kare varsa iskelet çiziliyor — kullanıcı "beni görüyor ama okuyamıyor"
+    // ile "beni hiç görmüyor" arasındaki farkı GÖZÜYLE de ayırt edebilsin.
+    final List<PoseLandmark> skeleton = resolution.frame!.landmarks;
+
     final EngineOutput out = engine.process(resolution.frame!);
     if (out.completedAttempt?.completed ?? false) _completed += 1;
 
@@ -171,10 +180,8 @@ final class LiveJabController {
       _states.add(LiveJabState.live(
         surface: LiveState.noVerdict,
         completedCount: _completed,
-        // Motorun KENDİ sebebi kullanılıyor; burada yeniden cümle kurmak
-        // iki ayrı gerçeğin (motorun bastırma sebebi / benim tahminim)
-        // birbirinden ayrılamaz hâle gelmesi olurdu.
-        noVerdictReason: out.suppressionReason,
+        noVerdictReason: _suppressionSentence(out.suppressionReason),
+        skeleton: skeleton,
       ));
       return;
     }
@@ -192,6 +199,7 @@ final class LiveJabController {
         completedCount: _completed,
         noVerdictReason: _phrase(issue.code) ?? _genericNoVerdict,
         phase: out.activePhase,
+        skeleton: skeleton,
       ));
       return;
     }
@@ -203,6 +211,7 @@ final class LiveJabController {
       // kod gösterilmez, genel ama DÜRÜST bir cümle gösterilir.
       cue: issue == null ? null : (_phrase(issue.code) ?? _genericIssue),
       phase: out.activePhase,
+      skeleton: skeleton,
     ));
   }
 
@@ -222,6 +231,46 @@ final class LiveJabController {
     return key == null ? null : cues.sayKey(key);
   }
 
+  /// `EngineOutput.suppressionReason` → kullanıcı cümlesi (J-099 düzeltmesi).
+  ///
+  /// Eskiden bu ham teşhis dizesi (`'quality:lowTrackingConfidence'` gibi)
+  /// DOĞRUDAN yüzeye yazılıyordu — doc-75/5'in ("ham teşhis dizesi kullanıcıya
+  /// SIZMAZ") üçüncü, hiç test edilmemiş ihlal noktası (bkz.
+  /// `docs/design/REPLIK-ERISILEBILIRLIK-TARAMASI-2026-08-06.md`). `_phrase`
+  /// issue-kodu için ne yapıyorsa, bu da bastırma-öneki için yapıyor.
+  String _suppressionSentence(String? reason) {
+    if (reason == null) return _genericNoVerdict;
+    if (reason.startsWith('structural:')) {
+      // ⚠️ ÖLÇÜLDÜ (test/live_jab_path_test.dart): bu dal canlı hatta bugün
+      // ERİŞİLEMEZ — `OrientationAwarePoseSource._run` (motion_core) HER
+      // karede kendi `StructuralValidator`ını çalıştırıp
+      // `OrientationCandidate.usable => structural.plausible` diyor; motor
+      // aynı kareyi görmeden önce zaten `resolution.usable=false`e düşüyor
+      // (satır ~161'deki AYRI hardcoded cümleyle). Yine de KORUNUYOR: hem
+      // savunma amaçlı (kapı sırası bir gün değişebilir) hem `_phrase`in
+      // issue-kodu için yaptığıyla AYNI örüntüyü koruyup dalın kendisini
+      // "unutulmuş" göstermemek için.
+      return cues.sayKey('cue.structural') ?? _genericNoVerdict;
+    }
+    if (reason == 'quality:outOfFrame') {
+      return cues.sayKey('cue.out_of_frame') ?? _genericNoVerdict;
+    }
+    if (reason == 'quality:lowTrackingConfidence') {
+      return cues.sayKey('cue.low_confidence') ?? _genericNoVerdict;
+    }
+    if (reason == 'quality:torsoUnreliable') {
+      // AYRI TUTULUR (koordinatör hükmü): kadraj-dışı DEĞİL — gövdesi
+      // kadrajda ama motor referans alamıyor, farklı bir düzeltme ister.
+      // `cues.en.json`de bu senaryoya özel bir anahtar yok; satır ~161'deki
+      // `resolution.usable==false` hardcoded cümlesiyle AYNI emsal (içerik
+      // eksikse yeni cue icat edilmez, dürüst sabit cümle yazılır).
+      return _torsoUnreliableReason;
+    }
+    // integrity:extensionRatio=... vb.: içerikte özel replik yok, ham dize
+    // yine sızmaz — dürüst genele düşer.
+    return _genericNoVerdict;
+  }
+
   /// İçerik boşluğunda gösterilen cümle. Kodun kendisi DEĞİL — ve sessizlik
   /// de değil: sessizlik canlı koçta "her şey yolunda" diye okunur.
   static const String _genericIssue =
@@ -229,6 +278,9 @@ final class LiveJabController {
       'it yet.';
   static const String _genericNoVerdict =
       'I cannot judge that clearly enough right now.';
+  static const String _torsoUnreliableReason =
+      "I can't get a steady read on your torso — square up so your "
+      'shoulders and hips are both visible.';
 
   StrikingEngine _buildEngine(FrameSize size) =>
       _engineFactory?.call(size) ??
@@ -273,6 +325,7 @@ sealed class LiveJabState {
     String? narration,
     String? noVerdictReason,
     String? phase,
+    List<PoseLandmark>? skeleton,
   }) = LiveJabRunning;
 
   const factory LiveJabState.failed(LiveSessionFailure failure) =
@@ -296,6 +349,7 @@ final class LiveJabRunning extends LiveJabState {
     this.narration,
     this.noVerdictReason,
     this.phase,
+    this.skeleton,
   });
 
   final LiveState surface;
@@ -310,6 +364,15 @@ final class LiveJabRunning extends LiveJabState {
   /// Faz makinesinin o andaki fazı — canlı geri bildirim. Bir hüküm DEĞİL,
   /// durum bildirimi; K8 kapısına takılmaz.
   final String? phase;
+
+  /// Çözülmüş karenin HAM 33 nokta iskeleti — hükümden BAĞIMSIZ (yukarıdaki
+  /// `_onEnvelope` dokümanı). `null` yalnız `resolution.usable==false`
+  /// iken (kimse bulunamadı): o zaman çizilecek hiçbir koordinat yok.
+  ///
+  /// Bilerek ÇEVRİLMEDİ — bu sınıfın "çeviri" işi kullanıcıya SÖZ söylemek
+  /// (cümleler), iskeleti hangi kemiklerle nasıl çizeceği bir RENDER kararı
+  /// ve o karar UI katmanına ait (`skeleton_overlay.dart`).
+  final List<PoseLandmark>? skeleton;
 }
 
 final class LiveJabFailed extends LiveJabState {

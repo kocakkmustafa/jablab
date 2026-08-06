@@ -124,6 +124,52 @@ void main() {
     await t.pumpAndSettle();
     expect(t.takeException(), isNull);
   });
+
+  testWidgets(
+      'Ders ekranı — öğret→dene→CANLI(iskelet+yer tutucu)→özet, 375pt taşma yok',
+      (WidgetTester t) async {
+    // `boxing.foundations.jab` BİLEREK: kamera KULLANAN gerçek bir ders —
+    // `jablabSessionTheme`/`SkeletonPreview`in giydirdiği tam da bu yol
+    // (design turu Parça 2, 2026-08-06). Fitness-track dersleri (diğer
+    // testlerin kullandığı) kamerasız, bu yolu hiç ÇALIŞTIRMAZ.
+    await pumpApp(t);
+    await t.dragUntilVisible(find.byKey(const Key('item-boxing')),
+        find.byType(Scrollable).first, const Offset(0, -400));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('item-boxing')));
+    await t.pumpAndSettle();
+    await t.dragUntilVisible(find.byKey(const Key('course-boxing.foundations')),
+        find.byType(Scrollable).first, const Offset(0, -400));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('course-boxing.foundations')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('lesson-boxing.foundations.jab')));
+    await t.pumpAndSettle();
+    expect(t.takeException(), isNull, reason: 'öğret aşaması');
+
+    final Finder advance = find.byKey(const Key('advance-button'));
+    await t.tap(advance); // öğret → dene
+    await t.pumpAndSettle();
+    expect(t.takeException(), isNull, reason: 'dene aşaması');
+
+    await t.tap(advance); // dene → CANLI (yıldız ekran)
+    // Kamera izni isteği + `LiveJabController.start()` asenkron —
+    // `runAsync` gerçek zamanlayıcıların akmasına izin veriyor
+    // (`fitness_ship_audit_test.dart`ın kendi deseniyle aynı gerekçe).
+    await t.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 200)));
+    await t.pumpAndSettle();
+    expect(t.takeException(), isNull, reason: 'CANLI aşama (iskelet + yer tutucu)');
+    // Yalnız "çökmedi" değil: `SkeletonPreview` GERÇEKTEN kullanıldığını
+    // doğruluyor — `preview:` yuvası boş kalıp eski jenerik ikona sessizce
+    // düşseydi (bir bağlama hatası) bu bulunamazdı, `takeException()` yine
+    // de `isNull` olurdu (ÖLÇÜLDÜ: flutter test'te gerçek kamera platform
+    // kanalı yok, bu yüzden bu koşuda hep yer-tutucu dalı render ediliyor).
+    expect(find.byKey(const Key('camera-preview-placeholder')), findsOneWidget);
+
+    await t.tap(advance); // CANLI → özet
+    await t.pumpAndSettle();
+    expect(t.takeException(), isNull, reason: 'özet aşaması');
+  });
 }
 
 class _FakeStore implements SessionStore {
