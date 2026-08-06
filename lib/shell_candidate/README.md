@@ -22,18 +22,43 @@ Bu klasördeki her şey, 5 app'in de kullanacağı **alan-bağımsız** kabuk pa
 > tamamlanana dek `lib/app/` altında yaşar ve sonraki turda taşınır.
 > Mevcut bileşenlerde düzeltme serbest; ekleme değil.
 
+> ## ⚠️ ŞERH (2026-08-06, M-F-267 sınıfı — koordinatör talebi)
+> **JabLab bu tarihte `ShellScaffold`/`ProgressPage`/`LibraryPage`/`ItemPage`/
+> `library_pages.dart`'ın kendi `CoursePage`'ini ÇAĞIRMAYI BIRAKTI** (design
+> turu, 4-sekme kabuk → 3 sayfa + köşe; `lib/app/course_page.dart` adında
+> AYNI-ADLI ama AYRI bir dosya yazıldı — karıştırmayın; bkz.
+> `docs/design/DESIGN-PANEL-PROMPT.md` + `jablab_app.dart` git tarihi
+> `fb9ba8f`). Dosyalar SİLİNMEDİ — terfi kaderi aile kararı, koordinatörde
+> (ölçüm: `packages/motion_shell` çekirdekte hiç doğmadı; bu klasör YALNIZ
+> JabLab'da var).
+>
+> **Neyi ölçtüğü artık değişti:** `test/shell_promotion_test.dart` hâlâ
+> yeşil ve hâlâ doğru şeyi ölçüyor — dosyaların sözlük/bağımlılık
+> sözleşmesini. Ama **canlı bir tüketici üzerinden değil**: JabLab'ın kendi
+> app akışı bu dört bileşene artık dokunmuyor. Test bir kapının ÇALIŞTIĞINI
+> değil, kapının hâlâ AYAKTA DURDUĞUNU kanıtlıyor — ikisi aynı şey değil.
+> Bayat yeşil kırmızıdan tehlikelidir: bunu ölçmeden okuyan biri "JabLab
+> hâlâ bunu kullanıyor" sanabilir.
+>
+> `test/progress_recorded_test.dart` (66 testten biri — `session_rounds_test`
+> · `live_jab_path_test` · `teach_material_test` · `session_narrator_test`
+> · `shell_promotion_test` ile birlikte) de aynı sınıftan: `ProgressPage`'i
+> DOĞRUDAN pompalıyor, JabLab'ın kendi kök yönlendirmesinden geçmiyor —
+> bileşen sağlam, ama artık hangi ekranda göründüğünü DEĞİL, hiç
+> görünmediğini test etmiyor.
+
 ## Bileşen listesi (terfi kapsamı)
 
 | Dosya | Bileşen | Rolü | Terfi |
 |---|---|---|---|
 | `shell_models.dart` | `ShellLibrary` · `ShellItem` · `ShellCourse` · `ShellLesson` · `ShellExclusion` | Kabuğun nötr görünüm modelleri; app kendi alan modelini bunlara çevirir | ✅ hazır |
-| `shell_scaffold.dart` | `ShellScaffold` | 4 sekmeli alt navigasyon (Today · Library · Progress · Profile); **2-tık kuralının** taşıyıcısı | ✅ hazır |
-| `shell_scaffold.dart` | `ProgressPage` | Bant + eğri gösterimi; `numericUnlocked=false` iken **sayı render eden yol yoktur** (K8/M-F-04'ün UI karşılığı) | ✅ hazır |
-| `shell_scaffold.dart` | `PaywallStub` | Fiyat sabit yazılmaz — kurucu kararı | 🟡 iskelet (IAP bağlanınca genişler) |
-| `library_pages.dart` | `LibraryPage` | Öğe ızgarası + "Neden yok?" girişi; kapsamın tamamı görünür, "yakında" rozetli | ✅ hazır |
-| `library_pages.dart` | `ItemPage` | Öğe sayfası: tanıtım + dürüstlük kutusu + kurs listesi; **açılmamış öğede kurs başlığı bile render edilmez** | ✅ hazır |
-| `library_pages.dart` | `CoursePage` | Ders listesi | ✅ hazır |
-| `library_pages.dart` | `WhyNotPage` | Kapsam-dışı gerekçe sayfası | ✅ hazır |
+| `shell_scaffold.dart` | `ShellScaffold` | 4 sekmeli alt navigasyon (Today · Library · Progress · Profile); **2-tık kuralının** taşıyıcısı | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
+| `shell_scaffold.dart` | `ProgressPage` | Bant + eğri gösterimi; `numericUnlocked=false` iken **sayı render eden yol yoktur** (K8/M-F-04'ün UI karşılığı) | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
+| `shell_scaffold.dart` | `PaywallStub` | Fiyat sabit yazılmaz — kurucu kararı | 🟡 iskelet (IAP bağlanınca genişler) · JabLab hâlâ kullanıyor |
+| `library_pages.dart` | `LibraryPage` | Öğe ızgarası + "Neden yok?" girişi; kapsamın tamamı görünür, "yakında" rozetli | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
+| `library_pages.dart` | `ItemPage` | Öğe sayfası: tanıtım + dürüstlük kutusu + kurs listesi; **açılmamış öğede kurs başlığı bile render edilmez** | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
+| `library_pages.dart` | `CoursePage` | Ders listesi | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06, kendi `lib/app/course_page.dart`ını yazdı) |
+| `library_pages.dart` | `WhyNotPage` | Kapsam-dışı gerekçe sayfası | ✅ hazır · JabLab hâlâ kullanıyor |
 | `honesty_box.dart` | `HonestyBox` | "Neler ölçülür / neler ÖLÇÜLMEZ"; `notMeasured` boşsa **assert ile patlar** | ✅ hazır |
 | `session_flow.dart` | `SessionStage` + `SessionFlowScaffold` | Ders akışı: öğret → dene → canlı → özet. `stage.judges` yalnız `live`'da true — öğrenme anında puanlamak öğrenmeyi cezalandırır | ✅ hazır |
 | `session_flow.dart` | `IntervalTimer` | Süreli çalışma aralığı. **Adı bilerek "round" değil**: boks turu, dans kombosu, kata tekrarı ve enstrüman pasajı aynı şey | ✅ hazır |
