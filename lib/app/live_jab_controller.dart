@@ -153,15 +153,30 @@ final class LiveJabController {
         source.next(envelope.tUs, const OrientationExpectation.exactly(BodyOrientation.upright));
 
     if (!resolution.usable) {
-      // Model kimseyi göremedi. HATA DEĞİL — canlı bir hâl; seans koşmaya
-      // devam ediyor ve kendi kendine düzelebilir. İskelet YOK: çizilecek
-      // hiçbir koordinat yok, boş bir figür çizmek görmediğimiz bir şeyi
-      // görüyormuş gibi yapardı.
+      // ⚠️ `!usable` TEK bir hâl DEĞİL, İKİ ayrı hâl (J-103). Ayrım verisi
+      // `resolution.structural`da: `_run()` yalnız model bir iskelet
+      // ÜRETTİĞİNDE doğrulayıcıyı çalıştırır, dolayısıyla
+      //   `structural == null` → model kimseyi bulamadı
+      //   `structural != null` → model BİRİNİ buldu, okuma anatomik olarak
+      //                          imkânsız çıktı (`plausible == false`)
+      // Tek cümle ikisine birden basılıyordu ve ikincisinde YANLIŞTI:
+      // kullanıcı zaten kadrajda, "geri çekil" onu düzeltmez — üstelik
+      // uzaklaşmak okumayı kötüleştirir. J-099 ailesinin dördüncü örneği:
+      // veri elimizde ama dal ayrılmamış.
       _states.add(LiveJabState.live(
         surface: LiveState.noVerdict,
         completedCount: _completed,
-        noVerdictReason: 'I cannot see you well enough to judge — step back '
-            'so your head and hands are in frame.',
+        noVerdictReason: resolution.structural == null
+            // KİMSE YOK: eylem kullanıcının elinde ve gerçekten kadraja
+            // girmek. İskelet YOK — çizilecek hiçbir koordinat yok, boş bir
+            // figür çizmek görmediğimiz bir şeyi görüyormuş gibi yapardı.
+            ? _nobodyFoundReason
+            // KİŞİ VAR, OKUMA BOZUK: kusur BİZDE. Kullanıcıya yapması
+            // gereken bir şey söylenmiyor çünkü yok — susmak yerine
+            // sorumluluğu üstlenen cümle (`cue.structural`). İskelet burada
+            // da YOK ama başka sebeple: `resolution.frame` bu dalda null,
+            // yani güvenmediğimiz koordinatlara zaten erişimimiz yok.
+            : cues.sayKey('cue.structural') ?? _genericNoVerdict,
       ));
       return;
     }
@@ -245,11 +260,13 @@ final class LiveJabController {
       // ERİŞİLEMEZ — `OrientationAwarePoseSource._run` (motion_core) HER
       // karede kendi `StructuralValidator`ını çalıştırıp
       // `OrientationCandidate.usable => structural.plausible` diyor; motor
-      // aynı kareyi görmeden önce zaten `resolution.usable=false`e düşüyor
-      // (satır ~161'deki AYRI hardcoded cümleyle). Yine de KORUNUYOR: hem
-      // savunma amaçlı (kapı sırası bir gün değişebilir) hem `_phrase`in
-      // issue-kodu için yaptığıyla AYNI örüntüyü koruyup dalın kendisini
-      // "unutulmuş" göstermemek için.
+      // aynı kareyi görmeden önce zaten `resolution.usable=false`e düşüyor.
+      // ✅ J-103: o üstteki kapı ARTIK aynı `cue.structural` anahtarına
+      // yönlendiriyor, yani KULLANICININ DUYDUĞU cümle bu dal erişilebilir
+      // olsa da olmasa da AYNI — iki kapı, tek replik. Bu dal yine de
+      // KORUNUYOR: savunma amaçlı (kapı sırası bir gün değişirse ham dize
+      // sızmasın) ve `_phrase`in issue-kodu için yaptığı örüntüyü bozmamak
+      // için. Erişilebilirliği yukarıdaki daldan ÖLÇÜLÜYOR.
       return cues.sayKey('cue.structural') ?? _genericNoVerdict;
     }
     if (reason == 'quality:outOfFrame') {
@@ -278,6 +295,14 @@ final class LiveJabController {
       'it yet.';
   static const String _genericNoVerdict =
       'I cannot judge that clearly enough right now.';
+
+  /// KİMSE YOK hâli — `cues.en.json`da karşılığı YOK ve bilerek: bu cümle
+  /// bir koçluk repliği değil, kurulum yönergesi. `cue.out_of_frame`
+  /// ("kısmen görüyorum") ile karıştırılmaması için ayrı tutuluyor —
+  /// `_torsoUnreliableReason` ile aynı emsal.
+  static const String _nobodyFoundReason =
+      'I cannot see you well enough to judge — step back so your head and '
+      'hands are in frame.';
   static const String _torsoUnreliableReason =
       "I can't get a steady read on your torso — square up so your "
       'shoulders and hips are both visible.';

@@ -139,8 +139,44 @@ void main() {
       expect(r.surface, LiveState.noVerdict);
       expect(r.noVerdictReason, isNotNull,
           reason: 'sessiz kalmak "her şey yolunda" diye okunur');
+      expect(r.noVerdictReason, contains('step back'),
+          reason: 'J-103: KİMSE YOK dalında "geri çekil" DOĞRU tavsiye — '
+              'kullanıcı kadrajda değil ve eylem onun elinde');
       expect(seen.whereType<LiveJabFailed>(), isEmpty,
           reason: 'görünmemek bir kurulum hatası DEĞİL');
+      await c.dispose();
+    });
+
+    test('KİŞİ VAR ama OKUMA BOZUK → "geri çekil" DEMİYOR (J-103)', () async {
+      // `!resolution.usable`in İKİNCİ hâli: model bir iskelet üretti
+      // (`structural != null`) ama anatomik olarak imkânsız çıktı. Eski
+      // kod ikisine de aynı "step back" cümlesini basıyordu ve BURADA
+      // yanlıştı: kullanıcı zaten kadrajda; geri çekilmek okumayı
+      // düzeltmez, kötüleştirir. Kusur BİZDE, tavsiye onda değil.
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+      final List<LiveJabState> seen = <LiveJabState>[];
+      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+      await c.start();
+      for (final PoseFrame f in _steadyFrames(body: _swappedChainBody)) {
+        cam.emit(_envelope(f));
+      }
+      await Future<void>.delayed(Duration.zero);
+      await sub.cancel();
+
+      final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+      expect(r.surface, LiveState.noVerdict);
+      expect(r.noVerdictReason, isNot(contains('step back')),
+          reason: 'J-103 kusuru geri geldi: kadrajdaki kullanıcıya '
+              '"geri çekil" deniyor');
+      expect(_structuralPhrases.contains(r.noVerdictReason), isTrue,
+          reason: '`cue.structural`in bilinen 3 varyantından biri değil: '
+              '"${r.noVerdictReason}"');
+      expect(r.skeleton, isNull,
+          reason: 'güvenmediğimiz iskeleti çizmek, "okumam bozuk" '
+              'cümlesiyle çelişirdi — üstelik koordinatlar zaten yok');
+      expect(seen.whereType<LiveJabFailed>(), isEmpty,
+          reason: 'bozuk okuma bir kurulum hatası DEĞİL, canlı bir hâl');
       await c.dispose();
     });
 
@@ -302,12 +338,13 @@ void main() {
         await c.dispose();
       });
 
-      // ⚠️ `structural:` öneki (`cue.structural`) BURADA canlı-hat üzerinden
-      // GERÇEK bir sentetik yapısal-kusurla tetiklenip test EDİLEMEDİ — dört
-      // ayrı fixture denendi (aşırı bacak kısaltma, yalnız kol uzatma, büyük
-      // kemik sıçraması, eşik-sınırı kemik sıçraması) ve HEPSİ, motora hiç
-      // ulaşmadan, `resolution.usable=false`e (BAŞKA bir hardcoded cümleye)
-      // düştü. Kaynağı OKUYUNCA sebep netleşti — kusur DEĞİL, mimari:
+      // ⚠️ `StrikingEngine`in `structural:` BASTIRMASI (bu dosyadaki
+      // `_suppressionSentence` dalı) canlı-hat üzerinden GERÇEK bir sentetik
+      // yapısal-kusurla tetiklenip test EDİLEMEDİ — dört ayrı fixture
+      // denendi (aşırı bacak kısaltma, yalnız kol uzatma, büyük kemik
+      // sıçraması, eşik-sınırı kemik sıçraması) ve HEPSİ, motora hiç
+      // ulaşmadan, `resolution.usable=false`e düştü. Sebep — kusur DEĞİL,
+      // mimari:
       // `OrientationAwarePoseSource._run` (motion_core) HER karede KENDİ
       // `StructuralValidator`ını çalıştırıyor ve `OrientationCandidate.usable
       // => structural.plausible` diyor (orientation_aware_source.dart:42) —
@@ -316,16 +353,21 @@ void main() {
       // `StructuralValidator` sınıfıyla, motor daha kareyi GÖRMEDEN önce
       // kontrol ediyor. Zaman-bağımsız kusurlar için (limbProportionImplausible,
       // bilateralAsymmetry) bu iki kontrol MATEMATİKSEL OLARAK AYNI kareyi,
-      // aynı formülle değerlendiriyor — yani `structural:` bastırması canlı
-      // hatta YAPISAL OLARAK ERİŞİLEMEZ, motion_core'un kendi kapısı her zaman
-      // önce davranıyor ve FARKLI bir mesajla kapatıyor. Bu üçüncü bir "ölü
-      // dal" bulgusu — `docs/design/REPLIK-ERISILEBILIRLIK-TARAMASI-2026-08-06.md`nin
-      // "cue.structural ölü" satırına bir SEVİYE daha derin bir açıklama
-      // ekliyor (içerik-eksikliği değil, erişilemezlik). `_suppressionSentence`
-      // içindeki `structural:` dalı yine de KORUNUYOR — savunma amaçlı
-      // (motion_core'un kapı sırası bir gün değişirse ham dize sızmasın) ve
-      // doğruluğu diğer iki dalla AYNI kod-örüntüsüyle inşa edildiği için
-      // teftişle (inspection) doğrulanıyor, canlı-hat testiyle değil.
+      // aynı formülle değerlendiriyor — yani `StrikingEngine`in `structural:`
+      // bastırması canlı hatta YAPISAL OLARAK ERİŞİLEMEZ; motion_core'un
+      // kendi kapısı her zaman önce davranıyor.
+      //
+      // ✅ J-103 BUNU ÇÖZDÜ — dalı erişilebilir kılarak DEĞİL, ÜSTTEKİ kapıyı
+      // düzelterek. Erken kapı artık iki hâli ayırıyor ve yapısal hâlde AYNI
+      // `cue.structural` anahtarını söylüyor; yukarıdaki *"KİŞİ VAR ama OKUMA
+      // BOZUK"* testi tam da o dört fixture'ın düştüğü yolu ölçüyor. Yani
+      // `cue.structural` artık ÖLÜ DEĞİL (tarama dokümanının 🔴🔴 satırı
+      // kapandı) — canlı olan yol bu dosyada test edilen erken kapı.
+      // `_suppressionSentence` içindeki geç dal KORUNUYOR: savunma amaçlı
+      // (motion_core'un kapı sırası bir gün değişirse ham dize sızmasın),
+      // doğruluğu teftişle doğrulanıyor — ama artık kullanıcının duyduğu
+      // cümle her iki kapıda da AYNI, yani "sessizce farklı davranma" riski
+      // de kalmadı.
     });
   });
 }
@@ -340,6 +382,34 @@ const List<String> _lowConfidencePhrases = <String>[
   "Tracking isn't clean — holding off.",
   'Not confident enough to call that.',
 ];
+
+/// `cue.structural` varyantları — `_lowConfidencePhrases` ile aynı gerekçe.
+const List<String> _structuralPhrases = <String>[
+  'My tracking looks wrong — holding off.',
+  "Not confident in what I'm seeing.",
+  "Something's off in my read. Staying quiet.",
+];
+
+/// KOL/BACAK ZİNCİRİ TAKAS EDİLMİŞ gövde — `StructuralValidator`ın
+/// `limbProportionImplausible` kapısını BİLEREK tetikler.
+///
+/// Kapının kuralı: `arm/leg > 1.15` (kol = üstkol+önkol ortalaması, bacak =
+/// uyluk+baldır; `structural_validator.dart`). Bu gövdede kol 0.23, bacak
+/// 0.15 → oran **1.53**. Ölçüler 2B ve z=0 olduğu için üretilen kemik
+/// uzunlukları burada YAZILAN değerlerin AYNISI — eşik hesabı poza bağlı
+/// değil, yani test kırılgan değil.
+///
+/// Bu senaryonun gerçek karşılığı motion_core'un kendi dokümanında: ters
+/// duran bir gövdede poz modeli kol ve bacak zincirlerini takas edip sonucu
+/// **yüksek güvenle** bildirebiliyor — güven kapısı bunu yakalayamaz, çünkü
+/// belirsiz olan hiçbir şey yok. Kullanıcı kadrajda ve doğru duruyor;
+/// yanlış olan bizim okumamız.
+const SyntheticBody _swappedChainBody = SyntheticBody(
+  upperArmLength: 0.12,
+  forearmLength: 0.11,
+  thighLength: 0.08,
+  shinLength: 0.07,
+);
 
 /// Hareketsiz, nötr bir duruş — yalnız güven/yapı kapılarını tetiklemek
 /// için var, `_jabSequence()`in aksine bir TEKNİK saymayı hedeflemiyor.
