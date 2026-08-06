@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../shell_candidate/honesty_box.dart';
 import '../shell_candidate/shell_models.dart';
+import 'design_tokens.dart';
 
 /// Sayfa A — Disiplin & Kurs Seçimi (design: `docs/design/DESIGN-PANEL-PROMPT.md`
 /// §2). Bu app'in giriş yüzeyi; hiç kurs başlatılmamışsa uygulamayı ilk
@@ -13,6 +14,15 @@ import '../shell_candidate/shell_models.dart';
 /// EKLENMEDİ (bkz. `shell_candidate/README.md`) — bu yüzden bu widget
 /// bilerek `lib/app/` altında yaşıyor; yalnız zaten var olan, domain-bağımsız
 /// `HonestyBox`u değiştirmeden reuse ediyor.
+///
+/// Görsel giydirme design turu Parça 4 (2026-08-06/07, SON parça) —
+/// `design_tokens.dart` tokenlarıyla, Ayarlar/Sayfa B ile AYNI dilde.
+/// `HonestyBox` frozen olduğu için (yalnız bu dosyanın reuse ettiği tek
+/// paylaşılan bileşen) yerel bir `Theme(data:, child:)` sarmalıyla besleniyor
+/// — Parça 2'nin `jablabSessionTheme` deseninin küçük ölçekli tekrarı.
+/// "Soon" rozeti ve "Neden yok?" bağlantısı Ayarlar'ın "FREE PLAN" rozeti/
+/// "why-not-link" satırıyla BİREBİR aynı görsel kalıptan — aynı kavram iki
+/// ekranda iki farklı dil konuşmasın diye.
 class SelectPage extends StatefulWidget {
   const SelectPage({
     super.key,
@@ -49,69 +59,109 @@ class _SelectPageState extends State<SelectPage> {
   String? _expandedId;
 
   @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.library.title),
-        actions: <Widget>[
-          IconButton(
-            key: const Key('settings-button'),
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: 'Settings',
-            onPressed: widget.onOpenSettings,
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: JColors.ground,
+        body: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[const Color(0xFF170809), JColors.ground],
+              stops: const <double>[0, .42],
+            ),
           ),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          if (widget.historyUnavailable != null) ...<Widget>[
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
+              children: <Widget>[
+                Row(
                   children: <Widget>[
-                    Text('Where you left off',
-                        key: const Key('recorded-heading'),
-                        style: theme.textTheme.titleSmall),
-                    const SizedBox(height: 4),
-                    Text(widget.historyUnavailable!,
-                        key: const Key('recorded-unavailable'),
-                        style: theme.textTheme.bodySmall),
-                    if (widget.onRetryHistory != null) ...<Widget>[
-                      const SizedBox(height: 12),
-                      OutlinedButton(
-                        key: const Key('retry-history'),
-                        onPressed: widget.onRetryHistory,
-                        child: const Text('Try again'),
+                    Expanded(
+                      child: Text(
+                        widget.library.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: JText.pageTitle.copyWith(fontSize: 22, letterSpacing: -.6),
                       ),
-                    ],
+                    ),
+                    const SizedBox(width: 12),
+                    GlassIconButton(
+                      key: const Key('settings-button'),
+                      icon: Icons.settings_outlined,
+                      tooltip: 'Settings',
+                      onTap: widget.onOpenSettings,
+                    ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 20),
+                if (widget.historyUnavailable != null) ...<Widget>[
+                  // Tier 2-d: "hangi kurs güncel" bile bilinemiyor — bu TAM
+                  // OLARAK `UnknownGlassPanel`in rezerve ettiği "bilmiyorum"
+                  // (Sayfa B'nin aynı beyanla AYNI tier'ı kullanmasıyla
+                  // tutarlı, bkz. course_page.dart).
+                  UnknownGlassPanel(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Where you left off',
+                            key: const Key('recorded-heading'),
+                            style: JText.body.copyWith(fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 4),
+                        Text(widget.historyUnavailable!,
+                            key: const Key('recorded-unavailable'),
+                            style: JText.bodyMuted),
+                        if (widget.onRetryHistory != null) ...<Widget>[
+                          const SizedBox(height: 12),
+                          OutlinedButton(
+                            key: const Key('retry-history'),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: JColors.ink,
+                              side: BorderSide(color: JColors.border),
+                            ),
+                            onPressed: widget.onRetryHistory,
+                            child: const Text('Try again'),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                ...widget.library.items.map((ShellItem i) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: _ItemBlock(
+                        item: i,
+                        expanded: _expandedId == i.id,
+                        onTap: () => setState(
+                            () => _expandedId = _expandedId == i.id ? null : i.id),
+                        onOpenCourse: widget.onOpenCourse,
+                      ),
+                    )),
+                const SizedBox(height: 6),
+                GlassPanel(
+                  padding: const EdgeInsets.all(16),
+                  child: InkWell(
+                    key: const Key('why-not-button'),
+                    onTap: widget.onOpenWhyNot,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.help_outline, color: JColors.ember, size: 18),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text("Why isn't my art here?",
+                              style: JText.body.copyWith(fontSize: 15, fontWeight: FontWeight.w600)),
+                        ),
+                        Icon(Icons.chevron_right, color: JColors.ember, size: 18),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-          ],
-          ...widget.library.items.map((ShellItem i) => _ItemBlock(
-                item: i,
-                expanded: _expandedId == i.id,
-                onTap: () => setState(
-                    () => _expandedId = _expandedId == i.id ? null : i.id),
-                onOpenCourse: widget.onOpenCourse,
-              )),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            key: const Key('why-not-button'),
-            onPressed: widget.onOpenWhyNot,
-            icon: const Icon(Icons.help_outline),
-            label: const Text("Why isn't my art here?"),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      );
 }
 
 class _ItemBlock extends StatelessWidget {
@@ -129,32 +179,46 @@ class _ItemBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     final bool live = item.status == ItemStatus.live;
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+    return GlassPanel(
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ListTile(
+          InkWell(
             key: Key('item-${item.id}'),
-            title: Text(item.title),
-            subtitle: Text(
-              live
-                  ? '${item.courses.length} course${item.courses.length == 1 ? '' : 's'}'
-                  : item.blurb,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: live
-                ? Icon(expanded ? Icons.expand_less : Icons.expand_more)
-                : Chip(
-                    key: Key('soon-${item.id}'),
-                    label: Text(item.waveLabel.isEmpty
-                        ? 'Soon'
-                        : 'Soon · ${item.waveLabel}'),
-                  ),
             onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(item.title,
+                            style: JText.body.copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 3),
+                        Text(
+                          live
+                              ? '${item.courses.length} course${item.courses.length == 1 ? '' : 's'}'
+                              : item.blurb,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: JText.bodyMuted,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  if (live)
+                    Icon(expanded ? Icons.expand_less : Icons.expand_more,
+                        color: JColors.ink3)
+                  else
+                    _SoonBadge(key: Key('soon-${item.id}'), label: item.waveLabel),
+                ],
+              ),
+            ),
           ),
           if (expanded)
             Padding(
@@ -163,49 +227,76 @@ class _ItemBlock extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   if (!live)
-                    Card(
-                      color: theme.colorScheme.surfaceContainerHighest,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          'Not open yet${item.waveLabel.isEmpty ? '' : ' · ${item.waveLabel}'}. '
-                          'We list it so you can see where this is going — '
-                          'there are no placeholder lessons behind this page.',
-                          key: const Key('coming-soon-note'),
-                          style: theme.textTheme.bodyMedium,
-                        ),
+                    UnknownGlassPanel(
+                      padding: const EdgeInsets.all(14),
+                      borderRadius: 14,
+                      child: Text(
+                        'Not open yet${item.waveLabel.isEmpty ? '' : ' · ${item.waveLabel}'}. '
+                        'We list it so you can see where this is going — '
+                        'there are no placeholder lessons behind this page.',
+                        key: const Key('coming-soon-note'),
+                        style: JText.bodyMuted,
                       ),
                     ),
                   if (item.blurb.isNotEmpty && live) ...<Widget>[
                     const SizedBox(height: 8),
-                    Text(item.blurb, style: theme.textTheme.bodyMedium),
+                    Text(item.blurb, style: JText.body.copyWith(color: JColors.ink2, fontSize: 14)),
                   ],
-                  HonestyBox(
-                      measured: item.measured, notMeasured: item.notMeasured),
+                  // `HonestyBox` frozen (shell_candidate) — `Theme.of(context)`
+                  // üzerinden besleniyor, JColors'ı doğrudan okuyamıyor.
+                  Theme(
+                    data: _honestyBoxTheme,
+                    child: HonestyBox(measured: item.measured, notMeasured: item.notMeasured),
+                  ),
                   if (live) ...<Widget>[
-                    Text('Courses', style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 6),
+                    Text('Courses', style: JText.body.copyWith(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     ...item.courses
                         .where((ShellCourse c) => c.lessons.isNotEmpty)
-                        .map((ShellCourse c) => Card(
-                              child: ListTile(
-                                key: Key('course-${c.id}'),
-                                title: Text(c.title),
-                                subtitle: Text(c.goal),
-                                trailing: Text('${c.lessons.length} lessons'),
-                                onTap: () => onOpenCourse(c),
+                        .map((ShellCourse c) => Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: GlassPanel(
+                                tier: GlassTier.observation,
+                                padding: const EdgeInsets.all(14),
+                                child: InkWell(
+                                  key: Key('course-${c.id}'),
+                                  onTap: () => onOpenCourse(c),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(c.title,
+                                                style: JText.body.copyWith(fontWeight: FontWeight.w600)),
+                                            if (c.goal.isNotEmpty) ...<Widget>[
+                                              const SizedBox(height: 3),
+                                              Text(c.goal,
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: JText.bodyMuted.copyWith(fontSize: 12.5)),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text('${c.lessons.length} lessons',
+                                          style: JText.mono.copyWith(color: JColors.cool2)),
+                                    ],
+                                  ),
+                                ),
                               ),
                             )),
                   ],
                   if (item.pendingNotes.isNotEmpty) ...<Widget>[
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     Text('Not open yet in this section',
-                        style: theme.textTheme.titleSmall),
+                        style: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 14)),
                     const SizedBox(height: 6),
                     ...item.pendingNotes.map((String n) => Padding(
                           padding: const EdgeInsets.only(bottom: 4),
-                          child:
-                              Text('• $n', style: theme.textTheme.bodySmall),
+                          child: Text('• $n', style: JText.bodyMuted),
                         )),
                   ],
                 ],
@@ -216,3 +307,42 @@ class _ItemBlock extends StatelessWidget {
     );
   }
 }
+
+/// "Soon" rozeti — Ayarlar'ın "FREE PLAN" rozetiyle BİREBİR aynı kalıp
+/// (settings_page.dart) — aynı görsel dil, iki ayrı icat değil.
+class _SoonBadge extends StatelessWidget {
+  const _SoonBadge({super.key, required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: JColors.border),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          label.isEmpty ? 'SOON' : 'SOON · ${label.toUpperCase()}',
+          style: JText.label.copyWith(color: JColors.ink3, letterSpacing: 1),
+        ),
+      );
+}
+
+/// `HonestyBox`un okuduğu tek yüzey (`Card`+`titleSmall`/`bodySmall`) —
+/// design_tokens.dart'ın kendi `jablabSessionTheme`iyle AYNI eşleme deseni,
+/// yalnız bu sayfanın frozen tek bileşenine ölçekli.
+final ThemeData _honestyBoxTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  cardColor: const Color(0x13E4ECF3),
+  cardTheme: const CardThemeData(
+    elevation: 0,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+  ),
+  iconTheme: IconThemeData(color: JColors.ink3),
+  textTheme: TextTheme(
+    titleSmall: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
+    bodySmall: JText.bodyMuted,
+  ),
+);
