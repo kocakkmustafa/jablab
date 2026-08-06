@@ -54,6 +54,10 @@ dependencies:
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
       ref: f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d
   permission_handler: ^12.0.3
+  # Design turu (2026-08-06): JabLab.dc.html spec board iki tipografi ailesi
+  # zorunlu kılıyor — Familjen Grotesk (insan sesi) + IBM Plex Mono (yalnız
+  # ÖLÇÜLEN şeyler: saat, sayaç, teknik sebep). İkisi de sistem fontu değil.
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
