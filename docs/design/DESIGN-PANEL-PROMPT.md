@@ -221,3 +221,62 @@ Referans görsellerde bunların bir kısmı VAR; **bilerek çıkarıldılar**:
 
 *Bağlayıcı kaynak: `docs/design/UI-BRIEF.md` §5 · aile defteri M-F-186 (vaat dili) ·
 K8 (skorsuz yüzey) · doc-75 (geçmiş üç-hâl) · M-F-282 (kurucu tasarım yönü).*
+
+---
+
+# 📌 ZEYİL — PANEL SORU-CEVABINDA ALINAN BAĞLAYICI KARARLAR (2026-08-06)
+
+> ⚠️ **Bu bölüm sonradan eklendi ve YUKARIDAKİ METNİ YER YER SÜPERSEDE EDER.**
+> Panel brief'i okuduktan sonra 10 soru sordu; koordinatör cevapladı ve o cevaplar
+> tasarımı şekillendirdi — ama cevaplar brief'e geri işlenmemişti. Giydiren hat yalnız
+> brief'i gördüğü için, **onaylanmış bir kararı "sapma" sanma riski** doğdu (JabLab
+> giydirme turunda gerçekten oldu). Bu zeyil o açığı kapatır: **brief + zeyil = tek kaynak.**
+
+## Z1. Arka plan görselleri — §1'i SÜPERSEDE EDER 🔴
+§1 *"tam-kadraj sporcu görselleri"* diyor. **Karar: İKİ KATMANLI SPEC.**
+- **Katman 1 (varsayılan, kalıcı, ship'lenebilir):** disipline özgü **kodlanmış gradyan/
+  hareket zemini** — her disiplin görsel olarak ayrı. Fotoğrafa bağımlı DEĞİL.
+- **Katman 2 (opsiyonel, sonra):** üzerine oturan fotoğraf + **AI-ifşa rozeti yuvası
+  şimdiden tasarımda.**
+- **Gerekçe:** cam panelleri yargılayabilmek için arkada gerçekten render olan bir şey
+  gerekiyordu; ayrıca seçim ekranı **1 canlı disiplinde de 8'de de** kasıtlı görünmek
+  zorunda — fotoğrafı olmayan disiplin de zemin ister.
+→ Tasarımın gradyan-geometri çözümü **bu kararın uygulanmasıdır, sapma DEĞİLDİR.**
+
+## Z2. Teslim biçimi
+İnteraktif prototip **+** spec board (ikisi birden). Prototip hareketi yargılatır,
+spec board uygulanabilir değerleri ve "her hâl tasarlandı mı" kontrolünü verir.
+
+## Z3. Öncelik sırası (panelin "en çok neyi doğru yapayım" sorusu)
+① Ders ekranı canlı ② **beş dürüst hâl** ③ kurs sayfası **üç geçmiş hâli**.
+İkinci kademe: seçim ekranının kısmi doluluğu.
+
+## Z4. Varyasyon
+**Ders ekranı kompozisyonunda 2-3 varyant**, gerisi tek yön. (Seçim ekranı konvansiyonel
+kart ızgarası — varyant üretmeye değmez.)
+
+## Z5. Hareket
+Ana akışta (seçim → kurs, kart-görseli devralma + ders-öncesi sahne) **çalışan geçişler**;
+gerisi **timing/easing değerleriyle spec'lenir**. Mühendisin sayıya ihtiyacı var, sıfata değil.
+
+## Z6. Metinler — GERÇEK, uydurma değil
+Replikler `assets/content/cues.en.json`'dan **aynen**; 8 disiplin blurb'ü ve 7 kapsam-dışı
+gerekçesi `assets/content/library.json`'dan **aynen, yumuşatılmadan**.
+→ Giydirirken **uydurma metin görürsen bu bir sapmadır.**
+
+## Z7. Ayarlar köşesi kapsamı
+Tam ayarlar + paywall, **görünür `{price}` yuvası** ile (fiyat sabit yazılmaz).
+
+## Z8. Çerçeve ve yönelim
+**iOS cihaz çerçevesi + durum çubuğu** (tam-kadraj canlı ekranda güvenli-alan çakışması
+gerçek risk; çerçevesiz görünüm bu problemi gizler).
+**PORTRAIT** — ve bu tercih değil, ürünün kendi kurulum replikleriyle ölçüldü:
+*"I need your whole body in frame"* · *"Step back until I can see your feet"* ·
+*"Prop the phone at hip height"*. Ayakta duran tüm-vücut kadrajı portrait ister.
+
+---
+
+## 🔧 SÜREÇ DERSİ (aile geneli)
+**Panel Q&A'sında alınan her karar, brief'e ZEYİL olarak geri işlenir.** Aksi hâlde
+giydiren hat brief'i tek kaynak sanar ve onaylanmış kararı sapma diye raporlar —
+ya da daha kötüsü, kararı bilmeden brief'e "sadık" kalıp kararı geri alır.
