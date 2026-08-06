@@ -164,26 +164,36 @@ class GlassPanel extends StatelessWidget {
       GlassTier.observation => JColors.cool.withValues(alpha: .24),
       GlassTier.judgement => JColors.ember.withValues(alpha: .5),
     };
-    Widget panel = ClipRRect(
-      borderRadius: br,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: _blurSigma, sigmaY: _blurSigma),
-        child: Container(
-          padding: padding,
-          decoration: BoxDecoration(
-            color: fill,
-            borderRadius: br,
-            border: Border.all(color: edge),
-            boxShadow: tier == GlassTier.judgement
-                ? <BoxShadow>[
-                    BoxShadow(
-                        color: JColors.deep.withValues(alpha: .4),
-                        blurRadius: 40,
-                        offset: const Offset(0, 12)),
-                  ]
-                : null,
+    // ⚠️ Gölge, KIRPILMAYAN bir dış katmanda — Gravita'nın kalıp-dersi
+    // (koordinatör 2026-08-06): `BoxShadow` kutunun DIŞINA taşar, ama
+    // `ClipRRect` çocuğunu kendi sınırına kırpar; gölgeyi `ClipRRect`in
+    // İÇİNDEKİ `Container`a koymak onu görünmez yapardı (10 test bunu
+    // Gravita'da kırmıştı). Cam-blur kırpması ayrı, gölge ayrı katman.
+    Widget panel = Container(
+      decoration: BoxDecoration(
+        borderRadius: br,
+        boxShadow: tier == GlassTier.judgement
+            ? <BoxShadow>[
+                BoxShadow(
+                    color: JColors.deep.withValues(alpha: .4),
+                    blurRadius: 40,
+                    offset: const Offset(0, 12)),
+              ]
+            : null,
+      ),
+      child: ClipRRect(
+        borderRadius: br,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: _blurSigma, sigmaY: _blurSigma),
+          child: Container(
+            padding: padding,
+            decoration: BoxDecoration(
+              color: fill,
+              borderRadius: br,
+              border: Border.all(color: edge),
+            ),
+            child: child,
           ),
-          child: child,
         ),
       ),
     );

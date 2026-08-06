@@ -206,11 +206,26 @@ class _WhereYouLeftOff extends StatelessWidget {
                   style: theme.textTheme.bodySmall),
             ],
             const SizedBox(height: 8),
-            ...recorded.entries.map((MapEntry<String, String> e) => ListTile(
+            // `ListTile` DEĞİL: title+trailing ikisi de uzayabiliyor
+            // ("Sessions" · "3 recorded, 1 stopped early") ve `ListTile`
+            // dar ekranda (375pt) trailing tile genişliğinin TAMAMINI
+            // kaplarsa performLayout'ta fırlıyor — 375pt taşma kapısı bunu
+            // yakaladı (koordinatör 2026-08-06, Lissom/Ostinato emsali).
+            // `Expanded` + `Flexible` ile iki taraf da esner, hiçbiri
+            // sabit-genişlik varsayımıyla diğerini kilitlemiyor.
+            ...recorded.entries.map((MapEntry<String, String> e) => Padding(
                   key: Key('recorded-${e.key}'),
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(e.key),
-                  trailing: Text(e.value, style: theme.textTheme.titleSmall),
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text(e.key)),
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Text(e.value,
+                            style: theme.textTheme.titleSmall, textAlign: TextAlign.end),
+                      ),
+                    ],
+                  ),
                 )),
             if (recordedNote != null)
               Padding(
@@ -261,10 +276,22 @@ class _HonestBands extends StatelessWidget {
             ),
           ),
         ),
-        ...bands.entries.map((MapEntry<String, String> e) => ListTile(
+        // `ListTile` değil — aynı 375pt taşma sınıfı `_WhereYouLeftOff`teki
+        // gibi burada da mümkün (bkz. o widget'ın yorumu); değerler bugün
+        // hep "—" ama alan `Map<String,String>` — savunma tüm sınıfa.
+        ...bands.entries.map((MapEntry<String, String> e) => Padding(
               key: Key('band-${e.key}'),
-              title: Text(e.key),
-              trailing: Text(e.value, style: theme.textTheme.titleSmall),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: Text(e.key)),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Text(e.value,
+                        style: theme.textTheme.titleSmall, textAlign: TextAlign.end),
+                  ),
+                ],
+              ),
             )),
       ],
     );
