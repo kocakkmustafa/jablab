@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_failure_screen.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
 /// BAĞLANTI testi (J-079): bozuk içerik GERÇEKTEN dürüst hata ekranını açıyor
@@ -76,15 +77,15 @@ void main() {
         contains('on us'));
 
     // 4. EN ÖNEMLİSİ: kısmi kütüphane RENDER EDİLMEDİ. Doğrulamanın bloklama
-    //    sebebi tam bu; sekmeler arkada dursaydı kullanıcı bozuk içerikte
+    //    sebebi tam bu; kabuk arkada dursaydı kullanıcı bozuk içerikte
     //    gezinebilirdi.
-    // Kabuk M3 `NavigationBar` kullanıyor — ilk yazdığımda
-    // `BottomNavigationBar` aramıştım ve o iddia BEDAVAYA geçiyordu
-    // (hiçbir koşulda bulunamayacak bir tip). Sekme anahtarı da ayrıca
-    // aranıyor: tip adı değişse bile kapı ayakta kalsın.
-    expect(find.byType(NavigationBar), findsNothing);
-    expect(find.byKey(const Key('tab-library')), findsNothing);
-    expect(find.byKey(const Key('today-heading')), findsNothing);
+    // 2026-08-06: kabuk 4-sekme `NavigationBar`dan 3-sayfa+köşe yapısına
+    // geçti (Hüküm 1) — o yapının GİRİŞ yüzeyi `SelectPage`. İlk yazdığımda
+    // `BottomNavigationBar` aramıştım ve o iddia BEDAVAYA geçiyordu (hiçbir
+    // koşulda bulunamayacak bir tip); aynı gotcha'ya bir daha düşmemek için
+    // hem TİP hem anahtar burada da ayrı ayrı aranıyor.
+    expect(find.byType(SelectPage), findsNothing);
+    expect(find.byKey(const Key('item-boxing')), findsNothing);
 
     // 5. Ayrıntı ihlali TAŞIYOR — sahada teşhis edilebilsin.
     await t.tap(find.byKey(const Key('failure-detail-tile')));
@@ -103,8 +104,8 @@ void main() {
     expect(find.byType(ContentFailureScreen), findsNothing);
     // Kabuğun açıldığına POZİTİF kanıt: "hâlâ yükleniyor" hâli bu testi
     // sessizce geçemesin (test 1'in tam simetriği).
-    expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.byKey(const Key('tab-library')), findsOneWidget);
+    expect(find.byType(SelectPage), findsOneWidget);
+    expect(find.byKey(const Key('item-boxing')), findsOneWidget);
   });
 
   /// ⭐ J-092 ZİNCİRİ — geçmiş okunamıyor, ama İÇERİK sağlam.
@@ -115,19 +116,21 @@ void main() {
   /// `_Root` onu hiç beslemiyor olabilirdi ve bileşen testi bunu göremezdi
   /// (aynı gerekçe: J-079 zinciri).
   group('⭐ J-092 zinciri', () {
-    Future<void> openProgress(WidgetTester t, ContentRepository repo) async {
-      await pumpApp(t, repo);
-      await t.tap(find.byKey(const Key('tab-progress')));
-      await t.pumpAndSettle();
-    }
+    // 2026-08-06: eskiden `tab-progress`e dokunuyordu (kalıcı sekme). O
+    // sekme kalktı — geçmiş TAMAMEN okunamazsa (aşağıdaki `_ThrowingStore`)
+    // hangi kursun "güncel" olduğu hiç bilinemez (Hüküm 3), dolayısıyla
+    // beyan artık Sayfa A'nın kendi banner'ında görünüyor; ek dokunuş
+    // gerekmiyor.
+    Future<void> openProgress(WidgetTester t, ContentRepository repo) =>
+        pumpApp(t, repo);
 
-    testWidgets('depo okuması FIRLATIRSA ilerleme sekmesi BEYAN ediyor',
+    testWidgets('depo okuması FIRLATIRSA Sayfa A BEYAN ediyor',
         (WidgetTester t) async {
       await openProgress(
           t, ContentRepository(storeOverride: _ThrowingStore()));
 
       // İçerik sağlam → bloklanmadı: kabuk ayakta, dersler açılabilir.
-      expect(find.byType(NavigationBar), findsOneWidget);
+      expect(find.byType(SelectPage), findsOneWidget);
       // ...ama sessiz de değil.
       expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
       expect(find.byType(ContentFailureScreen), findsNothing,
@@ -148,8 +151,13 @@ void main() {
       // düşme sebebi kusur değil, hattın çalıştığının kanıtıydı.
       await openProgress(t, ContentRepository(storeOverride: _WorkingStore()));
       expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
-      expect(find.byKey(const Key('bands-only-note')), findsOneWidget,
-          reason: 'ilerleme sekmesinin gerçekten açıldığına pozitif kanıt');
+      // `_WorkingStore` BOŞ (kayıt yok) → güncel kurs çözülmez → giriş
+      // Sayfa A'dır (Hüküm 3) ve K8 bant bloğu burada değil, bir kursta
+      // gösterilir — bu yüzden pozitif kanıt artık `bands-only-note` değil,
+      // Sayfa A'nın gerçekten açıldığının kendisi.
+      expect(find.byType(SelectPage), findsOneWidget,
+          reason: 'seçim ekranının gerçekten açıldığına pozitif kanıt');
+      expect(find.byKey(const Key('item-boxing')), findsOneWidget);
     });
   });
 }

@@ -121,8 +121,9 @@ void main() {
       });
       await t.pumpAndSettle();
 
-      await t.tap(find.byKey(const Key('tab-library')));
-      await t.pumpAndSettle();
+      // 2026-08-06: Sayfa A (SelectPage) zaten GİRİŞ yüzeyi — `tab-library`
+      // dokunuşu kalktı. `item-boxing` artık bir sayfa PUSH etmiyor, aynı
+      // sayfada satır-içi genişliyor (Hüküm 1, "az sayfa").
       await t.tap(find.byKey(const Key('item-boxing')));
       await t.pumpAndSettle();
       await t.tap(find.byKey(Key('course-${e.course.id}')));
@@ -242,9 +243,9 @@ void main() {
       await Future<void>.delayed(const Duration(milliseconds: 200));
     });
     await t.pumpAndSettle();
-    // Bir seans koş, sonra ilerleme sekmesine bak.
-    await t.tap(find.byKey(const Key('tab-library')));
-    await t.pumpAndSettle();
+    // Bir seans koş, sonra kaydedilenin göründüğüne bak.
+    // 2026-08-06: `tab-library` dokunuşu kalktı (Sayfa A zaten giriş
+    // yüzeyi); `item-boxing` artık PUSH değil satır-içi genişleme.
     await t.tap(find.byKey(const Key('item-boxing')));
     await t.pumpAndSettle();
     await t.tap(find.byKey(const Key('course-boxing.conditioning')));
@@ -263,14 +264,19 @@ void main() {
     await t.pumpAndSettle();
     await t.tap(find.byKey(const Key('advance-button')));
     await t.pumpAndSettle();
-    // Seans bitince kurs/öğe sayfaları yığında kalıyor; sekmeler kökte.
-    // Kullanıcının yaptığı şeyin aynısı: geri dönüp ilerlemeye bakmak.
-    while (find.byKey(const Key('tab-progress')).evaluate().isEmpty) {
+    // Seans bitince kurs sayfası yığında kalıyor (kök: Sayfa A). Kullanıcının
+    // yaptığı şeyin aynısı: geri dönmek. 2026-08-06: kalıcı bir "progress"
+    // sekmesi yok artık — kayıt artık GERÇEK olduğu için (`boxing.conditioning.r5`)
+    // köke dönünce `_currentCourse` bu kursu çözer ve kök doğrudan bu kursun
+    // Sayfa B'sini (bant+"kaldığın yer" dahil) gösterir (Hüküm 2/3). Sınırlı
+    // döngü: yığın derinliği bilinen bir sabit değil, ama sonsuz de olmamalı.
+    int pops = 0;
+    while (find.byKey(const Key('recorded-heading')).evaluate().isEmpty &&
+        pops < 5) {
       await t.pageBack();
       await t.pumpAndSettle();
+      pops++;
     }
-    await t.tap(find.byKey(const Key('tab-progress')));
-    await t.pumpAndSettle();
 
     final bool recordedShown =
         find.byKey(const Key('recorded-heading')).evaluate().isNotEmpty;

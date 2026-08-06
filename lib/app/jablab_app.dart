@@ -3,21 +3,22 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
-import '../shell_candidate/library_pages.dart';
+import '../shell_candidate/library_pages.dart' show WhyNotPage;
 import '../shell_candidate/shell_models.dart';
-import '../shell_candidate/shell_scaffold.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'camera_harness_screen.dart';
 import 'content_failure.dart';
 import 'content_failure_screen.dart';
 import 'content_repository.dart';
+import 'course_page.dart';
 import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
 import 'pose_model.dart';
+import 'select_page.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
 import 'session_screen.dart';
+import 'settings_page.dart';
 
 /// JabLab uygulaması — kabuğu içerikle bağlar.
 class JabLabApp extends StatelessWidget {
@@ -80,6 +81,13 @@ class _RootState extends State<_Root> {
   /// hâl bilgisi `RecordedSummary.status` içinde taşınamaz, çünkü o nesne
   /// yoktur.
   HistoryUnavailable? _historyUnavailable;
+
+  /// En son tamamlanan seansın ders kimliği — "kaldığın yer"in hedefi ve
+  /// "güncel kurs" (Hüküm 3, koordinatör 2026-08-06) buradan türetilir.
+  /// `_recorded` gibi bu da `_refreshRecorded()`te tazelenir; ayrı alan
+  /// olmasının sebebi `RecordedSummary`nin toplu bir özet olması — hangi
+  /// DERSTE olduğumuzu taşımaz, yalnız KAÇ seans/saniye taşır.
+  String? _lastLessonId;
 
   /// İçerik yükleme başarısızlığı — TİPLİ (J-079). Eskiden burada ham `Object`
   /// duruyordu ve ekrana `'$_error'` basılıyordu; kullanıcı Türkçe bir
@@ -151,6 +159,21 @@ class _RootState extends State<_Root> {
     if (s == null) return;
     try {
       final RecordedSummary sum = await RecordedSummary.from(s);
+      // "Güncel kurs" (Hüküm 3) EN SON tamamlanan seansın dersinden
+      // türetilir. İki ayrı `recent()` okuması var burada (biri
+      // `RecordedSummary.from` içinde, biri burada) — `RecordedSummary`
+      // hangi DERSTE olduğumuzu taşımıyor, yalnız toplu sayıları taşıyor;
+      // onu genişletmek yerine ikinci bir küçük okuma tercih edildi ki
+      // zaten test edilmiş toplu-özet mantığına dokunulmasın.
+      final List<SessionRecord> all = await s.recent();
+      String? lastId;
+      DateTime? lastAt;
+      for (final SessionRecord r in all) {
+        if (lastAt == null || r.completedAt.isAfter(lastAt)) {
+          lastAt = r.completedAt;
+          lastId = r.lessonId;
+        }
+      }
       if (mounted) {
         // Başarılı okuma önceki beyanı KALDIRIR: geçici bir I/O hatasından
         // sonra "geçmişini okuyamıyorum" cümlesini ekranda bırakmak, artık
@@ -158,6 +181,7 @@ class _RootState extends State<_Root> {
         setState(() {
           _recorded = sum;
           _historyUnavailable = null;
+          _lastLessonId = lastId;
         });
       }
     } on Object catch (e) {
@@ -170,9 +194,44 @@ class _RootState extends State<_Root> {
           // aynı anda göstermek olurdu.
           _recorded = null;
           _historyUnavailable = HistoryUnavailable(e.toString());
+          // Kurs da BİLİNMEZ hâle döner: bayat bir dersten türetilen
+          // "kaldığın yer" iddiası, bayat sayılarla aynı yalan sınıfı olurdu.
+          _lastLessonId = null;
         });
       }
     }
+  }
+
+  /// Kullanıcının içinde bulunduğu kurs (Hüküm 3) — en son tamamlanan
+  /// seansın dersini TAŞIYAN kurs. Kayıt yoksa ya da kayıtlı ders artık
+  /// kütüphanede yoksa (içerik değişti, ya da senkron/test verisi gerçek
+  /// bir dersle eşleşmiyor) `null` döner ve giriş yüzeyi Sayfa A'ya düşer —
+  /// bu bir hata değil, dürüst varsayılan: bilmediğimiz bir kursu "güncel"
+  /// diye göstermeyiz.
+  ShellCourse? get _currentCourse {
+    final String? id = _lastLessonId;
+    final ShellLibrary? lib = _library;
+    if (id == null || lib == null) return null;
+    for (final ShellItem item in lib.items) {
+      for (final ShellCourse course in item.courses) {
+        if (course.lessons.any((ShellLesson l) => l.id == id)) return course;
+      }
+    }
+    return null;
+  }
+
+  /// "Kaldığın yer"in resume hedefi — [_currentCourse] içindeki, kimliği
+  /// [_lastLessonId]e eşit ders. `_currentCourse` zaten bu eşleşme
+  /// üzerinden bulunduğu için burada tekrar bulunamama ihtimali yoktur;
+  /// yine de `null`-güvenli çünkü ikisi ayrı getter'lar.
+  ShellLesson? get _resumeLesson {
+    final ShellCourse? course = _currentCourse;
+    final String? id = _lastLessonId;
+    if (course == null || id == null) return null;
+    for (final ShellLesson l in course.lessons) {
+      if (l.id == id) return l;
+    }
+    return null;
   }
 
   @override
@@ -187,47 +246,103 @@ class _RootState extends State<_Root> {
           body: Center(child: CircularProgressIndicator()));
     }
 
-    return ShellScaffold(
-      home: _TodayPage(library: lib, onStart: (ShellLesson l) => _openSession(l)),
-      library: LibraryPage(
-        library: lib,
-        onOpenItem: (ShellItem i) => Navigator.of(context).push<void>(
-          MaterialPageRoute<void>(
-            builder: (_) => ItemPage(
-              item: i,
-              onOpenCourse: (ShellCourse c) => Navigator.of(context).push<void>(
-                MaterialPageRoute<void>(
-                  builder: (_) => CoursePage(course: c, onStart: _openSession),
-                ),
-              ),
-            ),
-          ),
-        ),
-        onOpenWhyNot: () => Navigator.of(context).push<void>(
-          MaterialPageRoute<void>(builder: (_) => WhyNotPage(library: lib)),
-        ),
-      ),
-      // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayısal skor YOK.
-      // Bantlar SUSAR; kaydedilen OLGULAR ayrı bölümde konuşur (F-4).
-      progress: ProgressPage(
+    // Hüküm 3 (koordinatör 2026-08-06): kurs VARSA giriş yüzeyi Sayfa B
+    // (kurs sayfası), YOKSA Sayfa A (seçim). Bu bir fallback değil,
+    // tasarlanmış bir hâl — boş bir kabuk göstermek yerine "birini seç"
+    // demek tek dürüst şey.
+    final ShellCourse? current = _currentCourse;
+    if (current != null) {
+      return CoursePage(
+        course: current,
+        onStart: _openSession,
+        onOpenSettings: () => _openSettings(context, lib),
+        onOpenSelect: () => _openSelect(context, lib),
+        isCurrent: true,
+        resumeLesson: _resumeLesson,
+        historyUnavailable: _historyUnavailableText(),
+        historyIncomplete: _historyIncompleteText(),
+        recorded: _recordedRows(),
+        recordedNote: _recordedNoteText(),
+        // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayısal skor YOK.
+        // Hüküm 2 (koordinatör 2026-08-06): bu bant düşmedi, Sayfa B'ye
+        // bağlamsal dürüst blok olarak taşındı — "ölçmüyoruz" değil
+        // "ölçüyoruz ama henüz puanlayamıyoruz" beyanı.
         bands: const <String, String>{
           'Guard discipline': '—',
           'Punch mechanics': '—',
           'Balance': '—',
         },
-        recorded: _recordedRows(),
-        historyUnavailable: _historyUnavailableText(),
-        historyIncomplete: _historyIncompleteText(),
-        recordedNote: _recorded == null || _recorded!.sessions == 0
-            ? null
-            : 'Recorded time does not unlock lessons yet. Every progress gate '
-                'also asks how much of the session the camera could actually '
-                'analyse, and the camera is not connected — so these minutes '
-                'are your history, not credit toward the next lesson. We would '
-                'rather say that than let a number quietly mean nothing.',
-      ),
-      profile: const _ProfilePage(),
+        onRetryHistory: _refreshRecorded,
+      );
+    }
+
+    return SelectPage(
+      library: lib,
+      onOpenCourse: (ShellCourse c) => _openCourse(context, lib, c),
+      onOpenWhyNot: () => _openWhyNot(context, lib),
+      onOpenSettings: () => _openSettings(context, lib),
+      // current==null buraya iki farklı sebepten düşebilir: hiç kayıt yok
+      // (sağlıklı, banner YOK) ya da kayıt okunamadı (banner VAR) —
+      // `_historyUnavailableText()` zaten bu ayrımı yapıyor.
+      historyUnavailable: _historyUnavailableText(),
+      onRetryHistory: _refreshRecorded,
     );
+  }
+
+  void _openSettings(BuildContext context, ShellLibrary lib) {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) =>
+            SettingsPage(onOpenWhyNot: () => _openWhyNot(context, lib)),
+      ),
+    );
+  }
+
+  void _openWhyNot(BuildContext context, ShellLibrary lib) {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(builder: (_) => WhyNotPage(library: lib)),
+    );
+  }
+
+  /// Sayfa A'yı PUSH eder — yalnız Sayfa B kök/giriş iken (`isCurrent`)
+  /// kullanılır, kullanıcı başka bir disiplin/kurs seçmek istediğinde.
+  /// Push (replace değil) ki geri gitmek "kaldığın yer"e dönsün.
+  void _openSelect(BuildContext context, ShellLibrary lib) {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => SelectPage(
+          library: lib,
+          onOpenCourse: (ShellCourse c) => _openCourse(context, lib, c),
+          onOpenWhyNot: () => _openWhyNot(context, lib),
+          onOpenSettings: () => _openSettings(context, lib),
+          historyUnavailable: _historyUnavailableText(),
+          onRetryHistory: _refreshRecorded,
+        ),
+      ),
+    );
+  }
+
+  void _openCourse(BuildContext context, ShellLibrary lib, ShellCourse c) {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => CoursePage(
+          course: c,
+          onStart: _openSession,
+          onOpenSettings: () => _openSettings(context, lib),
+        ),
+      ),
+    );
+  }
+
+  /// Kaydedilen sürenin ders açmadığını söyleyen not — yalnız kayıt varken.
+  String? _recordedNoteText() {
+    return _recorded == null || _recorded!.sessions == 0
+        ? null
+        : 'Recorded time does not unlock lessons yet. Every progress gate '
+            'also asks how much of the session the camera could actually '
+            'analyse, and the camera is not connected — so these minutes '
+            'are your history, not credit toward the next lesson. We would '
+            'rather say that than let a number quietly mean nothing.';
   }
 
   /// Geçmiş HİÇ okunamadıysa gösterilecek cümle (J-092), yoksa `null`.
@@ -376,80 +491,4 @@ class _RootState extends State<_Root> {
     // önler (plugin tek oturuma izin veriyor).
     await live.controller?.dispose();
   }
-}
-
-class _TodayPage extends StatelessWidget {
-  const _TodayPage({required this.library, required this.onStart});
-
-  final ShellLibrary library;
-  final void Function(ShellLesson) onStart;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final Iterable<ShellItem> live =
-        library.items.where((ShellItem i) => i.status == ItemStatus.live);
-    final ShellCourse? first =
-        live.isEmpty || live.first.courses.isEmpty ? null : live.first.courses.first;
-
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: <Widget>[
-        Text('Today',
-            key: const Key('today-heading'), style: theme.textTheme.headlineSmall),
-        const SizedBox(height: 12),
-        if (first != null)
-          Card(
-            child: ListTile(
-              key: const Key('continue-course'),
-              title: Text(first.title),
-              subtitle: Text(first.lessons.first.title),
-              trailing: const Icon(Icons.play_arrow),
-              // 2-tık kuralı: ana sayfa → derse tek dokunuş.
-              onTap: () => onStart(first.lessons.first),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _ProfilePage extends StatelessWidget {
-  const _ProfilePage();
-
-  @override
-  Widget build(BuildContext context) => ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          Text('Profile', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 12),
-          const PaywallStub(
-            freeUntil:
-                'The first assessment and the first course are free — you see '
-                'what the coaching is actually like before anything is asked of you.',
-          ),
-          // DEV HARNESS girişi — YALNIZ debug derlemede (J-072). Release'de
-          // bu satır hiç render edilmez: bir dev-harness'ın yayın
-          // derlemesinde erişilebilir kalması, "kamera var" izlenimini
-          // kullanıcıya sızdırmanın en kolay yolu olurdu (§7.8 ruhu).
-          if (CameraHarnessScreen.isAvailable) ...<Widget>[
-            const SizedBox(height: 24),
-            const Divider(),
-            Builder(
-              builder: (BuildContext context) => ListTile(
-                key: const Key('open-camera-harness'),
-                leading: const Icon(Icons.biotech_outlined),
-                title: const Text('Camera bridge — dev harness'),
-                subtitle: const Text(
-                    'Debug build only. Raw bridge metrics, no preview, '
-                    'no judgement.'),
-                onTap: () => Navigator.of(context).push<void>(
-                  MaterialPageRoute<void>(
-                      builder: (_) => const CameraHarnessScreen()),
-                ),
-              ),
-            ),
-          ],
-        ],
-      );
 }

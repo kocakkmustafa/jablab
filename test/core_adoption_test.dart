@@ -21,6 +21,14 @@ import 'package:jablab/app/session_store.dart';
 /// sürüyor ve iki şeyi ayrı ayrı kanıtlıyor:
 ///   1. ürün `unreadableRecords()`i GERÇEKTEN çağırıyor (casus depo sayıyor);
 ///   2. yüzey `HistoryPartial`da DALLANIYOR (metin görünüyor ve SAYIYI taşıyor).
+///
+/// **2026-08-06 yeniden yapılandırma notu:** `pumpApp` eskiden `tab-progress`e
+/// dokunuyordu (kalıcı sekme). O sekme kalktı; "kaldığın yer"/bant bloğu artık
+/// yalnız GÜNCEL kursun Sayfa B'sinde görünür (Hüküm 2/3). `_SpyStore` bu
+/// yüzden GERÇEK bir ders kimliği üretiyor (`boxing.foundations.jab`, eskiden
+/// sentetik `l$i`) — sahte kimlik `_currentCourse`u hiç çözemez ve bu testler
+/// erişecekleri bir sayfa bulamazdı. Dokunuş kalktı: gerçek kimlikle kurs
+/// zaten ilk build'de landing olur.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -31,8 +39,6 @@ void main() {
           repository: ContentRepository(storeOverride: store)));
       await Future<void>.delayed(const Duration(milliseconds: 200));
     });
-    await t.pumpAndSettle();
-    await t.tap(find.byKey(const Key('tab-progress')));
     await t.pumpAndSettle();
   }
 
@@ -78,11 +84,15 @@ void main() {
   });
 
   testWidgets('④ AÇILAMAMA: sayı YOK, beyan VAR', (WidgetTester t) async {
+    // `_ThrowingStore` `unreadableRecords()`ta fırlıyor → `_lastLessonId`
+    // hiç kurulamıyor → hangi kursun "güncel" olduğu BİLİNEMİYOR (bu bir
+    // kusur değil, dürüst varsayılan — Hüküm 3). Beyan bu yüzden Sayfa A'nın
+    // kendi banner'ında görünüyor, bir kurs sayfasında değil.
     await pumpApp(t, _ThrowingStore());
     expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
     expect(find.byKey(const Key('recorded-Time worked')), findsNothing);
-    expect(find.byType(NavigationBar), findsOneWidget,
-        reason: 'geçmiş hatası BLOKLAMAZ — içerik sağlam');
+    expect(find.byKey(const Key('item-boxing')), findsOneWidget,
+        reason: 'geçmiş hatası BLOKLAMAZ — içerik sağlam, seçim ekranı ayakta');
   });
 
   testWidgets('⑤ TEMİZ HÂL İKİZİ: hiçbir beyan YOK', (WidgetTester t) async {
@@ -113,12 +123,18 @@ void main() {
 }
 
 /// Kayıp sayısı sorulup sorulmadığını SAYAN depo.
+///
+/// `lessonId` GERÇEK bir ders kimliği (`boxing.foundations.jab`) — sentetik
+/// `'l$i'` değil. Hiçbir assertion burada lessonId değerini incelemiyor, ama
+/// `_RootState._currentCourse` gerçek kütüphanede eşleşen bir kimlik arıyor
+/// (Hüküm 3); sahte kimlik hiç eşleşmez ve bu testlerin ulaşacağı bir kurs
+/// sayfası kalmazdı (2026-08-06 yeniden yapılandırma).
 class _SpyStore implements SessionStore {
   _SpyStore({required this.unreadable, required int records})
       : _records = List<SessionRecord>.generate(
           records,
           (int i) => SessionRecord(
-            lessonId: 'l$i',
+            lessonId: 'boxing.foundations.jab',
             completedAt: DateTime.utc(2026, 8, 4).add(Duration(days: i)),
             workedSeconds: 540,
             unitsCompleted: 3,
