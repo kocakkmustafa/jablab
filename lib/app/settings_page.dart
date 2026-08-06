@@ -40,8 +40,11 @@ class SettingsPage extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    _GlassIconButton(
+                    GlassIconButton(
                       icon: Icons.arrow_back_ios_new_rounded,
+                      // `tester.pageBack()` `find.byTooltip('Back')` arıyor
+                      // (bkz. course_page.dart'ın aynı düzeltmesi) — süs değil.
+                      tooltip: 'Back',
                       onTap: () => Navigator.of(context).maybePop(),
                     ),
                     const SizedBox(width: 12),
@@ -169,30 +172,6 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ],
               ],
-            ),
-          ),
-        ),
-      );
-}
-
-class _GlassIconButton extends StatelessWidget {
-  const _GlassIconButton({required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => ClipOval(
-        child: GlassPanel(
-          tier: GlassTier.resting,
-          borderRadius: 22,
-          padding: EdgeInsets.zero,
-          child: SizedBox(
-            width: 44,
-            height: 44,
-            child: IconButton(
-              icon: Icon(icon, size: 18, color: JColors.ink),
-              onPressed: onTap,
             ),
           ),
         ),

@@ -293,6 +293,35 @@ class UnknownGlassPanel extends StatelessWidget {
   }
 }
 
+/// Yuvarlak buzlu-cam ikon düğmesi — geri/köşe gezinme için ortak kalıp
+/// (Ayarlar'da doğdu, Sayfa B/A da AYNI görsel dili istiyor; üç kopya yerine
+/// tek paylaşılan widget).
+class GlassIconButton extends StatelessWidget {
+  const GlassIconButton({super.key, required this.icon, required this.onTap, this.tooltip});
+
+  final IconData icon;
+  final VoidCallback onTap;
+  final String? tooltip;
+
+  @override
+  Widget build(BuildContext context) => ClipOval(
+        child: GlassPanel(
+          tier: GlassTier.resting,
+          borderRadius: 22,
+          padding: EdgeInsets.zero,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: IconButton(
+              icon: Icon(icon, size: 18, color: JColors.ink),
+              tooltip: tooltip,
+              onPressed: onTap,
+            ),
+          ),
+        ),
+      );
+}
+
 class _DashedRRectPainter extends CustomPainter {
   _DashedRRectPainter({required this.radius, required this.color});
 
