@@ -143,7 +143,21 @@ class SessionSummaryView extends StatelessWidget {
     this.topIssue,
   });
 
-  final int eventCount;
+  /// Bu seansta sayılan olay — **`null` = ANALİZ HİÇ KOŞMADI** (J-156).
+  ///
+  /// Alan önce non-nullable `int` idi ve çağıran taraf sabit `0` geçiyordu:
+  /// kullanıcı kaç yumruk atarsa atsın özet **"0 recorded this session"**
+  /// diyordu. Çıplak `0`, *"hiç yapmadın"* diye okunur (J-092/J-096) — ve
+  /// burada olan daha kötüsüydü: **ölçülmüş bir olgu atılıp yerine yanlışı
+  /// gösteriliyordu.**
+  ///
+  /// ⚠️ DONMUŞ AĞAÇ DEĞİŞİKLİĞİ, koordinatör hükmü 2026-08-07 11:04.
+  /// Gerekçe: *"bilinmiyor" ↔ "sıfır"* ayrımı bu dosyada **zaten vardı**
+  /// ([LiveCoachSurface.eventCount] `int?`); yeni bir kavram eklenmedi,
+  /// **var olan ayrım taşındı** — envanter büyümüyor, TUTARLI hâle geliyor.
+  /// Aynı dosyada iki benzer alanın biri `int?` biri `int` olması zaten bir
+  /// tutarsızlıktı.
+  final int? eventCount;
 
   /// Bileşen → bant. K8 (M-F-04): kalibrasyon kapısı geçilmeden SAYI yok.
   final Map<String, String> bands;
@@ -160,11 +174,16 @@ class SessionSummaryView extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: <Widget>[
-        Text('$eventCount',
-            key: const Key('summary-count'),
-            style: theme.textTheme.displayMedium),
-        Text('recorded this session', style: theme.textTheme.bodySmall),
-        const SizedBox(height: 20),
+        // Analiz koşmadıysa SAYI DA CÜMLE DE çizilmiyor. Yalnız sayıyı
+        // gizleyip *"recorded this session"* başlığını bırakmak, boş bir
+        // iddia bırakırdı.
+        if (eventCount != null) ...<Widget>[
+          Text('$eventCount',
+              key: const Key('summary-count'),
+              style: theme.textTheme.displayMedium),
+          Text('recorded this session', style: theme.textTheme.bodySmall),
+          const SizedBox(height: 20),
+        ],
         ...bands.entries.map((MapEntry<String, String> e) => ListTile(
               key: Key('summary-band-${e.key}'),
               dense: true,

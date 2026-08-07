@@ -127,6 +127,13 @@ class SessionScreen extends StatefulWidget {
 class _SessionScreenState extends State<SessionScreen> {
   SessionStage _stage = SessionStage.teach;
 
+  /// Canlı aşamada sayılan olay — `null` = **analiz hiç koşmadı** (J-156).
+  ///
+  /// Kamerasız derste ya da kurulum başarısızsa `null` kalır ve özet hiçbir
+  /// sayı göstermez. Analiz koştuysa gerçek sayı gelir — **0 dahil**, çünkü
+  /// o zaman sıfır DOĞRUDUR: ölçtük, hiç yumruk yoktu.
+  int? _countedEvents;
+
   /// Canlı aşamanın bildirdiği son durum — özet aşamasına geçerken
   /// kaydedilir. Canlı bileşenin içinde tutulup orada yazmak, ekran
   /// dispose edilirken async yazma yapmak olurdu.
@@ -215,10 +222,14 @@ class _SessionScreenState extends State<SessionScreen> {
               _roundsCompleted = rounds;
               _workedSeconds = worked;
             },
+            // J-156: sayım canlı aşamada YAŞIYOR ve özete hiç taşınmıyordu;
+            // `_Summary` sabit `0` veriyordu. `null` = analiz hiç koşmadı.
+            onCounted: (int? n) => _countedEvents = n,
           ),
           SessionStage.summary => _Summary(
             coachedNotScored: widget.coachedNotScored,
             bands: widget.bands,
+            eventCount: _countedEvents,
           ),
         },
       ),
@@ -318,6 +329,7 @@ class _Live extends StatefulWidget {
     required this.plan,
     required this.intervalPlan,
     required this.onProgress,
+    required this.onCounted,
     this.liveJab,
     this.liveJabSetupFailure,
     this.milestoneEvery,
@@ -332,6 +344,9 @@ class _Live extends StatefulWidget {
 
   /// (tamamlanan tur, ÇALIŞILAN saniye) — dinlenme sayılmaz.
   final void Function(int roundsCompleted, int workedSeconds) onProgress;
+
+  /// Sayılan olayı yukarı taşır. `null` = analiz hiç koşmadı (J-156).
+  final void Function(int? counted) onCounted;
 
   @override
   State<_Live> createState() => _LiveState();
@@ -389,6 +404,26 @@ class _LiveState extends State<_Live> {
   int get _completedJabs {
     final LiveJabState? jab = _jab;
     return jab is LiveJabRunning ? jab.completedCount : 0;
+  }
+
+  /// Özete taşınan sayı — **`null` = analiz hiç koşmadı** (J-156).
+  ///
+  /// `_completedJabs`ten AYRI: o, canlı ekranın kilometre taşı sayacı ve
+  /// kamerasız derste 0 dönmesi orada doğru (sayacak bir şey yok, dolayısıyla
+  /// kilometre taşı da yok). Ama ÖZET için 0 ile *"analiz koşmadı"* aynı şey
+  /// DEĞİL: birincisi *"ölçtük, hiç yumruk yoktu"*, ikincisi *"ölçmedik"* —
+  /// ve çıplak `0` ikincisini *"hiç yapmadın"* diye okutur (J-092/J-096).
+  ///
+  /// Bir kez `LiveJabRunning` görüldüyse sayı BİLİNİYOR sayılıyor: analiz
+  /// koştu ve durdu diye bilgi kaybolmaz.
+  int? _countedForSummary;
+
+  /// Sayımı yukarı bildirir. Analiz koşmadıysa `null` gider ve özet hiçbir
+  /// sayı çizmez.
+  void _reportCount() {
+    final LiveJabState? jab = _jab;
+    if (jab is LiveJabRunning) _countedForSummary = jab.completedCount;
+    widget.onCounted(_countedForSummary);
   }
 
   Duration get _segment {
@@ -511,6 +546,7 @@ class _LiveState extends State<_Live> {
         ? 0
         : _elapsed.inSeconds.clamp(0, plan.roundSeconds);
     widget.onProgress(completed, completed * plan.roundSeconds + inRound);
+    _reportCount();
   }
 
   /// Aralık kipi (J-068): patla → topla → patla ... son toparlanma DAHİL.
@@ -572,6 +608,7 @@ class _LiveState extends State<_Live> {
         ? 0
         : _elapsed.inSeconds.clamp(0, plan.burstSeconds);
     widget.onProgress(done, done * plan.burstSeconds + inBurst);
+    _reportCount();
   }
 
   @override
@@ -754,7 +791,14 @@ extension on _LiveState {
 }
 
 class _Summary extends StatelessWidget {
-  const _Summary({required this.coachedNotScored, required this.bands});
+  const _Summary({
+    required this.coachedNotScored,
+    required this.bands,
+    required this.eventCount,
+  });
+
+  /// `null` = analiz hiç koşmadı → özet SAYI GÖSTERMEZ (J-156).
+  final int? eventCount;
 
   final List<String> coachedNotScored;
 
@@ -764,9 +808,14 @@ class _Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SessionSummaryView(
-    eventCount: 0,
-    // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayı yok — bant bile
-    // ölçüm olmadığı için boş. Liste TÜREVİ (J-144).
+    // J-156: burada SABİT `0` duruyordu ve yanındaki K8 yorumu onu
+    // haklı çıkarıyor sanılıyordu. K8 **bantlar** için geçerli; **sayım**
+    // bir HÜKÜM değil OLGU — ürünün kendi dürüstlük kutusu böyle diyor:
+    // *"Punch events and count — a FACT from the phase machine, not a
+    // grade."* Yani sayım K8'e takılmaz; ölçülmüştü ve atılıyordu.
+    eventCount: eventCount,
+    // K8 (M-F-04): kalibrasyon kapısı geçilmeden BANT sayısı yok.
+    // Liste TÜREVİ (J-144).
     bands: bands,
     // J-033: eğitmenler gard/kol pozisyonunda ayrışıyor → koçlanır ama
     // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
