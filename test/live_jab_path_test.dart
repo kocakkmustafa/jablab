@@ -355,6 +355,106 @@ void main() {
       });
     });
 
+    group('GERÇEKÇİ GÜRÜLTÜ — sentetik sınırını DARALTMA (J-125)', () {
+      // ## Neden bu grup var
+      //
+      // Yayın envanterinin 🟡 satırlarından biri: *"iskelet gerçek MediaPipe
+      // çıktısı değil, sentetik."* Sınıfı **ÖLÇÜLMEMİŞ** (M-F-287) — imkânsız
+      // değil, ertelenmiş de değil: ölçülebilir ama ölçülmedi.
+      //
+      // Bugüne kadarki sentetik diziler **TEMİZDİ**: kusursuz görünürlük,
+      // sıfır titreme, sıfır kare düşmesi. Gerçek kamera bunların üçünü de
+      // yapmaz. Yani testler "sentetik" olduğu için değil, **temiz** olduğu
+      // için gerçekten uzaktı — ve o mesafenin bir kısmı ölçülebilir.
+      //
+      // Bu grup mesafeyi KAPATMIYOR (gerçek model hâlâ cihaz turunda), ama
+      // **daraltıyor**: zincir titreme ve kare düşmesi altında da ayakta mı?
+      // Sınıf hâlâ ölçülmemiş, ama artık daha küçük bir şey ölçülmemiş.
+
+      test('TİTREME altında jab hâlâ SAYILIYOR', () async {
+        // `sigma = 0.004` çekirdeğin kendi varsayılanı — uydurulmuş bir
+        // gürültü seviyesi değil. Tohum sabit: kırılan bir test birebir
+        // yeniden üretilebilmeli, çünkü kararsız bir fixture herkesi
+        // kırmızıyı görmezden gelmeye alıştırır.
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        for (final PoseFrame f
+            in SyntheticNoise.jitter(_jabSequence(), seed: 7)) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
+
+        final List<LiveJabRunning> runs =
+            seen.whereType<LiveJabRunning>().toList();
+        expect(runs, isNotEmpty);
+        expect(runs.last.completedCount, greaterThan(0),
+            reason: 'titreme altında jab hiç sayılmadı — zincir yalnız '
+                'kusursuz girdiyle çalışıyor demektir ve gerçek kamera '
+                'kusursuz değildir');
+        await c.dispose();
+      });
+
+      test('KARE DÜŞMESİ altında jab hâlâ SAYILIYOR', () async {
+        // `decimate(2)` = karelerin yarısı düşüyor (~30 fps → ~15).
+        // Termal kısıtlama altında gerçekleşen şey bu; motor faz süreleriyle
+        // çalıştığı için kare SAYISINA değil ZAMANA bağlı olmalı — bu test
+        // o tasarım iddiasını sınıyor.
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        for (final PoseFrame f in SyntheticNoise.decimate(_jabSequence(), 2)) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
+
+        final List<LiveJabRunning> runs =
+            seen.whereType<LiveJabRunning>().toList();
+        expect(runs, isNotEmpty);
+        expect(runs.last.completedCount, greaterThan(0),
+            reason: 'kare düşünce jab sayılmıyor — motor kare SAYISINA '
+                'bağımlı demektir, oysa faz süreleri ZAMANA bağlı olmalı');
+        await c.dispose();
+      });
+
+      test('İKİSİ BİRDEN — ve ham kod yine SIZMIYOR', () async {
+        // Gürültü, hüküm verilemeyen dalları da tetikleyebilir; o dallardan
+        // ham teşhis dizesi sızmadığı burada da ölçülüyor. Yeni bir yol
+        // açıldığında eski kapının ORADA da tuttuğunu varsaymak, kapıyı
+        // yalnız test edilmiş yolda kurmak olurdu.
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        for (final PoseFrame f in SyntheticNoise.decimate(
+            SyntheticNoise.jitter(_jabSequence(), seed: 11), 2)) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
+
+        final RegExp codeLike = RegExp(r'\b[A-Z][A-Z_]{4,}\b');
+        for (final LiveJabRunning r in seen.whereType<LiveJabRunning>()) {
+          for (final String? s in <String?>[r.cue, r.noVerdictReason]) {
+            if (s == null) continue;
+            expect(codeLike.hasMatch(s), isFalse,
+                reason: 'gürültülü yolda teşhis dizesi sızdı: "$s"');
+          }
+        }
+        expect(seen.whereType<LiveJabFailed>(), isEmpty,
+            reason: 'gürültü seansı ÖLDÜRDÜ — titreme bir kurulum hatası '
+                'değil, canlı bir hâl');
+        await c.dispose();
+      });
+    });
+
     test('BAŞLANGIÇ hâli ayrı — sıfır sayı GÖSTERİLMİYOR', () async {
       // İlk zarf gelmeden `completedCount` 0'dır ve sıfırı göstermek
       // "hiç yumruk atmadın" demektir; oysa henüz hiçbir şey ölçülmedi.

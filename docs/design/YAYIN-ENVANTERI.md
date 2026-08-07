@@ -64,13 +64,22 @@ sözcüğü; ürün dilinde ancak o mekanizma varsa yeri var).
 
 ---
 
-## 🟡 ÖLÇÜLDÜ, SINIRI BEYAN EDİLDİ
+## 🟡 ÖLÇÜLDÜ, SINIRI BEYAN EDİLDİ — her biri SINIFIYLA
 
-| yüzey | iddia | sınır |
-|---|---|---|
-| **Kamera önizlemesi** | *"left out on purpose — analysis runs without it"* | Sınıf **ERTELENMİŞ** (M-F-287), Gravita ile aynı. Sorumluluğu üstleniyor, tarih vermiyor |
-| **İskelet çizimi** | "ne gördüğümü çiziyorum" | Gerçek koordinatlardan — ama **sentetik** iskeletlerle sınandı; gerçek MediaPipe çıktısı cihaz turunda |
-| **Kova ayrımı (renk)** | üç hâl görsel olarak ayrışır | Kontrast kapıda; **ikon 2-3 m'den ayırt ediliyor mu ÖLÇÜLMEDİ** — WCAG luminans ölçüsü bu soruyu ölçmez |
+Sınıf ayrımı M-F-287: **imkânsız** (fizik) · **ertelenmiş** (yapılabilir, biz
+yapmadık) · **ölçülmemiş** (ölçülebilir, ölçmedik). Sınıf, kullanıcıya
+söylenecek cümleyi de belirliyor — üçü aynı şey değil.
+
+| yüzey | iddia | **sınıf** | sınırın bugünkü genişliği |
+|---|---|---|---|
+| **Kamera önizlemesi** | *"left out on purpose — analysis runs without it"* | **ERTELENMİŞ** | Gravita ile aynı çekirdek kısıtı, aynı sınıf. Sorumluluğu üstleniyor, tarih vermiyor. Daraltılamaz — açılması Texture önizlemesinin yazılması demek |
+| **İskelet çizimi** | "ne gördüğümü çiziyorum" | **ÖLÇÜLMEMİŞ** | 🔽 **DARALTILDI (J-125).** Testler artık yalnız *temiz* sentetikle değil, **titreme** (çekirdek varsayılanı σ=0.004, sabit tohum) ve **%50 kare düşmesi** altında da koşuyor; jab ikisinde de sayılıyor ve ham kod sızmıyor. Kalan mesafe: gerçek MediaPipe topolojisi — cihaz turunda |
+| **Kova ayrımı (ikon)** | üç hâl görsel olarak ayrışır | **ÖLÇÜLMEMİŞ (mekanikleştirilemez)** | Renk tarafı kapandı (WCAG 1.4.11 + AA). *Ikon 2-3 m'den ayırt ediliyor mu* bir ALGI sorusu; luminans ölçüsü onu ölçmez ve ölçüyormuş gibi kullanmak standardı ölçmediği şey için kullanmak olurdu. **Yalnız göz** |
+
+**Neden bu üçü aynı kutuda değil:** *ertelenmiş* bir iş kararıdır ve kapatılması
+kod yazmaktır; *ölçülmemiş* bir bilgi boşluğudur ve kapatılması ölçüm yapmaktır;
+*mekanikleştirilemez* olan ise ne kadar kod yazılırsa yazılsın kapanmaz. İkisini
+karıştırmak, birini yanlış kuyruğa koyar.
 
 ---
 
