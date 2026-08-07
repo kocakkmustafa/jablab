@@ -174,59 +174,83 @@ void main() {
             '$silent');
   });
 
-  test('DONDURULMUŞ kabuk: ERİŞİLEBİLİR ihlal SAYISI ölçülü (J-122)', () {
-    // ## Kapının kör noktası ölçüldü — ve içinde CANLI bir ihlal çıktı
+  test('İTHAL EDİLEN kabuk sınıflarında VAAT DİLİ YOK (J-123)', () {
+    // ## Kategori düzeltmesi: "donmuş" konum değil, ERİŞİM
     //
-    // Bu kapı `shell_candidate/`ı taramıyor (dondurulmuş, M-F-25) ve o
-    // kararı *"orada bir şey yok"* sanmakla karıştırmamak için sayıyı
-    // burada tutuyordu: **6**. Ama sayı tek başına yanıltıcıydı — aile
-    // dersi J-115: *kod taşıyan bir alanın VAR OLMASI onu sızıntı yapmaz,
-    // NEREYE GİTTİĞİ yapar.*
+    // Bu kapı önce `shell_candidate/`ı hiç taramıyordu (dondurulmuş) ve
+    // sayıyı (6) kör nokta olarak kaydediyordu. J-122 o sayının **ne
+    // olduğunu** ölçtü: 6'nın **5'i erişilemez**, **1'i CANLI** ve 7 kapalı
+    // disiplin kartında kullanıcıya görünüyordu.
     //
-    // Erişilebilirlik ölçüldü (`lib/app/`ın donmuş ağaçtan ne İTHAL
-    // ettiğine bakarak):
+    // Ders (koordinatör hükmü): **bir bileşen ithal edildiği anda donmuş
+    // olmaktan çıkar.** Etiket dosyanın KONUMUNA değil ERİŞİLEBİLİRLİĞİNE
+    // bakmalı:
+    //   app hiç ithal etmiyor  → gerçekten donmuş, freeze kapsamında
+    //   app ithal ediyor       → CANLI, freeze kapsamında DEĞİL
     //
-    //   library_pages `LibraryPage`/`_ItemCard`/`ItemPage`  → 4 ihlal,
-    //     app YALNIZ `WhyNotPage`i ithal ediyor → **ERİŞİLEMEZ**
-    //   shell_scaffold `PaywallStub`                        → 1 ihlal,
-    //     dosya hiç ithal edilmiyor → **ERİŞİLEMEZ**
-    //   honesty_box `HonestyBox`                            → 1 ihlal,
-    //     `select_page` onu İTHAL EDİYOR → **🔴 CANLI**
+    // ## `show` bildirimine SAYGI — yoksa kapı fazla geniş olur
     //
-    // Canlı olan şu: `measured.isEmpty` iken widget
-    // *"Nothing yet — this section is not open."* basıyor ve **7 kapalı
-    // disiplinin 7'sinde de `measured` boş.** Yani cümle yedi kartta da
-    // kullanıcıya görünüyor — ve J-108'de `library.json`dan SİLDİĞİM
-    // cümlenin ("Nothing yet — this discipline is not open") **donmuş
-    // ikizi.** İçerik kopyasını düzeltmiştim, widget'ın kendi kopyası
-    // duruyordu.
-    //
-    // Düzeltme app tarafından YAPILAMIYOR: `measured`a bir şey koymak
-    // olmayan bir ölçüm iddia etmek olurdu, kutuyu hiç göstermemek de
-    // dürüstlüğü en çok gereken yerde kaldırmak. Donmuş widget'a dokunmak
-    // kabuk-terfi kararı → koordinatöre taşındı (J-122).
-    int frozen = 0;
+    // `library_pages.dart` ithal ediliyor ama **yalnız `WhyNotPage` ile**
+    // (`show`). Dosyayı bütün olarak taramak, erişilemez 4 ihlali "canlı"
+    // ilan ederdi — ve fazla geniş bir kapı, doğru bir ilerlemeyi kırmızıya
+    // çevirir (ders #5'in test tarafı, J-120'de bir kez ödendi). Bu yüzden
+    // kapsam SINIFA iniyor: `show` varsa yalnız o sınıfların gövdesi.
+    final Map<String, Set<String>?> imported = _importedShellFiles();
+    expect(imported, isNotEmpty,
+        reason: 'app donmuş ağaçtan hiçbir şey ithal etmiyor görünüyor — '
+            'tarama kendi girdisini bulamamış, kapı vakum-doğru');
+
+    final List<String> live = <String>[];
+    imported.forEach((String file, Set<String>? shown) {
+      final String src = File('lib/shell_candidate/$file').readAsStringSync();
+      final Map<String, String> bodies = _classBodies(src);
+      // ⚠️ İLK YAZIŞIMDA "özel sınıf = erişilebilir" varsaydım ve kapı
+      // kendi FAZLA GENİŞLİĞİNİ gösterdi: `_ItemCard`ı canlı ilan etti,
+      // oysa onu yalnız `LibraryPage` kullanıyor ve o `show` listesinde
+      // YOK. Varsayım değil YÜRÜYÜŞ gerekiyor — özel bir sınıf ancak
+      // ERİŞİLEBİLİR bir sınıf ondan söz ediyorsa erişilebilirdir.
+      for (final String name in _reachableClasses(bodies, shown)) {
+        for (final String str in dartStrings(bodies[name]!)) {
+          if (promise.hasMatch(str)) live.add('$file/$name: "$str"');
+        }
+      }
+    });
+
+    expect(live, isEmpty,
+        reason: 'KULLANICIYA GÖRÜNEN vaat dili: ${live.join(" · ")}\n'
+            'Bu dosya donmuş ağaçta olabilir ama app onu İTHAL EDİYOR — '
+            'konum freeze verir, erişim vermez.');
+  });
+
+  test('ERİŞİLEMEZ kabuk borcu SESSİZ DEĞİL — sayı ölçülü', () {
+    // Kalan borç: app'in hiç ithal etmediği kabuk dosyaları. Bunlar
+    // kullanıcıya ULAŞMIYOR, yani ürün kusuru değil — ama "orada bir şey
+    // yok" da değil. Sayı burada duruyor ki kabuk terfi turu neyi
+    // devraldığını bilsin.
+    final Map<String, Set<String>?> imported = _importedShellFiles();
+    int unreachable = 0;
     for (final FileSystemEntity f
         in Directory('lib/shell_candidate').listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
-      frozen += dartStrings(f.readAsStringSync())
-          .where(promise.hasMatch)
-          .length;
+      final String name = f.uri.pathSegments.last;
+      final String src = f.readAsStringSync();
+      if (!imported.containsKey(name)) {
+        unreachable += dartStrings(src).where(promise.hasMatch).length;
+        continue;
+      }
+      // İthal EDİLEN dosyanın `show` dışında kalan sınıfları da erişilemez.
+      final Set<String>? shown = imported[name];
+      if (shown == null) continue;
+      final Map<String, String> bodies = _classBodies(src);
+      final Set<String> live = _reachableClasses(bodies, shown);
+      bodies.forEach((String cls, String body) {
+        if (live.contains(cls)) return;
+        unreachable += dartStrings(body).where(promise.hasMatch).length;
+      });
     }
-    expect(frozen, lessThanOrEqualTo(6),
-        reason: 'dondurulmuş kabukta vaat dili ARTTI ($frozen) — donmuş bir '
+    expect(unreachable, lessThanOrEqualTo(5),
+        reason: 'erişilemez kabuk borcu ARTTI ($unreachable) — donmuş bir '
             'ağaca yeni ihlal eklenmiş olamaz, biri dosyayı değiştirdi');
-
-    // ERİŞİLEBİLİR olanın sayısı AYRI tutuluyor: toplam düşerse sevinmek
-    // ama canlı olan dururken "azaldı" demek, yanlış yerde rahatlamaktır.
-    final int live = dartStrings(
-            File('lib/shell_candidate/honesty_box.dart').readAsStringSync())
-        .where(promise.hasMatch)
-        .length;
-    expect(live, lessThanOrEqualTo(1),
-        reason: 'CANLI (kullanıcıya görünen) vaat dili arttı: $live. '
-            '`HonestyBox` `select_page` tarafından kullanılıyor — bu '
-            'dosyadaki her ihlal 7 kapalı disiplin kartında GÖRÜNÜR.');
   });
 }
 
@@ -262,4 +286,96 @@ List<String> _userText(Object? node) {
 
   walk(node);
   return out;
+}
+
+/// `lib/app/` + `lib/main.dart`ın donmuş ağaçtan İTHAL ETTİĞİ dosyalar.
+///
+/// Değer: `show` listesindeki adlar, ya da `show` yoksa `null` (= dosyanın
+/// tamamı erişilebilir). Bu ayrım kapının kapsamını belirliyor ve
+/// **konumla erişimi karıştırmamanın** tek yolu.
+Map<String, Set<String>?> _importedShellFiles() {
+  final Map<String, Set<String>?> out = <String, Set<String>?>{};
+  final RegExp imp = RegExp(
+      r"""^\s*import\s+'[^']*shell_candidate/([a-z_]+\.dart)'([^;]*);""",
+      multiLine: true);
+  final List<File> sources = <File>[
+    File('lib/main.dart'),
+    ...Directory('lib/app')
+        .listSync()
+        .whereType<File>()
+        .where((File f) => f.path.endsWith('.dart')),
+  ];
+  for (final File f in sources) {
+    for (final RegExpMatch m in imp.allMatches(f.readAsStringSync())) {
+      final String file = m.group(1)!;
+      final String tail = m.group(2)!;
+      final RegExpMatch? show = RegExp(r'show\s+([A-Za-z0-9_,\s]+)').firstMatch(tail);
+      final Set<String>? names = show
+          ?.group(1)!
+          .split(',')
+          .map((String s) => s.trim())
+          .where((String s) => s.isNotEmpty)
+          .toSet();
+      // AYNI dosya iki yerden ithal edilebilir: biri `show`suz ise dosyanın
+      // tamamı erişilebilir demektir — dar olanı korumak yanlış olurdu.
+      if (out.containsKey(file) && (out[file] == null || names == null)) {
+        out[file] = null;
+      } else if (out.containsKey(file)) {
+        out[file] = <String>{...out[file]!, ...names!};
+      } else {
+        out[file] = names;
+      }
+    }
+  }
+  return out;
+}
+
+/// Kaynaktaki üst düzey sınıfları gövdeleriyle döndürür — kaba ama yeterli
+/// bir ayrıştırma: süslü parantez sayarak sınır buluyor. Kapının işi
+/// derleyicilik değil, KAPSAM belirlemek.
+Map<String, String> _classBodies(String source) {
+  final Map<String, String> out = <String, String>{};
+  final RegExp head = RegExp(r'^(?:abstract\s+|final\s+|sealed\s+)*class\s+(\w+)',
+      multiLine: true);
+  for (final RegExpMatch m in head.allMatches(source)) {
+    final int braceStart = source.indexOf('{', m.end);
+    if (braceStart < 0) continue;
+    int depth = 0;
+    int i = braceStart;
+    for (; i < source.length; i++) {
+      if (source[i] == '{') depth++;
+      if (source[i] == '}') {
+        depth--;
+        if (depth == 0) break;
+      }
+    }
+    out[m.group(1)!] = source.substring(braceStart, i.clamp(0, source.length));
+  }
+  return out;
+}
+
+/// [shown] adlarından başlayıp GEÇİŞLİ olarak erişilebilir sınıf kümesini
+/// yürür. `shown` `null` ise dosyanın tamamı erişilebilirdir.
+///
+/// Neden yürüyüş: özel (`_`) bir sınıf kendiliğinden erişilebilir DEĞİL —
+/// yalnız erişilebilir bir sınıfın gövdesinde adı geçiyorsa öyledir.
+/// "Özel = erişilebilir" varsayımı bu kapının ilk hâliydi ve `_ItemCard`ı
+/// yanlışlıkla canlı ilan etti; fazla geniş bir kapı, doğru bir ilerlemeyi
+/// kırmızıya çevirir.
+Set<String> _reachableClasses(Map<String, String> bodies, Set<String>? shown) {
+  final Set<String> seen = <String>{};
+  final List<String> queue = <String>[
+    ...bodies.keys.where((String c) => shown == null || shown.contains(c)),
+  ];
+  while (queue.isNotEmpty) {
+    final String cls = queue.removeLast();
+    if (!seen.add(cls)) continue;
+    final String? body = bodies[cls];
+    if (body == null) continue;
+    for (final String other in bodies.keys) {
+      if (seen.contains(other) || other == cls) continue;
+      if (RegExp('\\\\b$other\\\\b').hasMatch(body)) queue.add(other);
+    }
+  }
+  return seen;
 }

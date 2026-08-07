@@ -31,7 +31,19 @@ class HonestyBox extends StatelessWidget {
             const SizedBox(height: 6),
             ...measured.map((String m) => _Line(icon: Icons.check, text: m)),
             if (measured.isEmpty)
-              Text('Nothing yet — this section is not open.',
+              // ⚠️ DONMUŞ AĞAÇTA TEK KELİMELİK DÜZELTME (J-122, koordinatör
+              // hükmü). Eskiden *"Nothing yet — this section is not open."*
+              // yazıyordu ve bu cümle 7 KAPALI DİSİPLİNİN 7'sinde de
+              // kullanıcıya görünüyor (`measured` onlarda boş) — yani
+              // M-F-186'nın canlı ihlali, ve J-108'de `library.json`dan
+              // silinen cümlenin ikizi.
+              //
+              // Freeze'i çiğnemiyor: freeze *"kabuk envanterini BÜYÜTME"*
+              // için kondu; bir kelime silmek envanteri büyütmüyor, vaat
+              // dilini kaldırarak küçültüyor. Ayrıca freeze bir ÇALIŞMA
+              // DİSİPLİNİ, M-F-186 bir ÜRÜN SINIRI — süreç kuralı,
+              // kullanıcıya görünen bir dürüstlük ihlalinin önüne geçmez.
+              Text('This section is not open.',
                   style: theme.textTheme.bodySmall),
             const SizedBox(height: 14),
             Text("What it doesn't", style: theme.textTheme.titleSmall),
