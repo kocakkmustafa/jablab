@@ -272,4 +272,61 @@ void main() {
         reason: 'hüküm yuvası konuştu — kamera yokken form hükmü sızıyor');
     expect(find.byKey(const Key('live-no-verdict')), findsOneWidget);
   });
+
+  test('KİLOMETRE TAŞI EŞİĞE VARINCA ATEŞLENİYOR ve {n} DOLUYOR (J-121)', () {
+    // ## J-104'ün açık borcunun kapanabilen yarısı
+    //
+    // Borç şuydu: *kilometre taşı repliğinin EKRANDA göründüğü
+    // kanıtlanmadı.* Bu gece o kanıtın peşine düştüm ve **hangi katmanın
+    // sorunlu olduğunu ayırdım** — ölçümle, tahminle değil:
+    //
+    //   ürün katmanı (bu test)   → 0 ms, replik doğru dolduruluyor
+    //   widget koşumu            → kilometre taşı ATEŞLENDİĞİ an takılıyor
+    //
+    // Ayırıcı deney: eşik 25 iken 24 tekrar hızlı, 25 tekrar zaman aşımı;
+    // eşik 2'ye indirilince 2 tekrarda da AYNI takılma. Yani hacim değil,
+    // komşu testlerin zamanlayıcıları değil — **olayın kendisi.** Ve ürün
+    // katmanı temiz olduğu için bu bir SEVKİYAT riski değil; koşum tarafı
+    // borç olarak isimli duruyor.
+    //
+    // Bu test o borcun ölçülebilen yarısını KAPATIYOR: eşiğe varınca olay
+    // üretiliyor, replik seçiliyor ve `{n}` GERÇEK sayıyla doluyor.
+    final CueBook b = book();
+    final SessionNarrator n =
+        SessionNarrator(mode: SessionMode.steady, milestoneEvery: 2);
+
+    final List<String> spoken = <String>[];
+    for (int s = 0; s <= 5; s++) {
+      final List<NarrationEvent> ev = n.tick(
+          elapsed: Duration(seconds: s),
+          total: const Duration(seconds: 600),
+          eventCount: s);
+      if (ev.contains(NarrationEvent.milestone)) {
+        final String? line =
+            b.say(NarrationEvent.milestone, vars: <String, Object>{'n': s});
+        expect(line, isNotNull, reason: 'eşikte replik seçilmedi');
+        spoken.add(line!);
+      }
+    }
+
+    expect(spoken, isNotEmpty, reason: 'eşiğe varıldı, olay hiç üretilmedi');
+    for (final String line in spoken) {
+      expect(CueBook.unfilledPlaceholder.hasMatch(line), isFalse,
+          reason: 'yer tutucu dolmamış: "$line"');
+      expect(RegExp(r'^\d+').hasMatch(line), isTrue,
+          reason: 'replik SAYIYLA başlamıyor: "$line" — sayı gerçek '
+              'sayaçtan gelmiyor olabilir');
+    }
+    // ⭐ NEGATİF İKİZ: eşik ALTINDA olay YOK. Bu olmadan test, her tick'te
+    // ateşlenen bir kilometre taşıyla da geçerdi — ve o koç her saniye
+    // sayı sayardı.
+    final SessionNarrator quiet =
+        SessionNarrator(mode: SessionMode.steady, milestoneEvery: 100);
+    final List<NarrationEvent> none = quiet.tick(
+        elapsed: const Duration(seconds: 3),
+        total: const Duration(seconds: 600),
+        eventCount: 5);
+    expect(none.contains(NarrationEvent.milestone), isFalse,
+        reason: 'eşiğin ALTINDA kilometre taşı ateşlendi');
+  });
 }

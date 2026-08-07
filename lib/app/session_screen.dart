@@ -42,6 +42,7 @@ class SessionScreen extends StatefulWidget {
     this.store,
     this.liveJab,
     this.liveJabSetupFailure,
+    this.milestoneEvery,
   });
 
   final ShellLesson lesson;
@@ -88,6 +89,27 @@ class SessionScreen extends StatefulWidget {
   /// "kimse sormadı" aynı değere düşerdi ve ekran ikisini ayırt edemezdi —
   /// bu ekranın düzelttiği kusurun ta kendisi.
   final TeachMaterial teachMaterial;
+
+  /// Kaç sayımda bir kilometre taşı söylenir — **yalnız test dikişi**
+  /// (J-121). Üretimde `null` ve `SessionNarrator`ın kendi sabiti (25)
+  /// geçerli; bu alan o sabiti DEĞİŞTİRMİYOR, yalnız testin ona daha erken
+  /// ulaşmasını sağlıyor.
+  ///
+  /// ## Neden gerekti
+  ///
+  /// Zincirin son halkası — *ekran `_completedJabs`i `tick(eventCount:)`e
+  /// geçiriyor mu* — yalnız sayaç 25'e ulaşınca gözlenebiliyordu ve o
+  /// noktaya varan widget testi **koşum tarafında 10 dakikalık zaman
+  /// aşımına** düşüyordu (ölçüldü: 20 tekrar 2 sn, 25 tekrar zaman aşımı;
+  /// ayrı dosyada da, derlenen hâlde de). Sebep üründe DEĞİL — motor
+  /// profili doğrusal ölçüldü (100→800 kare 23 ms).
+  ///
+  /// İki seçenek vardı: kanıtı "teftişle doğrulandı" diye bırakmak, ya da
+  /// kanıtlanamayanı kanıtlanabilir yapmak. Bu depo ikincisini seçmiş
+  /// durumda ve emsali çok: `storeOverride` · `loadStringOverride` ·
+  /// `seenOverride` · `camera` · `engineFactory`. Hepsi üretimde `null`,
+  /// hepsi TEK yerde okunuyor.
+  final int? milestoneEvery;
 
   /// `ContentRepository.coachedNotScoredLabels` — config'in
   /// `stanceCoachedOnlyJoints`'inden türetilir (J-033/rule 9); burada
@@ -181,6 +203,7 @@ class _SessionScreenState extends State<SessionScreen> {
           SessionStage.live => _Live(
             cues: widget.cues,
             plan: widget.plan,
+            milestoneEvery: widget.milestoneEvery,
             intervalPlan: widget.intervalPlan,
             liveJab: widget.liveJab,
             liveJabSetupFailure: widget.liveJabSetupFailure,
@@ -292,9 +315,11 @@ class _Live extends StatefulWidget {
     required this.onProgress,
     this.liveJab,
     this.liveJabSetupFailure,
+    this.milestoneEvery,
   });
 
   final CueBook cues;
+  final int? milestoneEvery;
   final RoundPlan? plan;
   final IntervalPlan? intervalPlan;
   final LiveJabController? liveJab;
@@ -315,6 +340,12 @@ class _LiveState extends State<_Live> {
     mode: widget.intervalPlan != null
         ? SessionMode.interval
         : SessionMode.steady,
+    // ⚠️ Üretimde `null` → `SessionNarrator`ın kendi sabiti (25) geçerli.
+    // Bu satır ilk yazışımda EKSİK kaldı: alan `_Live`e kadar geliyordu ve
+    // burada OKUNMUYORDU — yani "alan var, tüketicisi yok", tam da bu
+    // dikişin KANITLAMAK için var olduğu desen. Testin kırmızısı onu
+    // yakaladı; teftişle geçseydim dikiş kendi ölçtüğü kusuru taşıyacaktı.
+    milestoneEvery: widget.milestoneEvery ?? 25,
   );
   Timer? _ticker;
 
