@@ -316,7 +316,29 @@ final class TrackedComponent {
   /// puanlanmıyor — ve [gradedWhyNot] neden olduğunu söylüyor.
   final bool graded;
 
-  /// `graded == false` iken ZORUNLU: kullanıcıya gösterilebilir gerekçe.
+  /// `graded == false` iken ZORUNLU gerekçe.
+  ///
+  /// ## ⚠️ BUGÜN HİÇBİR YÜZEY BUNU ÇİZMİYOR — ve bu isimli bir borç (J-147)
+  ///
+  /// Alanı yazdıktan bir saat sonra ölçtüm: `gradedWhyNot`ı **yalnız
+  /// testler okuyor.** Yani J-129'un tam sınıfını (*içerik var, yüzeyi
+  /// yok*) onu isimlendirdikten kısa süre sonra kendim ürettim.
+  ///
+  /// Ölçüm sonucu bunu **ikiye ayırıyor**:
+  ///
+  /// * **5 gerekçe canlı yüzeyde ZATEN söyleniyor** — dürüstlük kutusu
+  ///   (`honesty.measured`/`notMeasured`) ve kilitli ders gerekçeleri.
+  ///   Onlar için bu alan **iç gerekçe**: aynı sınırın makine-okur hâli,
+  ///   yeni bir iddia değil.
+  /// * **2'si (`punchMechanics`, `recovery`) hiçbir yüzeyde YOK.** Onları
+  ///   yüzeye taşımak bir IA kararı ve koordinatöre soruldu.
+  ///
+  /// Ve alanın kendisi bir kusur yakaladı: `punchMechanics`in ilk
+  /// gerekçesini **uydurmuştum** (*"no reference set"* — oysa
+  /// `references.jab` var, 3 bağımsız kaynak). Doğrusu kural setinin kendi
+  /// `$splitRule`unda yazılıydı: **öncü kol, eğitmenlerin en çok ayrıştığı
+  /// yer.** Yani gerekçeyi yazmak zorunda olmak, yanlış gerekçeyi de
+  /// görünür kıldı.
   final String? gradedWhyNot;
 }
 

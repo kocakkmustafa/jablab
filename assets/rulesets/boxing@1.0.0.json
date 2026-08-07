@@ -1144,8 +1144,8 @@
       "id": "punchMechanics",
       "displayName": "Punch mechanics",
       "graded": false,
-      "gradedWhyNot": "No reference set has been collected for punch mechanics.",
-      "$gradedWhy": "HICBIR beyan bunu skorlanan diye anmiyor; honesty.measured listesinde YOK. Sayfa B bant olarak gosteriyordu. Yoklugunda 'skorlanir' varsaymak, olculmemis bir seyi olculmus gibi sunmak olurdu (J-113 sinifi)."
+      "gradedWhyNot": "The arm is where coaches disagree most, so the punch path is coached rather than graded.",
+      "$gradedWhy": "⚠️ DUZELTME (J-147). ILK YAZDIGIM GEREKCE YANLISTI: 'No reference set has been collected for punch mechanics.' — references.jab VAR (3 bagimsiz kaynak, 11/11 attested). Gercek sebep kural setinin KENDI belgesinde yaziliydi: references.jab.$splitRule — 'jabin KENDISI olan ONCU KOL, egitmenlerin EN COK ayristigi yer' — ve $productEffect: jab sirasinda TABAN ve GOVDE skorlanabilir, GARD/KOL ile ilgili her hukum (oncu kolun uzanma yolu DAHIL) koclanir ama SKORLANMAZ. Yani sebep 'referans yok' degil 'referans VAR ve ayrisma orada'. Kendi kuralimi (beyandan turet, icat etme) koyduktan bir saat sonra ihlal ettim; yakalayan sey gerekcenin YUZEYE ulasip ulasmadigini olcmek oldu."
     },
     {
       "id": "combinationAccuracy",
@@ -1159,7 +1159,7 @@
       "displayName": "Recovery",
       "graded": false,
       "gradedWhyNot": "Hand recovery is coached during the round, not scored after it.",
-      "$gradedWhy": "LEAD_HAND_NOT_RECOVERED bir hata kodu ve repligi var (koclanir); hicbir beyan skorlandigini soylemiyor."
+      "$gradedWhy": "LEAD_HAND_NOT_RECOVERED bir hata kodu ve repligi var (koclanir). SKORLANMAMASININ kaynagi references.jab.$productEffect: gard/kol ile ilgili her hukum koclanir ama skorlanmaz. J-147'de kaynak ADIYLA baglandi."
     },
     {
       "id": "timing",
