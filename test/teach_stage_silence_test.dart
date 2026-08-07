@@ -65,6 +65,7 @@ void main() {
         lesson: const ShellLesson(id: 'x', title: 'Test lesson', minutes: 3),
         cues: cues,
         coachedNotScored: const <String>[],
+        bands: const <String, String>{'Stance': '—'},
         plan: null,
         teachMaterial: const TeachMaterialText(body: 'Body of the lesson.'),
         liveJab: LiveJabController(

@@ -306,13 +306,16 @@ class _RootState extends State<_Root> {
         recordedNote: _recordedNoteText(),
         // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayısal skor YOK.
         // Hüküm 2 (koordinatör 2026-08-06): bu bant düşmedi, Sayfa B'ye
-        // bağlamsal dürüst blok olarak taşındı — "ölçmüyoruz" değil
-        // "ölçüyoruz ama henüz puanlayamıyoruz" beyanı.
-        bands: const <String, String>{
-          'Guard discipline': '—',
-          'Punch mechanics': '—',
-          'Balance': '—',
-        },
+        // bağlamsal dürüst blok olarak taşındı.
+        //
+        // LİSTE TÜREVİ (J-144, koordinatör hükmü 09:24). Elle yazılıyken
+        // `Guard discipline` buradaydı ve o bileşen **puanlanmıyor** —
+        // eğitmenler uzlaşmıyor, yani kalibrasyonla KAPANMAZ. Bant
+        // başlığı ("until the thresholds are calibrated") onun için
+        // karşılıksız bir vaatti.
+        bands: _boxing == null
+            ? const <String, String>{}
+            : widget.repository.gradedBands(_boxing!),
         onRetryHistory: _refreshRecorded,
       );
     }
@@ -553,6 +556,7 @@ class _RootState extends State<_Root> {
                   cues: _cues!,
                   coachedNotScored:
                       widget.repository.coachedNotScoredLabels(_boxing!),
+                  bands: widget.repository.gradedBands(_boxing!),
                   plan: widget.repository.roundPlanFor(_domain!, l.id),
                   intervalPlan:
                       widget.repository.intervalPlanFor(_domain!, l.id),

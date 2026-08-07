@@ -26,6 +26,7 @@ void main() {
         lesson: const ShellLesson(id: 'x', title: 'Test lesson', minutes: 12),
         cues: cues,
         coachedNotScored: const <String>['Rear guard hand position'],
+        bands: const <String, String>{'Stance': '—'},
         plan: null,
         teachMaterial: material,
       ),

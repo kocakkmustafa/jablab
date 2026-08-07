@@ -250,7 +250,25 @@ void main() {
     // `pumpAppWithCurrentCourse` kullanıyor.
     await pumpAppWithCurrentCourse(t);
     expect(find.byKey(const Key('bands-only-note')), findsOneWidget);
-    expect(find.byKey(const Key('band-Guard discipline')), findsOneWidget);
+
+    // ⚖️ J-144 (koordinatör hükmü 09:24) — BU TEST KUSURU KODLUYORDU.
+    //
+    // Önce `band-Guard discipline` BEKLİYORDU. Ama guard **puanlanmıyor**:
+    // Sayfa A'nın dürüstlük kutusu *"detected and coached, but NOT graded.
+    // Coaches disagree"* diyor ve gerekçe ölçülmüş (`rear_forearm` dağılımı
+    // 45° tavana kırpılı). Bant başlığı ise *"until the thresholds are
+    // calibrated"* — yani guard için **karşılıksız bir vaat**, çünkü o
+    // bileşen kalibrasyonla değil **eğitmen uzlaşmazlığıyla** kapalı.
+    //
+    // KAPI İKİ YÖNLÜ (M-F-337): yalnız *"puanlanmayan yok"* ölçülseydi,
+    // bant listesinin tamamen boşalması da geçerli sayılırdı.
+    expect(find.byKey(const Key('band-Guard discipline')), findsNothing,
+        reason: 'puanlanmayan bir bileşen "kalibrasyon gelene kadar bant" '
+            'başlığı altında — karşılıksız vaat (J-144)');
+    expect(find.byKey(const Key('band-Stance')), findsOneWidget,
+        reason: 'puanlanan bileşen bant listesinden kayboldu — J-144 '
+            'guard\'ı çıkardı, listeyi boşaltmadı');
+    expect(find.byKey(const Key('band-Balance')), findsOneWidget);
     // Kalibrasyon kapısı geçilmeden hiçbir sayısal skor render edilmemeli.
     final Iterable<Text> texts = t.widgetList<Text>(find.byType(Text));
     for (final Text w in texts) {

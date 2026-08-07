@@ -36,6 +36,7 @@ class SessionScreen extends StatefulWidget {
     required this.lesson,
     required this.cues,
     required this.coachedNotScored,
+    required this.bands,
     required this.plan,
     required this.teachMaterial,
     this.intervalPlan,
@@ -115,6 +116,9 @@ class SessionScreen extends StatefulWidget {
   /// `stanceCoachedOnlyJoints`'inden türetilir (J-033/rule 9); burada
   /// elle kopyalanmaz ki kova kararı değişince metin sessizce bayatlamasın.
   final List<String> coachedNotScored;
+
+  /// Özet bantları — `RuleSet.trackedComponents`tan TÜREVİ (J-144).
+  final Map<String, String> bands;
 
   @override
   State<SessionScreen> createState() => _SessionScreenState();
@@ -214,6 +218,7 @@ class _SessionScreenState extends State<SessionScreen> {
           ),
           SessionStage.summary => _Summary(
             coachedNotScored: widget.coachedNotScored,
+            bands: widget.bands,
           ),
         },
       ),
@@ -749,20 +754,20 @@ extension on _LiveState {
 }
 
 class _Summary extends StatelessWidget {
-  const _Summary({required this.coachedNotScored});
+  const _Summary({required this.coachedNotScored, required this.bands});
 
   final List<String> coachedNotScored;
+
+  /// Kural setinin `trackedComponents`ından TÜRETİLİR (J-144) — elle
+  /// yazılmaz. Elle yazıldığı sürece iki ekran iki farklı üçlü gösterdi.
+  final Map<String, String> bands;
 
   @override
   Widget build(BuildContext context) => SessionSummaryView(
     eventCount: 0,
     // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayı yok — bant bile
-    // ölçüm olmadığı için boş.
-    bands: const <String, String>{
-      'Stance': '—',
-      'Balance': '—',
-      'Footwork': '—',
-    },
+    // ölçüm olmadığı için boş. Liste TÜREVİ (J-144).
+    bands: bands,
     // J-033: eğitmenler gard/kol pozisyonunda ayrışıyor → koçlanır ama
     // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
     // yazılmaz — bkz. widget dokümanı.

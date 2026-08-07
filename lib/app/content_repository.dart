@@ -86,6 +86,22 @@ final class ContentRepository {
   List<String> jabCoachedNotScoredLabels(RuleSet boxing) =>
       _labelsFor(boxing.jabCoachedOnlyJoints);
 
+  /// Ekranda gösterilecek BANT haritası — kural setinin
+  /// `trackedComponents`ından TÜRETİLİR, elle yazılmaz (J-144).
+  ///
+  /// Önce iki ekran kendi üçlüsünü elle yazıyordu ve ikisi FARKLIYDI:
+  /// özet `Stance·Balance·Footwork`, Sayfa B `Guard discipline·Punch
+  /// mechanics·Balance`. Üstelik `Guard discipline` **puanlanmayan** bir
+  /// bileşendi ve *"kalibrasyon gelene kadar bant"* başlığının altında
+  /// duruyordu — **karşılıksız bir vaat**, çünkü o bileşen kalibrasyonla
+  /// değil eğitmen uzlaşmazlığıyla kapalı.
+  ///
+  /// Değer `—`: K8 kalibrasyon kapısı geçilmeden sayı yok.
+  Map<String, String> gradedBands(RuleSet boxing) => <String, String>{
+        for (final TrackedComponent c in boxing.gradedComponents)
+          c.displayName: '—',
+      };
+
   List<String> _labelsFor(List<String> keys) => keys.map((String key) {
         final String? label = _jointLabels[key];
         if (label == null) {
