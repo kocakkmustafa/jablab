@@ -125,6 +125,41 @@ void main() {
     }
   });
 
+  test('N=1 VARSAYIMI YOK — 5. tekrarda da doğru kalan metinler (J-193)', () {
+    // Koordinatörün «N'inci kez» ekseninin son maddesi. Yukarıdaki kural
+    // *tur* bağlamıydı; bu *oturum* bağlamı — aynı aile, bir basamak
+    // yukarıda:
+    //
+    //   Uygulama bir dersin KAÇINCI kez açıldığını hiçbir yüzeye
+    //   taşımıyor. O hâlde hiçbir yüzey "ilk kez"i VARSAYAMAZ.
+    //
+    // ⚠️ NE ÖLÇMÜYOR: ders ADLARINI. `boxing.foundations.first_round`un
+    // başlığı "Your first round" ve bu bir İHLAL DEĞİL — müfredattaki ilk
+    // tam turu ADLANDIRIYOR, kullanıcının kaçıncı kez yaptığını iddia
+    // etmiyor. Ayrım ölçüldü ve kasıtlı: `displayName` muaf, ANLATI değil.
+    final RegExp firstTime = RegExp(
+        r"\b(welcome( back)?|first time|for the first time|getting started"
+        r"|new here|your first (session|round of|week))\b",
+        caseSensitive: false);
+    expect(firstTime.hasMatch('Welcome to JabLab'), isTrue,
+        reason: 'POZİTİF KONTROL: desen bilinen bir N=1 cümlesini '
+            'yakalamıyor — aşağıdaki temiz sonuç anlamsız olurdu');
+
+    final List<String> bad = allVariants()
+        .where((({String key, int index, String line}) v) =>
+            firstTime.hasMatch(v.line))
+        .map((({String key, int index, String line}) v) =>
+            '${v.key}[${v.index}] → "${v.line}"')
+        .toList();
+    expect(bad, isEmpty,
+        reason: 'bu replik(ler) oturumun İLKİ olduğunu varsayıyor:\n'
+            '  ${bad.join('\n  ')}\n\n'
+            'Uygulama bir dersin kaçıncı kez açıldığını hiçbir yüzeye '
+            'taşımıyor — depoda kayıt var ama anlatı onu OKUMUYOR. '
+            'Taşınmayan bir bağlam iddia edilemez (J-180 ile aynı kural, '
+            'tur yerine OTURUM ölçeğinde).');
+  });
+
   test('TERS İKİZ — havuz BOŞALTILARAK geçilemez', () {
     // M-F-337 dersi: yalnız "ihlal yok" ölçülseydi, `round_start` havuzunu
     // tek repliğe indirmek de kapıyı geçerdi — ihlal kalmaz çünkü replik
