@@ -86,9 +86,24 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 ### 9. Öksüz içerik anahtarı — `content_orphan_key_test` (J-129)
 | | |
 |---|---|
-| **ölçmüyor** | ① `curriculum.json` — tüketicisi uygulama değil TESTLER, şekli serbest sözlük; "tanımlı anahtar"ı test kodundan türetmek testi kendi kâhini yapardı (*ölçüm yöntemi*) ② `cues.en.json` — gerek yok, `CueBook.fromJson` tanımadığında FIRLATIYOR (*zaten imkânsız*) ③ **ters yön**: parser okuyor ama içerikte hiç geçmiyor (ölü alan, J-044) ④ **doğruluk** — okunuyor olmak doğru olmak değil |
+| **ölçmüyor** | ① `curriculum.json` — tüketicisi uygulama değil TESTLER, şekli serbest sözlük; "tanımlı anahtar"ı test kodundan türetmek testi kendi kâhini yapardı (*ölçüm yöntemi*) ② `cues.en.json` — gerek yok, `CueBook.fromJson` tanımadığında FIRLATIYOR (*zaten imkânsız*) ③ **ters yön**: parser okuyor ama içerikte hiç geçmiyor (ölü alan, J-044) — **ÖLÇÜLDÜ: bugün sıfır**, ve kapı BİLEREK konmadı (aşağı bak) ④ **doğruluk** — okunuyor olmak doğru olmak değil |
 | **kanıt** | Kapı kurulduğunda **10 öksüz anahtar** buldu ve ikisi YANLIŞ iddia taşıyordu. Tanımlı anahtarlar parser KAYNAĞINDAN türetiliyor: elle liste doğruyu iki yere yazmak olurdu |
 | **negatif ikiz** | Mutasyonla kırmızı görüldü (silinen `blurb` geri kondu → tam yol+değerle öttü) · parser'ın `blurb`i DİSİPLİN düzeyinde okuduğu ayrıca ölçülüyor, yoksa ikiz canlı alanı da öksüz sayardı |
+
+### Ters yön neden kapıya bağlanmadı — ölçülmüş bir kısıtlama (J-130)
+
+Öksüz-anahtar kapısının aynası: *parser bir alanı okuyor ama içerikte hiç
+geçmiyor mu?* Türetilmiş anahtar setleriyle ölçmek bedava — **ölçüldü, bugün
+sıfır.**
+
+Kapıya **bağlanmadı** ve sebebi kendi dersim: *"parser'ın okuduğu her alan
+içerikte bulunmalı"* kuralı, bir alanı içeriğinden önce eklemeyi **kırmızıya**
+çevirirdi. Bu tam olarak J-120'nin kusuru — sınırı olduğundan geniş yazmak
+testte daha sinsi: **doğru ilerleme, gerçek kusur gibi görünür.**
+
+Öksüz yönde asimetri yok: yazılmış ama okunmayan içeriğin meşru bir hâli
+**yok** — ya bir yüzeye bağlanır ya silinir. Bu yüzden o yön kapı, bu yön
+kayıt.
 
 ---
 
