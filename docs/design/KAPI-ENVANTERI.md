@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 204/204 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 208/208 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -20,6 +20,13 @@
 | J-121 | **çalışmayan kapı** | Bir kapı 10 dk zaman aşımına düşüyordu → **silindi** (yanlış öten kapı, olmayandan kötüdür) |
 
 Beşi de tek sınıftan: **kapının ne ölçtüğü ile ne ölçtüğü sanılan şey ayrışıyor.**
+
+**Ve gece ilerledikçe bir alt-desen çıktı: kapıların KATMAN kapsamı, KELİME
+kapsamından daha sık yanlış.** Beş örnek, beşi de aynı gece: J-122 (donmuş ağaç
+taranmıyor) · J-126 (token yolu) · J-129 (içerik dosyası) · J-131 (`unlock`
+kapısı yalnız `lib/` Dart dizelerini tarıyordu, sızıntı içerikteydi) · J-132
+(disiplin katmanı vardı, kurs katmanı yoktu). Kapı yazarken sorulacak ilk soru
+*"hangi kelimeler"* değil, ***"hangi katmanlar"***.
 
 ---
 
@@ -89,6 +96,24 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 | **ölçmüyor** | ① `curriculum.json` — tüketicisi uygulama değil TESTLER, şekli serbest sözlük; "tanımlı anahtar"ı test kodundan türetmek testi kendi kâhini yapardı (*ölçüm yöntemi*) ② `cues.en.json` — gerek yok, `CueBook.fromJson` tanımadığında FIRLATIYOR (*zaten imkânsız*) ③ **ters yön**: parser okuyor ama içerikte hiç geçmiyor (ölü alan, J-044) — **ÖLÇÜLDÜ: bugün sıfır**, ve kapı BİLEREK konmadı (aşağı bak) ④ **doğruluk** — okunuyor olmak doğru olmak değil |
 | **kanıt** | Kapı kurulduğunda **10 öksüz anahtar** buldu ve ikisi YANLIŞ iddia taşıyordu. Tanımlı anahtarlar parser KAYNAĞINDAN türetiliyor: elle liste doğruyu iki yere yazmak olurdu |
 | **negatif ikiz** | Mutasyonla kırmızı görüldü (silinen `blurb` geri kondu → tam yol+değerle öttü) · parser'ın `blurb`i DİSİPLİN düzeyinde okuduğu ayrıca ölçülüyor, yoksa ikiz canlı alanı da öksüz sayardı |
+
+### 10-11. Mekanizma dili + kurs hedefi — `promise_language_test` (J-131·J-132)
+| | |
+|---|---|
+| **ölçmüyor** | ① **Başka sözcüklerle söylemeyi** — hedef "punch chains" derse görmez ② **ters yönü**: hedefin kursta hiç olmayan konuyu anması (`tempo control`) — anlam işi, sınıfı **imkânsız** ③ **gerekçenin kalitesini** — işareti taşımak yeterli sayılıyor ④ mekanizma listesi DAR ve kanıta dayalı: yeni bir geliştirici kavramı sızarsa görmez |
+| **kanıt** | J-131'de 9 eşleşme ölçüldü, **6'sı bilerek durdu** — ölçüt kelimede değil: *mekanizma gözlenebiliyor mu · cümle eyleme çağırıyor mu*. J-132'de kurs katmanı ölçüldü ve **kusur bulundu** |
+| **negatif ikiz** | **İkisi de TERS yönde**: J-131 → `confidence gate` içerikten kalkarsa öter (kapı fazla genişlemiş demektir) · J-132 → kilitsiz her kurs da caveat taşırsa öter (**olmayan bir sınırı beyan etmek dürüstlük değil gürültüdür**) |
+
+### ⭐ Yeni araç: TERS NEGATİF İKİZ
+
+Standart ikiz kapının **daralmasını** engeller (*"düzeltme kaldırılırsa kırılsın"*).
+Ters ikiz **genişlemesini** engeller (*"meşru kullanım silinirse kırılsın"*).
+
+Gerekçesi ölçülmüş: **fazla geniş kapı bu gece iki kez ödendi** (J-120 · J-126'nın
+ilk hâli) ve ikisinde de kapıyı geri daraltan şey bir ölçüm değil, **fark
+etmemdi**. Ters ikiz onu mekanikleştiriyor — aile dersi #7'nin (*hatayı
+düzeltmek ≠ hatanın imkânsız olduğu yapıyı seçmek*) kapı tasarımına uygulanmış
+hâli. **Kural: her dar kapı, darlığını koruyan bir ikiz taşımalı.**
 
 ### Ters yön neden kapıya bağlanmadı — ölçülmüş bir kısıtlama (J-130)
 
