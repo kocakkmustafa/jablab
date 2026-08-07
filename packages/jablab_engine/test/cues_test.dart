@@ -22,8 +22,12 @@ void main() {
       (cues[g] as Map).cast<String, dynamic>();
 
   Iterable<String> allLines() sync* {
+    // `summary` J-104'te SİLİNDİ (üreticisi yoktu) — J-145'te ölçüldü:
+    // beş summary repliğinin hiçbirine `cues.en.json` DIŞINDA atıf yok.
+    // Listede bırakmak testi çökertiyordu, çökerten şey de content değil
+    // BU LİSTEYDİ.
     for (final String g in <String>[
-      'technique', 'noVerdict', 'counting', 'encouragement', 'session', 'summary'
+      'technique', 'noVerdict', 'counting', 'encouragement', 'session'
     ]) {
       for (final dynamic v in group(g).values) {
         yield* (v as List<dynamic>).cast<String>();
@@ -53,10 +57,12 @@ void main() {
       'counting': 3,
       'encouragement': 5,
       'session': 6,
-      'summary': 20,       // tur sonu, dinlenirken okunur/duyulur
       'interval': 5,       // HIIT: yalnız ritim ve sayım
-      'setup': 10,         // kamera dersi: kullanıcı hareketsiz, dinliyor
       'drill': 8,          // drill BAŞLAMADAN, kullanıcı dururken
+      // `summary` ve `setup` J-104'te silindi (üreticisi yoktu, J-145'te
+      // çapraz-dosya atıfları da ölçüldü: yok). `drill` DURUYOR çünkü
+      // `curriculum.json`daki 10 drill'in 10'u `introCue` ile ona atıf
+      // yapıyor — J-104 onu da silmişti ve bu YANLIŞTI.
     };
 
     // Yeni bir grup eklendiğinde bu haritaya yazılmazsa uzunluk kuralından

@@ -658,16 +658,6 @@
       "extensionMsMax": 95
     }
   },
-  "scoreComponents": [
-    "guardDiscipline",
-    "punchMechanics",
-    "recovery",
-    "footwork",
-    "balance",
-    "timing",
-    "combinationAccuracy",
-    "trackingConfidence"
-  ],
   "display": {
     "$doc": "K8 AILE KURALI (M-F-04, kurucu): kalibrasyon kapisi gecilmeden kullaniciya SAYISAL skor gosterilmez. V1 baslangic gosterimi = BANT + ilerleme egrisi; mutlak sayilar JabLab'in kendi kalibrasyon kapisindan (J-007 esik kalibrasyonu) SONRA acilir.",
     "numericScoresUnlockedBy": "jablab_threshold_calibration",
@@ -1122,5 +1112,69 @@
     "techniques.*.techniqueId": "digest kimligi; testte dogrulaniyor",
     "tolerance": "artefakt karsilastirmasi icin taşınıyor",
     "expected": "test fixture alani"
-  }
+  },
+  "trackedComponents": [
+    {
+      "id": "stance",
+      "displayName": "Stance",
+      "graded": true,
+      "$gradedWhy": "library.json honesty.measured: 'Stance width, crossed feet, balance — these are graded'. EKLENDI: eski scoreComponents listesinde YOKTU ama ozet ekrani 'Stance' bandi gosteriyordu — elle yazilan liste, kaynagin bilmedigi bir oge icat etmisti (J-144 ②)."
+    },
+    {
+      "id": "balance",
+      "displayName": "Balance",
+      "graded": true,
+      "$gradedWhy": "Ayni satir: '...crossed feet, balance — these are graded'."
+    },
+    {
+      "id": "guardDiscipline",
+      "displayName": "Guard discipline",
+      "graded": false,
+      "gradedWhyNot": "Coaches disagree about guard position, so there is nothing to grade against.",
+      "$gradedWhy": "honesty.measured: 'detected and coached, but NOT graded'. Olculmus gerekce: references.stance.coachedOnlyJoints.rear_forearm dagilimi 45 DERECE TAVANA KIRPILI. KRITIK: bu bir KALIBRASYON eksikligi DEGIL, REFERANS UZLASMAZLIGI — kalibrasyonla KAPANMAZ. Sayfa B onu 'until the thresholds are calibrated' basligi altinda listeliyordu; o baslik guard icin KARSILIKSIZ BIR VAAT idi (M-F-186)."
+    },
+    {
+      "id": "footwork",
+      "displayName": "Footwork",
+      "graded": false,
+      "gradedWhyNot": "We can catch crossed feet, but catching a fault is not grading a skill.",
+      "$gradedWhy": "boxing.intermediate.footwork_combo kilit gerekcesi: 'We can catch crossed feet: that is a fault, and faults are visible. Good footwork is a skill, and we have not collected takes from enough independent coaches.' Ozet ekrani yine de 'Footwork' bandi gosteriyordu."
+    },
+    {
+      "id": "punchMechanics",
+      "displayName": "Punch mechanics",
+      "graded": false,
+      "gradedWhyNot": "No reference set has been collected for punch mechanics.",
+      "$gradedWhy": "HICBIR beyan bunu skorlanan diye anmiyor; honesty.measured listesinde YOK. Sayfa B bant olarak gosteriyordu. Yoklugunda 'skorlanir' varsaymak, olculmemis bir seyi olculmus gibi sunmak olurdu (J-113 sinifi)."
+    },
+    {
+      "id": "combinationAccuracy",
+      "displayName": "Combination accuracy",
+      "graded": false,
+      "gradedWhyNot": "Hooks and uppercuts are not modelled, so combination order cannot be scored.",
+      "$gradedWhy": "boxing.intermediate.combinations kilit gerekcesi: '...so we don't score combination order.'"
+    },
+    {
+      "id": "recovery",
+      "displayName": "Recovery",
+      "graded": false,
+      "gradedWhyNot": "Hand recovery is coached during the round, not scored after it.",
+      "$gradedWhy": "LEAD_HAND_NOT_RECOVERED bir hata kodu ve repligi var (koclanir); hicbir beyan skorlandigini soylemiyor."
+    },
+    {
+      "id": "timing",
+      "displayName": "Timing",
+      "graded": false,
+      "gradedWhyNot": "Tempo is read as a band and is not shown as a score.",
+      "$gradedWhy": "honesty.measured: 'Tempo as a band (controlled / brisk / fast)... there is no screen that shows you the band'."
+    },
+    {
+      "id": "trackingConfidence",
+      "displayName": "Tracking confidence",
+      "graded": false,
+      "gradedWhyNot": "This is how well the camera saw you, not how well you moved.",
+      "$gradedWhy": "KOORDINATOR HUKMU (09:24): bu ogenin listede olmasi, listenin adinin YANLIS oldugunun kanitiydi — 'scoreComponents' degil IZLENEN bilesenler. Ad duzeltildi: trackedComponents."
+    }
+  ],
+  "$trackedComponentsWhy": "J-144 (koordinator hukmu 09:24). ESKI AD 'scoreComponents' YANLISTI ve kaniti kendi icindeydi: trackingConfidence onun icindeydi ve o ASLA puanlanmaz. Liste ayrica OLUYDU (RuleSet.fromJson okumuyordu) ve olu olmasi celiskiyi GIZLEDI: iki yuzey kendi bant ucluşunu ELLE yazdi, biri kaynakta hic olmayan 'Stance'i icat etti, oteki 'Guard discipline'i KARSILIKSIZ bir kalibrasyon vaadinin altina koydu. Artik her bilesen graded + isimli gerekce tasiyor ve bant listeleri BURADAN TURUYOR. graded kararlarinin tamami mevcut beyanlardan turetildi (honesty.measured, kilit gerekceleri) — ICAT YOK; beyani olmayan bilesen graded=false, cunku yoklugunda 'skorlanir' varsaymak olculmemis bir seyi olculmus gibi sunmak olurdu."
 }

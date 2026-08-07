@@ -62,6 +62,44 @@ void main() {
         .toSet();
   }
 
+  /// PARSER DIŞI OKUYUCULAR (J-145 düzeltmesi).
+  ///
+  /// İlk hâli *"okuyan"*ı `Lesson.fromJson` ile SINIRLI tanımladı ve bu
+  /// **yanlıştı**: `lockedBy` (3 ders) öksüz sayılıp silindi, oysa
+  /// `packages/jablab_engine/test/curriculum_binding_test.dart` onu kilit
+  /// sınıfının makine-okur adı olarak **zorunlu** tutuyor. Ham JSON'u okuyan
+  /// testler de okuyucudur; *"parser okumuyor"* ile *"kimse okumuyor"* ayrı
+  /// şeyler ve bu kapı ikincisini ölçmeliydi.
+  ///
+  /// **Kapı, kusura yol açan dar tanımı kodlamıştı** — bu gece üçüncü kez
+  /// aynı sınıf (J-104 üretici · J-129 okuyucu · J-144 kapsam beyanı).
+  Set<String> readersOutsideParser() {
+    final Set<String> out = <String>{};
+    // ⚠️ DAR TUTULUYOR: her dize sabitini "okuyucu" saymak kapıyı fazla
+    // GEVŞEK yapardı — adı tesadüfen geçen gerçek bir öksüz de affedilirdi.
+    // Yalnız HARİTA ERİŞİMİ sayılıyor (`x['key']`), yani bir OKUMA;
+    // anahtarın bir cümlede anılması okuma DEĞİLDİR (aile dersi #6).
+    final RegExp lit = RegExp(r'''\[\s*['"](\w+)['"]\s*\]''');
+    for (final String dir in <String>[
+      'test', 'lib', '../../packages/jablab_engine/test',
+      '../../packages/jablab_engine/lib',
+    ]) {
+      final Directory d = Directory(dir.startsWith('..')
+          ? dir.replaceFirst('../../', 'packages/jablab_engine/')
+              .replaceFirst('packages/jablab_engine/packages/jablab_engine/',
+                  'packages/jablab_engine/')
+          : dir);
+      if (!d.existsSync()) continue;
+      for (final FileSystemEntity f in d.listSync(recursive: true)) {
+        if (f is! File || !f.path.endsWith('.dart')) continue;
+        for (final RegExpMatch m in lit.allMatches(f.readAsStringSync())) {
+          out.add(m.group(1)!);
+        }
+      }
+    }
+    return out;
+  }
+
   /// Kök üstverisi: hiçbir parser okumuyor ve bu KASITLI. Muafiyet
   /// desenle değil ADLA veriliyor — desen muafiyeti, bir sonraki öksüz
   /// anahtarı da sessizce yutardı.
@@ -87,6 +125,11 @@ void main() {
           'gövde ayrıştırması kırılmış olabilir');
     });
 
+    final Set<String> otherReaders = readersOutsideParser();
+    expect(otherReaders, isNotEmpty,
+        reason: 'parser-dışı okuyucu taraması BOŞ döndü — tarama girdisini '
+            'bulamamış olabilir ve kapı fazla sıkı öter');
+
     final Map<String, dynamic> lib = (jsonDecode(
             File('assets/content/library.json').readAsStringSync()) as Map)
         .cast<String, dynamic>();
@@ -101,6 +144,9 @@ void main() {
         // değil, gerekçe. Bunlar kullanıcıya hiç gitmez ve gitmemeli.
         if (key.startsWith(r'$')) continue;
         if (cls == 'Library' && rootMetadata.containsKey(key)) continue;
+        // Parser okumuyor OLABİLİR ama başka bir okuyucu (test, motor)
+        // anahtarı ADIYLA kullanıyorsa öksüz DEĞİLDİR (J-145).
+        if (otherReaders.contains(key)) continue;
         if (!known[cls]!.contains(key)) {
           final String v = jsonEncode(node[key]);
           orphans.add('$path → $cls.$key = ${v.length > 90 ? '${v.substring(0, 90)}…' : v}');

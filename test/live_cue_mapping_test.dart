@@ -84,16 +84,28 @@ void main() {
     // `jabLabCueMapping`e yazılmış bir anahtar bu kapıdan geçer ama onu
     // ateşleyen olay hiç üretilmiyor olabilir (`cue.corrected`/`streak`/
     // `settled` bugün tam olarak bu durumda — `cues.en.json`in
-    // `$producers` bloğunda `mapped-not-fired` diye İSİMLE beyan edildi).
+    // `$producers` bloğunda `awaiting-wiring` diye İSİMLE beyan edildi).
     // Bu kapı statik erişilebilirliği ölçer, çalışma-zamanı ulaşılabilirliği
     // DEĞİL; ikincisi ancak `session_rounds_test`in kilometre-taşı testi
     // gibi gerçek bir yüzey testiyle ölçülür.
     final Set<String> referenced = <String>{};
     final RegExp literal = RegExp(r'''['"](cue\.[a-z_.]+)['"]''');
-    for (final String dir in <String>['lib', 'assets/rulesets', 'packages']) {
+    // ⚠️ KAPSAM DÜZELTİLDİ (J-145). Bu kapı önce `lib` · `assets/rulesets` ·
+    // `packages` tarıyordu ve **`assets/content` YOKTU** — yani atıflar tam
+    // da taranmayan dizindeydi. Sonucu: J-104 `drill` grubunun 10 repliğini
+    // *"ölü"* sayıp sildi, oysa `curriculum.json`daki 10 drill'in 10'u
+    // `introCue` ile onlara atıf yapıyordu. **Kapı, kusura yol açan dar
+    // tanımı kodlamıştı.**
+    //
+    // `cues.en.json` BİLEREK dışarıda: kendi anahtarlarını içerdiği için
+    // her repliği kendi kendine "atıflı" yapar ve kapı vakum-doğru olurdu.
+    for (final String dir in <String>[
+      'lib', 'assets/rulesets', 'assets/content', 'packages',
+    ]) {
       for (final FileSystemEntity f
           in Directory(dir).listSync(recursive: true)) {
         if (f is! File) continue;
+        if (f.path.endsWith('cues.en.json')) continue;
         if (!f.path.endsWith('.dart') && !f.path.endsWith('.json')) continue;
         for (final RegExpMatch m in literal.allMatches(f.readAsStringSync())) {
           referenced.add(m.group(1)!);

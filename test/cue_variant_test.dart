@@ -132,23 +132,17 @@ void main() {
             'az varyanta sahipti (J-141):\n  ${offenders.join('\n  ')}');
   });
 
-  test('yeni varyantlar da UZUNLUK kuralını taşıyor (≤8 kelime)', () {
-    // Varyant eklemek, kuralı gevşetmenin kolay yolu olurdu: uzun bir cümle
-    // sayıyı büyütür ama telefon uzaktayken duyulmaz. `$lengthRule` dosyanın
-    // kendi beyanı; burada zorlanıyor.
-    final List<String> tooLong = <String>[];
-    cues.forEach((String g, dynamic v) {
-      if (g.startsWith(r'$') || v is! Map) return;
-      v.forEach((dynamic k, dynamic lines) {
-        if ((k as String).startsWith(r'$')) return;
-        for (final dynamic line in lines as List<dynamic>) {
-          final int words = (line as String).trim().split(RegExp(r'\s+')).length;
-          if (words > 8) tooLong.add('$k: "$line" ($words kelime)');
-        }
-      });
-    });
-    expect(tooLong, isEmpty,
-        reason: 'replik 8 kelimeyi aşıyor — telefon uzakta ve kullanıcı '
-            'hareket hâlinde; uzun cümle duyulmaz: ${tooLong.join(" · ")}');
-  });
+  // ⚠️ UZUNLUK KURALI BURADA DEĞİL — ve olmamalı (J-145).
+  //
+  // İlk yazışımda buraya global bir `≤8 kelime` testi koydum. Sonra motor
+  // süiti koşturunca gördüm ki kural ZATEN VAR ve **daha iyi**:
+  // `packages/jablab_engine/test/cues_test.dart` sınırı GRUBA GÖRE
+  // uyguluyor — `counting` 3 · `interval` 5 · `technique` 5 · `session` 6 ·
+  // `noVerdict` 10 · `summary` 20. Gerekçesi de yazılı: *tur ortasında 8
+  // kelime bile fazla, tur sonunda 13 kelime gayet normal.*
+  //
+  // Benim global kuralım onun **zayıf kopyasıydı** ve zararlıydı: yeşil
+  // yanan gevşek bir kapı, sıkı olanın yokluğunu düşündürür. J-139'da
+  // kelime listesi için aynı hatayı bulmuştum — bu üçüncüsü ve ilk kez
+  // hatayı **kendim ürettim**. Kural tek yerde kalıyor.
 }

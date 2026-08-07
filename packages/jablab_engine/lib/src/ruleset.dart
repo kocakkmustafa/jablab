@@ -270,6 +270,56 @@ final class CombinationConfig {
 }
 
 /// Bir branşın tüm kural paketi (`boxing@1.x.json`).
+/// Motorun İZLEDİĞİ bir bileşen — ve puanlanıp puanlanmadığı.
+///
+/// Ad bilerek `trackedComponents`: eski adı `scoreComponents` idi ve YANLIŞTI.
+/// Kanıtı kendi içindeydi — `trackingConfidence` listedeydi ve o **asla**
+/// puanlanmaz (koordinatör hükmü 2026-08-07, J-144).
+///
+/// Liste ayrıca ÖLÜYDÜ (bu parser onu okumuyordu) ve ölü olması bir çelişkiyi
+/// GİZLEDİ: iki ekran kendi bant üçlüsünü ELLE yazdı, biri kaynakta hiç
+/// olmayan bir öğe icat etti, öteki puanlanmayacak bir bileşeni
+/// *"kalibrasyon gelene kadar"* başlığının altına koydu — **karşılıksız bir
+/// vaat**, çünkü o bileşen kalibrasyonla değil eğitmen uzlaşmazlığıyla
+/// kapalı.
+final class TrackedComponent {
+  const TrackedComponent({
+    required this.id,
+    required this.displayName,
+    required this.graded,
+    this.gradedWhyNot,
+  });
+
+  factory TrackedComponent.fromJson(Map<String, dynamic> j) {
+    final bool graded = j['graded'] as bool? ?? false;
+    final String? why = j['gradedWhyNot'] as String?;
+    // Puanlanmayan bir bileşen SEBEPSİZ kalamaz. Sebepsiz "puanlanmıyor",
+    // kullanıcıya *"bir gün belki"* diye okunur ve bu ürünün tamamı o
+    // okumaya karşı yazıldı.
+    if (!graded && (why == null || why.trim().isEmpty)) {
+      throw StateError(
+          '${j['id']}: graded=false ama gerekçe YOK — sebepsiz bir sınır, '
+          'gizli bir vaattir');
+    }
+    return TrackedComponent(
+      id: j['id'] as String,
+      displayName: j['displayName'] as String,
+      graded: graded,
+      gradedWhyNot: why,
+    );
+  }
+
+  final String id;
+  final String displayName;
+
+  /// Bu bileşen bir HÜKÜM üretiyor mu. `false` ise izleniyor ama
+  /// puanlanmıyor — ve [gradedWhyNot] neden olduğunu söylüyor.
+  final bool graded;
+
+  /// `graded == false` iken ZORUNLU: kullanıcıya gösterilebilir gerekçe.
+  final String? gradedWhyNot;
+}
+
 final class RuleSet {
   const RuleSet({
     required this.rulesetId,
@@ -288,9 +338,15 @@ final class RuleSet {
     required this.stanceCoachedOnlyJoints,
     required this.jabCoachedOnlyJoints,
     required this.jabScoredJoints,
+    required this.trackedComponents,
   });
 
   factory RuleSet.fromJson(Map<String, dynamic> j) {
+    final List<TrackedComponent> tracked =
+        ((j['trackedComponents'] as List?) ?? const <dynamic>[])
+            .map((dynamic c) =>
+                TrackedComponent.fromJson((c as Map).cast<String, dynamic>()))
+            .toList(growable: false);
     final Map<String, dynamic> integrity =
         ((j['integrity'] as Map?) ?? const <String, dynamic>{}).cast<String, dynamic>();
     final Map<String, dynamic> display =
@@ -330,6 +386,7 @@ final class RuleSet {
     }
 
     return RuleSet(
+      trackedComponents: tracked,
       rulesetId: j['rulesetId'] as String,
       version: j['version'] as String,
       techniques: ((j['techniques'] as List?) ?? const <dynamic>[])
@@ -359,6 +416,14 @@ final class RuleSet {
       jabScoredJoints: jabScored.keys.toList(growable: false)..sort(),
     );
   }
+
+  /// Motorun izlediği bileşenler ve her birinin HÜKÜM üretip üretmediği.
+  /// Bant listeleri BURADAN türer — elle yazılmaz (J-144).
+  final List<TrackedComponent> trackedComponents;
+
+  /// Puanlanan bileşenler — ekranda bant olarak görünenler.
+  List<TrackedComponent> get gradedComponents =>
+      trackedComponents.where((TrackedComponent c) => c.graded).toList();
 
   final String rulesetId;
   final String version;
