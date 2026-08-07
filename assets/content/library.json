@@ -507,6 +507,31 @@
         "id": "self_defense_outcome",
         "displayName": "Self-defence guarantees",
         "reason": "We can help you train movement. Nobody can promise how a real situation goes, and an app that implies otherwise is doing you harm."
+      },
+      {
+        "id": "head_movement",
+        "displayName": "Slipping and rolling",
+        "reason": "We can see your head move. We cannot tell you whether it was the right move, because right is defined by a punch that isn't there. Grading a slip with nothing to slip would be grading a guess."
+      },
+      {
+        "id": "bag_work",
+        "displayName": "Heavy bag and pad work",
+        "reason": "We track your body, not the bag — so the thing a coach actually watches, how the bag moves, is invisible to us. Contact also changes what we do read: a punch that lands stops early and returns differently from one that travels free."
+      },
+      {
+        "id": "breathing",
+        "displayName": "Breathing",
+        "reason": "A phone across the room cannot hear you, and chest movement during boxing is mostly the boxing. Telling you to breathe on a schedule we cannot check would be advice dressed as feedback."
+      },
+      {
+        "id": "pain_injury",
+        "displayName": "Pain and injury",
+        "reason": "We read shape, not tissue. Nothing here can tell a sore shoulder from a tired one, and nothing here is medical advice. If something hurts, that decision belongs to you and a professional, not to a camera."
+      },
+      {
+        "id": "readiness_to_spar",
+        "displayName": "Whether you're ready to spar",
+        "reason": "That call weighs things we never see: how you take a shot, how you behave when tired and hit, who you would be in with. A number from solo practice cannot carry it, so we do not print one."
       }
     ]
   }
