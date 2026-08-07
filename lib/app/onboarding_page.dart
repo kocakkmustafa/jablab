@@ -241,7 +241,16 @@ class _Setup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('SET UP ONCE', style: JText.label),
+        // J-154: başlık `SET UP ONCE` idi ve **her seans tekrarlanan** bir
+        // fiziksel işi (*telefonu yerleştir, geri çekil, hafif açılı dur*)
+        // **bir kereye mahsus** diye çerçeveliyordu. Ölçüm: hiçbir kurulum
+        // verisi saklanmıyor — kalıcı olan tek şey `onboarding_seen`, yani
+        // BU EKRANIN bir kez gösterilmesi; kurulumun kendisi değil.
+        //
+        // J-153'ün sınıfı: **çerçeve, içeriğin desteklemediği bir iddia
+        // taşıyor.** Ve `EVERY SESSION` yalnız daha dürüst değil, daha
+        // FAYDALI: kullanıcıya bunun rutin olduğunu söylüyor.
+        Text('EVERY SESSION', style: JText.label),
         const SizedBox(height: 10),
         Text('Where to put\nthe phone.', style: JText.pageTitle),
         const SizedBox(height: 18),
