@@ -327,6 +327,52 @@ void main() {
             'biçim canlı sayfaya sızmış olabilir');
   });
 
+  test('PLAN HİYERARŞİSİ iddia edilmiyor — ne IAP var ne ikinci plan (J-152)',
+      () {
+    // ## Yapısal vaadin üçüncü biçimi: BİR HİYERARŞİ
+    //
+    // Ayarlar `SUBSCRIPTION` başlığı + `FREE PLAN` rozeti taşıyordu. İkisi
+    // birlikte bir **plan sistemi** iddia ediyordu — *"free olan varsa
+    // başkası da vardır"*. Ölçüm: **ne IAP var ne ikinci plan.** J-124'ün
+    // sınıfı (üretici yok, beyan onu anlatıyor) ve J-150'nin kardeşi (vaat
+    // sözcükte değil **yapıda**).
+    //
+    // Ve ikisi altındaki DÜRÜST cümleyi de zehirliyordu: *"Pricing is not
+    // set"* tek başına dürüsttü; hiyerarşiyle okununca *"fiyatlandırma
+    // geliyor"* oluyordu. **Doğru bir cümle, yanlış bir çerçevede yanlış
+    // okunuyor.**
+    //
+    // ⚠️ NE ÖLÇMÜYOR: yeni bir plan-adı sözcüğü (`tier`, `premium`,
+    // `upgrade`) — liste dar ve kanıta dayalı; IAP gerçekten geldiğinde bu
+    // kapı GÜNCELLENMELİ, gevşetilmemeli.
+    const List<String> planWords = <String>[
+      'SUBSCRIPTION', 'FREE PLAN', 'Free plan', 'PREMIUM', 'UPGRADE',
+    ];
+    final String src = File('lib/app/settings_page.dart').readAsStringSync();
+    final List<String> hits = <String>[];
+    for (final String s in dartStrings(src)) {
+      for (final String w in planWords) {
+        if (s.contains(w)) hits.add('"$s" ← "$w"');
+      }
+    }
+    expect(hits, isEmpty,
+        reason: 'PLAN HİYERARŞİSİ iddiası: ${hits.join(" · ")}. Bugün ne '
+            'IAP var ne ikinci plan; bir plan adı, olmayan bir sistemi '
+            'beyan eder (J-152)');
+  });
+
+  test('NEGATİF İKİZ — ödeme durumu HÂLÂ beyan ediliyor (J-152)', () {
+    // Plan sözcüklerini yasaklamak, bölümün tamamen susmasını da geçerli
+    // sayardı — ve o zaman kapı bir iddiayı değil **bir sessizliği**
+    // korurdu. Ödeme durumu SÖYLENMELİ; söylenmemesi de bir belirsizlik.
+    final String src = File('lib/app/settings_page.dart').readAsStringSync();
+    expect(src, contains('Pricing is not set.'),
+        reason: 'fiyat beyanı kalkmış');
+    expect(src, contains('behind a payment'),
+        reason: 'ödeme duvarı olmadığı beyanı kalkmış — kapı plan '
+            'sözcüklerini yasaklarken bölümü susturmuş olabilir');
+  });
+
   test('KİLİTLİ ders içeren KURSUN hedefi bunu söylüyor (J-132)', () {
     // ## Katman: disiplin kapısı vardı, KURS kapısı yoktu
     //

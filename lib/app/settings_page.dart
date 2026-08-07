@@ -75,14 +75,29 @@ class SettingsPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('SUBSCRIPTION', style: JText.label.copyWith(color: JColors.ember)),
+                          // J-152 (koordinatör hükmü 10:23): başlık
+                          // `SUBSCRIPTION` idi ve rozet `FREE PLAN` — ikisi
+                          // birlikte bir **plan hiyerarşisi** iddia ediyordu
+                          // (*"free olan varsa başkası da vardır"*). Ölçüm:
+                          // **ne IAP var ne ikinci plan.** J-124'ün sınıfı —
+                          // üretici yok ama beyan onu anlatıyor.
+                          //
+                          // Ve ikisi birlikte altındaki DÜRÜST cümleyi de
+                          // zehirliyordu: *"Pricing is not set"* tek başına
+                          // dürüsttü; plan hiyerarşisiyle okununca
+                          // *"fiyatlandırma geliyor"* oluyordu.
+                          //
+                          // ⚖️ Bu bir DÜRÜSTLÜK kararı, iş modeli kararı
+                          // DEĞİL: abonelik gelirse başlık O ZAMAN doğru
+                          // olur; bugün değil.
+                          Text('ACCESS', style: JText.label.copyWith(color: JColors.ember)),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                             decoration: BoxDecoration(
                               border: Border.all(color: JColors.border),
                               borderRadius: BorderRadius.circular(4),
                             ),
-                            child: Text('FREE PLAN',
+                            child: Text('NO PAYWALL',
                                 // `ink3` idi: 10 puntoda 3,51:1, eşik 4,5
                                 // (J-126). Sayfa A'nın `NOT OPEN` rozetiyle
                                 // AYNI kalıptan yapılmıştı (J-102'de öyle
