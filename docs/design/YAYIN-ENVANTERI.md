@@ -94,6 +94,20 @@ karıştırmak, birini yanlış kuyruğa koyar.
 
 ---
 
+### J-131 · "Progress gate" — doğru sayı, yanlış model (koordinatör hükmü)
+
+| | |
+|---|---|
+| **yüzey** | `r10` öğretme metni — dersi açan herkes görüyor |
+| **iddia** | *"the **progress gate** for this lesson asks for ten minutes of work"* |
+| **kanıt** | Sayı **gerçek** (`curriculum.json` `gates.sessionMinutes=10`) ama o kapı bir **içerik doğrulama sözleşmesi**: `curriculum_binding_test` plan aritmetiğini ona karşı zorluyor. **Çalışma zamanında geçilen bir kapı yok** — `workedSecondsFor` hiç çağrılmıyor (J-124). Kullanıcı *"geçeceğim bir kapı var"* modelini kuruyordu. |
+
+**Sınıfı neden J-124 ile aynı:** cümle teknik olarak yanlış değildi. Dürüstlük
+sınırı cümlenin doğruluğuna değil **kullanıcının kurduğu modele** bakıyor —
+doğru sayı + yanlış model, en zor yakalanan hâl.
+
+Sayı korundu, mekanizma dili düştü: *"ten minutes of work, split three ways."*
+
 ## ⚠️ BU ENVANTERİN YAPISAL KÖR NOKTASI (J-129'da ölçüldü)
 
 Envanterin sorusu *"hangi **yüzey** kullanıcıyı yanlış bilgilendirir"* — ve gücü
