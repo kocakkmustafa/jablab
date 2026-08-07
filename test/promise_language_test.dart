@@ -27,7 +27,8 @@ import 'package:flutter_test/flutter_test.dart';
 /// JSON'larındaki kullanıcıya giden metin alanları.
 ///
 /// **Taranmayan, gerekçesiyle:**
-/// * `lib/shell_candidate/` — DONDURULMUŞ (M-F-25). Orada 6 eşleşme var ve
+/// * `lib/shell_candidate/` — DONDURULMUŞ (M-F-25). Orada 6 eşleşme var (biri
+///   ERİŞİLEBİLİR ve kullanıcıya görünüyor — J-122) ve
 ///   bu kapı onları görmüyor; dondurulmuş bir ağacı düzeltmek bu turun
 ///   yetkisinde değil. **Kabuk terfi turunun borcu** olarak buraya yazıldı;
 ///   sessizce "temiz" demiyoruz.
@@ -173,11 +174,37 @@ void main() {
             '$silent');
   });
 
-  test('DONDURULMUŞ kabuğun borcu SESSİZ DEĞİL — sayı ölçülü', () {
-    // Bu kapının kör noktası ÖLÇÜLÜYOR. `shell_candidate/`ı taramamak bir
-    // karar; o kararı "orada bir şey yok" sanmakla karıştırmamak için sayı
-    // burada duruyor. Kabuk terfi turunda bu test ya sıfıra iner ya da
-    // kapının kapsamı genişler — ikisi de bilinçli bir hamle olur.
+  test('DONDURULMUŞ kabuk: ERİŞİLEBİLİR ihlal SAYISI ölçülü (J-122)', () {
+    // ## Kapının kör noktası ölçüldü — ve içinde CANLI bir ihlal çıktı
+    //
+    // Bu kapı `shell_candidate/`ı taramıyor (dondurulmuş, M-F-25) ve o
+    // kararı *"orada bir şey yok"* sanmakla karıştırmamak için sayıyı
+    // burada tutuyordu: **6**. Ama sayı tek başına yanıltıcıydı — aile
+    // dersi J-115: *kod taşıyan bir alanın VAR OLMASI onu sızıntı yapmaz,
+    // NEREYE GİTTİĞİ yapar.*
+    //
+    // Erişilebilirlik ölçüldü (`lib/app/`ın donmuş ağaçtan ne İTHAL
+    // ettiğine bakarak):
+    //
+    //   library_pages `LibraryPage`/`_ItemCard`/`ItemPage`  → 4 ihlal,
+    //     app YALNIZ `WhyNotPage`i ithal ediyor → **ERİŞİLEMEZ**
+    //   shell_scaffold `PaywallStub`                        → 1 ihlal,
+    //     dosya hiç ithal edilmiyor → **ERİŞİLEMEZ**
+    //   honesty_box `HonestyBox`                            → 1 ihlal,
+    //     `select_page` onu İTHAL EDİYOR → **🔴 CANLI**
+    //
+    // Canlı olan şu: `measured.isEmpty` iken widget
+    // *"Nothing yet — this section is not open."* basıyor ve **7 kapalı
+    // disiplinin 7'sinde de `measured` boş.** Yani cümle yedi kartta da
+    // kullanıcıya görünüyor — ve J-108'de `library.json`dan SİLDİĞİM
+    // cümlenin ("Nothing yet — this discipline is not open") **donmuş
+    // ikizi.** İçerik kopyasını düzeltmiştim, widget'ın kendi kopyası
+    // duruyordu.
+    //
+    // Düzeltme app tarafından YAPILAMIYOR: `measured`a bir şey koymak
+    // olmayan bir ölçüm iddia etmek olurdu, kutuyu hiç göstermemek de
+    // dürüstlüğü en çok gereken yerde kaldırmak. Donmuş widget'a dokunmak
+    // kabuk-terfi kararı → koordinatöre taşındı (J-122).
     int frozen = 0;
     for (final FileSystemEntity f
         in Directory('lib/shell_candidate').listSync(recursive: true)) {
@@ -186,21 +213,20 @@ void main() {
           .where(promise.hasMatch)
           .length;
     }
-    // ⚠️ ÖLÇÜLEN SAYI **6**, koordinatörün bildirdiği 4 DEĞİL — ve fark
-    // tahminle değil sayarak kapandı. Sebep yöntemde: o tarama yalnız `yet`
-    // arıyordu, bu kapı aynı sınıfın diğer üyelerini (`soon`…) de sayıyor.
-    // Altısı, adıyla:
-    //   honesty_box    'Nothing yet — this section is not open.'
-    //   library_pages  'Soon' · 'Soon · <wave>' · 'Not open yet…' ×2
-    //   shell_scaffold 'Pricing is not set yet.'
-    // Beşinin CANLI ikizi bu turda düzeltildi (`select_page`,
-    // `settings_page`); donmuş kopyalar duruyor ve kabuk terfi turunun
-    // borcu. `'Soon'` rozeti ayrıca bu kapının kendi bulgusu: `yet`-only
-    // tarama onu göremiyordu, canlı ikizi (`SOON` rozeti, Sayfa A) bu tur
-    // `NOT OPEN` oldu.
     expect(frozen, lessThanOrEqualTo(6),
         reason: 'dondurulmuş kabukta vaat dili ARTTI ($frozen) — donmuş bir '
             'ağaca yeni ihlal eklenmiş olamaz, biri dosyayı değiştirdi');
+
+    // ERİŞİLEBİLİR olanın sayısı AYRI tutuluyor: toplam düşerse sevinmek
+    // ama canlı olan dururken "azaldı" demek, yanlış yerde rahatlamaktır.
+    final int live = dartStrings(
+            File('lib/shell_candidate/honesty_box.dart').readAsStringSync())
+        .where(promise.hasMatch)
+        .length;
+    expect(live, lessThanOrEqualTo(1),
+        reason: 'CANLI (kullanıcıya görünen) vaat dili arttı: $live. '
+            '`HonestyBox` `select_page` tarafından kullanılıyor — bu '
+            'dosyadaki her ihlal 7 kapalı disiplin kartında GÖRÜNÜR.');
   });
 }
 
