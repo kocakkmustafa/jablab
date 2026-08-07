@@ -112,19 +112,25 @@
       "Halfway.",
       "Half done.",
       "Half gone.",
-      "Middle of it."
+      "Middle of it.",
+      "Half.",
+      "Half left."
     ],
     "cue.last_ten": [
       "Ten seconds.",
       "Last ten.",
       "Ten left.",
-      "Final ten seconds."
+      "Final ten seconds.",
+      "Ten.",
+      "Ten to go."
     ],
     "cue.last_five": [
       "Five.",
       "Last five.",
       "Five left.",
-      "Five seconds."
+      "Five seconds.",
+      "Five to go.",
+      "Nearly done."
     ],
     "cue.milestone": [
       "{n} in.",
@@ -146,19 +152,24 @@
       "Hands up. Go.",
       "Here we go.",
       "Let's work.",
-      "Guard up. Begin."
+      "Guard up. Begin.",
+      "Start it.",
+      "Guard set — go."
     ],
     "cue.round_end": [
       "Time. Breathe.",
       "That's the round.",
       "Time.",
-      "Round done. Breathe."
+      "Round done. Breathe.",
+      "That's time.",
+      "Hands down. Breathe."
     ],
     "cue.rest": [
       "Rest.",
       "Shake it out.",
       "Breathe. Loose arms.",
-      "Recover."
+      "Recover.",
+      "Loose. Breathe it back."
     ],
     "cue.setup_ok": [
       "I can see you. Ready?",
@@ -182,7 +193,11 @@
       "Now — full pace.",
       "Empty it.",
       "No pacing this one.",
-      "Hard as it gets."
+      "Hard as it gets.",
+      "Full pace now.",
+      "Flat out.",
+      "Nothing held back.",
+      "Top speed — go."
     ],
     "cue.burst_end": [
       "Ease off.",
@@ -192,7 +207,11 @@
       "Off it.",
       "Stop there.",
       "That one is finished.",
-      "Hands down."
+      "Hands down.",
+      "Cut it there.",
+      "Wind it down.",
+      "Drop the pace.",
+      "That's it — breathe."
     ],
     "cue.recover": [
       "Recover.",
@@ -202,7 +221,11 @@
       "Big breaths.",
       "Let it come down.",
       "Walk it off.",
-      "Arms heavy, breathe."
+      "Arms heavy, breathe.",
+      "Settle.",
+      "Long breaths now.",
+      "Hands low, breathe.",
+      "Let the pace drop."
     ],
     "cue.next_burst": [
       "Ten seconds to go.",
@@ -212,7 +235,11 @@
       "Nearly time. Hands up.",
       "Get your breath now.",
       "One more coming.",
-      "Set yourself."
+      "Set yourself.",
+      "Ready yourself.",
+      "Reset your stance.",
+      "Breathe, then go.",
+      "Almost time. Set."
     ]
   },
   "$producers": {
