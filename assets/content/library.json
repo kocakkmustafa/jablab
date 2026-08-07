@@ -44,7 +44,7 @@
           "displayName": "Foundations",
           "level": "beginner",
           "goal": "Build a stance and a jab you can repeat without thinking.",
-          "estimatedMinutes": 60,
+          "estimatedMinutes": 80,
           "lessons": [
             {
               "id": "boxing.foundations.camera",
@@ -333,7 +333,8 @@
               }
             }
           ],
-          "$scopeWhy": "Bu hattin kapilari SURE ve KATILIM olcer, teknik hukmu vermez. Referans beklemeden cikabilmesinin sebebi bu: '10 dakika calistin' demek icin egitmenlerin bir aci uzerinde uzlasmasi gerekmiyor."
+          "$scopeWhy": "Bu hattin kapilari SURE ve KATILIM olcer, teknik hukmu vermez. Referans beklemeden cikabilmesinin sebebi bu: '10 dakika calistin' demek icin egitmenlerin bir aci uzerinde uzlasmasi gerekmiyor.",
+          "$estimatedMinutesWhy": "BU SAYI DERS TOPLAMIYLA UYUSMUYOR (54 vs 78) ve SEBEBI BILINMIYOR. Bu geceden ONCE de boyleydi (git HEAD~1'de olculdu), yani yeni bir kusur degil - ESKI ve ACIKLANMAMIS bir sapma. Buraya uydurma bir gerekce YAZILMADI: diger iki kursta sayi ders toplamina TAM esit (foundations 80=80, intermediate 63=63), yani degismez GERCEK ve bu kurs onu cigniyor. Koordinatore soruldu (J-191). Not: bu sayi bugun HICBIR EKRANDA gosterilmiyor - ShellCourse.minutes'a eslenip orada kaliyor - yani kullanici bugun yanlis bilgilendirilmiyor; risk, birinin onu tek satirla kurs kartina koymasi."
         },
         {
           "id": "boxing.intermediate",
