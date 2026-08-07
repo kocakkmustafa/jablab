@@ -202,6 +202,93 @@ void main() {
             'testin kapsamı da değişmeli — cümle ondan ÖNCE gelemez.');
   });
 
+  test('İÇERİKTE geliştirici-sözleşmesi mekanizması anlatılmıyor (J-131)', () {
+    // ## Koordinatör hükmü: iç sözleşme dili ≠ kullanıcı dili
+    //
+    // `r10`in öğretme metni *"the **progress gate** for this lesson asks for
+    // ten minutes of work"* diyordu. Sayı GERÇEK (`curriculum.json`
+    // `gates.sessionMinutes=10`) — ama o kapı bir **içerik doğrulama
+    // sözleşmesi**: `curriculum_binding_test` plan aritmetiğini ona karşı
+    // zorluyor. **Çalışma zamanında geçilen bir kapı DEĞİL** (J-124:
+    // `workedSecondsFor` hiç çağrılmıyor).
+    //
+    // Cümle teknik olarak yanlış değildi; **kullanıcının kurduğu MODEL**
+    // yanlıştı — *"geçeceğim bir kapı var"*. Bir doğrulama kavramının
+    // gerçek olması, kullanıcıya anlatılabilir olduğunu göstermez.
+    //
+    // ## ÖLÇÜT — ve neden kelime yasağı DEĞİL
+    //
+    // İki kapılı test: ① mekanizma çalışma zamanında var ve kullanıcı onu
+    // **gözleyebiliyor** mu · ② cümle kullanıcıyı bir **eyleme** çağırıyor
+    // mu. `progress gate` ①'de kaldı ve ②'yi yapıyordu.
+    //
+    // Ölçüm 9 eşleşme buldu ve **6'sı bilerek DURDU**: `confidence gate`
+    // (①VAR — kullanıcı "seni göremiyorum"u görür), `phase machine`
+    // (①gözlenmez ama ②YOK — bu bir KÖKEN beyanı), `engine`/`rule set`/
+    // `flag` (mekanizma adı değil, sade İngilizce). Blanket bir kelime
+    // yasağı bunları da öldürürdü — ailenin 04:50'de `will` için ölçtüğü
+    // tuzağın aynısı: 17 eşleşmenin hepsi `will not`/`will never` idi,
+    // yani hattın EN GÜÇLÜ dürüstlük dili.
+    //
+    // Bu yüzden liste DAR ve KANITA dayalı: yalnız geliştirici-tarafı
+    // doğrulama sözleşmesini adlandıran ifadeler.
+    const List<String> devContract = <String>[
+      'progress gate', 'sessionMinutes', 'curriculum',
+    ];
+    final List<String> hits = <String>[];
+    void walk(Object? node, String path) {
+      if (node is String) {
+        for (final String w in devContract) {
+          if (node.toLowerCase().contains(w.toLowerCase())) {
+            hits.add('$path: "$w" → "$node"');
+          }
+        }
+      } else if (node is List) {
+        for (int i = 0; i < node.length; i++) {
+          walk(node[i], '$path[$i]');
+        }
+      } else if (node is Map) {
+        node.forEach((Object? k, Object? v) {
+          // `$` notları geliştiriciye yazılır ve bu kuralı ANLATIRKEN
+          // kavramı adıyla anmak zorundadır.
+          if (k is String && k.startsWith(r'$')) return;
+          walk(v, '$path.$k');
+        });
+      }
+    }
+    walk(
+        jsonDecode(File('assets/content/library.json').readAsStringSync()),
+        'library.json');
+
+    expect(hits, isEmpty,
+        reason: 'GELİŞTİRİCİ SÖZLEŞMESİ kullanıcı metnine sızdı — sayı '
+            'gerçek olabilir ama mekanizma kullanıcının GÖZLEYEBİLECEĞİ bir '
+            'şey değilse anlatılamaz (J-131): ${hits.join(" · ")}');
+  });
+
+  test('NEGATİF İKİZ — kapı FAZLA GENİŞ değil: gözlenebilir mekanizma DURUYOR',
+      () {
+    // Bu ikiz alışılmışın tersini koruyor. Normalde ikiz *"düzeltme
+    // kaldırılırsa kırılır mı"* diye sorar; bu ikiz **kapının kendisi fazla
+    // genişlerse** kırılır.
+    //
+    // Somut risk: bir sonraki tur *"gate kelimesini tamamen yasaklayalım"*
+    // diyebilir. O an `muay_thai`in *"our confidence gate already refuses
+    // to judge"* cümlesi ölür — oysa o mekanizma ÇALIŞIYOR ve kullanıcı
+    // sonucunu ekranda görüyor. Onu silmek, çalışan bir dürüstlüğü
+    // kelimenin biçimi yüzünden kaybetmek olurdu.
+    final Map<String, dynamic> lib = (jsonDecode(
+            File('assets/content/library.json').readAsStringSync()) as Map)
+        .cast<String, dynamic>();
+    final String muay = ((lib['disciplines'] as List<dynamic>)
+            .firstWhere((dynamic d) => (d as Map)['id'] == 'muay_thai')
+        as Map)['blurb'] as String;
+    expect(muay.toLowerCase(), contains('confidence gate'),
+        reason: 'gözlenebilir bir mekanizmanın adı içerikten kalkmış — '
+            'kapı fazla genişlemiş olabilir. J-131 ölçütü kelimeye değil '
+            'MEKANİZMANIN GÖZLENEBİLİRLİĞİNE bakar');
+  });
+
   test('İTHAL EDİLEN kabuk sınıflarında VAAT DİLİ YOK (J-123)', () {
     // ## Kategori düzeltmesi: "donmuş" konum değil, ERİŞİM
     //
