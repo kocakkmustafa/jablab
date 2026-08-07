@@ -100,8 +100,15 @@ yakından bakmıyor. **Uzaktan-okunurluk canlı ekranın 1 numaralı kısıtı.*
 Aşağıdaki durumların **hepsi gerçek** — hiçbiri varsayımsal değil, bugünkü
 kodda ya var ya da isimli olarak eksik.
 
-### 3.1 Onboarding · **HENÜZ YOK, TASARLANACAK** 🔴
-Bugün uygulama doğrudan kabuğa açılıyor. Tasarım ihtiyacı:
+### 3.1 Onboarding · **✅ YAZILDI 2026-08-07 (J-106)** — `lib/app/onboarding_page.dart`
+Üç perde, `main`de: ① vaat ② **ne yapmadığımız** ③ kurulum + izin reddi.
+Kapsam-dışı listesi `library.exclusions`tan TÜRÜYOR (elle yazılmadı), sayı dahil.
+9 test iddiaları ölçüyor (`test/onboarding_test.dart`): sıra · veriden-türeme ·
+çıkmaz-sokak-değil · vaat dili YOK (M-F-186) · sayısal skor YOK (K8) · 375pt taşma.
+**Görsel cila design turunun kapsamında DEĞİLDİ** — tokenlar kullanıldı ama bu ekran
+simülatörde göz-doğrulaması GÖRMEDİ (M-F-277 kapısı bu ekran için AÇIK).
+
+Aşağıdaki tablo tasarım ihtiyacının orijinal hâli, kayıt olarak duruyor:
 | durum | içerik |
 |---|---|
 | karşılama | tek cümle vaat + "no bag, no sensors" |
