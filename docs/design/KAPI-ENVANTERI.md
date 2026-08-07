@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 211/211 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 213/213 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -117,6 +117,13 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 | **ölçmüyor** | ① **çalışma zamanında hesaplanan** bant değerleri (kaynak taraması yalnız sabit haritaları görür; sınıfı *ölçüm yöntemi*, iki çağrı yeri de sabit olduğu için kovalanmadı) ② bandın **doğruluğunu** — yalnız sayı OLMADIĞINI ③ sayının **başka yollardan** yüzeye gelmesini |
 | **kanıt** | Widget `Map<String, String>` alıyor; iddia *"a precise-looking number would be worse than no number"* diyor ama **hiçbir şey oraya sayı konmasını engellemiyordu**. Mutasyon (`'Balance': '72'`) → kırmızı |
 | **negatif ikiz** | Öncül kapısı: `numericScoresUnlocked` TRUE olursa test **öter ve ne yapılacağını söyler** — kapıyı silmeden önce ekrandaki cümleyi güncelle, yoksa o zaman cümle yalan olur |
+
+### 14. Fiyat literali — `promise_language_test` (J-136)
+| | |
+|---|---|
+| **ölçmüyor** | ① çalışma zamanında gelen fiyatın **doğruluğunu** ② fiyatın **içerik dosyalarından** gelmesini (bugün orada fiyat alanı yok; eklenirse genişletilmeli — *ölçüm yöntemi*) ③ **sayısız** fiyat vaadini (*"cheaper than a gym"*) — o vaat dili kapısının konusu |
+| **kanıt** | Koruma denetiminin bulduğu **tek boşluk**. Kural literale bakıyor, ekrana değil: mağazadan gelen **yerelleştirilmiş** fiyat dizesini göstermek DOĞRU; yanlış olan fiyatı kaynağa gömmek |
+| **negatif ikiz** | Cümle ayarlar sayfasından kalkarsa öter — yoksa kapı bir iddiayı değil **bir SESSİZLİĞİ** korurdu (fiyat literali yok, çünkü fiyattan hiç söz edilmiyor). Ayrıca `"not set yet"` biçiminin canlı sayfaya sızması ölçülüyor |
 
 ### 🎯 Yeni kapı sebebi: DOĞRU ama KORUNMASIZ
 

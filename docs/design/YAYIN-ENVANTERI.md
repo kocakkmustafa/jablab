@@ -114,12 +114,22 @@ Envanterin ilk hâli tek soru soruyordu: *bu iddia doğru mu?* J-133 ikinci
 soruyu ekledi: ***bu iddiayı yanlışa çevirecek en MAKUL değişiklik ne, ve
 gated mi?***
 
-| iddia | onu yanlışa çevirecek en makul değişiklik | durum |
+| iddia | onu yanlışa çevirecek en makul değişiklik | koruma |
 |---|---|---|
-| *"Nothing is being analysed during this part"* (+ ikizi) | **kamerayı öğretmede ısıtmak** — canlı geçiş gecikmesini azaltmak için | ✅ **kapandı (J-133)**, mutasyon ürün kodunda doğrulandı |
-| *"Scores are shown as bands… a precise-looking number would be worse"* | **hesaplanmış bir değeri banda bağlamak** — yuva serbest `String` | ✅ **kapandı (J-134)**, kural `numericScoresUnlocked`a KOŞULLU |
-| Karşılama ② kapsam-dışı sayısı | listeyi elle yazmak | ✅ zaten türetiliyor (J-107) |
-| **Kalan 7 satır** | — | 🟡 **KORUMA AÇISINDAN DENETLENMEDİ.** Doğrulukları ölçüldü, kırılganlıkları ölçülmedi — ve bu iki ayrı şey |
+| *"Nothing is being analysed during this part"* (+ ikizi) | **kamerayı öğretmede ısıtmak** (canlı geçiş gecikmesi) | ✅ **J-133** — mutasyon ürün kodunda |
+| *"Scores are shown as bands…"* | **hesaplanmış değeri banda bağlamak** — yuva serbest `String` | ✅ **J-134** — `numericScoresUnlocked`a KOŞULLU |
+| *"Pricing is not set."* | **IAP bağlanınca fiyatı elle yazmak** | ✅ **J-136** — literal taranır, mağaza dizesi serbest |
+| Karşılama ② kapsam-dışı sayısı | listeyi elle yazmak | ✅ türetiliyor (J-107) |
+| Karşılama ③ *"izin vermezsen turlar yine çalışır"* | canlı yolu zorunlu kılmak | ✅ örtük — `session_rounds_test` saati **kamerasız** sürüyor |
+| Özet *coached-not-scored* | listeyi koda kopyalamak | ✅ `content_repository_test` bu kopyalamaya karşı **açıkça** nöbette |
+| Disiplin kartları — isimli gerekçe | gerekçeyi rozete indirgemek | ✅ J-112 |
+| Canlı 11 dürüst hâl | hâlleri tek görsele yıkmak | ✅ J-110/114/116/117 |
+| Kilitli 3 ders — *"şu ölçüm yok"* | `lockedReason`sız kilit | ✅ parser `status:locked` için gerekçeyi **zorunlu** kılıyor |
+| Kapsam-dışı (12) — *"kamera bunu göremez"* | gerekçeyi zayıflatmak | 🟡 **ZAYIF** — yalnız uzunluk (≥20 krk) ölçülüyor, İÇERİK değil. Sınıfı *imkânsız*: bir gerekçenin ikna ediciliği mekanikleştirilemez |
+
+**Denetim tamamlandı: 10 satırın 9'u korunuyor, 1'i isimli-zayıf.** Üçü bu turda
+kapandı (J-133·134·136) ve **üçü de zaten doğruydu** — bulunan şey yanlışlık
+değil **kırılganlık**. Envanterin ilk hâli bu ikisini ayırmıyordu.
 
 **Neden koşullu kural, mutlak kuraldan üstün:** K8 kapısı *"bant değerinde
 sayı olmaz"* demiyor; *"`numericScoresUnlocked` false olduğu sürece olmaz"*

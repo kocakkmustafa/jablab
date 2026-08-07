@@ -266,6 +266,67 @@ void main() {
             'şey değilse anlatılamaz (J-131): ${hits.join(" · ")}');
   });
 
+  test('FİYAT sabit yazılmıyor — "Pricing is not set." korunuyor (J-136)', () {
+    // ## Koruma denetiminin bulduğu tek boşluk
+    //
+    // Ayarlar sayfası *"Pricing is not set."* diyor. J-133'ün ölçütü:
+    // **bunu yanlışa çevirecek en makul değişiklik ne?** — IAP bağlanınca
+    // birinin fiyatı ekrana elle yazması. Kurucu kuralı zaten *"fiyat sabit
+    // yazılmaz"*, ama kuralı **hiçbir şey zorlamıyordu**.
+    //
+    // ## Neden LİTERAL taranıyor, ekran değil
+    //
+    // IAP bağlandığında mağazanın verdiği **yerelleştirilmiş fiyat dizesini**
+    // göstermek DOĞRUdur — kullanıcının para birimiyle, mağazadan gelen
+    // gerçek değer. Yanlış olan, fiyatı **kaynağa gömmek**: o an fiyat
+    // ülkeye, indirime ve mağaza kararına göre değişirken ekran sabit bir
+    // sayı gösterir. Bu yüzden kural kaynak literaline bakıyor; çalışma
+    // zamanı değeri kapsam DIŞI ve bu **kasıtlı**.
+    //
+    // ## ⚠️ NE ÖLÇMÜYOR
+    //
+    // * Çalışma zamanında gelen fiyatın **doğruluğunu**.
+    // * Fiyatın **içerik dosyalarından** gelmesini — bugün orada fiyat alanı
+    //   yok; eklenirse bu kapı genişletilmeli (sınıf: *ölçüm yöntemi*).
+    // * Sayısız ifade edilen bir fiyat vaadini (*"cheaper than a gym"*) —
+    //   o vaat dili kapısının konusu.
+    final RegExp priceLiteral = RegExp(
+        r'[$€£₺]\s?\d|\d+[.,]\d{2}\s*(?:USD|EUR|GBP|TRY)\b|'
+        r'\d\s*(?:/\s*(?:mo|month|yr|year)|per\s+(?:month|year))',
+        caseSensitive: false);
+    final List<String> hits = <String>[];
+    int scanned = 0;
+    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+      if (f is! File || !f.path.endsWith('.dart')) continue;
+      for (final String s in dartStrings(f.readAsStringSync())) {
+        scanned++;
+        if (priceLiteral.hasMatch(s)) hits.add('${f.path}: "$s"');
+      }
+    }
+    // VAKUM KAPISI: hiç dize taranmadıysa kural boşa döner.
+    expect(scanned, greaterThan(50),
+        reason: 'yalnız $scanned dize tarandı — tarama kendi girdisini '
+            'bulamamış olabilir');
+    expect(hits, isEmpty,
+        reason: 'FİYAT KAYNAĞA GÖMÜLMÜŞ. Ekran "Pricing is not set." diyor '
+            've fiyat ülkeye/indirime göre değişir — sabit sayı ikisini de '
+            'yalanlar. Mağazadan gelen yerelleştirilmiş dizeyi göster '
+            '(J-136): ${hits.join(" · ")}');
+  });
+
+  test('NEGATİF İKİZ — korunan CÜMLE hâlâ ekranda (J-136)', () {
+    // Yukarıdaki kapı, cümle tamamen kaldırılırsa da yeşil öterdi: fiyat
+    // literali yok çünkü fiyattan hiç söz edilmiyor. O zaman kapı bir
+    // iddiayı değil, bir SESSİZLİĞİ korurdu.
+    final String settings = File('lib/app/settings_page.dart').readAsStringSync();
+    expect(settings, contains('Pricing is not set.'),
+        reason: 'korunan cümle ayarlar sayfasından kalkmış — kapı artık bir '
+            'iddiayı değil bir sessizliği koruyor olabilir');
+    expect(settings, isNot(contains('not set yet')),
+        reason: '"yet" bir zaman taahhüdü (M-F-186) — donmuş ağaçtaki eski '
+            'biçim canlı sayfaya sızmış olabilir');
+  });
+
   test('KİLİTLİ ders içeren KURSUN hedefi bunu söylüyor (J-132)', () {
     // ## Katman: disiplin kapısı vardı, KURS kapısı yoktu
     //
