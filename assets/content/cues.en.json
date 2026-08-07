@@ -110,19 +110,27 @@
   "counting": {
     "cue.halfway": [
       "Halfway.",
-      "Half done."
+      "Half done.",
+      "Half of it gone.",
+      "You're at the middle."
     ],
     "cue.last_ten": [
       "Ten seconds.",
-      "Last ten."
+      "Last ten.",
+      "Ten left.",
+      "Final ten seconds."
     ],
     "cue.last_five": [
       "Five.",
-      "Last five."
+      "Last five.",
+      "Five left.",
+      "Five seconds."
     ],
     "cue.milestone": [
       "{n} in.",
-      "{n} down."
+      "{n} down.",
+      "{n} so far.",
+      "That's {n}."
     ]
   },
   "encouragement": {
@@ -169,21 +177,42 @@
     "cue.burst_start": [
       "Go. Hard.",
       "Burst — go.",
-      "All out."
+      "All out.",
+      "Everything you have.",
+      "Now — full pace.",
+      "Empty it.",
+      "No pacing this one.",
+      "Hard as it gets."
     ],
     "cue.burst_end": [
       "Ease off.",
-      "Off the gas."
+      "Off the gas.",
+      "That's the burst.",
+      "Done. Ease down.",
+      "Off it.",
+      "Stop there.",
+      "That one is finished.",
+      "Hands down."
     ],
     "cue.recover": [
       "Recover.",
       "Breathe it back.",
-      "Loose. Breathe."
+      "Loose. Breathe.",
+      "Shake it loose.",
+      "Big breaths.",
+      "Let it come down.",
+      "Walk it off.",
+      "Arms heavy, breathe."
     ],
     "cue.next_burst": [
       "Ten seconds to go.",
       "Get ready.",
-      "Next one coming."
+      "Next one coming.",
+      "Ten seconds. Reset.",
+      "Nearly time. Hands up.",
+      "Get your breath now.",
+      "One more coming.",
+      "Set yourself."
     ]
   },
   "$producers": {
@@ -246,5 +275,6 @@
     },
     "$silinenler": "cue.low_light · cue.partial_analysis · cue.next_up · cue.not_measured_power · cue.coached_not_scored · cue.count · cue.round_of · cue.scored_topics · cue.coached_topics · cue.trend_* (4) · setup.* (7) · drill.* (10) = 30 anahtar. Gerekce ve TASINAN METIN: docs/design/ICERIK-ONCU-REPLIKLER.md",
     "$liveKeysAnlami": "liveKeys = SessionNarrator.tick()'in STEADY kipte gercekten urettigi olaylarin anahtarlari. session_narrator_test [J-041] bu listeyi anlaticiyi kosturarak DOGRULUYOR: beyan ile gercek arasinda fark varsa test kirmizi. Ekranin ELLE ekledigi olaylar (rest, sessionEnd) bu listeye GIRMEZ — ayri yol, ayri kanit. engineLiveKeys ise MOTOR-surüculu kanaldir (LiveJabController → LiveJabRunning.narration); [J-041] onu okumaz, kaniti live_jab_path_test'tedir."
-  }
+  },
+  "$variantWhy": "J-141: varyant sayisi ATESLENME sayisiyla olcekleniyor. Olculdu (secici round-robin: (v+1) % lines.length, rastgele DEGIL): hiit 12 patlama x 2 varyant = ayni cumle 12 dakikada ALTI KEZ; r20'de cue.halfway UC KEZ. Desen yapisaldi — EN COK atesleyen replikler EN AZ varyanta sahipti, cunku sayac/aralik replikleri bir kez calacakmis gibi yazilmisti. Hedef SECILMEDI, uygulamanin kendi en iyi kapsanan seans repligiden TURETILDI: cue.round_start 4 varyant / 6 tur = 1,5x. Kapi bu orani referans alir (cue_variant_test)."
 }
