@@ -57,10 +57,10 @@
             {
               "id": "boxing.foundations.stance",
               "displayName": "Stance and guard",
-              "teach": "Feet about shoulder width, lead foot forward, rear heel slightly lifted. Weight sits between your feet — not forward on the toes, not back on the heels.\n\nHands up: lead hand out around chin height, rear hand touching your cheek. The rear hand is the one that keeps you safe and the one that gets tired first, which is why it is the thing we watch most.\n\nStay tall. The most common fault in the first week is folding forward at the waist to reach further — it feels stronger and it takes your balance with it.\n\nWe can see stance width, crossed feet and balance, and we grade those. We can see your guard hand and we will tell you when it drops, but we do not put a number on it: experienced coaches disagree about where exactly it belongs.",
+              "teach": "Feet about shoulder width, lead foot forward, rear heel slightly lifted. Weight sits between your feet — not forward on the toes, not back on the heels.\n\nHands up: lead hand out around chin height, rear hand touching your cheek. The rear hand is the one that keeps you safe and the one that gets tired first. When it drops, you will hear about it.\n\nStay tall. The most common fault in the first week is folding forward at the waist to reach further — it feels stronger and it takes your balance with it.\n\nWe can see stance width, crossed feet and balance, and we grade those. We can see your guard hand and we will tell you when it drops, but we do not put a number on it: experienced coaches disagree about where exactly it belongs.",
               "techniques": [],
               "focus": "stance",
-              "errorFocus": [
+              "authoringFocus": [
                 "STANCE_TOO_NARROW",
                 "STANCE_TOO_WIDE",
                 "FEET_CROSSED"
@@ -70,11 +70,11 @@
             {
               "id": "boxing.foundations.jab",
               "displayName": "The jab",
-              "teach": "The jab is your lead hand, travelling straight out and straight back on the same line. It is not a big punch. It is the one that measures distance and buys you time.\n\nPush from the floor, turn the shoulder, let the arm follow. Fist finishes where your eyes are pointing. Elbow stays down and behind the fist — when the elbow swings out to the side, the punch stops being a jab.\n\nThe return matters as much as the punch. A hand that comes back slowly is a hand that is not home when it is needed, and that is the single fault we count most often.\n\nThrow them at a pace you can hold. Speed that costs you shape is not speed — it is a faster way to practise something you do not want.",
+              "teach": "The jab is your lead hand, travelling straight out and straight back on the same line. It is not a big punch. It is the one that measures distance and buys you time.\n\nPush from the floor, turn the shoulder, let the arm follow. Fist finishes where your eyes are pointing. Elbow stays down and behind the fist — when the elbow swings out to the side, the punch stops being a jab.\n\nThe return matters as much as the punch. A hand that comes back slowly is a hand that is not home when it is needed. It is one of the faults we call out by name.\n\nThrow them at a pace you can hold. Speed that costs you shape is not speed — it is a faster way to practise something you do not want.",
               "techniques": [
                 "jab"
               ],
-              "errorFocus": [
+              "authoringFocus": [
                 "REAR_HAND_LOW",
                 "LEAD_HAND_NOT_RECOVERED"
               ],
@@ -89,7 +89,7 @@
               "techniques": [
                 "cross"
               ],
-              "errorFocus": [
+              "authoringFocus": [
                 "REAR_HAND_LOW",
                 "TORSO_FALLING_FORWARD"
               ],
@@ -106,7 +106,7 @@
               "combinations": [
                 "1-2"
               ],
-              "errorFocus": [
+              "authoringFocus": [
                 "WRONG_HAND_FOR_COMBINATION",
                 "COMBINATION_ORDER_ERROR"
               ],
@@ -177,7 +177,7 @@
                 "jab",
                 "cross"
               ],
-              "errorFocus": [
+              "authoringFocus": [
                 "TEMPO_TOO_FAST_FOR_FORM"
               ],
               "focus": "round",
@@ -287,7 +287,7 @@
               "combinations": [
                 "1-2"
               ],
-              "errorFocus": [
+              "authoringFocus": [
                 "FEET_CROSSED",
                 "BALANCE_LOSS"
               ],
@@ -363,7 +363,7 @@
               "combinations": [
                 "1-2"
               ],
-              "errorFocus": [
+              "authoringFocus": [
                 "REAR_HAND_LOW",
                 "LEAD_HAND_NOT_RECOVERED",
                 "BALANCE_LOSS"
@@ -381,7 +381,8 @@
           "$goalWhy": "J-132: hedef ONCE \"Combinations, tempo control and recovery under fatigue\" diyordu ve UC KUSUR tasiyordu. ① Kursun 4 dersinin 3'U KILITLI — hedef acilamayan bir kursu acilabilir gibi tarif ediyordu. ② Ilk andigi konu (\"Combinations\") tam da KILITLI dersin kendisi. ③ \"tempo control\" bu kursta HIC YOK — o ders conditioning'de. Sinif J-131 ile ayni: cumle kelime kelime yanlis degil, ama kullanicinin kurdugu MODEL urunle celisiyor ve celisme bir dokunus sonra ortaya cikiyor. Yeni metin ONCE erisilebilir olani soyluyor. Uc gerekcenin UC FARKLI SINIF oldugunu (modellenmemis · rakip yok · referans yok) tek cumleye YIKMADI: M-F-287'ye gore o siniflar ayri seyler ve duzlestirmek, kullaniciya \"hepsi ayni engel\" dedirtirdi. Onun yerine kartlara yonlendiriyor. Kapi: promise_language_test, kurs KATMANI."
         }
       ],
-      "$blurbWhy": "J-162: eski metin 'guard, stance, SEQUENCE and balance' diyordu. OLCUM: dizi koclugunu veren iki replik (cue.combo_order · cue.wrong_hand) COMBINATION_END'de degerlendiriliyor ve HICBIR ACIK DERSTE kamera+kombinasyon BIR ARADA YOK — yedi kombinasyonlu ders var, hepsi kamerasiz; tek kamerali ders (jab) tek teknikli. Yani vaat edilen dort seyin BIRI teslim edilemiyordu. Kalan uc: guard (koclanir), stance ve balance (skorlanir, trackedComponents). Silinen sey ICERIK degil VAAT: kombinasyon replikleri duruyor ve $producers'ta 'awaiting-content' diye beyanli."
+      "$blurbWhy": "J-162: eski metin 'guard, stance, SEQUENCE and balance' diyordu. OLCUM: dizi koclugunu veren iki replik (cue.combo_order · cue.wrong_hand) COMBINATION_END'de degerlendiriliyor ve HICBIR ACIK DERSTE kamera+kombinasyon BIR ARADA YOK — yedi kombinasyonlu ders var, hepsi kamerasiz; tek kamerali ders (jab) tek teknikli. Yani vaat edilen dort seyin BIRI teslim edilemiyordu. Kalan uc: guard (koclanir), stance ve balance (skorlanir, trackedComponents). Silinen sey ICERIK degil VAAT: kombinasyon replikleri duruyor ve $producers'ta 'awaiting-content' diye beyanli.",
+      "$authoringFocusNote": "authoringFocus = YAZARLIK NOTU, ÜRÜN DAVRANIŞI DEĞİL. Bu alanın çalışma anında TÜKETİCİSİ YOKTUR: SessionNarrator ders almaz, koç bu listeyi hiç okumaz ve okuma niyeti de yoktur. Buradaki kodlar dersin hangi hatalara odaklandığını YAZARA hatırlatır — kullanıcının duyduğu koçluk 14 hata kodunun HEPSİ için aynıdır ve bu liste onu DEĞİŞTİRMEZ. Alanın eski adı `errorFocus`tu ve o ad bir urun yetkisi ima ediyordu: bir yazar buraya bakip REAR_HAND_LOW'un en cok gectigini gordu ve stance dersine 'the thing we watch most' yazdi. Iddia YANLISTI (motorda 5 kod esit 'high', ve en cok fazda degerlendirilen rear hand degil) ama yazar YALAN SOYLEMEDI - DOGRU bir yere bakti, o yer urunu YONETMIYORDU. Bu yuzden: BU ALANDAN KULLANICI IDDIASI TURETILEMEZ ve bunu authoring_focus_test.dart kapisi zorluyor."
     },
     {
       "id": "kickboxing",
@@ -552,5 +553,6 @@
   "$comingSoonWhyWorded": "Yedi kapali disiplinin metni 2026-08-07'de YENIDEN YAZILDI. OLCUM: 7'nin YALNIZ 1'i (kickboxing) kapali olma SEBEBINI soyluyordu; kalan 6 ya icerik listeliyordu ('Siu Nim Tao through Biu Jee', 'Taegeuk forms and the kick ladder') ya da kapsam beyani yapiyordu. Kart zaten 'This discipline is not open' diyor — NEDEN'i tasimasi gereken yer bu metindi ve tasimyordu. Bir yol haritasi ile bir durustluk beyani ayni sey degil: birincisi ne GELECEGINI soyler, ikincisi neden BUGUN olmadigini. Yeni metinlerin hepsi kod-gercegine dayali: kural seti yok (boxing@1.0.0 14 kod, hepsi yumruk) · referans take'i toplanmadi (M-C-04 kapisi, footwork_combo'yu da kilitleyen ayni kapi) · PassPlan.uprightOnly + OrientationExpectation.exactly(upright) · guven kapisinin zaten reddettigi ortusme. TAI CHI KASTEN FARKLI YAZILDI: orada engel kamera DEGIL (yavas form, sifir bulanma) — engel REFERANS. Yedisine ayni gerekce yazmak, farkli sebepleri tek sebep gibi gostermek olurdu (M-F-287: siniri genis yazmak dar yazmak kadar pahali). AYRICA bir VAAT SILINDI: taekwondo metni 'Jumping and spinning kicks WILL CARRY a visible accuracy warning' diyordu — var olmayan bir disiplin hakkinda gelecek-zaman iddiasi. Karsilastirma icin: r20 dersinin 'it will tell you if it loses you' cumlesi KALDI, cunku o BUGUNKU davranisi anlatiyor (novVerdict yuvasi calisiyor) — kosacagin turu tarif etmek vaat degil.",
   "$teachWhy": "teach alani J-118'de eklendi. TeachMaterialText varyanti J-094'ten beri VARDI ve render ediliyordu — ama hicbir yer ONU URETMIYORDU: 17 canli dersin 17'sinde de ogretme asamasi bostu ve ekran 'yapmadik' diyordu. Beyan durusttu, bosluk gercekti. Metinler KOD-GERCEGINE bagli yazildi (J-112 sinifi): kamera dersi 'isigi olcmuyoruz, siz olcebilirsiniz' diyor cunku motorda isik olcumu YOK (cue.low_light bu yuzden silindi) · durus dersi gard elinin KOCLANDIGINI ama PUANLANMADIGINI soyluyor cunku config'in coachedOnlyJoints kovasi oyle diyor (J-113) · cross dersi 'kuvveti olcmuyoruz' diyor (whyNotIncluded/power_measurement) · 1-2 dersi kombinasyon sirasinin YALNIZ modellenen yumruklar icin izlendigini soyluyor (boxing.intermediate.combinations kilit gerekcesiyle ayni olcum) · ilk tur dersi 'gorunmezse SOYLER' diyor (noVerdict yuvasi). Yani ogretme metni pazarlama degil, urunun kendi olculmus sinirlarinin ogretim dilindeki hali. Alan NULLABLE: materyali olan ders tasir, olmayan tasimaz ve ekranda 'yapmadik' der — bos dizeye varsayilanlamak 'yazilmadi' ile 'bos yazildi'yi ayni degere yikardi.",
   "$orphanKeyWhy": "J-129: ders duzeyinde `blurb` (6) + `comingSoonInThisDiscipline` (1) SILINDI. ⚠️ DUZELTME (J-145): `lockedBy` (3) de silinmisti ve BU YANLISTI — okuyani VARMIS: `packages/jablab_engine/test/curriculum_binding_test.dart` onu kilit sinifinin makine-okur adi olarak ZORUNLU tutuyor. J-129'un olcumu 'okuyan'i `Lesson.fromJson` ile SINIRLI tanimladi; ham JSON'u okuyan TESTLERE hic bakmadi. Geri kondu. Onemli olan silinmeleri degil NASIL bulunduklari: Lesson.fromJson bu anahtarlari TANIMIYOR ve JSON tanimadigini sessizce dusuruyor — icerik yazildi, ALANI yoktu. Ikisi canli metnin birebir kopyasiydi, ikisi kapsanmisti, IKISI YANLISTI: hiit \"punch quality is not judged at this pace\" diyordu (J-119 bunu OLCTU ve curuttu), fatigue \"watches whether your error rate climbs\" diyordu (oyle bir trend hesabi yok, dersin KENDI ogretme metni aksini soyluyor). Okunmayan anahtar, CURUTULMUS IDDIALARIN HAYATTA KALDIGI YERDIR: bu gecenin butun durustluk turlari YUZEYLERI taradi, burasi hicbir yuzeyde degildi. Silinen blurb'e ATIF YAPAN 3 provenance notu canli ogretme metnine yeniden baglandi — yoksa beyan bayatlardi (J-124 kusuru). Kapi: test/content_orphan_key_test.dart, tanimli anahtarlari PARSER KAYNAGINDAN turetir.",
-  "$mechanismLanguageWhy": "J-131 OLCUTU — hangi mekanizma adi kullaniciya SOYLENEBILIR? Iki kapili test: ① mekanizma CALISMA ZAMANINDA var ve kullanici onu GOZLEYEBILIYOR mu · ② cumle kullaniciyi bir EYLEME cagiriyor mu (\"gececegim\", \"acacagim\")? r10'un \"progress gate\"i ①'de kaldi ve ②'yi yapiyordu → dustu. KALANLAR olculdu ve BILEREK durdu: muay_thai \"confidence gate\" (① VAR — kullanici \"seni goremiyorum\"u gorur), honesty \"phase machine\" (① gozlenmez ama ② YOK — bu bir KOKEN beyani, eylem cagrisi degil), \"engine\"/\"rule set\"/\"flag\" (mekanizma adi degil, sade Ingilizce). Kelime YASAKLAMAK yanlis arac olurdu: aile 04:50'de ayni tuzagi \"will\" icin olctu — 17 esleşmenin hepsi \"will not/will never\" idi, yani hattin EN GUCLU durustluk dili. Blanket yasak, dogru cumleleri de oldururdu."
+  "$mechanismLanguageWhy": "J-131 OLCUTU — hangi mekanizma adi kullaniciya SOYLENEBILIR? Iki kapili test: ① mekanizma CALISMA ZAMANINDA var ve kullanici onu GOZLEYEBILIYOR mu · ② cumle kullaniciyi bir EYLEME cagiriyor mu (\"gececegim\", \"acacagim\")? r10'un \"progress gate\"i ①'de kaldi ve ②'yi yapiyordu → dustu. KALANLAR olculdu ve BILEREK durdu: muay_thai \"confidence gate\" (① VAR — kullanici \"seni goremiyorum\"u gorur), honesty \"phase machine\" (① gozlenmez ama ② YOK — bu bir KOKEN beyani, eylem cagrisi degil), \"engine\"/\"rule set\"/\"flag\" (mekanizma adi degil, sade Ingilizce). Kelime YASAKLAMAK yanlis arac olurdu: aile 04:50'de ayni tuzagi \"will\" icin olctu — 17 esleşmenin hepsi \"will not/will never\" idi, yani hattin EN GUCLU durustluk dili. Blanket yasak, dogru cumleleri de oldururdu.",
+  "$languageNote": "language: BU ALAN BUGUN HICBIR KOD TARAFINDAN OKUNMUYOR. Muhatabi GELISTIRICI: dil secimi bugun VARLIK ANAHTARINDAN geliyor (ContentRepository sabit 'assets/content/cues.en.json' yukluyor), bu alandan DEGIL. Yani cues.tr.json ekleyip buraya 'tr' yazmak HICBIR SEYI DEGISTIRMEZ - uygulama yine en dosyasini yukler. Alan SILINMEDI cunku i18n geldiginde gercekten gerekecek ve niyet mesru; ama o gun gelene kadar bu satir, alani okuyup 'dil buradan secilir' sanacak gelistiriciyi durdurmak icin burada. Baglandigi gun inert_declaration_test.dart KIRMIZIYA doner ve bu beyanin kaldirilmasini soyler."
 }

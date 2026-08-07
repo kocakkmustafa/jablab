@@ -104,7 +104,7 @@ final class Lesson {
     required this.displayName,
     required this.techniques,
     this.combinations = const <String>[],
-    this.errorFocus = const <String>[],
+    this.authoringFocus = const <String>[],
     this.focus,
     this.minutes = 0,
     this.lockedReason,
@@ -121,8 +121,8 @@ final class Lesson {
             ((j['techniques'] as List?) ?? const <dynamic>[]).cast<String>(),
         combinations:
             ((j['combinations'] as List?) ?? const <dynamic>[]).cast<String>(),
-        errorFocus:
-            ((j['errorFocus'] as List?) ?? const <dynamic>[]).cast<String>(),
+        authoringFocus:
+            ((j['authoringFocus'] as List?) ?? const <dynamic>[]).cast<String>(),
         focus: j['focus'] as String?,
         // Kilit, İÇERİĞİN kendi beyanı. Bir dersi kilitlemek "yakında" demek
         // değil: o dersin hükmünü verecek ÖLÇÜM yok demek. Sebep kullanıcıya
@@ -151,7 +151,7 @@ final class Lesson {
   final String displayName;
   final List<String> techniques;
   final List<String> combinations;
-  final List<String> errorFocus;
+  final List<String> authoringFocus;
   final String? focus;
 
   /// Öğretme aşamasının METNİ — `null` ise materyal yok ve ekran bunu
@@ -369,9 +369,9 @@ final class Library {
               errs.add('${l.id}: tanımsız kombinasyon → "$combo"');
             }
           }
-          for (final String code in l.errorFocus) {
+          for (final String code in l.authoringFocus) {
             if (!rs.errors.any((ErrorConfig x) => x.code == code)) {
-              errs.add('${l.id}: tanımsız hata kodu → "$code"');
+              errs.add('${l.id}: tanımsız hata kodu (authoringFocus) → "$code"');
             }
           }
         }

@@ -329,5 +329,6 @@
       "Stay planted. Don't chase.",
       "Punch from where you stand."
     ]
-  }
+  },
+  "$languageNote": "language: BU ALAN BUGUN HICBIR KOD TARAFINDAN OKUNMUYOR. Muhatabi GELISTIRICI: dil secimi bugun VARLIK ANAHTARINDAN geliyor (ContentRepository sabit 'assets/content/cues.en.json' yukluyor), bu alandan DEGIL. Yani cues.tr.json ekleyip buraya 'tr' yazmak HICBIR SEYI DEGISTIRMEZ - uygulama yine en dosyasini yukler. Alan SILINMEDI cunku i18n geldiginde gercekten gerekecek ve niyet mesru; ama o gun gelene kadar bu satir, alani okuyup 'dil buradan secilir' sanacak gelistiriciyi durdurmak icin burada. Baglandigi gun inert_declaration_test.dart KIRMIZIYA doner ve bu beyanin kaldirilmasini soyler."
 }
