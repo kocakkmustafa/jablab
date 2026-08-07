@@ -22,18 +22,19 @@
       "blurb": "Put your phone in front of you and shadow box. Your corner calls out guard, stance, sequence and balance — no bag, no sensors.",
       "honesty": {
         "measured": [
-          "Punch events and count",
-          "Combination order and timing",
-          "Stance width, crossed feet, balance",
-          "Guard hand position (with a front-oblique camera)",
-          "Tempo as a band — controlled / brisk / fast"
+          "Punch events and count — a fact from the phase machine, not a grade",
+          "Combination order and timing, for the punches we model. A combination built from hooks or uppercuts is not ordered, because those punches are not recognised in the first place",
+          "Stance width, crossed feet, balance — these are graded",
+          "Guard hand position — detected and coached, but NOT graded. Coaches disagree about it: across our reference takes the rear forearm spread past 45 degrees, and we do not know how far past. We will flag a dropping hand; we will not put a number on it",
+          "Tempo as a band (controlled / brisk / fast), derived from how long the punch takes to extend — not from pixel speed. The engine uses it today to decide when to say slow down; there is no screen that shows you the band"
         ],
         "notMeasured": [
           "Punch force or power — a camera cannot measure force, and we will not pretend otherwise",
           "Hook and uppercut technique — not modelled. We ran a real hook lesson through the app: it missed almost every hook, and the handful it did register it counted as jabs or crosses. We would rather say that than let a wrong number look right.",
           "Head movement quality (slip / duck / roll) — reaction skills need an opponent",
           "Anything while your body is out of frame or tracking confidence is low — the app says so instead of guessing"
-        ]
+        ],
+        "$measuredBoundaryWhy": "2026-08-07 OLCUMU: bu liste IKI farkli iddiayi tek baslik altinda topluyordu — 'tespit edip kocluyoruz' ve 'puanliyoruz'. Besin UCU yalnizca BIRINCISIYDI ve kullanici ikincisi diye okuyordu. Kanit config'in KENDISINDE: references.stance.coachedOnlyJoints icinde lead_forearm/rear_forearm/rear_shoulder/lead_upper_arm/rear_upper_arm/lead_elbow/rear_elbow var — yani GARD ELI acikca 'koclanan ama SKORLANMAYAN' kovada (rear_forearm dagilimi 45 derece TAVANA kirpilmis: 'daha buyuk, ne kadar bilinmiyor'). Ayni anda SessionSummaryView 'Coached but not scored' basligi altinda ayni seyi soyluyordu: iki temsil CELISIYORDU ve celisen taraf en gorunur yerdeydi — disiplinin kendi durustluk listesi, yani guveni kuran sey. COMBINATION ORDER: boxing.intermediate.combinations KILITLI ve kilit metni 'we don't score combination order' diyor; liste ise sinirsiz 'Combination order and timing' vaat ediyordu. Sinir artik cumlenin ICINDE. TEMPO: tempoBands GERCEKTEN hesaplaniyor (ADR-001, faz suresinden; controlled >=160ms / brisk 95-160 / fast <=95) ve TEMPO_TOO_FAST_FOR_FORM kapisini besliyor — ama hicbir ekran bandi GOSTERMIYOR (summary'nin bant yuvalari sabit '—' ve tempo aralarinda bile yok). 'Olculuyor' dogruydu, 'goreceksin' degildi. M-F-287 / ders #5: bir siniri olmadigindan GENIS yazmak, dar yazmak kadar pahali."
       },
       "courses": [
         {
