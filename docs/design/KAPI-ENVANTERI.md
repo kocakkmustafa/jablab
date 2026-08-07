@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 218/218 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 222/222 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -135,6 +135,32 @@ cümle sessizce yalan olur.
 
 **Ölçüt: bir cümle sevk edildiyse, onu yanlışa çevirecek en MAKUL değişikliği
 sor. Makulse, kapı gerekir.**
+
+### 📜 Brief'in SEKİZ SERT KURALI — kaçı kapıda? (J-143 süpürmesi)
+
+Gecenin brief'i sekiz esnemez sınır koydu. J-142 birinin **hiç zorlanmadığını**
+ve **canlı bir ihlal taşıdığını** gösterince kalanını da süpürdüm — çünkü
+*"kural var"* ile *"kural zorlanıyor"* bu gece defalarca ayrıştı.
+
+| # | kural | kapı |
+|---|---|---|
+| 1 | K8 — skorsuz yüzey | `k8_band_test` (J-134) · `engine_test` · `content_failure_test` · `progress_recorded_test` |
+| 2 | vaat dili yasak (*"yet"* dahil) | `promise_language_test` (J-108·112·122·123) |
+| 3 | dürüst hâller birinci sınıf | `live_honesty_bucket_test` (J-110·114·116·117) |
+| 4 | ham `detail`/hata kodu sızmaz | `live_cue_mapping_test` · `live_jab_path_test` · `surface_text_shape_test` |
+| 5 | **sol/sağ denmez → lead/rear** | `laterality_test` — **bu gece kuruldu, canlı ihlal buldu (J-142)** |
+| 6 | analiz başlamamışken çıplak `0` yok | `live_jab_path_test` — **iki yönlü**: koşan seansta `0` DOĞRUDUR ve gösterilir |
+| 7 | fiyat sabit yazılmaz | `promise_language_test` (J-136) |
+| 8 | **cihaz kanıtı vaat edilmez** | ⛔ **mekanik kapı YOK — ve olamaz** |
+
+**8 neden kapıya bağlanmadı:** diğer yedisi ürünün **kullanıcıya** söylediğini
+sınırlıyor; bu, **kaydın kurucuya** söylediğini sınırlıyor. *"Cihazda
+doğrulandı"* iddiasını mekanik olarak yanlışlayacak bir referans yok — sınıf
+**imkânsız**. Ölçüldü: **ihlal yok**; J-096 satırı açıkça *"CİHAZDA
+KANITLANMADI ve hiçbir yorum öyle demiyor"* diyor ve §7.3-7.7 **isimli bir
+release-gate** olarak duruyor. Yani kuralı taşıyan şey bir test değil, **kaydın
+kendi disiplini** — ve bu gece J-135/J-138 kaydın da bozulabildiğini gösterdi.
+**Bu satır o yüzden isimli açık kalıyor.**
 
 ### 🔬 Kapıların kendi ARAÇLARI — iki tuzak ve bir denetim (J-139/J-140)
 
