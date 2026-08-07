@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **app 245/245 + motor 113/113** · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **app 247/247 + motor 113/113** · `flutter analyze` temiz
 
 ## ⚠️ ÖNCE: *"YEŞİL"* NE KADARINI KAPSIYOR (J-145/J-146)
 
@@ -224,7 +224,15 @@ cümlesi temizlendi; bu **cümle değildi**, o yüzden bütün gece hayatta kald
 Aynı kartta **iki ayrı vaat** vardı — biri şemada (`W1`), biri cümlede
 (*"where this is going"*) — ve **kapı ikisini de göremedi.**
 
-**Kapı KURULMADI ve sınıfı: *ölçüt yetersiz*** (J-143 taksonomisi). Genel bir
+✅ **DAR HÂLİ KAPANDI (J-165):** *"tek büyük harf + rakam"* jetonu (`W1`·`V2`)
+tüm içerik ve kullanıcı dizelerinde **yalnız 8 kez** geçiyor ve **hepsi `wave`**
+— **sıfır yanlış pozitif.** Mevcut kod-biçimli metin kapısı bunları göremiyordu
+(deseni en az **dört** karakter istiyor; `W1` iki). Kapı: `sequence_token_test`,
+ve **muafiyet ölçüme bağlı** — `wave` ancak **hiçbir UI dosyası** ona dokunmuyorsa
+affediliyor (*UI dosyası = `flutter/material.dart` ithal eden*), yani muafiyet
+listesi değil **koşul**.
+
+**Genel hâli hâlâ açık ve sınıfı doğru:** *ölçüt yetersiz* (J-143 taksonomisi). Genel bir
 "yapısal vaat" dedektörü ölçülemiyor: süpürme 20 aday buldu, **yalnız 8'i
 gerçek**, ve ayırıcı soru mekanik değil — ***var olanı mı tarif ediyor,
 gelecek bir düzeni mi ilan ediyor?*** (*"Your first round"* mevcut bir ders ·
