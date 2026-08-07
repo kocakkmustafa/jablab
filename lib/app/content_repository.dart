@@ -162,7 +162,7 @@ final class ContentRepository {
               'nothing to show here.');
     }
     return const TeachMaterialNone(
-        reason: 'There is no lesson material to watch or read here yet — we '
+        reason: 'There is no lesson material to watch or read here — we '
             'have not made it. The session still works: the next step is you '
             'moving, and nothing is scored while you learn the shape.');
   }

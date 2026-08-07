@@ -96,7 +96,7 @@ class SettingsPage extends StatelessWidget {
                                 children: <Widget>[
                                   Text('PRICE', style: JText.label.copyWith(fontSize: 9)),
                                   const SizedBox(height: 5),
-                                  Text('Pricing is not set yet.',
+                                  Text('Pricing is not set.',
                                       key: const Key('pricing-not-set'),
                                       style: JText.mono.copyWith(color: JColors.ink, fontSize: 13)),
                                 ],

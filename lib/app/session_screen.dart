@@ -235,8 +235,8 @@ class _Teach extends StatelessWidget {
           // Bu cümle materyalden BAĞIMSIZ ve her hâlde doğru: hüküm
           // aşamanın kendisinde susuyor (`SessionStage.teach.judges == false`).
           Text(
-            'Nothing is being analysed yet. Scoring you while you are still '
-            'learning the shape would punish learning.',
+            'Nothing is being analysed during this part. Scoring you while '
+            'you are still learning the shape would punish learning.',
             key: const Key('teach-no-analysis'),
             style: theme.textTheme.bodySmall,
           ),

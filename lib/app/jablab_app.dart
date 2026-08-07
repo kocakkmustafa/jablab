@@ -379,7 +379,7 @@ class _RootState extends State<_Root> {
   String? _recordedNoteText() {
     return _recorded == null || _recorded!.sessions == 0
         ? null
-        : 'Recorded time does not unlock lessons yet. Every progress gate '
+        : 'Recorded time does not unlock lessons. Every progress gate '
             'also asks how much of the session the camera could actually '
             'analyse, and the camera is not connected — so these minutes '
             'are your history, not credit toward the next lesson. We would '

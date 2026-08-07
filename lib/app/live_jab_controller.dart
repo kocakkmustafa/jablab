@@ -292,7 +292,7 @@ final class LiveJabController {
   /// de değil: sessizlik canlı koçta "her şey yolunda" diye okunur.
   static const String _genericIssue =
       'Something in that one needs fixing, but we do not have the words for '
-      'it yet.';
+      'it.';
   static const String _genericNoVerdict =
       'I cannot judge that clearly enough right now.';
 

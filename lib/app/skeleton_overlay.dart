@@ -10,9 +10,23 @@ import 'design_tokens.dart';
 ///
 /// 1. **Kamera GÖRÜNTÜSÜ** — bilinçli ertelendi, bkz. tek satırlık işaretçi:
 ///    PLACEHOLDER(asset): kamera akışının gerçek görüntüsü (Texture tabanlı önizleme) — unblocked by: Texture-based preview (registrar.textures), deliberately deferred, docs/70-KAMERA-KOPRUSU-SOZLESMESI.md
-///    Bu katman İCAT EDİLMEDİ; ne zaman geleceği belirsiz olduğu için ekran
-///    bunu SAKLAMIYOR — koyu bir dolgu + "henüz yok" cümlesi, sahte bir
-///    "analiz ediliyor" animasyonu DEĞİL.
+///    Bu katman İCAT EDİLMEDİ; ekran bunu SAKLAMIYOR — koyu bir dolgu +
+///    açık bir cümle, sahte bir "analiz ediliyor" animasyonu DEĞİL.
+///
+///    **SINIRIN SINIFI: ERTELENMİŞ** (M-F-287 · imkânsız / ertelenmiş /
+///    ölçülmemiş üçlüsü). Gravita aynı çekirdek kısıtını aynı sınıfa
+///    koydu — aynı `motion_camera` pini, aynı `registrar.textures` yolu,
+///    aynı karar; iki hattın farklı sınıflandırması, tek bir kısıtın iki
+///    farklı şeymiş gibi okunmasına yol açardı.
+///
+///    Sınıf ayrımı boş bir titizlik değil, kullanıcı cümlesini belirliyor:
+///    *imkânsız* olsaydı "bir kamera bunu göremez" derdik (kapsam-dışı
+///    listesinin dili); *ölçülmemiş* olsaydı "bilmiyoruz" derdik.
+///    **Ertelenmiş** = yapılabilir, biz yapmadık — o yüzden yüzeydeki
+///    cümle sorumluluğu ÜSTLENİYOR ("left out on purpose") ve bir tarih
+///    VERMİYOR. "not built yet" ikisini birden kaçırıyordu: hem sorumluluk
+///    almıyor hem bir zaman taahhüdü veriyordu (M-F-186, Ostinato hükmü
+///    2026-08-07: *"gerekçenin varlığı 'yet'i affetmiyor"*).
 /// 2. **İskelet çizimi** — PLACEHOLDER DEĞİL. Motorun zaten ürettiği gerçek
 ///    [PoseLandmark] koordinatlarından çiziliyor (bkz.
 ///    `LiveJabController._onEnvelope`, `LiveJabRunning.skeleton`). Kamera
@@ -65,7 +79,8 @@ class _CameraPlaceholder extends StatelessWidget {
               Icon(Icons.videocam_off_outlined, size: 28, color: JColors.ink4),
               const SizedBox(height: 8),
               Text(
-                'Camera preview is not built yet — analysis runs without it',
+                'Camera preview is left out on purpose — analysis runs '
+                'without it',
                 key: const Key('camera-preview-placeholder'),
                 textAlign: TextAlign.center,
                 style: JText.mono.copyWith(fontSize: 11, color: JColors.ink4),

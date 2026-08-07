@@ -82,7 +82,7 @@ void main() {
     await pumpProgress(
       t,
       recorded: <String, String>{'Time worked': '24 min'},
-      note: 'Recorded time does not unlock lessons yet.',
+      note: 'Recorded time does not unlock lessons.',
     );
     expect(find.byKey(const Key('recorded-note')), findsOneWidget);
   });
@@ -110,7 +110,7 @@ void main() {
       // çizilmiyorsa da geçerdi. Bu ikiz o boşluğu kapatıyor.
       await pumpProgress(t,
           recorded: <String, String>{'Time worked': '24 min'},
-          note: 'Recorded time does not unlock lessons yet.');
+          note: 'Recorded time does not unlock lessons.');
       expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
       expect(find.byKey(const Key('recorded-Time worked')), findsOneWidget);
       expect(find.byKey(const Key('recorded-note')), findsOneWidget);

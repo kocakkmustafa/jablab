@@ -148,7 +148,7 @@ saklamıyor ve "gard daha az düştü" diyebilecek bir karşılaştırma katman�
 "cue.trend_improving": ["Your guard dropped less this round than last. That's your own trend, not a score."],
 "cue.trend_worse":     ["Guard dropped more often this round. Usually that's fatigue, not technique."],
 "cue.trend_flat":      ["About the same as last round."],
-"cue.no_trend_yet":    ["Not enough rounds yet to call a trend."]
+"cue.no_trend_yet":    ["Not enough rounds to call a trend."]
 ```
 
 ⚠️ **Bağlarken dikkat — K8 sınırı burada ince.** Bu dördü sayısal skor DEĞİL, bu

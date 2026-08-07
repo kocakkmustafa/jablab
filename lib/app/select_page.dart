@@ -231,7 +231,7 @@ class _ItemBlock extends StatelessWidget {
                       padding: const EdgeInsets.all(14),
                       borderRadius: 14,
                       child: Text(
-                        'Not open yet${item.waveLabel.isEmpty ? '' : ' · ${item.waveLabel}'}. '
+                        'Not open${item.waveLabel.isEmpty ? '' : ' · ${item.waveLabel}'}. '
                         'We list it so you can see where this is going — '
                         'there are no placeholder lessons behind this page.',
                         key: const Key('coming-soon-note'),
@@ -291,7 +291,7 @@ class _ItemBlock extends StatelessWidget {
                   ],
                   if (item.pendingNotes.isNotEmpty) ...<Widget>[
                     const SizedBox(height: 10),
-                    Text('Not open yet in this section',
+                    Text('Not open in this section',
                         style: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 14)),
                     const SizedBox(height: 6),
                     ...item.pendingNotes.map((String n) => Padding(
@@ -308,8 +308,18 @@ class _ItemBlock extends StatelessWidget {
   }
 }
 
-/// "Soon" rozeti — Ayarlar'ın "FREE PLAN" rozetiyle BİREBİR aynı kalıp
+/// "Açık değil" rozeti — Ayarlar'ın "FREE PLAN" rozetiyle BİREBİR aynı kalıp
 /// (settings_page.dart) — aynı görsel dil, iki ayrı icat değil.
+///
+/// ⚠️ Metin **"SOON" DEĞİL** (2026-08-07). Rozet bir kelimeyle konuşuyor ve
+/// o kelime en yoğun beyandır: "SOON" tek başına bir takvim sözü verir ve
+/// arkasında hiçbir tarih yok. Kartın altındaki cümle zaten *neden* açık
+/// olmadığını isimli teknik gerekçesiyle söylüyor — rozetin işi o gerekçeyi
+/// tekrarlamak değil, DURUMU adlandırmak. `NOT OPEN` durum; `SOON` vaat.
+///
+/// Sınıf ve widget ANAHTARI (`soon-<id>`) bilerek DEĞİŞMEDİ: anahtarlar
+/// kullanıcıya görünmez ve testlerin tutunduğu yüzeydir; görünmeyen bir adı
+/// değiştirmek görünen bir kusuru düzeltmez, yalnız gürültü üretir.
 class _SoonBadge extends StatelessWidget {
   const _SoonBadge({super.key, required this.label});
 
@@ -323,7 +333,7 @@ class _SoonBadge extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(
-          label.isEmpty ? 'SOON' : 'SOON · ${label.toUpperCase()}',
+          label.isEmpty ? 'NOT OPEN' : 'NOT OPEN · ${label.toUpperCase()}',
           style: JText.label.copyWith(color: JColors.ink3, letterSpacing: 1),
         ),
       );
