@@ -224,11 +224,14 @@
     },
     "session": {
       "by": "SessionNarrator → _Live ekrani",
-      "status": "partial",
-      "$note": "round_start/round_end anlatici tick'inden CANLI (liveKeys, testle dogrulandi). rest ve finished EKRAN tarafindan elle ekleniyor — canli ama tick-suruculu degil. cue.setup_ok ise mapped-not-fired: NarrationEvent.sessionStart'i URETEN hicbir kod yolu yok — J-105'te muafiyet listesi kuculdu ama BU ad hala orada, cunku olay gercekten ekran tarafindan eklenmeyi bekliyor (kamera 'seni goruyorum' dedigi an). Karar ERTELENDI ve bu satir ertelemenin kaydidir. round_of/next_up SILINDI: birincisi ses katmani bekliyor (ekranda live-round-position zaten var), ikincisinin {name} kaynagi hic yok.",
+      "status": "bound",
+      "$note": "round_start/round_end anlatici tick'inden CANLI (liveKeys, testle dogrulandi). rest ve finished EKRAN tarafindan elle ekleniyor — canli ama tick-suruculu degil. cue.setup_ok J-120'den beri CANLI ve MOTOR kanalindan (engineLiveKeys): LiveJabController ilk cozulen karede soyluyor. Once NarrationEvent.sessionStart olarak enum'da duruyordu ve hicbir yerden uretilmiyordu; J-105'te muafiyet listesini 6→3 indirirken 'gercekten eklenmeyi bekliyor' diye BIRAKILMISTI — o bir karar degil kararin ERTELENMESIYDI. Muafiyet listesi 3→2 indi; kalan ikisinin (rest, sessionEnd) ureticisi GERCEKTEN var. round_of/next_up SILINDI: birincisi ses katmani bekliyor (ekranda live-round-position zaten var), ikincisinin {name} kaynagi hic yok.",
       "liveKeys": [
         "cue.round_start",
         "cue.round_end"
+      ],
+      "engineLiveKeys": [
+        "cue.setup_ok"
       ]
     },
     "summary": {

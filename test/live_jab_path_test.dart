@@ -229,6 +229,59 @@ void main() {
       await c.dispose();
     });
 
+    test('İLK ÇÖZÜLEN KAREDE "seni görüyorum" — bir kez (J-120)', () async {
+      // `cue.setup_ok` J-105'te muafiyet listesinde bırakılmıştı: *"gerçekten
+      // eklenmeyi bekliyor."* O bir karar değil kararın ERTELENMESİYDİ.
+      // Karar: bağlanır — yetenek zaten var ve eşik gerektirmiyor, "seni
+      // görüyorum" çözülmüş ilk karenin ta kendisi.
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+      final List<LiveJabState> seen = <LiveJabState>[];
+      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+      await c.start();
+      for (final PoseFrame f in _jabSequence()) {
+        cam.emit(_envelope(f));
+      }
+      await Future<void>.delayed(Duration.zero);
+      await sub.cancel();
+
+      final List<String> lines = seen
+          .whereType<LiveJabRunning>()
+          .map((LiveJabRunning r) => r.narration)
+          .whereType<String>()
+          .toList();
+      expect(lines, isNotEmpty, reason: '"seni görüyorum" hiç söylenmedi');
+      expect(_readyPhrases.contains(lines.first), isTrue,
+          reason: '`cue.setup_ok`in bilinen 3 varyantından biri değil: '
+              '"${lines.first}"');
+      // TEK KEZ: her karede tekrarlamak canlı koçu gürültüye çevirir ve
+      // gürültü susmakla aynı sonucu verir — kullanıcı dinlemeyi bırakır.
+      expect(lines.where(_readyPhrases.contains).length, 1,
+          reason: '"seni görüyorum" ${lines.where(_readyPhrases.contains).length} '
+              'kez söylendi — her karede tekrarlanıyor');
+      await c.dispose();
+    });
+
+    test('KİMSE YOKKEN "seni görüyorum" DENMİYOR', () async {
+      // ⭐ NEGATİF İKİZ: çözülmüş kare yoksa cümle de yok. Bu olmadan
+      // yukarıdaki test, seansın başında koşulsuz konuşan bir koçla da
+      // geçerdi — ve o koç görmediği bir şeyi gördüğünü söylerdi.
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+      final List<LiveJabState> seen = <LiveJabState>[];
+      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+      await c.start();
+      cam.emit(_envelope(null));
+      await Future<void>.delayed(Duration.zero);
+      await sub.cancel();
+
+      for (final LiveJabRunning r in seen.whereType<LiveJabRunning>()) {
+        expect(_readyPhrases.contains(r.narration), isFalse,
+            reason: 'kimse görünmezken "seni görüyorum" denildi');
+      }
+      await c.dispose();
+    });
+
     group('DÜZELTME KAYBOLDU (J-105)', () {
       // `cue.corrected` J-105'e kadar ölüydü: `jabLabCueMapping`de duruyordu
       // ama `NarrationEvent.corrected`i üreten hiçbir kod yolu yoktu ve
@@ -252,13 +305,19 @@ void main() {
         await Future<void>.delayed(Duration.zero);
         await sub.cancel();
 
-        final Iterable<String> lines = seen
+        // ⚠️ "HİÇ anlatı yok" DİYE ölçmüyor — o fazla geniş bir iddia
+        // olurdu ve nitekim öyleydi: J-120'de `cue.setup_ok` aynı yuvaya
+        // bağlanınca bu test kırıldı, oysa ölçtüğü şey bozulmamıştı.
+        // Ölçülen şey DÜZELTME repliğinin çıkmaması; anlatı yuvasının başka
+        // doğru şeyler söylemesi bu testi ilgilendirmez.
+        final Iterable<String> corrected = seen
             .whereType<LiveJabRunning>()
             .map((LiveJabRunning r) => r.narration)
-            .whereType<String>();
-        expect(lines, isEmpty,
+            .whereType<String>()
+            .where(_correctedPhrases.contains);
+        expect(corrected, isEmpty,
             reason: 'hiçbir işaret kaybolmadan "düzeltildi" denildi: '
-                '${lines.toList()}');
+                '${corrected.toList()}');
         await c.dispose();
       });
 
@@ -500,6 +559,22 @@ const List<String> _lowConfidencePhrases = <String>[
 ];
 
 /// `cue.structural` varyantları — `_lowConfidencePhrases` ile aynı gerekçe.
+/// `cue.setup_ok` varyantları — `_lowConfidencePhrases` ile aynı gerekçe.
+/// `cue.corrected` varyantları — aynı gerekçe.
+const List<String> _correctedPhrases = <String>[
+  'That correction is gone.',
+  'The flag cleared that time.',
+  'Not seeing it on that one.',
+  'That one came back clean.',
+];
+
+/// `cue.setup_ok` varyantları — `_lowConfidencePhrases` ile aynı gerekçe.
+const List<String> _readyPhrases = <String>[
+  'I can see you. Ready?',
+  'Got you. Whenever you are.',
+  "You're in frame. Ready?",
+];
+
 const List<String> _structuralPhrases = <String>[
   'My tracking looks wrong — holding off.',
   "Not confident in what I'm seeing.",

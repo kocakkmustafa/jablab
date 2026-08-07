@@ -9,7 +9,6 @@ import 'dart:convert';
 /// eşlemesi [CueBook] ile app tarafında yapılır — çello ve salsa aynı
 /// zamanlamayı farklı sözlükle kullanır.
 enum NarrationEvent {
-  sessionStart,
   roundStart,
   halfway,
   lastTen,
@@ -225,7 +224,6 @@ class CueBook {
 /// yazılmazsa olay sessizce sessiz kalırdı — sesli koçta en pahalı kusur,
 /// çünkü kullanıcı "bir şey söylenmedi"yi "sorun yok" diye okur.
 const Map<NarrationEvent, String> jabLabCueMapping = <NarrationEvent, String>{
-  NarrationEvent.sessionStart: 'cue.setup_ok',
   NarrationEvent.roundStart: 'cue.round_start',
   NarrationEvent.halfway: 'cue.halfway',
   NarrationEvent.lastTen: 'cue.last_ten',
@@ -244,6 +242,21 @@ const Map<NarrationEvent, String> jabLabCueMapping = <NarrationEvent, String>{
 /// karşılık gelen bir [NarrationEvent] YOK ve olmamalı (yukarıdaki not).
 /// `LiveJabController` bunları doğrudan [CueBook.sayKey] ile söyler.
 const String jabLabCorrectedCueKey = 'cue.corrected';
+
+/// "Seni görüyorum" — seansta İLK çözülen karede söylenir (J-120).
+///
+/// `NarrationEvent.sessionStart` olarak bu enum'da duruyordu ve **hiçbir
+/// yerden üretilmiyordu**; J-105'te muafiyet listesini 6→3 indirirken onu
+/// *"gerçekten ekran tarafından eklenmeyi bekliyor"* diye bırakmıştım.
+/// O cümle bir karar değil, **kararın ertelenmesiydi** — muafiyet
+/// listelerinin ölü dalı sakladığı mekanizmanın ta kendisi, ve bu kez
+/// mekanizmayı bilen kişi tarafından kuruldu.
+///
+/// Karar: **bağlanır.** Yetenek zaten var ve eşik gerektirmiyor — "seni
+/// görüyorum", çözülmüş ilk karenin ta kendisi; araya sığacak bir sayı, bir
+/// süre ya da bir "yeterince" yok. Ama ZAMANA bağlı değil MOTORA bağlı, o
+/// yüzden `NarrationEvent`ten çıktı: anlatıcı saatten başka bir şey görmez.
+const String jabLabReadyCueKey = 'cue.setup_ok';
 
 /// MOTOR HATA KODU → REPLİK ANAHTARI (J-096). **Mekanik değil, ELLE.**
 ///

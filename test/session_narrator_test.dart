@@ -147,8 +147,19 @@ void main() {
     // (`_Live._tick`) ya da eklenmeyi bekliyor — ve `sessionStart` hâlâ
     // hiçbir yerden üretilmiyor, bu yüzden burada kalıyor ve `$producers`ta
     // `mapped-not-fired` diye BEYAN ediliyor.
+    // ⚠️ MUAFİYET LİSTESİ 3→2 (J-120). `sessionStart` buradan da çıktı ve
+    // enum'dan da: "seni görüyorum" ZAMANA değil MOTORA bağlı bir olay ve
+    // artık `LiveJabController` onu ilk çözülen karede söylüyor.
+    //
+    // J-105'te bu listeyi 6→3 indirirken `sessionStart`ı *"gerçekten
+    // eklenmeyi bekliyor"* diye bırakmıştım — **o bir karar değil, kararın
+    // ertelenmesiydi**, yani muafiyet listelerinin ölü dalı sakladığı
+    // mekanizmayı, o mekanizmayı BİLEN kişi olarak yeniden kurmuştum.
+    //
+    // Kalan ikisi gerçekten ekran tarafından elle ekleniyor
+    // (`_Live._tick`): `rest` dinlenmenin başında, `sessionEnd` son turun
+    // sonunda. İkisi de zaman olayı ve ikisinin de üreticisi VAR.
     const Set<NarrationEvent> engineDriven = <NarrationEvent>{
-      NarrationEvent.sessionStart,
       NarrationEvent.sessionEnd,
       NarrationEvent.rest,
     };

@@ -94,6 +94,10 @@ final class LiveJabController {
   /// gerek kalmadı — her iki hâlde de doğru davranış aynı: sus.
   String? _lastAttemptIssueCode;
 
+  /// "Seni görüyorum" bir kez söylendi mi (J-120). Her karede tekrarlamak
+  /// canlı koçu gürültüye çevirir ve gürültü susmakla aynı sonucu verir.
+  bool _announcedReady = false;
+
   Stream<LiveJabState> get states => _states.stream;
 
   /// Seansı başlatır. Başarısızlıkta **fırlatmaz** — tipli hâl DÖNER.
@@ -194,6 +198,16 @@ final class LiveJabController {
       return;
     }
 
+    // İLK ÇÖZÜLEN KARE = "seni görüyorum" (J-120). Bir OLGU, eşik yok:
+    // model bir iskelet çözdü, o kadar. Motor henüz hüküm veremiyor olabilir
+    // (`!judgeable`) ve cümle yine DOĞRU — söylediği şey görmek, yargılamak
+    // değil. Bu yüzden dalların HEPSİNDEN önce hesaplanıyor.
+    String? readyLine;
+    if (!_announcedReady) {
+      _announcedReady = true;
+      readyLine = cues.sayKey(jabLabReadyCueKey);
+    }
+
     // İSKELET, HÜKÜMDEN BAĞIMSIZ: "ne gördüğüm" ile "ne yargıladığım" ayrı
     // katmanlar (aynen `narration`ın hüküm susarken bile konuşabilmesi gibi).
     // Motor hüküm veremese BİLE (aşağıdaki `!judgeable` dalı) çözülmüş bir
@@ -241,7 +255,7 @@ final class LiveJabController {
         // Hüküm susarken bile ANLATI konuşabilir (ayrı yuva): deneme
         // kapandı ve önceki işaret gitti — bunu söylememek için bir sebep
         // yok, hükmün verilememesi ayrı bir olgu.
-        narration: correctedLine,
+        narration: readyLine ?? correctedLine,
         skeleton: skeleton,
       ));
       return;
@@ -261,7 +275,7 @@ final class LiveJabController {
         noVerdictReason: _phrase(issue.code) ?? _genericNoVerdict,
         // GÖRÜNÜRLÜK kodu: "seni göremiyorum" — eylem sende.
         bucket: LiveHonestyBucket.yours,
-        narration: correctedLine,
+        narration: readyLine ?? correctedLine,
         phase: out.activePhase,
         skeleton: skeleton,
       ));
@@ -274,7 +288,7 @@ final class LiveJabController {
       // HAM KOD ASLA: `REAR_HAND_LOW` bir teşhis dizesidir. İçerik eksikse
       // kod gösterilmez, genel ama DÜRÜST bir cümle gösterilir.
       cue: issue == null ? null : (_phrase(issue.code) ?? _genericIssue),
-      narration: correctedLine,
+      narration: readyLine ?? correctedLine,
       phase: out.activePhase,
       skeleton: skeleton,
     ));
