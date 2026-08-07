@@ -457,6 +457,12 @@ class _LiveState extends State<_Live> {
         _jab = st;
         if (st is LiveJabFailed) _jabFailure = st.failure;
       });
+      // Sayım DEĞİŞTİĞİNDE bildiriliyor, tik attığında değil (J-157).
+      // İlk yazışımda `_reportCount()` yalnız tur/aralık tiklerinden
+      // çağrılıyordu ve **plansız bir derste tik yoktur** — yani sayı
+      // özete hiç ulaşmazdı. Kusurun kendisi J-156'nın sınıfıydı:
+      // üretici vardı ama yolu yoktu.
+      _reportCount();
     });
     final LiveSessionFailure? f = await live.start();
     if (f != null && mounted) setState(() => _jabFailure = f);
