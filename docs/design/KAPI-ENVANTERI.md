@@ -183,6 +183,31 @@ release-gate** olarak duruyor. Yani kuralı taşıyan şey bir test değil, **ka
 kendi disiplini** — ve bu gece J-135/J-138 kaydın da bozulabildiğini gösterdi.
 **Bu satır o yüzden isimli açık kalıyor.**
 
+### 🕳️ KÖR NOKTA: YAPISAL VAAT (J-150) — kapı KURULMADI, sınıfı yazıldı
+
+Vaat dili kapısı **kelimelere** bakıyor (`yet` · `soon` · `coming` · `will`).
+Ama bir vaat **hiç vaat sözcüğü kullanmadan** kurulabilir:
+
+> Kapalı disiplin kartları `NOT OPEN · **W1**` yazıyordu. `W1`→`W4` bir
+> **numaralandırma**; numaralandırma bir **sıra**, sıra da bir **vaat** —
+> *"bunlar sırayla geliyor."*
+
+**Kelime taraması bu sınıfa tanımı gereği kördür.** J-108/112'de 16 vaat
+cümlesi temizlendi; bu **cümle değildi**, o yüzden bütün gece hayatta kaldı.
+Aynı kartta **iki ayrı vaat** vardı — biri şemada (`W1`), biri cümlede
+(*"where this is going"*) — ve **kapı ikisini de göremedi.**
+
+**Kapı KURULMADI ve sınıfı: *ölçüt yetersiz*** (J-143 taksonomisi). Genel bir
+"yapısal vaat" dedektörü ölçülemiyor: süpürme 20 aday buldu, **yalnız 8'i
+gerçek**, ve ayırıcı soru mekanik değil — ***var olanı mı tarif ediyor,
+gelecek bir düzeni mi ilan ediyor?*** (*"Your first round"* mevcut bir ders ·
+*"One is the jab, two is the cross"* mevcut bir kombinasyon · *"phase
+machine"* köken beyanı).
+
+⚠️ **Ve açıklamak bir çözüm değil:** *"W1 ne demek"* diye anlatmak, örtük yol
+haritası vaadini **açık** hâle getirirdi. Üçüncü seçenek ihlalin büyütülmüş
+hâlidir.
+
 ### 🔬 Kapıların kendi ARAÇLARI — iki tuzak ve bir denetim (J-139/J-140)
 
 Bir kapı doğru şeyi ölçebilir ve **aracı bozuk olduğu için** yine de yeşil

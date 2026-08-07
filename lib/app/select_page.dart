@@ -215,7 +215,13 @@ class _ItemBlock extends StatelessWidget {
                     Icon(expanded ? Icons.expand_less : Icons.expand_more,
                         color: JColors.ink3)
                   else
-                    _SoonBadge(key: Key('soon-${item.id}'), label: item.waveLabel),
+                    // `waveLabel` BİLEREK GEÇİLMİYOR (J-150, koordinatör
+                    // hükmü 10:12). Değerler `W1`→`W4` idi ve iki kusur
+                    // taşıyorlardı: kullanıcıya **hiçbir şey ifade
+                    // etmiyorlar** (bilgi değeri sıfır) ama `W1→W4` bir
+                    // **SIRA** kuruyor (vaat değeri pozitif). Sıfır bilgi +
+                    // pozitif vaat = kaldırılır.
+                    _SoonBadge(key: Key('soon-${item.id}')),
                 ],
               ),
             ),
@@ -231,9 +237,16 @@ class _ItemBlock extends StatelessWidget {
                       padding: const EdgeInsets.all(14),
                       borderRadius: 14,
                       child: Text(
-                        'Not open${item.waveLabel.isEmpty ? '' : ' · ${item.waveLabel}'}. '
-                        'We list it so you can see where this is going — '
-                        'there are no placeholder lessons behind this page.',
+                        // J-150 ③: eski metin *"We list it so you can see
+                        // where this is going"* diyordu — **cümlesel** bir
+                        // vaat, ve kapının kelime listesinde yok. Yani aynı
+                        // kartta İKİ ayrı vaat vardı: biri şemada (`W1`),
+                        // biri cümlede. Yeni metin NEDEN listelediğimizi
+                        // söylüyor (kapsamı görünür kılmak), NEREYE gittiğini
+                        // değil.
+                        'Not open. We list it so you can see the whole scope '
+                        'of what this app covers — there are no placeholder '
+                        'lessons behind this page.',
                         key: const Key('coming-soon-note'),
                         style: JText.bodyMuted,
                       ),
@@ -343,10 +356,19 @@ class _ItemBlock extends StatelessWidget {
 /// Sınıf ve widget ANAHTARI (`soon-<id>`) bilerek DEĞİŞMEDİ: anahtarlar
 /// kullanıcıya görünmez ve testlerin tutunduğu yüzeydir; görünmeyen bir adı
 /// değiştirmek görünen bir kusuru düzeltmez, yalnız gürültü üretir.
+/// Kapalı disiplin rozeti — **durum**, sıra DEĞİL.
+///
+/// Eskiden `NOT OPEN · W1` yazıyordu. `wave` alanı içerikte DURUYOR (meşru
+/// iç planlama verisi) ama **yüzeye çıkmıyor**: `W1`/`W2`/`W3`/`W4` bir
+/// numaralandırma ve numaralandırma bir **sıra**, sıra da bir **vaat**
+/// (J-150). Vaat dili kapısı bunu göremedi çünkü kapı **kelimelere**
+/// bakıyor (`yet`·`soon`·`will`) ve burada vaat **şemadaydı** — kelime
+/// taraması bu sınıfa **tanımı gereği** kör.
+///
+/// ⚠️ Ve *"W1 ne demek"i açıklamak* bir çözüm DEĞİL: örtük yol haritası
+/// vaadini **açık** hâle getirirdi.
 class _SoonBadge extends StatelessWidget {
-  const _SoonBadge({super.key, required this.label});
-
-  final String label;
+  const _SoonBadge({super.key});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -356,7 +378,7 @@ class _SoonBadge extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(
-          label.isEmpty ? 'NOT OPEN' : 'NOT OPEN · ${label.toUpperCase()}',
+          'NOT OPEN',
           // ⚠️ `ink3` idi ve ÖLÇÜLDÜ: 10 puntoda zemine karşı **3,51:1**,
           // WCAG 2.2 AA normal-metin eşiği 4,5. J-108'de bu rozetin
           // SÖZCÜĞÜNÜ düzelttim (`SOON` → `NOT OPEN`) ve KONTRASTINI hiç
