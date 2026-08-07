@@ -29,6 +29,8 @@ import 'package:motion_core/motion_core.dart';
 ///   `live_jab_path_test` ölçüyor; burada ölçülen **taşınma**.
 /// * Gerçek MediaPipe topolojisini (cihaz günü §7.3-7.7).
 void main() {
+  setUp(LiveJabController.debugResetCameraLock);
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late RuleSet ruleSet;

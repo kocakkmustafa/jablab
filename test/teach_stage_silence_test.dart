@@ -46,6 +46,8 @@ import 'package:motion_camera/motion_camera.dart';
 ///   Kapının işi DAVRANIŞI sabitlemek; metnin kendisi `surface_text_shape`
 ///   ve vaat dili kapılarının kapsamında.
 void main() {
+  setUp(LiveJabController.debugResetCameraLock);
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late RuleSet ruleSet;

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show visibleForTesting;
+
 import 'package:jablab_engine/jablab_engine.dart';
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart';
@@ -119,8 +121,21 @@ final class LiveJabController {
     //
     // Bekleme N=1'de SIFIR: `_closing` null ise hiçbir gecikme eklenmez.
     // Nadir bir kusur, her açılıştaki gecikmeyle TAKAS EDİLMİYOR.
+    // ⚠️ KİLİT BİR OPTİMİZASYON, GARANTİ DEĞİL — ve SONSUZA BEKLEYEMEZ.
+    // Ölçüldü (J-195): `stop()`un future'ı hiç tamamlanmazsa (platform
+    // takılırsa) kilitsiz hâlde `already-running` alırdık; kilitli hâlde
+    // ise açılış SONSUZA KADAR bekler. İkincisi DAHA KÖTÜ: biri tipli bir
+    // hâl gösterir, diğeri ekranı sessizce dondurur. Bu yüzden bekleme
+    // SINIRLI; süre dolarsa yine de deneriz ve eklenti kendi tipli
+    // reddiyle döner — ürün onu zaten dürüstçe gösteriyor.
     final Future<void>? closing = _closing;
-    if (closing != null) await closing;
+    if (closing != null) {
+      try {
+        await closing.timeout(const Duration(seconds: 2));
+      } on Object catch (_) {
+        _closing = null;
+      }
+    }
 
     if (_running) {
       return const LiveCameraUnavailable(
@@ -404,6 +419,20 @@ final class LiveJabController {
   /// Her ders kendi controller'ını kuruyor ama cihazda **tek kamera** var;
   /// bu yüzden kilit örnek düzeyinde OLAMAZ.
   static Future<void>? _closing;
+
+  /// Süreç-geneli kilidi sıfırlar — **yalnız testler için.**
+  ///
+  /// Ölçüldü (J-195): static durum **testler arasında sızıyor.** Bir test
+  /// controller'ı bırakırken `stop()` çağırıyor; sahte kameranın gerçek
+  /// zamanlı gecikmesi widget testinin sahte saatinde **hiç ilerlemiyor**,
+  /// yani `_closing` **asla temizlenmiyor** ve bir sonraki testin `start()`i
+  /// sonsuza bekliyor. Üretimde bu olmaz (platform yanıtlar ya da uygulama
+  /// zaten kapanır) ama **testte bir zincir kapısını kırdı** ve o kapı
+  /// gerçek bir kusuru koruyordu.
+  ///
+  /// > **Static bir kilit koyan, ona bir sıfırlama da borçludur.**
+  @visibleForTesting
+  static void debugResetCameraLock() => _closing = null;
 
   /// ⚠️ **`async` DEĞİL — bilerek.**
   ///

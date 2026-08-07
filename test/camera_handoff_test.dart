@@ -49,6 +49,8 @@ import 'package:motion_camera/motion_camera.dart';
 ///   doğrulanması **cihaz turuna** ait.
 /// * İzin akışını, kamera donanım hatalarını.
 void main() {
+  setUp(LiveJabController.debugResetCameraLock);
+
   RuleSet rules() {
     // Motor kuralları burada sınanmıyor; controller'ın YAŞAM DÖNGÜSÜ sınanıyor.
     return RuleSet.fromJson(<String, dynamic>{

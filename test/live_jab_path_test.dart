@@ -25,6 +25,8 @@ import 'package:motion_core/motion_core.dart';
 /// çıktısı değil — cihaz kanıtı §7.3-7.7'de, kurucu-manuel. Bu ayrımı silmek
 /// en kolay sahte-ilerleme yolu olurdu (emülatör smoke'unun kendi dersi).
 void main() {
+  setUp(LiveJabController.debugResetCameraLock);
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late RuleSet ruleSet;
