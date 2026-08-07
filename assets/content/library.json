@@ -323,7 +323,8 @@
               "minutes": 14,
               "lockedBy": "no-opponent",
               "$lockedWhy": "Savunma sonrasi cevap, bir SALDIRIYA cevaptir. Golge calismasinda saldiri yok; olcebilecegimiz sey yalnizca kullanicinin kendi kendine yaptigi hareket sirasi olurdu. Bunu 'savunma refleksi' diye sunmak yalan olur.",
-              "lockedReason": "Answering a defence needs an opponent to answer. Shadow work can't provide one, so we won't score it."
+              "lockedReason": "Answering a defence means answering an attack, and in shadow work there is no attack. We could time the movement you make on your own — but calling that a defensive reflex would be a lie about what we measured, not just an imprecise score.",
+              "$lockedReasonWhyWorded": "Kullaniciya gorunen metin 2026-08-07'de GUCLENDIRILDI. Eskisi ('Shadow work can't provide one, so we won't score it') dogruydu ama $lockedWhy'in en keskin fikrini tasimiyordu: olcebilecegimiz sey kullanicinin KENDI hareket sirasi ve onu 'savunma refleksi' diye sunmak bir OLCUM YALANI olurdu — puanin kaba olmasi degil, olculenin baska bir sey olmasi. Kilit metni artik o ayrimi soyluyor."
             },
             {
               "id": "boxing.intermediate.footwork_combo",
@@ -333,7 +334,8 @@
               "minutes": 15,
               "lockedBy": "missing-reference",
               "$lockedWhy": "Adim kalitesi icin referans YOK: uc bagimsiz egitmenden footwork take'i toplanmadi (M-C-04). FEET_CROSSED tespit edilebiliyor ama 'iyi adim' olculemez — hata yakalamak ile beceri puanlamak ayni sey degil.",
-              "lockedReason": "We can spot crossed feet, but we haven't measured what good footwork looks like across enough coaches to grade it."
+              "lockedReason": "We can catch crossed feet: that is a fault, and faults are visible. Good footwork is a skill, and we have not collected takes from enough independent coaches to say what it looks like. Catching a fault and grading a skill are different jobs, and we will not let one stand in for the other.",
+              "$lockedReasonWhyWorded": "Kullaniciya gorunen metin 2026-08-07'de GUCLENDIRILDI. $lockedWhy'daki asil ayrim ('hata yakalamak ile beceri puanlamak ayni sey degil') yuzeye cikarildi: FEET_CROSSED CANLI ve calisiyor, eksik olan 'iyi adim' REFERANSI (M-C-04, uc bagimsiz egitmen take'i toplanmadi). Iki isi ayirmak, kullanicinin bugun neyin calistigini bilmesini sagliyor — kilit bir 'hicbir sey yok' beyani DEGIL."
             },
             {
               "id": "boxing.intermediate.fatigue",
