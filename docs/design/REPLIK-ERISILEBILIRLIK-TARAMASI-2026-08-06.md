@@ -121,3 +121,51 @@ bir şey gösteriyor.
    iki paralel temsil (cue-key vs `coachedNotScoredLabels()`) hangisi kanonik?
 5. **`setup.*`/`drill.*`/`summary.trend_*`** muhtemelen bilinçli içerik-öncü — ship
    kararı gerektirmiyor, yalnız DESIGN-AHEAD-OF-CODE'a not düşüldü (aşağıda).
+
+---
+
+# ✅ KAPANIŞ — 2026-08-07 (J-103 + J-104)
+
+> Bu tarama bir ÖLÇÜMDÜ; aşağısı onun UYGULANMASI. Taramanın altı sonucundan
+> beşi kapandı, biri koordinatöre gitti. **62 → 32 anahtar, ölü sayısı 0.**
+
+## Ne yapıldı
+
+| Tarama sonucu | Karar | Kanıt |
+|---|---|---|
+| ① `cue.low_light` ship edilmez | **SİLİNDİ** (sınıf b) — motorda ışık ölçümü alanı yok | asset'ten çıktı |
+| ② `cue.structural` gerçek sinyale karşılık geliyor ama hiç uğranmıyor | **CANLI (J-103)** — `_onEnvelope` "kimse yok" / "kişi var, okuma bozuk" dallarını ayırdı, ikincisi bu anahtarı söylüyor | `live_jab_path_test.dart` · commit `506d32c` |
+| ③ `cue.partial_analysis` için veri yok | **SİLİNDİ** (sınıf b) | asset'ten çıktı |
+| ④ `cue.coached_not_scored` çelişkisi (hangisi kanonik?) | **CUE TARAFI KAPANDI** — `SessionSummaryView` aynı cümleyi `coached-not-scored-note` ile GÖSTERİYOR; kullanıcının okuduğu kanonik, cue ölü ikizdi → silindi. Kalan yarısı (donmuş kabuğun içerikten beslenmesi) koordinatöre | `ICERIK-ONCU-REPLIKLER.md` §Silinenler |
+| ⑤ `setup.*`/`drill.*`/`trend_*` içerik-öncü | **TAŞINDI** (sınıf c) — metin `ICERIK-ONCU-REPLIKLER.md`de aynen duruyor, açılma koşulu isimli | 21 anahtar |
+| 🔴🔴🔴 EN ÖNEMLİ BULGU: ham teşhis dizesi sızıyor | **J-099'da KAPANDI**, J-103 dördüncü örneği kapattı | — |
+
+## Taramanın GÖREMEDİĞİ bir kusur daha çıktı (J-104)
+
+Bu tarama **grep tabanlıydı**: bir anahtarın `lib/`de dize sabiti olarak geçmesini
+"canlı" saydı. Bu ölçü **fazla iyimser** çıktı — aile dersi #6'nın kendisi:
+
+- **`cue.milestone`** grep'e göre canlıydı (`jabLabCueMapping`de duruyor). Gerçekte
+  `SessionNarrator.tick`e `eventCount` **hiç geçilmiyordu**, yani sayaç her zaman
+  0'a düşüyor ve `NarrationEvent.milestone` **hiçbir koşulda ateşlenemiyordu.**
+  Tetiği bağlandı (`_LiveState._completedJabs`).
+- Bağlanır bağlanmaz **ikinci bir kusur** ortaya çıktı: replik `"{n} in."`
+  şablonuydu ve çağıran `vars` geçmiyordu → ekrana **literal `{n} in.`** yazıldı.
+  `CueBook.unfilledPlaceholder` regex'i vardı ama yalnız TESTTE kullanılıyordu;
+  artık `say()` doldurulmamış şablonu **söylemiyor** (susuyor) ve testte de
+  yakalanıyor. *İki kusuru da grep değil, tetiği GERÇEKTEN ateşleyen bir yüzey
+  testi buldu.*
+- **`cue.corrected`/`streak`/`settled`** aynı sınıfta ve hâlâ AÇIK: eşlemede
+  duruyorlar, onları üreten hiçbir olay yok. Silinmediler (yetenek var, karar
+  ürün davranışı) — `$producers`ta **`mapped-not-fired`** diye isimle beyan
+  edildiler ve koordinatöre soruldu (J-105).
+
+## Bir daha olmaması için
+
+`test/live_cue_mapping_test.dart` → **ÖLÜ REPLİK YOK kapısı**. `cues.en.json`daki
+her anahtarın kodda bir dize-sabiti çağrısı olmak zorunda. 31. ölü replik
+eklenemez: yazan kişi üç seçenekten birini isimle seçmeye zorlanır.
+
+**Kapının beyan edilmiş sınırı:** statik erişilebilirliği ölçer, çalışma-zamanı
+ulaşılabilirliğini DEĞİL — `cue.milestone` bu kapıdan zaten geçiyordu. Onu ancak
+gerçek bir yüzey testi yakalar.

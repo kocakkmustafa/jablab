@@ -319,6 +319,26 @@ class _LiveState extends State<_Live> {
   RoundPlan? get _plan => widget.plan;
   IntervalPlan? get _ivl => widget.intervalPlan;
 
+  /// Kameranın o ana kadar SAYDIĞI tamamlanmış jab — anlatıcının sayım
+  /// kilometre taşı için okuduğu tek girdi.
+  ///
+  /// ⚠️ **Bu getter bir kusurun kapanışı (J-104).** `SessionNarrator.tick`
+  /// `eventCount` parametresini en baştan taşıyordu ve `milestoneEvery`
+  /// (25) testliydi — ama çağıran onu HİÇ geçmiyordu, yani `eventCount`
+  /// her zaman 0'a düşüyor ve `NarrationEvent.milestone` **hiçbir koşulda
+  /// ateşlenemiyordu**. `cue.milestone` bu yüzden "kodda eşlenmiş ama
+  /// kullanıcı asla duymuyor" sınıfındaydı: aile dersi #6'nın
+  /// (*"repliğin varlığı tetiğinin varlığı değil"*) tam örneği — ve grep
+  /// taraması bunu YAKALAYAMAZ, çünkü anahtar `jabLabCueMapping`de duruyor.
+  ///
+  /// Kamerasız derste 0 döner ve bu DOĞRU: sayacak bir şey yok, dolayısıyla
+  /// kilometre taşı da yok. Uydurulmuş bir eşik EKLENMEDİ — `milestoneEvery`
+  /// zaten `SessionNarrator`ın kendi sabiti.
+  int get _completedJabs {
+    final LiveJabState? jab = _jab;
+    return jab is LiveJabRunning ? jab.completedCount : 0;
+  }
+
   Duration get _segment {
     final IntervalPlan? ip = _ivl;
     if (ip != null) {
@@ -369,7 +389,8 @@ class _LiveState extends State<_Live> {
       // Dinlenme anlatılmaz saniye saniye; başında bir kez söylenir.
       if (_elapsed <= Duration.zero) events.add(NarrationEvent.rest);
     } else {
-      events.addAll(_narrator.tick(elapsed: _elapsed, total: _segment));
+      events.addAll(_narrator.tick(
+          elapsed: _elapsed, total: _segment, eventCount: _completedJabs));
     }
 
     Duration next = _elapsed + const Duration(seconds: 1);
@@ -403,7 +424,16 @@ class _LiveState extends State<_Live> {
 
     // Aynı anda birden çok olay düşerse SONUNCUSU söylenir: üst üste iki
     // cümle sesli koçta anlaşılmaz, kullanıcı ikisini de kaçırır.
-    final String? said = events.isEmpty ? null : widget.cues.say(events.last);
+    //
+    // ⚠️ `vars` ZORUNLU: `cue.milestone` "{n} in." şablonudur ve tetiği
+    // bağlandığı ilk anda ekrana LİTERAL "{n} in." yazdı (J-104'ün ikinci
+    // kusuru — tetik testi yakaladı). `{n}` sayımın kendisi, yani
+    // `eventCount` ile AYNI değer; ayrı bir sayaç tutmak ikisinin
+    // ayrışabileceği bir yol açardı.
+    final String? said = events.isEmpty
+        ? null
+        : widget.cues.say(events.last,
+            vars: <String, Object>{'n': _completedJabs});
     if (!mounted) return;
     setState(() {
       if (said != null) _line = said;

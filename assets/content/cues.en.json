@@ -101,11 +101,6 @@
       "Tracking isn't clean — holding off.",
       "Not confident enough to call that."
     ],
-    "cue.low_light": [
-      "Too dark to read your form.",
-      "Not enough light in here.",
-      "I need more light to judge."
-    ],
     "cue.structural": [
       "My tracking looks wrong — holding off.",
       "Not confident in what I'm seeing.",
@@ -113,9 +108,6 @@
     ]
   },
   "counting": {
-    "cue.count": [
-      "{n}"
-    ],
     "cue.halfway": [
       "Halfway.",
       "Half done."
@@ -177,13 +169,6 @@
       "Got you. Whenever you are.",
       "You're in frame. Ready?"
     ],
-    "cue.round_of": [
-      "Round {n} of {total}."
-    ],
-    "cue.next_up": [
-      "Next: {name}.",
-      "Coming up: {name}."
-    ],
     "cue.finished": [
       "Session done.",
       "That's the session.",
@@ -191,35 +176,6 @@
     ]
   },
   "$scoringHonesty": "J-033: egitmenler gard/kol pozisyonunda 36,7 derece ayrisiyor. Bu basliklar KOCLANIR ama SKORLANMAZ; tur sonunda kullaniciya soylenir.",
-  "summary": {
-    "cue.coached_not_scored": [
-      "Experienced coaches disagree on this, so we flag it but don't grade it."
-    ],
-    "cue.not_measured_power": [
-      "We don't measure punch power — a camera can't."
-    ],
-    "cue.trend_improving": [
-      "Your guard dropped less this round than last. That's your own trend, not a score."
-    ],
-    "cue.trend_worse": [
-      "Guard dropped more often this round. Usually that's fatigue, not technique."
-    ],
-    "cue.trend_flat": [
-      "About the same as last round."
-    ],
-    "cue.no_trend_yet": [
-      "Not enough rounds yet to call a trend."
-    ],
-    "cue.partial_analysis": [
-      "I could only read {pct} percent of this round. The rest isn't counted either way."
-    ],
-    "cue.scored_topics": [
-      "Graded this round: {list}."
-    ],
-    "cue.coached_topics": [
-      "Flagged but not graded: {list}."
-    ]
-  },
   "interval": {
     "$groupDoc": "HIIT araligi. Bu grup calisirken FORM repliklerinin susturuldugunu varsayar: yuksek tempoyu urun istedi, sonra 'formun bozuldu' demek kendi tasarimimiza ceza kesmek olur. Burada yalnizca ritim ve sayim konusulur.",
     "cue.burst_start": [
@@ -242,141 +198,58 @@
       "Next one coming."
     ]
   },
-  "setup": {
-    "$groupDoc": "Kamera ve alan dersi. Kullanici hareketsiz ve dinliyor, bu yuzden sinir tur-ici repliklerden genis. Bu grup KURULUM kosulunu tarif eder; form hukmu VERMEZ.",
-    "cue.setup_step_back": [
-      "Step back until I can see your feet.",
-      "A bit further back.",
-      "I need your whole body in frame."
-    ],
-    "cue.setup_center": [
-      "Move to the middle of the frame.",
-      "Centre yourself.",
-      "Slide over a little."
-    ],
-    "cue.setup_angle": [
-      "Turn slightly toward me.",
-      "A front-oblique angle reads your guard best.",
-      "Angle yourself about forty-five degrees."
-    ],
-    "cue.setup_light": [
-      "Face the light if you can.",
-      "Try not to stand against a window."
-    ],
-    "cue.setup_phone": [
-      "Prop the phone at hip height.",
-      "Waist height works best.",
-      "Lean it somewhere stable."
-    ],
-    "cue.setup_space": [
-      "Give yourself two steps in every direction.",
-      "Clear a little space around you."
-    ],
-    "cue.setup_done": [
-      "That's a good setup. Remember this spot."
-    ]
-  },
-  "drill": {
-    "$groupDoc": "Drill baslangic replikleri. Drill BASLAMADAN once, kullanici dururken soylenir — bu yuzden tur-ici sinirdan genis. Her drill'in hedefi tek.",
-    "cue.drill.guard_discipline": [
-      "Slow jabs. Only the other hand matters.",
-      "Forget speed. Watch the hand that stays home."
-    ],
-    "cue.drill.snap_back": [
-      "Throw and bring it straight back.",
-      "The return is the rep, not the punch."
-    ],
-    "cue.drill.stance_reset": [
-      "Reset your stance between each one.",
-      "Step out, step back, find the base."
-    ],
-    "cue.drill.footwork_basics": [
-      "Step and slide. Never cross.",
-      "Small steps. Feet never meet."
-    ],
-    "cue.drill.balance": [
-      "Punch, then hold your finish.",
-      "Freeze at the end of each one."
-    ],
-    "cue.drill.posture_reset": [
-      "Chest tall. Punch without folding.",
-      "Stay stacked through the shot."
-    ],
-    "cue.drill.combo_slow": [
-      "One, then two. No rush.",
-      "Half speed. Order over speed."
-    ],
-    "cue.drill.controlled_tempo": [
-      "Match my count. Not faster.",
-      "Stay on the beat."
-    ],
-    "cue.drill.straight_line": [
-      "Punch along a straight line.",
-      "Elbow follows the fist."
-    ],
-    "cue.drill.range_control": [
-      "Stay planted. Don't chase.",
-      "Punch from where you stand."
-    ]
-  },
   "$producers": {
-    "$doc": "Her replik grubunun BUGUN bir ureticisi var mi. Durum ANAHTAR duzeyinde de olabilir: bir grup 'awaiting-wiring' iken icindeki birkac anahtar canli olabilir. Grup duzeyinde 'bagli' demek buyuk yalan uretir — sesli koc kutuphanesinde bir anahtarin canli olmasi digerini canli yapmaz.",
+    "$doc": "Her replik anahtarinin BUGUN bir ureticisi var mi. Grup duzeyinde 'bagli' demek buyuk yalan uretir — bir anahtarin canli olmasi digerini canli yapmaz. J-104 (2026-08-07) bu blogu GERCEGE cekti: uretici ADI yazili olmasi uretici VAR demek degildi ('drill' grubu 'bound' yaziyordu, library.json'da drills alani hic yoktu).",
+    "$statusAnlami": {
+      "bound": "Kullanicinin BUGUN duyabildigi/gorebildigi — canli bir kod yolu bu anahtari cagiriyor.",
+      "mapped-not-fired": "Anahtar bir esleme tablosunda DURUYOR ama onu ateslecek olay hicbir yerde uretilmiyor. Grep 'canli' gosterir, kullanici asla gormez — aile dersi #6."
+    },
     "technique": {
       "by": "errors[].feedbackKey + techniques[].abortOnRetreat.feedbackKey",
       "status": "bound",
-      "$note": "cue.strike_not_extended bir HATA kodundan degil, girisim-kapatma sozlesmesinden (M-F-60) geliyor. Ayri yol, ayri beyan: 'technique grubu bagli' demek onu kapsamiyordu."
+      "$note": "cue.strike_not_extended bir HATA kodundan degil, girisim-kapatma sozlesmesinden (M-F-60) geliyor. Ayri yol, ayri beyan."
     },
     "noVerdict": {
-      "by": "errors[].feedbackKey + StrikingEngine bastirma kapilari",
-      "status": "bound"
-    },
-    "drill": {
-      "by": "curriculum.drills[].introCue",
-      "status": "bound"
+      "by": "errors[].feedbackKey + LiveJabController kapilari",
+      "status": "bound",
+      "$note": "cue.structural J-103'ten beri CANLI: LiveJabController._onEnvelope 'kimse yok' ile 'kisi var ama okuma bozuk' dallarini ayirip ikincisinde bu anahtari soyluyor. Once ikisine de tek hardcoded cumle basiliyordu ve ikincisinde YANLISTI."
     },
     "counting": {
       "by": "SessionNarrator → _Live ekrani",
-      "status": "awaiting-wiring",
-      "surface": "lib/app/session_narrator.dart",
+      "status": "bound",
+      "$note": "cue.milestone J-104'ten beri CANLI: _LiveState._completedJabs kamera sayimini narrator'a gecirıyor ve {n} vars ile DOLDURULUYOR. Once eventCount hic gecilmiyordu, yani milestone hicbir kosulda atesleneMİYORDU. cue.count SILINDI (sesli sayim; ses katmani yok, ekranda event-count zaten var) → docs/design/ICERIK-ONCU-REPLIKLER.md",
       "liveKeys": [
         "cue.halfway",
         "cue.last_ten",
-        "cue.last_five"
-      ],
-      "$note": "cue.count ve cue.milestone SAYIMA bagli; sayim kameradan gelir, kamera koprusu yok. Tur saati calisiyor ama yumruk sayilmiyor — bu yuzden ayni gruptaki uc anahtar canli, ikisi degil."
+        "cue.last_five",
+        "cue.milestone"
+      ]
+    },
+    "encouragement": {
+      "by": "—",
+      "status": "mapped-not-fired",
+      "$note": "NarrationEvent.corrected/streak/settled jabLabCueMapping'de duruyor ama bu uc olayi URETEN hicbir kod yolu yok: SessionNarrator.tick/interval bunlari asla emit etmiyor, _Live ekrani da elle eklemiyor. Yetenek MEVCUT (canli hat duzeltme kodunun kaybolusunu gorebilir) ama 'ne zaman ovulur' bir URUN DAVRANISI karari — koordinatore soruldu (J-105)."
     },
     "session": {
       "by": "SessionNarrator → _Live ekrani",
-      "status": "awaiting-wiring",
-      "surface": "lib/app/session_narrator.dart",
+      "status": "partial",
+      "$note": "round_start/round_end anlatici tick'inden CANLI (liveKeys, testle dogrulandi). rest ve finished EKRAN tarafindan elle ekleniyor — canli ama tick-suruculu degil. cue.setup_ok ise mapped-not-fired: NarrationEvent.sessionStart'i URETEN hicbir kod yolu yok. round_of/next_up SILINDI: birincisi ses katmani bekliyor (ekranda live-round-position zaten var), ikincisinin {name} kaynagi hic yok.",
       "liveKeys": [
         "cue.round_start",
         "cue.round_end"
-      ],
-      "$note": "rest/setup_ok/finished MOTOR tarafindan uretilecek olaylara bagli (seans sinirlari, dinlenme) — ekran su an tek tur kosuyor. round_of/next_up hic eslenmedi: cok turlu seans akisi yok."
-    },
-    "encouragement": {
-      "by": "StrikingEngine düzeltme sinyali",
-      "status": "awaiting-wiring",
-      "surface": "lib/shell_candidate/live_surface.dart",
-      "$note": "Olumlu sinyal 'duzeltmeyi GORDUM' der; gormek icin poz gerekir. Kamera koprusu gelene kadar bu grubun tek anahtari bile canli olamaz."
+      ]
     },
     "summary": {
-      "by": "SessionSummaryView",
-      "status": "awaiting-wiring",
-      "surface": "lib/shell_candidate/live_surface.dart",
-      "$note": "Ozet sabit metin tasiyor. Trend replikleri SEANS GECMISI ister; gecmis olmadan 'gecen turdan iyi' cumlesi kurulamaz."
+      "by": "SessionSummaryView (hardcoded metin)",
+      "status": "mapped-not-fired",
+      "$note": "Grup BOSALDI. Dokuz anahtarin besi silindi (ikiz: metin zaten SessionSummaryView'de ya da library.json'da CANLI), dordu icerik-oncu (turlar-arasi egilim hesabi yok). Kalan sifir anahtar — grup yapisi ileride egilim hesabi gelince geri doldurulmak uzere duruyor."
     },
     "interval": {
-      "by": "SessionNarrator (interval kipi)",
-      "status": "awaiting-wiring",
-      "surface": "lib/app/session_narrator.dart",
-      "$note": "Anlatici aralik kipini DESTEKLIYOR ve testli; onu suren HIIT ekrani yok. 'Kod var' ile 'kullanici duyuyor' ayni sey degil."
+      "by": "SessionNarrator (interval kipi) → _Live ekrani",
+      "status": "bound",
+      "$note": "_LiveState kipi PLANA gore seciyor (intervalPlan varsa SessionMode.interval); session_rounds_test bu dordunun gercekten konustugunu olcuyor. liveKeys YOK cunku [J-041] testi STEADY kipi kosturuyor — aralik kipinin kaniti ayri dosyada."
     },
-    "setup": {
-      "by": "kamera kurulum sihirbazi",
-      "status": "awaiting-surface",
-      "$note": "Sihirbazin KENDISI yok (shell_candidate/README 'Henuz yok' listesinde). Kamera dersi canli ama rehberlik metinleri sessiz."
-    }
+    "$silinenler": "cue.low_light · cue.partial_analysis · cue.next_up · cue.not_measured_power · cue.coached_not_scored · cue.count · cue.round_of · cue.scored_topics · cue.coached_topics · cue.trend_* (4) · setup.* (7) · drill.* (10) = 30 anahtar. Gerekce ve TASINAN METIN: docs/design/ICERIK-ONCU-REPLIKLER.md",
+    "$liveKeysAnlami": "liveKeys = SessionNarrator.tick()'in STEADY kipte gercekten urettigi olaylarin anahtarlari. session_narrator_test [J-041] bu listeyi anlaticiyi kosturarak DOGRULUYOR: beyan ile gercek arasinda fark varsa test kirmizi. Ekranin ELLE ekledigi olaylar (rest, sessionEnd) bu listeye GIRMEZ — ayri yol, ayri kanit."
   }
 }

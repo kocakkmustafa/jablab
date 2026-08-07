@@ -177,6 +177,18 @@ class CueBook {
         s = s.replaceAll('{${v.key}}', '${v.value}');
       }
     }
+    // DOLMAMIŞ ŞABLON SÖYLENMEZ (J-104 kusur #2). `cue.milestone` tetiği
+    // bağlandığı ilk anda ekrana literal "{n} in." yazdı: çağıran `vars`
+    // geçmiyordu ve bu sınıfın kendi `unfilledPlaceholder` regex'i yalnız
+    // TESTTE kullanılıyordu, çalışma zamanında hiçbir şeyi engellemiyordu.
+    //
+    // Fırlatmak yerine SUSMAK seçildi: eksik bir değişken bir içerik/çağrı
+    // kusurudur, kullanıcının seansını öldürmesi için bir sebep değil — ve
+    // burada susmanın maliyeti bir sayım anonsunu kaçırmak, HÜKÜM susması
+    // değil (o ayrı yuva, `noVerdictReason`, ve orada sessizlik yasak).
+    // Kusurun cihaza ulaşmaması testin işi: `session_narrator_test`
+    // içeriği tarayıp şablon taşıyan HER anahtarın doldurulduğunu zorluyor.
+    if (unfilledPlaceholder.hasMatch(s)) return null;
     return s;
   }
 

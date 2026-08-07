@@ -180,6 +180,55 @@ void main() {
       await c.dispose();
     });
 
+    test('SAYAÇ BİRİKİYOR — anlatıcının sayım girdisi gerçek (J-104)',
+        () async {
+      // ## Neden bu test var
+      //
+      // `_LiveState._completedJabs` bu sayacı okuyup
+      // `SessionNarrator.tick(eventCount:)`e geçiyor. O çağrı J-104'e kadar
+      // YOKTU: `eventCount` her zaman 0'a düşüyor ve `cue.milestone`
+      // hiçbir koşulda ateşlenemiyordu — oysa anahtar `jabLabCueMapping`de
+      // duruyordu, yani grep taraması ve ölü-replik kapısı ikisi de onu
+      // "canlı" sayıyordu (aile dersi #6).
+      //
+      // Burada sayacın GERÇEKTEN biriktiği ölçülüyor: sabit 0 olmadığı,
+      // yani anlatıcıya beslenen şeyin bir olgu olduğu.
+      //
+      // ## ⛔ NE ÖLÇÜLMEDİ — beyan ediyorum
+      //
+      // Kilometre taşı repliğinin (eşik 25) EKRANDA göründüğü. O yüzey
+      // testi yazıldı ve KOŞTURULAMADI: `session_rounds_test` süiti içinde
+      // 10 dakikalık zaman aşımına düşüyor, TEK BAŞINA 20 tekrarda 2
+      // saniyede bitiyor — yani maliyet süit etkileşiminde, hacimde değil.
+      // Sebebin ÜRÜNDE olmadığı ayrıca ölçüldü: motor profili DOĞRUSAL
+      // (100→800 kare toplam 23 ms, kare başına maliyet DÜŞÜYOR), yani
+      // uzun seansta biriken bir yavaşlama YOK. Kalan dikiş —
+      // `_completedJabs` → `tick(eventCount:)` — teftişle doğrulanıyor ve
+      // cihaz/simülatör turunda göz-doğrulaması bekliyor (J-104 açık borç).
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+      final List<LiveJabState> seen = <LiveJabState>[];
+      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+      await c.start();
+      // Aynı diziyi 6 kez, zaman ekseninde ÖTELEYEREK. Öteleme şart:
+      // damgaları tekrar göndermek faz makinesini geriye sarardı ve
+      // tekrarlar ayrı jab sayılmazdı.
+      for (int rep = 0; rep < 6; rep++) {
+        for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
+          cam.emit(_envelope(f));
+        }
+      }
+      await Future<void>.delayed(Duration.zero);
+      await sub.cancel();
+
+      final LiveJabRunning last = seen.whereType<LiveJabRunning>().last;
+      expect(last.completedCount, 6,
+          reason: 'altı sentetik jab gönderildi, sayaç ${last.completedCount} '
+              '— sayaç birikmiyorsa anlatıcıya geçen şey de sabit kalır ve '
+              'kilometre taşı asla ateşlenemez');
+      await c.dispose();
+    });
+
     test('BAŞLANGIÇ hâli ayrı — sıfır sayı GÖSTERİLMİYOR', () async {
       // İlk zarf gelmeden `completedCount` 0'dır ve sıfırı göstermek
       // "hiç yumruk atmadın" demektir; oysa henüz hiçbir şey ölçülmedi.
@@ -461,7 +510,7 @@ void _countSlotTests() {
 }
 
 /// Motorun jab olarak tanıdığı sentetik dizi (engine_test'in aynısı).
-List<PoseFrame> _jabSequence() {
+List<PoseFrame> _jabSequence({int repOffsetUs = 0}) {
   const SyntheticPoseBuilder b = SyntheticPoseBuilder();
   // engine_test'in gard/uzanma pozları — açı tabanlı (kol eklem açıları),
   // bilek koordinatı DEĞİL: motorun okuduğu şey açılar.
@@ -492,7 +541,7 @@ List<PoseFrame> _jabSequence() {
   const int stepUs = 33333; // ~30 fps
   final List<PoseFrame> out = <PoseFrame>[];
   for (int t = seq.startUs; t <= seq.endUs; t += stepUs) {
-    out.add(b.build(seq.poseAt(t), tUs: t));
+    out.add(b.build(seq.poseAt(t), tUs: repOffsetUs + t));
   }
   return out;
 }

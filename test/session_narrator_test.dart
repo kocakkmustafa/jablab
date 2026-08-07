@@ -173,6 +173,19 @@ void main() {
       expect(filled, isNotNull);
       expect(CueBook.unfilledPlaceholder.hasMatch(filled!), isFalse,
           reason: '$e: doldurulmamış yer tutucu kaldı — "$filled"');
+      expect(filled, contains('25'),
+          reason: '$e: yer tutucu kayboldu ama DEĞER de yok — '
+              'kullanıcı sayıyı hiç duymuyor');
+
+      // ⭐ NEGATİF İKİZ (J-104 kusur #2). `vars` GEÇİLMEZSE ne oluyor?
+      // Cevap 2026-08-07'ye kadar "ekrana literal `{n} in.` yazılıyordu"
+      // idi: `cue.milestone`un tetiği bağlandığı ilk anda yakalandı.
+      // Bu regex TESTTE vardı ama ÇALIŞMA ZAMANINDA hiçbir şeyi
+      // engellemiyordu — beyanla korumanın farkı. Artık `say()` şablonu
+      // SÖYLEMİYOR; susmak, şablon göstermekten dürüst.
+      expect(b.say(e), isNull,
+          reason: '$e: değişkensiz çağrıda ŞABLON döndü — '
+              'kullanıcı "{n} in." okur/duyar');
     }
   });
 
@@ -181,14 +194,19 @@ void main() {
     // gerçek çağrısıyla karşılaştırmazsak, beyan zamanla gerçeğin önüne geçer
     // ve dosya "bağlandı" derken kullanıcı sessizlik yaşar.
     //
-    // _Live ekranı eventCount VERMEDEN tick ediyor (yumruk sayısı kameradan
-    // gelir, köprü yok) — o yüzden sayıma bağlı replikler canlı DEĞİL.
+    // ⚠️ `eventCount` ARTIK GEÇİLİYOR (J-104). Bu satır eskiden yoktu ve
+    // yorumu *"_Live ekranı eventCount VERMEDEN tick ediyor — o yüzden
+    // sayıma bağlı replikler canlı DEĞİL"* diyordu. Doğruydu: ekran gerçekten
+    // geçmiyordu, yani `cue.milestone` HİÇBİR koşulda ateşlenemiyordu.
+    // Kamera köprüsü (J-096) sayımı getirdi ama çağrı güncellenmemişti;
+    // `_LiveState._completedJabs` o boşluğu kapattı. Burada sayacın ARTAN
+    // hâli taklit ediliyor — ekranın yaptığı da bu.
     final SessionNarrator n = SessionNarrator(mode: SessionMode.steady);
     const Duration total = Duration(minutes: 3);
     final Set<NarrationEvent> screenDriven = <NarrationEvent>{};
     for (int s = 0; s <= total.inSeconds; s++) {
-      screenDriven
-          .addAll(n.tick(elapsed: Duration(seconds: s), total: total));
+      screenDriven.addAll(
+          n.tick(elapsed: Duration(seconds: s), total: total, eventCount: s));
     }
     final Set<String> actuallyLive = screenDriven
         .map((NarrationEvent e) => jabLabCueMapping[e])

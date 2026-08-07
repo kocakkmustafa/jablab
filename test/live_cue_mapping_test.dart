@@ -59,6 +59,58 @@ void main() {
     return keys;
   }
 
+  test('ÖLÜ REPLİK YOK — her anahtarın bir çağrı yolu var (J-104 kapısı)', () {
+    // ## Neden bu kapı var
+    //
+    // 2026-08-06 taraması `cues.en.json`in 62 anahtarından **32'sinin**
+    // hiçbir kod yolundan çağrılmadığını ölçtü (%52). Sevk edilen bir
+    // varlıkta duran her replik, uygulamanın o cümleyi söyleyebildiğini
+    // İDDİA EDER — söyleyemiyorsa beyan yanlıştır (M-F-186'nın veri tarafı).
+    // J-104 turunda 30'u temizlendi; bu kapı 31.'nin sessizce eklenmesini
+    // engelliyor: yeni bir replik yazan kişi ya tetiğini yazar, ya
+    // `docs/design/ICERIK-ONCU-REPLIKLER.md`ye taşır — kararı İSİMLE verir.
+    //
+    // ## Neden yalnız DİZE SABİTLERİ taranıyor
+    //
+    // Ham `cue.` geçişini aramak bir yanlış-negatif üretirdi: bu depoda
+    // replik anahtarları YORUMLARDA sıkça anılıyor (bu yorumun kendisi
+    // dahil). Bir anahtarın bir açıklamada geçmesi, onu ateşleyen kodun var
+    // olduğunu KANITLAMAZ — aile dersi #6'nın tam kendisi. Bu yüzden yalnız
+    // tırnak içindeki hâli sayılıyor: Dart `'cue.x'` ve JSON `"cue.x"`.
+    //
+    // ## Bu kapının GÖREMEDİĞİ şey — beyan ediyorum
+    //
+    // "Bir eşleme tablosunda duruyor" ile "kullanıcı duyuyor" AYRI şeyler.
+    // `jabLabCueMapping`e yazılmış bir anahtar bu kapıdan geçer ama onu
+    // ateşleyen olay hiç üretilmiyor olabilir (`cue.corrected`/`streak`/
+    // `settled` bugün tam olarak bu durumda — `cues.en.json`in
+    // `$producers` bloğunda `mapped-not-fired` diye İSİMLE beyan edildi).
+    // Bu kapı statik erişilebilirliği ölçer, çalışma-zamanı ulaşılabilirliği
+    // DEĞİL; ikincisi ancak `session_rounds_test`in kilometre-taşı testi
+    // gibi gerçek bir yüzey testiyle ölçülür.
+    final Set<String> referenced = <String>{};
+    final RegExp literal = RegExp(r'''['"](cue\.[a-z_.]+)['"]''');
+    for (final String dir in <String>['lib', 'assets/rulesets', 'packages']) {
+      for (final FileSystemEntity f
+          in Directory(dir).listSync(recursive: true)) {
+        if (f is! File) continue;
+        if (!f.path.endsWith('.dart') && !f.path.endsWith('.json')) continue;
+        for (final RegExpMatch m in literal.allMatches(f.readAsStringSync())) {
+          referenced.add(m.group(1)!);
+        }
+      }
+    }
+
+    final List<String> dead = (cueKeys().difference(referenced)).toList()
+      ..sort();
+    expect(dead, isEmpty,
+        reason: 'ÖLÜ REPLİK: $dead — bu anahtar(lar) `cues.en.json`da '
+            'duruyor ama hiçbir kod yolu çağırmıyor. Üç seçenekten birini '
+            'İSİMLE seç: (a) tetiğini yaz · (b) sil (yetenek yok ya da '
+            'canlı bir yol aynı şeyi zaten söylüyor) · (c) sil ve metni '
+            '`docs/design/ICERIK-ONCU-REPLIKLER.md`ye taşı (yüzeyi yok).');
+  });
+
   test('kural setindeki HER kod eşlemede var', () {
     final Set<String> missing =
         ruleSetCodes().difference(jabLabIssueCueMapping.keys.toSet());
