@@ -288,6 +288,7 @@ final class TrackedComponent {
     required this.displayName,
     required this.graded,
     this.gradedWhyNot,
+    this.surfacedKeyword,
   });
 
   factory TrackedComponent.fromJson(Map<String, dynamic> j) {
@@ -306,6 +307,7 @@ final class TrackedComponent {
       displayName: j['displayName'] as String,
       graded: graded,
       gradedWhyNot: why,
+      surfacedKeyword: j['surfacedKeyword'] as String?,
     );
   }
 
@@ -340,6 +342,15 @@ final class TrackedComponent {
   /// yer.** Yani gerekçeyi yazmak zorunda olmak, yanlış gerekçeyi de
   /// görünür kıldı.
   final String? gradedWhyNot;
+
+  /// Bu sınırın KULLANICI-YÜZÜ olduğunu beyan eder ve dürüstlük kutusundaki
+  /// maddeyi bulmaya yarayan anahtar sözcüğü taşır (J-149).
+  ///
+  /// Ölçüt **beklenti**: kullanıcı bu bileşenin puanlandığını varsayar mı?
+  /// Ürün onu sayıyor/gösteriyorsa evet — o zaman sınır beyan edilmeli.
+  /// `null` ise bileşen **iç gerekçe** sınıfındadır: sessiz değil, sınıfı
+  /// yazılı. Her sınırı her yerde söylemek de gürültüdür.
+  final String? surfacedKeyword;
 }
 
 final class RuleSet {

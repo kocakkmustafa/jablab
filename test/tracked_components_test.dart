@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab_engine/jablab_engine.dart';
@@ -78,6 +81,52 @@ void main() {
       if (c.graded) continue;
       expect(c.gradedWhyNot, isNotNull, reason: c.id);
       expect(c.gradedWhyNot!.trim(), isNotEmpty, reason: c.id);
+    }
+  });
+
+  test('YÜZEY beyanı olan bileşen dürüstlük kutusunda GERÇEKTEN var (J-149)',
+      () {
+    // ## Ölçüt: kullanıcı bunun puanlandığını VARSAYAR MI?
+    //
+    // Her sınırı her yerde beyan etmek de gürültüdür (M-F-331). Ayırıcı
+    // soru **ölçülebilir**: ürün o bileşeni sayıyor/gösteriyor mu?
+    //
+    // * `punchMechanics` → **evet**: bu bir boks uygulaması ve ürün
+    //   **yumruk sayıyor**, yani mekaniğinin değerlendirildiği varsayılır.
+    //   Karşılıksız bir beklenti var → sınır **yüzeye taşındı**.
+    // * `recovery` → **hayır**: ürün toparlanmayı hiçbir yerde
+    //   göstermiyor; beyan olmayan bir beklentiye cevap olurdu. İç gerekçe.
+    //
+    // Cümle **tek yerde** yaşıyor (`honesty.notMeasured`); burada yalnız
+    // anahtar sözcük duruyor ve bu kapı ikisinin bağlı kaldığını ölçüyor.
+    // `surfacedKeyword` taşımayan bir `graded:false` bileşeni **iç
+    // gerekçe** demektir — sessiz değil, sınıfı yazılı.
+    //
+    // ⚠️ NE ÖLÇMÜYOR: anahtar sözcüğün geçmesi, **doğru iddianın**
+    // yapıldığını kanıtlamaz — yalnız beyanın kaybolmadığını.
+    final Map<String, dynamic> lib = (jsonDecode(
+            File('assets/content/library.json').readAsStringSync()) as Map)
+        .cast<String, dynamic>();
+    final Map<dynamic, dynamic> boxingJson =
+        (lib['disciplines'] as List<dynamic>).firstWhere(
+            (dynamic d) => (d as Map)['id'] == 'boxing') as Map<dynamic, dynamic>;
+    final List<String> notMeasured =
+        ((boxingJson['honesty'] as Map)['notMeasured'] as List<dynamic>)
+            .cast<String>();
+
+    final List<TrackedComponent> declared = boxing.trackedComponents
+        .where((TrackedComponent c) => c.surfacedKeyword != null)
+        .toList();
+    expect(declared, isNotEmpty,
+        reason: 'hiçbir bileşen yüzey beyanı taşımıyor — J-149 en az birini '
+            'taşıtıyor (punchMechanics)');
+
+    for (final TrackedComponent c in declared) {
+      expect(notMeasured.any((String t) => t.contains(c.surfacedKeyword!)),
+          isTrue,
+          reason: '${c.id}: yüzeye taşındığı BEYAN EDİLDİ ama dürüstlük '
+              'kutusunda "${c.surfacedKeyword}" geçen bir madde YOK — '
+              'sarkan bir yüzey beyanı (J-149)');
     }
   });
 

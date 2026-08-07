@@ -1145,7 +1145,9 @@
       "displayName": "Punch mechanics",
       "graded": false,
       "gradedWhyNot": "The arm is where coaches disagree most, so the punch path is coached rather than graded.",
-      "$gradedWhy": "⚠️ DUZELTME (J-147). ILK YAZDIGIM GEREKCE YANLISTI: 'No reference set has been collected for punch mechanics.' — references.jab VAR (3 bagimsiz kaynak, 11/11 attested). Gercek sebep kural setinin KENDI belgesinde yaziliydi: references.jab.$splitRule — 'jabin KENDISI olan ONCU KOL, egitmenlerin EN COK ayristigi yer' — ve $productEffect: jab sirasinda TABAN ve GOVDE skorlanabilir, GARD/KOL ile ilgili her hukum (oncu kolun uzanma yolu DAHIL) koclanir ama SKORLANMAZ. Yani sebep 'referans yok' degil 'referans VAR ve ayrisma orada'. Kendi kuralimi (beyandan turet, icat etme) koyduktan bir saat sonra ihlal ettim; yakalayan sey gerekcenin YUZEYE ulasip ulasmadigini olcmek oldu."
+      "$gradedWhy": "⚠️ DUZELTME (J-147). ILK YAZDIGIM GEREKCE YANLISTI: 'No reference set has been collected for punch mechanics.' — references.jab VAR (3 bagimsiz kaynak, 11/11 attested). Gercek sebep kural setinin KENDI belgesinde yaziliydi: references.jab.$splitRule — 'jabin KENDISI olan ONCU KOL, egitmenlerin EN COK ayristigi yer' — ve $productEffect: jab sirasinda TABAN ve GOVDE skorlanabilir, GARD/KOL ile ilgili her hukum (oncu kolun uzanma yolu DAHIL) koclanir ama SKORLANMAZ. Yani sebep 'referans yok' degil 'referans VAR ve ayrisma orada'. Kendi kuralimi (beyandan turet, icat etme) koyduktan bir saat sonra ihlal ettim; yakalayan sey gerekcenin YUZEYE ulasip ulasmadigini olcmek oldu.",
+      "surfacedKeyword": "Punch mechanics",
+      "$surfacedWhy": "J-149: bu sinir KULLANICI-YUZU olmali (koordinator hukmu 09:55): urun yumruk sayiyor, yani mekaniginin degerlendirildigi VARSAYILIR. Cumle library.json honesty.notMeasured'da YASIYOR (tek yer); burada yalnizca ANAHTAR sozcuk duruyor ve kapi ikisinin bagli kaldigini olcuyor. `surfacedKeyword` TASIMAYAN bir graded:false bileseni IC GEREKCE demektir."
     },
     {
       "id": "combinationAccuracy",
@@ -1159,7 +1161,8 @@
       "displayName": "Recovery",
       "graded": false,
       "gradedWhyNot": "Hand recovery is coached during the round, not scored after it.",
-      "$gradedWhy": "LEAD_HAND_NOT_RECOVERED bir hata kodu ve repligi var (koclanir). SKORLANMAMASININ kaynagi references.jab.$productEffect: gard/kol ile ilgili her hukum koclanir ama skorlanmaz. J-147'de kaynak ADIYLA baglandi."
+      "$gradedWhy": "LEAD_HAND_NOT_RECOVERED bir hata kodu ve repligi var (koclanir). SKORLANMAMASININ kaynagi references.jab.$productEffect: gard/kol ile ilgili her hukum koclanir ama skorlanmaz. J-147'de kaynak ADIYLA baglandi.",
+      "$surfacedWhy": "J-149: yuzeye TASINMADI ve bu bir karar: urun toparlanmayi hicbir yerde gostermiyor, yani kullanici puanlandigini VARSAYMIYOR. Olmayan bir beklentiye cevap vermek gurultudur (M-F-331). Ic gerekce."
     },
     {
       "id": "timing",
