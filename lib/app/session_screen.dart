@@ -727,16 +727,31 @@ extension on _LiveState {
 
     final LiveJabState? jab = _jab;
     if (widget.liveJab == null) {
-      // KAMERASIZ ders — hâlâ doğru olan eski cümle.
+      // KAMERASIZ ders. ⚠️ AMA HEPSİ SAATLİ DEĞİL (J-159).
+      //
+      // Cümle *"This lesson runs on the clock"* diyordu ve **dersin saati
+      // olup olmadığına bakmıyordu.** Ölçüm: dört ders (`camera` ·
+      // `stance` · `cross` · `one_two`) hem kamerasız hem **plansız** —
+      // `_Live.initState` planı olmayan derste ticker'ı **hiç kurmuyor**
+      // (`if (_plan == null && _ivl == null) return;`). Yani o dört derste
+      // ekran **var olmayan bir saati** anlatıyordu.
+      //
+      // Aynı kusur sınıfı J-158'le kardeş: orada saatin YOKLUĞU bir
+      // repliği ulaşılamaz yapıyordu, burada aynı yokluk bir cümleyi
+      // YANLIŞ yapıyor.
+      final bool timed = _plan != null || _ivl != null;
       return _bucketed(
         LiveHonestyBucket.none,
         LiveCoachSurface(
           state: LiveState.noVerdict,
           eventCount: null,
           narration: _line,
-          noVerdictReason:
-              'This lesson runs on the clock — nothing is being judged. '
-              'The round timer and the voice coach both work.',
+          noVerdictReason: timed
+              ? 'This lesson runs on the clock — nothing is being judged. '
+                  'The round timer and the voice coach both work.'
+              : 'Nothing is being judged here, and there is no clock '
+                  'either. Work at your own pace and move on when you are '
+                  'done.',
           preview: const SkeletonPreview(
             state: LiveState.noVerdict,
             bucket: LiveHonestyBucket.none,
