@@ -1101,9 +1101,9 @@
     "references.stance.agreementMedian": "rapor sayisi; kod okumuyor",
     "references.stance.*.zeroAtDeg": "skorlama acilmadan tuketilmiyor (K8)",
     "techniques.*.scheduledPhase": "faz siralamasi makinede; alan belge amacli",
-    "drills.*.durationSec": "sure UI'da sabit; config'ten okunmuyor",
     "references.stance.leadSide": "referansin uretildigi oncu taraf (3/3 orthodox). Kod okumuyor: motor oncu tarafi HER KARE geometrik olarak kendisi cozuyor (M-F-06), referanstan devralmiyor — devralsaydi southpaw kullanici yanlis tarafa gore olculurdu.",
-    "references.stance.sourceArtifact.inspected": "denetlenen artefaktin adi — koken kaydi; kod okumuyor, test yalnizca boundTo ve gerekce alanlarini zorluyor."
+    "references.stance.sourceArtifact.inspected": "denetlenen artefaktin adi — koken kaydi; kod okumuyor, test yalnizca boundTo ve gerekce alanlarini zorluyor.",
+    "drills.*.durationSec": "sure UI'da sabit; config'ten okunmuyor. ⚠️ J-148 GENISLETMESI: `RuleSet.fromJson` aslinda drills dizisinin TAMAMINI okumuyor (id/displayKey/durationSec hicbiri) — id ve displayKey bu kapidan gecer cunku ayni ADLAR baska siniflarda okunuyor (TechniqueConfig.displayKey), yani muafiyet ad-cakismasindan geliyor, okunuyor olmalarindan DEGIL. Eksik bir beyan yanlis olandan sinsidir: `displayKey`e canli sanip guvenilebilirdi. SILINMEDI — bu gece 'kimse okumuyor' olcumunde IKI KEZ yanildim (J-145), o yuzden SILME esigi BEYAN esiginden yuksek. Curriculum ile cakisan tek alan `durationSec` ve degerler bugun ESIT; esit kalmasini `drill_consistency_test` zorluyor. 🪤 VE BU ANAHTARIN BICIMI MAKINE-OKUR: reference_contract_test anahtarin SON nokta-parcasini yaprak adi sayiyor. Once anahtari 'drills (TUM DIZI)' diye yeniden adlandirmistim — insana daha dogru, makineye OKUNMAZ. Anahtar makineye, DEGER insana konusur."
   },
   "$testEnforcedFields": {
     "$doc": "YALNIZ TESTIN okudugu alanlar. Olu DEGILLER — bir degismezi mekanik olarak zorluyorlar; ama urun davranisini da SURMUYORLAR. Ucuncu durum olarak ayri tutuluyor cunku ikisini karistirmak iki yonde de yanlis: bunlari 'olu' sayip silmek kapiyi kaldirir, 'canli' sayip guvenmek ise calismayan bir davranisa guvenmek olur.",
