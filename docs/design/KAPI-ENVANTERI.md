@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 213/213 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 218/218 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -135,6 +135,29 @@ cümle sessizce yalan olur.
 
 **Ölçüt: bir cümle sevk edildiyse, onu yanlışa çevirecek en MAKUL değişikliği
 sor. Makulse, kapı gerekir.**
+
+### 🔬 Kapıların kendi ARAÇLARI — iki tuzak ve bir denetim (J-139/J-140)
+
+Bir kapı doğru şeyi ölçebilir ve **aracı bozuk olduğu için** yine de yeşil
+öter. Bu gece **beş** araç hatası oldu; hepsinde çıktı `0` idi, yani
+*"ihlal yok"* diye okunacaktı:
+
+| tuzak | nasıl yakalandı |
+|---|---|
+| yanlış `cwd` (iki kez) | **vakum kapısı** (*>30 dize bekleniyor*) |
+| dar regex (*"0 kanıt"*) | **ham veriye dönmek** |
+| **`find.byType` alt sınıfları eşleştirmez** — `FilledButton`ı `ButtonStyleButton` diye aramak HER ZAMAN 0 döndürür | **pozitif ikiz** (1 bekleyen dal) |
+| kaba regex bir dosyayı *"pozitif dalı zayıf"* diye işaretledi | negatiflerin **ne olduğuna** bakmak (9'u `takeException(), isNull` — kendi kendini doğrular) |
+
+> **Vakum kapısı** *"hiç bulamadım"*ı yakalar; **pozitif ikiz** *"aracım bozuk"*u.
+> İkisi farklı şeyi ölçüyor ve **sıfır bekleyen bir kapı, bozuk aracı asla
+> göstermez.**
+
+**Denetim (J-140): 25 test dosyasının hepsinde pozitif dal var.** `find.byType`
+kullanımlarının tamamı somut widget'lara ya da sürükleme hedeflerine ait —
+eşleşmeseler zaten fırlarlardı. **Kapıya bağlanmadı:** *"her dosyada pozitif
+iddia olsun"* kuralı mekanik olarak ölçülemiyor (regex'in kendisi bu turda
+yanlış bayrak kaldırdı) ve sınıfı **ölçüm yöntemi**. Kayıt, kapı değil.
 
 ### ⭐ Yeni araç: TERS NEGATİF İKİZ
 
