@@ -146,6 +146,7 @@
             {
               "id": "boxing.conditioning.r3",
               "displayName": "3 x 3 minute rounds",
+              "teach": "Three rounds of three minutes, ninety seconds between them. That shape is not a style choice — the total time this lesson claims is twelve minutes, nine of them working, so the rest falls out of the arithmetic.\n\nRound one is easy and that is the trap: the pace you set there is the pace you have to pay for in round three. Start slower than feels right.\n\nUse the rest. Ninety seconds is long enough to get your breath fully back, and coming back to a round already tired teaches your body a shape you do not want.\n\nThe clock runs whether or not the camera can read you. If it loses you it says so, and the round keeps going.",
               "techniques": [
                 "jab",
                 "cross"
@@ -169,6 +170,7 @@
             {
               "id": "boxing.conditioning.tempo",
               "displayName": "Tempo control",
+              "teach": "Ten minutes, one round, no break — and the missing break is the point.\n\nRest resets the drift that fatigue puts into your timing, and that drift is exactly the thing this lesson is about. Break it into pieces and you measure a fresh boxer three times instead of a tiring one once.\n\nHold one pace. Not your fastest and not a crawl: the speed you could still be throwing at minute nine. Most people find it about two thirds of what they started with.\n\nWe read tempo from how long the punch takes to extend, not from how fast anything moves across the screen. That is why a slow arm close to the camera and a quick one far away do not fool it.",
               "techniques": [
                 "jab",
                 "cross"
@@ -189,6 +191,7 @@
             {
               "id": "boxing.conditioning.r5",
               "displayName": "Five minutes",
+              "teach": "One round, five minutes. Longer than a boxing round on purpose — this is conditioning, not a fight.\n\nSomewhere past minute three the shape starts to go before the effort does. Hands sit a little lower, the return gets a little lazy, the feet stop resetting. Nothing dramatic, and that is why it is worth watching for.\n\nWhen you notice it, do not speed up to make up for it. Slow down until the shape comes back. A clean minute is worth more here than two ragged ones.\n\nNo rest, because there is no second round to rest for.",
               "focus": "conditioning",
               "minutes": 5,
               "techniques": [
@@ -207,6 +210,7 @@
             {
               "id": "boxing.conditioning.r10",
               "displayName": "Ten minutes",
+              "teach": "Ten minutes of work, split into three rounds with rest between them.\n\nTwo hundred seconds a round is arithmetic, not tradition: the progress gate for this lesson asks for ten minutes of work and the lesson declares three rounds. It is worth knowing that the same sum, done independently for the twenty minute lesson, lands on the same round length.\n\nThe rest is a ratio borrowed from the three by three lesson, not something we measured. We are telling you that because a number you cannot check should at least come with a note saying where it came from.\n\nAim to finish round three looking like round one. That is the whole exercise.",
               "focus": "conditioning",
               "minutes": 10,
               "techniques": [
@@ -229,6 +233,7 @@
             {
               "id": "boxing.conditioning.r20",
               "displayName": "Twenty minutes",
+              "teach": "Six rounds, twenty minutes of work. The longest thing in this course.\n\nSixty seconds between rounds — the corner-break convention, chosen rather than measured. Short enough that fatigue carries across, which is the point of a long session.\n\nBy round four you will find out which part of your shape goes first. For most people it is the rear hand, then the return, then the feet. Learning your own order is more useful than any score we could print.\n\nLong enough that the app's own tracking gets tested too — it will tell you if it loses you.",
               "focus": "conditioning",
               "minutes": 20,
               "techniques": [
@@ -251,6 +256,7 @@
             {
               "id": "boxing.conditioning.hiit",
               "displayName": "Interval burst",
+              "teach": "Twelve bursts of thirty seconds, thirty seconds of recovery between each. Six minutes of work inside twelve minutes of clock.\n\nGo hard in the burst. Genuinely hard — this is the one lesson where pace beats polish.\n\nAt that intensity your shape will drift, and that is expected rather than a failure: we asked you for a tempo that costs shape. Take the corrections you see here as information about where your limit is, not as a verdict on the round.\n\nThe thirty-thirty cycle is a common starting split, not a measurement of ours. If it is too much, take the burst at three quarters rather than shortening it — keeping the clock honest matters more than the intensity.",
               "focus": "conditioning",
               "minutes": 12,
               "techniques": [
@@ -266,11 +272,13 @@
                 "planProvenance": "arithmetic",
                 "$planBasis": "KOORDINATOR KARARI (M-F-149): `minutes:12` TOPLAM otorite + 30/30 dongu. 12 x (30sn patlama + 30sn toparlanma) = 720 sn = 12 dk TOPLAM; calisma 12x30 = 360 sn = 6 dk. Otorite secimi gerekcesi: HIIT\"in TUR KIMLIGI kisa-toplam yuksek-yogunluktur — kapi-otorite yolu 24 dakikalik bir \"hiit\" uretirdi ve blurb\"un \"short intervals with short rest\" beyanini cignerdi. 30/30 baslangic-guvenli standart dongu ve cue kadansina oturuyor. Aritmetik TAM; icat YOK.",
                 "$planBoundary": "30/30 secimi bir KONVANSIYON (baslangic-guvenli standart dongu), olculmus bir esik degil. Kapi gecilebilirligini etkilemez (kapi calisma suresini sayar) ama dersin zorlugunu belirler — insan-antrenor dogrulamasi bekliyor."
-              }
+              },
+              "$teachBoundary": "Bu metin ONCE 'form koclugu burada susar' diyordu — ve KODDA OYLE BIR SEY YOK (J-119). cues.en.json'un interval grup notu bunu VARSAYIYOR ('Bu grup calisirken FORM repliklerinin susturuldugunu varsayar') ama _coachSurface aralik kipinde de r.cue'yu aynen ciziyor. Metin KODA uyduruldu, kod metne DEGIL: olmayan bir davranisi ogretmek, gecenin bes kez yakaladigi kusur sinifinin ta kendisi olurdu. Celiski koordinatore tasindi."
             },
             {
               "id": "boxing.conditioning.technique_round",
               "displayName": "Technique round",
+              "teach": "Three rounds of three minutes, and the only kind of round where the form feedback stays on the whole time.\n\nThat makes it the slowest lesson here, and it should be. You are not trying to fit punches into the time; you are trying to make each one the same as the last.\n\nThere is a real tension in leaving feedback on continuously, and we would rather name it than hide it: being corrected on every repetition can make you lean on the correction instead of learning the movement. Today that tension is theoretical — the correction only speaks when the camera can read you, and the shape of it will be worth revisiting once it does so on a real device.\n\nNinety seconds of rest, which is generous for the work. Here the rest is less about breath and more about resetting, so the next round starts from your shape rather than the last round's drift.",
               "focus": "conditioning",
               "minutes": 9,
               "techniques": [
@@ -347,6 +355,7 @@
             {
               "id": "boxing.intermediate.fatigue",
               "displayName": "Technique under fatigue",
+              "teach": "Four rounds of five minutes. Long rounds, deliberately — the same twenty minutes split into six shorter rounds would just be the twenty minute lesson again.\n\nDo not change pace to survive it. The point is to hold one pace long enough that your technique, not your will, becomes the limit.\n\nSixty seconds of rest, kept short on purpose. Fatigue has to carry from one round to the next or there is no trend to see.\n\nWhat you are looking for is not whether you finish. It is which thing goes first, and how early. That answer is yours and it does not need a number attached to it.",
               "focus": "conditioning",
               "minutes": 20,
               "techniques": [
