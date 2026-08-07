@@ -174,6 +174,34 @@ void main() {
             '$silent');
   });
 
+  test('VAR OLMAYAN MEKANİZMA anlatılmıyor — "unlock" (J-124)', () {
+    // ## Yayın envanterinin ilk bulgusu, kapıya çevrildi
+    //
+    // `_recordedNoteText()` kullanıcıya *"Every progress gate also asks how
+    // much of the session the camera could actually analyse"* diyordu.
+    // Ölçüldü: **ilerleme kapısı diye bir şey YOK** — `unlock` sözcüğü tüm
+    // depoda yalnız o cümlede geçiyordu, içerikte gate alanı yok,
+    // `workedSecondsFor` hiç çağrılmıyor. Yani cümle kullanıcıya VAR
+    // OLMAYAN bir mekanizmayı öğretiyordu.
+    //
+    // Bu kapı o sınıfı tutuyor: `unlock` bir MEKANİZMA sözcüğü ve ürün
+    // dilinde ancak o mekanizma varsa yeri var. `numericScoresUnlocked`
+    // (K8 skor kapısı) AYRI ve gerçek — o yüzden kural dize sabitlerine
+    // bakıyor, tanımlayıcılara değil.
+    final List<String> hits = <String>[];
+    final RegExp mech = RegExp(r'\bunlock', caseSensitive: false);
+    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+      if (f is! File || !f.path.endsWith('.dart')) continue;
+      for (final String str in dartStrings(f.readAsStringSync())) {
+        if (mech.hasMatch(str)) hits.add('${f.path}: "$str"');
+      }
+    }
+    expect(hits, isEmpty,
+        reason: 'kullanıcıya var olmayan bir kilit-açma mekanizması '
+            'anlatılıyor: ${hits.join(" · ")}. Böyle bir kapı yazılırsa bu '
+            'testin kapsamı da değişmeli — cümle ondan ÖNCE gelemez.');
+  });
+
   test('İTHAL EDİLEN kabuk sınıflarında VAAT DİLİ YOK (J-123)', () {
     // ## Kategori düzeltmesi: "donmuş" konum değil, ERİŞİM
     //

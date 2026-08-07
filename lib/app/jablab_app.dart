@@ -376,13 +376,36 @@ class _RootState extends State<_Root> {
   }
 
   /// Kaydedilen sürenin ders açmadığını söyleyen not — yalnız kayıt varken.
+  ///
+  /// ## ⚠️ İKİ İDDİA BAYATLAMIŞTI (J-124, yayın envanterinin ilk bulgusu)
+  ///
+  /// Eski metin şunu diyordu: *"Every progress gate also asks how much of
+  /// the session the camera could actually analyse, and the camera is not
+  /// connected."* İkisi de ÖLÇÜLDÜ ve ikisi de YANLIŞTI:
+  ///
+  /// * **İlerleme kapısı diye bir şey YOK.** `unlock` sözcüğü tüm depoda
+  ///   YALNIZ bu cümlede geçiyor (`numericScoresUnlocked` ayrı kavram, K8
+  ///   skor kapısı); içerikte `gate`/`unlock`/`sessionMinutes` diye bir
+  ///   alan yok; `SessionStore.workedSecondsFor` hiç çağrılmıyor. Cümle
+  ///   kullanıcıya VAR OLMAYAN bir mekanizmayı öğretiyordu.
+  /// * **Kamera BAĞLI.** `boxing.foundations.jab` `usesCamera:true` ve
+  ///   `_liveJabFor` onun için gerçek bir `LiveJabController` kuruyor
+  ///   (J-096'dan beri). Cümle J-096 ÖNCESİNDE doğruydu ve öyle kaldı.
+  ///
+  /// SONUÇ doğruydu (*"bu dakikalar geçmişin, kredi değil"*) — çünkü zaten
+  /// hiçbir şey kilit açmıyor. Ama GEREKÇE iki kez yanlıştı, ve doğru
+  /// sonucu yanlış gerekçeyle söylemek kullanıcıya ürünün yanlış bir
+  /// modelini öğretir: kapılar olduğunu ve kameranın bağlı olmadığını.
+  ///
+  /// Yeni metin gerçek mekanizmayı gösteriyor: kilitler İÇERİK
+  /// düzeyindedir ve her birinin isimli teknik gerekçesi vardır
+  /// (`lockedReason`) — süreyle ilgisi yok.
   String? _recordedNoteText() {
     return _recorded == null || _recorded!.sessions == 0
         ? null
-        : 'Recorded time does not unlock lessons. Every progress gate '
-            'also asks how much of the session the camera could actually '
-            'analyse, and the camera is not connected — so these minutes '
-            'are your history, not credit toward the next lesson. We would '
+        : 'These minutes are your history, not credit. Nothing here opens '
+            'with time — the lessons that are closed are closed for a named '
+            'technical reason, and each one tells you its own. We would '
             'rather say that than let a number quietly mean nothing.';
   }
 
