@@ -107,9 +107,9 @@ kilitli ders      : 3
    🔒 boxing.intermediate.combinations
       Hooks and uppercuts aren't modelled here. We ran a real hook lesson through the app: it missed almost all of them, and the few it did register it labelled as jabs or crosses. Either way the number would be wrong, so we don't score combination order.
    🔒 boxing.intermediate.counter
-      Answering a defence needs an opponent to answer. Shadow work can't provide one, so we won't score it.
+      Answering a defence means answering an attack, and in shadow work there is no attack. We could time the movement you make on your own — but calling that a defensive reflex would be a lie about what we measured, not just an imprecise score.
    🔒 boxing.intermediate.footwork_combo
-      We can spot crossed feet, but we haven't measured what good footwork looks like across enough coaches to grade it.
+      We can catch crossed feet: that is a fault, and faults are visible. Good footwork is a skill, and we have not collected takes from enough independent coaches to say what it looks like. Catching a fault and grading a skill are different jobs, and we will not let one stand in for the other.
 
 ═══════════════════════════════════════════════════════════════
 SONUÇ: 9/9 canlı süreli ders uçtan uca YÜRÜDÜ.
