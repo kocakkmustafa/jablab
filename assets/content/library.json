@@ -19,7 +19,7 @@
       "status": "live",
       "wave": "V1",
       "rulesetId": "boxing",
-      "blurb": "Put your phone in front of you and shadow box. Your corner calls out guard, stance, sequence and balance — no bag, no sensors.",
+      "blurb": "Put your phone in front of you and shadow box. Your corner calls out guard, stance and balance — no bag, no sensors.",
       "honesty": {
         "measured": [
           "Punch events and count — a fact from the phase machine, not a grade",
@@ -380,7 +380,8 @@
           ],
           "$goalWhy": "J-132: hedef ONCE \"Combinations, tempo control and recovery under fatigue\" diyordu ve UC KUSUR tasiyordu. ① Kursun 4 dersinin 3'U KILITLI — hedef acilamayan bir kursu acilabilir gibi tarif ediyordu. ② Ilk andigi konu (\"Combinations\") tam da KILITLI dersin kendisi. ③ \"tempo control\" bu kursta HIC YOK — o ders conditioning'de. Sinif J-131 ile ayni: cumle kelime kelime yanlis degil, ama kullanicinin kurdugu MODEL urunle celisiyor ve celisme bir dokunus sonra ortaya cikiyor. Yeni metin ONCE erisilebilir olani soyluyor. Uc gerekcenin UC FARKLI SINIF oldugunu (modellenmemis · rakip yok · referans yok) tek cumleye YIKMADI: M-F-287'ye gore o siniflar ayri seyler ve duzlestirmek, kullaniciya \"hepsi ayni engel\" dedirtirdi. Onun yerine kartlara yonlendiriyor. Kapi: promise_language_test, kurs KATMANI."
         }
-      ]
+      ],
+      "$blurbWhy": "J-162: eski metin 'guard, stance, SEQUENCE and balance' diyordu. OLCUM: dizi koclugunu veren iki replik (cue.combo_order · cue.wrong_hand) COMBINATION_END'de degerlendiriliyor ve HICBIR ACIK DERSTE kamera+kombinasyon BIR ARADA YOK — yedi kombinasyonlu ders var, hepsi kamerasiz; tek kamerali ders (jab) tek teknikli. Yani vaat edilen dort seyin BIRI teslim edilemiyordu. Kalan uc: guard (koclanir), stance ve balance (skorlanir, trackedComponents). Silinen sey ICERIK degil VAAT: kombinasyon replikleri duruyor ve $producers'ta 'awaiting-content' diye beyanli."
     },
     {
       "id": "kickboxing",

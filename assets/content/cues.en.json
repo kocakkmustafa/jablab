@@ -226,7 +226,8 @@
     "technique": {
       "by": "errors[].feedbackKey + techniques[].abortOnRetreat.feedbackKey",
       "status": "bound",
-      "$note": "cue.strike_not_extended bir HATA kodundan degil, girisim-kapatma sozlesmesinden (M-F-60) geliyor. Ayri yol, ayri beyan."
+      "$note": "cue.strike_not_extended bir HATA kodundan degil, girisim-kapatma sozlesmesinden (M-F-60) geliyor. Ayri yol, ayri beyan.",
+      "$combinationNote": "J-162: `cue.combo_order` ve `cue.wrong_hand` COMBINATION_END'de degerlendiriliyor ve BUGUN ULASILAMAZ: hicbir ACIK derste kamera+kombinasyon bir arada yok (tek kamerali ders `boxing.foundations.jab` tek teknikli; kombinasyonlu yedi ders kamerasiz). Esleme DOGRU ve replikler DURUYOR — eksik olan ICERIK: kamerali bir kombinasyon dersi. Silmedik cunku yetenek VAR (motor bunlari uretebiliyor); J-104'un ucuncu secenegi (sil+kaydet) burada YANLIS olurdu. Durum: awaiting-content. Kapi: cue_reachability_test."
     },
     "noVerdict": {
       "by": "errors[].feedbackKey + LiveJabController kapilari",
