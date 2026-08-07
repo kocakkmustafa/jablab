@@ -162,7 +162,12 @@ class _LessonRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool locked = lesson.isLocked;
-    final Color fg = locked ? JColors.ink3 : JColors.ink;
+    // ⚠️ Kilitli dal `ink3` idi: 17 puntoda **3,51:1**, WCAG AA eşiği 4,5
+    // (J-127). Bu, KİLİTLİ DERSİN ADI — yani J-111'de güçlendirdiğim
+    // gerekçenin hemen yanındaki metin. Kontrast kapısı burayı göremiyordu
+    // çünkü renk bir DEĞİŞKENDEN geliyor; kapı yalnız `copyWith(color:)`
+    // içindeki doğrudan `JColors.*` referanslarını çözüyordu.
+    final Color fg = locked ? JColors.ink2 : JColors.ink;
     return GlassPanel(
       padding: const EdgeInsets.all(14),
       child: InkWell(
@@ -174,7 +179,11 @@ class _LessonRow extends StatelessWidget {
             Icon(
               locked ? Icons.lock_outline : Icons.play_circle_outline,
               size: 22,
-              color: locked ? JColors.ink4 : JColors.ember,
+              // `ink4` idi: **1,80:1**, metin-DIŞI eşiği (SC 1.4.11) 3,0'ın
+              // bile altında — kilit ikonu pratikte görünmüyordu. `ink3`
+              // 3,51:1 veriyor ve sönüklük hiyerarşisi (ember ↔ ink3)
+              // korunuyor.
+              color: locked ? JColors.ink3 : JColors.ember,
             ),
             const SizedBox(width: 12),
             Expanded(

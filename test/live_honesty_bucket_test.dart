@@ -179,11 +179,30 @@ void main() {
     final RegExp colorRef = RegExp(r'JColors\.(\w+)');
     final RegExp sizeRef = RegExp(r'fontSize:\s*([\d.]+)');
 
+    /// YEREL RENK DEĞİŞKENLERİNİ ÇÖZER (J-127). Kapının kör noktası
+    /// buydu ve **boş değildi**: `final Color fg = locked ? ink3 : ink;`
+    /// satırı kilitli ders ADINI 3,51:1'de tutuyordu. Kapsam sınıfı
+    /// *"ölçüm yöntemi"* idi — yani kapatılabilirdi, ve kapatıldı.
+    ///
+    /// Yalnız `JColors.*`tan kurulan yerel sabitler çözülüyor; çalışma
+    /// zamanından gelen bir renk hâlâ dışarıda ve o **gerçekten** statikle
+    /// çözülemez.
+    Map<String, String> localColors(String src) {
+      final Map<String, String> out = <String, String>{};
+      for (final RegExpMatch m in RegExp(
+              r'final\s+Color\s+(\w+)\s*=\s*([^;]+);')
+          .allMatches(src)) {
+        out[m.group(1)!] = m.group(2)!;
+      }
+      return out;
+    }
+
     final List<String> hits = <String>[];
     for (final FileSystemEntity f
         in Directory('lib/app').listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       final String src = f.readAsStringSync();
+      final Map<String, String> locals = localColors(src);
       for (final RegExpMatch m in override.allMatches(src)) {
         final TextStyle? b = base(m.group(1)!);
         if (b == null) continue;
@@ -206,7 +225,12 @@ void main() {
         // TERNARY korunuyor: `color: locked ? ink2 : cool2` — `color:`
         // bağının İÇİNDEKİ her dal ölçülüyor, çünkü koşulun bir yarısını
         // kör bırakmak ihlali yarı yarıya gizler.
-        final String colorArg = _colorBinding(args);
+        String colorArg = _colorBinding(args);
+        // Değişken adı geçiyorsa yerel tanımıyla DEĞİŞTİR — böylece
+        // `color: fg` de ölçülür.
+        for (final MapEntry<String, String> v in locals.entries) {
+          colorArg = colorArg.replaceAll(RegExp('\\b${v.key}\\b'), v.value);
+        }
         for (final RegExpMatch c in colorRef.allMatches(colorArg)) {
           final Color? col = tone(c.group(1)!);
           if (col == null) continue;

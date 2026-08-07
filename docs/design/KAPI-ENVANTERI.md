@@ -85,15 +85,36 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 
 ---
 
-## Ortak kör nokta — üçü birden
+## Ortak kör nokta — üçtü, ikisi kapandı
 
-Sekiz kapının **hiçbiri** şunları ölçmüyor, ve bu bilinçli:
+Envanterin bulduğu üç kör nokta ve **sınıflarının söylediği kuyruk**:
 
-1. **Algı** — 2-3 m'den okunurluk, ikon ayırt edilebilirliği. *Mekanikleştirilemez*; yalnız göz.
-2. **Yerleşim** — örtüşme, hizalama, görsel ağırlık. Mekanikleştirilebilir ama **yapılmadı** (J-117 tek bir örtüşmeyi ölçtü, genel bir kapı yok).
-3. **Değişkenden gelen değerler** — renk/metin bir ifadeden geliyorsa statik tarama çözemez.
+| kör nokta | sınıf | kapatması | durum |
+|---|---|---|---|
+| **Algı** — 2-3 m okunurluk, ikon ayırt | **imkânsız** | hiçbir kod | **açık ve öyle kalacak** — sim turu |
+| **Yerleşim** — çakışan kutular | **kod** | kapı yazmak | ✅ **KAPANDI (J-128)** — `layout_overlap_test` |
+| **Değişkenden gelen renkler** | **ölçüm yöntemi** | ayrıştırıcıyı genişletmek | ✅ **KAPANDI (J-127)** — ve **boş değildi** |
 
-**Sınıfları ayrı** (M-F-287 + J-125): ①'in kapatması **imkânsız**, ②'nin kapatması **kod**, ③'ün kapatması **ölçüm yöntemi değişikliği**. Karıştırmak birini yanlış kuyruğa koyar.
+**Sınıf, kuyruğu belirledi ve bu somut bir kazanç oldu:** *kod* ve *ölçüm
+yöntemi* olanlar kapatıldı; *imkânsız* olanı kovalamaya hiç başlamadım. Üçünü
+aynı kutuya koysaydım, kapanmayacak olanı kovalayıp kapanacak ikisini geciktirirdim.
+
+### J-127 — "değişkenden gelen renk" kör noktası boş değildi
+`final Color fg = locked ? JColors.ink3 : JColors.ink;` → **kilitli dersin ADI**
+17 puntoda **3,51:1** (eşik 4,5). Ve yanındaki kilit ikonu `ink4` = **1,80:1**
+(metin-dışı eşiği 3,0'ın bile altında) — **pratikte görünmüyordu.** İkisi de
+J-111'de güçlendirdiğim kilit gerekçesinin hemen yanındaydı.
+
+### J-128 — yerleşim kapısı
+375×812'de her ekranın yaprak `Text`/`Icon` kutuları ikişerli kesişim için
+taranıyor. **İç içe olanlar muaf** (rozetin çerçevesi, düğmenin etiketi bir
+kapatma değil kalıptır); **kısmi kesişim** gerçek çakışmadır. Eşik icat etmemek
+için kesişim **alanı** değil **varlığı** ölçülüyor.
+
+**Bu kapının kendi kör noktaları da yazılı:** kasıtlı katmanları ayırt etmiyor ·
+kısmi örtüşmenin okunabilirliğe etkisini ölçmüyor · z-sırasını bilmiyor. Bir gün
+kasıtlı bir metin katmanı gelirse kapı **yanlış öter** ve o zaman istisna
+**adıyla** yazılmalı — kapı gevşetilmemeli.
 
 ---
 
