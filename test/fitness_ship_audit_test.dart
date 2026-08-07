@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/session_store.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
@@ -27,6 +28,11 @@ import 'package:jablab_engine/jablab_engine.dart';
 ///   4. Seans sonunda ÇALIŞMA süresi dersin KENDİ KAPISINA birebir eşit.
 ///   5. Kayıt diske/depoya YAZILIYOR (kamera olmadan da çalışan hat).
 ///   6. Kaydedilen olgu ilerleme sayfasında GÖRÜNÜYOR.
+/// KARŞILAMA ATLANIYOR (J-106). Bu dosyanın sınadığı şey karşılama DEĞİL;
+/// gerçek bayrağı okumak her testi "ilk açılış" hâline sokup kabuğa hiç
+/// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
+const OnboardingStore _seen = OnboardingStore(seenOverride: true);
+
 void main() {
   final StringBuffer log = StringBuffer();
   void say(String s) {
@@ -116,7 +122,7 @@ void main() {
       // bulunamaz. Benzersiz `key` ağacı yeniden kurar.
       await t.runAsync(() async {
         await t.pumpWidget(
-            JabLabApp(key: ValueKey<String>(l.id), repository: repo));
+            JabLabApp(key: ValueKey<String>(l.id), repository: repo, onboarding: _seen));
         await Future<void>.delayed(const Duration(milliseconds: 200));
       });
       await t.pumpAndSettle();
@@ -239,6 +245,7 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(JabLabApp(
           key: const ValueKey<String>('progress-leg'),
+          onboarding: _seen,
           repository: ContentRepository(storeOverride: progressStore)));
       await Future<void>.delayed(const Duration(milliseconds: 200));
     });

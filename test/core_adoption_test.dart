@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/session_store.dart';
 
 /// ADOPSİYON NÖBETİ — motion_core 0.11.0 (J-095, doc-75 test asgarisi).
@@ -29,6 +30,11 @@ import 'package:jablab/app/session_store.dart';
 /// sentetik `l$i`) — sahte kimlik `_currentCourse`u hiç çözemez ve bu testler
 /// erişecekleri bir sayfa bulamazdı. Dokunuş kalktı: gerçek kimlikle kurs
 /// zaten ilk build'de landing olur.
+/// KARŞILAMA ATLANIYOR (J-106). Bu dosyanın sınadığı şey karşılama DEĞİL;
+/// gerçek bayrağı okumak her testi "ilk açılış" hâline sokup kabuğa hiç
+/// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
+const OnboardingStore _seen = OnboardingStore(seenOverride: true);
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -36,6 +42,7 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(JabLabApp(
           key: ValueKey<Object>(store),
+          onboarding: _seen,
           repository: ContentRepository(storeOverride: store)));
       await Future<void>.delayed(const Duration(milliseconds: 200));
     });

@@ -13,6 +13,8 @@ import 'content_repository.dart';
 import 'course_page.dart';
 import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
+import 'onboarding_page.dart';
+import 'onboarding_store.dart';
 import 'pose_model.dart';
 import 'select_page.dart';
 import 'session_narrator.dart';
@@ -22,9 +24,18 @@ import 'settings_page.dart';
 
 /// JabLab uygulaması — kabuğu içerikle bağlar.
 class JabLabApp extends StatelessWidget {
-  const JabLabApp({super.key, this.repository = const ContentRepository()});
+  const JabLabApp({
+    super.key,
+    this.repository = const ContentRepository(),
+    this.onboarding = const OnboardingStore(),
+  });
 
   final ContentRepository repository;
+
+  /// "Karşılama görüldü mü" bayrağı (J-106). Enjekte ediliyor ki testler
+  /// gerçek dosya sistemine dokunmadan İKİ yolu da (ilk açılış / dönen
+  /// kullanıcı) koşturabilsin.
+  final OnboardingStore onboarding;
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +47,16 @@ class JabLabApp extends StatelessWidget {
             seedColor: const Color(0xFFB3261E), brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      home: _Root(repository: repository),
+      home: _Root(repository: repository, onboarding: onboarding),
     );
   }
 }
 
 class _Root extends StatefulWidget {
-  const _Root({required this.repository});
+  const _Root({required this.repository, required this.onboarding});
 
   final ContentRepository repository;
+  final OnboardingStore onboarding;
 
   @override
   State<_Root> createState() => _RootState();
@@ -94,10 +106,20 @@ class _RootState extends State<_Root> {
   /// `StateError` gövdesi görüyordu.
   ContentFailure? _failure;
 
+  /// Karşılama gösterilecek mi (J-106). **`null` = HENÜZ BİLİNMİYOR** ve bu
+  /// üçüncü hâl şart: `false` başlatmak, bayrak diskten okunana kadar geçen
+  /// bir karelik pencerede kabuğu gösterir, sonra karşılamayı üstüne
+  /// açardı — ilk açılışta ekran zıplaması. "Bilmiyorum" ile "hayır" ayrımı,
+  /// bu depoda `HistoryUnavailable` ve `LiveJabStarting` ile aynı ilke.
+  bool? _showOnboarding;
+
   @override
   void initState() {
     super.initState();
     _loadContent();
+    unawaited(widget.onboarding.seen().then((bool seen) {
+      if (mounted) setState(() => _showOnboarding = !seen);
+    }));
     unawaited(widget.repository.openStore().then((SessionStore s) async {
       if (!mounted) return;
       setState(() => _store = s);
@@ -241,9 +263,28 @@ class _RootState extends State<_Root> {
       return ContentFailureScreen(failure: failure, onRetry: _loadContent);
     }
     final ShellLibrary? lib = _library;
-    if (lib == null) {
+    final bool? showOnboarding = _showOnboarding;
+    if (lib == null || showOnboarding == null) {
       return const Scaffold(
           body: Center(child: CircularProgressIndicator()));
+    }
+
+    // KARŞILAMA, kabuktan ÖNCE (J-106). Dürüstlük ön-beyanı ürünün içine
+    // girmeden okunmak zorunda — sonradan bir ayar sayfasına gömmek onu
+    // hiç okunmayacak bir yere koymak olurdu (UI-BRIEF §3.1).
+    if (showOnboarding) {
+      return OnboardingPage(
+        library: lib,
+        onOpenWhyNot: () => _openWhyNot(context, lib),
+        onDone: () {
+          // Bayrak YAZILMASI BEKLENMİYOR: I/O'yu beklemek kullanıcıyı
+          // "Start"a bastıktan sonra bekletirdi ve yazma başarısız olsa
+          // bile ekran açılmalı (`OnboardingStore` hatayı yutuyor —
+          // maliyeti karşılamanın bir daha görünmesi, katlanılır).
+          unawaited(widget.onboarding.markSeen());
+          setState(() => _showOnboarding = false);
+        },
+      );
     }
 
     // Hüküm 3 (koordinatör 2026-08-06): kurs VARSA giriş yüzeyi Sayfa B

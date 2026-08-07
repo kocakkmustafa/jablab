@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/session_store.dart';
 
 /// DAR-CİHAZ TAŞMA KAPISI (Lissom + Ostinato emsali, koordinatör 2026-08-06).
@@ -24,6 +25,11 @@ import 'package:jablab/app/session_store.dart';
 /// yakalanabilir bir istisna bırakır; global `FlutterError.onError`
 /// müdahalesi BİLEREK YAPILMADI (ilk denemede semantics ağacını bozup
 /// `pumpAndSettle`i sonsuz döngüye soktu — düzeltme değil, yeni bir kusur).
+/// KARŞILAMA ATLANIYOR (J-106). Bu dosyanın sınadığı şey karşılama DEĞİL;
+/// gerçek bayrağı okumak her testi "ilk açılış" hâline sokup kabuğa hiç
+/// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
+const OnboardingStore _seen = OnboardingStore(seenOverride: true);
+
 void main() {
   setUp(() {
     final TestWidgetsFlutterBinding b = TestWidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +46,7 @@ void main() {
   Future<void> pumpApp(WidgetTester t, {ContentRepository? repo, Key? key}) async {
     await t.runAsync(() async {
       await t.pumpWidget(
-          JabLabApp(key: key, repository: repo ?? const ContentRepository()));
+          JabLabApp(key: key, onboarding: _seen, repository: repo ?? const ContentRepository()));
       await Future<void>.delayed(const Duration(milliseconds: 150));
     });
     await t.pumpAndSettle();

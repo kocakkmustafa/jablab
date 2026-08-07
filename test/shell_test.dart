@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/course_page.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
@@ -21,6 +22,11 @@ import 'package:jablab/app/session_store.dart';
 /// yolundan yeniden kuruyor. **3 yeni test EKLENDİ** (Hüküm 3 iki yönlü +
 /// "devam et" hedefinin GERÇEKTEN doğru derse gittiğinin ölçümü — bu son
 /// tur öncesinde VARSAYILMIŞTI, şimdi ölçülüyor).
+/// KARŞILAMA ATLANIYOR (J-106). Bu dosyanın sınadığı şey karşılama DEĞİL;
+/// gerçek bayrağı okumak her testi "ilk açılış" hâline sokup kabuğa hiç
+/// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
+const OnboardingStore _seen = OnboardingStore(seenOverride: true);
+
 void main() {
   setUp(() {
     // Varsayılan test yüzeyi (800×600) 8 disiplini ve uzun ders listelerini
@@ -44,7 +50,7 @@ void main() {
     // ekranda kalır ve pumpAndSettle (sonsuz animasyon yüzünden) zaman aşımına
     // uğrar — sabit bir gecikmeyle "çözmek" yarış durumu üretirdi.
     await tester.runAsync(() async {
-      await tester.pumpWidget(JabLabApp(repository: repo ?? const ContentRepository()));
+      await tester.pumpWidget(JabLabApp(repository: repo ?? const ContentRepository(), onboarding: _seen));
       await Future<void>.delayed(const Duration(milliseconds: 150));
     });
     await tester.pumpAndSettle();

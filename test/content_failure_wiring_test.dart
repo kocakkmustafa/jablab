@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_failure_screen.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
@@ -24,6 +25,11 @@ import 'package:jablab/app/session_store.dart';
 /// çalışan taklit uygulamayı sonsuz yükleme hâlinde bırakıyordu. Onun yerine
 /// `ContentRepository.loadStringOverride` dikişi kullanılıyor —
 /// `storeOverride`'ın kurduğu emsal: tek yerde okunan dar bir kanca.
+/// KARŞILAMA ATLANIYOR (J-106). Bu dosyanın sınadığı şey karşılama DEĞİL;
+/// gerçek bayrağı okumak her testi "ilk açılış" hâline sokup kabuğa hiç
+/// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
+const OnboardingStore _seen = OnboardingStore(seenOverride: true);
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -50,7 +56,7 @@ void main() {
   /// ilerletmez (shell_test'teki aynı gerekçe).
   Future<void> pumpApp(WidgetTester t, ContentRepository repo) async {
     await t.runAsync(() async {
-      await t.pumpWidget(JabLabApp(repository: repo));
+      await t.pumpWidget(JabLabApp(repository: repo, onboarding: _seen));
       await Future<void>.delayed(const Duration(milliseconds: 200));
     });
     await t.pumpAndSettle();
