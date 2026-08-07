@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/session_store.dart';
@@ -11,6 +13,25 @@ import 'package:jablab/shell_candidate/shell_scaffold.dart';
 /// otoritede okur — bu yüzden AYRI bölümde duruyorlar ve testte de öyle
 /// zorlanıyor.
 void main() {
+  test('kayıt notu KAPSAM beyanı taşıyor (J-161)', () {
+    // Widget testi notun ÇİZİLDİĞİNİ ölçüyor; bu, METNİN kapsamı
+    // söylediğini. İkisi ayrı: not çizilir ama içi susabilir.
+    // ⚠️ ARAÇ NOTU: Dart kaynağında uzun cümleler **bitişik değil** —
+    // `'…a ' \n 'round clock…'` diye birleştirilir. Ham alt-dize araması
+    // bunu göremez ve kapı, metin YERİNDEYKEN kırmızı öter. Birleşme
+    // dikişi normalize ediliyor. (Bu gecenin sekizinci araç kusuru;
+    // yakalayan şey testin kendi kırmızısı oldu — rapor öncesi.)
+    final String src = File('lib/app/jablab_app.dart')
+        .readAsStringSync()
+        .replaceAll(RegExp(r"'\s*\n\s*'"), '');
+    expect(src, contains('Only lessons with a round clock are counted here'),
+        reason: 'kayıt notu HANGİ seansların sayıldığını söylemiyor — '
+            'kullanıcı bayrak dersini koşup geçmişinde hiçbir şey '
+            'bulamıyor ve sebebi hiçbir yerde yazmıyor (J-161)');
+    expect(src, contains('leave no line'),
+        reason: 'yokluk beyan edilmemiş');
+  });
+
   Future<void> pumpProgress(
     WidgetTester t, {
     Map<String, String> recorded = const <String, String>{},

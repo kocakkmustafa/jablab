@@ -407,12 +407,28 @@ class _RootState extends State<_Root> {
   /// düzeyindedir ve her birinin isimli teknik gerekçesi vardır
   /// (`lockedReason`) — süreyle ilgisi yok.
   String? _recordedNoteText() {
+    // ⚠️ J-161 (koordinatör hükmü 11:36 ②): not artık HANGİ seansların
+    // buraya girdiğini de söylüyor.
+    //
+    // Ölçüldü: `_record()` **plansız** dersi bilerek atlıyor ve gerekçesi
+    // savunulabilir (saat yokken `workedSeconds: 0` yazmak yanlış olurdu).
+    // Ama beş açık ders plansız — **kameralı `jab` DAHİL** — yani ürünün
+    // bayrak dersi geçmişte **hiç iz bırakmıyordu ve söylenmiyordu.**
+    // *Olan bir yokluğu susmak yanıltmadır* (J-159).
+    //
+    // ⛔ Bu bir ARA çözüm: hüküm ① (*sayımı yaz, süreyi yazma*) çekirdek
+    // sözleşmesinde ifade EDİLEMİYOR — `SessionRecord.workedSeconds`
+    // required non-nullable `int` ve JSON'da düz sayı; *"süre ölçülmedi"*
+    // diye bir hâl yok. `0` yazmak, J-156'nın kusurunu **kalıcı katmanda**
+    // yeniden üretirdi. Çekirdek değişikliği koordinatörde.
     return _recorded == null || _recorded!.sessions == 0
         ? null
-        : 'These minutes are your history, not credit. Nothing here opens '
-            'with time — the lessons that are closed are closed for a named '
-            'technical reason, and each one tells you its own. We would '
-            'rather say that than let a number quietly mean nothing.';
+        : 'These minutes are your history, not credit. Only lessons with a '
+            'round clock are counted here — the free-practice lessons have '
+            'no timer, so their time is not measured and they leave no line. '
+            'Nothing here opens with time either: the lessons that are '
+            'closed are closed for a named technical reason, and each one '
+            'tells you its own.';
   }
 
   /// Geçmiş HİÇ okunamadıysa gösterilecek cümle (J-092), yoksa `null`.
