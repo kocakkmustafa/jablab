@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **app 226/226 + motor 113/113** · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **app 231/231 + motor 113/113** · `flutter analyze` temiz
 
 ## ⚠️ ÖNCE: *"YEŞİL"* NE KADARINI KAPSIYOR (J-145/J-146)
 
@@ -182,6 +182,33 @@ KANITLANMADI ve hiçbir yorum öyle demiyor"* diyor ve §7.3-7.7 **isimli bir
 release-gate** olarak duruyor. Yani kuralı taşıyan şey bir test değil, **kaydın
 kendi disiplini** — ve bu gece J-135/J-138 kaydın da bozulabildiğini gösterdi.
 **Bu satır o yüzden isimli açık kalıyor.**
+
+### 🕳️ KÖR NOKTA: ÇERÇEVE (J-153) — kapı KURULMADI, sınıfı yazıldı
+
+Bu gece **her cümle** tek tek denetlendi: vaat dili · ölçüm iddiası · gerekçe
+kaynağı · yapısal vaat. Ama **hiçbir kapı ÇERÇEVEYE bakmıyor.**
+
+> *"Neden yok?"* sayfasının girişi *"Some things a single phone camera
+> genuinely cannot see"* diyordu. **12 kalemin yalnız 2'si o sınıftan.**
+> Kalanı: 5 × ikinci kişi gerek · 2 × başka sensör · 1 × etik/bilgi sınırı ·
+> 1 × tıbbi sınır · 1 × hüküm yetkisi.
+
+**Ve düz bir düzleştirme değildi:** çerçeve **kasıtlı kararları teknik kısıt
+gibi** gösteriyordu. *"Kamera senin spar'a hazır olup olmadığını göremiyor"*
+demek, *"daha iyi teknoloji bunu çözer"* demektir — oysa **mükemmel bir
+kamerayla da o hükmü vermeyiz.** Teknik kısıt **örtük bir vaat** taşır
+(J-150 sınıfı); kasıtlı karar taşımaz.
+
+**Tek tek cümleler bunu DOĞRU söylüyordu.** Yanlış olan çerçeveydi.
+
+> **Doğru bir cümle, yanlış bir çerçevede yanlış okunur — dürüstlük denetimi
+> cümle cümle yapılamıyor.**
+
+**Kapı KURULMADI, sınıfı: *ölçüt yetersiz*.** *"Çerçeve kümeyi doğru tarif
+ediyor mu"* mekanik olarak ölçülemez: kalemlerin sınıfını çıkarmak semantik
+bir iş ve bu turda **elle** yapıldı. İkinci örnek: J-152'de `FREE PLAN`
+rozeti, altındaki **dürüst** `"Pricing is not set."* cümlesini zehirliyordu —
+aynı sınıf, farklı yüzey.
 
 ### 🕳️ KÖR NOKTA: YAPISAL VAAT (J-150) — kapı KURULMADI, sınıfı yazıldı
 
