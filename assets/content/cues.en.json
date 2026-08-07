@@ -165,7 +165,7 @@
   },
   "$scoringHonesty": "J-033: egitmenler gard/kol pozisyonunda 36,7 derece ayrisiyor. Bu basliklar KOCLANIR ama SKORLANMAZ; tur sonunda kullaniciya soylenir.",
   "interval": {
-    "$groupDoc": "HIIT araligi. Bu grup calisirken FORM repliklerinin susturuldugunu varsayar: yuksek tempoyu urun istedi, sonra 'formun bozuldu' demek kendi tasarimimiza ceza kesmek olur. Burada yalnizca ritim ve sayim konusulur.",
+    "$groupDoc": "HIIT araligi. ⚠️ BU NOT 2026-08-07'de DUZELTILDI (J-119): eskiden 'bu grup calisirken FORM repliklerinin SUSTURULDUGUNU varsayar' diyordu ve KOD SUSTURMUYORDU — varsayim uygulanmis sanilabilirdi. YENI KURAL (koordinator hukmu): form replikleri SUSTURULMAZ, TONU degisir. Gerekce ucuncu bir ilkeden: OLCUM ≠ HUKUM. 'Formun bozuldu' bir hukum ve evet, yuksek tempoyu urun istedi — ama form bozulmasi bir OLGU ve gercek; saklamak kullanicidan kendi vucuduna dair bir seyi gizlemek olur. Susturmayi asil oldüren sey urunun kendi kurali: bu uygulamada SESSIZLIK 'her sey yolunda' diye okunur, yani susmak notr degil YANLIS bir sey soyler. Uygulama: jablabIntervalTone (design_tokens.dart) hukum yuvasini Tier-2 gozlem tonuna cekiyor; punto DUSMUYOR (kullanici 2-3 m uzakta). Bu grubun kendi replikleri (ritim/sayim) DEGISMEDI.",
     "cue.burst_start": [
       "Go. Hard.",
       "Burst — go.",

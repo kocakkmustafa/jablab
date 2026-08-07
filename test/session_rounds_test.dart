@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
+import 'package:jablab/app/design_tokens.dart';
 import 'package:jablab/app/session_narrator.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/session_store.dart';
+import 'package:jablab/app/skeleton_overlay.dart';
 import 'package:jablab/app/teach_material.dart';
 import 'package:jablab/shell_candidate/session_flow.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
@@ -321,6 +323,61 @@ void main() {
     });
   });
 
+  // ## J-119 — aralık kipinde düzeltme SUSTURULMUYOR, TONU değişiyor
+  //
+  // `cues.en.json` eskiden form repliklerinin bu kipte SUSTURULDUĞUNU
+  // varsayıyordu ve kod susturmuyordu — varsayım uygulanmış sanılabilirdi.
+  // Susturmayı ürünün kendi kuralı öldürüyor: **bu uygulamada sessizlik
+  // "her şey yolunda" diye okunur**, yani susmak nötr değil YANLIŞ bir şey
+  // söyler. Üçüncü ilke ikisini de kesiyor: ÖLÇÜM ≠ HÜKÜM — *"formun
+  // bozuldu"* bir hüküm, *form bozulması* bir olgu.
+  //
+  // ⚠️ İKİ AYRI TEST, tek test değil: `pumpLive` bir testte iki kez
+  // çağrılamıyor — birinci canlı aşamanın `Timer.periodic`i koşarken
+  // ikinci çağrının `runAsync`i ilerlemiyor. Ölçüldü (üç farklı bulucu
+  // aynı sebeple düştü). Bölmek, kurulumu ikinci kez yazmaktan iyi.
+
+  /// Hüküm yuvasının okuduğu stili, `_bucketed` sarmalının İÇİNDEN okur.
+  /// `SkeletonPreview` her iki kipte de orada çiziliyor (kamerasız dalda
+  /// da — J-110'da eklendi).
+  TextStyle cueStyle(WidgetTester t) => Theme.of(
+          t.element(find.byType(SkeletonPreview).first))
+      .textTheme
+      .titleLarge!;
+
+  testWidgets('ARALIK kipinde düzeltme GÖZLEM tonunda (J-119)',
+      (WidgetTester t) async {
+    await pumpLive(t,
+        plan: null,
+        intervalPlan: const IntervalPlan(
+            bursts: 2,
+            burstSeconds: 10,
+            recoverSeconds: 10,
+            planProvenance: 'test'));
+    expect(cueStyle(t).color, JColors.cool,
+        reason: 'aralık kipinde düzeltme hâlâ HÜKÜM tonunda çiziliyor');
+  });
+
+  testWidgets('⭐ NEGATİF İKİZ: TURLU kipte ton DEĞİŞMİYOR (J-119)',
+      (WidgetTester t) async {
+    // Bu olmadan yukarıdaki test, her iki kipte de gözlem tonu kullanılsa
+    // bile geçerdi — hüküm yuvası sessizce hükmünü kaybeder ve ayrım
+    // vakum-doğru olurdu (ders #4).
+    await pumpLive(t,
+        plan: const RoundPlan(
+            rounds: 1,
+            roundSeconds: 60,
+            restSeconds: 0,
+            planProvenance: 'test'));
+    final TextStyle steady = cueStyle(t);
+    expect(steady.color, isNot(JColors.cool),
+        reason: 'turlu kipte de gözlem tonu kullanılıyor — hüküm yuvası '
+            'hükmünü kaybetmiş');
+    expect(steady.fontSize, JText.correction.fontSize,
+        reason: 'punto değişmiş: kullanıcı 2-3 m uzakta ve okunurluk '
+            'tonun altında değil — ton rengi değiştirir, boyutu değil');
+  });
+
 }
 
 /// Bellekte tutan sahte depo — kalıcılık davranışı `session_store_test`'te
@@ -345,5 +402,6 @@ class _FakeStore implements SessionStore {
     }
     return total;
   }
+
 
 }

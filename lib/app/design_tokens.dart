@@ -166,6 +166,39 @@ final ThemeData jablabSessionTheme = ThemeData(
   ),
 );
 
+/// ARALIK KİPİNİN DÜZELTME TONU (J-119, koordinatör hükmü 2026-08-07).
+///
+/// ## Neden ayrı bir ton, neden SUSTURMA değil
+///
+/// `cues.en.json`un aralık grup notu, form repliklerinin bu kipte
+/// **susturulduğunu VARSAYIYORDU** — ve kod susturmuyordu. Gerekçesi
+/// iyiydi: *yüksek tempoyu ürün istedi, sonra "formun bozuldu" demek kendi
+/// tasarımına ceza kesmektir.*
+///
+/// Ama susturma seçeneğini ürünün kendi kuralı öldürüyor: **bu üründe
+/// sessizlik "her şey yolunda" diye okunur.** Yani susmak nötr değil,
+/// YANLIŞ bir şey söyler; susturulmuş bir replik, anlatısı olmayan bir
+/// yokluktur ve kullanıcı o boşluğu kendi doldurur.
+///
+/// Çözüm üçüncü ilkeden geliyor: **ÖLÇÜM ≠ HÜKÜM.** *"Formun bozuldu"* bir
+/// hüküm; *form bozulması* bir olgu ve gerçek. Olguyu saklamak kullanıcıdan
+/// kendi vücuduna dair bir şeyi gizlemek olurdu. O yüzden replik ÇİZİLİR,
+/// yalnız **hüküm tonundan gözlem tonuna** geçer.
+///
+/// Mekanizma J-110'un dil tarafı: aynı bilgi, farklı sorumluluk ekseni.
+/// Orada renk/ikon ayırdı, burada TON ayırıyor — ve ton icat edilmedi,
+/// tasarımın kendi katman sistemi kullanıldı (Tier 3 hüküm = `ink`
+/// ağırlığı · Tier 2 gözlem = `cool`). Punto DÜŞÜRÜLMEDİ: kullanıcı 2-3 m
+/// uzakta ve okunurluk tonun altında değil.
+ThemeData jablabIntervalTone(ThemeData base) => base.copyWith(
+      textTheme: base.textTheme.copyWith(
+        titleLarge: JText.correction.copyWith(
+          color: JColors.cool,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+
 /// § MOTION TOKENS — "No curve overshoots. JabLab arrives and stops."
 class JMotion {
   JMotion._();

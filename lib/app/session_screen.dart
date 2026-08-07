@@ -597,8 +597,15 @@ extension on _LiveState {
   /// `shell_candidate/` altında DONDURULMUŞ ve `colorScheme.error`ü
   /// "göremiyorum" ikonuna basıyor; widget'a dokunmadan tek yol bu sarmal —
   /// J-100'ün `jablabSessionTheme` deseninin aynısı, bir katman içeride.
-  Widget _bucketed(LiveHonestyBucket bucket, Widget surface) =>
-      Theme(data: bucket.themeFor(Theme.of(context)), child: surface);
+  Widget _bucketed(LiveHonestyBucket bucket, Widget surface) {
+    ThemeData t = bucket.themeFor(Theme.of(context));
+    // ARALIK KİPİNDE DÜZELTME GÖZLEM TONUNDA (J-119). Susturulmuyor —
+    // sessizlik bu üründe "her şey yolunda" diye okunur ve HIIT'te form
+    // gerçekten bozulur; olguyu saklamak kullanıcıdan kendi vücuduna dair
+    // bir şeyi gizlemek olurdu. Değişen HÜKÜM tonu, bilginin kendisi değil.
+    if (_ivl != null) t = jablabIntervalTone(t);
+    return Theme(data: t, child: surface);
+  }
 
   Widget _coachSurface() {
     final LiveSessionFailure? failure = _jabFailure;
