@@ -94,8 +94,33 @@ void main() {
     expect(find.byKey(const Key('coming-soon-note')), findsOneWidget);
     expect(find.text('Courses'), findsNothing,
         reason: 'açılmamış disiplinde kurs başlığı bile görünmemeli');
-    // Dürüstlük kutusu yine de zorunlu.
-    expect(find.text("What it doesn't"), findsOneWidget);
+
+    // KURAL KOŞULLU OLDU (J-137, koordinatör hükmü 08:47).
+    //
+    // Bu satır önce *"Dürüstlük kutusu yine de zorunlu"* diyordu ve karar
+    // AÇIK disiplinler için doğru, kapalılar için yanlıştı. Gerçek render
+    // ölçtü: kapalı kartta kullanıcı aynı olguyu DÖRT kez görüyordu ve
+    // kutunun iki tarafı da ölçüm cümlesi değildi — **kapalı olmak bir
+    // ölçüm sınırı değildir.**
+    //
+    // Test SİLİNMEDİ, koşullu oldu: kural, hükmü veren DURUMA bağlı.
+    expect(find.text("What it doesn't"), findsNothing,
+        reason: 'kapalı disiplinde ölçüm kabı çiziliyor — ölçüm yokken '
+            '"neyi ölçmez" başlığı, durumu ölçüm sınırı gibi sunar');
+  });
+
+  testWidgets('POZİTİF İKİZ — AÇIK disiplinde dürüstlük kutusu VAR',
+      (WidgetTester t) async {
+    // M-F-337: kapı iki yönlü olmalı. Yalnız *"kapalıda kutu yok"* ölçülseydi,
+    // kutunun HER YERDEN silinmesi de kapıyı geçerdi — kapı bir iddiayı
+    // değil **bir sessizliği** korurdu. Kutu açık disiplinde zorunludur ve
+    // J-137 o kararı DEĞİŞTİRMEDİ, yalnız kapsamını daralttı.
+    await pumpApp(t);
+    await t.tap(find.byKey(const Key('item-boxing')));
+    await t.pumpAndSettle();
+    expect(find.text("What it doesn't"), findsOneWidget,
+        reason: 'AÇIK disiplinde dürüstlük kutusu kayboldu — J-137 kapalı '
+            'disiplini kapsam dışı bıraktı, kutuyu kaldırmadı');
   });
 
   testWidgets('canlı disiplinde kurs → ders → seans zinciri yürür',

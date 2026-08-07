@@ -244,10 +244,33 @@ class _ItemBlock extends StatelessWidget {
                   ],
                   // `HonestyBox` frozen (shell_candidate) — `Theme.of(context)`
                   // üzerinden besleniyor, JColors'ı doğrudan okuyamıyor.
-                  Theme(
-                    data: _honestyBoxTheme,
-                    child: HonestyBox(measured: item.measured, notMeasured: item.notMeasured),
-                  ),
+                  //
+                  // KAPALI DİSİPLİNDE ÇİZİLMİYOR (J-137, koordinatör hükmü
+                  // 08:47). Ölçüldü (gerçek render): kapalı bir kartta
+                  // kullanıcı aynı olguyu DÖRT kez görüyordu — `NOT OPEN`
+                  // rozeti · "Not open · W1. We list it so…" notu · kutunun
+                  // ÖLÇÜLENLER tarafı ("This section is not open.") ·
+                  // ÖLÇÜLMEYENLER tarafı ("This discipline is not open").
+                  // Son ikisi ölçüm cümlesi DEĞİL: **kapalı olmak bir ölçüm
+                  // sınırı değildir.**
+                  //
+                  // Kap ölçüm beyanı içindir; ölçüm yoksa kap yanlıştır.
+                  // Tutarlılık uğruna boş kap doldurmak sahte dolulukdur ve
+                  // tautoloji yazardan değil ORADAN doğuyor.
+                  //
+                  // Alternatif ("açılınca ölçemeyeceklerimizi yaz") REDDEDİLDİ:
+                  // kapalı disiplinin gerçek ölçüm sınırı YOK — hiç ölçmüyor.
+                  // Var olmayan bir motorun sınırını iddia etmek, tautolojiden
+                  // daha pahalı bir yanlış olurdu.
+                  //
+                  // Bilgi kaybı yok: gerekçe altbaşlıkta (render ile
+                  // doğrulandı), durum rozette ve notta.
+                  if (live)
+                    Theme(
+                      data: _honestyBoxTheme,
+                      child: HonestyBox(
+                          measured: item.measured, notMeasured: item.notMeasured),
+                    ),
                   if (live) ...<Widget>[
                     const SizedBox(height: 6),
                     Text('Courses', style: JText.body.copyWith(fontWeight: FontWeight.w600)),
