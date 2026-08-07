@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 210/210 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 211/211 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -110,6 +110,13 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 | **ölçmüyor** | ① **"analiz" ile "kamera"yı** aynı sayıyor — kamerasız bir analiz kaynağı (kayıttan oynatma) gelirse görmez ② **prova aşamasını** ③ cümlenin **kelimelerini** — metin yeniden yazılırsa yine geçer; kapının işi DAVRANIŞI sabitlemek |
 | **kanıt** | İddia ölçüldü ve **bugün doğru**; bulgu *"yanlış"* değil **"korunmasız"** idi. Mutasyon **ürün kodunda** yapıldı (`initState`e kamera ısıtma) → kırmızı |
 | **negatif ikiz** | **Pozitif** ikiz: canlı aşamada kamera gerçekten açılıyor — yoksa öğretmedeki sıfır *"bağlı ama susuyor"* değil *"hiç bağlanmamış"* olurdu |
+
+### 13. K8 bant kuralı — `k8_band_test` (J-134)
+| | |
+|---|---|
+| **ölçmüyor** | ① **çalışma zamanında hesaplanan** bant değerleri (kaynak taraması yalnız sabit haritaları görür; sınıfı *ölçüm yöntemi*, iki çağrı yeri de sabit olduğu için kovalanmadı) ② bandın **doğruluğunu** — yalnız sayı OLMADIĞINI ③ sayının **başka yollardan** yüzeye gelmesini |
+| **kanıt** | Widget `Map<String, String>` alıyor; iddia *"a precise-looking number would be worse than no number"* diyor ama **hiçbir şey oraya sayı konmasını engellemiyordu**. Mutasyon (`'Balance': '72'`) → kırmızı |
+| **negatif ikiz** | Öncül kapısı: `numericScoresUnlocked` TRUE olursa test **öter ve ne yapılacağını söyler** — kapıyı silmeden önce ekrandaki cümleyi güncelle, yoksa o zaman cümle yalan olur |
 
 ### 🎯 Yeni kapı sebebi: DOĞRU ama KORUNMASIZ
 

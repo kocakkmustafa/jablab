@@ -108,6 +108,25 @@ doğru sayı + yanlış model, en zor yakalanan hâl.
 
 Sayı korundu, mekanizma dili düştü: *"ten minutes of work, split three ways."*
 
+## 🛡️ KORUMA DENETİMİ (J-133/J-134) — "doğru" ile "korunmalı" ayrı şeyler
+
+Envanterin ilk hâli tek soru soruyordu: *bu iddia doğru mu?* J-133 ikinci
+soruyu ekledi: ***bu iddiayı yanlışa çevirecek en MAKUL değişiklik ne, ve
+gated mi?***
+
+| iddia | onu yanlışa çevirecek en makul değişiklik | durum |
+|---|---|---|
+| *"Nothing is being analysed during this part"* (+ ikizi) | **kamerayı öğretmede ısıtmak** — canlı geçiş gecikmesini azaltmak için | ✅ **kapandı (J-133)**, mutasyon ürün kodunda doğrulandı |
+| *"Scores are shown as bands… a precise-looking number would be worse"* | **hesaplanmış bir değeri banda bağlamak** — yuva serbest `String` | ✅ **kapandı (J-134)**, kural `numericScoresUnlocked`a KOŞULLU |
+| Karşılama ② kapsam-dışı sayısı | listeyi elle yazmak | ✅ zaten türetiliyor (J-107) |
+| **Kalan 7 satır** | — | 🟡 **KORUMA AÇISINDAN DENETLENMEDİ.** Doğrulukları ölçüldü, kırılganlıkları ölçülmedi — ve bu iki ayrı şey |
+
+**Neden koşullu kural, mutlak kuraldan üstün:** K8 kapısı *"bant değerinde
+sayı olmaz"* demiyor; *"`numericScoresUnlocked` false olduğu sürece olmaz"*
+diyor. Kalibrasyon gerçekten yapılırsa kapı **kendiliğinden gevşer**. Mutlak
+yazsaydım doğru bir ilerleme bir gün kırmızıya döner ve kapı **silinerek**
+aşılırdı — J-120'de bir kez ödendi.
+
 ## ⚠️ BU ENVANTERİN YAPISAL KÖR NOKTASI (J-129'da ölçüldü)
 
 Envanterin sorusu *"hangi **yüzey** kullanıcıyı yanlış bilgilendirir"* — ve gücü
