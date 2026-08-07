@@ -106,6 +106,22 @@ final class LiveJabController {
   /// sınıflandırmanın tek yerde olması bu tasarımın bütün amacı
   /// (`ContentFailure.from` ile aynı gerekçe).
   Future<LiveSessionFailure?> start() async {
+    // C-195/J-195 — CİHAZDA TEK KAMERA VAR, ama her ders KENDİ controller'ını
+    // kuruyor. `State.dispose` SENKRON olduğu için önceki dersin `stop()`u
+    // beklenemez (`unawaited`) ve o bir PLATFORM-KANALI gidiş-dönüşü.
+    // Kullanıcı dersten çıkıp hemen bir ders daha açarsa, bu `start` sistem
+    // kamerayı HÂLÂ kapatırken koşar ve eklenti `already-running` der →
+    // İKİNCİ ders, BİRİNCİ dersin sebep olduğu bir arızayla karşılanır.
+    //
+    // N=1'de YAPISAL OLARAK görünmez: henüz durdurulmuş bir şey yok. Bu
+    // yüzden bir seans süiti bunu kaçırır — hepsi "ekran çalışıyor mu" diye
+    // sorar ve cevap İLK SEFERİNDE evettir.
+    //
+    // Bekleme N=1'de SIFIR: `_closing` null ise hiçbir gecikme eklenmez.
+    // Nadir bir kusur, her açılıştaki gecikmeyle TAKAS EDİLMİYOR.
+    final Future<void>? closing = _closing;
+    if (closing != null) await closing;
+
     if (_running) {
       return const LiveCameraUnavailable(
           failure: CameraFailure.alreadyRunning,
@@ -383,8 +399,31 @@ final class LiveJabController {
         provenance: <String, String>{'modelId': modelId},
       );
 
-  Future<void> stop() async {
+  /// Uçmakta olan kapanış — **süreç geneli**, çünkü **kamera da öyle**.
+  ///
+  /// Her ders kendi controller'ını kuruyor ama cihazda **tek kamera** var;
+  /// bu yüzden kilit örnek düzeyinde OLAMAZ.
+  static Future<void>? _closing;
+
+  /// ⚠️ **`async` DEĞİL — bilerek.**
+  ///
+  /// `async` bir gövde, ilk `await`e kadar senkron koşar ama `_closing`
+  /// ataması gövdenin İÇİNDE olurdu; çağıran `unawaited(stop())` dediği an
+  /// atama **bir mikrotask geç** yayınlanırdı — ve tam o mikrotask içinde
+  /// yeni ders `start()` çağırırsa kilidi **göremez.** Kilidin senkron
+  /// yayınlanması bu tasarımın bütün amacı.
+  Future<void> stop() {
     _running = false;
+    final Completer<void> done = Completer<void>();
+    _closing = done.future;
+    _stopInner().whenComplete(() {
+      if (identical(_closing, done.future)) _closing = null;
+      if (!done.isCompleted) done.complete();
+    });
+    return done.future;
+  }
+
+  Future<void> _stopInner() async {
     await _sub?.cancel();
     _sub = null;
     try {
