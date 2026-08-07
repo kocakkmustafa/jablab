@@ -198,7 +198,6 @@
                 "jab",
                 "cross"
               ],
-              "blurb": "One short round. Enough to find out whether your guard survives being tired.",
               "roundPlan": {
                 "rounds": 1,
                 "roundSeconds": 300,
@@ -220,13 +219,12 @@
               "combinations": [
                 "1-2"
               ],
-              "blurb": "Three rounds with rest. The first honest test of whether form holds when you stop thinking about it.",
               "roundPlan": {
                 "rounds": 3,
                 "roundSeconds": 200,
                 "restSeconds": 100,
                 "planProvenance": "arithmetic",
-                "$planBasis": "Tur sayisi (3) blurbda beyanli (\"Three rounds with rest\"); CALISMA suresi ilerleme kapisinda beyanli (sessionMinutes=10 => 600 sn, $why: \"10 dakika calistin\"). 600/3 = 200 sn/tur — SAF ARITMETIK, icat YOK. Dinlenme 100 sn: r3 emsalindeki 1:2 is-dinlenme orani (180:90) ayni oranla 200:100 olarak uygulandi.",
+                "$planBasis": "Tur sayisi (3) OGRETME METNINDE beyanli (\"split into three rounds\"); CALISMA suresi ilerleme kapisinda beyanli (sessionMinutes=10 => 600 sn, $why: \"10 dakika calistin\"). 600/3 = 200 sn/tur — SAF ARITMETIK, icat YOK. Dinlenme 100 sn: r3 emsalindeki 1:2 is-dinlenme orani (180:90) ayni oranla 200:100 olarak uygulandi.",
                 "$planBoundary": "Dinlenme suresi (100 sn) r3 emsalinden turetilen bir ORAN secimidir, beyan DEGIL. Kapi gecilebilirligini ETKILEMEZ (kapi yalniz calisma suresini sayar), ama toplam ders suresini etkiler: 3x200+2x100 = 800 sn ~ 13,3 dk. Ders adi \"Ten minutes\" CALISMA suresini adlandiriyor (kapinin $why metniyle tutarli). Insan-antrenor dogrulamasi bekliyor."
               }
             },
@@ -243,13 +241,12 @@
               "combinations": [
                 "1-2"
               ],
-              "blurb": "Six rounds. Long enough that the app's own tracking gets tested too — it will tell you if it loses you.",
               "roundPlan": {
                 "rounds": 6,
                 "roundSeconds": 200,
                 "restSeconds": 60,
                 "planProvenance": "arithmetic",
-                "$planBasis": "Tur sayisi (6) blurbda beyanli (\"Six rounds\"); CALISMA suresi kapida beyanli (sessionMinutes=20 => 1200 sn). 1200/6 = 200 sn/tur — SAF ARITMETIK. BAGIMSIZ TUTARLILIK KONTROLU: r10 da ayni yolla 200 sn/tur veriyor, yani iki ders birbirinden bagimsiz olarak AYNI tur uzunlugunu dogruluyor. Dinlenme 60 sn: bokstaki neredeyse evrensel \"kose molasi\" konvansiyonu.",
+                "$planBasis": "Tur sayisi (6) OGRETME METNINDE beyanli (\"Six rounds, twenty minutes of work\"); CALISMA suresi kapida beyanli (sessionMinutes=20 => 1200 sn). 1200/6 = 200 sn/tur — SAF ARITMETIK. BAGIMSIZ TUTARLILIK KONTROLU: r10 da ayni yolla 200 sn/tur veriyor, yani iki ders birbirinden bagimsiz olarak AYNI tur uzunlugunu dogruluyor. Dinlenme 60 sn: bokstaki neredeyse evrensel \"kose molasi\" konvansiyonu.",
                 "$planBoundary": "Dinlenme 60 sn bir konvansiyon secimidir, beyan DEGIL; kapi gecilebilirligini etkilemez. Toplam: 6x200+5x60 = 1500 sn = 25 dk (ad \"Twenty minutes\" calisma suresini adlandiriyor). Insan-antrenor dogrulamasi bekliyor."
               }
             },
@@ -263,7 +260,6 @@
                 "jab",
                 "cross"
               ],
-              "blurb": "Short hard intervals with short rest. Punch count is reported; punch quality is not judged at this pace.",
               "$judgementWhy": "Yuksek tempoda form hukmu VERILMEZ. TEMPO_TOO_FAST_FOR_FORM zaten C bandinda; hizli aralikta 'kotu form' demek, kullaniciya kendi tasarladigimiz egzersiz icin ceza kesmektir.",
               "intervalPlan": {
                 "bursts": 12,
@@ -292,7 +288,6 @@
                 "FEET_CROSSED",
                 "BALANCE_LOSS"
               ],
-              "blurb": "Deliberately slow rounds. The only round type where form feedback stays on the whole time.",
               "roundPlan": {
                 "rounds": 3,
                 "roundSeconds": 180,
@@ -324,7 +319,6 @@
                 "jab",
                 "cross"
               ],
-              "lockedBy": "technique-unmodelled",
               "$lockedWhy": "1-2 disindaki kombinasyonlar kanca/uppercut ister ve kural seti bu iki teknigi HIC modellemiyor. Bu alan UC kez duzeltildi, her seferinde OLCUMLE ve her seferinde onceki MEKANIZMA iddiasi fazla cikti: (1) 'unclassified_strike'a dusuyor' — fallback'in tetiklendigi VARSAYILMISTI; (2) 'jab/cross diye YANLIS sayiliyor' — yogunluk ve abort sayaci atlanmisti; (3) 'GORUNMEZ, o 6 olay egitmenin demo jab'leri' — bu da transkriptle dustu: kaynak videoda 'hook' 61 kez, 'jab' 1 kez geciyor, yani jab icerigi yok denecek kadar az. ARTIK MEKANIZMA IDDIA EDILMIYOR, yalnizca OLCULEN yaziliyor: 24,8 dakikalik gercek bir kanca dersinde FSM 6 TAMAMLANMA + 0 YARIDA-KESILME uretti ve unclassified_strike 6/6 kez tetiklenmedi. Duzinelerce kancanin oldugu bir derste 6 olay demek, kancalarin BUYUK COGUNLUGUNUN hic deneme baslatmadigi; tetiklenen az sayidaki olayin da jab/cross etiketi aldigi anlamina geliyor. Iki kusur da ayni sonuca cikiyor: kullanici yanlis sayi gorur. Kanit: docs/g3/YUMRUK-TIPI-IMZA-OLCUMU.md",
               "$lockedWhyMeasurement": "Imza tarafi HALA OLCULEMEDI: olay-basi ground truth yok. Transkript KONU veriyor (bu 25 dakika kanca anlatiyor), HAREKET OLAYI vermiyor — egitmen konusurken cogu zaman duruyor. 'Hook konusmasina yakin' gozlemi de TABAN ORANA normalize edilince bilgi tasimadi (kapsam %57, gozlem 3/6). Dogrulanmis kanca OLAYI olmadan 'katalog nicelikleri kanca ile jab'i ayirmiyor' DENEMEZ. Kilit bir esik ayariyla acilmaz: olay-zaman-damgali kanca fixture'i (>=3 egitmen) + uppercut kaynagi (bugun SIFIR) gerekiyor.",
               "$lockedReasonWhyWorded": "Metin MEKANIZMADAN bagimsiz yazildi. Uc kez mekanizma iddia ettim, ucu de olcumle dustu; kullaniciya gorunen cumle artik yalnizca her okumada DOGRU olan seyi soyluyor: gormuyor ya da yanlis sayiyor, ikisi de yanlis sayi demek.",
@@ -336,7 +330,6 @@
               "status": "locked",
               "focus": "defence",
               "minutes": 14,
-              "lockedBy": "no-opponent",
               "$lockedWhy": "Savunma sonrasi cevap, bir SALDIRIYA cevaptir. Golge calismasinda saldiri yok; olcebilecegimiz sey yalnizca kullanicinin kendi kendine yaptigi hareket sirasi olurdu. Bunu 'savunma refleksi' diye sunmak yalan olur.",
               "lockedReason": "Answering a defence means answering an attack, and in shadow work there is no attack. We could time the movement you make on your own — but calling that a defensive reflex would be a lie about what we measured, not just an imprecise score.",
               "$lockedReasonWhyWorded": "Kullaniciya gorunen metin 2026-08-07'de GUCLENDIRILDI. Eskisi ('Shadow work can't provide one, so we won't score it') dogruydu ama $lockedWhy'in en keskin fikrini tasimiyordu: olcebilecegimiz sey kullanicinin KENDI hareket sirasi ve onu 'savunma refleksi' diye sunmak bir OLCUM YALANI olurdu — puanin kaba olmasi degil, olculenin baska bir sey olmasi. Kilit metni artik o ayrimi soyluyor."
@@ -347,7 +340,6 @@
               "status": "locked",
               "focus": "footwork",
               "minutes": 15,
-              "lockedBy": "missing-reference",
               "$lockedWhy": "Adim kalitesi icin referans YOK: uc bagimsiz egitmenden footwork take'i toplanmadi (M-C-04). FEET_CROSSED tespit edilebiliyor ama 'iyi adim' olculemez — hata yakalamak ile beceri puanlamak ayni sey degil.",
               "lockedReason": "We can catch crossed feet: that is a fault, and faults are visible. Good footwork is a skill, and we have not collected takes from enough independent coaches to say what it looks like. Catching a fault and grading a skill are different jobs, and we will not let one stand in for the other.",
               "$lockedReasonWhyWorded": "Kullaniciya gorunen metin 2026-08-07'de GUCLENDIRILDI. $lockedWhy'daki asil ayrim ('hata yakalamak ile beceri puanlamak ayni sey degil') yuzeye cikarildi: FEET_CROSSED CANLI ve calisiyor, eksik olan 'iyi adim' REFERANSI (M-C-04, uc bagimsiz egitmen take'i toplanmadi). Iki isi ayirmak, kullanicinin bugun neyin calistigini bilmesini sagliyor — kilit bir 'hicbir sey yok' beyani DEGIL."
@@ -370,22 +362,17 @@
                 "LEAD_HAND_NOT_RECOVERED",
                 "BALANCE_LOSS"
               ],
-              "blurb": "Long rounds, no pace change. Watches whether your error rate climbs as you tire — that trend is the lesson.",
               "roundPlan": {
                 "rounds": 4,
                 "roundSeconds": 300,
                 "restSeconds": 60,
                 "planProvenance": "arithmetic",
                 "$planBasis": "Kapi 1200sn CALISMA istiyor. Uygulamada kullanilan uzunluklar icinde 1200\"u TAM bolen IKI cozum var (200x6 ve 300x4) — AYRIMI BLURB YAPIYOR: \"Long rounds\". 200x6 yapisi r20 ile BIREBIR AYNI olurdu, yani \"long rounds\" beyani YANLIS olur ve ders r20\"den ayirt edilemezdi. 300sn (5 dk) uygulamadaki en uzun tur (r5\"in tek turu) ve r-serisinin 180/200\"unden gercekten UZUN. Yani 4x300 = 1200sn tek tutarli cozum; icat yok.",
-                "$planBoundary": "DINLENME (60sn) bokstaki \"kose molasi\" konvansiyonu (r20 emsali) ve blurb\"un \"no pace change\" cercevesiyle tutarli: yorgunluk-trendi olculecekse dinlenme KISA olmali, yoksa her turda toparlanip trend silinir. Konvansiyon secimi, beyan degil; kapi gecilebilirligini etkilemez."
+                "$planBoundary": "DINLENME (60sn) bokstaki \"kose molasi\" konvansiyonu (r20 emsali) ve ogretme metninin \"Do not change pace to survive it\" cercevesiyle tutarli: yorgunluk-trendi olculecekse dinlenme KISA olmali, yoksa her turda toparlanip trend silinir. Konvansiyon secimi, beyan degil; kapi gecilebilirligini etkilemez."
               }
             }
           ]
         }
-      ],
-      "comingSoonInThisDiscipline": [
-        "Defence course (slip / duck / roll) — blocked on reaction-skill limits, see honesty box",
-        "Hooks and uppercuts as judged technique — currently counted only"
       ]
     },
     {
@@ -554,5 +541,6 @@
     ]
   },
   "$comingSoonWhyWorded": "Yedi kapali disiplinin metni 2026-08-07'de YENIDEN YAZILDI. OLCUM: 7'nin YALNIZ 1'i (kickboxing) kapali olma SEBEBINI soyluyordu; kalan 6 ya icerik listeliyordu ('Siu Nim Tao through Biu Jee', 'Taegeuk forms and the kick ladder') ya da kapsam beyani yapiyordu. Kart zaten 'This discipline is not open' diyor — NEDEN'i tasimasi gereken yer bu metindi ve tasimyordu. Bir yol haritasi ile bir durustluk beyani ayni sey degil: birincisi ne GELECEGINI soyler, ikincisi neden BUGUN olmadigini. Yeni metinlerin hepsi kod-gercegine dayali: kural seti yok (boxing@1.0.0 14 kod, hepsi yumruk) · referans take'i toplanmadi (M-C-04 kapisi, footwork_combo'yu da kilitleyen ayni kapi) · PassPlan.uprightOnly + OrientationExpectation.exactly(upright) · guven kapisinin zaten reddettigi ortusme. TAI CHI KASTEN FARKLI YAZILDI: orada engel kamera DEGIL (yavas form, sifir bulanma) — engel REFERANS. Yedisine ayni gerekce yazmak, farkli sebepleri tek sebep gibi gostermek olurdu (M-F-287: siniri genis yazmak dar yazmak kadar pahali). AYRICA bir VAAT SILINDI: taekwondo metni 'Jumping and spinning kicks WILL CARRY a visible accuracy warning' diyordu — var olmayan bir disiplin hakkinda gelecek-zaman iddiasi. Karsilastirma icin: r20 dersinin 'it will tell you if it loses you' cumlesi KALDI, cunku o BUGUNKU davranisi anlatiyor (novVerdict yuvasi calisiyor) — kosacagin turu tarif etmek vaat degil.",
-  "$teachWhy": "teach alani J-118'de eklendi. TeachMaterialText varyanti J-094'ten beri VARDI ve render ediliyordu — ama hicbir yer ONU URETMIYORDU: 17 canli dersin 17'sinde de ogretme asamasi bostu ve ekran 'yapmadik' diyordu. Beyan durusttu, bosluk gercekti. Metinler KOD-GERCEGINE bagli yazildi (J-112 sinifi): kamera dersi 'isigi olcmuyoruz, siz olcebilirsiniz' diyor cunku motorda isik olcumu YOK (cue.low_light bu yuzden silindi) · durus dersi gard elinin KOCLANDIGINI ama PUANLANMADIGINI soyluyor cunku config'in coachedOnlyJoints kovasi oyle diyor (J-113) · cross dersi 'kuvveti olcmuyoruz' diyor (whyNotIncluded/power_measurement) · 1-2 dersi kombinasyon sirasinin YALNIZ modellenen yumruklar icin izlendigini soyluyor (boxing.intermediate.combinations kilit gerekcesiyle ayni olcum) · ilk tur dersi 'gorunmezse SOYLER' diyor (noVerdict yuvasi). Yani ogretme metni pazarlama degil, urunun kendi olculmus sinirlarinin ogretim dilindeki hali. Alan NULLABLE: materyali olan ders tasir, olmayan tasimaz ve ekranda 'yapmadik' der — bos dizeye varsayilanlamak 'yazilmadi' ile 'bos yazildi'yi ayni degere yikardi."
+  "$teachWhy": "teach alani J-118'de eklendi. TeachMaterialText varyanti J-094'ten beri VARDI ve render ediliyordu — ama hicbir yer ONU URETMIYORDU: 17 canli dersin 17'sinde de ogretme asamasi bostu ve ekran 'yapmadik' diyordu. Beyan durusttu, bosluk gercekti. Metinler KOD-GERCEGINE bagli yazildi (J-112 sinifi): kamera dersi 'isigi olcmuyoruz, siz olcebilirsiniz' diyor cunku motorda isik olcumu YOK (cue.low_light bu yuzden silindi) · durus dersi gard elinin KOCLANDIGINI ama PUANLANMADIGINI soyluyor cunku config'in coachedOnlyJoints kovasi oyle diyor (J-113) · cross dersi 'kuvveti olcmuyoruz' diyor (whyNotIncluded/power_measurement) · 1-2 dersi kombinasyon sirasinin YALNIZ modellenen yumruklar icin izlendigini soyluyor (boxing.intermediate.combinations kilit gerekcesiyle ayni olcum) · ilk tur dersi 'gorunmezse SOYLER' diyor (noVerdict yuvasi). Yani ogretme metni pazarlama degil, urunun kendi olculmus sinirlarinin ogretim dilindeki hali. Alan NULLABLE: materyali olan ders tasir, olmayan tasimaz ve ekranda 'yapmadik' der — bos dizeye varsayilanlamak 'yazilmadi' ile 'bos yazildi'yi ayni degere yikardi.",
+  "$orphanKeyWhy": "J-129: ders duzeyinde `blurb` (6) · `lockedBy` (3) · `comingSoonInThisDiscipline` (1) SILINDI. Onemli olan silinmeleri degil NASIL bulunduklari: Lesson.fromJson bu anahtarlari TANIMIYOR ve JSON tanimadigini sessizce dusuruyor — icerik yazildi, ALANI yoktu. Ikisi canli metnin birebir kopyasiydi, ikisi kapsanmisti, IKISI YANLISTI: hiit \"punch quality is not judged at this pace\" diyordu (J-119 bunu OLCTU ve curuttu), fatigue \"watches whether your error rate climbs\" diyordu (oyle bir trend hesabi yok, dersin KENDI ogretme metni aksini soyluyor). Okunmayan anahtar, CURUTULMUS IDDIALARIN HAYATTA KALDIGI YERDIR: bu gecenin butun durustluk turlari YUZEYLERI taradi, burasi hicbir yuzeyde degildi. Silinen blurb'e ATIF YAPAN 3 provenance notu canli ogretme metnine yeniden baglandi — yoksa beyan bayatlardi (J-124 kusuru). Kapi: test/content_orphan_key_test.dart, tanimli anahtarlari PARSER KAYNAGINDAN turetir."
 }
