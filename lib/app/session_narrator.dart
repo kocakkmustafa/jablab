@@ -90,14 +90,30 @@ class SessionNarrator {
     }
     if (left <= Duration.zero) fire(NarrationEvent.roundEnd);
 
-    // Kilometre taşı sayıma bağlı, zamana değil — ayrı anahtarla izlenir ki
-    // 25. ve 50. ayrı ayrı söylenebilsin.
-    if (milestoneEvery > 0 && eventCount > 0 &&
-        eventCount % milestoneEvery == 0 &&
-        _fired.add('milestone-$eventCount')) {
-      out.add(NarrationEvent.milestone);
-    }
+    // Kilometre taşı sayıma bağlı, zamana değil (bkz. [counted]).
+    out.addAll(counted(eventCount));
     return out;
+  }
+
+  /// SAYIMA bağlı anlatı — saatten BAĞIMSIZ (J-158).
+  ///
+  /// ## Neden ayrı bir yol
+  ///
+  /// Bu sınıfın kendi yorumu *"kilometre taşı sayıma bağlı, zamana değil"*
+  /// diyordu — ama tek çağıran [tick] idi ve o **yalnız saatten** koşuyor.
+  /// `_Live` saati **plan yoksa hiç kurmuyor** (`if (_plan == null && _ivl
+  /// == null) return;`), ve **tek kameralı ders olan `boxing.foundations.
+  /// jab`ın tur planı YOK.** Yani sayan tek dersin saati yoktu ve
+  /// `cue.milestone` **pratikte ulaşılamazdı** — J-104 tetiği bağladı,
+  /// yolun kendisi kapalı kaldı.
+  ///
+  /// Aynı `_fired` anahtarı kullanılıyor: 25. ve 50. ayrı ayrı söylenir,
+  /// ama aynı sayı iki yoldan iki kez söylenmez.
+  List<NarrationEvent> counted(int eventCount) {
+    if (milestoneEvery <= 0 || eventCount <= 0) return const <NarrationEvent>[];
+    if (eventCount % milestoneEvery != 0) return const <NarrationEvent>[];
+    if (!_fired.add('milestone-$eventCount')) return const <NarrationEvent>[];
+    return const <NarrationEvent>[NarrationEvent.milestone];
   }
 
   /// Aralık kipi geçişleri. [inBurst] o anki aralığın sert kısmında olup

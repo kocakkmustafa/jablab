@@ -14,6 +14,47 @@ import 'package:jablab/shell_candidate/live_surface.dart';
 /// hiç tetiklememek, kodda ölü dal bırakmakla aynı sınıf: derleyici susar,
 /// testler yeşil kalır, kullanıcı o anı sessiz yaşar.
 void main() {
+  group('SAYIM yolu saatten BAĞIMSIZ (J-158)', () {
+    test('counted() kilometre taşını saat olmadan üretir', () {
+      // TEK kameralı ders (`boxing.foundations.jab`) tur planı TAŞIMIYOR,
+      // yani `_Live` saati hiç kurmuyor. `tick()` tek çağıran olduğu sürece
+      // `cue.milestone` **sayan tek derste** ulaşılamazdı — J-104 tetiği
+      // bağladı, YOL kapalı kaldı.
+      final SessionNarrator n =
+          SessionNarrator(mode: SessionMode.steady, milestoneEvery: 5);
+      expect(n.counted(4), isEmpty, reason: 'eşiğe gelmeden söylenmemeli');
+      expect(n.counted(5), <NarrationEvent>[NarrationEvent.milestone]);
+    });
+
+    test('AYNI sayı iki kez söylenmez, FARKLI sayılar ayrı ayrı söylenir', () {
+      // Anahtar interpolasyonu bir kez KAÇIRILMIŞ yazıldı
+      // (`'milestone-\$eventCount'`) ve o hâliyle her taş AYNI anahtarı
+      // kullanırdı: yalnız ilki ateşlenir, 50. hiç söylenmezdi. Tek taş
+      // atan bir test bunu göremezdi — bu yüzden ikisi de ölçülüyor.
+      final SessionNarrator n =
+          SessionNarrator(mode: SessionMode.steady, milestoneEvery: 5);
+      expect(n.counted(5), isNotEmpty);
+      expect(n.counted(5), isEmpty, reason: 'aynı sayı tekrar söylendi');
+      expect(n.counted(10), isNotEmpty,
+          reason: 'İKİNCİ kilometre taşı hiç söylenmedi — anahtar sayıya '
+              'göre değişmiyor olabilir');
+    });
+
+    test('tick() ile counted() AYNI sayıyı iki kez söylemez', () {
+      // İki yol tek `_fired` kümesini paylaşıyor; paylaşmasalardı saatli
+      // bir derste taş İKİ KEZ söylenirdi.
+      final SessionNarrator n =
+          SessionNarrator(mode: SessionMode.steady, milestoneEvery: 3);
+      expect(n.counted(3), isNotEmpty);
+      expect(
+          n.tick(
+              elapsed: const Duration(seconds: 1),
+              total: const Duration(seconds: 60),
+              eventCount: 3),
+          isNot(contains(NarrationEvent.milestone)));
+    });
+  });
+
   final String cueSource =
       File('assets/content/cues.en.json').readAsStringSync();
   CueBook book() => CueBook.fromJson(cueSource, jabLabCueMapping);

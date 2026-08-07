@@ -457,6 +457,17 @@ class _LiveState extends State<_Live> {
         _jab = st;
         if (st is LiveJabFailed) _jabFailure = st.failure;
       });
+      // Sayıma bağlı anlatı da BURADA sorulur (J-158): narrator'ın kendi
+      // yorumu *"kilometre taşı sayıma bağlı, zamana değil"* diyordu ama
+      // tek çağıranı saat tikiydi — ve TEK kameralı dersin (`jab`) tur
+      // planı YOK, yani saat hiç kurulmuyor. Sayan tek dersin saati
+      // olmadığı için `cue.milestone` pratikte ulaşılamazdı.
+      final List<NarrationEvent> counted = _narrator.counted(_completedJabs);
+      if (counted.isNotEmpty) {
+        final String? said = widget.cues.say(counted.last,
+            vars: <String, Object>{'n': _completedJabs});
+        if (said != null && mounted) setState(() => _line = said);
+      }
       // Sayım DEĞİŞTİĞİNDE bildiriliyor, tik attığında değil (J-157).
       // İlk yazışımda `_reportCount()` yalnız tur/aralık tiklerinden
       // çağrılıyordu ve **plansız bir derste tik yoktur** — yani sayı

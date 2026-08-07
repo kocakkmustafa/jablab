@@ -41,6 +41,83 @@ void main() {
     cues = await const ContentRepository().loadCues();
   });
 
+  testWidgets('⭐ KİLOMETRE TAŞI EKRANDA GÖRÜNÜYOR (J-158 — isimli borç)',
+      (WidgetTester t) async {
+    // ## Kapatılan borç
+    //
+    // J-104 `cue.milestone`un tetiğini bağladı; `session_narrator_test`
+    // repliğin ÜRETİLDİĞİNİ ölçüyor. Ama **ekranda göründüğü** hiç
+    // kanıtlanmadı: ilk denemede widget koşumu, kilometre taşı olayı
+    // ateşlendiği anda takılıyordu ve test SİLİNİP borç **isimli**
+    // bırakıldı.
+    //
+    // J-157'nin canlı koşumu (sahte kamera + sentetik jab + `runAsync`)
+    // artık çalışıyor. Borç, **koşum tekniği değiştiği için** kapanıyor —
+    // ürün değişmedi.
+    //
+    // `milestoneEvery` bir TEST DİKİŞİ: varsayılan 25, burada 2. Eşiği
+    // ürün için değiştirmiyoruz; yalnız sentetik tekrar sayısını makul
+    // tutuyoruz.
+    final _SeqCamera cam = _SeqCamera();
+    await t.pumpWidget(MaterialApp(
+      home: SessionScreen(
+        lesson: const ShellLesson(id: 'x', title: 'Jab', minutes: 3),
+        cues: cues,
+        coachedNotScored: const <String>[],
+        bands: const <String, String>{'Stance': '—'},
+        plan: null,
+        milestoneEvery: 2,
+        teachMaterial: const TeachMaterialText(body: 'Body.'),
+        liveJab: LiveJabController(
+          ruleSet: ruleSet,
+          cues: cues,
+          modelPath: () async => '/dev/null/model.task',
+          modelId: 'test-model',
+          camera: cam,
+          requestPermission: () async => true,
+          permissionPermanentlyDenied: () async => false,
+        ),
+      ),
+    ));
+    await t.pumpAndSettle();
+    await t.runAsync(() async {
+      for (int i = 0; i < 2; i++) {
+        await t.tap(find.text('Continue'));
+        await t.pump();
+        await Future<void>.delayed(const Duration(milliseconds: 60));
+      }
+    });
+    await t.pump(const Duration(milliseconds: 200));
+
+    await t.runAsync(() async {
+      for (int rep = 0; rep < 3; rep++) {
+        for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(const Duration(milliseconds: 40));
+      }
+    });
+    await t.pump(const Duration(milliseconds: 150));
+
+    // Kilometre taşı replikleri (J-141 varyantlarıyla): `{n}` DOLDURULMUŞ
+    // olmalı — yer tutucu görünüyorsa J-104'ün ikinci kusuru geri gelmiş
+    // demektir ve sayının GERÇEK sayaçtan geldiği de böylece ölçülüyor.
+    final List<String> onScreen = t
+        .widgetList<Text>(find.byType(Text))
+        .map((Text w) => w.data ?? '')
+        .toList();
+    final bool milestone = onScreen.any((String s) =>
+        RegExp(r'^\d+ (in|down)\.$').hasMatch(s) ||
+        RegExp(r'^\d+ so far\.$').hasMatch(s) ||
+        RegExp(r"^That's \d+\.$").hasMatch(s));
+    expect(milestone, isTrue,
+        reason: 'kilometre taşı repliği EKRANDA YOK. Zincirin son halkası '
+            '(narrator → canlı yüzey) kopuk olabilir. Ekrandakiler: '
+            '${onScreen.where((String s) => s.isNotEmpty).take(8).toList()}');
+    expect(onScreen.any((String s) => s.contains('{n}')), isFalse,
+        reason: 'yer tutucu doldurulmamış — sayı gerçek sayaçtan gelmiyor');
+  });
+
   testWidgets('sentetik jab SAYILIYOR ve özette GÖRÜNÜYOR',
       (WidgetTester t) async {
     final _SeqCamera cam = _SeqCamera();
