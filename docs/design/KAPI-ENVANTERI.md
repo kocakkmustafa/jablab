@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 208/208 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 210/210 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -103,6 +103,24 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 | **ölçmüyor** | ① **Başka sözcüklerle söylemeyi** — hedef "punch chains" derse görmez ② **ters yönü**: hedefin kursta hiç olmayan konuyu anması (`tempo control`) — anlam işi, sınıfı **imkânsız** ③ **gerekçenin kalitesini** — işareti taşımak yeterli sayılıyor ④ mekanizma listesi DAR ve kanıta dayalı: yeni bir geliştirici kavramı sızarsa görmez |
 | **kanıt** | J-131'de 9 eşleşme ölçüldü, **6'sı bilerek durdu** — ölçüt kelimede değil: *mekanizma gözlenebiliyor mu · cümle eyleme çağırıyor mu*. J-132'de kurs katmanı ölçüldü ve **kusur bulundu** |
 | **negatif ikiz** | **İkisi de TERS yönde**: J-131 → `confidence gate` içerikten kalkarsa öter (kapı fazla genişlemiş demektir) · J-132 → kilitsiz her kurs da caveat taşırsa öter (**olmayan bir sınırı beyan etmek dürüstlük değil gürültüdür**) |
+
+### 12. Öğretme aşamasında sessizlik — `teach_stage_silence_test` (J-133)
+| | |
+|---|---|
+| **ölçmüyor** | ① **"analiz" ile "kamera"yı** aynı sayıyor — kamerasız bir analiz kaynağı (kayıttan oynatma) gelirse görmez ② **prova aşamasını** ③ cümlenin **kelimelerini** — metin yeniden yazılırsa yine geçer; kapının işi DAVRANIŞI sabitlemek |
+| **kanıt** | İddia ölçüldü ve **bugün doğru**; bulgu *"yanlış"* değil **"korunmasız"** idi. Mutasyon **ürün kodunda** yapıldı (`initState`e kamera ısıtma) → kırmızı |
+| **negatif ikiz** | **Pozitif** ikiz: canlı aşamada kamera gerçekten açılıyor — yoksa öğretmedeki sıfır *"bağlı ama susuyor"* değil *"hiç bağlanmamış"* olurdu |
+
+### 🎯 Yeni kapı sebebi: DOĞRU ama KORUNMASIZ
+
+Bu geceki kapıların çoğu bir kusurdan doğdu. J-133 farklı: **iddia doğruydu.**
+Kapının sebebi, onu yanlışa çevirecek değişikliğin **makul** olması —
+*"canlı geçiş gecikmesini azaltmak için kamerayı öğretmede ısıtalım"*. Kimse
+yalan söylemeye karar vermez; performans düzeltmesi yapar ve iki sevk edilmiş
+cümle sessizce yalan olur.
+
+**Ölçüt: bir cümle sevk edildiyse, onu yanlışa çevirecek en MAKUL değişikliği
+sor. Makulse, kapı gerekir.**
 
 ### ⭐ Yeni araç: TERS NEGATİF İKİZ
 
