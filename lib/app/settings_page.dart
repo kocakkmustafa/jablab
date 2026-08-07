@@ -108,7 +108,21 @@ class SettingsPage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      Text('Full corner',
+                      // J-155: başlık `Full corner` idi — bir **KADEME ADI**
+                      // ("tam" olan varsa eksik olan da vardır). J-152'de
+                      // hiyerarşi SÖZCÜKLERİNİ kaldırdım (`SUBSCRIPTION` /
+                      // `FREE PLAN`) ama **kademenin ADINI bıraktım**; aynı
+                      // iddia, bir satır yukarıda hayatta kaldı.
+                      //
+                      // Ve `Full corner` **başka hiçbir yerde geçmiyor** —
+                      // J-124'ün sınıfı: ürün bir kavramı adlandırıyor,
+                      // karşılığı yok. (*"Corner"* ürünün koçluk metaforu ve
+                      // meşru: *"Your corner calls out guard…"*; sorun
+                      // *"Full"*.)
+                      //
+                      // Yeni başlık bugünün olgusunu söylüyor — rozetle ve
+                      // altındaki cümleyle aynı şeyi, üç kez değil bir kez.
+                      Text('Everything is open',
                           style: JText.pageTitle.copyWith(fontSize: 28, letterSpacing: -1)),
                       const SizedBox(height: 8),
                       Text(

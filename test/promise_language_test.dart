@@ -347,6 +347,10 @@ void main() {
     // kapı GÜNCELLENMELİ, gevşetilmemeli.
     const List<String> planWords = <String>[
       'SUBSCRIPTION', 'FREE PLAN', 'Free plan', 'PREMIUM', 'UPGRADE',
+      // J-155: kademe SÖZCÜKLERİ kaldırılmıştı ama kademe ADI kalmıştı —
+      // `Full corner` (*'tam' olan varsa eksik olan da vardır*), ve o ad
+      // başka hiçbir yerde geçmiyordu. Aynı iddia, bir satır yukarıda.
+      'Full corner',
     ];
     final String src = File('lib/app/settings_page.dart').readAsStringSync();
     final List<String> hits = <String>[];
