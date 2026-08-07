@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **app 247/247 + motor 113/113** · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **app 248/248 + motor 113/113** · `flutter analyze` temiz
 
 ## ⚠️ ÖNCE: *"YEŞİL"* NE KADARINI KAPSIYOR (J-145/J-146)
 
@@ -299,16 +299,21 @@ etmemdi**. Ters ikiz onu mekanikleştiriyor — aile dersi #7'nin (*hatayı
 düzeltmek ≠ hatanın imkânsız olduğu yapıyı seçmek*) kapı tasarımına uygulanmış
 hâli. **Kural: her dar kapı, darlığını koruyan bir ikiz taşımalı.**
 
-### Ters yön neden kapıya bağlanmadı — ölçülmüş bir kısıtlama (J-130)
+### ~~Ters yön neden kapıya bağlanmadı~~ → ✅ **BAĞLANDI (J-166)** — sınıf yanlıştı
 
 Öksüz-anahtar kapısının aynası: *parser bir alanı okuyor ama içerikte hiç
 geçmiyor mu?* Türetilmiş anahtar setleriyle ölçmek bedava — **ölçüldü, bugün
 sıfır.**
 
-Kapıya **bağlanmadı** ve sebebi kendi dersim: *"parser'ın okuduğu her alan
-içerikte bulunmalı"* kuralı, bir alanı içeriğinden önce eklemeyi **kırmızıya**
-çevirirdi. Bu tam olarak J-120'nin kusuru — sınırı olduğundan geniş yazmak
-testte daha sinsi: **doğru ilerleme, gerçek kusur gibi görünür.**
+~~Kapıya bağlanmadı~~ — **ve gerekçem yanlıştı (J-166).** *"Bir alanı
+içeriğinden önce eklemek"*i **meşru hâl** saymıştım. Doğru-pozitif sınaması
+yanlışladı: deponun sözleşmesi **içerik-önce** (`CLAUDE.md`: *"kural =
+versiyonlu config"*) ve `library.dart` alan eklemenin **J-044'ün 17 ölü
+alanını tekrarlayacağını** yazıyor — yani *"meşru hâl"* saydığım şey bu
+depoda **kusurun adı.** Kapı kuruldu, mutasyonla kırmızı.
+
+**Üç kutunun üçü de sınandı ve üçünde de yanlış yerleştirme çıktı:**
+`imkânsız` (J-164) · `ölçüt yetersiz` (J-165) · `meşru hâl var` (J-166).
 
 Öksüz yönde asimetri yok: yazılmış ama okunmayan içeriğin meşru bir hâli
 **yok** — ya bir yüzeye bağlanır ya silinir. Bu yüzden o yön kapı, bu yön

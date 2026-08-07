@@ -39,8 +39,14 @@ import 'package:flutter_test/flutter_test.dart';
 /// * **`cues.en.json`** kapsam dışı ve sınıfı *kapandı-başka-kapıyla*:
 ///   `CueBook.fromJson` tanımadığı anahtarda FIRLATIR, sessizce düşürmez —
 ///   yani bu kusur sınıfı orada zaten imkânsız.
-/// * **Ters yön**: parser'ın okuduğu ama içerikte HİÇ geçmeyen alan. Bu ayrı
-///   bir kusur (ölü alan, J-044) ve bu kapı onu görmez.
+/// * ~~**Ters yön**~~ → ✅ **KAPANDI (J-166)**: parser'ın okuduğu ama
+///   içerikte HİÇ geçmeyen alan (ölü alan, J-044). J-130'da ölçmüş
+///   (**sıfır**) ama kapıya BAĞLAMAMIŞTIM: gerekçem *"bir alan içerikten
+///   ÖNCE eklenebilir"*di. **Doğru-pozitif sınaması yanlışladı:** deponun
+///   sözleşmesi **içerik-önce** (`CLAUDE.md`: *"kural = versiyonlu
+///   config"*) ve `library.dart` alan eklemenin **J-044'ün 17 ölü alanını
+///   tekrarlayacağını** yazıyor — *"meşru hâl"* saydığım şey bu depoda
+///   **kusurun adı.**
 /// * **Doğruluk**: bir anahtar okunuyor diye içeriği doğru değildir.
 void main() {
   final String parserSrc =
@@ -207,5 +213,66 @@ void main() {
     // Ve pozitif taraf: gerçekten okunan bir alan yanlışlıkla öksüz
     // sayılmamalı — `blurb` DISIPLIN düzeyinde okunuyor ve ekranda.
     expect(parsedKeys('Discipline'), contains('blurb'));
+  });
+
+  test('TERS YÖN — parser okuyor ama içerikte HİÇ geçmeyen alan YOK (J-166)',
+      () {
+    // J-130'da ölçtüm (**sıfır ölü alan**) ve kapıya bağlamadım: *"bir alan
+    // içerikten önce eklenebilir"* dedim. Doğru-pozitif sınaması bunu
+    // yanlışladı — deponun sözleşmesi **içerik-önce** ve `library.dart`
+    // alan eklemenin **J-044'ün 17 ölü alanını** tekrarlayacağını yazıyor.
+    //
+    // ⚠️ NE ÖLÇMÜYOR: içerikte geçip de hiç KULLANILMAYAN alanı (o öksüz
+    // yön, yukarıdaki test) · alanın DOĞRU okunduğunu.
+    final Map<String, Set<String>> known = <String, Set<String>>{
+      for (final String c in <String>[
+        'Course', 'Lesson', 'RoundPlan', 'IntervalPlan', 'ExcludedItem',
+      ])
+        c: parsedKeys(c),
+    };
+    final Map<String, dynamic> lib = (jsonDecode(
+            File('assets/content/library.json').readAsStringSync()) as Map)
+        .cast<String, dynamic>();
+    final Map<String, Set<String>> seen = <String, Set<String>>{};
+    void note(String cls, Map<dynamic, dynamic> node) {
+      seen.putIfAbsent(cls, () => <String>{}).addAll(node.keys
+          .cast<String>()
+          .where((String k) => !k.startsWith(r'$')));
+    }
+
+    for (final dynamic d in lib['disciplines'] as List<dynamic>) {
+      for (final dynamic c
+          in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+        note('Course', c as Map<dynamic, dynamic>);
+        for (final dynamic l
+            in (c['lessons'] as List<dynamic>? ?? const <dynamic>[])) {
+          final Map<dynamic, dynamic> lesson = l as Map<dynamic, dynamic>;
+          note('Lesson', lesson);
+          if (lesson['roundPlan'] != null) {
+            note('RoundPlan', lesson['roundPlan'] as Map<dynamic, dynamic>);
+          }
+          if (lesson['intervalPlan'] != null) {
+            note('IntervalPlan', lesson['intervalPlan'] as Map<dynamic, dynamic>);
+          }
+        }
+      }
+    }
+    for (final dynamic x
+        in ((lib['whyNotIncluded'] as Map)['items'] as List<dynamic>)) {
+      note('ExcludedItem', x as Map<dynamic, dynamic>);
+    }
+
+    expect(seen['Lesson'], isNotEmpty,
+        reason: 'içerik taraması boş — kapı girdisini bulamamış');
+
+    final List<String> dead = <String>[];
+    known.forEach((String cls, Set<String> keys) {
+      for (final String k in keys) {
+        if (!(seen[cls] ?? const <String>{}).contains(k)) dead.add('$cls.$k');
+      }
+    });
+    expect(dead, isEmpty,
+        reason: 'ÖLÜ ALAN: parser okuyor ama içerikte HİÇ geçmiyor — '
+            'J-044\'ün 17 ölü alanının sınıfı: $dead');
   });
 }
