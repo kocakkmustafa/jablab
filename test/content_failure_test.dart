@@ -65,6 +65,51 @@ void main() {
     expect(calls, 1, reason: 'çalışmayan bir retry, retry olmamasından kötü');
   });
 
+  /// YAPISAL KAÇIŞ-KAPISI KAPISI (J-139).
+  ///
+  /// Sınır zaten korunuyordu — ama **kelime listesiyle** (`Continue` · `Skip`
+  /// · `Ignore` · `Dismiss`). O liste ilk yeni ada karşı kör: *"Use offline
+  /// copy"*, *"Show what loaded"*, *"Proceed"* hiçbirini yakalamaz — J-124
+  /// `unlock` kapısının beyan edilmiş kör noktasının aynısı.
+  ///
+  /// Bu iki test aynı sınırı **yapıyla** ölçüyor: ekranda retry DIŞINDA
+  /// düğme yok. Kelime listesi kalıyor (ucuz ve okunur bir belge), yapı onu
+  /// **kapsıyor**.
+  ///
+  /// ⚠️ NE ÖLÇMÜYOR: ① düğme olmayan kaçış yolu (metne gömülü link, geri
+  /// jesti) ② ayrıntı katmanının açılabilirliği — o bir kaçış değil ③ aynı
+  /// sınırın beyan edildiği diğer iki yeri (`live_session_failure` ·
+  /// `session_screen`); onlar ayrı ekranlar ve ayrı kapı ister.
+  ///
+  /// İki AYRI test: tek gövdede iki kez `pumpWidget` çağırmak bu koşumda
+  /// ikinci ağacı güvenilir kurmuyor — bu gecenin `pumpLive` dersinin aynısı.
+  testWidgets('BÜTÜNLÜK ekranında HİÇ düğme yok', (WidgetTester t) async {
+    await pump(t, integrity, onRetry: () async {});
+    await t.pumpAndSettle();
+    // `find.byType` ALT SINIFLARI eşleştirmez (tam runtimeType karşılaştırır)
+    // — `FilledButton`ı `ButtonStyleButton` diye aramak HER ZAMAN sıfır
+    // döndürür ve bu test VAKUM-DOĞRU geçerdi. Ölçüldü: aşağıdaki pozitif
+    // ikiz (1 bekleyen) bozuk aracı ifşa etti. Predicate şart.
+    expect(find.byWidgetPredicate((Widget w) => w is ButtonStyleButton),
+        findsNothing,
+        reason: 'bütünlük hatasında düğme çıktı — retry burada zaten '
+            'yasak (aynı asset aynı sonucu verir) ve başka her düğme bir '
+            'KAÇIŞ KAPISI olur: doğrulama süs hâline gelir (J-139)');
+  });
+
+  testWidgets('OKUNAMAZ ekranında TEK düğme var ve o retry',
+      (WidgetTester t) async {
+    await pump(t, unreadable, onRetry: () async {});
+    await t.pumpAndSettle();
+    final Finder buttons =
+        find.byWidgetPredicate((Widget w) => w is ButtonStyleButton);
+    expect(buttons, findsOneWidget,
+        reason: 'okunamaz ekranında beklenen 1 düğme yok/fazla — ikinci bir '
+            'düğme ne olursa olsun bir kaçış kapısıdır (J-139)');
+    expect(find.byKey(const Key('failure-retry')), findsOneWidget,
+        reason: 'tek düğme var ama retry DEĞİL — sayı doğru, kimlik yanlış');
+  });
+
   testWidgets('onRetry verilmezse düğme UYDURULMAZ', (WidgetTester t) async {
     await pump(t, unreadable);
     expect(find.byKey(const Key('failure-retry')), findsNothing);
