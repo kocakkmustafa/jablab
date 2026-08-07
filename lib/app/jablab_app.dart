@@ -418,8 +418,26 @@ class _RootState extends State<_Root> {
   /// ekranda "hiç yapmadın"a dönüşür: tam kapattığımız yalan, uç değerinden
   /// geri sızardı.
   ///
-  /// "Try again" bilerek sunulmuyor: kullanıcının yapabileceği bir şey yok ve
-  /// çalışmayan bir düğme, düğme olmamasından kötüdür (J-079 dersi).
+  /// **"Try again" SUNULUYOR — ve bu yorum bunun tersini söylüyordu (J-138).**
+  ///
+  /// Eski hâli *"'Try again' bilerek sunulmuyor: kullanıcının yapabileceği bir
+  /// şey yok"* diyordu. Gerçek render ölçtü: düğme ekranda
+  /// (`select_page.dart`), `onRetryHistory` her çağrı yerinde besleniyor, ve
+  /// `_refreshRecorded` **gerçekten** yeniden okuyup başarıda bu beyanı
+  /// kaldırıyor. Yani J-079'un kuralı (*çalışmayan retry, retry olmamasından
+  /// kötüdür*) burada **ihlal edilmiyor** — düğme çalışıyor; ihlal eden şey
+  /// yorumun kendisiydi.
+  ///
+  /// Bayat beyanın maliyeti burada somut: bu satırı okuyan bir sonraki tur,
+  /// **çalışan bir düğmeyi "yanlışlıkla eklenmiş" sanıp silebilirdi.** Bu
+  /// yüzden davranış artık yoruma değil kapıya bağlı
+  /// (`history_retry_test`): düğme VAR · geri çağırıyor · beyan yokken
+  /// düğme de YOK.
+  ///
+  /// (İçerik yükleme tarafındaki ayrı kural yerinde duruyor: `content_failure`
+  /// ekranı retry'ı yalnız `unreadable` sınıfında sunar, çünkü BÜTÜNLÜK
+  /// hatasında aynı asset aynı sonucu verir — orada retry gerçekten
+  /// çalışmayan bir düğme olurdu.)
   String? _historyUnavailableText() {
     if (_historyUnavailable != null) {
       // Ham `detail` yüzeye SIZMAZ (doc-75/5): kullanıcı metni app'in
