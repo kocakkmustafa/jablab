@@ -47,6 +47,7 @@
             {
               "id": "boxing.foundations.camera",
               "displayName": "Camera and space",
+              "teach": "Stand where you can take two steps in any direction without hitting anything. Prop the phone at about waist height, leaning on something solid — a chair, a shelf, a wall.\n\nThen step back until your feet and your hands both fit in the picture at the same time. That is the whole test. If your feet leave the frame when you punch, you are too close.\n\nTurn slightly toward the camera rather than standing square to it. A boxing guard is side-on, and from directly in front your rear hand hides behind your body — the camera reads a hand it cannot see as a hand that is not there.\n\nThe room only needs enough light that you can see your own hands clearly. We do not measure the light, so we cannot tell you when it is too dark; you can.",
               "techniques": [],
               "focus": "setup",
               "minutes": 6
@@ -54,6 +55,7 @@
             {
               "id": "boxing.foundations.stance",
               "displayName": "Stance and guard",
+              "teach": "Feet about shoulder width, lead foot forward, rear heel slightly lifted. Weight sits between your feet — not forward on the toes, not back on the heels.\n\nHands up: lead hand out around chin height, rear hand touching your cheek. The rear hand is the one that keeps you safe and the one that gets tired first, which is why it is the thing we watch most.\n\nStay tall. The most common fault in the first week is folding forward at the waist to reach further — it feels stronger and it takes your balance with it.\n\nWe can see stance width, crossed feet and balance, and we grade those. We can see your guard hand and we will tell you when it drops, but we do not put a number on it: experienced coaches disagree about where exactly it belongs.",
               "techniques": [],
               "focus": "stance",
               "errorFocus": [
@@ -66,6 +68,7 @@
             {
               "id": "boxing.foundations.jab",
               "displayName": "The jab",
+              "teach": "The jab is your lead hand, travelling straight out and straight back on the same line. It is not a big punch. It is the one that measures distance and buys you time.\n\nPush from the floor, turn the shoulder, let the arm follow. Fist finishes where your eyes are pointing. Elbow stays down and behind the fist — when the elbow swings out to the side, the punch stops being a jab.\n\nThe return matters as much as the punch. A hand that comes back slowly is a hand that is not home when it is needed, and that is the single fault we count most often.\n\nThrow them at a pace you can hold. Speed that costs you shape is not speed — it is a faster way to practise something you do not want.",
               "techniques": [
                 "jab"
               ],
@@ -80,6 +83,7 @@
             {
               "id": "boxing.foundations.cross",
               "displayName": "The cross",
+              "teach": "The cross is the rear hand, and it travels a longer road: it starts further away and it has to cross your body to arrive. That distance is where its weight comes from and also where the trouble comes from.\n\nTurn the rear foot and hip first, then the shoulder, then let the hand go. If the arm leads, you are throwing with your arm alone and reaching for the target with your chest.\n\nYour lead hand does not go on holiday while the cross is out. It stays up. The most common shape fault here is one hand out and the other drifting down at the same time.\n\nWe cannot tell you how hard it lands. A camera sees shape and timing, not force, and we will not print a number we did not take.",
               "techniques": [
                 "cross"
               ],
@@ -92,6 +96,7 @@
             {
               "id": "boxing.foundations.one_two",
               "displayName": "The 1-2",
+              "teach": "One is the jab, two is the cross. Thrown together, the jab is not just a punch — it is what makes room for the one behind it.\n\nLet the jab come back before the cross goes out. The two punches share one line and one balance; if the second starts while the first is still travelling, you end up leaning into the shot with both hands away from your face.\n\nLand back in your stance, not past it. Finishing a combination out of position is how a good pair of punches becomes a bad third one.\n\nWe watch the order and the timing between the two — for the punches we model. A combination built from hooks or uppercuts is not ordered here, because we do not recognise those punches in the first place.",
               "techniques": [
                 "jab",
                 "cross"
@@ -108,6 +113,7 @@
             {
               "id": "boxing.foundations.first_round",
               "displayName": "Your first round",
+              "teach": "Three minutes, one round, nothing to reach. The only goal is to keep the shape you have been practising while the clock runs and your arms start to complain.\n\nWork at a pace you could hold for a second round even though there is not one. If you are throwing so fast that your hands stop coming home, you are practising the fault, not the punch.\n\nSomewhere around the two minute mark the rear hand starts to sit lower. That is not a character flaw, it is fatigue, and it is exactly what a round is for: it shows you where your shape ends.\n\nThe clock runs whether or not the camera can read you. If it loses you, it will say so rather than go quiet.",
               "techniques": [
                 "jab",
                 "cross"
@@ -538,5 +544,6 @@
       }
     ]
   },
-  "$comingSoonWhyWorded": "Yedi kapali disiplinin metni 2026-08-07'de YENIDEN YAZILDI. OLCUM: 7'nin YALNIZ 1'i (kickboxing) kapali olma SEBEBINI soyluyordu; kalan 6 ya icerik listeliyordu ('Siu Nim Tao through Biu Jee', 'Taegeuk forms and the kick ladder') ya da kapsam beyani yapiyordu. Kart zaten 'This discipline is not open' diyor — NEDEN'i tasimasi gereken yer bu metindi ve tasimyordu. Bir yol haritasi ile bir durustluk beyani ayni sey degil: birincisi ne GELECEGINI soyler, ikincisi neden BUGUN olmadigini. Yeni metinlerin hepsi kod-gercegine dayali: kural seti yok (boxing@1.0.0 14 kod, hepsi yumruk) · referans take'i toplanmadi (M-C-04 kapisi, footwork_combo'yu da kilitleyen ayni kapi) · PassPlan.uprightOnly + OrientationExpectation.exactly(upright) · guven kapisinin zaten reddettigi ortusme. TAI CHI KASTEN FARKLI YAZILDI: orada engel kamera DEGIL (yavas form, sifir bulanma) — engel REFERANS. Yedisine ayni gerekce yazmak, farkli sebepleri tek sebep gibi gostermek olurdu (M-F-287: siniri genis yazmak dar yazmak kadar pahali). AYRICA bir VAAT SILINDI: taekwondo metni 'Jumping and spinning kicks WILL CARRY a visible accuracy warning' diyordu — var olmayan bir disiplin hakkinda gelecek-zaman iddiasi. Karsilastirma icin: r20 dersinin 'it will tell you if it loses you' cumlesi KALDI, cunku o BUGUNKU davranisi anlatiyor (novVerdict yuvasi calisiyor) — kosacagin turu tarif etmek vaat degil."
+  "$comingSoonWhyWorded": "Yedi kapali disiplinin metni 2026-08-07'de YENIDEN YAZILDI. OLCUM: 7'nin YALNIZ 1'i (kickboxing) kapali olma SEBEBINI soyluyordu; kalan 6 ya icerik listeliyordu ('Siu Nim Tao through Biu Jee', 'Taegeuk forms and the kick ladder') ya da kapsam beyani yapiyordu. Kart zaten 'This discipline is not open' diyor — NEDEN'i tasimasi gereken yer bu metindi ve tasimyordu. Bir yol haritasi ile bir durustluk beyani ayni sey degil: birincisi ne GELECEGINI soyler, ikincisi neden BUGUN olmadigini. Yeni metinlerin hepsi kod-gercegine dayali: kural seti yok (boxing@1.0.0 14 kod, hepsi yumruk) · referans take'i toplanmadi (M-C-04 kapisi, footwork_combo'yu da kilitleyen ayni kapi) · PassPlan.uprightOnly + OrientationExpectation.exactly(upright) · guven kapisinin zaten reddettigi ortusme. TAI CHI KASTEN FARKLI YAZILDI: orada engel kamera DEGIL (yavas form, sifir bulanma) — engel REFERANS. Yedisine ayni gerekce yazmak, farkli sebepleri tek sebep gibi gostermek olurdu (M-F-287: siniri genis yazmak dar yazmak kadar pahali). AYRICA bir VAAT SILINDI: taekwondo metni 'Jumping and spinning kicks WILL CARRY a visible accuracy warning' diyordu — var olmayan bir disiplin hakkinda gelecek-zaman iddiasi. Karsilastirma icin: r20 dersinin 'it will tell you if it loses you' cumlesi KALDI, cunku o BUGUNKU davranisi anlatiyor (novVerdict yuvasi calisiyor) — kosacagin turu tarif etmek vaat degil.",
+  "$teachWhy": "teach alani J-118'de eklendi. TeachMaterialText varyanti J-094'ten beri VARDI ve render ediliyordu — ama hicbir yer ONU URETMIYORDU: 17 canli dersin 17'sinde de ogretme asamasi bostu ve ekran 'yapmadik' diyordu. Beyan durusttu, bosluk gercekti. Metinler KOD-GERCEGINE bagli yazildi (J-112 sinifi): kamera dersi 'isigi olcmuyoruz, siz olcebilirsiniz' diyor cunku motorda isik olcumu YOK (cue.low_light bu yuzden silindi) · durus dersi gard elinin KOCLANDIGINI ama PUANLANMADIGINI soyluyor cunku config'in coachedOnlyJoints kovasi oyle diyor (J-113) · cross dersi 'kuvveti olcmuyoruz' diyor (whyNotIncluded/power_measurement) · 1-2 dersi kombinasyon sirasinin YALNIZ modellenen yumruklar icin izlendigini soyluyor (boxing.intermediate.combinations kilit gerekcesiyle ayni olcum) · ilk tur dersi 'gorunmezse SOYLER' diyor (noVerdict yuvasi). Yani ogretme metni pazarlama degil, urunun kendi olculmus sinirlarinin ogretim dilindeki hali. Alan NULLABLE: materyali olan ders tasir, olmayan tasimaz ve ekranda 'yapmadik' der — bos dizeye varsayilanlamak 'yazilmadi' ile 'bos yazildi'yi ayni degere yikardi."
 }

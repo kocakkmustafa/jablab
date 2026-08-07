@@ -161,6 +161,14 @@ final class ContentRepository {
           reason: 'We could not find this lesson in the library, so there is '
               'nothing to show here.');
     }
+    // İÇERİKTEN TÜRETİLİR (J-118). `TeachMaterialText` varyantı J-094'ten
+    // beri VARDI ve render ediliyordu — ama hiçbir yer ONU ÜRETMİYORDU,
+    // yani 17 canlı dersin 17'sinde de öğretme aşaması boştu. Tanıdık
+    // desen: biçimin varlığı üreticisinin varlığı değildir.
+    final String? teach = _lessonFor(lib, lessonId)?.teach;
+    if (teach != null && teach.trim().isNotEmpty) {
+      return TeachMaterialText(body: teach);
+    }
     return const TeachMaterialNone(
         reason: 'There is no lesson material to watch or read here — we '
             'have not made it. The session still works: the next step is you '

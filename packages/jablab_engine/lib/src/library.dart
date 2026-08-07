@@ -111,6 +111,7 @@ final class Lesson {
     this.roundPlan,
     this.intervalPlan,
     this.usesCamera = false,
+    this.teach,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -131,6 +132,12 @@ final class Lesson {
             j['status'] == 'locked' ? j['lockedReason'] as String : null,
         minutes: (j['minutes'] as num?)?.toInt() ?? 0,
         usesCamera: j['usesCamera'] as bool? ?? false,
+        // ÖĞRETME METNİ (J-118). Nullable ve bu bir eksiklik DEĞİL:
+        // materyali olan ders onu taşır, olmayan taşımaz ve ekranda
+        // "yapmadık" der (`TeachMaterialNone`). Boş dizeye varsayılanlamak
+        // iki hâli tek değere yıkardı — "yazılmadı" ile "boş yazıldı" aynı
+        // şey değil ve ikincisi ekranda sessiz bir boşluk üretirdi.
+        teach: j['teach'] as String?,
         roundPlan: j['roundPlan'] == null
             ? null
             : RoundPlan.fromJson((j['roundPlan'] as Map).cast<String, dynamic>()),
@@ -146,6 +153,13 @@ final class Lesson {
   final List<String> combinations;
   final List<String> errorFocus;
   final String? focus;
+
+  /// Öğretme aşamasının METNİ — `null` ise materyal yok ve ekran bunu
+  /// SÖYLER. Biçim bilerek düz metin: `TeachMaterial` hiyerarşisi zengin
+  /// biçimleri ayrı varyant olarak bekliyor ve buraya `videoUrl` gibi
+  /// okunmayan alanlar eklemek J-044'ün 17 ölü alanını tekrarlardı.
+  final String? teach;
+
   final int minutes;
 
   /// Doluysa ders KİLİTLİ ve bu cümle sebebidir (kullanıcıya gösterilir).

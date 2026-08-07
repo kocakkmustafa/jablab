@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:jablab_engine/jablab_engine.dart'
-    show IntervalPlan, RoundPlan;
+import 'package:jablab_engine/jablab_engine.dart' show IntervalPlan, RoundPlan;
 
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
@@ -132,30 +131,32 @@ class _SessionScreenState extends State<SessionScreen> {
         _workedSeconds <= 0) {
       return;
     }
-    await store.append(SessionRecord(
-      lessonId: widget.lesson.id,
-      completedAt: DateTime.now(),
-      workedSeconds: _workedSeconds,
-      unitsCompleted: _roundsCompleted,
-      plannedUnits: plan?.rounds ?? widget.intervalPlan!.bursts,
-      // Birim KAYIT BAŞINA (çekirdek sözleşmesi): aynı ilerleme ekranında
-      // tur-birimli ve aralık-birimli ders yan yana durabilir.
-      unitLabel: plan != null ? 'round' : 'interval',
-      // SINIF, YAZMA ANINDA (J-095). Bugün JabLab'ta hiçbir ders
-      // puanlanmıyor: kalibrasyon kapısı (K8) geçilmedi ve kamera bağlı
-      // değil. `'unscored'` bunu yazma anında mühürlüyor — ders yarın terfi
-      // ederse YENİ kayıtlar farklı sınıf taşır ve bugünküler doğru şekilde
-      // puansız kalır. Sınıfı sonradan HESAPLAMAK geçmişi sessizce yeniden
-      // yorumlamak olurdu (çekirdeğin kendi uyarısı).
-      //
-      // Ayrıca en-az-yetki: yalnız `'scored'` puanlı okunur, bu değer değil.
-      lessonClass: 'unscored',
-      // `unmeasuredUnits` SIFIR ve bu bir varsayım değil: o alan "motorun
-      // GÖRDÜĞÜ ama yargılayamadığı" birimler için (kadraj/ışık/takip).
-      // JabLab'ta kamera HİÇ yok — tur sayısı saatten gelen bir olgu, kamera
-      // ölçümü değil. Yargılanmamışlığı taşıyan alan `lessonClass`; buraya
-      // yazmak iki farklı olguyu karıştırırdı.
-    ));
+    await store.append(
+      SessionRecord(
+        lessonId: widget.lesson.id,
+        completedAt: DateTime.now(),
+        workedSeconds: _workedSeconds,
+        unitsCompleted: _roundsCompleted,
+        plannedUnits: plan?.rounds ?? widget.intervalPlan!.bursts,
+        // Birim KAYIT BAŞINA (çekirdek sözleşmesi): aynı ilerleme ekranında
+        // tur-birimli ve aralık-birimli ders yan yana durabilir.
+        unitLabel: plan != null ? 'round' : 'interval',
+        // SINIF, YAZMA ANINDA (J-095). Bugün JabLab'ta hiçbir ders
+        // puanlanmıyor: kalibrasyon kapısı (K8) geçilmedi ve kamera bağlı
+        // değil. `'unscored'` bunu yazma anında mühürlüyor — ders yarın terfi
+        // ederse YENİ kayıtlar farklı sınıf taşır ve bugünküler doğru şekilde
+        // puansız kalır. Sınıfı sonradan HESAPLAMAK geçmişi sessizce yeniden
+        // yorumlamak olurdu (çekirdeğin kendi uyarısı).
+        //
+        // Ayrıca en-az-yetki: yalnız `'scored'` puanlı okunur, bu değer değil.
+        lessonClass: 'unscored',
+        // `unmeasuredUnits` SIFIR ve bu bir varsayım değil: o alan "motorun
+        // GÖRDÜĞÜ ama yargılayamadığı" birimler için (kadraj/ışık/takip).
+        // JabLab'ta kamera HİÇ yok — tur sayısı saatten gelen bir olgu, kamera
+        // ölçümü değil. Yargılanmamışlığı taşıyan alan `lessonClass`; buraya
+        // yazmak iki farklı olguyu karıştırırdı.
+      ),
+    );
   }
 
   @override
@@ -172,21 +173,25 @@ class _SessionScreenState extends State<SessionScreen> {
         advanceLabel: _stage == SessionStage.summary ? 'Done' : 'Continue',
         onAdvance: _advance,
         child: switch (_stage) {
-          SessionStage.teach =>
-              _Teach(lesson: widget.lesson, material: widget.teachMaterial),
+          SessionStage.teach => _Teach(
+            lesson: widget.lesson,
+            material: widget.teachMaterial,
+          ),
           SessionStage.rehearse => const _Rehearse(),
           SessionStage.live => _Live(
-              cues: widget.cues,
-              plan: widget.plan,
-              intervalPlan: widget.intervalPlan,
-              liveJab: widget.liveJab,
-              liveJabSetupFailure: widget.liveJabSetupFailure,
-              onProgress: (int rounds, int worked) {
-                _roundsCompleted = rounds;
-                _workedSeconds = worked;
-              },
-            ),
-          SessionStage.summary => _Summary(coachedNotScored: widget.coachedNotScored),
+            cues: widget.cues,
+            plan: widget.plan,
+            intervalPlan: widget.intervalPlan,
+            liveJab: widget.liveJab,
+            liveJabSetupFailure: widget.liveJabSetupFailure,
+            onProgress: (int rounds, int worked) {
+              _roundsCompleted = rounds;
+              _workedSeconds = worked;
+            },
+          ),
+          SessionStage.summary => _Summary(
+            coachedNotScored: widget.coachedNotScored,
+          ),
         },
       ),
     );
@@ -204,44 +209,51 @@ class _Teach extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Icon(Icons.school_outlined, size: 36),
-          const SizedBox(height: 16),
-          Text(lesson.title, style: theme.textTheme.headlineSmall),
-          const SizedBox(height: 8),
-          if (lesson.subtitle.isNotEmpty)
-            Text(lesson.subtitle, style: theme.textTheme.bodyMedium),
-          const SizedBox(height: 20),
-          // MATERYAL — ekran KENDİSİ karar vermez, `ContentRepository`den
-          // türetir (J-094). Eskiden burada elle yazılmış *"watch first"*
-          // duruyordu ve izlenecek hiçbir şey yoktu: kullanıcıya
-          // yapamayacağı bir eylem söyleniyordu.
-          switch (material) {
-            TeachMaterialText(body: final String body) => Text(
+    // ⚠️ KAYDIRILABİLİR — ve bunu 375pt kapısı BULDU (J-118). Materyal
+    // yokken bu aşama üç kısa satırdı ve sabit `Column` yetiyordu; gerçek
+    // öğretme metni gelir gelmez 375×812'de **61 piksel** taştı. Aile
+    // dersi #3'ün birebir tekrarı: *gerçek metin fixture'dan uzundur* —
+    // ve bu kez fixture değil, İÇERİĞİN KENDİSİ uzadı.
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Icon(Icons.school_outlined, size: 36),
+            const SizedBox(height: 16),
+            Text(lesson.title, style: theme.textTheme.headlineSmall),
+            const SizedBox(height: 8),
+            if (lesson.subtitle.isNotEmpty)
+              Text(lesson.subtitle, style: theme.textTheme.bodyMedium),
+            const SizedBox(height: 20),
+            // MATERYAL — ekran KENDİSİ karar vermez, `ContentRepository`den
+            // türetir (J-094). Eskiden burada elle yazılmış *"watch first"*
+            // duruyordu ve izlenecek hiçbir şey yoktu: kullanıcıya
+            // yapamayacağı bir eylem söyleniyordu.
+            switch (material) {
+              TeachMaterialText(body: final String body) => Text(
                 body,
                 key: const Key('teach-material'),
                 style: theme.textTheme.bodyMedium,
               ),
-            TeachMaterialNone(reason: final String reason) => Text(
+              TeachMaterialNone(reason: final String reason) => Text(
                 reason,
                 key: const Key('teach-material-none'),
                 style: theme.textTheme.bodySmall,
               ),
-          },
-          const SizedBox(height: 12),
-          // Bu cümle materyalden BAĞIMSIZ ve her hâlde doğru: hüküm
-          // aşamanın kendisinde susuyor (`SessionStage.teach.judges == false`).
-          Text(
-            'Nothing is being analysed during this part. Scoring you while '
-            'you are still learning the shape would punish learning.',
-            key: const Key('teach-no-analysis'),
-            style: theme.textTheme.bodySmall,
-          ),
-        ],
+            },
+            const SizedBox(height: 12),
+            // Bu cümle materyalden BAĞIMSIZ ve her hâlde doğru: hüküm
+            // aşamanın kendisinde susuyor (`SessionStage.teach.judges == false`).
+            Text(
+              'Nothing is being analysed during this part. Scoring you while '
+              'you are still learning the shape would punish learning.',
+              key: const Key('teach-no-analysis'),
+              style: theme.textTheme.bodySmall,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -252,17 +264,19 @@ class _Rehearse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const Padding(
-        padding: EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Icon(Icons.timer_outlined, size: 36),
-            SizedBox(height: 16),
-            Text('Go slow. One thing at a time, no clock.',
-                key: Key('rehearse-copy')),
-          ],
+    padding: EdgeInsets.all(24),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Icon(Icons.timer_outlined, size: 36),
+        SizedBox(height: 16),
+        Text(
+          'Go slow. One thing at a time, no clock.',
+          key: Key('rehearse-copy'),
         ),
-      );
+      ],
+    ),
+  );
 }
 
 /// Canlı tur: süre AKAR ve anlatı konuşur, hüküm SUSAR.
@@ -298,9 +312,10 @@ class _LiveState extends State<_Live> {
   /// olay üretir, `steady`de sessizce boş döner. Sabit `steady` bırakmak,
   /// aralık repliklerini hiç duyulmaz kılardı (kodu var, kullanıcı duymuyor).
   late final SessionNarrator _narrator = SessionNarrator(
-      mode: widget.intervalPlan != null
-          ? SessionMode.interval
-          : SessionMode.steady);
+    mode: widget.intervalPlan != null
+        ? SessionMode.interval
+        : SessionMode.steady,
+  );
   Timer? _ticker;
 
   /// Kamera hattının son bildirdiği hâl — `null` iken ders kamerasız.
@@ -343,8 +358,7 @@ class _LiveState extends State<_Live> {
   Duration get _segment {
     final IntervalPlan? ip = _ivl;
     if (ip != null) {
-      return Duration(
-          seconds: _resting ? ip.recoverSeconds : ip.burstSeconds);
+      return Duration(seconds: _resting ? ip.recoverSeconds : ip.burstSeconds);
     }
     return _resting
         ? Duration(seconds: _plan!.restSeconds)
@@ -390,8 +404,13 @@ class _LiveState extends State<_Live> {
       // Dinlenme anlatılmaz saniye saniye; başında bir kez söylenir.
       if (_elapsed <= Duration.zero) events.add(NarrationEvent.rest);
     } else {
-      events.addAll(_narrator.tick(
-          elapsed: _elapsed, total: _segment, eventCount: _completedJabs));
+      events.addAll(
+        _narrator.tick(
+          elapsed: _elapsed,
+          total: _segment,
+          eventCount: _completedJabs,
+        ),
+      );
     }
 
     Duration next = _elapsed + const Duration(seconds: 1);
@@ -433,8 +452,10 @@ class _LiveState extends State<_Live> {
     // ayrışabileceği bir yol açardı.
     final String? said = events.isEmpty
         ? null
-        : widget.cues.say(events.last,
-            vars: <String, Object>{'n': _completedJabs});
+        : widget.cues.say(
+            events.last,
+            vars: <String, Object>{'n': _completedJabs},
+          );
     if (!mounted) return;
     setState(() {
       if (said != null) _line = said;
@@ -576,10 +597,8 @@ extension on _LiveState {
   /// `shell_candidate/` altında DONDURULMUŞ ve `colorScheme.error`ü
   /// "göremiyorum" ikonuna basıyor; widget'a dokunmadan tek yol bu sarmal —
   /// J-100'ün `jablabSessionTheme` deseninin aynısı, bir katman içeride.
-  Widget _bucketed(LiveHonestyBucket bucket, Widget surface) => Theme(
-        data: bucket.themeFor(Theme.of(context)),
-        child: surface,
-      );
+  Widget _bucketed(LiveHonestyBucket bucket, Widget surface) =>
+      Theme(data: bucket.themeFor(Theme.of(context)), child: surface);
 
   Widget _coachSurface() {
     final LiveSessionFailure? failure = _jabFailure;
@@ -596,89 +615,99 @@ extension on _LiveState {
           ? LiveHonestyBucket.none
           : LiveHonestyBucket.ours;
       return _bucketed(
-          bucket,
-          LiveCoachSurface(
-            state: LiveState.noVerdict,
-            // Analiz HİÇ başlamadı → sayı YOK. `0` yazmak "sıfır yumruk
-            // attın" demektir ve hiçbir şey ölçülmedi (J-096).
-            eventCount: null,
-            narration: _line,
-            noVerdictReason: _failureSentence(failure),
-            preview: SkeletonPreview(
-                state: LiveState.noVerdict, bucket: bucket),
-          ));
+        bucket,
+        LiveCoachSurface(
+          state: LiveState.noVerdict,
+          // Analiz HİÇ başlamadı → sayı YOK. `0` yazmak "sıfır yumruk
+          // attın" demektir ve hiçbir şey ölçülmedi (J-096).
+          eventCount: null,
+          narration: _line,
+          noVerdictReason: _failureSentence(failure),
+          preview: SkeletonPreview(state: LiveState.noVerdict, bucket: bucket),
+        ),
+      );
     }
 
     final LiveJabState? jab = _jab;
     if (widget.liveJab == null) {
       // KAMERASIZ ders — hâlâ doğru olan eski cümle.
       return _bucketed(
-          LiveHonestyBucket.none,
-          LiveCoachSurface(
+        LiveHonestyBucket.none,
+        LiveCoachSurface(
+          state: LiveState.noVerdict,
+          eventCount: null,
+          narration: _line,
+          noVerdictReason:
+              'This lesson runs on the clock — nothing is being judged. '
+              'The round timer and the voice coach both work.',
+          preview: const SkeletonPreview(
             state: LiveState.noVerdict,
-            eventCount: null,
-            narration: _line,
-            noVerdictReason:
-                'This lesson runs on the clock — nothing is being judged. '
-                'The round timer and the voice coach both work.',
-            preview: const SkeletonPreview(
-                state: LiveState.noVerdict, bucket: LiveHonestyBucket.none),
-          ));
+            bucket: LiveHonestyBucket.none,
+          ),
+        ),
+      );
     }
     if (jab == null || jab is LiveJabStarting) {
       // Henüz hiçbir kare gelmedi. SIFIR GÖSTERİLMİYOR: sıfır "hiç yumruk
       // atmadın" demektir, oysa daha hiçbir şey ölçülmedi. İskelet de YOK
       // (henüz çözülmüş bir kare yok) — yalnız yer tutucu görünür.
       return _bucketed(
-          LiveHonestyBucket.none,
-          LiveCoachSurface(
+        LiveHonestyBucket.none,
+        LiveCoachSurface(
+          state: LiveState.noVerdict,
+          eventCount: null,
+          narration: _line,
+          noVerdictReason: 'Getting the camera ready…',
+          preview: const SkeletonPreview(
             state: LiveState.noVerdict,
-            eventCount: null,
-            narration: _line,
-            noVerdictReason: 'Getting the camera ready…',
-            preview: const SkeletonPreview(
-                state: LiveState.noVerdict, bucket: LiveHonestyBucket.none),
-          ));
+            bucket: LiveHonestyBucket.none,
+          ),
+        ),
+      );
     }
 
     final LiveJabRunning r = jab as LiveJabRunning;
     return _bucketed(
-        r.bucket,
-        LiveCoachSurface(
-      state: r.surface,
-      eventCount: r.completedCount,
-      cue: r.cue,
-      // MOTOR ANLATISI SAATİNKİNİ EZER (J-105). İkisi de aynı yuvaya
-      // yazıyor ve yuva tek; hangisi kazanacağı bir tercih değil bir ZAMAN
-      // meselesi: "düzeltme kayboldu" TAM O ANDA doğru ve bir saniye sonra
-      // artık haber değil, oysa "yarıladın" tur boyunca doğru kalır.
-      // Kaybolan cümleyi bekleten bir kuyruk kurmak, en taze sinyali en geç
-      // söylemek olurdu.
-      narration: r.narration ?? _line,
-      noVerdictReason: r.noVerdictReason,
-      preview: SkeletonPreview(
-          state: r.surface, skeleton: r.skeleton, bucket: r.bucket),
-    ));
+      r.bucket,
+      LiveCoachSurface(
+        state: r.surface,
+        eventCount: r.completedCount,
+        cue: r.cue,
+        // MOTOR ANLATISI SAATİNKİNİ EZER (J-105). İkisi de aynı yuvaya
+        // yazıyor ve yuva tek; hangisi kazanacağı bir tercih değil bir ZAMAN
+        // meselesi: "düzeltme kayboldu" TAM O ANDA doğru ve bir saniye sonra
+        // artık haber değil, oysa "yarıladın" tur boyunca doğru kalır.
+        // Kaybolan cümleyi bekleten bir kuyruk kurmak, en taze sinyali en geç
+        // söylemek olurdu.
+        narration: r.narration ?? _line,
+        noVerdictReason: r.noVerdictReason,
+        preview: SkeletonPreview(
+          state: r.surface,
+          skeleton: r.skeleton,
+          bucket: r.bucket,
+        ),
+      ),
+    );
   }
 
   /// Tipli hâl → kullanıcı cümlesi. **Ham `detail` KULLANILMIYOR** (doc-75/5
   /// kamera tarafı): teşhis dizesi geliştirici içindir.
   String _failureSentence(LiveSessionFailure f) => switch (f) {
-        LivePermissionDenied(permanentlyDenied: final bool permanent) =>
-          permanent
-              // "Tekrar dene" demek anlamsız: sistem bir daha sormayacak.
-              ? 'Camera access is off for JabLab, and the system will not ask '
-                  'again. You can turn it on in Settings. The round clock '
-                  'still runs without it.'
-              : 'We need the camera to watch your jab. Nothing is analysed '
-                  'without it — the round clock still runs.',
-        LiveCameraUnavailable() =>
-          'We could not open the camera on this device, so nothing is being '
-              'analysed. The round clock still runs.',
-        LiveSetupFailed() =>
-          'Something went wrong setting up the camera, so nothing is being '
-              'analysed. The round clock still runs.',
-      };
+    LivePermissionDenied(permanentlyDenied: final bool permanent) =>
+      permanent
+          // "Tekrar dene" demek anlamsız: sistem bir daha sormayacak.
+          ? 'Camera access is off for JabLab, and the system will not ask '
+                'again. You can turn it on in Settings. The round clock '
+                'still runs without it.'
+          : 'We need the camera to watch your jab. Nothing is analysed '
+                'without it — the round clock still runs.',
+    LiveCameraUnavailable() =>
+      'We could not open the camera on this device, so nothing is being '
+          'analysed. The round clock still runs.',
+    LiveSetupFailed() =>
+      'Something went wrong setting up the camera, so nothing is being '
+          'analysed. The round clock still runs.',
+  };
 }
 
 class _Summary extends StatelessWidget {
@@ -688,17 +717,17 @@ class _Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SessionSummaryView(
-        eventCount: 0,
-        // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayı yok — bant bile
-        // ölçüm olmadığı için boş.
-        bands: const <String, String>{
-          'Stance': '—',
-          'Balance': '—',
-          'Footwork': '—',
-        },
-        // J-033: eğitmenler gard/kol pozisyonunda ayrışıyor → koçlanır ama
-        // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
-        // yazılmaz — bkz. widget dokümanı.
-        coachedNotScored: coachedNotScored,
-      );
+    eventCount: 0,
+    // K8 (M-F-04): kalibrasyon kapısı geçilmeden sayı yok — bant bile
+    // ölçüm olmadığı için boş.
+    bands: const <String, String>{
+      'Stance': '—',
+      'Balance': '—',
+      'Footwork': '—',
+    },
+    // J-033: eğitmenler gard/kol pozisyonunda ayrışıyor → koçlanır ama
+    // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
+    // yazılmaz — bkz. widget dokümanı.
+    coachedNotScored: coachedNotScored,
+  );
 }
