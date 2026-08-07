@@ -352,6 +352,46 @@ kısmi örtüşmenin okunabilirliğe etkisini ölçmüyor · z-sırasını bilmi
 kasıtlı bir metin katmanı gelirse kapı **yanlış öter** ve o zaman istisna
 **adıyla** yazılmalı — kapı gevşetilmemeli.
 
+### J-180 — dönen bir replik havuzunda BAĞLAM iddiası
+`session.cue.round_start` havuzunda **"Round one. Go."** vardı. Tek başına
+doğru; **çalınma yolu** onu yanlış yapıyordu: `startRound()` her turda
+`_fired`'ı temizler → `roundStart` her turda tetiklenir, `CueBook.say()` havuzu
+**round-robin** döndürür. Aritmetik: 1. tur `[0]`, **2. tur `(0+1)%4 = 1` →
+kullanıcı ikinci turun başında "Round one" duyuyordu.** Kondisyon derslerinin
+çoğu 3-4 turlu → **kenar durum değil.**
+
+**Kural sıra sayısını yasaklamıyor** — *seçim yolunun taşımadığı bir bağlamı
+iddia etmeyi* yasaklıyor. `counting`'deki `{n}` çiğnemez: bağlam **çağrı
+anında** doldurulur, metne gömülü değildir.
+
+Kapı **dört yönlü**: vakum muhafızı · pozitif kontrol · negatif ikiz (`{n}`
+yakalanmıyor) · **ters ikiz (havuz boşaltılarak geçilemez** — yoksa "ihlali sil"
+yerine "havuzu daralt" çözüm sanılır ve round-robin'in tekrar-önleme değeri
+ölür). **Mutasyonla doğrulandı:** kusur geri konunca kırmızı.
+
+**⚠️ Ne ölçmüyor:** bağlamın başka türlerini (ekipman, günün saati). Yeni bir
+bağlam sınıfı çıkarsa kapı onu **görmez**.
+
+### J-184 — gerçek veri motordan geçiyor + EKSİK FIXTURE SINIFI
+Gerçek videodan hasat edilmiş landmark'lar `StrikingEngine`'in **tamamından**
+geçiriliyor. Bugüne kadar fixture'lar yalnız **sayısal** kullanılıyordu
+(aritmetik Python ile uyuşuyor mu).
+
+**Bu kapı yazılırken üç araç kusuru üretti ve üçü de kayıtlı:** ① *"tamamlanan
+deneme > 0"* bekledim, 0 çıktı, **kusur sandım** — oysa ikisi de ÖLÇÜ
+fixture'ı, yumruk döngüsü içermeleri amaçlanmamış ② vakum eşiğim gerekçesiz
+`>100`'dü, fixture'lar 59/55 kare → **sağlıklı fixture'ı reddediyordu**
+③ "tanımlı anahtar" kümem yalnız `errors[]` okuyordu, `cue.strike_not_extended`
+faz-iptallerinde → **motorun DOĞRU ürettiği anahtarı "tanımsız" bildirdim.**
+
+> **Bir fixture'ı, yapılmadığı soruyu sormak için kullanmak ölçüm değildir.**
+
+**Asıl kayıt — üçüncü sınıf YOK:** sentetik keyframe *faz makinesini ideal
+girdide* kanıtlar · hasat fixture'ı *aritmetiği* kanıtlar · **"gerçek veriden
+bir SEANS çıkar" diyen artefakt yok — ne cihazda ne dosyada.** Bu boşluk, cihaz
+turunun neden bir **engel** olduğunun teknik hâli. Boşluk kapandığında **öten**
+bir test var (golden dizini değişirse) → belge kendiliğinden bayatlamıyor.
+
 ---
 
 ## Şablon notu — diğer hatlara
