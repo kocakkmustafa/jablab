@@ -49,12 +49,30 @@ Bu klasördeki her şey, 5 app'in de kullanacağı **alan-bağımsız** kabuk pa
 
 ## Bileşen listesi (terfi kapsamı)
 
+> **Kayıt ölçüldü (2026-08-07, J-135).** `PaywallStub` satırı *"JabLab hâlâ
+> kullanıyor"* diyordu; **0 atıf** çıktı. Zarar geliştirici-yüzüydü ama somut:
+> bir sonraki oturum paywall iskeletini sevk ediliyor sanır ve oradaki
+> `"Pricing is not set **yet**"` — yasaklı sözcük — canlı zannedilir. (Gerçek:
+> erişilemez borcun içinde, `promise_language_test`te sayılı; canlı ayarlar
+> sayfası `"Pricing is not set."` diyor.)
+>
+> **Koordinatör hükmü (08:32): freeze KODU dondurur, KAYDI değil.** Donmuş kod
+> dokunulmaz; donmuş kod HAKKINDAKİ kayıt canlıdır ve doğru tutulmak
+> zorundadır — çünkü terfi kararı bu kayda bakarak verilecek ve **yanlış kayıt
+> donmuş kodu korumaz, onun hakkındaki kararı bozar.**
+>
+> ⚠️ *"JabLab çağırmıyor"* = **uygulama** çağırmıyor. `ProgressPage` ve
+> `ShellScaffold`u **testler çağırıyor** (`progress_recorded_test`,
+> `shell_test`). Erişilemez bir sayfayı sabitleyen test, kapsam sayarken
+> **kapsama benzer ama kullanıcıya ulaşan hiçbir şeyi ölçmez** — terfi turunda
+> bu ayrım korunmalı.
+
 | Dosya | Bileşen | Rolü | Terfi |
 |---|---|---|---|
 | `shell_models.dart` | `ShellLibrary` · `ShellItem` · `ShellCourse` · `ShellLesson` · `ShellExclusion` | Kabuğun nötr görünüm modelleri; app kendi alan modelini bunlara çevirir | ✅ hazır |
 | `shell_scaffold.dart` | `ShellScaffold` | 4 sekmeli alt navigasyon (Today · Library · Progress · Profile); **2-tık kuralının** taşıyıcısı | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
 | `shell_scaffold.dart` | `ProgressPage` | Bant + eğri gösterimi; `numericUnlocked=false` iken **sayı render eden yol yoktur** (K8/M-F-04'ün UI karşılığı) | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
-| `shell_scaffold.dart` | `PaywallStub` | Fiyat sabit yazılmaz — kurucu kararı | 🟡 iskelet (IAP bağlanınca genişler) · JabLab hâlâ kullanıyor |
+| `shell_scaffold.dart` | `PaywallStub` | Fiyat sabit yazılmaz — kurucu kararı | 🟡 iskelet (IAP bağlanınca genişler) · ⚠️ **JabLab çağırmıyor** (ölçüldü 08-07: 0 atıf) |
 | `library_pages.dart` | `LibraryPage` | Öğe ızgarası + "Neden yok?" girişi; kapsamın tamamı görünür, "yakında" rozetli | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
 | `library_pages.dart` | `ItemPage` | Öğe sayfası: tanıtım + dürüstlük kutusu + kurs listesi; **açılmamış öğede kurs başlığı bile render edilmez** | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06) |
 | `library_pages.dart` | `CoursePage` | Ders listesi | ✅ hazır · ⚠️ JabLab çağırmıyor (08-06, kendi `lib/app/course_page.dart`ını yazdı) |
