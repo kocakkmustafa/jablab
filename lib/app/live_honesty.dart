@@ -56,8 +56,13 @@ enum LiveHonestyBucket {
         LiveHonestyBucket.yours => JColors.cool,
         // Nötr-parlak: görünür ama yönlendirmiyor — söyleyecek bir eylem yok.
         LiveHonestyBucket.ours => JColors.ink2,
-        // En sönük: bir şey olmuyor ve bunu görsel olarak da söylüyor.
-        LiveHonestyBucket.none => JColors.ink4,
+        // Sönük ama GÖRÜNÜR. ⚠️ Burada `ink4` yazıyordu ve ÖLÇÜLDÜ:
+        // zemine karşı kontrastı **1,80:1**, WCAG 2.2 SC 1.4.11'in
+        // metin-dışı eşiğinin (3,0) altında — yani "analiz hiç yok" ikonu
+        // pratikte görünmüyordu. Ve bu hâl izin reddi ile kamerasız dersin
+        // hâli, yani en sık görülecek olanlardan biri: **görünmeyen bir
+        // dürüst hâl, susmakla aynı şeydir.** `ink3` 3,51:1 veriyor.
+        LiveHonestyBucket.none => JColors.ink3,
       };
 
   /// Önizleme yuvasının ikonu. Donmuş yüzeyin ikonu DEĞİŞTİRİLEMİYOR
@@ -72,6 +77,24 @@ enum LiveHonestyBucket {
   /// Donmuş yüzeyi giydiren tema. **YALNIZ `error` eşleniyor** — o alan
   /// yüzeyin "göremiyorum" ikonunun okuduğu tek renk. Kullanılmayan bir
   /// `ColorScheme` girişi icat edilmedi (`jablabSessionTheme`in kuralı).
+  /// ⚠️ **RENK TEK BAŞINA AYRIMI TAŞIMIYOR — ölçüldü ve beyan ediliyor.**
+  ///
+  /// Üçünün de zemine karşı kontrastı WCAG 2.2 SC 1.4.11'i (metin-dışı,
+  /// 3,0:1) geçiyor: `yours` 10,80 · `ours` 7,61 · `none` 3,51. Yani
+  /// **görünürlük** ölçülü ve kapıda (`live_honesty_bucket_test`).
+  ///
+  /// Ama en önemli ayrım — *eylem sende* ile *eylem bizde* — renk olarak
+  /// **en zayıf** olanı: `yours`↔`ours` luminans oranı 1,42:1. Bu bir kusur
+  /// DEĞİL, bir sınır: WCAG kontrastı bir LUMINANS ölçüsüdür ve *"bu iki
+  /// renk birbirinden ayırt edilebilir mi"* sorusunu ölçmez (mavi-gri ile
+  /// nötr gri aynı parlaklıkta olup gözle apaçık farklı olabilir). Onu
+  /// kontrast oranıyla ölçmeye kalkmak, bir standardı ölçmediği şey için
+  /// kullanmak olurdu.
+  ///
+  /// **Bu yüzden ayrımın asıl yükünü İKON taşıyor**, renk değil — ve ikonun
+  /// 2-3 m'den okunup okunmadığı ancak GÖZLE doğrulanır. O doğrulama
+  /// yapılmadı (sim erişimi kurucu onayı bekliyor); bu paragraf onun yerine
+  /// geçmez, borcu adıyla tutar.
   ThemeData themeFor(ThemeData base) => base.copyWith(
         colorScheme: base.colorScheme.copyWith(error: accent),
       );

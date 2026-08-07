@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/design_tokens.dart';
@@ -29,6 +31,26 @@ void main() {
     final Set<IconData> icons =
         LiveHonestyBucket.values.map((LiveHonestyBucket b) => b.icon).toSet();
     expect(icons.length, LiveHonestyBucket.values.length);
+  });
+
+  test('ÜÇ KOVA DA ZEMİNDE GÖRÜNÜR — WCAG 2.2 SC 1.4.11 (metin-dışı 3:1)', () {
+    // ## Neden bu kapı, "üç renk farklı" testinin YANINA eklendi
+    //
+    // O test `Color` KİMLİĞİNİ ölçüyordu ve GEÇİYORDU — ama ölçüm başka
+    // şey söyledi: `none` kovası `ink4` iken zemine karşı **1,80:1**
+    // veriyordu, eşiğin (3,0) altında. Yani "analiz hiç yok" ikonu
+    // pratikte görünmüyordu ve test bunu göremiyordu: üç renk gerçekten
+    // farklıydı, biri sadece görünmüyordu. **Beyanın varlığı doğruluğu
+    // değildir** — bu gecenin dersi, kendi işime uygulandı.
+    //
+    // Eşik İCAT DEĞİL: WCAG 2.2 SC 1.4.11, kullanıcı arayüzü bileşenleri
+    // ve grafik nesneler için 3:1. Dış standart, bizim seçimimiz değil.
+    for (final LiveHonestyBucket b in LiveHonestyBucket.values) {
+      final double r = _contrast(_over(b.accent, JColors.ground), JColors.ground);
+      expect(r, greaterThanOrEqualTo(3.0),
+          reason: '$b zemine karşı ${r.toStringAsFixed(2)}:1 — eşik 3,0. '
+              'Görünmeyen bir dürüst hâl, susmakla aynı şeydir.');
+    }
   });
 
   test('HİÇBİR kova HÜKÜM (ember) tonunu kullanmıyor', () {
@@ -92,4 +114,30 @@ void main() {
           reason: '$bucket ikonu önizlemede çizilmiyor');
     }
   });
+}
+
+/// Alfa taşıyan bir rengi zemine BİNDİRİR. Kontrast, ekranda gerçekten
+/// oluşan renkten hesaplanmalı: `ink` yarı saydamken `ink`in kendi
+/// parlaklığını ölçmek, ölçmediğimiz bir pikseli ölçmek olurdu.
+Color _over(Color fg, Color bg) {
+  double c(double f, double b) => f * fg.a + b * (1 - fg.a);
+  return Color.from(
+      alpha: 1, red: c(fg.r, bg.r), green: c(fg.g, bg.g), blue: c(fg.b, bg.b));
+}
+
+/// WCAG 2.x bağıl parlaklık ve kontrast oranı — formül standardın kendisi
+/// (sRGB doğrusallaştırma + 0.2126/0.7152/0.0722 ağırlıkları), burada
+/// uydurulmuş hiçbir katsayı yok.
+double _luminance(Color c) {
+  double lin(double v) =>
+      v <= 0.04045 ? v / 12.92 : math.pow((v + 0.055) / 1.055, 2.4).toDouble();
+  return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+}
+
+double _contrast(Color a, Color b) {
+  final double la = _luminance(a);
+  final double lb = _luminance(b);
+  final double hi = math.max(la, lb);
+  final double lo = math.min(la, lb);
+  return (hi + 0.05) / (lo + 0.05);
 }
