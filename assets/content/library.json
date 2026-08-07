@@ -83,6 +83,37 @@
               "$cameraBasis": "Bu ders KAMERA hattini acar (J-096): teknik listesi tam olarak ['jab'] ve jab modellenmis TEK teknik. Kanca/uppercut modellenmedigi icin kombinasyon dersleri kamerayi ACMAZ - acsalardi kullanici izin verir, pil yanar ve sayim yanlis cikardi."
             },
             {
+              "id": "boxing.foundations.guard",
+              "displayName": "Holding the guard",
+              "teach": "Both hands stay in front of your face and the punches leave from there. Lead hand out around chin height, rear hand touching your cheek. Elbows down and in — a guard held with the elbows out looks tighter than it is, because the hands are up and the middle is open.\n\nThis lesson is jabs, but the jab is not the point. The point is what the other hand does while the jab is away, and what the jab hand does on the way back.\n\nThe rear hand is the first thing fatigue takes. It drifts down a few centimetres at a time and it does not feel like anything happening. Throw slowly enough that you can feel it stay.\n\nWe can see both hands during the punch, and we call it out when one drops or comes home late. We do not put a number on the guard: experienced coaches disagree about exactly where it belongs, so you get a flag and no score.",
+              "techniques": [
+                "jab"
+              ],
+              "authoringFocus": [
+                "REAR_HAND_LOW",
+                "LEAD_HAND_NOT_RECOVERED"
+              ],
+              "minutes": 10,
+              "usesCamera": true,
+              "$cameraBasis": "Teknik listesi tam olarak ['jab'] — jab modellenmis TEK teknik, o yuzden kamera hatti acilabilir (emsal: boxing.foundations.jab). VE ONEMLI: bu dersin iki odak hatasi da YUMRUK FAZI istiyor (REAR_HAND_LOW: EXTENSION+PEAK, LEAD_HAND_NOT_RECOVERED: RETRACTION). Yumruk atilmayan bir 'gard dersi' yazilsaydi bu hatalar HIC FIRLAYAMAZDI ve ogretim metnindeki 'dustugunde soyleriz' cumlesi KARSILIKSIZ bir vaat olurdu. Ders bu yuzden jab atarak kuruldu."
+            },
+            {
+              "id": "boxing.foundations.range",
+              "displayName": "Range and the straight line",
+              "teach": "Two things go wrong when a punch has to travel further than it should. The elbow swings out to find a shortcut, and the body leans in to cover the distance.\n\nThe elbow first. A straight punch keeps the elbow under and behind the fist for as long as it can. When the elbow lifts out to the side, the fist arrives on a curve — wider, slower, and no longer the punch you were practising.\n\nThen the lean. If you have to fall forward to land, you were not in range. Reaching puts your weight over your lead foot and takes away the thing that lets you throw the next one.\n\nThe fix is under you, not in front of you. Step in, then punch. Range is a footwork problem wearing an arm problem's clothes.\n\nWe can see the elbow angle and the forward lean, and we call both out. Neither carries a number: the thresholds behind them are not calibrated, so you get the flag and not a score.",
+              "techniques": [
+                "jab"
+              ],
+              "authoringFocus": [
+                "ELBOW_FLARED",
+                "OVERREACH"
+              ],
+              "minutes": 10,
+              "usesCamera": true,
+              "$cameraBasis": "Teknik listesi tam olarak ['jab'] (emsal: boxing.foundations.jab). Odak hatalarinin ikisi de yumruk fazi istiyor (ELBOW_FLARED: EXTENSION+PEAK, OVERREACH: PEAK) — yumruksuz bir 'mesafe dersi' bu hatalari uretemezdi.",
+              "$gapBasis": "BU DERS OLCULMUS BIR BOSLUGU KAPATIYOR: ELBOW_FLARED ve OVERREACH, motorun gordugu ve kocun seslendirdigi 14 hatadan HICBIR DERSIN ele almadigi ikisiydi (J-188 olcumu). Ikisi de band 'B-kal' ve severity 'medium'; ogretim metni bu yuzden SAYI VAAT ETMIYOR."
+            },
+            {
               "id": "boxing.foundations.cross",
               "displayName": "The cross",
               "teach": "The cross is the rear hand, and it travels a longer road: it starts further away and it has to cross your body to arrive. That distance is where its weight comes from and also where the trouble comes from.\n\nTurn the rear foot and hip first, then the shoulder, then let the hand go. If the arm leads, you are throwing with your arm alone and reaching for the target with your chest.\n\nYour lead hand does not go on holiday while the cross is out. It stays up. The most common shape fault here is one hand out and the other drifting down at the same time.\n\nWe cannot tell you how hard it lands. A camera sees shape and timing, not force, and we will not print a number we did not take.",

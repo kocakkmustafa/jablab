@@ -18,8 +18,33 @@ void main() {
   final Map<String, RuleSet> ruleSets = <String, RuleSet>{'boxing': boxing};
 
   group('Kütüphane IA', () {
-    test('blueprint kapsamı: 8 disiplin, biri canlı', () {
-      expect(lib.disciplines.length, 8);
+    test('blueprint kapsamı: her disiplin ya CANLI ya İSİMLİ GEREKÇELİ', () {
+      // ÖZNE DEĞİL ÖZELLİK (Choreia dersi, J-189). Bu test önce
+      // `disciplines.length == 8` diyordu ve o **sayı-bağlı** bir iddiaydı:
+      // dokuzuncu bir disiplin eklendiği gün test **mümkün olan en iyi
+      // sebeple** düşerdi (içerik geldi), ve düştüğü an "iyi haber" olacağı
+      // için yerine 9 yazılıp geçilirdi — kusuru çözmek değil, **bir
+      // sonraki disiplinin arkasına kuyruklamak.**
+      //
+      // Sayı KALDI ama artık **iddia değil, vakum muhafızı**: kütüphane
+      // boşalırsa aşağıdaki "hepsi gerekçeli" döngüsü **hiçbir şey
+      // ölçmeden** yeşil kalırdı.
+      expect(lib.disciplines.length, greaterThanOrEqualTo(8),
+          reason: 'disiplin sayısı ${lib.disciplines.length} — kütüphane '
+              'küçülmüş; bu bir İÇERİK KAYBI ve sebebi araştırılmalı');
+
+      // ASIL İDDİA: kapalı olan her disiplin NEDEN kapalı olduğunu söyler.
+      // "Yakında" demek yasak; mühendislik sebebi vermek zorunlu.
+      for (final Discipline d in lib.disciplines) {
+        if (lib.live.contains(d)) continue;
+        expect(d.blurb.trim().length, greaterThan(60),
+            reason: '${d.id}: kapalı ama gerekçesi ${d.blurb.trim().length} '
+                'karakter — bu bir MÜHENDİSLİK SEBEBİ taşıyamayacak kadar '
+                'kısa. Kullanıcı kısa bir gerekçeyi "bir gün belki" diye '
+                'okur, ve bu ürünün tamamı o okumaya karşı yazıldı. '
+                '(Ölçüldü: bugünkü 7 gerekçenin en kısası bile bunun '
+                'üstünde ve en yüksek ikili benzerlik 0.38 — şablon yok.)');
+      }
       expect(lib.live.map((Discipline d) => d.id), <String>['boxing']);
       // Kapsamın TAMAMI kullanıcıya baştan görünür — dar app algısı yaratılmaz.
       expect(lib.disciplines.map((Discipline d) => d.id),

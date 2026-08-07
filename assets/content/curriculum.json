@@ -342,6 +342,45 @@
           "$why": "DERSIN KENDISI bu trend. Gard eklemleri KOCLANAN (egitmenler ayrisiyor) — kapi kurulamaz; ama kullanicinin KENDI hata orani zaman icinde karsilastirilabilir. Kendine gore kiyas, baskasina gore kiyastan daha az iddia tasir."
         }
       ]
+    },
+    "boxing.foundations.guard": {
+      "gates": [
+        {
+          "event": "jab",
+          "minCompletedAttempts": 40,
+          "$why": "Odak hatalarinin IKISI DE kapi KURAMAZ: REAR_HAND_LOW ve LEAD_HAND_NOT_RECOVERED, koclanan-ama-skorlanmayan guardDiscipline'a ait (graded:false; referans uzlasmazligi, rear_forearm dagilimi 45 derece tavana kirpili). Kapi bu yuzden KATILIM sayiyor: 40 tamamlanmis jab. Jab tespiti A bandinda (%100, D2) — sayim durust. Dersin ogrettigi sey gardin YERI degil, yumruk atarken YERINDE KALMASI; ve o, atilan yumruk sayisiyla olculebilen bir MARUZIYET."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.rear_hand_low",
+          "direction": "decreasing",
+          "$why": "Sinyal, kapi degil: kullaniciya 'daha az hatirlatmam gerekti' diye gosterilir, ilerleme KILIDI acmaz."
+        },
+        {
+          "cue": "cue.lead_hand_not_recovered",
+          "direction": "decreasing"
+        }
+      ]
+    },
+    "boxing.foundations.range": {
+      "gates": [
+        {
+          "event": "jab",
+          "minCompletedAttempts": 40,
+          "$why": "ELBOW_FLARED ve OVERREACH band 'B-kal' — esikleri KALIBRE EDILMEMIS. gateDoc'a gore kalibre edilmemis bir sinyalle kapi kurmak, skoru baska adla vermektir. Kapi yine KATILIM: 40 jab. Bu ders bir DOGRULUK kapisi tasiyamaz, cunku dogrulugu olcen esik yok — ve tasiyormus gibi yapmak, ogretim metnindeki 'sayi vermiyoruz' cumlesini yalanlardi."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.elbow_flared",
+          "direction": "decreasing"
+        },
+        {
+          "cue": "cue.overreach",
+          "direction": "decreasing"
+        }
+      ]
     }
   },
   "$lateralityWhy": "J-142: 'Right order, right hand, every time.' -> 'Correct order, rear hand, every time.'. Ikinci 'right' bir VUCUT TARAFI atfiydi ve southpaw duruşta yanlis. Bu dosyanin tuketicisi BUGUN testler (uygulama okumuyor, J-129'da olculdu) — yani sizinti kullaniciya ULASMIYOR; drill'ler baglandigi gun ulasirdi. Sinif: gizli, kapida."
