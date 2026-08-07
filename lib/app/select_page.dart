@@ -334,7 +334,13 @@ class _SoonBadge extends StatelessWidget {
         ),
         child: Text(
           label.isEmpty ? 'NOT OPEN' : 'NOT OPEN · ${label.toUpperCase()}',
-          style: JText.label.copyWith(color: JColors.ink3, letterSpacing: 1),
+          // ⚠️ `ink3` idi ve ÖLÇÜLDÜ: 10 puntoda zemine karşı **3,51:1**,
+          // WCAG 2.2 AA normal-metin eşiği 4,5. J-108'de bu rozetin
+          // SÖZCÜĞÜNÜ düzelttim (`SOON` → `NOT OPEN`) ve KONTRASTINI hiç
+          // ölçmedim; kontrast kapısı da onu göremedi çünkü token
+          // VARSAYILANLARINI ölçüyor, yerinde `copyWith(color:)` ile
+          // geçilenleri değil (J-126). Rozet 7 kapalı disiplin kartında var.
+          style: JText.label.copyWith(color: JColors.ink2, letterSpacing: 1),
         ),
       );
 }

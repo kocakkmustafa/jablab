@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -134,6 +135,95 @@ void main() {
             'vakum-doğru bir kapı (aile dersi #4)');
   });
 
+  test('YERİNDE GEÇİLEN metin renkleri de OKUNUR (J-126)', () {
+    // ## Kapı envanterinin ürettiği bulgu
+    //
+    // Yukarıdaki token testi `JText.*` VARSAYILANLARINI ölçüyor. Ama
+    // yüzeyler rengi çoğu zaman **yerinde** geçiyor:
+    // `JText.label.copyWith(color: JColors.ink3)`. O yol kapının DIŞINDAYDI
+    // — ve içinde gerçek bir ihlal vardı: kapalı disiplin rozeti
+    // (`NOT OPEN`) 10 puntoda **3,51:1**, eşik 4,5.
+    //
+    // İkinci kez aynı ders: **J-116'da örüntüyü değil örneği düzeltmiştim**;
+    // burada kapının KAPSAMI örüntünün yalnız bir yarısını tutuyordu.
+    // Kapsamı ölçmeden "kapattım" demek, J-122'nin (kapsam ≠ alan) test
+    // tarafı.
+    //
+    // ⚠️ BU KAPININ GÖREMEDİĞİ, beyan: rengi bir DEĞİŞKENDEN alan yerler
+    // (`color: fg`) çözülemiyor — statik metinde değer yok. Onlar hâlâ
+    // kapının dışında ve bunu bilerek yazıyorum; "hepsini tarıyor" demek
+    // yanlış olurdu.
+    TextStyle? base(String name) => switch (name) {
+          'body' => JText.body,
+          'bodyMuted' => JText.bodyMuted,
+          'label' => JText.label,
+          'mono' => JText.mono,
+          'correction' => JText.correction,
+          'pageTitle' => JText.pageTitle,
+          'clock' => JText.clock,
+          _ => null,
+        };
+    Color? tone(String name) => switch (name) {
+          'ink' => JColors.ink,
+          'ink2' => JColors.ink2,
+          'ink3' => JColors.ink3,
+          'ink4' => JColors.ink4,
+          'cool' => JColors.cool,
+          'cool2' => JColors.cool2,
+          'cool3' => JColors.cool3,
+          _ => null,
+        };
+
+    final RegExp override = RegExp(
+        r'JText\.(\w+)\s*\n?\s*\.?copyWith\(([^)]*)\)', dotAll: true);
+    final RegExp colorRef = RegExp(r'JColors\.(\w+)');
+    final RegExp sizeRef = RegExp(r'fontSize:\s*([\d.]+)');
+
+    final List<String> hits = <String>[];
+    for (final FileSystemEntity f
+        in Directory('lib/app').listSync(recursive: true)) {
+      if (f is! File || !f.path.endsWith('.dart')) continue;
+      final String src = f.readAsStringSync();
+      for (final RegExpMatch m in override.allMatches(src)) {
+        final TextStyle? b = base(m.group(1)!);
+        if (b == null) continue;
+        final String args = m.group(2)!;
+        if (!args.contains('color:')) continue;
+        final double size =
+            double.tryParse(sizeRef.firstMatch(args)?.group(1) ?? '') ??
+                b.fontSize ??
+                14;
+        final bool bold = (b.fontWeight?.value ?? 400) >= FontWeight.w700.value;
+        final double threshold =
+            (size >= 24 || (bold && size >= 18.66)) ? 3.0 : 4.5;
+        // ⚠️ YALNIZ `color:` BAĞI — ilk yazışımda argümanların TAMAMINDAKİ
+        // `JColors.*` referanslarını alıyordum ve kapı kendi fazla
+        // genişliğini gösterdi: karşılamadaki bağlantının `decorationColor`
+        // (alt çizgi) rengini METİN rengi sanıp 2,10:1 diye bildirdi.
+        // Alt çizgi bir metin değil; onu metin eşiğiyle ölçmek, standardı
+        // ölçmediği şey için kullanmak olurdu (J-114'ün aynı dersi).
+        //
+        // TERNARY korunuyor: `color: locked ? ink2 : cool2` — `color:`
+        // bağının İÇİNDEKİ her dal ölçülüyor, çünkü koşulun bir yarısını
+        // kör bırakmak ihlali yarı yarıya gizler.
+        final String colorArg = _colorBinding(args);
+        for (final RegExpMatch c in colorRef.allMatches(colorArg)) {
+          final Color? col = tone(c.group(1)!);
+          if (col == null) continue;
+          final double r =
+              _contrast(_over(col, JColors.ground), JColors.ground);
+          if (r < threshold) {
+            hits.add('${f.uri.pathSegments.last} JText.${m.group(1)} + '
+                '${c.group(1)} @${size.toStringAsFixed(0)}px → '
+                '${r.toStringAsFixed(2)}:1 (eşik $threshold)');
+          }
+        }
+      }
+    }
+    expect(hits, isEmpty,
+        reason: 'yerinde geçilen metin rengi okunmuyor: ${hits.join(" · ")}');
+  });
+
   test('SÖNÜK ama OKUNUR — hiyerarşi kaybolmadı', () {
     // Kontrastı yükseltmenin ucuz yolu her şeyi `ink` yapmaktır ve bu,
     // görsel hiyerarşiyi öldürürdü. Ölçü: birincil metin ile sönük metin
@@ -244,4 +334,21 @@ Color _blend(Color fg, double alpha, Color bg) {
   double c(double f, double b) => f * a + b * (1 - a);
   return Color.from(
       alpha: 1, red: c(fg.r, bg.r), green: c(fg.g, bg.g), blue: c(fg.b, bg.b));
+}
+
+/// `copyWith` argümanlarından YALNIZ `color:` bağının değerini çıkarır.
+/// Sonraki üst-düzey virgüle kadar okur, yani ternary (`a ? X : Y`) tek
+/// parça olarak gelir; `decorationColor:`/`backgroundColor:` gibi başka
+/// renk parametreleri DIŞARIDA kalır.
+String _colorBinding(String args) {
+  final int i = RegExp(r'(^|,)\s*color:').firstMatch(args)?.end ?? -1;
+  if (i < 0) return '';
+  int depth = 0;
+  for (int j = i; j < args.length; j++) {
+    final String ch = args[j];
+    if (ch == '(' || ch == '[') depth++;
+    if (ch == ')' || ch == ']') depth--;
+    if (ch == ',' && depth == 0) return args.substring(i, j);
+  }
+  return args.substring(i);
 }

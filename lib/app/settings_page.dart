@@ -70,7 +70,12 @@ class SettingsPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text('FREE PLAN',
-                                style: JText.label.copyWith(color: JColors.ink3, letterSpacing: 1)),
+                                // `ink3` idi: 10 puntoda 3,51:1, eşik 4,5
+                                // (J-126). Sayfa A'nın `NOT OPEN` rozetiyle
+                                // AYNI kalıptan yapılmıştı (J-102'de öyle
+                                // kaydedilmiş) — kalıp paylaşılınca kusur da
+                                // paylaşılmış. Kapı ikizi buldu, ben birini.
+                                style: JText.label.copyWith(color: JColors.ink2, letterSpacing: 1)),
                           ),
                         ],
                       ),
