@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// KURS SÜRESİ, DERS SÜRELERİNİN TOPLAMIDIR (J-191).
+/// KURS SÜRESİ SAPMASI **SESSİZ** KALAMAZ (J-191).
 ///
 /// ## Bu kapı, KENDİ KIRDIĞIM bir şeyi korumak için var
 ///
@@ -21,16 +21,39 @@ import 'package:flutter_test/flutter_test.dart';
 /// **hiçbir testin bakmadığı bir DEĞİŞMEZİ** öldürdü — ve ölüm **sessiz**
 /// oldu, çünkü bakan yoktu.
 ///
-/// ## Değişmez GERÇEK mi? — ölçüldü, varsayılmadı
+/// ## ⚠️ ÖNCE BİR DÜZELTME: "değişmez" DEDİM, FAZLA GENİŞTİ
 ///
-/// Üç kurstan **ikisi** sayıyı ders toplamına **tam eşit** taşıyor
-/// (`foundations` 80=80, `intermediate` 63=63). Üçüncüsü (`conditioning`,
-/// 54 vs 78) **bu geceden ÖNCE de** uyuşmuyordu — `git HEAD~1`de ölçüldü.
-/// Yani sapma yeni değil, **eski ve açıklanmamış.**
+/// İlk yazışımda *"üç kurstan ikisi tutuyor → değişmez gerçek"* dedim.
+/// **Tarihi ölçünce çıkarım zayıfladı:**
 ///
-/// Oraya **uydurma bir gerekçe yazılmadı.** Beyan, bilinmediğini söylüyor
-/// ve koordinatöre soruldu. *Bilmediğini bilmek, bir gerekçe uydurmaktan
-/// iyidir.*
+/// * `foundations` **60/60 (6 ders)** ve `intermediate` **63/63 (4 ders)**
+///   — ikisi de **hiç değişmemiş**; yazıldıkları gün tutarlı yazılmışlar ve
+///   **hiçbir şey onları sınamamış.**
+/// * `conditioning` ise **ilk commit'ten beri** uyuşmuyor (**54 ↔ 78**), ve
+///   **en eski sürümde bile** (30 ↔ 22, 2 ders) uyuşmuyordu.
+///
+/// > **Hiç değişmemiş iki sabit, bir KURALI kanıtlamaz.** Bir değişmez,
+/// > **değişime dayandığında** değişmezdir — ve bunlar hiç değişmedi.
+/// > **İlk değişimi bu gece ben yaptım, ve biri kırıldı.**
+///
+/// Ayrıca `conditioning`in **54'ü hiçbir hesaba uymuyor**: ders toplamı
+/// **78**, saf çalışma **69**, dinlenmeler dahil **89**. Yani koordinatörün
+/// *"iki sayı farklı şeyleri ölçüyor olabilir"* hipotezi de **doğrulanmadı**
+/// — 54 **hesaplanabilir hiçbir şeye** eşit değil.
+///
+/// **Bugünkü dürüst okuma:** `estimatedMinutes` **üç kursta da ELLE
+/// yazılmış** bir tahmin; ikisi toplamla çakışıyor, biri hiç çakışmadı, ve
+/// **hiçbiri türetilmiyor.** Bu kapı bir kuralı DAYATMIYOR — sapmanın
+/// **sessiz** kalmasını yasaklıyor, çünkü sessiz bir sapma bir sonraki
+/// içerik turunda **fark edilmeden büyür.**
+///
+/// ## Kapının kuralı, bu düzeltmeden SONRA
+///
+/// Kapı **eşitliği dayatmıyor**; sapmanın **gerekçesiz** kalmasını
+/// yasaklıyor. `conditioning` gerekçesini taşıyor (*bilinmiyor*, ve o
+/// beyan **uydurulmadı**), `foundations`/`intermediate` eşitliği taşıyor.
+/// Yeni ders yazan biri sayıyı güncellemezse kapı **öter** — ve öttüğü an
+/// iki yol var: sayıyı düzelt, ya da **neden farklı olduğunu yaz.**
 ///
 /// ## ⚠️ NE ÖLÇMÜYOR
 ///
