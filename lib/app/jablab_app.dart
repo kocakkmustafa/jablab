@@ -337,7 +337,10 @@ class _RootState extends State<_Root> {
     Navigator.of(context).push<void>(
       MaterialPageRoute<void>(
         builder: (_) =>
-            SettingsPage(onOpenWhyNot: () => _openWhyNot(context, lib)),
+            SettingsPage(
+              onOpenWhyNot: () => _openWhyNot(context, lib),
+              excludedCount: lib.exclusions.length,
+            ),
       ),
     );
   }

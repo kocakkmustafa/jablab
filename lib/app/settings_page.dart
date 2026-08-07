@@ -18,9 +18,22 @@ import 'design_tokens.dart';
 /// bu da tam olarak o katmanın rezerve ettiği anlam ("ölçülmedi/bilinmiyor"),
 /// süs değil.
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key, required this.onOpenWhyNot});
+  const SettingsPage({
+    super.key,
+    required this.onOpenWhyNot,
+    required this.excludedCount,
+  });
 
   final VoidCallback onOpenWhyNot;
+
+  /// Kapsam-dışı madde sayısı — `library.exclusions`tan TÜREVİ (J-151).
+  ///
+  /// Elle yazılıydı ve **bayatlamıştı**: ekranda *"Seven things"* diyordu,
+  /// gerçek sayı **12**. J-107'de aynı kusur karşılama ekranında bulunup
+  /// türetilerek çözülmüştü; **ayarlar köşesi o turda taranmamıştı** —
+  /// kapsamın katman değil YÜZEY bazında dolaşılması gerektiğinin bir
+  /// örneği daha.
+  final int excludedCount;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -84,9 +97,20 @@ class SettingsPage extends StatelessWidget {
                           style: JText.pageTitle.copyWith(fontSize: 28, letterSpacing: -1)),
                       const SizedBox(height: 8),
                       Text(
-                        'The first assessment and the first course are free — you '
-                        'see what the coaching is actually like before anything is '
-                        'asked of you.',
+                        // J-151: eski metin *"The first **assessment** and the
+                        // first course are free — … before anything is **asked
+                        // of you**"* diyordu. İKİ kusur: ① `assessment`
+                        // sözcüğü TÜM DEPODA yalnız bu cümlede geçiyordu —
+                        // öyle bir aşama YOK (J-124'ün sınıfı) ② *"before
+                        // anything is asked"* gelecekte bir istek İMÂ ediyor,
+                        // yani vaat — ve kapının kelime listesinde yok
+                        // (`yet`/`soon`/`will` değil). Yeni metin yalnız
+                        // BUGÜNÜ söylüyor: ödeme duvarı yok, kilitli dersler
+                        // ödeme yüzünden değil ÖLÇÜM yüzünden kapalı ve her
+                        // biri sebebini yazıyor.
+                        'Nothing here is behind a payment. A few lessons are '
+                        'locked, and not because of money — each one names the '
+                        'measurement it is missing.',
                         style: JText.body.copyWith(fontSize: 14, color: JColors.ink2),
                       ),
                       const SizedBox(height: 14),
@@ -143,7 +167,9 @@ class SettingsPage extends StatelessWidget {
                               Text("What we don't do, and why",
                                   style: JText.body.copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
                               const SizedBox(height: 4),
-                              Text('Seven things left out on purpose, each with its reason.',
+                              Text(
+                                  '$excludedCount things left out on purpose, '
+                                  'each with its reason.',
                                   style: JText.body.copyWith(fontSize: 12.5, color: JColors.ink2)),
                             ],
                           ),

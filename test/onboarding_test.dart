@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_page.dart';
+import 'package:jablab/app/settings_page.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
 
@@ -15,6 +16,7 @@ import 'package:jablab/shell_candidate/shell_models.dart';
 /// sayısı VERİDEN mi türüyor, izin reddi çıkmaz sokak olarak mı sunuluyor,
 /// ve vaat dili sızmış mı.
 void main() {
+  _settingsCountGate();
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late Directory tmp;
@@ -231,5 +233,42 @@ void main() {
         if (step < 2) await advance(t);
       }
     });
+  });
+}
+
+/// AYARLAR KÖŞESİ — sayı TÜREVİ, elle yazılmıyor (J-151).
+///
+/// J-107 aynı kusuru **karşılama ekranında** bulup türeterek çözmüştü.
+/// **Ayarlar köşesi o turda taranmadı** ve orada elle yazılmış sayı
+/// bayatlamıştı: ekran *"Seven things left out on purpose"* diyordu, gerçek
+/// sayı **12**. Kapsamın katman değil **yüzey** bazında dolaşılması
+/// gerektiğinin bir örneği daha (J-145 ailesi).
+///
+/// ⚠️ NE ÖLÇMÜYOR: sayının DOĞRU yerden geldiğini — yalnız ekrandaki
+/// değerin `library.exclusions` uzunluğuyla aynı olduğunu.
+void _settingsCountGate() {
+  testWidgets('ayarlarda kapsam-dışı sayısı TÜREVİ (J-151)',
+      (WidgetTester t) async {
+    late final int expected;
+    late final dynamic lib;
+    await t.runAsync(() async {
+      const ContentRepository repo = ContentRepository();
+      lib = repo.toShell((await repo.load()).library);
+      expected = (lib.exclusions as List<dynamic>).length;
+    });
+    expect(expected, greaterThan(1),
+        reason: 'kapsam-dışı listesi boş — kapı vakum-doğru olurdu');
+
+    await t.pumpWidget(MaterialApp(
+      home: SettingsPage(onOpenWhyNot: () {}, excludedCount: expected),
+    ));
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('$expected things left out'), findsOneWidget,
+        reason: 'ayarlardaki sayı içerikle uyuşmuyor — elle yazılmış bir '
+            'sayı bayatlar ve bu tam olarak J-151de olan şeydi');
+    // NEGATİF İKİZ: eski bayat sayı geri gelirse öter.
+    expect(find.textContaining('Seven things'), findsNothing,
+        reason: 'elle yazılmış sayı geri kondu');
   });
 }
