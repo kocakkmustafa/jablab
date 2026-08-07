@@ -94,6 +94,22 @@ karıştırmak, birini yanlış kuyruğa koyar.
 
 ---
 
+## ⚠️ BU ENVANTERİN YAPISAL KÖR NOKTASI (J-129'da ölçüldü)
+
+Envanterin sorusu *"hangi **yüzey** kullanıcıyı yanlış bilgilendirir"* — ve gücü
+buradan geliyor. Ama aynı cümle sınırını da çiziyor: **yüzeyi olmayan içeriği
+yapısal olarak göremez.**
+
+J-129'da `library.json`'da parser'ın hiç okumadığı 10 anahtar bulundu ve ikisi
+**yanlış** iddia taşıyordu — biri J-119'un ölçüp çürüttüğü iddianın ta kendisi.
+Bu envanter onları kaçırmadı: **bakmadı**, çünkü hiçbir yüzeyde değillerdi ve
+tanımı gereği kapsam dışıydılar. Kapatan şey ayrı bir kapı oldu
+(`content_orphan_key_test`), envanterin genişletilmesi değil.
+
+**Ders:** doğru soru sormak, o sorunun sormadığını görmezden gelmek değildir.
+Yüzey-merkezli bir envanter yüzey-öncesi katmanı asla kapsamaz; o katmanın
+kendi kapısı olmalı.
+
 ## Şablon notu — diğer hatlara
 
 İki şey bu envanteri işe yarar kıldı:

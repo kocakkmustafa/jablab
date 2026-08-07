@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 200/200 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **Kapılar:** 204/204 · `flutter analyze` temiz
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
@@ -82,6 +82,13 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 | **ölçmüyor** | **Okunabilirliği.** Taşma yoksa geçer; metin okunmuyor olabilir (Lissom'un çift-tire dersi) |
 | **kanıt** | J-118'de gerçek içerik gelince **61 piksel** taşma yakaladı — yani taşma tarafı çalışıyor; okunabilirlik tarafı **hiç ölçmüyor** ve o kısmı kontrast kapısı devraldı |
 | **negatif ikiz** | — |
+
+### 9. Öksüz içerik anahtarı — `content_orphan_key_test` (J-129)
+| | |
+|---|---|
+| **ölçmüyor** | ① `curriculum.json` — tüketicisi uygulama değil TESTLER, şekli serbest sözlük; "tanımlı anahtar"ı test kodundan türetmek testi kendi kâhini yapardı (*ölçüm yöntemi*) ② `cues.en.json` — gerek yok, `CueBook.fromJson` tanımadığında FIRLATIYOR (*zaten imkânsız*) ③ **ters yön**: parser okuyor ama içerikte hiç geçmiyor (ölü alan, J-044) ④ **doğruluk** — okunuyor olmak doğru olmak değil |
+| **kanıt** | Kapı kurulduğunda **10 öksüz anahtar** buldu ve ikisi YANLIŞ iddia taşıyordu. Tanımlı anahtarlar parser KAYNAĞINDAN türetiliyor: elle liste doğruyu iki yere yazmak olurdu |
+| **negatif ikiz** | Mutasyonla kırmızı görüldü (silinen `blurb` geri kondu → tam yol+değerle öttü) · parser'ın `blurb`i DİSİPLİN düzeyinde okuduğu ayrıca ölçülüyor, yoksa ikiz canlı alanı da öksüz sayardı |
 
 ---
 
