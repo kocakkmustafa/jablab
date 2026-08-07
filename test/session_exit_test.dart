@@ -104,7 +104,7 @@ void main() {
             'ölçülmelidir');
   });
 
-  testWidgets('BUGÜNKÜ DAVRANIŞ: geri çıkışta kayıt YAZILMIYOR', (
+  testWidgets('GERİ çıkışta da kayıt YAZILIYOR (hüküm 14:05)', (
     WidgetTester t,
   ) async {
     final _FakeStore store = _FakeStore();
@@ -117,15 +117,15 @@ void main() {
     await t.pageBack();
     await t.pumpAndSettle();
 
-    expect(store.written, isEmpty,
-        reason: 'BEKLENTİ SATIRI (J-192): bugün geri çıkışta kayıt '
-            'YAZILMIYOR. Bu test bir hüküm değil, bugünkü davranışın '
-            'ÇİVİSİ. Koordinatör "geri de kaydetsin" derse: '
-            '(a) SessionScreen\'e PopScope ekle ve canlı aşamadan '
-            'çıkarken _record() çağır (b) bu beklentiyi '
-            '`isNotEmpty`ye çevir (c) `session_rounds_test`teki '
-            '"YARIDA bırakılan seans da kaydedilir" kapısının ADI o gün '
-            'GERÇEKTEN genel olur — bugün yalnız ileri yolu ölçüyor.');
+    expect(store.written, isNotEmpty,
+        reason: 'geri çıkışta kayıt YAZILMIYOR. Hüküm (14:05): yazılmalı. '
+            'Belirleyici olan "geri = vazgeçme mi" değil, ASİMETRİ — '
+            'ileri gitseydi "tamamlanmadı" diye kaydedilecekti, yani '
+            'sistem vazgeçmeyi ZATEN kaydediyor. Zarar bileşik: yalnız '
+            'geçmiş değil, ilerleme de kayboluyor (minCompletedAttempts).');
+    expect(store.written.single.isComplete, isFalse,
+        reason: 'kayıt sınıfı DEĞİŞMEMELİ: "tamamlandı" değil, mevcut '
+            '"yarıda bırakıldı" sınıfı');
   });
 
   testWidgets('POZİTİF İKİZ — İLERİ çıkışta kayıt YAZILIYOR', (

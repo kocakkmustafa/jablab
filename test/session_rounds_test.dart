@@ -198,6 +198,17 @@ void main() {
           reason: 'çalışma 3×4=12sn olmalı; 16 çıkarsa dinlenme de sayılmış');
     });
 
+    // ⚠️ KAPSAM NOTU (J-192): bu kapının ADI 2026-08-07'ye kadar
+    // ölçümünden GENİŞTİ — "yarıda bırakılan seans" diyordu ama yalnız
+    // İLERİ düğmesiyle çıkışı ölçüyordu; GERİ okuyla çıkan kullanıcının
+    // işi kaydedilmiyordu ve bunu hiçbir test görmüyordu.
+    //
+    //   Devralınan bir kapı, kurulduğu günkü kapsamıyla değil,
+    //   ADININ vaat ettiği kapsamla okunur — ve fark zamanla büyür,
+    //   çünkü kimse adı yeniden ölçmez.
+    //
+    // Geri yolu artık `session_exit_test` ölçüyor ve `dispose` onu
+    // kaydediyor; bu ad BUGÜN gerçekten genel.
     testWidgets('YARIDA bırakılan seans da kaydedilir, tamamlanmamış işaretli',
         (WidgetTester t) async {
       final _FakeStore store = _FakeStore();

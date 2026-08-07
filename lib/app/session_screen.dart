@@ -154,6 +154,31 @@ class _SessionScreenState extends State<SessionScreen> {
     if (leavingLive) unawaited(_record());
   }
 
+  /// GERİ ÇIKIŞTA DA KAYDET (J-192, koordinatör hükmü 14:05).
+  ///
+  /// Ölçüldü: kayıt yalnız `_next()` yolunda yazılıyordu, yani kullanıcı
+  /// canlı turun ortasında **geri okuna** basarsa yaptığı iş **kayboluyordu**
+  /// — ileri gitseydi *"tamamlanmadı"* diye kaydedilecekti.
+  ///
+  /// > **Aynı çalışma, çıkış YÖNÜNE göre var ya da yok.**
+  ///
+  /// Belirleyici olan *"geri = vazgeçme mi"* değil, bu **asimetri**: sistem
+  /// vazgeçmeyi **zaten** kaydediyor, sadece **bir** kapıdan çıkanı kaydedip
+  /// diğerinden çıkanı kaybediyordu. Ve tutarsızlık kullanıcı tarafında
+  /// **görünmez** — *kullanıcının göremediği bir kural, kural değil kazadır.*
+  ///
+  /// `dispose` seçildi çünkü **her** çıkış yolunu kapsıyor: geri oku, kenar
+  /// jesti, programatik pop. `PopScope` yalnız birini yakalardı.
+  ///
+  /// **Çift kayıt riski yok:** `_next()` canlıdan çıkarken aşamayı zaten
+  /// ilerletmiş olur (`summary`), bu yüzden buradaki koşul tutmaz — ve o
+  /// `session_exit_test`in pozitif ikiziyle ölçülüyor.
+  @override
+  void dispose() {
+    if (_stage == SessionStage.live) unawaited(_record());
+    super.dispose();
+  }
+
   Future<void> _record() async {
     final SessionStore? store = widget.store;
     final RoundPlan? plan = widget.plan;
