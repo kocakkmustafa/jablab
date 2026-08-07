@@ -8,7 +8,7 @@
       "Rear hand up.",
       "Protect your chin.",
       "Hand back to your cheek.",
-      "Right hand home.",
+      "Rear hand home.",
       "That hand keeps dropping.",
       "Guard it."
     ],
@@ -276,5 +276,6 @@
     "$silinenler": "cue.low_light · cue.partial_analysis · cue.next_up · cue.not_measured_power · cue.coached_not_scored · cue.count · cue.round_of · cue.scored_topics · cue.coached_topics · cue.trend_* (4) · setup.* (7) · drill.* (10) = 30 anahtar. Gerekce ve TASINAN METIN: docs/design/ICERIK-ONCU-REPLIKLER.md",
     "$liveKeysAnlami": "liveKeys = SessionNarrator.tick()'in STEADY kipte gercekten urettigi olaylarin anahtarlari. session_narrator_test [J-041] bu listeyi anlaticiyi kosturarak DOGRULUYOR: beyan ile gercek arasinda fark varsa test kirmizi. Ekranin ELLE ekledigi olaylar (rest, sessionEnd) bu listeye GIRMEZ — ayri yol, ayri kanit. engineLiveKeys ise MOTOR-surüculu kanaldir (LiveJabController → LiveJabRunning.narration); [J-041] onu okumaz, kaniti live_jab_path_test'tedir."
   },
-  "$variantWhy": "J-141: varyant sayisi ATESLENME sayisiyla olcekleniyor. Olculdu (secici round-robin: (v+1) % lines.length, rastgele DEGIL): hiit 12 patlama x 2 varyant = ayni cumle 12 dakikada ALTI KEZ; r20'de cue.halfway UC KEZ. Desen yapisaldi — EN COK atesleyen replikler EN AZ varyanta sahipti, cunku sayac/aralik replikleri bir kez calacakmis gibi yazilmisti. Hedef SECILMEDI, uygulamanin kendi en iyi kapsanan seans repligiden TURETILDI: cue.round_start 4 varyant / 6 tur = 1,5x. Kapi bu orani referans alir (cue_variant_test)."
+  "$variantWhy": "J-141: varyant sayisi ATESLENME sayisiyla olcekleniyor. Olculdu (secici round-robin: (v+1) % lines.length, rastgele DEGIL): hiit 12 patlama x 2 varyant = ayni cumle 12 dakikada ALTI KEZ; r20'de cue.halfway UC KEZ. Desen yapisaldi — EN COK atesleyen replikler EN AZ varyanta sahipti, cunku sayac/aralik replikleri bir kez calacakmis gibi yazilmisti. Hedef SECILMEDI, uygulamanin kendi en iyi kapsanan seans repligiden TURETILDI: cue.round_start 4 varyant / 6 tur = 1,5x. Kapi bu orani referans alir (cue_variant_test).",
+  "$lateralityWhy": "J-142: 'Right hand home.' → 'Rear hand home.'. Bu bir USLUP degil DOGRULUK duzeltmesi: southpaw (solak) duruslu bir kullanicida ARKA EL sol eldir, yani replik YANLIS ELI soyluyordu. Kamera durusu okuyor ama kullanicinin hangi elini 'sag' saydigini BILMIYOR; lead/rear duruşa GORE tanimlidir ve her iki duruşta da dogrudur. Kural gecenin brief'inde yaziliydi ('sol/sag denmez -> lead/rear hand') ama HICBIR KAPI zorlamiyordu — J-133 olcutunun ta kendisi: sevk edilmis bir sinir, korumasiz. Kapi: laterality_test."
 }

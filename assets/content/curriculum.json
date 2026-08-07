@@ -98,7 +98,7 @@
     "drill.combo_slow": {
       "displayName": "Combination, slowly",
       "durationSec": 90,
-      "instruction": "Half speed. Right order, right hand, every time.",
+      "instruction": "Half speed. Correct order, rear hand, every time.",
       "targets": [
         "cue.wrong_hand",
         "cue.combo_order"
@@ -343,5 +343,6 @@
         }
       ]
     }
-  }
+  },
+  "$lateralityWhy": "J-142: 'Right order, right hand, every time.' -> 'Correct order, rear hand, every time.'. Ikinci 'right' bir VUCUT TARAFI atfiydi ve southpaw duruşta yanlis. Bu dosyanin tuketicisi BUGUN testler (uygulama okumuyor, J-129'da olculdu) — yani sizinti kullaniciya ULASMIYOR; drill'ler baglandigi gun ulasirdi. Sinif: gizli, kapida."
 }
