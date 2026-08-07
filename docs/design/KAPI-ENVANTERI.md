@@ -7,7 +7,7 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **app 231/231 + motor 113/113** · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **app 245/245 + motor 113/113** · `flutter analyze` temiz
 
 ## ⚠️ ÖNCE: *"YEŞİL"* NE KADARINI KAPSIYOR (J-145/J-146)
 
@@ -121,7 +121,7 @@ Her satır: **kapı · neyi ölçmüyor · kanıt (kapsamı nasıl biliyorum) ·
 ### 10-11. Mekanizma dili + kurs hedefi — `promise_language_test` (J-131·J-132)
 | | |
 |---|---|
-| **ölçmüyor** | ① **Başka sözcüklerle söylemeyi** — hedef "punch chains" derse görmez ② **ters yönü**: hedefin kursta hiç olmayan konuyu anması (`tempo control`) — anlam işi, sınıfı **imkânsız** ③ **gerekçenin kalitesini** — işareti taşımak yeterli sayılıyor ④ mekanizma listesi DAR ve kanıta dayalı: yeni bir geliştirici kavramı sızarsa görmez |
+| **ölçmüyor** | ① **Başka sözcüklerle söylemeyi** — hedef "punch chains" derse görmez ② ~~ters yönü~~ ✅ **KAPANDI (J-164)** — *"hedefin kursta hiç olmayan konuyu anması"*ı **imkânsız** diye sınıflamıştım, **yanlıştı**: `boxing.conditioning`de tam adı **`Tempo control`** olan bir ders var → ölçüt mekanik (`goal_scope_test`). Sınıf **ölçüm yöntemi**ymiş ③ **gerekçenin kalitesini** — işareti taşımak yeterli sayılıyor ④ mekanizma listesi DAR ve kanıta dayalı: yeni bir geliştirici kavramı sızarsa görmez |
 | **kanıt** | J-131'de 9 eşleşme ölçüldü, **6'sı bilerek durdu** — ölçüt kelimede değil: *mekanizma gözlenebiliyor mu · cümle eyleme çağırıyor mu*. J-132'de kurs katmanı ölçüldü ve **kusur bulundu** |
 | **negatif ikiz** | **İkisi de TERS yönde**: J-131 → `confidence gate` içerikten kalkarsa öter (kapı fazla genişlemiş demektir) · J-132 → kilitsiz her kurs da caveat taşırsa öter (**olmayan bir sınırı beyan etmek dürüstlük değil gürültüdür**) |
 
@@ -234,6 +234,28 @@ machine"* köken beyanı).
 ⚠️ **Ve açıklamak bir çözüm değil:** *"W1 ne demek"* diye anlatmak, örtük yol
 haritası vaadini **açık** hâle getirirdi. Üçüncü seçenek ihlalin büyütülmüş
 hâlidir.
+
+### 🧪 SINIFLANDIRMANIN DOĞRU-POZİTİFİ (J-164)
+
+Ölçüm araçlarına vakum kapısı ve pozitif ikiz koyuyoruz. **Sınıflandırma da
+bir araçtır ve o da yanılır** — ve kusuru daha pahalı: *araç kusuru yanlış
+ÖLÇÜM verir, sınıf kusuru yanlış İŞ verir.*
+
+**En pahalı kutu `imkânsız`**, çünkü oraya konan şeye **bir daha bakılmaz.**
+Bu gece oraya dört şey kondu; birine doğru-pozitif sınaması uygulandı:
+
+> *"Hedefin kursta hiç olmayan bir konuyu anması"* — **imkânsız** demiştim
+> (*anlam işi*). Ama `boxing.conditioning`de **tam adı `Tempo control` olan
+> bir ders var** ve eski hedef **`tempo control`** diyordu. Ölçüt mekanik:
+> **bir kurs hedefi, BAŞKA bir kursun dersinin tam adını anmamalı.**
+
+Sınıf **`ölçüm yöntemi`**ymiş ve kapı **on dakikada** kuruldu.
+
+**Sınama sorusu:** *bu kutuya koyduğum başka ne var, ve onlarla gerçekten
+aynı mı?* — `imkânsız` kutusunda kalanlar: **algı** (2-3 m ikon ayırt) ·
+**gerekçe ikna ediciliği** · **çerçeve-küme uyumu**. Üçü de **semantik ya da
+algısal**; *tempo control* ise **veriden çıkarılabilir bir olguydu** ve
+yanlış kutudaydı.
 
 ### 🔬 Kapıların kendi ARAÇLARI — iki tuzak ve bir denetim (J-139/J-140)
 
