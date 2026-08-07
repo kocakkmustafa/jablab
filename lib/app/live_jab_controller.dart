@@ -5,6 +5,7 @@ import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart';
 
 import '../shell_candidate/live_surface.dart' show LiveState;
+import 'live_honesty.dart';
 import 'live_session_failure.dart';
 import 'session_narrator.dart';
 
@@ -85,6 +86,13 @@ final class LiveJabController {
   StreamSubscription<CameraFrameEnvelope>? _sub;
   bool _running = false;
   int _completed = 0;
+
+  /// Son TAMAMLANMIŞ denemenin ilk hata kodu — `cue.corrected`in tek girdisi
+  /// (J-105). `null` iki şey demek olabilir: henüz deneme yok, ya da son
+  /// deneme temizdi; ikisinde de "düzeltildi" DİYEMEYİZ, çünkü ortada
+  /// kaybolan bir işaret yok. Bu yüzden ayrı bir "henüz deneme yok" hâline
+  /// gerek kalmadı — her iki hâlde de doğru davranış aynı: sus.
+  String? _lastAttemptIssueCode;
 
   Stream<LiveJabState> get states => _states.stream;
 
@@ -177,6 +185,11 @@ final class LiveJabController {
             // da YOK ama başka sebeple: `resolution.frame` bu dalda null,
             // yani güvenmediğimiz koordinatlara zaten erişimimiz yok.
             : cues.sayKey('cue.structural') ?? _genericNoVerdict,
+        // KİMSE YOK → eylem SENDE (kadraja gir). OKUMA BOZUK → eylem BİZDE.
+        // J-103 bu ikisini metinde ayırmıştı; kova ayrımı GÖRSELE taşıyor.
+        bucket: resolution.structural == null
+            ? LiveHonestyBucket.yours
+            : LiveHonestyBucket.ours,
       ));
       return;
     }
@@ -189,13 +202,46 @@ final class LiveJabController {
     final List<PoseLandmark> skeleton = resolution.frame!.landmarks;
 
     final EngineOutput out = engine.process(resolution.frame!);
-    if (out.completedAttempt?.completed ?? false) _completed += 1;
+
+    // DÜZELTME KAYBOLDU MU (J-105). Bir OLGU ölçülüyor, bir eşik DEĞİL:
+    // önceki tamamlanmış denemede işaretlenmiş bir hata kodu vardı ve bu
+    // tamamlanmış denemede o kod YOK. Kod ya var ya yok — araya sığacak bir
+    // sayı, bir süre ya da bir "yeterince" yok.
+    //
+    // ⚠️ DENEME SINIRINDA ölçülüyor, karede değil. Kare-kare bakmak bir
+    // eşik icat etmeye zorlardı ("kaç kare boyunca yok olursa düzeldi
+    // sayılır") ve motor zaten denemeyi kendisi kapatıyor — sınırı ondan
+    // almak, uydurmamanın tek yolu.
+    String? correctedLine;
+    if (out.completedAttempt?.completed ?? false) {
+      _completed += 1;
+      final String? previous = _lastAttemptIssueCode;
+      final String? current = out.issues.isEmpty ? null : out.issues.first.code;
+      // GÖRÜNÜRLÜK kodları hariç: "seni göremiyordum, artık görüyorum" bir
+      // DÜZELTME değil — kullanıcı bir şey düzeltmedi, koşullar değişti.
+      // Onu övmek, yapmadığı bir işi ona mal etmek olurdu.
+      if (previous != null &&
+          current != previous &&
+          !jabLabVisibilityIssueCodes.contains(previous)) {
+        correctedLine = cues.sayKey(jabLabCorrectedCueKey);
+      }
+      _lastAttemptIssueCode = current;
+    }
 
     if (!out.judgeable) {
       _states.add(LiveJabState.live(
         surface: LiveState.noVerdict,
         completedCount: _completed,
         noVerdictReason: _suppressionSentence(out.suppressionReason),
+        // Bastırma sebepleri KULLANICININ düzeltebileceği şeyler
+        // (kadraj-dışı, düşük güven, gövde okunamıyor) — `structural:`
+        // dalı hariç, ama o dal canlı hatta erişilemez (üstteki kapı
+        // önce davranıyor ve zaten `ours` diyor).
+        bucket: LiveHonestyBucket.yours,
+        // Hüküm susarken bile ANLATI konuşabilir (ayrı yuva): deneme
+        // kapandı ve önceki işaret gitti — bunu söylememek için bir sebep
+        // yok, hükmün verilememesi ayrı bir olgu.
+        narration: correctedLine,
         skeleton: skeleton,
       ));
       return;
@@ -213,6 +259,9 @@ final class LiveJabController {
         surface: LiveState.noVerdict,
         completedCount: _completed,
         noVerdictReason: _phrase(issue.code) ?? _genericNoVerdict,
+        // GÖRÜNÜRLÜK kodu: "seni göremiyorum" — eylem sende.
+        bucket: LiveHonestyBucket.yours,
+        narration: correctedLine,
         phase: out.activePhase,
         skeleton: skeleton,
       ));
@@ -225,6 +274,7 @@ final class LiveJabController {
       // HAM KOD ASLA: `REAR_HAND_LOW` bir teşhis dizesidir. İçerik eksikse
       // kod gösterilmez, genel ama DÜRÜST bir cümle gösterilir.
       cue: issue == null ? null : (_phrase(issue.code) ?? _genericIssue),
+      narration: correctedLine,
       phase: out.activePhase,
       skeleton: skeleton,
     ));
@@ -351,6 +401,7 @@ sealed class LiveJabState {
     String? noVerdictReason,
     String? phase,
     List<PoseLandmark>? skeleton,
+    LiveHonestyBucket bucket,
   }) = LiveJabRunning;
 
   const factory LiveJabState.failed(LiveSessionFailure failure) =
@@ -375,7 +426,15 @@ final class LiveJabRunning extends LiveJabState {
     this.noVerdictReason,
     this.phase,
     this.skeleton,
+    this.bucket = LiveHonestyBucket.none,
   });
+
+  /// SORUMLULUK KOVASI (J-110) — "eylem kimde". Kontrolcü hangi dala
+  /// girdiğini zaten biliyor; yüzey yalnız CÜMLEYİ görüyordu ve bu yüzden
+  /// 11 hâli aynı renkte çiziyordu. Kova burada TÜRETİLİYOR, yüzeyde
+  /// cümleden tahmin EDİLMİYOR — tahmin, ayrımın sessizce yanlış olacağı
+  /// tek yol olurdu.
+  final LiveHonestyBucket bucket;
 
   final LiveState surface;
 

@@ -9,6 +9,7 @@ import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
 import 'design_tokens.dart';
 import 'session_narrator.dart';
+import 'live_honesty.dart';
 import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
 import 'session_store.dart';
@@ -571,56 +572,93 @@ class _LiveState extends State<_Live> {
 
 /// Canlı yüzey — kameralı ve kamerasız dersin AYNI yuvası, farklı içerikle.
 extension on _LiveState {
+  /// Donmuş yüzeyi kovanın rengiyle giydirir (J-110). `LiveCoachSurface`
+  /// `shell_candidate/` altında DONDURULMUŞ ve `colorScheme.error`ü
+  /// "göremiyorum" ikonuna basıyor; widget'a dokunmadan tek yol bu sarmal —
+  /// J-100'ün `jablabSessionTheme` deseninin aynısı, bir katman içeride.
+  Widget _bucketed(LiveHonestyBucket bucket, Widget surface) => Theme(
+        data: bucket.themeFor(Theme.of(context)),
+        child: surface,
+      );
+
   Widget _coachSurface() {
     final LiveSessionFailure? failure = _jabFailure;
     if (failure != null) {
       // KURULUM hatası: seans başlamadı. Saat koşmaya devam ediyor (yukarıda)
       // ama analiz yok ve bu SÖYLENİYOR — "yine de devam et" düğmesi YOK,
       // çünkü kamera dersinin vaadi analizdir.
-      return LiveCoachSurface(
-        state: LiveState.noVerdict,
-        // Analiz HİÇ başlamadı → sayı YOK. `0` yazmak "sıfır yumruk attın"
-        // demektir ve hiçbir şey ölçülmedi (J-096, simülatörde bulundu).
-        eventCount: null,
-        narration: _line,
-        noVerdictReason: _failureSentence(failure),
-      );
+      // KOVA KURULUM HATASININ SINIFINDAN TÜRÜYOR, hepsi aynı değil:
+      // izin reddi analizin HİÇ başlamadığı hâldir (kullanıcı bilerek
+      // seçti, ortada bir arıza yok); kamera açılamadı/kurulum düştü ise
+      // BİZİM tarafımızda bir sorun. İkisine aynı görseli vermek, J-103'ün
+      // metinde ayırdığı şeyi görselde birleştirmek olurdu.
+      final LiveHonestyBucket bucket = failure is LivePermissionDenied
+          ? LiveHonestyBucket.none
+          : LiveHonestyBucket.ours;
+      return _bucketed(
+          bucket,
+          LiveCoachSurface(
+            state: LiveState.noVerdict,
+            // Analiz HİÇ başlamadı → sayı YOK. `0` yazmak "sıfır yumruk
+            // attın" demektir ve hiçbir şey ölçülmedi (J-096).
+            eventCount: null,
+            narration: _line,
+            noVerdictReason: _failureSentence(failure),
+            preview: SkeletonPreview(
+                state: LiveState.noVerdict, bucket: bucket),
+          ));
     }
 
     final LiveJabState? jab = _jab;
     if (widget.liveJab == null) {
       // KAMERASIZ ders — hâlâ doğru olan eski cümle.
-      return LiveCoachSurface(
-        state: LiveState.noVerdict,
-        eventCount: null,
-        narration: _line,
-        noVerdictReason:
-            'This lesson runs on the clock — nothing is being judged. '
-            'The round timer and the voice coach both work.',
-      );
+      return _bucketed(
+          LiveHonestyBucket.none,
+          LiveCoachSurface(
+            state: LiveState.noVerdict,
+            eventCount: null,
+            narration: _line,
+            noVerdictReason:
+                'This lesson runs on the clock — nothing is being judged. '
+                'The round timer and the voice coach both work.',
+            preview: const SkeletonPreview(
+                state: LiveState.noVerdict, bucket: LiveHonestyBucket.none),
+          ));
     }
     if (jab == null || jab is LiveJabStarting) {
       // Henüz hiçbir kare gelmedi. SIFIR GÖSTERİLMİYOR: sıfır "hiç yumruk
       // atmadın" demektir, oysa daha hiçbir şey ölçülmedi. İskelet de YOK
       // (henüz çözülmüş bir kare yok) — yalnız yer tutucu görünür.
-      return LiveCoachSurface(
-        state: LiveState.noVerdict,
-        eventCount: null,
-        narration: _line,
-        noVerdictReason: 'Getting the camera ready…',
-        preview: const SkeletonPreview(state: LiveState.noVerdict),
-      );
+      return _bucketed(
+          LiveHonestyBucket.none,
+          LiveCoachSurface(
+            state: LiveState.noVerdict,
+            eventCount: null,
+            narration: _line,
+            noVerdictReason: 'Getting the camera ready…',
+            preview: const SkeletonPreview(
+                state: LiveState.noVerdict, bucket: LiveHonestyBucket.none),
+          ));
     }
 
     final LiveJabRunning r = jab as LiveJabRunning;
-    return LiveCoachSurface(
+    return _bucketed(
+        r.bucket,
+        LiveCoachSurface(
       state: r.surface,
       eventCount: r.completedCount,
       cue: r.cue,
-      narration: _line,
+      // MOTOR ANLATISI SAATİNKİNİ EZER (J-105). İkisi de aynı yuvaya
+      // yazıyor ve yuva tek; hangisi kazanacağı bir tercih değil bir ZAMAN
+      // meselesi: "düzeltme kayboldu" TAM O ANDA doğru ve bir saniye sonra
+      // artık haber değil, oysa "yarıladın" tur boyunca doğru kalır.
+      // Kaybolan cümleyi bekleten bir kuyruk kurmak, en taze sinyali en geç
+      // söylemek olurdu.
+      narration: r.narration ?? _line,
       noVerdictReason: r.noVerdictReason,
-      preview: SkeletonPreview(state: r.surface, skeleton: r.skeleton),
-    );
+      preview: SkeletonPreview(
+          state: r.surface, skeleton: r.skeleton, bucket: r.bucket),
+    ));
   }
 
   /// Tipli hâl → kullanıcı cümlesi. **Ham `detail` KULLANILMIYOR** (doc-75/5

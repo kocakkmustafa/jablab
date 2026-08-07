@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+
+import 'design_tokens.dart';
+
+/// DÜRÜST HÂLLERİN SORUMLULUK EKSENİ (J-110, koordinatör hükmü 2026-08-07).
+///
+/// ## Ölçülen sorun
+///
+/// Canlı yüzeyde **11+ ayrı dürüst hâl** var (5 kurulum-hatası sınıfı ·
+/// kamerasız ders · başlangıç · kimse-yok · okuma-bozuk · kadraj-dışı ·
+/// düşük-güven · gövde-okunamıyor) ve hepsi TEK görselden geçiyordu: aynı
+/// ikon, aynı renk, aynı tipografi. Ayrışan tek şey cümleydi.
+///
+/// Telefon 2-3 m uzakta (UI-BRIEF'in 1 numaralı kısıtı: uzaktan-okunurluk).
+/// Kullanıcının okuduğu **ilk şey renk, ikinci şey ikon, cümle üçüncü.**
+/// Yani J-103'te metinde ayırdığımız *"sen kadrajda değilsin"* ile
+/// *"benim okumam bozuk"* farkı **kullanıcıya ulaşmıyordu** — düzeltmenin
+/// görsel karşılığı hiç yapılmamıştı.
+///
+/// ## Neden 11 değil 3
+///
+/// 11 hâle 11 görsel icat etmek **eşik icadının görsel kardeşi** olurdu:
+/// ayrımın kendisi uydurma olurdu. Bu üç kova İCAT DEĞİL TÜRETİM — 11 hâlin
+/// her biri zaten *"eylem kimde"* sorusuna bir cevap taşıyor; burada
+/// yapılan tek şey o ekseni görünür kılmak.
+///
+/// ## `colorScheme.error` KALDIRILDI
+///
+/// Donmuş `LiveCoachSurface` "göremiyorum" ikonunu `colorScheme.error` ile
+/// çiziyordu ve bu HER hâle basılıyordu. **"Kimse yok" bir hata değildir** —
+/// kırmızı, kullanıcıya yanlış bir şey yaptığını söyler. Sınıfı yanlış
+/// yazmanın renkle yapılmış hâli; J-103'ün düzelttiği yanlış-yönlendirmenin
+/// ta kendisi.
+///
+/// Donmuş widget'a DOKUNULMADAN çözülüyor: `themeFor` `colorScheme.error`ü
+/// kovanın rengine eşliyor ve yüzey `Theme(data:, child:)` ile sarılıyor —
+/// J-100'ün `jablabSessionTheme` deseninin aynısı.
+enum LiveHonestyBucket {
+  /// **EYLEM SENDE.** Kullanıcının yapabileceği bir şey var: kadraja gir,
+  /// gövdeni göster, daha net dur. Sakin ve okunur — bu bir uyarı değil,
+  /// bir yönlendirme.
+  yours,
+
+  /// **EYLEM BİZDE.** Okuma bozuk, kamera açılamadı, kurulum düştü.
+  /// Kullanıcıya yapması gereken bir şey söylenmiyor çünkü yok. Kırmızı
+  /// OLMAZ: kusur onda değil.
+  ours,
+
+  /// **ANALİZ HİÇ YOK.** İzin verilmedi, ders kamerasız, ya da henüz ilk
+  /// kare gelmedi. Ortada ne düzeltilecek bir şey var ne bozulan bir şey —
+  /// en sessiz hâl.
+  none;
+
+  Color get accent => switch (this) {
+        // Gözlem tonu (Tier 2): "bak" diyor, "hata" demiyor.
+        LiveHonestyBucket.yours => JColors.cool,
+        // Nötr-parlak: görünür ama yönlendirmiyor — söyleyecek bir eylem yok.
+        LiveHonestyBucket.ours => JColors.ink2,
+        // En sönük: bir şey olmuyor ve bunu görsel olarak da söylüyor.
+        LiveHonestyBucket.none => JColors.ink4,
+      };
+
+  /// Önizleme yuvasının ikonu. Donmuş yüzeyin ikonu DEĞİŞTİRİLEMİYOR
+  /// (`visibility_off_outlined` orada sabit); ikon ekseni bu yüzden app'in
+  /// KENDİ yuvasından (`SkeletonPreview`) taşınıyor.
+  IconData get icon => switch (this) {
+        LiveHonestyBucket.yours => Icons.center_focus_strong_outlined,
+        LiveHonestyBucket.ours => Icons.sync_problem_outlined,
+        LiveHonestyBucket.none => Icons.videocam_off_outlined,
+      };
+
+  /// Donmuş yüzeyi giydiren tema. **YALNIZ `error` eşleniyor** — o alan
+  /// yüzeyin "göremiyorum" ikonunun okuduğu tek renk. Kullanılmayan bir
+  /// `ColorScheme` girişi icat edilmedi (`jablabSessionTheme`in kuralı).
+  ThemeData themeFor(ThemeData base) => base.copyWith(
+        colorScheme: base.colorScheme.copyWith(error: accent),
+      );
+}

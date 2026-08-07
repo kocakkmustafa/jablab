@@ -22,10 +22,29 @@ enum NarrationEvent {
   recover,
   nextBurst,
   sessionEnd,
-  corrected,
-  streak,
-  settled,
 }
+
+/// ⚠️ `corrected`/`streak`/`settled` bu enum'dan ÇIKARILDI (J-105,
+/// koordinatör hükmü 2026-08-07) ve üçü AYNI sebeple çıkmadı:
+///
+/// * **`corrected` YAŞIYOR ama burası onun yeri değildi.** Bu enum ZAMANA
+///   bağlı olayları taşır — anlatıcı saatten başka hiçbir şey görmez.
+///   "Düzeltme kayboldu" bir MOTOR sinyalidir; `LiveJabController` onu
+///   `cues.sayKey('cue.corrected')` ile doğrudan söylüyor (`_phrase`in
+///   issue-kodu için yaptığıyla aynı desen). Zaman-sürücülü bir listede
+///   motor-sürücülü bir olayı tutmak, onu hiçbir zaman ateşlemeyecek bir
+///   yere koymaktı — nitekim öyle oldu.
+/// * **`streak` SİLİNDİ:** bir SAYI eşiği ister ve o eşik artefakttan
+///   türemiyor; ayrıca ödül-döngüsü öğesi (aile Lissom'da ismen yasakladı).
+///   Yetenek VAR, **iddia yasak**.
+/// * **`settled` SİLİNDİ:** duruş-kararlılığı eşiği artefakttan
+///   türetilemiyor (stance artefaktı `mirrorConfident=false` + `unattested`,
+///   BAĞLANMADI 2026-07-29). Türetilemeyen eşik icat edilir.
+///
+/// Üçü de `session_narrator_test`in `engineDriven` MUAFİYET listesinde
+/// duruyordu — "motor üretir" denmiş, üreten hiçbir kod yolu yazılmamıştı.
+/// Muafiyet listesi kararın kendisi sanılmıştı; oysa bir muafiyet, kararın
+/// ERTELENMESİDİR (aile dersi #6'nın beyan tarafı).
 
 /// Seans kipi. Aralıklı çalışma, sürekli turdan farklı konuşur.
 enum SessionMode { steady, interval }
@@ -219,10 +238,12 @@ const Map<NarrationEvent, String> jabLabCueMapping = <NarrationEvent, String>{
   NarrationEvent.recover: 'cue.recover',
   NarrationEvent.nextBurst: 'cue.next_burst',
   NarrationEvent.sessionEnd: 'cue.finished',
-  NarrationEvent.corrected: 'cue.corrected',
-  NarrationEvent.streak: 'cue.streak',
-  NarrationEvent.settled: 'cue.settled',
 };
+
+/// MOTOR SÜRÜCÜLÜ replik anahtarları — `jabLabCueMapping`in dışında, çünkü
+/// karşılık gelen bir [NarrationEvent] YOK ve olmamalı (yukarıdaki not).
+/// `LiveJabController` bunları doğrudan [CueBook.sayKey] ile söyler.
+const String jabLabCorrectedCueKey = 'cue.corrected';
 
 /// MOTOR HATA KODU → REPLİK ANAHTARI (J-096). **Mekanik değil, ELLE.**
 ///

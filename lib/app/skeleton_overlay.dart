@@ -3,6 +3,7 @@ import 'package:motion_core/motion_core.dart' show Lm, PoseLandmark;
 
 import '../shell_candidate/live_surface.dart' show LiveState;
 import 'design_tokens.dart';
+import 'live_honesty.dart';
 
 /// Canlı seansın önizleme yuvası — `LiveCoachSurface.preview`e verilir.
 ///
@@ -33,7 +34,17 @@ import 'design_tokens.dart';
 ///    görüntüsü yokken bile "ne gördüğümü çiziyorum" doğru bir cümle —
 ///    motor kişiyi görüyor, yalnız o görüntüyü EKRANA basmıyoruz.
 class SkeletonPreview extends StatelessWidget {
-  const SkeletonPreview({super.key, required this.state, this.skeleton});
+  const SkeletonPreview({
+    super.key,
+    required this.state,
+    this.skeleton,
+    this.bucket = LiveHonestyBucket.none,
+  });
+
+  /// SORUMLULUK KOVASI (J-110). Donmuş `LiveCoachSurface`in ikonu sabit
+  /// (`visibility_off_outlined`) ve değiştirilemiyor; ikon ekseni bu yüzden
+  /// BURADAN taşınıyor — bu yuva app'in kendi mülkü.
+  final LiveHonestyBucket bucket;
 
   final LiveState state;
 
@@ -46,7 +57,7 @@ class SkeletonPreview extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        const _CameraPlaceholder(),
+        _CameraPlaceholder(bucket: bucket),
         if (skeleton != null)
           CustomPaint(
             key: const Key('skeleton-overlay'),
@@ -58,7 +69,9 @@ class SkeletonPreview extends StatelessWidget {
 }
 
 class _CameraPlaceholder extends StatelessWidget {
-  const _CameraPlaceholder();
+  const _CameraPlaceholder({required this.bucket});
+
+  final LiveHonestyBucket bucket;
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -76,7 +89,7 @@ class _CameraPlaceholder extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(Icons.videocam_off_outlined, size: 28, color: JColors.ink4),
+              Icon(bucket.icon, size: 28, color: bucket.accent),
               const SizedBox(height: 8),
               Text(
                 'Camera preview is left out on purpose — analysis runs '

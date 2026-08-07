@@ -127,22 +127,10 @@
   },
   "encouragement": {
     "cue.corrected": [
-      "That's it.",
-      "Better.",
-      "Yes — keep that.",
-      "There it is.",
-      "Held it that time."
-    ],
-    "cue.streak": [
-      "Clean set.",
-      "Nice and tight.",
-      "That's the shape.",
-      "Staying with it."
-    ],
-    "cue.settled": [
-      "Good base.",
-      "You've settled.",
-      "Feet look right."
+      "That correction is gone.",
+      "The flag cleared that time.",
+      "Not seeing it on that one.",
+      "That one came back clean."
     ]
   },
   "session": {
@@ -226,14 +214,18 @@
       ]
     },
     "encouragement": {
-      "by": "—",
-      "status": "mapped-not-fired",
-      "$note": "NarrationEvent.corrected/streak/settled jabLabCueMapping'de duruyor ama bu uc olayi URETEN hicbir kod yolu yok: SessionNarrator.tick/interval bunlari asla emit etmiyor, _Live ekrani da elle eklemiyor. Yetenek MEVCUT (canli hat duzeltme kodunun kaybolusunu gorebilir) ama 'ne zaman ovulur' bir URUN DAVRANISI karari — koordinatore soruldu (J-105)."
+      "by": "LiveJabController — duzeltme kodunun KAYBOLUSU",
+      "status": "bound",
+      "$note": "J-105 (koordinator hukmu 2026-08-07) ucunu AYRISTIRDI. cue.corrected CANLI: bir issue kodu bir karede VARDI ve sonraki TAMAMLANMIS denemede YOK — bu bir OLGU, esik yok. cue.streak SILINDI: bir SAYI esigi ister (artefakttan turemez) ve odul-dongusu ogesi (aile Lissom'da ismen yasakladi) — yetenek VAR ama IDDIA yasak. cue.settled SILINDI: durus-kararliligi esigi artefakttan turetilemiyor (stance artefakti mirrorConfident=false + unattested, BAGLANMADI 2026-07-29) ve turetemedigin esik icat edilir. ⚠️ ALAN ADI 'liveKeys' DEGIL 'engineLiveKeys': liveKeys sozlesmesi ANLATICI-tick'inin urettigi anahtarlari kastediyor ([J-041] testi onu anlaticiyi kosturarak dogruluyor). cue.corrected CANLI ama BASKA kanaldan (LiveJabController). Ikisini ayni alana yazmak, [J-041]'i 'anlatici bunu soylemiyor' diye kirmizi yapardi — ve o kirmizi DOGRU olurdu: anlatici gercekten soylemiyor. Iki kanal, iki beyan.",
+      "$toneBoundary": "Replikler OLCUM DILI, tezahurat DEGIL (koordinator: 'That correction is gone.' evet, 'Nice!' hayir). Eski varyantlar ('Yes — keep that.', 'Better.') ovgu ve karsilastirma tasiyordu; ikincisi ayrica K8'e komsu bir iddia.",
+      "engineLiveKeys": [
+        "cue.corrected"
+      ]
     },
     "session": {
       "by": "SessionNarrator → _Live ekrani",
       "status": "partial",
-      "$note": "round_start/round_end anlatici tick'inden CANLI (liveKeys, testle dogrulandi). rest ve finished EKRAN tarafindan elle ekleniyor — canli ama tick-suruculu degil. cue.setup_ok ise mapped-not-fired: NarrationEvent.sessionStart'i URETEN hicbir kod yolu yok. round_of/next_up SILINDI: birincisi ses katmani bekliyor (ekranda live-round-position zaten var), ikincisinin {name} kaynagi hic yok.",
+      "$note": "round_start/round_end anlatici tick'inden CANLI (liveKeys, testle dogrulandi). rest ve finished EKRAN tarafindan elle ekleniyor — canli ama tick-suruculu degil. cue.setup_ok ise mapped-not-fired: NarrationEvent.sessionStart'i URETEN hicbir kod yolu yok — J-105'te muafiyet listesi kuculdu ama BU ad hala orada, cunku olay gercekten ekran tarafindan eklenmeyi bekliyor (kamera 'seni goruyorum' dedigi an). Karar ERTELENDI ve bu satir ertelemenin kaydidir. round_of/next_up SILINDI: birincisi ses katmani bekliyor (ekranda live-round-position zaten var), ikincisinin {name} kaynagi hic yok.",
       "liveKeys": [
         "cue.round_start",
         "cue.round_end"
@@ -250,6 +242,6 @@
       "$note": "_LiveState kipi PLANA gore seciyor (intervalPlan varsa SessionMode.interval); session_rounds_test bu dordunun gercekten konustugunu olcuyor. liveKeys YOK cunku [J-041] testi STEADY kipi kosturuyor — aralik kipinin kaniti ayri dosyada."
     },
     "$silinenler": "cue.low_light · cue.partial_analysis · cue.next_up · cue.not_measured_power · cue.coached_not_scored · cue.count · cue.round_of · cue.scored_topics · cue.coached_topics · cue.trend_* (4) · setup.* (7) · drill.* (10) = 30 anahtar. Gerekce ve TASINAN METIN: docs/design/ICERIK-ONCU-REPLIKLER.md",
-    "$liveKeysAnlami": "liveKeys = SessionNarrator.tick()'in STEADY kipte gercekten urettigi olaylarin anahtarlari. session_narrator_test [J-041] bu listeyi anlaticiyi kosturarak DOGRULUYOR: beyan ile gercek arasinda fark varsa test kirmizi. Ekranin ELLE ekledigi olaylar (rest, sessionEnd) bu listeye GIRMEZ — ayri yol, ayri kanit."
+    "$liveKeysAnlami": "liveKeys = SessionNarrator.tick()'in STEADY kipte gercekten urettigi olaylarin anahtarlari. session_narrator_test [J-041] bu listeyi anlaticiyi kosturarak DOGRULUYOR: beyan ile gercek arasinda fark varsa test kirmizi. Ekranin ELLE ekledigi olaylar (rest, sessionEnd) bu listeye GIRMEZ — ayri yol, ayri kanit. engineLiveKeys ise MOTOR-surüculu kanaldir (LiveJabController → LiveJabRunning.narration); [J-041] onu okumaz, kaniti live_jab_path_test'tedir."
   }
 }

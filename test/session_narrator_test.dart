@@ -136,14 +136,21 @@ void main() {
           untilNext: Duration(seconds: 20 - (s % 20))));
       was = inBurst;
     }
-    // Motor tarafından üretilenler: seans sınırları ve düzeltme sinyalleri.
+    // ⚠️ MUAFİYET LİSTESİ KÜÇÜLDÜ (J-105, 2026-08-07). Burada altı ad
+    // vardı ve üçü (`corrected`/`streak`/`settled`) hiçbir kod yolundan
+    // üretilmiyordu — liste "motor üretir" diyordu, üreten yazılmamıştı.
+    // **Bir muafiyet bir karar değil, kararın ERTELENMESİDİR** ve bu liste
+    // tam da o ertelemeyi kalıcı kılan yerdi: test yeşil kaldıkça kimse
+    // bakmadı. Üçü de artık enum'da YOK — `corrected` motor-sürücülü olarak
+    // `LiveJabController`a taşındı, `streak`/`settled` silindi (eşik icadı
+    // ve ödül-döngüsü). Kalan üçü GERÇEKTEN ekran tarafından elle ekleniyor
+    // (`_Live._tick`) ya da eklenmeyi bekliyor — ve `sessionStart` hâlâ
+    // hiçbir yerden üretilmiyor, bu yüzden burada kalıyor ve `$producers`ta
+    // `mapped-not-fired` diye BEYAN ediliyor.
     const Set<NarrationEvent> engineDriven = <NarrationEvent>{
       NarrationEvent.sessionStart,
       NarrationEvent.sessionEnd,
       NarrationEvent.rest,
-      NarrationEvent.corrected,
-      NarrationEvent.streak,
-      NarrationEvent.settled,
     };
     final Set<NarrationEvent> unreachable = NarrationEvent.values.toSet()
       ..removeAll(reachable)

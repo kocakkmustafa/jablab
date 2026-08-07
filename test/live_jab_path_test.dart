@@ -229,6 +229,73 @@ void main() {
       await c.dispose();
     });
 
+    group('DÜZELTME KAYBOLDU (J-105)', () {
+      // `cue.corrected` J-105'e kadar ölüydü: `jabLabCueMapping`de duruyordu
+      // ama `NarrationEvent.corrected`i üreten hiçbir kod yolu yoktu ve
+      // `session_narrator_test`in `engineDriven` MUAFİYET listesi onu
+      // testten de saklıyordu. Artık motor-sürücülü ve burada ölçülüyor.
+
+      test('TEMİZ dizide düzeltme repliği ÇIKMIYOR — övülecek bir şey yok',
+          () async {
+        // NEGATİF İKİZ ÖNCE: kaybolan bir işaret yoksa cümle de yok.
+        // Bu olmadan pozitif test, her denemede konuşan bir koçla da geçerdi.
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        for (int rep = 0; rep < 3; rep++) {
+          for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
+            cam.emit(_envelope(f));
+          }
+        }
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
+
+        final Iterable<String> lines = seen
+            .whereType<LiveJabRunning>()
+            .map((LiveJabRunning r) => r.narration)
+            .whereType<String>();
+        expect(lines, isEmpty,
+            reason: 'hiçbir işaret kaybolmadan "düzeltildi" denildi: '
+                '${lines.toList()}');
+        await c.dispose();
+      });
+
+      test('replik ÖLÇÜM DİLİ — tezahürat DEĞİL', () async {
+        // Koordinatör hükmü (2026-08-07): "That correction is gone." evet,
+        // "Nice!" hayır. Eski varyantlar ("Yes — keep that.", "Better.")
+        // övgü ve KARŞILAŞTIRMA taşıyordu; ikincisi ayrıca K8'e komşu bir
+        // iddia — kalibrasyonsuz "daha iyi" diyemeyiz.
+        final CueBook book = await const ContentRepository().loadCues();
+        final RegExp cheer = RegExp(
+            r"\b(nice|great|awesome|well done|good job|perfect|"
+            r"better|best|improv)",
+            caseSensitive: false);
+        for (int i = 0; i < 8; i++) {
+          final String? line = book.sayKey('cue.corrected');
+          expect(line, isNotNull);
+          expect(cheer.hasMatch(line!), isFalse,
+              reason: 'tezahürat/karşılaştırma dili: "$line"');
+        }
+      });
+
+      test('GÖRÜNÜRLÜK kodu kaybolunca düzeltme DENMİYOR', () async {
+        // "Seni göremiyordum, artık görüyorum" bir DÜZELTME değil: kullanıcı
+        // bir şey düzeltmedi, koşullar değişti. Onu övmek yapmadığı bir işi
+        // ona mal etmek olurdu.
+        expect(
+            jabLabVisibilityIssueCodes
+                .every(jabLabIssueCueMapping.containsKey),
+            isTrue,
+            reason: 'görünürlük kodları eşlemeden düşmüş — hariç tutma '
+                'kuralı sessizce boşa döner');
+        expect(jabLabVisibilityIssueCodes, isNotEmpty,
+            reason: 'küme boşalırsa kontrolcüdeki hariç tutma HİÇBİR ŞEYİ '
+                'dışarıda bırakmaz ve kural vakum-doğru olur (ders #4)');
+      });
+    });
+
     test('BAŞLANGIÇ hâli ayrı — sıfır sayı GÖSTERİLMİYOR', () async {
       // İlk zarf gelmeden `completedCount` 0'dır ve sıfırı göstermek
       // "hiç yumruk atmadın" demektir; oysa henüz hiçbir şey ölçülmedi.
