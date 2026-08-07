@@ -118,6 +118,61 @@ void main() {
         reason: 'VAAT DİLİ (içerik): ${hits.join(" · ")}');
   });
 
+  test('KAPALI disiplinlerde GELECEK-ZAMAN iddiası YOK', () {
+    // ## Neden düz bir `will` yasağı YANLIŞ olurdu
+    //
+    // İki cümle ölçüldü, ikisi de AYNI kelimeyi taşıyor, ama yalnız biri
+    // vaat:
+    //
+    //   r20 dersi   "…it will tell you if it loses you"      → DOĞRU
+    //   taekwondo   "…will carry a visible accuracy warning" → VAAT
+    //
+    // Fark kelimede değil ÖZNEDE: birincisi kullanıcının birazdan koşacağı
+    // turun BUGÜNKÜ davranışını tarif ediyor (`noVerdict` yuvası çalışıyor
+    // ve gerçekten söylüyor); ikincisi var OLMAYAN bir disiplin hakkında
+    // konuşuyor. Düz bir `will` yasağı doğru cümleyi de kırmızıya çevirir
+    // ve kapıyı gürültüye boğardı — ders #5: bir sınırı olduğundan GENİŞ
+    // yazmak, dar yazmak kadar pahalı. Bu yüzden kural KAPSAMLI: gelecek
+    // zaman yalnız `coming_soon` disiplinlerin metninde yasak.
+    final List<String> hits = <String>[];
+    final RegExp future = RegExp(r'\bwill\b(?!\s+not\b)', caseSensitive: false);
+    for (final Map<String, dynamic> d in _comingSoon()) {
+      for (final String text in _userText(d)) {
+        if (future.hasMatch(text)) hits.add('${d['id']}: "$text"');
+      }
+    }
+    expect(hits, isEmpty,
+        reason: 'kapalı bir disiplin hakkında GELECEK ZAMAN: '
+            '${hits.join(" · ")}\nKart zaten "not open" diyor; bu metnin '
+            'işi NEDEN kapalı olduğunu söylemek, ne geleceğini değil.');
+  });
+
+  test('KAPALI disiplinlerin hepsi kapalı olma SEBEBİNİ taşıyor', () {
+    // 2026-08-07 ölçümü: 7'nin YALNIZ 1'i (kickboxing) sebebi söylüyordu;
+    // kalanı ya içerik listeliyordu ("Siu Nim Tao through Biu Jee") ya da
+    // kapsam beyanı yapıyordu. Bir YOL HARİTASI ile bir DÜRÜSTLÜK BEYANI
+    // aynı şey değil: birincisi ne geleceğini söyler, ikincisi neden bugün
+    // olmadığını. Kart zaten "not open" diyor — NEDEN'i bu metin taşımalı.
+    //
+    // ⚠️ BEYAN EDİLMİŞ SINIR: bu kapı metnin bir engel sözcüğü TAŞIDIĞINI
+    // ölçer, gerekçenin DOĞRU ya da iyi olduğunu değil. Kelime listesi bir
+    // kalite ölçüsü değil, "burada bir gerekçe olması gerektiği"nin
+    // hatırlatıcısı. Kaliteyi insan okuması doğrular; bu ayrımı silmek
+    // testi yalancı yapar.
+    final RegExp blocker = RegExp(
+        r"\b(not in|not built|missing|reference|cannot|can't|do not|"
+        r"does not|we have one|refuses|stays out|is not)\b",
+        caseSensitive: false);
+    final List<String> silent = <String>[];
+    for (final Map<String, dynamic> d in _comingSoon()) {
+      final String blurb = (d['blurb'] as String?) ?? '';
+      if (!blocker.hasMatch(blurb)) silent.add(d['id'] as String);
+    }
+    expect(silent, isEmpty,
+        reason: 'kapalı ama NEDEN kapalı olduğunu söylemeyen disiplin: '
+            '$silent');
+  });
+
   test('DONDURULMUŞ kabuğun borcu SESSİZ DEĞİL — sayı ölçülü', () {
     // Bu kapının kör noktası ÖLÇÜLÜYOR. `shell_candidate/`ı taramamak bir
     // karar; o kararı "orada bir şey yok" sanmakla karıştırmamak için sayı
@@ -147,4 +202,38 @@ void main() {
         reason: 'dondurulmuş kabukta vaat dili ARTTI ($frozen) — donmuş bir '
             'ağaca yeni ihlal eklenmiş olamaz, biri dosyayı değiştirdi');
   });
+}
+
+/// `library.json`daki kapalı disiplinler.
+List<Map<String, dynamic>> _comingSoon() {
+  final Map<String, dynamic> lib =
+      (jsonDecode(File('assets/content/library.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
+  return (lib['disciplines'] as List<dynamic>)
+      .cast<Map<String, dynamic>>()
+      .where((Map<String, dynamic> d) => d['status'] == 'coming_soon')
+      .toList();
+}
+
+/// Bir disiplin düğümünün KULLANICIYA giden metinleri — `$` önekli
+/// türetim/gerekçe alanları hariç (onlar kuralı ANLATIRKEN kelimeyi
+/// kullanabilmeli).
+List<String> _userText(Object? node) {
+  final List<String> out = <String>[];
+  void walk(Object? n) {
+    if (n is String) {
+      out.add(n);
+    } else if (n is List) {
+      n.forEach(walk);
+    } else if (n is Map) {
+      n.forEach((Object? k, Object? v) {
+        if (k is String && k.startsWith(r'$')) return;
+        walk(v);
+      });
+    }
+  }
+
+  walk(node);
+  return out;
 }

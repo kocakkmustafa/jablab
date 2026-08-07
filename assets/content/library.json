@@ -377,7 +377,7 @@
       "displayName": "Kickboxing",
       "status": "coming_soon",
       "wave": "W1",
-      "blurb": "Kicks join the engine. Needs a wider frame and a kick classifier.",
+      "blurb": "Kicks are not in the rule set. The engine reads a striking stance and arm angles; a leg travelling at head height is a different measurement we have not built or checked against coaches.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -391,7 +391,7 @@
       "displayName": "Tai Chi",
       "status": "coming_soon",
       "wave": "W1",
-      "blurb": "Slow forms are where camera analysis is strongest — no motion blur at all. The 24-form comes first.",
+      "blurb": "The camera is not the blocker here — slow forms are the easiest thing it reads, with no motion blur at all. What is missing is the reference: nobody has told us what correct looks like for the 24-form, and we do not grade from our own opinion.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -405,7 +405,7 @@
       "displayName": "Karate — Kihon & Kata",
       "status": "coming_soon",
       "wave": "W2",
-      "blurb": "Line drills and the Heian kata series, with stance classes and floor-pattern tracking.",
+      "blurb": "Kata is a pattern across the floor over minutes. We track a body, not where that body is in a room over time, so the part that defines the form is the part we cannot see.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -419,7 +419,7 @@
       "displayName": "Muay Thai",
       "status": "coming_soon",
       "wave": "W2",
-      "blurb": "Teeps, knees and elbows. Clinch work stays out — it needs a partner.",
+      "blurb": "Elbows and knees live at a range where the limbs cross in front of the torso. That is the same overlap our confidence gate already refuses to judge in boxing — opening it would mean grading exactly the frames we throw away.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -433,7 +433,7 @@
       "displayName": "Taekwondo",
       "status": "coming_soon",
       "wave": "W3",
-      "blurb": "Taegeuk forms and the kick ladder. Jumping and spinning kicks will carry a visible accuracy warning.",
+      "blurb": "Spinning and jumping kicks leave the ground and turn. The engine reads one orientation per frame and is told to expect an upright body, so a spin is not a case it can read — and we have not built the second pass that would.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -447,7 +447,7 @@
       "displayName": "MMA Striking",
       "status": "coming_soon",
       "wave": "W3",
-      "blurb": "A free-mix drill mode across boxing, kickboxing and Muay Thai. Striking only — stated plainly.",
+      "blurb": "This is a mix of three rule sets and we have one. Nothing here is hard in a new way — it is the boxing, kickboxing and Muay Thai work, added up, and none of the other two exist.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -461,7 +461,7 @@
       "displayName": "Wing Chun — Solo Forms",
       "status": "coming_soon",
       "wave": "W4",
-      "blurb": "Siu Nim Tao through Biu Jee. The wooden dummy form stays out — it needs equipment.",
+      "blurb": "Solo forms are a good fit and the reference gap is the only thing between us. The dummy form stays out for a different reason: the dummy is equipment, and we track the body, not the object it is working against.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -536,5 +536,6 @@
         "reason": "That call weighs things we never see: how you take a shot, how you behave when tired and hit, who you would be in with. A number from solo practice cannot carry it, so we do not print one."
       }
     ]
-  }
+  },
+  "$comingSoonWhyWorded": "Yedi kapali disiplinin metni 2026-08-07'de YENIDEN YAZILDI. OLCUM: 7'nin YALNIZ 1'i (kickboxing) kapali olma SEBEBINI soyluyordu; kalan 6 ya icerik listeliyordu ('Siu Nim Tao through Biu Jee', 'Taegeuk forms and the kick ladder') ya da kapsam beyani yapiyordu. Kart zaten 'This discipline is not open' diyor — NEDEN'i tasimasi gereken yer bu metindi ve tasimyordu. Bir yol haritasi ile bir durustluk beyani ayni sey degil: birincisi ne GELECEGINI soyler, ikincisi neden BUGUN olmadigini. Yeni metinlerin hepsi kod-gercegine dayali: kural seti yok (boxing@1.0.0 14 kod, hepsi yumruk) · referans take'i toplanmadi (M-C-04 kapisi, footwork_combo'yu da kilitleyen ayni kapi) · PassPlan.uprightOnly + OrientationExpectation.exactly(upright) · guven kapisinin zaten reddettigi ortusme. TAI CHI KASTEN FARKLI YAZILDI: orada engel kamera DEGIL (yavas form, sifir bulanma) — engel REFERANS. Yedisine ayni gerekce yazmak, farkli sebepleri tek sebep gibi gostermek olurdu (M-F-287: siniri genis yazmak dar yazmak kadar pahali). AYRICA bir VAAT SILINDI: taekwondo metni 'Jumping and spinning kicks WILL CARRY a visible accuracy warning' diyordu — var olmayan bir disiplin hakkinda gelecek-zaman iddiasi. Karsilastirma icin: r20 dersinin 'it will tell you if it loses you' cumlesi KALDI, cunku o BUGUNKU davranisi anlatiyor (novVerdict yuvasi calisiyor) — kosacagin turu tarif etmek vaat degil."
 }
