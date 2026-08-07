@@ -7,7 +7,28 @@
 > göremediği gibi. Bir kapının tehlikeli tarafı ölçtüğü şey değil, **ölçtüğü
 > sanılan ama ölçmediği** şeydir: o alanda kimse bakmaz, çünkü kapı yeşildir.
 
-**Tarih:** 2026-08-07 · **Kapılar:** 222/222 · `flutter analyze` temiz
+**Tarih:** 2026-08-07 · **app 226/226 + motor 113/113** · `flutter analyze` temiz
+
+## ⚠️ ÖNCE: *"YEŞİL"* NE KADARINI KAPSIYOR (J-145/J-146)
+
+Bu gece kırk kez *"kapılar N/N yeşil"* raporlandı. **O app süitiydi** ve
+**motor süiti J-104'ten beri kırmızıydı.** Cümle yanlış değildi — **eksikti.**
+
+> **Bir kapının yeşili, o kapının KAPSADIĞI kadar geçerlidir.**
+> **İki süitli bir depoda *"testler yeşil"* EKSİK bir cümledir.**
+
+**Bu depoda tam koşum listesi (ölçüldü, varsayılmadı):**
+
+| koşum | kapsam | not |
+|---|---|---|
+| `flutter test` | `app/test` — 31 dosya | |
+| `dart test` | `app/packages/jablab_engine/test` — 14 dosya | **AYRI koşum** |
+| `flutter analyze` | app kökü | **motor paketini de kapsıyor** — deneyle ölçüldü (motora kasıtlı kullanılmayan import kondu, app kökündeki analyze bildirdi) |
+
+Başka çalıştırılabilir kapı **yok** (`tool/fetch_pose_model.sh` bir getirme
+betiği). Liste `test/runner_inventory_test.dart` ile **sabitlendi**: üçüncü
+bir paket eklenirse kapı öter ve **ne yapılacağını söyler** — çünkü o an
+*"yeşil"* sessizce daralır.
 
 ## Neden bu envanter gerekti — dört kanıt, hepsi aynı gece
 
