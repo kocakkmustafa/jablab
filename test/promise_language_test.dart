@@ -266,6 +266,99 @@ void main() {
             'şey değilse anlatılamaz (J-131): ${hits.join(" · ")}');
   });
 
+  test('KİLİTLİ ders içeren KURSUN hedefi bunu söylüyor (J-132)', () {
+    // ## Katman: disiplin kapısı vardı, KURS kapısı yoktu
+    //
+    // `boxing.intermediate`in hedefi *"Combinations, tempo control and
+    // recovery under fatigue"* diyordu. Ölçüldü: kursun **4 dersinin 3'ü
+    // KİLİTLİ**, ilk andığı konu (`Combinations`) tam da kilitli dersin
+    // kendisi, ve `tempo control` bu kursta **hiç yok** — o ders
+    // `conditioning`de.
+    //
+    // Sınıf J-131 ile aynı: cümle kelime kelime yanlış değil, ama
+    // kullanıcının kurduğu **model** ürünle çelişiyor — ve çelişme bir
+    // dokunuş sonra ortaya çıkıyor. Hedef **iki** canlı yüzeyde:
+    // `select_page` (disiplin listesi) ve `course_page` (kurs başlığı).
+    //
+    // Kapalı DİSİPLİN için gerekçe kapısı J-112'den beri var; aynı standart
+    // kurs katmanına inmemişti. Bu, gecenin beşinci **katman** kapsam
+    // kusuru (J-122 donmuş ağaç · J-126 token yolu · J-129 içerik dosyası ·
+    // J-131 içerik katmanı · J-132 kurs katmanı) — ve ilk kez ölçüm
+    // kusurdan ÖNCE geldi.
+    //
+    // ## ⚠️ NE ÖLÇMÜYOR
+    //
+    // * **Başka sözcüklerle söylemeyi**: hedef "punch chains" derse kapı
+    //   görmez. Sınırlı ama kanıta dayalı — bulunan kusur birebir addı.
+    // * **Ters yönü**: hedefin kursta HİÇ olmayan bir konuyu anması
+    //   (`tempo control`). Anlam işi, mekanikleştirilemez — sınıfı
+    //   **imkânsız**, ve bu yüzden kovalanmıyor.
+    // * **Gerekçenin KALİTESİNİ**: işareti taşımak yeterli sayılıyor.
+    const List<String> limitMarkers = <String>[
+      'locked', 'not open', 'closed',
+    ];
+    final Map<String, dynamic> lib = (jsonDecode(
+            File('assets/content/library.json').readAsStringSync()) as Map)
+        .cast<String, dynamic>();
+    final List<String> hits = <String>[];
+    int coursesWithLocks = 0;
+    for (final dynamic d in lib['disciplines'] as List<dynamic>) {
+      for (final dynamic c
+          in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+        final Map<dynamic, dynamic> course = c as Map<dynamic, dynamic>;
+        final List<dynamic> lessons =
+            course['lessons'] as List<dynamic>? ?? const <dynamic>[];
+        final List<dynamic> locked = lessons
+            .where((dynamic l) => (l as Map)['status'] == 'locked')
+            .toList();
+        if (locked.isEmpty) continue;
+        coursesWithLocks++;
+        final String goal = (course['goal'] as String? ?? '').toLowerCase();
+        if (!limitMarkers.any(goal.contains)) {
+          hits.add('${course['id']}: ${locked.length}/${lessons.length} ders '
+              'kilitli ama hedef bunu SÖYLEMİYOR → "${course['goal']}"');
+        }
+      }
+    }
+    // VAKUM KAPISI: kilitli dersi olan kurs hiç bulunamazsa kural boşa döner
+    // ve kapı sessizce geçer (aile dersi #4).
+    expect(coursesWithLocks, greaterThan(0),
+        reason: 'kilitli ders içeren kurs bulunamadı — kapı kendi girdisini '
+            'bulamamış olabilir');
+    expect(hits, isEmpty,
+        reason: 'KURS HEDEFİ açılamayan bir kursu açılabilir gibi tarif '
+            'ediyor: ${hits.join(" · ")}');
+  });
+
+  test('NEGATİF İKİZ — kilitsiz kurstan CAVEAT İSTENMİYOR (J-132)', () {
+    // Ters ikiz: kapı *"her hedef sınır işareti taşısın"*a genişlerse
+    // `foundations` ve `conditioning` kırmızıya döner — oysa oralarda
+    // kilitli ders YOK ve söylenecek bir sınır da yok. **Olmayan bir
+    // sınırı beyan etmek, dürüstlük değil gürültüdür.**
+    final Map<String, dynamic> lib = (jsonDecode(
+            File('assets/content/library.json').readAsStringSync()) as Map)
+        .cast<String, dynamic>();
+    final List<String> clean = <String>[];
+    for (final dynamic d in lib['disciplines'] as List<dynamic>) {
+      for (final dynamic c
+          in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+        final Map<dynamic, dynamic> course = c as Map<dynamic, dynamic>;
+        final List<dynamic> lessons =
+            course['lessons'] as List<dynamic>? ?? const <dynamic>[];
+        if (lessons.any((dynamic l) => (l as Map)['status'] == 'locked')) {
+          continue;
+        }
+        final String goal = (course['goal'] as String? ?? '').toLowerCase();
+        if (!goal.contains('locked') && !goal.contains('not open')) {
+          clean.add(course['id'] as String);
+        }
+      }
+    }
+    expect(clean, isNotEmpty,
+        reason: 'kilitsiz her kurs da sınır işareti taşıyor — kapı fazla '
+            'genişlemiş ve olmayan bir sınırı beyan ettiriyor olabilir');
+  });
+
   test('NEGATİF İKİZ — kapı FAZLA GENİŞ değil: gözlenebilir mekanizma DURUYOR',
       () {
     // Bu ikiz alışılmışın tersini koruyor. Normalde ikiz *"düzeltme

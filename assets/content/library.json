@@ -306,7 +306,7 @@
           "id": "boxing.intermediate",
           "displayName": "Intermediate",
           "level": "intermediate",
-          "goal": "Combinations, tempo control and recovery under fatigue.",
+          "goal": "One lesson is open: holding your shape through a long round. The other three are locked for three different reasons, and each names its own.",
           "estimatedMinutes": 63,
           "$scopeWhy": "Bu kursun cogu ders KILITLI ve kilidin sebebi her derste yazili. Kilit bir 'yakinda' pazarlama rozeti degil: o dersin kapisini kurabilmek icin eksik olan OLCUM adiyla yaziliyor. Kapsami bastan gostermek ile olcemedigimizi vaat etmek ayni sey degil.",
           "lessons": [
@@ -372,7 +372,8 @@
                 "$planBoundary": "DINLENME (60sn) bokstaki \"kose molasi\" konvansiyonu (r20 emsali) ve ogretme metninin \"Do not change pace to survive it\" cercevesiyle tutarli: yorgunluk-trendi olculecekse dinlenme KISA olmali, yoksa her turda toparlanip trend silinir. Konvansiyon secimi, beyan degil; kapi gecilebilirligini etkilemez."
               }
             }
-          ]
+          ],
+          "$goalWhy": "J-132: hedef ONCE \"Combinations, tempo control and recovery under fatigue\" diyordu ve UC KUSUR tasiyordu. ① Kursun 4 dersinin 3'U KILITLI — hedef acilamayan bir kursu acilabilir gibi tarif ediyordu. ② Ilk andigi konu (\"Combinations\") tam da KILITLI dersin kendisi. ③ \"tempo control\" bu kursta HIC YOK — o ders conditioning'de. Sinif J-131 ile ayni: cumle kelime kelime yanlis degil, ama kullanicinin kurdugu MODEL urunle celisiyor ve celisme bir dokunus sonra ortaya cikiyor. Yeni metin ONCE erisilebilir olani soyluyor. Uc gerekcenin UC FARKLI SINIF oldugunu (modellenmemis · rakip yok · referans yok) tek cumleye YIKMADI: M-F-287'ye gore o siniflar ayri seyler ve duzlestirmek, kullaniciya \"hepsi ayni engel\" dedirtirdi. Onun yerine kartlara yonlendiriyor. Kapi: promise_language_test, kurs KATMANI."
         }
       ]
     },
