@@ -53,6 +53,59 @@ void main() {
     }
   });
 
+  test('KULLANICI METNİ TOKENLARI OKUNUR — WCAG 2.2 AA (J-116)', () {
+    // ## Neden bu, kova testinin YANINA geldi
+    //
+    // J-114'te `none` kovasının ikonunu `ink4`ten çıkardım — **ve örüntüyü
+    // değil ÖRNEĞİ düzeltmişim.** Aynı `ink4` bir dosya ötede kamera
+    // yer-tutucusunun ALTYAZISINDA duruyordu (1,80:1) ve `JText.mono`
+    // tokenının kendi varsayılanı (`ink3`, 3,51:1) da eşiğin altındaydı.
+    // Aile dersi #8: **tuzak dosyaya değil DESENE yazılır** — bu kapı o
+    // dersin bu gecedeki bedelinin karşılığı.
+    //
+    // Eşikler WCAG 2.2 SC 1.4.3: normal metin 4,5 · BÜYÜK metin 3,0
+    // (≥24px, ya da ≥18,66px + kalın). İcat yok, sınıflandırma standardın.
+    // ⚠️ Tokenlar derleme-zamanı sabit DEĞİL (`GoogleFonts` çalışma
+    // zamanında çözülüyor), o yüzden liste değil tek tek çağrı. Yeni bir
+    // token eklendiğinde buraya yazılmazsa kapı onu görmez — bu kapının
+    // beyan edilmiş sınırı ve `$producers`taki `liveKeys` ile aynı sınıf:
+    // elle tutulan bir liste, otomatik bir kapsam değil.
+    void check(String name, TextStyle style) {
+      final double size = style.fontSize ?? 14;
+      final bool bold =
+          (style.fontWeight?.value ?? 400) >= FontWeight.w700.value;
+      final bool large = size >= 24 || (bold && size >= 18.66);
+      final double threshold = large ? 3.0 : 4.5;
+      final Color c = style.color!;
+      final double r = _contrast(_over(c, JColors.ground), JColors.ground);
+      expect(r, greaterThanOrEqualTo(threshold),
+          reason: '$name ${size.toStringAsFixed(0)}px → '
+              '${r.toStringAsFixed(2)}:1, eşik $threshold. Okunamayan bir '
+              'cümle, yazılmamış bir cümledir.');
+    }
+
+    check('JText.body', JText.body);
+    check('JText.bodyMuted', JText.bodyMuted);
+    check('JText.label', JText.label);
+    check('JText.mono', JText.mono);
+    check('JText.correction', JText.correction);
+    check('JText.pageTitle', JText.pageTitle);
+    check('JText.clock', JText.clock);
+  });
+
+  test('SÖNÜK ama OKUNUR — hiyerarşi kaybolmadı', () {
+    // Kontrastı yükseltmenin ucuz yolu her şeyi `ink` yapmaktır ve bu,
+    // görsel hiyerarşiyi öldürürdü. Ölçü: birincil metin ile sönük metin
+    // arasında hâlâ belirgin bir fark VAR (ikisi de eşiği geçerken).
+    final double primary =
+        _contrast(_over(JText.body.color!, JColors.ground), JColors.ground);
+    final double muted =
+        _contrast(_over(JText.mono.color!, JColors.ground), JColors.ground);
+    expect(primary, greaterThan(muted * 2),
+        reason: 'sönük ile birincil metin ayrışmıyor — okunurluk uğruna '
+            'hiyerarşi feda edilmiş');
+  });
+
   test('HİÇBİR kova HÜKÜM (ember) tonunu kullanmıyor', () {
     // Ember tasarımda Tier 3'e — HÜKÜM katmanına — rezerve. "Göremiyorum"
     // bir hüküm değil; ember'a kaymak, susan bir katmanı konuşuyormuş gibi

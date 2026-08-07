@@ -96,7 +96,11 @@ class _CameraPlaceholder extends StatelessWidget {
                 'without it',
                 key: const Key('camera-preview-placeholder'),
                 textAlign: TextAlign.center,
-                style: JText.mono.copyWith(fontSize: 11, color: JColors.ink4),
+                // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin
+                // eşiğinin (4,5) çok altında. Bu altyazı kameranın NEDEN
+                // görünmediğini açıklıyor, yani en çok iskelet çizilirken
+                // gerekiyor; okunamaz olması onu hiç yazmamakla aynı şey.
+                style: JText.mono.copyWith(fontSize: 11, color: JColors.ink2),
               ),
             ],
           ),

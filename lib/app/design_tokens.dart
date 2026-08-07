@@ -98,7 +98,15 @@ class JText {
   static TextStyle label = GoogleFonts.ibmPlexMono(
       fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 1.8, color: JColors.cool2);
 
-  static TextStyle mono = GoogleFonts.ibmPlexMono(fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink3);
+  /// ⚠️ Varsayılan renk `ink3`ten `ink2`ye ÇEKİLDİ (J-116). ÖLÇÜLDÜ:
+  /// `ink3` 12 puntoda zemine karşı **3,51:1**, WCAG 2.2 AA'nın normal
+  /// metin eşiği **4,5**. Bu token "ölçülen şeyler" için — saat, sayaç,
+  /// teknik sebep — yani okunması GEREKEN yerler. `ink2` 7,61:1.
+  ///
+  /// Sönüklük hiyerarşisi KAYBOLMADI: `ink` (18,43) ile `ink2` (7,61)
+  /// arasında hâlâ belirgin bir fark var ve ikisi de eşiği geçiyor.
+  /// Kaybolan tek şey, okunamayacak kadar sönük olma seçeneği.
+  static TextStyle mono = GoogleFonts.ibmPlexMono(fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink2);
 }
 
 /// Ders akışının frozen kabuk parçalarını (`SessionFlowScaffold`,

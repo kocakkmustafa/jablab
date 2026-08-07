@@ -198,7 +198,11 @@ class _LessonRow extends StatelessWidget {
             if (lesson.minutes != 0) ...<Widget>[
               const SizedBox(width: 8),
               Text('${lesson.minutes} min',
-                  style: JText.mono.copyWith(color: locked ? JColors.ink4 : JColors.cool2)),
+                  // Kilitli ders SÖNÜK ama okunur: `ink4` 1,80:1 veriyordu
+                  // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
+                  // "daha az önemli" demek, "okunmasın" demek değil.
+                  style: JText.mono
+                      .copyWith(color: locked ? JColors.ink2 : JColors.cool2)),
             ],
           ],
         ),
