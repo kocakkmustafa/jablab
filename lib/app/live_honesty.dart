@@ -83,6 +83,12 @@ enum LiveHonestyBucket {
   /// 3,0:1) geçiyor: `yours` 10,80 · `ours` 7,61 · `none` 3,51. Yani
   /// **görünürlük** ölçülü ve kapıda (`live_honesty_bucket_test`).
   ///
+  /// ⚠️ Bu oranlar ZEMİNE karşı. Önizleme yuvasında iskelet metnin/ikonun
+  /// üstünden geçebiliyor ve orada efektif zemin farklı — o durum artık
+  /// kapsam DIŞI değil, **scrim'li zemine göre ayrıca ölçülüyor** (J-117).
+  /// Kapsam beyanının kendisi bayatlayabilir: scrim eklendiği an eski
+  /// "kapsam dışı" cümlesi yanlışa döndü ve güncellendi.
+  ///
   /// Ama en önemli ayrım — *eylem sende* ile *eylem bizde* — renk olarak
   /// **en zayıf** olanı: `yours`↔`ours` luminans oranı 1,42:1. Bu bir kusur
   /// DEĞİL, bir sınır: WCAG kontrastı bir LUMINANS ölçüsüdür ve *"bu iki

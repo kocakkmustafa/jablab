@@ -93,6 +93,47 @@ void main() {
     check('JText.clock', JText.clock);
   });
 
+  test('SCRIM ÜSTÜNDEKİ ALTYAZI, İSKELET EN PARLAKKEN BİLE OKUNUR (J-117)',
+      () {
+    // ## Hükmün ayrılmaz parçası — kapsam, scrim'le BİRLİKTE genişledi
+    //
+    // J-116'da kontrastı ZEMİNE karşı ölçtüm ve iskeletin örttüğü durumu
+    // "kapsam dışı" diye dürüstçe beyan ettim. Scrim gelince o beyan
+    // BAYATLADI: artık efektif zemin scrim'li zemin. Ölçmeye devam
+    // etmemek, J-114'te kendi koyduğum kuralın (*"`ink` yarı saydamken
+    // `ink`in kendi parlaklığını ölçmek, ölçmediğimiz bir pikseli ölçmek
+    // olurdu"*) aynı ihlalini bir katman yukarıda tekrarlamak olurdu.
+    //
+    // ## En kötü hâl UYDURULMADI, painter'dan türetildi
+    //
+    // `_SkeletonPainter` eklemleri `JColors.cool` ile, alfa
+    // `_alpha(i) * sceneAlpha` çiziyor. Tavan: `_alpha` en fazla
+    // `0.15 + 0.85*1.0 = 1.0`, `sceneAlpha` temiz hâlde `0.85` →
+    // **cool @ 0.85**. Altyazının arkasına düşebilecek en parlak piksel bu.
+    const double maxJointAlpha = 0.85;
+
+    // Gradyanın ÜST ucu (en açık zemin): deep @ .55 over ground.
+    final Color gradientTop = _blend(JColors.deep, 0.55, JColors.ground);
+    final Color brightestJoint =
+        _blend(JColors.cool, maxJointAlpha, gradientTop);
+    final Color scrimmed =
+        _blend(JColors.ground, 0.81, brightestJoint);
+    final Color caption = _blend(JColors.ink2, 1.0, scrimmed);
+
+    final double r = _contrast(caption, scrimmed);
+    expect(r, greaterThanOrEqualTo(4.5),
+        reason: 'iskelet altyazının üstünden geçerken metin '
+            '${r.toStringAsFixed(2)}:1 — scrim yetmiyor. Örtüşmede '
+            'okunmayan bir açıklama, hiç yazılmamış bir açıklamadır.');
+
+    // NEGATİF İKİZ: scrim OLMASAYDI kırılırdı. Bu satır olmadan test,
+    // scrim silindiğinde de yeşil kalabilecek bir şey ölçüyor olabilirdi.
+    final Color noScrim = _blend(JColors.ink2, 1.0, brightestJoint);
+    expect(_contrast(noScrim, brightestJoint), lessThan(4.5),
+        reason: 'scrim olmadan da geçiyorsa bu test scrim\'i ÖLÇMÜYOR — '
+            'vakum-doğru bir kapı (aile dersi #4)');
+  });
+
   test('SÖNÜK ama OKUNUR — hiyerarşi kaybolmadı', () {
     // Kontrastı yükseltmenin ucuz yolu her şeyi `ink` yapmaktır ve bu,
     // görsel hiyerarşiyi öldürürdü. Ölçü: birincil metin ile sönük metin
@@ -193,4 +234,14 @@ double _contrast(Color a, Color b) {
   final double hi = math.max(la, lb);
   final double lo = math.min(la, lb);
   return (hi + 0.05) / (lo + 0.05);
+}
+
+/// [fg]i [alpha] ile [bg] üstüne bindirir. `_over`den farkı: alfayı
+/// rengin kendisinden değil AÇIKÇA alması — scrim gibi katmanları
+/// modellerken alfa bir kompozisyon parametresidir, rengin özelliği değil.
+Color _blend(Color fg, double alpha, Color bg) {
+  final double a = alpha * fg.a;
+  double c(double f, double b) => f * a + b * (1 - a);
+  return Color.from(
+      alpha: 1, red: c(fg.r, bg.r), green: c(fg.g, bg.g), blue: c(fg.b, bg.b));
 }

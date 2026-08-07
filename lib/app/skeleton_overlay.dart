@@ -75,17 +75,37 @@ class _CameraPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[JColors.deep.withValues(alpha: .55), JColors.ground],
+      ),
+    ),
+    child: Center(
+      // SCRIM (J-117, koordinatör hükmü a). İskelet bu metnin ÜSTÜNDEN
+      // geçiyor — ölçüldü: sentetik nötr duruşta iki dirsek altyazı
+      // kutusunun içine düşüyor, ve parlak bir eklem noktasının üstünde
+      // metnin kontrastı **1,72:1**e iniyor (eşik 4,5). Yani J-116'da
+      // düzelttiğim kontrast, örtüşme durumunda zaten kırılıyordu.
+      //
+      // Altyazıyı üst banda TAŞIMAK çözüm değildi: bu boks, eller
+      // yukarıda duruyor — üst bant tam da tehlikeli bölge. Kusuru
+      // çözmez, taşırdı. Scrim ise okunabilirliğin bozulmasını
+      // **duruştan bağımsız imkânsız** kılıyor (aile dersi #7).
+      //
+      // ⚠️ ALFA SEÇİLMEDİ, TÜRETİLDİ. Hedef: *iskelet hiç yokken metnin
+      // sahip olduğu kontrastı geri vermek* (6,56:1). Bunu karşılayan
+      // en küçük değer **0,81** (6,58:1). Daha yükseği gereksiz opaklık,
+      // daha düşüğü örtüşmede kayıp. Altındakinin %19'u hâlâ geçiyor,
+      // yani iskelet metnin arkasında SEZİLİYOR — gizlenmiyor.
+      child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              JColors.deep.withValues(alpha: .55),
-              JColors.ground,
-            ],
-          ),
+          color: JColors.ground.withValues(alpha: .81),
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -105,7 +125,9 @@ class _CameraPlaceholder extends StatelessWidget {
             ],
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 /// Boks için ilgili 13 nokta + kemik bağlantıları — 33 MediaPipe noktasının
@@ -189,11 +211,21 @@ class _SkeletonPainter extends CustomPainter {
     // ayrı bir "yüz" çizimi yok, yalnız gövdenin nereye baktığını okunur
     // kılan bir referans.
     final Offset shoulderMid = Offset.lerp(
-        _xy(Lm.leftShoulder, size), _xy(Lm.rightShoulder, size), .5)!;
+      _xy(Lm.leftShoulder, size),
+      _xy(Lm.rightShoulder, size),
+      .5,
+    )!;
     final double headAlpha = _alpha(_headPoint) * sceneAlpha;
-    canvas.drawLine(shoulderMid, _xy(_headPoint, size),
-        bone..color = JColors.cool.withValues(alpha: headAlpha * .55));
-    canvas.drawCircle(_xy(_headPoint, size), 6, joint..color = JColors.cool.withValues(alpha: headAlpha));
+    canvas.drawLine(
+      shoulderMid,
+      _xy(_headPoint, size),
+      bone..color = JColors.cool.withValues(alpha: headAlpha * .55),
+    );
+    canvas.drawCircle(
+      _xy(_headPoint, size),
+      6,
+      joint..color = JColors.cool.withValues(alpha: headAlpha),
+    );
   }
 
   @override
