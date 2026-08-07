@@ -227,7 +227,7 @@
       "by": "errors[].feedbackKey + techniques[].abortOnRetreat.feedbackKey",
       "status": "bound",
       "$note": "cue.strike_not_extended bir HATA kodundan degil, girisim-kapatma sozlesmesinden (M-F-60) geliyor. Ayri yol, ayri beyan.",
-      "$combinationNote": "J-162: `cue.combo_order` ve `cue.wrong_hand` COMBINATION_END'de degerlendiriliyor ve BUGUN ULASILAMAZ: hicbir ACIK derste kamera+kombinasyon bir arada yok (tek kamerali ders `boxing.foundations.jab` tek teknikli; kombinasyonlu yedi ders kamerasiz). Esleme DOGRU ve replikler DURUYOR — eksik olan ICERIK: kamerali bir kombinasyon dersi. Silmedik cunku yetenek VAR (motor bunlari uretebiliyor); J-104'un ucuncu secenegi (sil+kaydet) burada YANLIS olurdu. Durum: awaiting-content. Kapi: cue_reachability_test."
+      "$combinationNote": "J-163 (ÖLÇÜLDÜ, koordinatör hükmü ① gereği): `cue.combo_order` ve `cue.wrong_hand` `COMBINATION_END`de degerlendiriliyor ve **MOTORUN KOMBINASYON DURUM MAKINESI YOK**. Olcum: `COMBINATION_END` motor lib'inde, motor testlerinde ve app'te HIC gecmiyor — yalniz kural setinin JSON'unda bir dize olarak duruyor. Motor teknikleri (jab/cross) tek tek taniyor ve hatalari TEKNIK FAZ isaretlerinde degerlendiriyor; dizi izleyen bir yapi yok. `library.dart` yalnizca ders kombinasyon KIMLIKLERININ kural setinde var oldugunu DOGRULUYOR — tanima degil. ⚠️ DURUM DUZELTILDI: J-162'de 'awaiting-content' yazmistim ve o OLCULMEDEN yazilmisti. Icerik eklemek (kamerali bir kombinasyon dersi) HICBIR SEYI DEGISTIRMEZ: replikler yine atesle(n)mez. Dogru sinif **awaiting-capability** — ve iki sinif AYRI KUYRUK: icerik bekleyen YAZILABILIR, yetenek bekleyen BEKLER."
     },
     "noVerdict": {
       "by": "errors[].feedbackKey + LiveJabController kapilari",

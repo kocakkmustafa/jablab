@@ -83,11 +83,12 @@ void main() {
 
     final String declared =
         jsonEncode((cues[r'$producers'] as Map)['technique']);
-    expect(declared, contains('awaiting-content'),
+    expect(declared, contains('awaiting-capability'),
         reason: 'KOMBİNASYON REPLİKLERİ ULAŞILAMAZ ($comboCues) ve durum '
             'BEYAN EDİLMEMİŞ. Hiçbir açık derste kamera+kombinasyon bir '
-            'arada yok. Ya bir ders ikisini taşımalı, ya `\$producers` '
-            'bunu söylemeli — sessizlik seçenek değil (J-162)');
+            'arada yok — ve ÖLÇÜLDÜ (J-163): motorun kombinasyon durum '
+            'makinesi de YOK, yani içerik eklemek bunu çözmez. Durum '
+            '`\$producers`ta beyan edilmeli — sessizlik seçenek değil');
     for (final String cue in comboCues) {
       expect(declared, contains(cue.split('.').last),
           reason: '$cue beyanda ADIYLA geçmiyor — "bir şeyler ulaşılamaz" '
