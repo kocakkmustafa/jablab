@@ -13,4 +13,14 @@ cd "$ROOT"
 chmod +x tool/hooks/pre-commit
 git config core.hooksPath tool/hooks
 
+# ⚠️ ÖLÇÜLDÜ (taze klon sınaması, 2026-08-11): pose modeli (.task, 9,4 MB)
+# aile kuralıyla git DIŞINDA tutuluyor (motion-core/.gitignore) — taze
+# klonda `assets/models/` dizini yok ve `flutter analyze` bunu HATA sayıp
+# çıkış kodunu 1 yapıyor. Fetch edilmeden kapı kendi ilk koşumunda
+# ÇALIŞMADAN kırmızı dönerdi — kurulmuş olmak yetmiyordu, öttüğünü
+# GÖRMEDEN bu boşluk saklı kalırdı. Testler modelin yokluğuna zaten
+# toleranslı (`model_pin_test` isimli sebeple atlar); `flutter analyze`
+# değil.
+bash tool/fetch_pose_model.sh
+
 echo "core.hooksPath -> tool/hooks (bu klondaki commit kapısı artık AKTİF)."
