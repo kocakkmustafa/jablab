@@ -1,0 +1,35 @@
+#!/bin/bash
+# COMMIT KAPISI — JabLab. Lissom'un L-275 kalıbının aktarımı, ve JabLab'ın
+# KENDİ kusurundan (2026-08-07 KAPANIŞ, DEFTER) öğrenilen ders BURADA
+# uygulandı: `flutter test | tail -1 && git commit` boru hattının çıkış
+# kodu SON komutunki (`tail`) idi — HER ZAMAN 0 — ve kırmızı bir süit o
+# gece commit'lendi. Kapı vakum-doğruydu.
+#
+# ⛔ BORU HATTI YOK. Bu dosyada `|` ile bir komutu başka bir komuta
+# bağlayan tek satır yok (yorumlar hariç) — çıkış kodu her adımda
+# doğrudan taşınır.
+#
+# ⛔ SIFIRINCI ŞART (M-F-428/399, Choreia): kapının VAR OLMASI. Bu dosya
+# `tool/hooks/` altında İZLENİYOR (git'e commit'li) — ama `.git/hooks/`
+# hiçbir zaman izlenmez, git bunu tasarım gereği yapmaz. Taze klonda bu
+# betik KOŞMAZ, `core.hooksPath` bu dizine ayarlanana kadar. Bir kerelik
+# kurulum adımı: `tool/setup_hooks.sh` (bu dosyanın kardeşi).
+#
+# ⚠️ `dirname "$0"` KULLANILMAZ: hook olarak koşarken `$0`
+# `.git/hooks/pre-commit`e eşdeğerdir (core.hooksPath sembolik/kopya
+# fark etmeksizin git onu ORADAN çağırır); `git rev-parse
+# --show-toplevel` depo kökünü konumdan bağımsız verir.
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+echo "commit kapısı 1/3: flutter analyze…"
+flutter analyze
+
+echo "commit kapısı 2/3: app süiti…"
+flutter test
+
+echo "commit kapısı 3/3: motor süiti…"
+(cd packages/jablab_engine && flutter test)
+
+echo "commit kapısı: 3/3 yeşil — commit devam ediyor."
