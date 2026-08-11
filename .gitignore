@@ -1,6 +1,13 @@
 .dart_tool/
 .packages
 build/
+# `build/` yalnız GERÇEK dizinleri kapsar (git deseni: sondaki `/` yalnız
+# dizin eşler) — iCloud/codesign panzehiri `build`i SEMBOLİK LİNKE
+# çevirince (KAMERA-KOPRUSU-CANLILIK.md) bu desen onu KAÇIRDI ve makineye
+# özel mutlak yol (`/Users/<kullanıcı>/jablab_buildout`) commit'lendi
+# (koordinatör ölçümü, 2026-08-11). `/build` (sondaki `/` yok) sembolik
+# linki de kapsar.
+/build
 # iCloud CATISMA KOPYASI. Bu proje ~/Documents altinda ve orasi iCloud'a
 # senkronlaniyor; codesign panzehiri `build`i bir symlink yapinca iCloud onun
 # kopyasini uretti ("build 3" -> ayni hedef, 0 bayt). Zararsiz ama `build/`
