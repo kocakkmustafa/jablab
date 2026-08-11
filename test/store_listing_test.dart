@@ -121,6 +121,32 @@ void main() {
             'taşımıyor — icat edilmiş bir gerekçe olabilir');
   });
 
+  test('KOMBİNASYON SIRASI iddiası MEASURED\'da DEĞİL — motor kanıtı yok', () {
+    // Koordinatör çapraz kontrolü (2026-08-12): "Combination order and
+    // timing" iddiası J-162/163'ün açık sorusuna bağlıydı. Ölçüm KESİN
+    // sonuç verdi: WRONG_HAND_FOR_COMBINATION/COMBINATION_ORDER_ERROR
+    // `evaluateAt:['COMBINATION_END']` istiyor, `COMBINATION_END` motor
+    // kodunda SIFIR yerde geçiyor, `sequenceMismatch` (condition alanı)
+    // tek yerde deklare edilip HİÇBİR YERDE atanmıyor — bu iki hata
+    // KALICI ERİŞİLEMEZ. İddia MEASURED AND GRADED'dan NOT MEASURE'a
+    // taşındı. Bu test o taşımanın GERİ ALINMADIĞINI korur.
+    final String desc = listing['description'] as String;
+    final int measuredIdx = desc.indexOf('MEASURED AND GRADED');
+    final int notMeasuredIdx = desc.indexOf('WHAT WE DO NOT MEASURE');
+    expect(measuredIdx, greaterThanOrEqualTo(0));
+    expect(notMeasuredIdx, greaterThan(measuredIdx));
+    final String measuredBlock =
+        desc.substring(measuredIdx, notMeasuredIdx).toLowerCase();
+    expect(measuredBlock, isNot(contains('combination')),
+        reason: 'MEASURED bölümünde "combination" geçiyor — '
+            'WRONG_HAND_FOR_COMBINATION/COMBINATION_ORDER_ERROR motorda '
+            'KALICI ERİŞİLEMEZ (evaluateAt COMBINATION_END, motor onu hiç '
+            'üretmiyor), bu iddia desteksiz');
+    expect(desc.toLowerCase(), contains('combination order and timing'),
+        reason: 'kombinasyon-sırası bulgusu NOT MEASURE\'dan da düşmüş — '
+            'bu bir dürüstlük geri çekilmesi, sessiz silinmemeli');
+  });
+
   test('kamera izin metni Info.plist ile TUTARLI', () {
     final String plist =
         File('ios/Runner/Info.plist').readAsStringSync();

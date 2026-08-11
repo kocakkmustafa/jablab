@@ -50,6 +50,34 @@ cihaz-kanıtı iddiası yok (2) ölçüm-beyanı üçlüsü (`MEASURED`/`WATCHED
 yüzeydir ve bayatlar** — içerik değişirse (yeni ders, yeni ölçüm) bu dosya
 da güncellenmeli, kapı bunu hatırlatır.
 
+## 🔴 DÜZELTME (koordinatör çapraz kontrolü, 2026-08-12)
+
+İlk taslak `MEASURED AND GRADED` altında *"Combination order and timing, for
+the punches we model"* diyordu. Koordinatör J-162/163'ün açık sorusuna
+(`COMBINATION_END` motorda geçiyor mu) bağlı olduğunu işaretledi ve
+gönderim öncesi kesin ölçüm istedi. **Ölçüm KESİN sonuç verdi — şüpheden
+kötü:**
+
+* `WRONG_HAND_FOR_COMBINATION` / `COMBINATION_ORDER_ERROR` ikisi de
+  `evaluateAt:["COMBINATION_END"]` istiyor (`boxing@1.0.0.json`).
+* `COMBINATION_END` motor kodunda (`lib/` + `packages/jablab_engine/`)
+  **sıfır** yerde geçiyor (pozitif kontrollü grep).
+* Koşul alanı `sequenceMismatch` (`striking_engine.dart` `_Ctx`) **tek
+  yerde deklare edilip hiçbir yerde atanmıyor.**
+* `evaluateAt` dispatch'i gerçek faz kimlikleriyle eşleşiyor
+  (`GUARD_READY`/`EXTENSION`/`PEAK`/`RETRACTION`/`GUARD_RECOVERED`) —
+  `COMBINATION_END` bunların hiçbiri değil.
+
+**Sonuç: bu iki hata KALICI ERİŞİLEMEZ.** İddia `WHAT WE DO NOT MEASURE`ye
+taşındı. `test/store_listing_test.dart`e bu taşımanın geri alınmasını
+engelleyen bir regresyon testi eklendi.
+
+⚠️ **Ayrı ve daha büyük bulgu — bu turda dokunulmadı:** aynı aşırı-iddia
+`boxing.foundations.one_two` dersinin **canlı** öğretme metninde de var
+(*"We watch the order and the timing between the two"*). Bu, mağaza
+metninden ayrı — zaten SEVK EDİLMİŞ uygulama içeriği. Koordinatöre ayrıca
+raporlandı.
+
 ## ⚠️ Bu taslağın ÖLÇMEDİĞİ şey
 
 * **Metnin ASC/Play karakter sınırlarını TAM karşıladığını** — kabaca
