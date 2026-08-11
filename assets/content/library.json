@@ -182,7 +182,7 @@
           "displayName": "Rounds and conditioning",
           "level": "all",
           "goal": "Work rounds without a bag. The app keeps time, counts what it can see, and stays quiet about what it can't.",
-          "estimatedMinutes": 54,
+          "estimatedMinutes": 78,
           "lessons": [
             {
               "id": "boxing.conditioning.r3",
@@ -356,7 +356,7 @@
             }
           ],
           "$scopeWhy": "Bu hattin kapilari SURE ve KATILIM olcer, teknik hukmu vermez. Referans beklemeden cikabilmesinin sebebi bu: '10 dakika calistin' demek icin egitmenlerin bir aci uzerinde uzlasmasi gerekmiyor.",
-          "$estimatedMinutesWhy": "BU SAYI DERS TOPLAMIYLA UYUSMUYOR (54 vs 78) ve SEBEBI BILINMIYOR. Bu geceden ONCE de boyleydi (git HEAD~1'de olculdu), yani yeni bir kusur degil - ESKI ve ACIKLANMAMIS bir sapma. Buraya uydurma bir gerekce YAZILMADI: diger iki kursta sayi ders toplamina TAM esit (foundations 80=80, intermediate 63=63), yani degismez GERCEK ve bu kurs onu cigniyor. Koordinatore soruldu (J-191). Not: bu sayi bugun HICBIR EKRANDA gosterilmiyor - ShellCourse.minutes'a eslenip orada kaliyor - yani kullanici bugun yanlis bilgilendirilmiyor; risk, birinin onu tek satirla kurs kartina koymasi."
+          "$estimatedMinutesWhy": "COZULDU 2026-08-11 (J-191, koordinator hukmu): 54 → 78. Arastirma SEBEBI bulamadi ama hipotezleri CURUTTU: (1) 'sonradan ders eklendi, sayi guncellenmedi' — YANLIS, kursun DOGDUGU commit'te (eefac38, G6, 2026-07-29) 7 dersin TAMAMI zaten yaziliydi ve 54 o an bile 78'le uyusmuyordu. (2) '54 anlamli bir alt-kume' — YANLIS, 78'lik toplamdan 54'e ulasan UC FARKLI kombinasyon var ([r3,tempo,r20,hiit]·[r3,r10,r20,hiit]·[tempo,r5,r10,r20,technique_round]) — UC farkli eslesme, eslesmenin TESADUF oldugunun kanitidir (128 alt-kume uzayinda birkac yoldan 54'e dusmek beklenir). PRD/roadmap/blueprint'te bagimsiz bir '54' beyani da YOK. Arastirilip cozulememis bir bilinmezlik, arastirilmamis olandan farklidir — 78 ICAT DEGIL TURETIM: foundations (80=80) ve intermediate (63=63) bu degismezi zaten tasiyor, 54'un ise hicbir kokeni/tuketicisi/beyani yoktu."
         },
         {
           "id": "boxing.intermediate",

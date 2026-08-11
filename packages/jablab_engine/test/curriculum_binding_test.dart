@@ -221,6 +221,56 @@ void main() {
             'kandırıyor');
   });
 
+  test('[J-191] kurs estimatedMinutes = ders toplamı, YA DA fark ADIYLA beyanlı', () {
+    // ÖLÇÜLEN KUSUR (J-191): conditioning'in estimatedMinutes'ı (54) ders
+    // minutes toplamıyla (78) UYUŞMUYORDU, ve foundations (80=80) ile
+    // intermediate (63=63) bu eşitliği DOĞAL olarak taşıyordu — yani bu
+    // sessiz bir istisnaydı, adı yazılmamış bir sapma. Kök git-arkeolojisiyle
+    // kurtarılamadı (kursun doğduğu committe bile uyuşmuyordu; 78'den 54'e
+    // ulaşan ÜÇ farklı alt-küme var — tesadüfi çakışma, anlamlı değil).
+    // Koordinatör hükmü: 54 → 78 (türetim, icat değil).
+    //
+    // ⚠️ KAPI ÇIPLAK EŞİTLİK YAZMAZ (J-120 sınıfı uyarı): yarın meşru bir
+    // kurs-düzeyi fark (dersler arası dinlenme, ısınma, kurs-düzeyi ek)
+    // gerçek olabilir — çıplak eşitlik o gün DOĞRU ürünü kırmızıya çevirir.
+    // Kapı bu yüzden EŞİTLİK YA DA `$estimatedMinutesBoundary` alanında
+    // adıyla+yeterli-uzunlukta beyan edilmiş bir farkı kabul eder — beyansız
+    // fark kırmızı, beyanlı fark yeşil kalır.
+    final Map<String, dynamic> libRaw = (jsonDecode(
+                File('../../assets/content/library.json').readAsStringSync())
+            as Map)
+        .cast<String, dynamic>();
+    final List<dynamic> disciplines = libRaw['disciplines'] as List<dynamic>;
+    final Map<String, dynamic> boxing = disciplines
+        .cast<Map<String, dynamic>>()
+        .firstWhere((Map<String, dynamic> d) => d['id'] == 'boxing');
+
+    int checked = 0;
+    for (final dynamic cRaw in boxing['courses'] as List<dynamic>) {
+      final Map<String, dynamic> c = (cRaw as Map).cast<String, dynamic>();
+      final int declared = (c['estimatedMinutes'] as num).toInt();
+      final int summed = (c['lessons'] as List<dynamic>).fold<int>(
+          0,
+          (int acc, dynamic l) =>
+              acc + (((l as Map)['minutes'] as num?)?.toInt() ?? 0));
+      if (declared != summed) {
+        final String? boundary =
+            c[r'$estimatedMinutesBoundary'] as String?;
+        expect(boundary, isNotNull,
+            reason: '${c['id']}: estimatedMinutes ($declared) ders '
+                'toplamından ($summed) farklı ama fark İSİMLİ SEBEPSİZ — '
+                'sessiz sapma (J-191 sınıfı)');
+        expect(boundary!.trim().length, greaterThanOrEqualTo(20),
+            reason:
+                '${c['id']}: \$estimatedMinutesBoundary yeterli gerekçe '
+                'taşımıyor');
+      }
+      checked++;
+    }
+    expect(checked, greaterThan(0),
+        reason: 'hiçbir kurs kontrol edilmedi — bu kapının sonucu anlamsız');
+  });
+
   test('[J-035] koçlanan eklem ya dispersiyonla ya AÇIKLIKLA düşer', () {
     // sd n=3'te dayanıklı değil: {-1,9 · -3,8 · -28,4} → sd 12,0° (tabanın
     // altında) ama ortada uzlaşı değil bimodal bölünme var. Bu yüzden 14°
