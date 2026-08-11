@@ -21,6 +21,7 @@ DEST="assets/models/${VARIANT}.v1.task"
 URL="https://storage.googleapis.com/mediapipe-models/pose_landmarker/${VARIANT}/float16/${VERSION}/${VARIANT}.task"
 
 cd "$(dirname "$0")/.."
+mkdir -p "$(dirname "$DEST")"
 
 verify() {
   local got
