@@ -1,0 +1,32 @@
+{
+  "$doc": "Magaza liste metni TASLAGI — makine-okur kaynak. Insan-okur baglam: docs/store/STORE-LISTING-TASLAK.md. Bu dosya test/store_listing_test.dart tarafindan taranir (vaat dili + cihaz-kaniti iddiasi + olcum-beyani varligi). Gonderim KURUCU kalemi (M-F-77) — bu dosya yalniz TASLAK, onay bekliyor.",
+  "appStore": {
+    "name": "JabLab",
+    "subtitle": "Solo boxing form coach",
+    "promotionalText": "Shadow box in front of your phone. JabLab watches your stance, your jab, and your guard — and tells you plainly what it can and can't measure.",
+    "keywords": "boxing,shadow boxing,jab,cross,combat training,pose coach,solo workout,form check,stance,guard"
+  },
+  "playStore": {
+    "shortDescription": "Solo shadow-boxing training with live camera coaching — no bag, no opponent."
+  },
+  "description": "JabLab is a solo shadow-boxing coach. Put your phone where it can see you, and it watches your stance, your jab, and your guard while you train — no bag, no pads, no partner.\n\nWhat it measures, it grades. What it can see but can't score fairly, it flags instead — a phone camera can't replace a coach's judgment on everything, and we would rather say so than fake a number.\n\nMEASURED AND GRADED\n- Punch events and count\n- Combination order and timing, for the punches we model (jab and cross)\n- Stance width, crossed feet, and balance\n\nWATCHED AND COACHED, NOT SCORED\n- Guard hand position - we will tell you when it drops, but coaches disagree on exactly where it belongs, so we do not put a number on it\n- Tempo, shown as a band (controlled, brisk, fast) rather than a speed we have not verified\n\nWHAT WE DO NOT MEASURE\n- Punch force or power - a camera cannot measure force\n- Hook and uppercut technique - we ran a real hook lesson through the app and it missed almost every hook, so we do not score what we cannot reliably see\n- Sparring, contact work, or anything that needs a second person to judge\n\nYour camera view never leaves your device. JabLab keeps the body positions it measures, not video, and nothing is uploaded.\n\nSolo training, honestly scored.",
+  "$measurementDisclosureLine": "MEASURED AND GRADED / WATCHED AND COACHED, NOT SCORED / WHAT WE DO NOT MEASURE ucluu, description alaninin kendi icinde — HonestyBox'in (Discipline.measured/notMeasured) magaza karsiligi. Ayri bir alan degil, description'in govdesi.",
+  "cameraPermissionRationale": {
+    "ios": "JabLab watches your shadow boxing to coach your form. Video stays on this device and is never uploaded — the app only keeps the body landmarks it measures.",
+    "$source": "ios/Runner/Info.plist NSCameraUsageDescription — BURAYA KOPYALANDI, DEGISTIRILMEDI. Tutarlilik: description'daki 'never leaves your device' cumlesiyle BIREBIR ayni iddia."
+  },
+  "ageRating": {
+    "expectedTier": "App Store 4+ / Google Play Everyone (PEGI 3) — TAHMIN, nihai sonuc ASC/Play'in kendi sureci",
+    "rationale": [
+      "Realistic or cartoon violence: NONE — solo shadow boxing, hicbir rakip TASVIR EDILMIYOR, dovus mekanigi yok",
+      "Contests / competitive play against others: NONE — cok-oyunculu ya da siralama yok",
+      "Simulated gambling: NONE",
+      "Horror or fear themes: NONE",
+      "Mature or suggestive themes: NONE",
+      "Medical/treatment information: NONE — CLAUDE.md kurali: tibbi dil yasak, uygulama wellness/antrenman dili kullaniyor, tani/tedavi iddiasi yok",
+      "Unrestricted web access: NONE — uygulama ici tarayici yok",
+      "User-generated content / sosyal paylasim: NONE — kamera goruntusu cihazdan hic cikmiyor (yukaridaki izin metni), yukleme/paylasim ozelligi yok"
+    ]
+  },
+  "$notClaimed": "Bu taslak 'cihazda dogrulandi/kanitlandi' TURUNDE HICBIR CUMLE ICERMIYOR — cihaz turu (KAMERA-KOPRUSU-CANLILIK.md §7.3-7.7) henuz yapilmadi. Description'daki her cumle BUGUN kod-gercegine dayanir (measured/notMeasured library.json'dan birebir), cihaz-performansi iddiasi tasimaz."
+}
