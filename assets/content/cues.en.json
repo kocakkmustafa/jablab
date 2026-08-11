@@ -23,7 +23,9 @@
       "Elbow in.",
       "Keep it tight.",
       "Punch through the line.",
-      "Elbow stays down."
+      "Elbow stays down.",
+      "Tuck it.",
+      "Straight line, elbow down."
     ],
     "cue.overreach": [
       "Don't lean in.",
@@ -36,7 +38,9 @@
       "Chest up.",
       "Stack over your hips.",
       "Stand tall.",
-      "Lift your chest."
+      "Lift your chest.",
+      "Weight back.",
+      "Don't reach with your chest."
     ],
     "cue.stance_narrow": [
       "Feet wider.",
@@ -54,13 +58,17 @@
       "Don't cross your feet.",
       "Step, don't cross.",
       "Feet crossed.",
-      "Reset your feet."
+      "Reset your feet.",
+      "Feet apart.",
+      "Base first."
     ],
     "cue.balance_loss": [
       "Stay balanced.",
       "Weight between your feet.",
       "Find your base.",
-      "Settle."
+      "Settle.",
+      "Center your weight.",
+      "Steady."
     ],
     "cue.wrong_hand": [
       "Other hand.",
