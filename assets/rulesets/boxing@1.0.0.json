@@ -645,6 +645,12 @@
       "$classWhy": "SETUP: kullanicinin FORMUYLA ilgili degil, kameranin gorus kosuluyla. Bu yuzden drillId TASIYAMAZ — 'gard calismasi yap' demek, sorun cerceve/isik iken kullaniciyi kendi tripodu icin sucladirmak olur. Cozum egzersiz degil, kamerayi duzeltmek."
     }
   ],
+  "$unreachableErrorCodes": [
+    "COMBINATION_ORDER_ERROR",
+    "TEMPO_TOO_FAST_FOR_FORM",
+    "WRONG_HAND_FOR_COMBINATION"
+  ],
+  "$unreachableErrorCodesWhy": "OLCULDU 2026-08-12 (magaza metni capraz kontrolunden cikan sweep, J-162/163'un genellemesi). Uc hata kodu da evaluateAt:['COMBINATION_END'] TASIYOR — ve COMBINATION_END, motorun dispatch ettigi HICBIR markerla eslesmiyor: ne bir teknik fazi (techniques[].phases[].id: GUARD_READY/EXTENSION/PEAK/RETRACTION/GUARD_RECOVERED/REAR_SHOULDER_ROTATION/STRIKE_WINDOW) ne bir literal dispatch noktasi (striking_engine.dart: STANCE_SAMPLE, ANY). Kosul alanlari da OLU: sequenceMismatch (_Ctx) tek yerde deklare edilip hicbir yerde atanmiyor. Sonuc: bu UC hata KALICI ERISILEMEZ — kismi zayiflik degil, tam-olu mekanizma. WRONG_HAND_FOR_COMBINATION/COMBINATION_ORDER_ERROR icin bu J-162/163'un supheyi KESINLIGE cevirmesiydi (magaza metni + boxing.foundations.one_two canlı ogretme metni duzeltildi); TEMPO_TOO_FAST_FOR_FORM ayni supurmede YENI bulundu ve hicbir canli metin ona dayanmiyordu (conditioning.tempo'nun ogretme metni tempoBand HESAPLAMASINa dayanir — ayri, GERCEK bir mekanizma, extMs'ten dogrudan turer, evaluateAt/marker gerektirmez). Kapi: packages/jablab_engine/test/error_reachability_test.dart, cift yonlu mutasyonla dogrulanir.",
   "tempoBands": {
     "$doc": "ADR-001 — faz suresinden turetilir, piksel hizindan DEGIL. Sinirlar D2 havuz olcumunden (medyan 128ms, en hizli %10 54ms).",
     "controlled": {
