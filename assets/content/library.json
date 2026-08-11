@@ -215,7 +215,8 @@
             {
               "id": "boxing.conditioning.tempo",
               "displayName": "Tempo control",
-              "teach": "Ten minutes, one round, no break — and the missing break is the point.\n\nRest resets the drift that fatigue puts into your timing, and that drift is exactly the thing this lesson is about. Break it into pieces and you measure a fresh boxer three times instead of a tiring one once.\n\nHold one pace. Not your fastest and not a crawl: the speed you could still be throwing at minute nine. Most people find it about two thirds of what they started with.\n\nWe read tempo from how long the punch takes to extend, not from how fast anything moves across the screen. That is why a slow arm close to the camera and a quick one far away do not fool it.",
+              "teach": "Ten minutes, one round, no break — and the missing break is the point.\n\nRest resets the drift that fatigue puts into your timing, and that drift is exactly the thing this lesson is about. Break it into pieces and you measure a fresh boxer three times instead of a tiring one once.\n\nHold one pace. Not your fastest and not a crawl: the speed you could still be throwing at minute nine. Most people find it about two thirds of what they started with.\n\nWe read tempo from how long the punch takes to extend, not from how fast anything moves across the screen. That is why a slow arm close to the camera and a quick one far away do not fool it.\n\nWe do not judge whether the pace is costing your form — that call is yours to make.",
+              "$absenceDisclosureJ205": "OLCULDU 2026-08-12 (koordinatorun 'yoklugu anlatan yuzey var mi' talimati): TEMPO_TOO_FAST_FOR_FORM kalici erisilemez (bkz. boxing@1.0.0.json $unreachableErrorCodesWhy) ama eski metin YANLIS bir iddia TASIMIYORDU — yalniz SESSIZDI. Son cumle eklendi: yokluk artik adiyla acik, sessizlige birakilmadi.",
               "techniques": [
                 "jab",
                 "cross"
