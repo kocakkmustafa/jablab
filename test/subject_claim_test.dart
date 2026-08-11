@@ -166,9 +166,18 @@ void main() {
         reason: 'stance dersinin düzeltilmiş cümlesi kaybolmuş — sınıfı '
             'DESTEKSİZ idi, yani ölçüm gelirse iddia geri konabilir; '
             'ama cümlenin kendisi silinmemeli');
-    expect(lib, contains('It is one of the faults we call out by name.'),
-        reason: 'jab dersinin düzeltilmiş cümlesi kaybolmuş — sınıfı '
-            'DESTEKLENEMEZ idi (telemetri yok), yani bu KALICI bir sınır '
-            've yerine konan cümle onun taşıyıcısı');
+    // ⚠️ İKİNCİ DÜZELTME (2026-08-12, 4. katman ölçümü): jab dersinin
+    // J-186 tarafından buraya konan cümlesi ("It is one of the faults we
+    // call out by name.") KENDİSİ de yanlış çıktı — LEAD_HAND_NOT_
+    // RECOVERED'ın koşulu (`phaseDurationMs.RETRACTION`) hiç
+    // atanmadığından hata kalıcı erişilemez; "adıyla çağırıyoruz" iddiası
+    // desteksizdi. Aynı ters-ikiz ilkesi (sil değil düzelt) BU turda da
+    // uygulandı — eski cümle burada SİLİNMİYOR, yeni cümlenin varlığı
+    // çiviliyor (boxing@1.0.0.json $unassignedConditionFieldsWhy).
+    expect(lib, contains('We do not call this one out today — watch for it yourself.'),
+        reason: 'jab dersinin İKİNCİ kez düzeltilmiş cümlesi kaybolmuş — '
+            'LEAD_HAND_NOT_RECOVERED kalıcı erişilemez (phaseDurationMs hiç '
+            'atanmıyor), bu KALICI bir sınır ve yerine konan cümle onun '
+            'taşıyıcısı');
   });
 }
