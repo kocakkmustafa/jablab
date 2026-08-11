@@ -384,19 +384,6 @@
     }
   },
   "$lateralityWhy": "J-142: 'Right order, right hand, every time.' -> 'Correct order, rear hand, every time.'. Ikinci 'right' bir VUCUT TARAFI atfiydi ve southpaw duruşta yanlis. Bu dosyanin tuketicisi BUGUN testler (uygulama okumuyor, J-129'da olculdu) — yani sizinti kullaniciya ULASMIYOR; drill'ler baglandigi gun ulasirdi. Sinif: gizli, kapida.",
-  "$gateReachability": "OLCULDU 2026-08-07 (J-197): bu müfredatin 15 ilerleme kapisindan 12'si BUGUN SAGLANAMAZ. Sebep tek ve yapisal: kapilarin TAMAMI tespit istiyor (event/combination/minCompletedAttempts/withValidAnalysisRatio...), tespit ise KAMERA demek — ve o 12 dersin `usesCamera` alani false. Ulasilabilir olan 3: jab, guard, range. YALNIZ `cross` kendini `$blocked` diye beyan ediyor; kalan 11'i gerekceli kapilar tasiyor ama ULASILAMAZ olduklarini SOYLEMIYOR. BUGUN KULLANICI ZARARI YOK: bu dosyayi uygulama hic yuklemiyor (J-179), yani kusur LATENT — mufredat baglandigi gun 12 ders KALICI KILITLI dogar. VE BU BIR OYLAMA: 9 kondisyon kapisi `withValidAnalysisRatio: 0.7` istiyor, yani 'karelerin %70'inde gecerli analiz'; first_round'un gerekcesi birebir boyle yaziyor. Icerik metinleri de ayni seyi varsayiyor (J-194b). Iki BAGIMSIZ sistem kamerayi varsayiyor, yalniz `usesCamera` hayir diyor — bu artik bir SECENEK degil KUSUR. En carpici kanit: `camera` dersinin kapisi `setupCheckPassed` istiyor ve o ders kamerayi ACMIYOR; bir ders KENDI OGRETTIGI SEYIN kapisini gecemiyor. HUKUM (koordinator 14:35): bugun UYGULANMIYOR — kapsam 5 dersten 12 derse + mufredata buyudu ve karar artik ders karari degil URUN MIMARISI karari ($cameraBasis politikasi). Yeni oturumun 1. isi. Bir kusuru kaydetmek, yarim duzeltmekten iyidir.",
-  "$gateReachabilityUnreachable": [
-    "boxing.conditioning.hiit",
-    "boxing.conditioning.r10",
-    "boxing.conditioning.r20",
-    "boxing.conditioning.r3",
-    "boxing.conditioning.r5",
-    "boxing.conditioning.technique_round",
-    "boxing.conditioning.tempo",
-    "boxing.foundations.camera",
-    "boxing.foundations.first_round",
-    "boxing.foundations.one_two",
-    "boxing.foundations.stance",
-    "boxing.intermediate.fatigue"
-  ]
+  "$gateReachability": "OLCULDU 2026-08-07 (J-197), COZULDU 2026-08-11 (ADR-005): bu mufredatin 15 ilerleme kapisindan 12'si camera-basis eksikligiyle SAGLANAMIYORDU. Koordinator hukmu (2026-08-11 22:44): $cameraBasis karari cihaz turuna BAGLI DEGIL — cihaz turu koprunun CALISTIGINI kanitlar, $cameraBasis bir dersin kamerayi GEREKTIRDIGINI beyan eder, ikisi ayri eksen (bkz. docs/adr/ADR-005-camera-basis-politikasi.md). 12 dersin hepsine `usesCamera:true` + gerekceli `$cameraBasis` eklendi (library.json); unreachable kume simdi BOS. `cross` hala kendini `$blocked` diye beyan ediyor (J-031, referans 2/3 kaynak — ayri, cozulmemis konu). BUGUN KULLANICI ZARARI YOK (J-179, degismedi): curriculum.json'u uygulama hala yuklemiyor. ⚠️ IKI NAMED ACIK KALEM COZULMEDI, GIZLENMEDI: ① `boxing.foundations.camera` ve `boxing.foundations.stance`'in kapi-olaylari (`setupCheckPassed`, `stanceHold`) motor kodunda hicbir yerde uretilmiyor — camera-basis dogru, bu iki spesifik gate-primitifinin ureticisi yazilmadi (yeni motor yuzeyi acmak bu turun kapsami disinda). ② `boxing.foundations.one_two`'nun COMBINATION_END sorusu (J-162/163) bu turda yeniden sinanmadi. Detay: ADR-005.",
+  "$gateReachabilityUnreachable": []
 }

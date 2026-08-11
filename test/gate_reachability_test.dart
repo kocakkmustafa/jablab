@@ -5,37 +5,38 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// İLERLEME KAPILARININ ULAŞILABİLİRLİĞİ — ölçülmüş hâl çivilendi (J-197).
 ///
-/// ## Ne kaydediliyor
+/// ## ✅ ÇÖZÜLDÜ — 2026-08-11 (ADR-005)
 ///
-/// Müfredatın **15 kapısından 12'si bugün sağlanamaz.** Sebep tek ve
-/// yapısal: kapıların **tamamı tespit istiyor**, tespit **kamera** demek, ve
-/// o 12 dersin `usesCamera` alanı `false`.
+/// ~~Müfredatın 15 kapısından 12'si bugün sağlanamaz. Sebep tek ve yapısal:
+/// kapıların tamamı tespit istiyor, tespit kamera demek, ve o 12 dersin
+/// `usesCamera` alanı false.~~ Eski cümlenin üstü çizildi, silinmedi — neyin
+/// yanlış olduğunu göstermek öğretici.
 ///
-/// > En çarpıcı kanıt: **`camera` dersinin kapısı `setupCheckPassed` istiyor
-/// > — ve o ders kamerayı AÇMIYOR.** Bir ders, **kendi öğrettiği şeyin**
-/// > kapısını geçemiyor.
+/// Koordinatör hükmü (2026-08-11 22:44): **`$cameraBasis` kararı cihaz
+/// turuna bağlı değil** — cihaz turu köprünün ÇALIŞTIĞINI kanıtlar,
+/// `$cameraBasis` bir dersin kamerayı GEREKTİRDİĞİNİ beyan eder, ikisi ayrı
+/// eksen (`docs/adr/ADR-005-camera-basis-politikasi.md`). 12 dersin hepsine
+/// `usesCamera:true` + gerekçeli `$cameraBasis` eklendi. Unreachable küme
+/// şimdi **boş**.
 ///
-/// ## Bu bir kusur, "seçenek" değil
+/// > En çarpıcı kanıt hâlâ kayıtta: **`camera` dersinin kapısı
+/// > `setupCheckPassed` istiyordu — ve o ders kamerayı AÇMIYORDU.** Artık
+/// > açıyor; ama `setupCheckPassed` olayının kendisi motor kodunda hâlâ
+/// > **hiçbir yerde üretilmiyor** — bu NAMED açık kalem, ADR-005'te
+/// > kaydedildi, gizlenmedi (ikincisi: `stanceHold`, aynı sınıf).
 ///
-/// 9 kondisyon kapısı **`withValidAnalysisRatio: 0.7`** istiyor — *karelerin
-/// %70'inde geçerli analiz.* İçerik metinleri de aynı şeyi varsayıyor
-/// (J-194b: *"cümleler motor hakkında doğru, ders hakkında yanlış"*).
+/// ## Neden BUGÜN düzeltildi
 ///
-/// > **Bir tutarsızlık, İKİ BAĞIMSIZ sistem aynı şeyi varsayıp üçüncüsü
-/// > reddettiğinde artık "seçenek" değil KUSURDUR** — ve hangi tarafın
-/// > yanlış olduğunu **çoğunluk** değil, **hangisinin diğer ikisini
-/// > yalanladığı** söyler.
+/// Önceki koordinatör hükmü (14:35, 2026-08-07): kapsam 5 dersten 12 derse
+/// + müfredata büyüdüğü için karar bir ders kararı değil ürün mimarisi
+/// kararıydı ve o gün ertelendi. Dört gün sonra (2026-08-11) aynı
+/// koordinatör kararı verdi: beş kurucu-kapılı kalemden (harcama/store/
+/// fiyat/lisans/tasarım) hiçbiri değil, içerik-doğruluğu sorusu.
+/// **Zarar hâlâ latent:** `curriculum.json`u uygulama hâlâ yüklemiyor
+/// (J-179) — bu ADR onu değiştirmedi, yalnız kamera-temelini düzeltti.
 ///
-/// ## Neden BUGÜN düzeltilmedi
-///
-/// Koordinatör hükmü (14:35): kapsam **5 dersten 12 derse + müfredata**
-/// büyüdü; karar artık bir **ders** kararı değil **ürün mimarisi** kararı
-/// (`$cameraBasis` politikası, ve beş hattın ortak kamera hattı).
-/// **Zarar latent:** `curriculum.json`u uygulama **hiç yüklemiyor** (J-179),
-/// yani bugün kullanıcı zararı **yok** — müfredat bağlandığı gün 12 ders
-/// **kalıcı kilitli doğar.**
-///
-/// > **Bir kusuru kaydetmek, yarım düzeltmekten iyidir.**
+/// > **Bir kusuru kaydetmek, yarım düzeltmekten iyidir.** — ve bir kusuru
+/// > ÇÖZERKEN bulunan yeni, daha dar kusurları da kaydetmek aynı kural.
 ///
 /// ## Bu kapı İYİ HABERİ de söyler
 ///

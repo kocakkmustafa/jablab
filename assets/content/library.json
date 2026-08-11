@@ -52,7 +52,9 @@
               "teach": "Stand where you can take two steps in any direction without hitting anything. Prop the phone at about waist height, leaning on something solid — a chair, a shelf, a wall.\n\nThen step back until your feet and your hands both fit in the picture at the same time. That is the whole test. If your feet leave the frame when you punch, you are too close.\n\nTurn slightly toward the camera rather than standing square to it. A boxing guard is side-on, and from directly in front your rear hand hides behind your body — the camera reads a hand it cannot see as a hand that is not there.\n\nThe room only needs enough light that you can see your own hands clearly. We do not measure the light, so we cannot tell you when it is too dark; you can.",
               "techniques": [],
               "focus": "setup",
-              "minutes": 6
+              "minutes": 6,
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: bu dersin ilerleme kapisi (curriculum.json 'setupCheckPassed') tespit-turevi — kurulum dersinin KENDISI kamerayi acmiyor olmasi J-197'nin en carpici kaniti idi. usesCamera:true onu duzeltir. ⚠️ NAMED ACIK KALEM: 'setupCheckPassed' adli bir olay motor kodunda bugun HICBIR YERDE uretilmiyor (repo geneli arama, sifir eslesme) — kamera-gerekliligi dogru ama bu spesifik kapi-olayinin ureticisi yazilmadi, bu turun kapsami disinda (yeni motor yuzeyi acmak)."
             },
             {
               "id": "boxing.foundations.stance",
@@ -65,7 +67,9 @@
                 "STANCE_TOO_WIDE",
                 "FEET_CROSSED"
               ],
-              "minutes": 10
+              "minutes": 10,
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: bu dersin ilerleme kapisi (curriculum.json 'stanceHold') tespit-turevi. Odak hatalarinin ucu de (STANCE_TOO_NARROW/WIDE, FEET_CROSSED) A bandinda ve gateable:true (drill.stance_reset/drill.balance/drill.footwork_basics, M-F-06 geometrik durus dedektoru GERCEK) — kamera-gerekliligi saglam. ⚠️ NAMED ACIK KALEM: 'stanceHold' adli spesifik kapi-olayi motor kodunda bugun uretilmiyor (sifir eslesme) — tespit yetenegi gercek, bu tek gate-primitifinin ureticisi yazilmadi, bu turun kapsami disinda."
             },
             {
               "id": "boxing.foundations.jab",
@@ -141,7 +145,9 @@
                 "WRONG_HAND_FOR_COMBINATION",
                 "COMBINATION_ORDER_ERROR"
               ],
-              "minutes": 12
+              "minutes": 12,
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: bu dersin ilerleme kapisi (curriculum.json combination '1-2') tespit-turevi. Sira-takibi A bandinda (kapinin kendi $gateableWhy'i: 'olay sirasi blur'dan bagimsiz'). ⚠️ NAMED ACIK KALEM: J-162/163'te COMBINATION_END'in motorda hic gecmedigi olculmustu ve bu ADR o olcumu YENIDEN sinamadi (baslangic promptunun ayri, kapanista bilerek birakilan 2. isi) — usesCamera:true kavramsal olarak dogru, kapinin somut olayinin bugun ateslendigi dogrulanmadi."
             },
             {
               "id": "boxing.foundations.first_round",
@@ -159,6 +165,8 @@
               "focus": "round",
               "minutes": 8,
               "status": "live",
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: bu dersin ilerleme kapisi (curriculum.json sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani kameranin cikardigi judgedRatio'nun karsiligi (KAMERA-KOPRUSU-CANLILIK.md, emulatorde 0,810 olculdu). Techniques zaten ['jab','cross'] ve emsal jab/guard/range ile ayni desen.",
               "roundPlan": {
                 "rounds": 1,
                 "roundSeconds": 180,
@@ -192,6 +200,8 @@
               ],
               "focus": "round",
               "minutes": 12,
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round.",
               "roundPlan": {
                 "rounds": 3,
                 "roundSeconds": 180,
@@ -213,6 +223,8 @@
               ],
               "focus": "round",
               "minutes": 10,
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round.",
               "roundPlan": {
                 "rounds": 1,
                 "roundSeconds": 600,
@@ -231,6 +243,8 @@
                 "jab",
                 "cross"
               ],
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round.",
               "roundPlan": {
                 "rounds": 1,
                 "roundSeconds": 300,
@@ -252,6 +266,8 @@
               "combinations": [
                 "1-2"
               ],
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round.",
               "roundPlan": {
                 "rounds": 3,
                 "roundSeconds": 200,
@@ -275,6 +291,8 @@
               "combinations": [
                 "1-2"
               ],
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round.",
               "roundPlan": {
                 "rounds": 6,
                 "roundSeconds": 200,
@@ -295,6 +313,8 @@
                 "cross"
               ],
               "$judgementWhy": "Yuksek tempoda form hukmu VERILMEZ. TEMPO_TOO_FAST_FOR_FORM zaten C bandinda; hizli aralikta 'kotu form' demek, kullaniciya kendi tasarladigimiz egzersiz icin ceza kesmektir.",
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round. 30sn'lik patlama sureklilik-testi icin en siki vaka (ADR-005 pil/isi bolumu).",
               "intervalPlan": {
                 "bursts": 12,
                 "burstSeconds": 30,
@@ -322,6 +342,8 @@
                 "FEET_CROSSED",
                 "BALANCE_LOSS"
               ],
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round. Bu ders zaten form-geri-bildirimini SUREKLI acik tutuyor (teach metni) — kameranin ACIK olmasi dersin kendi anlattigi mekanizmayla tutarli.",
               "roundPlan": {
                 "rounds": 3,
                 "roundSeconds": 180,
@@ -400,6 +422,8 @@
                 "LEAD_HAND_NOT_RECOVERED",
                 "BALANCE_LOSS"
               ],
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005: ilerleme kapisi (sessionMinutes + withValidAnalysisRatio:0.7) tespit-turevi — gecerli-analiz orani judgedRatio'nun karsiligi. Techniques ['jab','cross'], emsal jab/guard/range/first_round. Kurstaki en uzun tur (20 dk toplam) — surekli cikarimin en zorlu vakasi (ADR-005 pil/isi bolumu).",
               "roundPlan": {
                 "rounds": 4,
                 "roundSeconds": 300,
