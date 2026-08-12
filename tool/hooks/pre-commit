@@ -23,13 +23,24 @@ set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
-echo "commit kapısı 1/3: flutter analyze…"
+echo "commit kapısı 1/4: flutter analyze…"
 flutter analyze
 
-echo "commit kapısı 2/3: app süiti…"
+echo "commit kapısı 2/4: app süiti…"
 flutter test
 
-echo "commit kapısı 3/3: motor süiti…"
+echo "commit kapısı 3/4: motor süiti…"
 (cd packages/jablab_engine && flutter test)
 
-echo "commit kapısı: 3/3 yeşil — commit devam ediyor."
+# 4/4 — DEFTER TAZELİĞİ (J-225).
+#
+# ⏱️ ZAMANLAMA BİLEREK: pre-commit sırasında YAPILMAKTA OLAN commit henüz
+# `git log`da YOKTUR. Yani bu kapı bir commit'lik PAY verir — bugün
+# `(J-NNN)` yazıp kaydı sonra yazabilirsin — ama BİR SONRAKİ commit'te
+# kaydı ZORLAR. Böylece anlık iş bloklanmaz, BİRİKME imkânsızlaşır.
+# (2026-08-12'de altı kayıt tam böyle birikmişti: J-217…J-222 commit'lendi,
+# deftere hiç geçmedi, ve yalnız bir çapa aramasıyla fark edildi.)
+echo "commit kapısı 4/4: defter tazeliği…"
+python3 tool/defter_freshness.py
+
+echo "commit kapısı: 4/4 yeşil — commit devam ediyor."
