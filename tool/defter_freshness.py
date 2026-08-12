@@ -104,23 +104,49 @@ def defter_numbers() -> set[str]:
     return out
 
 
-def commit_numbers(limit: int) -> tuple[dict[str, str], int]:
-    """Başlıklardan (yalnız `%s`) J numaraları. Dönüş: {numara: başlık}, atıfsız."""
+def commit_numbers(limit: int) -> tuple[dict[str, str], int, int]:
+    """Başlıklardan (yalnız `%s`) J numaraları.
+
+    ⚠️ ÜÇ SAYI DÖNER ÇÜNKÜ İKİ AYRI BİRİM VAR (J-226) — ilk sürüm bunları
+    karıştırıyordu: `atıflı` **benzersiz NUMARA** sayıyordu, `atıfsız` ise
+    **BAŞLIK**, ve ikisi yan yana bir BÖLME gibi basılıyordu. Toplamıyordu:
+    `121 + 91 = 212`, oysa taranan `226`. Aradaki **14**, aynı numaraya
+    birden fazla commit atan başlıklardı (19 numara 2-3 commit'li).
+
+    > **Bir payda YAZILMIŞ olabilir ve yine de TOPLAMIYOR olabilir — payda
+    > yazmak, paydayı DENETLEMEK değildir.** Ve iki sayı yan yana
+    > basıldığında, okuyan onların AYNI BİRİMDE olduğunu varsayar.
+
+    ⚠️ İKİ SAYAÇ DA BAĞIMSIZ SAYILIR, biri ötekinden TÜRETİLMEZ. İlk
+    düzeltmemde `unattributed = scanned - attributed` yazmış, sonra
+    `attributed + unattributed == scanned` diye "denetlemiştim" — yapı
+    gereği HER ZAMAN doğru olan bir kontrol. Mutasyonla ölçüldü: sayacı
+    bozdum, **kapı ötmedi.**
+
+    > ***Türetilmiş bir sayıyı kaynağına karşı denetleyemezsin: aritmetik
+    > kimlik bir ÖLÇÜM değildir.*** Bugün üç kez "vakum-doğru test"
+    > yakaladım; dördüncüsü kendi payda denetimimdi.
+
+    Dönüş: `({numara: ilk başlık}, atıflı, atıfsız, taranan)` — hepsi BAŞLIK
+    birimi; `found` ise NUMARA birimi (ayrı birim, ayrı basılır).
+    """
     titles = subprocess.run(
         ["git", "-C", str(APP), "log", f"-{limit}", "--format=%s"],
         capture_output=True, text=True, check=True,
     ).stdout.splitlines()
     found: dict[str, str] = {}
-    unattributed = 0
+    attributed = 0
+    unattributed = 0          # ⚠️ BAĞIMSIZ sayılır, TÜRETİLMEZ (aşağı bak)
     for t in titles:
         raw = _record_ref(t)
         if raw is None:
             unattributed += 1
             continue
+        attributed += 1
         head, *rest = raw.split("/")
         for num in [head] + [f"J-{x}" for x in rest]:
             found.setdefault(num, t)
-    return found, unattributed
+    return found, attributed, unattributed, len(titles)
 
 
 def self_test() -> bool:
@@ -153,6 +179,14 @@ def self_test() -> bool:
         check(f"defter-içeriyor-{probe}", probe in nums, True)
     check("defter-uydurma", "J-9999" in nums, False)
 
+    # ⭐ PAYDA ARİTMETİĞİ — payda YAZMAK, paydayı DENETLEMEK değildir (J-226).
+    _ref, _att, _un, _scan = commit_numbers(400)
+    # İki sayaç BAĞIMSIZ; bu yüzden toplamları gerçek bir iddiadır.
+    check("payda-toplamı", _att + _un, _scan)
+    check("taranan-gerçek", _scan <= 400, True)
+    check("birim-ayrı", _att >= len(_ref), True)  # başlık ≥ benzersiz numara
+    check("sayaçlar-dolu", _att > 0 and _un > 0, True)
+
     # ⭐ KENDİ ÖLÇÜLMÜŞ KİRLENME RİSKİM — Gravita'nın sentinel testi
     # KOPYALANMADI (o riski ölçtüm: bu depoda `J-9xx` yalnız BU dosyada
     # geçiyor, deftere ya da başlığa karışamaz). Onun yerine benim GERÇEK
@@ -177,17 +211,27 @@ def main() -> int:
         return 0 if good else 1
 
     written = defter_numbers()
-    referenced, unattributed = commit_numbers(limit)
+    referenced, attributed, unattributed, scanned = commit_numbers(limit)
     missing = sorted(
         (n for n in referenced if n not in written),
         key=lambda s: int(s.split("-")[1]),
     )
 
-    # ③ PAYDA HER ZAMAN YAZILIR
+    # ③ PAYDA HER ZAMAN YAZILIR — VE DENETLENİR.
+    #
+    # ⚠️ `limit` BASILMAZ: `-400` bir ÜST SINIRDIR, bir sayım değil. Depoda
+    # 226 commit var; ilk sürüm "taranan: 400" yazıyordu ve kapsamı
+    # OLDUĞUNDAN GENİŞ gösteriyordu — hem de tam bu kapının kapsam sorunu
+    # olduğu gün. *Bir pencereyi İSTEMEK, onu ÖLÇMEK değildir.*
+    assert attributed + unattributed == scanned, (
+        f"PAYDA TOPLAMIYOR: {attributed} + {unattributed} != {scanned}"
+    )
     print(
-        f"DEFTER TAZELİĞİ · taranan commit başlığı: {limit} · "
-        f"atıflı: {len(referenced)} · atıfsız: {unattributed} · "
-        f"deftere yazılı kayıt: {len(written)}"
+        f"DEFTER TAZELİĞİ · taranan başlık: {scanned} "
+        f"(istenen üst sınır {limit}) = atıflı {attributed} + atıfsız "
+        f"{unattributed} ✓ · benzersiz kayıt numarası: {len(referenced)} "
+        f"(atıflı başlıktan {attributed - len(referenced)} eksik: aynı "
+        f"numaraya birden fazla commit) · deftere yazılı: {len(written)}"
     )
     if not missing:
         print("  ✅ commit'te anılıp deftere YAZILMAMIŞ kayıt: 0")
