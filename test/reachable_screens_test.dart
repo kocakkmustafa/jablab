@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/camera_harness_screen.dart';
@@ -231,6 +233,43 @@ void main() {
     // adıyla kilitliyoruz ki sessizce atlanan bir aşama sayıyı düşürmesin.
     expect(walked, SessionStage.values.toSet(),
         reason: 'bir aşamaya yürünerek ulaşılamıyor');
+  });
+
+  test('SAYMA KURALI YAZILI — ve sayı ondan KOPMUYOR (J-221)', () {
+    // Gravita'nın uyarısı: "sekmeleri farklı sayıyorsak iki sayı AYNI ŞEYİ
+    // ÖLÇMÜYOR; fark içerik değil SAYMA KURALI olur." Sayı kapılıydı, KURAL
+    // değildi — kuralsız bir sayı hatlar arasında kıyaslanamaz.
+    final File rule =
+        File('docs/gates/GEZILEBILIRLIK-SAYMA-KURALI.md');
+    expect(rule.existsSync(), isTrue,
+        reason: 'sayma kuralı belgesi yok — 6/11 sayısı kuralsız kalır');
+    final String src = rule.readAsStringSync();
+    // Dört sorunun dördü de cevaplanmış olmalı.
+    for (final String q in <String>[
+      'Sekme', 'envanteri', 'nereden başlıyor', 'Onboarding içeride mi',
+    ]) {
+      expect(src, contains(q), reason: '"$q" sorusu belgeden düşmüş');
+    }
+    // Sayılar belgede ve kodda AYNI olmalı — belge bayatlarsa öter.
+    expect(src, contains('katı **$kStrictRoutes**'),
+        reason: 'belgedeki katı sayı koddan KOPMUŞ');
+    expect(src, contains('gevşek **$kLooseScreens**'),
+        reason: 'belgedeki gevşek sayı koddan KOPMUŞ');
+    expect(src, contains('$kStrictRoutes − 2 + $kOnboardingPanels + '
+        '$kSessionStages'),
+        reason: 'türetim formülü belgede koddakiyle aynı değil');
+    // Kör nokta kendi BÖLÜMÜYLE durmalı.
+    //
+    // ⚠️ İlk hâli `src.toUpperCase().contains('KÖR NOKTA')` idi ve MUTASYONU
+    // GEÇTİ: başlığı sildiğimde gövdedeki küçük harfli geçişler ("bu kör
+    // nokta bir kez ölçüldü") kapıyı tatmin etti. *Bir kavramdan SÖZ eden
+    // cümle, o kavramın BÖLÜMÜ değildir* — kapı bölüm başlığını arıyor.
+    expect(src, contains('## ⚠️ ENVANTER YÖNTEMİNİN KÖR NOKTASI'),
+        reason: 'envanter yönteminin kör-nokta BÖLÜMÜ belgeden düşmüş; bir '
+            'sayma kuralı, neyi göremediğini söylemeden tam değildir');
+    expect(src, contains('KAPILI DEĞİL'),
+        reason: 'kör noktanın KORUMASIZ olduğu beyanı düşmüş — bugün boş '
+            'çıkan bir tarama, korunmadığı yazılmazsa güvence sanılır');
   });
 
   test('gevşek okuma ③: TÜRETİLEN SAYI — bileşen değişirse burası öter', () {
