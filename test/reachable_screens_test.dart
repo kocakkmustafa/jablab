@@ -75,97 +75,189 @@ const int kSessionStages = 4;
 const int kLooseScreens =
     kStrictRoutes - 2 + kOnboardingPanels + kSessionStages;
 
+/// ⛔ KÖK VARIŞ SAYISI — ÇAPALI (J-240).
+///
+/// Ostinato'nun bulgusu (M-F-582) bu ağaçta da doğrulandı: sayılan üyelerin
+/// hepsi `push` DEĞİL. Burada **ikisi** kök varış — `OnboardingPage` ve onun
+/// yerine geçen `SelectPage` **aynı kök rotada** yaşıyor, aralarındaki geçiş
+/// `_RootState.setState` ile bir TAKAS (`jablab_app.dart`, `_showOnboarding`).
+/// Eski toplam-assert bunu **görünmez** kılıyordu.
+///
+/// > ***Sayı çapalanır ki ÜÇÜNCÜ bir kök varış bir BEYAN değil, bir BULGU
+/// > olsun.***
+const int kRootArrivals = 2;
+
+/// Bir ekrana **NASIL** varıldığı — (b)'nin tanıkla ölçebildiği büyüklük.
+enum Arrival {
+  /// Tanık yeni bir rota `push`u gördü.
+  push,
+
+  /// Yeni rota YOK: kök rotanın kendisi ya da onun içinde `setState` takası.
+  root,
+}
+
+/// (b) TANIĞI — ***varış ADIYLA değil OLAYLA sayılır.***
+///
+/// ⚠️ Bu ağaçta `route.settings.name` **her rotada `null`** (hepsi anonim
+/// `MaterialPageRoute`; `jablab_app.dart` 398-435, 632). Ada bakan bir tanık
+/// ***sessizce boş*** kalırdı — Ostinato'nun M-F-582'de ödediği bedel. O
+/// yüzden tanık **olay sayıyor**, ve adların gerçekten boş olduğu aşağıda
+/// AYRICA sınanıyor: bir gün rotalar ad taşımaya başlarsa bu varsayım
+/// sessizce bayatlamasın.
+class _RouteWitness extends NavigatorObserver {
+  int pushes = 0;
+  int pops = 0;
+  final List<String?> pushedNames = <String?>[];
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    pushes++;
+    pushedNames.add(route.settings.name);
+    super.didPush(route, previousRoute);
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    pops++;
+    super.didPop(route, previousRoute);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// YÜRÜYÜŞÜN ÇIKTISI — denklem artık BUNU okuyor.
+//
+// 🔴 ÖNCEKİ HÂL VE NEDEN YANLIŞTI (J-240): denklemdeki `walked`, **elle
+// yazılmış bir `const Set`**ti; gerçek yürüyüş BAŞKA bir testte yaşıyordu
+// (`reached`) ve ***ikisinin uzlaştığını hiçbir şey sınamıyordu.*** Yani
+// (e) ile "kaynak olmaktan çıkarılan" elle küme, arka kapıdan **(b)'nin
+// işini** görüyordu.
+//
+// > ***BİR KÜMEYİ "KAYNAK DEĞİL" İLAN ETMEK, ONU KAYNAK OLARAK KULLANMAYI
+// > BIRAKMAK DEĞİLDİR.***
+//
+// Artık üyelik yalnız **yürünerek** buraya yazılıyor; elle küme aşağıda
+// `knownFloor` adıyla ve YALNIZ (e) rolünde duruyor.
+// ══════════════════════════════════════════════════════════════════════
+
+/// Yürüyüşün vardığı ekranların SINIF adları — denklemin `varılan` tarafı.
+final Set<String> walkedClasses = <String>{};
+
+/// Her varışın KİPİ — kısa ad → `push`/`root`.
+final Map<String, Arrival> walkArrivals = <String, Arrival>{};
+
+/// Yürüyüşte gerçekten basılarak görülen karşılama perdesi sayısı.
+int? walkedPanels;
+
+/// Yürüyüşte gerçekten basılarak görülen seans aşaması sayısı.
+int? walkedStages;
+
 void main() {
-  const OnboardingStore seen = OnboardingStore(seenOverride: true);
+  late Directory tmp;
 
   setUp(() {
+    tmp = Directory.systemTemp.createTempSync('jablab_walk_');
     final TestWidgetsFlutterBinding b =
         TestWidgetsFlutterBinding.ensureInitialized();
     b.platformDispatcher.views.first.physicalSize = const Size(1200, 3000);
     b.platformDispatcher.views.first.devicePixelRatio = 1.0;
   });
   tearDown(() {
+    tmp.deleteSync(recursive: true);
     final TestWidgetsFlutterBinding b =
         TestWidgetsFlutterBinding.ensureInitialized();
     b.platformDispatcher.views.first.resetPhysicalSize();
     b.platformDispatcher.views.first.resetDevicePixelRatio();
   });
 
-  // ⚠️ İKİ AYRI TEST: tek gövdede iki kez `pumpWidget` bu koşumda ikinci
-  // ağacı güvenilir kurmuyor (bu gecenin ÜÇÜNCÜ kez düştüğü tuzak —
-  // `pumpLive` · `content_failure` · burası). Karşılama ayrı ölçülüyor.
-  testWidgets('rota 1/6 — KARŞILAMA (ilk açılış)', (WidgetTester t) async {
+  /// ⭐ A1 · SÖZLEŞME (b)+③ — **TEK YÜRÜYÜŞ**, TAZE KURULUMDAN, TANIKLA.
+  ///
+  /// ## Neden bu test var — ve neden ÖNCEKİ dört test yerine BİR tane
+  ///
+  /// Ölçüm (2026-08-12 kapanışı) şunu buldu: zincir **dört ayrı teste
+  /// bölünmüştü** ve *"tam akış çalışıyor"* iddiasının kanıtı **yoktu**.
+  /// Bölünmenin kendisi meşru bir sebeple doğmuştu (tek gövdede iki
+  /// `pumpWidget` ikinci ağacı güvenilir kurmuyordu) — ama:
+  ///
+  /// > ***TESTLER BİLEREK BÖLÜNDÜ; BÖLÜNÜNCE YENİDEN BAĞLANMADI.***
+  ///
+  /// Ve bölünmenin bedeli ölçüldü: karşılamayı yürüyen test **çıkışı**
+  /// kanıtlıyordu ama **nereye indiğini** hiç sınamıyordu; kabuğu yürüyen
+  /// test ise karşılamayı **atlayarak** başlıyordu — `reached` kümesi
+  /// `{'onboarding'}` **literaliyle TOHUMLANIYOR** ve bayrak **set
+  /// ediliyordu**. ⇒ *Karşılamanın çıkışı, KATI sayının içinde hiç
+  /// basılmamıştı.*
+  ///
+  /// > ***BİR EKRANI ATLAYARAK YÜRÜYEN ÖLÇÜM, O EKRANIN ÇIKIŞI OLUP
+  /// > OLMADIĞINI SÖYLEYEMEZ.*** (sözleşme ③)
+  ///
+  /// ## Tek `pumpWidget` — eski tuzağa DÜŞMEDEN
+  ///
+  /// Bölünmenin sebebi olan tuzak (*ikinci `pumpWidget` güvenilir değil*)
+  /// burada **hiç doğmuyor**: bu test ağacı **bir kez** kuruyor ve sonuna
+  /// kadar aynı ağaçta yürüyor. Yani birleşim, tuzağı geri getirmiyor —
+  /// ***tuzağın var olma sebebini ortadan kaldırıyor.***
+  ///
+  /// ## ③ TAZE KURULUM — bayrak SET EDİLMİYOR, YAZILIYOR
+  ///
+  /// `seenOverride` **kullanılmıyor**. Depo GERÇEK bir dosyaya bakıyor
+  /// (`fileOverride`, bu koşumun geçici dizini) ve dosya **yok** ⇒ ilk-koşu
+  /// hâli *kurulmuyor*, **gerçekten öyle**. Karşılama **düğmeye basılarak**
+  /// geçiliyor ve `markSeen()` bayrağı **diske yazıyor** — aşağıda dosyanın
+  /// varlığı sınanıyor. (⚠️ `seenOverride: false` bunu ölçemezdi:
+  /// `OnboardingStore.markSeen` `seenOverride != null` ise **erken dönüyor**,
+  /// yani kalıcılık yolu hiç çalışmazdı. *Bir test double, gerçeğin kuralını
+  /// uygulamaz.*)
+  testWidgets(
+      'A1 · TAM AKIŞ — taze kurulum → karşılama → seçim → oturum → SONUÇ',
+      (WidgetTester t) async {
+    // ── ③ TAZE KURULUM ────────────────────────────────────────────────
+    final File flagFile = File('${tmp.path}/${OnboardingStore.fileName}');
+    expect(flagFile.existsSync(), isFalse,
+        reason: 'taze kurulum DEĞİL — bayrak zaten diskte, karşılama hiç '
+            'çıkmayacak ve bu yürüyüş ③\'ü ölçemez');
+    final OnboardingStore fresh = OnboardingStore(fileOverride: flagFile);
+
+    final _RouteWitness witness = _RouteWitness();
+
     await t.runAsync(() async {
-      await t.pumpWidget(
-          const JabLabApp(onboarding: OnboardingStore(seenOverride: false)));
+      await t.pumpWidget(JabLabApp(
+        onboarding: fresh,
+        navigatorObservers: <NavigatorObserver>[witness],
+      ));
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
-    expect(find.byType(OnboardingPage), findsOneWidget);
-  });
 
-  testWidgets('rota 2-6/6 — select → settings → whyNot → course → session',
-      (WidgetTester t) async {
-    final Set<String> reached = <String>{'onboarding'};
-    void mark(Type screen, String name) {
-      if (find.byType(screen).evaluate().isNotEmpty) reached.add(name);
+    // ⭐ TANIĞIN KENDİSİ ÖLÇÜLÜYOR — Ostinato'nun bedeli (M-F-582): onun
+    // tanığı ilk yazımda **tanımlıydı ama BAĞLI DEĞİLDİ**. Kök rota
+    // kurulduğunda tanık BİR push görmüş olmalı; görmemişse tanık bağlı
+    // değildir ve aşağıdaki her "varış" ölçümü ANLAMSIZDIR.
+    expect(witness.pushes, 1,
+        reason: 'tanık kök rotayı görmedi (${witness.pushes} push) — '
+            'NavigatorObserver bağlı değil, bu yürüyüşün varış KİPİ '
+            'ölçümlerinin hepsi anlamsız olurdu');
+
+    int lastPushes = witness.pushes;
+
+    /// Bir ekrana VARILDIĞINI kaydeder — ve **NASIL** varıldığını tanıktan
+    /// okur. Tanık son çağrıdan beri yeni bir push gördüyse `push`,
+    /// görmediyse `root` (kök rota ya da onun içinde `setState` takası).
+    void visit(Type screen, String name) {
+      expect(find.byType(screen), findsWidgets,
+          reason: '$name: kontrole basıldı ama ekran gelmedi — yürüyüş '
+              'modeli yanlış, bu üyelik SAYILAMAZ');
+      final Arrival mode =
+          witness.pushes > lastPushes ? Arrival.push : Arrival.root;
+      lastPushes = witness.pushes;
+      walkedClasses.add(screen.toString());
+      walkArrivals[name] = mode;
     }
 
-    await t.runAsync(() async {
-      await t.pumpWidget(const JabLabApp(onboarding: seen));
-    });
-    await settleAppLoad(t);
-    await t.pumpAndSettle();
-    mark(SelectPage, 'select');
+    // ── 1/6 KARŞILAMA (kök) ───────────────────────────────────────────
+    visit(OnboardingPage, 'onboarding');
 
-    // Ayarlar — Sayfa A'nın köşe düğmesi.
-    final Finder gear = find.byIcon(Icons.settings_outlined);
-    expect(gear, findsWidgets, reason: 'ayarlar düğmesi Sayfa A\'da yok');
-    await t.tap(gear.first);
-    await t.pumpAndSettle();
-    mark(SettingsPage, 'settings');
-
-    // Neden yok — ayarlardaki satır.
-    await t.tap(find.textContaining('things left out').first);
-    await t.pumpAndSettle();
-    mark(WhyNotPage, 'whyNot');
-    await t.pageBack();
-    await t.pumpAndSettle();
-    await t.pageBack();
-    await t.pumpAndSettle();
-
-    // Sayfa B — disiplin → kurs.
-    await t.tap(find.byKey(const Key('item-boxing')));
-    await t.pumpAndSettle();
-    await t.tap(find.byKey(const Key('course-boxing.foundations')));
-    await t.pumpAndSettle();
-    mark(CoursePage, 'course');
-
-    // Seans — ders.
-    await t.tap(find.byKey(const Key('lesson-boxing.foundations.stance')));
-    await t.pumpAndSettle();
-    mark(SessionScreen, 'session');
-
-    expect(reached, <String>{
-      'onboarding', 'select', 'settings', 'whyNot', 'course', 'session',
-    }, reason: 'gezilebilir rota kümesi değişti — sayı bayatladı, devir '
-        'notu ve pano güncellenmeli (J-167)');
-  });
-
-  // ⚠️ Perde ve aşama yürüyüşleri AYRI testler — aynı gövdede iki kez
-  // `pumpWidget` bu koşumda ikinci ağacı güvenilir kurmuyor (yukarıdaki
-  // aynı not).
-  testWidgets('gevşek okuma ①: KARŞILAMA PERDELERİ yürünerek sayılıyor',
-      (WidgetTester t) async {
-    await t.runAsync(() async {
-      await t.pumpWidget(
-          const JabLabApp(onboarding: OnboardingStore(seenOverride: false)));
-    });
-    await settleAppLoad(t);
-    await t.pumpAndSettle();
-
-    // Sayılan şey `_steps` sabiti DEĞİL, düğmeye basarak GERÇEKTEN görülen
-    // perde sayısı: ulaşılamayan bir perde bu sayıya giremez.
+    // Perdeler YÜRÜNEREK sayılıyor — `_steps` sabiti değil, basarak
+    // GERÇEKTEN görülen sayı: ulaşılamayan bir perde bu sayıya giremez.
     int panels = 0;
     while (find.byType(OnboardingPage).evaluate().isNotEmpty) {
       panels++;
@@ -175,26 +267,56 @@ void main() {
       await t.pump();
       await t.pump(const Duration(milliseconds: 400));
     }
-
+    walkedPanels = panels;
     expect(panels, kOnboardingPanels,
         reason: 'perde sayısı değişti — gevşek ekran sayısı ($kLooseScreens) '
             'artık yanlış; devir notu ve pano güncellenmeli');
-  });
 
-  testWidgets('gevşek okuma ②: SEANS AŞAMALARI yürünerek sayılıyor',
-      (WidgetTester t) async {
-    await t.runAsync(() async {
-      await t.pumpWidget(const JabLabApp(onboarding: seen));
-    });
-    await settleAppLoad(t);
+    // ③'ÜN KALICILIK YARISI — çıkış yalnız EKRANI değiştirmedi, bayrağı
+    // DİSKE yazdı. Bu satır olmadan "çıkış var" demek, dönen kullanıcının
+    // karşılamayı bir daha görmeyeceğini SÖYLEMEZ.
+    expect(flagFile.existsSync(), isTrue,
+        reason: 'karşılama geçildi ama bayrak diske YAZILMADI — kullanıcı '
+            'her açılışta karşılamayı yeniden görür');
+
+    // ── 2/6 SEÇİM ─────────────────────────────────────────────────────
+    // ⚠️ Eski hâlde burası HİÇ SINANMIYORDU: karşılamayı yürüyen test
+    // yalnız `OnboardingPage` findsNothing diyordu.
+    // > ***BİR EKRANIN KAYBOLMASI, BİR BAŞKASININ GELDİĞİ ANLAMINA
+    // > GELMEZ.*** Çıkışın İNDİĞİ yer artık ölçülüyor.
+    visit(SelectPage, 'select');
+
+    // ── 3/6 AYARLAR (push) ────────────────────────────────────────────
+    final Finder gear = find.byIcon(Icons.settings_outlined);
+    expect(gear, findsWidgets, reason: 'ayarlar düğmesi Sayfa A\'da yok');
+    await t.tap(gear.first);
     await t.pumpAndSettle();
+    visit(SettingsPage, 'settings');
+
+    // ── 4/6 NEDEN YOK (push) ──────────────────────────────────────────
+    await t.tap(find.textContaining('things left out').first);
+    await t.pumpAndSettle();
+    visit(WhyNotPage, 'whyNot');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
+
+    // ── 5/6 KURS (push) ───────────────────────────────────────────────
+    // `item-boxing` sayfa DEĞİŞTİRMİYOR — `setState` ile YERİNDE açılıyor
+    // (`select_page.dart`), kurs kartları aynı sayfada beliriyor.
     await t.tap(find.byKey(const Key('item-boxing')));
     await t.pumpAndSettle();
     await t.tap(find.byKey(const Key('course-boxing.foundations')));
     await t.pumpAndSettle();
+    visit(CoursePage, 'course');
+
+    // ── 6/6 SEANS (push) ──────────────────────────────────────────────
     await t.tap(find.byKey(const Key('lesson-boxing.foundations.stance')));
     await t.pumpAndSettle();
+    visit(SessionScreen, 'session');
 
+    // ── SONUÇ — dört aşama YÜRÜNEREK, özet DÂHİL ──────────────────────
     // Aşama, RAY'dan (hep dört rozet çizer) değil, ekranın o an TAŞIDIĞI
     // `stage` değerinden okunuyor — ray bir beyandır, bu bir konumdur.
     final Finder flow = find.byType(SessionFlowScaffold);
@@ -202,10 +324,10 @@ void main() {
         ? null
         : t.widget<SessionFlowScaffold>(flow).stage;
 
-    final Set<SessionStage> walked = <SessionStage>{};
+    final Set<SessionStage> stages = <SessionStage>{};
     int taps = 0;
     for (SessionStage? s = stageNow(); s != null; s = stageNow()) {
-      walked.add(s);
+      stages.add(s);
       expect(taps++, lessThanOrEqualTo(kSessionStages + 2),
           reason: 'seans kapanmıyor — son aşamada "Done" ekrandan çıkarmıyor');
       await t.tap(find.byKey(const Key('advance-button')));
@@ -216,23 +338,89 @@ void main() {
       // tesadüfen doğru kalıyordu) ve geçiş sırasında `IgnorePointer` altında
       // kalan düğmeye basıp `tap()` ıskalatıyordu. *Iskalayan bir yürüyüş,
       // yürünmemiş bir yolu yürünmüş sayabilir* — o yüzden burada sabit süre
-      // değil, GERÇEK bir durum değişikliği bekleniyor: aşama ilerledi ya da
-      // ekran kapandı. Sınırlı (1,2 s) — takılan bir geçiş sessizce beklemez,
-      // yukarıdaki tur sınırına çarpar.
+      // değil, GERÇEK bir durum değişikliği bekleniyor.
       for (int f = 0; f < 6; f++) {
         await t.pump(const Duration(milliseconds: 200));
         if (stageNow() != s) break;
       }
     }
+    walkedStages = stages.length;
 
-    expect(walked.length, kSessionStages,
+    expect(stages.length, kSessionStages,
         reason: 'yürünen aşama sayısı değişti — gevşek ekran sayısı '
             '($kLooseScreens) artık yanlış; devir notu ve pano '
-            'güncellenmeli. Yürünenler: ${walked.map((SessionStage s) => s.name)}');
-    // Bir aşamanın ENUM'da olması, ona GİDEN yolun olması değildir: kümeyi
-    // adıyla kilitliyoruz ki sessizce atlanan bir aşama sayıyı düşürmesin.
-    expect(walked, SessionStage.values.toSet(),
+            'güncellenmeli. Yürünenler: ${stages.map((SessionStage s) => s.name)}');
+    // Bir aşamanın ENUM'da olması, ona GİDEN yolun olması değildir.
+    expect(stages, SessionStage.values.toSet(),
         reason: 'bir aşamaya yürünerek ulaşılamıyor');
+
+    // AKIŞ KAPANDI: seans POP etti ve kullanıcı kursa döndü. Bir akış,
+    // bittiği yerde kullanıcıyı bırakmıyorsa "baştan sona çalışıyor"
+    // sayılmaz.
+    expect(witness.pops, greaterThan(0),
+        reason: 'seans hiç POP etmedi — "Done" kullanıcıyı akıştan '
+            'çıkarmıyor, akış SONUÇTA kapanmıyor');
+    expect(find.byType(CoursePage), findsWidgets,
+        reason: 'seans kapandı ama kullanıcı kurs sayfasına dönmedi');
+
+    // ── ⭐ (b) VARIŞ KİPİ — beyansız varış KIRMIZI ─────────────────────
+    expect(walkArrivals, <String, Arrival>{
+      'onboarding': Arrival.root,
+      'select': Arrival.root,
+      'settings': Arrival.push,
+      'whyNot': Arrival.push,
+      'course': Arrival.push,
+      'session': Arrival.push,
+    }, reason: 'bir üyenin VARIŞ KİPİ değişti. Bu sayı-değil-KİP ölçümü, '
+        'eski toplam-assert\'in görünmez kıldığı şeydi: bir ekran artık '
+        'push ile mi geliyor, kökte mi takas ediliyor?');
+
+    final int rootArrivals = walkArrivals.values
+        .where((Arrival a) => a == Arrival.root)
+        .length;
+    expect(rootArrivals, kRootArrivals,
+        reason: 'kök varış sayısı $kRootArrivals değil $rootArrivals — '
+            'ÜÇÜNCÜ bir kök varış bir BEYAN değil BULGUDUR; sözleşme (b) '
+            'bunu görünür kılmak için var');
+
+    // ⚠️ TANIĞIN VARSAYIMI DA SINANIYOR — VE İLK YAZIMDA YANLIŞTI.
+    //
+    // *"Bu ağaçta rotalar anonim"* diye yazmıştım; kapı ilk koşumda ötüp
+    // gerçeği gösterdi: `[/, null, null, null, null]` — **kök rota `/`
+    // adını TAŞIYOR** (`MaterialApp` `home:`e varsayılan adı verir), gerçek
+    // gezinmelerin **dördü** ise anonim.
+    //
+    // > ***BİR TANIĞIN NEYE BAKAMAYACAĞI DA ÖLÇÜLÜR — VE İLK TAHMİN
+    // > YANLIŞTI; DÜZELTEN ŞEY KAPININ KENDİSİ OLDU.***
+    //
+    // Sonuç aynı yere çıkıyor ama sebebi artık DOĞRU: ad, üyeleri **ayırt
+    // etmeye yetmiyor** — dört gerçek varışın dördü de `null`, yani ada
+    // bakan bir tanık onları birbirinden ayıramaz ve *sessizce boş* kalır.
+    // Bu yüzden tanık **olay** sayıyor.
+    expect(witness.pushedNames.first, '/',
+        reason: 'kök rotanın adı değişti (${witness.pushedNames.first}) — '
+            'tanığın kök/push ayrımı bu varsayıma dayanıyor');
+    expect(witness.pushedNames.skip(1).every((String? n) => n == null), isTrue,
+        reason: 'bir GEZİNME rotası artık AD taşıyor '
+            '(${witness.pushedNames}) — adlar boş olduğu için tanık olay '
+            'sayıyordu; artık ada da bakılabilir, ölçüm GÜÇLENDİRİLEBİLİR');
+
+    // ignore: avoid_print
+    print('  A1 TAM AKIŞ · varılan ${walkedClasses.length} ekran '
+        '(push ${walkArrivals.values.where((Arrival a) => a == Arrival.push).length} + '
+        'kök $rootArrivals) · perde $panels · aşama ${stages.length} · '
+        'tanık: ${witness.pushes} push / ${witness.pops} pop');
+  });
+
+  test('gevşek okuma ①+②: perde ve aşama YÜRÜYÜŞTEN geliyor', () {
+    // ⛔ VAKUM MUHAFIZI: yürüyüş koşmadıysa bu kontrol sessizce geçerdi.
+    expect(walkedPanels, isNotNull,
+        reason: 'yürüyüş koşmadı — perde sayısı ölçülmedi, bu kontrol '
+            'ANLAMSIZ olurdu');
+    expect(walkedStages, isNotNull,
+        reason: 'yürüyüş koşmadı — aşama sayısı ölçülmedi');
+    expect(walkedPanels, kOnboardingPanels);
+    expect(walkedStages, kSessionStages);
   });
 
   /// SÖZLEŞME (a)+(c) — aday küme KODDAN TÜRETİLİR, üyelik YÜRÜYEREK
@@ -290,14 +478,41 @@ void main() {
     // ölçüm gösterdi ki *bir artefaktın bir ROLDE kusurlu olması, her rolde
     // kusurlu olduğu anlamına gelmez.* Kaynak olarak yanlış, KONTROL olarak
     // doğru → silinmedi, **rütbesi düşürüldü.**
-    const Set<String> walked = <String>{
+    const Set<String> knownFloor = <String>{
       'OnboardingPage', 'SelectPage', 'SettingsPage',
       'WhyNotPage', 'CoursePage', 'SessionScreen',
     };
-    expect(walked.difference(derived), isEmpty,
-        reason: 'türetim, yürüyerek VARILDIĞI kanıtlanmış ekranları '
-            'kaçırıyor: ${walked.difference(derived)} — desen bozuk, '
-            'aşağıdaki "varılamayan" listesi ANLAMSIZ olurdu');
+    expect(knownFloor.difference(derived), isEmpty,
+        reason: 'türetim, bilinen taban ekranlarını kaçırıyor: '
+            '${knownFloor.difference(derived)} — desen bozuk, aşağıdaki '
+            '"varılamayan" listesi ANLAMSIZ olurdu');
+
+    // ── (b) DENKLEMİN "VARILAN" TARAFI — ARTIK YÜRÜYÜŞTEN ──────────────
+    //
+    // 🔴 ÖNCEKİ HÂL: yukarıdaki elle küme **aynı zamanda** denklemin
+    // `varılan` tarafıydı. Yani (e) ile "kaynak olmaktan çıkarılan" liste,
+    // arka kapıdan **(b)'nin işini** görüyordu: gerçek yürüyüş başka bir
+    // testteydi ve ***ikisinin uzlaştığını hiçbir şey sınamıyordu.***
+    //
+    // Artık `varılan`, **A1 yürüyüşünün çıktısı** (`walkedClasses`) — bir
+    // ekranın buraya girmesi, ona **boyanmış bir kontrole basılarak
+    // varıldığının** ve tanığın varışı GÖRDÜĞÜNÜN kanıtı.
+    //
+    // ⛔ VAKUM MUHAFIZI: yürüyüş koşmadıysa küme boş olur ve bölme
+    // *"her şey varılamaz"* diye **vakum-doğru** geçerdi.
+    expect(walkedClasses, isNotEmpty,
+        reason: 'A1 yürüyüşü koşmadı — `walkedClasses` boş. Bu bölme '
+            'testinin sonucu ANLAMSIZ olurdu: türetilen her aday '
+            '"varılamayan" sayılırdı ve kapı yine YEŞİL geçerdi');
+    final Set<String> walked = walkedClasses;
+
+    // (e) POZİTİF KONTROL — elle taban, YÜRÜYÜŞÜN de altında mı? Yürüyüş
+    // bir ekranı sessizce atlarsa (kontrol kayboldu, tap ıskaladı) burası
+    // öter. *Elle liste kaynak olarak yanlış, KONTROL olarak doğru.*
+    expect(knownFloor.difference(walked), isEmpty,
+        reason: 'yürüyüş, bilinen taban ekranlarına VARAMADI: '
+            '${knownFloor.difference(walked)} — bir kontrol kayboldu ya da '
+            'tap ıskaladı; "varılamayan" kovası YANLIŞ büyür');
     expect(walked.length, kStrictRoutes,
         reason: 'yürünen küme ile katı sayı ayrışmış');
 

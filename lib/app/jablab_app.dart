@@ -29,6 +29,7 @@ class JabLabApp extends StatelessWidget {
     super.key,
     this.repository = const ContentRepository(),
     this.onboarding = const OnboardingStore(),
+    this.navigatorObservers = const <NavigatorObserver>[],
   });
 
   final ContentRepository repository;
@@ -38,11 +39,26 @@ class JabLabApp extends StatelessWidget {
   /// kullanıcı) koşturabilsin.
   final OnboardingStore onboarding;
 
+  /// GEZİLEBİLİRLİK TANIĞI için dikiş (J-240, sözleşme maddesi **(b)**).
+  ///
+  /// Sözleşme *"üyelik YÜRÜYEREK kanıtlanır — `NavigatorObserver`
+  /// tanıklığıyla"* diyor. Tanık ancak `MaterialApp`e bağlanabilir ve
+  /// `MaterialApp` burada kuruluyor; dışarıdan sarmalanamaz. Üretimde
+  /// **boş liste** — `repository`/`onboarding` ile aynı emsal: dikiş TEK
+  /// yerde, üretim davranışı değişmiyor.
+  ///
+  /// ⚠️ Bu alan bir KOLAYLIK değil, ölçümün ön koşulu: tanıksız bir yürüyüş
+  /// *"vardım"* diyebilir ama **NASIL vardığını** söyleyemez — ve bu ağaçta
+  /// varışların bir kısmı `push` DEĞİL (karşılama→seçim aynı kökte
+  /// `setState` ile takas ediliyor). Ayrımı yalnız tanık görür.
+  final List<NavigatorObserver> navigatorObservers;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'JabLab',
       debugShowCheckedModeBanner: false,
+      navigatorObservers: navigatorObservers,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color(0xFFB3261E), brightness: Brightness.dark),
