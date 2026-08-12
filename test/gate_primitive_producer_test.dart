@@ -53,6 +53,8 @@ import 'package:flutter_test/flutter_test.dart';
 /// Büyürse test öter: yeni bir kapı üreticisi olmayan bir primitife
 /// bağlandı — içerik yazmak burada da ULAŞILABİLİRLİĞİ sınar.
 void main() {
+  _ratioClassProducerGate();
+
   test('ÜRETİCİSİZ kapı primitifleri, ÖLÇÜLEN hâlle birebir aynı', () {
     final Map<String, dynamic> cur =
         (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
@@ -134,5 +136,97 @@ void main() {
             'kombinasyon adına bağlandı — o kapı kamera açık olsa bile asla '
             'geçilemez. Olayı ya motora ekle ya da kapıyı isimli sebeple '
             'kilitle.');
+  });
+}
+
+/// RATIO SINIFI — ② ölçütünün ADIYLA dışında bıraktığı 9 kapı, ÖLÇÜLDÜ
+/// (2026-08-12, J-207).
+///
+/// Yukarıdaki doc bu sınıfı *"ayrı bir primitif sınıfı … bu turda ayrı bir
+/// soru"* diye **adıyla** dışarıda bırakmıştı. Adıyla dışarıda bırakmak
+/// dürüsttü — ama soru **sorulmadan** kaldı, ve sorulmayan bir soru
+/// *"cevabı iyi"* diye okunur (M-F-101 sınıfı: bu üründe sessizlik "her şey
+/// yolunda" diye okunur).
+///
+/// **Ölçüt:** `withValidAnalysisRatio` adlı primitifi ÜRETEN bir kod var mı?
+/// Üretim kaynağı (`lib/` + `packages/jablab_engine/lib/`) taranır ve
+/// **yorum satırları SAYILMAZ** — bir kavramdan SÖZ eden yorum, onu üreten
+/// kod değildir (M-F-506'nın kaynak-kodu karşılığı: `--grep` isabeti bir
+/// ADAYDIR, bir sonuç değil).
+///
+/// ⚠️ **POZİTİF KONTROL KAPININ İÇİNDE.** Bir "sıfır" bulgusu, aracın o şeyi
+/// BULABİLDİĞİ kanıtlanmadan raporlanmaz. Bu yüzden aynı tarama, GERÇEKTEN
+/// tüketilen bir içerik kavramını (`usesCamera` — `content_repository.dart`
+/// ve `jablab_app.dart` onu okuyor) bulmak ZORUNDA; bulamazsa tarama
+/// bozuktur ve sıfır sonucu anlamsızdır. Negatif kontrol de var: uydurma bir
+/// dizge bulunmamalı.
+///
+/// **NE ÖLÇMÜYOR:** bu kapının bulduğu "üretici yok", kapının *tüketicisi*
+/// olup olmadığını ölçmez — o AYRI ve daha alttaki bir katman (J-207'de
+/// ölçüldü: `curriculum.json` üretimde hiç yüklenmiyor). Burada yalnız
+/// primitifin üretilip üretilmediği sorulur.
+void _ratioClassProducerGate() {
+  test('RATIO sınıfı (9 kapı) — üreticisi ÖLÇÜLDÜ, varsayılmadı', () {
+    final Map<String, dynamic> cur =
+        (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
+    final Map<String, dynamic> progression =
+        (cur['progression'] as Map).cast<String, dynamic>();
+
+    // Sınıfın BÜYÜKLÜĞÜ de ölçülüyor: kapı sayısı değişirse beyan bayatlar.
+    final List<String> ratioLessons = <String>[
+      for (final MapEntry<String, dynamic> e in progression.entries)
+        if (((e.value as Map)['gates'] as List<dynamic>? ?? const <dynamic>[])
+            .any((dynamic g) => (g as Map).containsKey('withValidAnalysisRatio')))
+          e.key,
+    ]..sort();
+
+    final List<String> declared =
+        (cur[r'$gateRatioPrimitiveWithoutProducer'] as List<dynamic>)
+            .cast<String>()
+          ..sort();
+    expect(ratioLessons, declared,
+        reason: 'RATIO sınıfındaki ders kümesi DEĞİŞTİ.\n'
+            '  ölçülen : $ratioLessons\n'
+            '  kayıtlı : $declared\n\n'
+            'Kapı eklendiyse/kaldırıldıysa beyanı güncelle — bu sınıfın '
+            'üreticisi bugün YOK, yani listeye giren her ders geçilemez bir '
+            'kapı kazanır.');
+
+    // ---- kaynak taraması ----
+    final List<File> sources = <File>[
+      ...Directory('lib').listSync(recursive: true).whereType<File>(),
+      ...Directory('packages/jablab_engine/lib')
+          .listSync(recursive: true)
+          .whereType<File>(),
+    ].where((File f) => f.path.endsWith('.dart')).toList();
+    expect(sources.length, greaterThan(20),
+        reason: 'yalnız ${sources.length} kaynak dosya tarandı — gezinme '
+            'bozuk, bu kapının sonucu anlamsız');
+
+    bool producedBy(String token) => sources.any((File f) {
+          for (final String line in f.readAsLinesSync()) {
+            final String t = line.trimLeft();
+            if (t.startsWith('//')) continue; // yorum ≠ üretim
+            if (line.contains(token)) return true;
+          }
+          return false;
+        });
+
+    // POZİTİF KONTROL — tarama, GERÇEKTEN tüketilen bir kavramı buluyor mu?
+    expect(producedBy('usesCamera'), isTrue,
+        reason: 'tarama `usesCamera`yı bulamadı — ama o kavram üretimde '
+            'GERÇEKTEN okunuyor (content_repository/jablab_app). Tarama '
+            'bozuk; aşağıdaki "üretici yok" sonucu ANLAMSIZ olurdu');
+    // NEGATİF KONTROL — her şeyi bulan bir tarama hiçbir şey ölçmez.
+    expect(producedBy('ZZQQOlmayanPrimitif'), isFalse,
+        reason: 'tarama uydurma bir dizgeyi buldu — vakum-doğru');
+
+    expect(producedBy('withValidAnalysisRatio'), isFalse,
+        reason: 'İYİ HABER: `withValidAnalysisRatio` artık üretim kodunda '
+            'geçiyor — bu sınıfın üreticisi yazılmış olabilir. Ölç, '
+            'doğruysa `\$gateRatioPrimitiveWithoutProducerWhy` beyanını ve '
+            'ADR-005\'i güncelle: 9 kapı geçilemezlikten çıkar.');
   });
 }
