@@ -270,7 +270,26 @@ void main() {
       }
     }
 
-    // POZİTİF KONTROL: türetim, YÜRÜYEREK kanıtlanmış 6 ekranı içermeli.
+    // ── (e) ELLE BİLİNEN KÜME — KAYNAK DEĞİL, TÜRETİMİN POZİTİF KONTROLÜ ──
+    //
+    // ⚠️ **BU KÜME BİR ALT SINIRDIR, TAM ENVANTER DEĞİLDİR.** Aday kümenin
+    // kaynağı artık DESEN (yukarıda, koddan türetiliyor); buradaki isimler
+    // yalnız *"türetim bunları KAÇIRMAMALI"* diyor. Envanteri buradan
+    // okumak, (a) parçasını geri almak olur.
+    //
+    // ⚠️ **BURAYA EKLEME YAPMAK ENVANTER GÜNCELLEMESİ DEĞİL, KONTROLÜN
+    // TABANINI YÜKSELTMEKTİR.** Yeni bir ekran eklendiğinde asıl iş onu
+    // *yürüyüşe katmaktır*; bu listeye yazmak yalnız "türetim artık bunu da
+    // kaçıramaz" demek. İkisi karıştırılırsa liste altı ay sonra yeniden
+    // "envanter" sanılır — (e)'nin var olma sebebi tam bu.
+    //
+    // 🎯 NEDEN KALDI (kendi vakam): türetimin ilk hâlinde `_XState` elemesi
+    // **her StatefulWidget ekranını** yok etmişti (8 aday; `SelectPage`/
+    // `SessionScreen`/`OnboardingPage` YOKTU) ve **yakalayan şey bu elle
+    // kümeydi.** Koordinatör onu sözleşmede "hafızadan okuyor" diye elemişti;
+    // ölçüm gösterdi ki *bir artefaktın bir ROLDE kusurlu olması, her rolde
+    // kusurlu olduğu anlamına gelmez.* Kaynak olarak yanlış, KONTROL olarak
+    // doğru → silinmedi, **rütbesi düşürüldü.**
     const Set<String> walked = <String>{
       'OnboardingPage', 'SelectPage', 'SettingsPage',
       'WhyNotPage', 'CoursePage', 'SessionScreen',
