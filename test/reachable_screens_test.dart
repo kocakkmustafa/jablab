@@ -442,11 +442,45 @@ void main() {
   /// eşlemesiyle düzeltildi. *Bir desen, neyi kaçırdığı bilinmeden envanter
   /// sayılamaz.*
   test('SÖZLEŞME (a)+(c) — aday KODDAN türetiliyor, varılamayan AYRI', () {
-    final Set<String> derived = <String>{};
+    // Kaynak ağacı BİR KEZ okunur; hem türetim hem (c) gerekçe yüklemleri
+    // aynı anlık görüntüden beslenir (iki ayrı okuma iki ayrı gerçek olurdu).
+    //
+    // ⚠️ **YORUMLAR SÖKÜLÜR — ve bunun sebebi ÖLÇÜLDÜ (J-242/P7):** kamera
+    // kapısı kaynaktan GERÇEKTEN sökülmüşken (`if (true)`), dosyaya düşülen
+    // tek bir `// CameraHarnessScreen.isAvailable` yorumu (c) yüklemini
+    // **yeşil geçirdi.** Yani J-239'un *"tek ölçülü gerekçe"* dediği yüklem
+    // bile zehirlenebiliyordu — ve zehrin yönü **sessiz-yeşildi**, gürültülü
+    // kırmızı değil.
+    // > ***Bir kaynağı METİN olarak tarayan ölçüm, o metnin ÇALIŞAN kısmıyla
+    // > ANLATAN kısmını ayırmıyorsa, kodun kendisi hakkında değil DOSYA
+    // > hakkında konuşur.***
+    // ⛔ SINIR AÇIK: bu bir ayrıştırıcı değil, satır düzeyi bir sökücü —
+    //    içinde `//` geçen bir DİZGE sabiti (örn. bir URL) taranan kopyada
+    //    kırpılır. Kalan sapma bu; kapanmadı, ADIYLA duruyor.
+    String codeOnly(String s) => s
+        .replaceAll(RegExp(r'/\*.*?\*/', dotAll: true), ' ')
+        .split('\n')
+        .map((String l) {
+          final int i = l.indexOf('//');
+          return i < 0 ? l : l.substring(0, i);
+        })
+        .join('\n');
+
+    final Map<String, String> libSrc = <String, String>{};
     for (final FileSystemEntity e
         in Directory('lib').listSync(recursive: true)) {
       if (e is! File || !e.path.endsWith('.dart')) continue;
-      for (final String chunk in e.readAsStringSync().split(RegExp(r'\n(?=class )'))) {
+      libSrc[e.path] = codeOnly(e.readAsStringSync());
+    }
+    // Sökücünün POZİTİF KONTROLÜ: gerçekten söküyor mu? (yeşil bir sökücü,
+    // hiç sökmeyen bir sökücüyle aynı görünür.)
+    expect(codeOnly('a(); // b();\n/* c(); */ d();'), isNot(contains('b();')));
+    expect(codeOnly('a(); // b();\n/* c(); */ d();'), isNot(contains('c();')));
+    expect(codeOnly('a(); // b();\n/* c(); */ d();'), contains('d();'));
+
+    final Set<String> derived = <String>{};
+    for (final String src in libSrc.values) {
+      for (final String chunk in src.split(RegExp(r'\n(?=class )'))) {
         final RegExpMatch? m = RegExp(r'class\s+(\w+)').firstMatch(chunk);
         if (m == null || !chunk.contains('Scaffold(')) continue;
         String name = m.group(1)!;
@@ -540,6 +574,123 @@ void main() {
           reason: '${e.key} gerekçesiz — varılamayan bir aday, SEBEBİ '
               'yazılmadan listede duramaz');
     }
+
+    // ── (c) GEREKÇELER ARTIK BEYAN DEĞİL, ÖLÇÜLÜ (J-242) ─────────────────
+    //
+    // 🔴 ÖNCEKİ HÂL (J-239 ölçümü): denetim yalnız yukarıdaki **uzunluktu**
+    //    (`> 25 karakter`). Altı gerekçenin **yalnız biri** ölçülüydü
+    //    (`CameraHarnessScreen.isAvailable`), beşi **beyandı** — sözleşme ise
+    //    açıkça *"sebep de ÖLÇÜLÜR"* diyor.
+    //    > ***Yanlış bir sebep, sebepsizlikten daha kötüdür: denetimi
+    //    > DOĞRULANMIŞ gösterir.***
+    //    Uzunluk kapısı **silinmedi** — bir taban olarak duruyor (*gerekçe
+    //    YAZILMIŞ olmalı*); ölçüm onun ÜSTÜNE bindi, yerine geçmedi.
+    //
+    // 🔑 ÖLÇÜM PRİMİTİFİ — **İKİNCİ, BAĞIMSIZ KANAL:** aday kümesi `Scaffold(`
+    // kuran sınıftan türüyor (yapısal); burada ise **rota hedefleri** kaynaktan
+    // çıkarılıyor (`MaterialPageRoute(builder: … => X(`). İkisi farklı şeye
+    // bakar: biri *"ekran gibi çiziyor mu"*, öbürü *"rota hedefi mi"*.
+    final Set<String> routed = <String>{};
+    for (final String src in libSrc.values) {
+      for (final RegExpMatch m in RegExp(
+              r'MaterialPageRoute<[^>]*>\(\s*builder:\s*\([^)]*\)\s*=>\s*(?:const\s+)?(\w+)\s*\(')
+          .allMatches(src)) {
+        routed.add(m.group(1)!);
+      }
+    }
+    expect(routed, isNotEmpty,
+        reason: 'rota kanalı BOŞ döndü — desen bozulmuş olmalı; aşağıdaki '
+            '"rota hedefi değil" gerekçeleri VAKUM-DOĞRU geçerdi');
+
+    // ⭐ İKİ KANALIN UZLAŞMASI — ve (d)'nin GÖLGELİ yönünün CANLI karşılığı.
+    //
+    // (d) altındaki `walked ⊄ derived` yönü bugün mekanik olarak kurulamıyor
+    // (taban == yürüyüş). Ama AYNI kusur sınıfı — *"türetimin göremediği bir
+    // ekran"* — burada **gölgesiz** ölçülebiliyor: bir sınıf rota hedefiyse
+    // ürün onu EKRAN sayıyor demektir; aday kümesinde yoksa `Scaffold(` deseni
+    // KÖR demektir. Tam olarak (a)'nın adı konmuş kör noktası:
+    // *`Scaffold`unu ortak bir kabuğa devreden ekran aday olmaz.*
+    //
+    // ⛔ TERS YÖN İSTENMİYOR: `derived ⊄ routed` meşru (kök takasıyla gelen
+    //    `OnboardingPage`/`SelectPage` hiç `push` edilmiyor — J-240'ın kök
+    //    varış bulgusu). İki kanal aynı şeyi ölçmüyor; uzlaşma TEK YÖNLÜ.
+    expect(routed.difference(derived), isEmpty,
+        reason: 'İKİ KANAL AYRIŞTI — rota hedefi olan sınıf aday değil: '
+            '${routed.difference(derived)}. Rota onu EKRAN sayıyor, '
+            '`Scaffold(` deseni GÖREMİYOR ⇒ türetim kör ve "varılamayan" '
+            'kovası bu ekranı hiç sormaz.');
+
+    bool mentionedOutside(String name, String dir) => libSrc.entries
+        .any((MapEntry<String, String> e) =>
+            !e.key.startsWith(dir) && e.value.contains(name));
+    bool builtSomewhere(String name, String declPath) => libSrc.entries.any(
+        (MapEntry<String, String> e) =>
+            e.key != declPath && e.value.contains('$name('));
+
+    // Her gerekçe bir YÜKLEM taşır; yüklem gerekçenin KENDİ iddiasını ölçer.
+    final Map<String, bool Function()> reasonHolds = <String, bool Function()>{
+      // iddia: "kDebugMode kapılı" → kapı gerçekten kDebugMode'dan mı türüyor,
+      // ve onu açan HER çağrı yeri kapının arkasında mı?
+      'CameraHarnessScreen': () {
+        const String decl = 'lib/app/camera_harness_screen.dart';
+        final bool gateFromDebug = RegExp(r'isAvailable\s*=>\s*kDebugMode')
+            .hasMatch(libSrc[decl] ?? '');
+        final Iterable<String> callers = libSrc.entries
+            .where((MapEntry<String, String> e) =>
+                e.key != decl && e.value.contains('CameraHarnessScreen('))
+            .map((MapEntry<String, String> e) => e.value);
+        return gateFromDebug &&
+            callers.isNotEmpty &&
+            callers.every((String s) => s.contains('CameraHarnessScreen.isAvailable'));
+      },
+      // iddia: "kontrole basarak ulaşılmıyor" → rota hedefi DEĞİL, ama bir
+      // yerde çiziliyor (hiç çizilmiyorsa gerekçe başka olurdu: ölü kod).
+      'ContentFailureScreen': () =>
+          !routed.contains('ContentFailureScreen') &&
+          builtSomewhere('ContentFailureScreen', 'lib/app/content_failure_screen.dart'),
+      // iddia: "ayrı bir ekran değil, kökün iskelesi" → sınıf ÖZEL (`_Root`,
+      // dışarıdan rota hedefi olamaz) ve yalnız `home:` olarak bağlanıyor.
+      'Root': () {
+        final String app = libSrc['lib/app/jablab_app.dart'] ?? '';
+        return app.contains('class _Root') &&
+            RegExp(r'home:\s*_Root\(').hasMatch(app) &&
+            !routed.contains('Root');
+      },
+      // iddia: "SessionScreen'in İÇİNDE kullanılan kabuk parçası, ayrı rota
+      // değil" → rota hedefi değil VE SessionScreen onu kuruyor.
+      'SessionFlowScaffold': () =>
+          !routed.contains('SessionFlowScaffold') &&
+          (libSrc['lib/app/session_screen.dart'] ?? '')
+              .contains('SessionFlowScaffold('),
+      // iddia: "lib/shell_candidate/ — DONDURULMUŞ envanter" → orada tanımlı VE
+      // o dizinin DIŞINDAN hiç anılmıyor. (Ayrımı gerçek kılan şey:
+      // `SessionFlowScaffold` de orada tanımlı ama DIŞARIDAN anılıyor — bu
+      // yüzden gerekçesi ayrı, ve yüklem ikisini birbirine karıştırmıyor.)
+      'ItemPage': () =>
+          (libSrc['lib/shell_candidate/library_pages.dart'] ?? '')
+              .contains('class ItemPage') &&
+          !mentionedOutside('ItemPage', 'lib/shell_candidate/'),
+      'ShellScaffold': () =>
+          (libSrc['lib/shell_candidate/shell_scaffold.dart'] ?? '')
+              .contains('class ShellScaffold') &&
+          !mentionedOutside('ShellScaffold', 'lib/shell_candidate/'),
+    };
+
+    // ⛔ YÜKLEMSİZ KAYIT KALAMAZ — yeni bir varılamayan aday eklenip yüklemi
+    // yazılmazsa burası öter; yoksa (c) sessizce "beyan"a geri düşerdi.
+    expect(reasonHolds.keys.toSet(), registered,
+        reason: 'her varılamayan adayın gerekçesi ÖLÇÜLMEK ZORUNDA — '
+            'yüklemi olmayan kayıt: ${registered.difference(reasonHolds.keys.toSet())} · '
+            'kaydı olmayan yüklem: ${reasonHolds.keys.toSet().difference(registered)}');
+    for (final MapEntry<String, bool Function()> e in reasonHolds.entries) {
+      expect(e.value(), isTrue,
+          reason: '${e.key} — GEREKÇE ARTIK DOĞRU DEĞİL: '
+              '"${unreachableWhy[e.key]}". Kaynak değişti ve kayıt eskidi; '
+              'gerekçeyi düzelt ya da ekranı yürüyüşe kat.');
+    }
+    // ignore: avoid_print
+    print('  (c) GEREKÇE · ${reasonHolds.length}/${registered.length} '
+        'varılamayan adayın sebebi ÖLÇÜLÜ (rota kanalı: ${routed.length} hedef)');
 
     // ── (d) BÖLME — YÖN ADIYLA SINANIR, ARİTMETİKLE DEĞİL (J-241) ────────
     //
