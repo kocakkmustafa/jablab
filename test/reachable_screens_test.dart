@@ -527,8 +527,9 @@ void main() {
       'ItemPage': 'lib/shell_candidate/ — DONDURULMUŞ terfi envanteri',
       'ShellScaffold': 'lib/shell_candidate/ — DONDURULMUŞ terfi envanteri',
     };
+    final Set<String> registered = unreachableWhy.keys.toSet();
     final Set<String> unreachable = derived.difference(walked);
-    expect(unreachable, unreachableWhy.keys.toSet(),
+    expect(unreachable, registered,
         reason: 'ADAY olup VARILAMAYAN küme DEĞİŞTİ.\n'
             '  ölçülen : ${unreachable.toList()..sort()}\n'
             '  kayıtlı : ${unreachableWhy.keys.toList()..sort()}\n'
@@ -540,11 +541,65 @@ void main() {
               'yazılmadan listede duramaz');
     }
 
+    // ── (d) BÖLME — YÖN ADIYLA SINANIR, ARİTMETİKLE DEĞİL (J-241) ────────
+    //
+    // 🔴 ÖNCEKİ HÂL: `expect(walked.length + unreachable.length, derived.length,
+    //    reason: 'payda TOPLAMIYOR — bir aday hiçbir kovaya girmemiş')`.
+    //    İKİ ayrı kusuru vardı ve ikisi de ÖLÇÜLDÜ (mutasyon, J-241):
+    //
+    // ① **RAPORU YANLIŞTI — imkânsız bir kusuru anlatıyordu.** `unreachable`
+    //    zaten `derived − walked` diye TÜRETİLİYOR ⇒ "bir aday hiçbir kovaya
+    //    girmemiş" hâli tanım gereği oluşamaz. O kusuru yakalayan şey yukarıdaki
+    //    (c) eşitliğidir — ölçüldü (M2: kayıttan bir isim silindi → ilk kırmızı
+    //    *"ADAY olup VARILAMAYAN küme DEĞİŞTİ"*). Aritmetiğin gerçekten sınadığı
+    //    TEK şey `walked ⊆ derived` idi; cümlesi bunu SÖYLEMİYORDU.
+    //    → ***bir kapının raporu, sınadığı şeyi değil sanılan şeyi anlatıyorsa
+    //    yeşili de kırmızısı da yanlış okunur*** (J-226'nın sınıfı, bu kez
+    //    kendi bölme testimde).
+    //
+    // ② **J-239'un "TANIM GEREĞİ HİÇ ÖTEMEZ" HÜKMÜ FAZLA GENİŞTİ.** Dişi VAR:
+    //    M3'te üç komşu (`knownFloor ⊆ walked` · `|walked| == kStrictRoutes` ·
+    //    (c) eşitliği) kapatılıp yürüyüşe türetimde olmayan bir sınıf eklenince
+    //    assert GERÇEKTEN öttü. Komşular yerindeyken (M1) ötmedi — `walked.length`
+    //    kontrolü önce yakaladı. Yani kusur **totoloji değil GÖLGELENME**:
+    //    → ***bir assert'in yeşilliği, ötme yeteneğinin değil KOMŞULARININ
+    //    kanıtı olabilir.*** (M-F-287: sınırı geniş yazmak dar yazmak kadar
+    //    pahalı — "hiç ötemez" demek, ötme koşulunu aramayı durdurur.)
+    //
+    // Yön artık ADIYLA duruyor. Sınadığı şey (a)'nın kör noktasının TA KENDİSİ:
+    // türetim `Scaffold(` kuran sınıfa bakar; `Scaffold`unu ortak bir kabuğa
+    // DEVREDEN bir ekran aday olmaz ama YÜRÜNEBİLİR — o zaman "varılamayan"
+    // kovası onu hiç sormaz ve envanter sessizce eksilir.
+    expect(walked.difference(derived), isEmpty,
+        reason: 'YÜRÜYÜŞ, türetimin aday saymadığı bir ekrana vardı: '
+            '${walked.difference(derived)} — desen bu ekranı GÖREMİYOR '
+            '((a) kör noktası). Aday olmadığı için "varılamayan" kovasına da '
+            'hiç sorulmaz: envanter SESSİZCE eksilir.');
+
+    // ⚠️ VE BU YÖN BUGÜN CANLI DEĞİL — yeşilliği kanıt sayılmasın diye YAZILIYOR.
+    // `knownFloor ⊆ walked` (yukarıda, (e) pozitif kontrolü) + `|walked| ==
+    // kStrictRoutes` + `|knownFloor| == kStrictRoutes` üçlüsü bugün
+    // `walked == knownFloor` eşitliğini ZORLUYOR; `knownFloor ⊆ derived` de
+    // ayrıca kapılı ⇒ `walked ⊆ derived` MEKANİK OLARAK doğru, ihlali
+    // kurulamaz. Yön, yürüyüş tabanın ÜSTÜNE çıktığı gün (7. ekran yürünüp
+    // tabana yazılmadığında) kendiliğinden canlanır — ve satır bunu BASAR.
+    //
+    // ⛔ `walked == knownFloor` ASSERT EDİLMEZ: (e) tabanı bir ALT SINIRDIR,
+    //    eşitlik yazmak onu envantere geri çevirir (J-233 sözleşmesi).
+    final bool splitDirectionLive = walked.length > knownFloor.length;
     // ignore: avoid_print
-    print('  GEZİLEBİLİRLİK · türetilen aday ${derived.length} = '
-        'yürünen ${walked.length} + varılamayan ${unreachable.length}');
-    expect(walked.length + unreachable.length, derived.length,
-        reason: 'payda TOPLAMIYOR — bir aday hiçbir kovaya girmemiş');
+    print('  (d) YÖN · "walked ⊄ derived" kontrolü: '
+        '${splitDirectionLive ? "CANLI" : "GÖLGELİ"} '
+        '(yürünen ${walked.length} · taban ${knownFloor.length} — '
+        'taban yürüyüşe eşitken ihlal kurulamaz)');
+
+    // Denklemin İKİ YANI AYRI KAYNAKTAN: sol = kod deseni, sağ = tanıklı
+    // yürüyüş + elle gerekçeli kayıt. Sayı değişmedi; NEYLE KANITLANDIĞI
+    // değişti (J-240'ın provenans dersi, bu kez raporlamada).
+    // ignore: avoid_print
+    print('  GEZİLEBİLİRLİK · türetilen aday ${derived.length} (kod deseni) = '
+        'yürünen ${walked.length} (tanıklı yürüyüş) + '
+        'varılamayan ${registered.length} (elle kayıt, gerekçeli)');
   });
 
   test('SAYMA KURALI YAZILI — ve sayı ondan KOPMUYOR (J-221)', () {
