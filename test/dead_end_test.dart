@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/course_page.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
+import 'package:jablab/shell_candidate/shell_models.dart';
 import 'package:jablab/app/session_screen.dart';
 
 import 'app_pump.dart';
@@ -77,6 +80,23 @@ import 'app_pump.dart';
 /// araması **tüm ekranı** tarıyordu → komşu disiplinin metni kickboxing'i
 /// "gerekçeli" sayıyordu. ***Bir kontrolün gerekçesini ekran düzeyinde
 /// aramak, KOMŞUNUN dürüstlüğünü ona mal etmektir.***
+/// DEDEKTÖR — hem gerçek yürüyüş hem sentetik fixture bunu kullanır.
+///
+/// Ayrı bir fonksiyon olması şart: fixture bir KOPYAyı sınasaydı, gerçek
+/// yürüyüşteki dedektörün ateşlendiğini kanıtlamazdı.
+///
+/// `id` kartına basıldıktan SONRA çağrılır. Gerekçe araması **kartın ALT
+/// AĞACINA** kapsanmış — ekran düzeyinde aramak komşunun dürüstlüğünü ona
+/// mal ederdi (bu turda sabotajla ölçüldü).
+bool hasNamedReason(String id) => find
+    .descendant(
+        of: find.byKey(ValueKey<String>(id)),
+        matching: find.textContaining(RegExp(
+            'not open|not in the rule set|left out|rule set',
+            caseSensitive: false)))
+    .evaluate()
+    .isNotEmpty;
+
 void main() {
   const OnboardingStore seen = OnboardingStore(seenOverride: true);
 
@@ -160,14 +180,7 @@ void main() {
         // > dürüstlüğünü ona mal etmektir.***
         // Ölçüldü (`find.descendant`): gerekçe metni `item-` kartının
         // ALT AĞACINDA — kickboxing alt ağacı 1, tüm ekran 2.
-        final bool named = find
-                .descendant(
-                    of: find.byKey(ValueKey<String>(id)),
-                    matching: find.textContaining(RegExp(
-                        'not open|not in the rule set|left out|rule set',
-                        caseSensitive: false)))
-                .evaluate()
-                .isNotEmpty;
+        final bool named = hasNamedReason(id);
         if (named) {
           namedEmpty++;
         } else {
@@ -231,6 +244,31 @@ void main() {
       }
     }
 
+    // (d) YÜRÜYÜŞ EKSİK YÜRÜNMÜŞ OLABİLİR — İÇERİKTEN TÜRETİLEN BEKLENEN
+    // SAYIYA karşı denetleniyor (J-232, Lissom'un bulgusu).
+    //
+    // > ***Yürüyüş de eksik yürünürse yalan söyler:*** kaydırmayan bir
+    // > yürüyüş "0 kusur"u YANLIŞ SEBEPLE basar. Kendi payda toplamım bunu
+    // > yakalayamaz — yalnız YÜRÜDÜĞÜMÜ sayar. Referans içerikten gelmeli.
+    final Map<String, dynamic> lib = (jsonDecode(
+            File('assets/content/library.json').readAsStringSync()) as Map)
+        .cast<String, dynamic>();
+    int expected = 0;
+    for (final dynamic d in lib['disciplines'] as List<dynamic>) {
+      expected++; // disiplin kartı
+      for (final dynamic c
+          in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+        expected++; // kurs kartı
+        expected +=
+            ((c as Map)['lessons'] as List<dynamic>? ?? const <dynamic>[])
+                .length; // ders kartları
+      }
+    }
+    expect(reachable, expected,
+        reason: 'YÜRÜYÜŞ EKSİK: içerikten türetilen $expected kontrol '
+            'beklenirken $reachable yürünmüş. Kaydırma/ulaşamama yüzünden '
+            'atlanan kartlar "çıkmaz yok" sonucunu YANLIŞ SEBEPLE üretir.');
+
     // ③ PAYDA + İŞLEM — ve sayaçlar BAĞIMSIZ (türetilmiyor).
     // ignore: avoid_print
     print('  ÇIKMAZ SOKAK · varılabilir kontrol $reachable = '
@@ -246,5 +284,105 @@ void main() {
         reason: 'ÇIKMAZ SOKAK: basılıyor, bir şey sunmuyor, ve NEDEN '
             'sunmadığını da söylemiyor. Bir yokluk adı konmuşsa cevaptır; '
             'adı konmamışsa çıkmazdır.');
+  });
+
+  /// 🧪 DEDEKTÖRÜN POZİTİF KONTROLÜ — DOĞRULAYICININ ALTINDAN (J-232).
+  ///
+  /// J-230'da *"0 çıkmaz"* raporladım ama **dedektörün ateşlendiğini
+  /// kanıtlayamadım**: `Library.validate` çıkmaz sokağı **ifade edilemez**
+  /// kılıyor, iki sabotaj da UI'a varmadan reddedildi.
+  /// > *Bir kapının yeşili, ateşlendiği görülmeden tam kanıt değildir.*
+  ///
+  /// Koordinatör hükmü: doğrulayıcı üstte engelliyorsa, dedektörü
+  /// **ALTINDAN** sına — `ShellLibrary` **doğrudan** kurulur (JSON yolu ve
+  /// `validate` hiç çalışmaz) ve `SelectPage`e verilir.
+  /// ⛔ Ürün yolu değişmedi, doğrulayıcı gevşetilmedi.
+  ///
+  /// 📌 Ostinato'nun vakasının TERSİ: orada **var olmayan** bir riski test
+  /// etmek vakum-doğru olurdu; burada risk **gerçek ama üretimde
+  /// ERİŞİLEMEZ**, ve fixture onu erişilebilir kılıyor.
+  testWidgets('🧪 DEDEKTÖR ATEŞLENİYOR — sentetik çıkmaz sokakta',
+      (WidgetTester t) async {
+    const ShellLibrary synthetic = ShellLibrary(
+      title: 'Sentetik',
+      items: <ShellItem>[
+        // AÇIK görünüyor, kursu YOK, ve gerekçe metni de YOK → çıkmaz sokak.
+        ShellItem(
+          id: 'ghost',
+          title: 'Ghost',
+          status: ItemStatus.live,
+          courses: <ShellCourse>[],
+          // ⚠️ BOŞ DEĞİL — üçüncü bir yapısal engel var: honesty_box
+          // 'notMeasured.length > 0' assert'i boş listeyle çizdirmiyor.
+          // Bu yüzden liste DOLU ama içinde KAPALILIK SEBEBİ yok: kart bir
+          // şey söylüyor, ama "burada neden iş yok"u söylemiyor.
+          measured: <String>['Stance'],
+          notMeasured: <String>['Leg technique'],
+        ),
+      ],
+      exclusions: <ShellExclusion>[],
+    );
+
+    await t.pumpWidget(MaterialApp(
+      home: SelectPage(
+        library: synthetic,
+        onOpenCourse: (_) {},
+        onOpenWhyNot: () {},
+        onOpenSettings: () {},
+      ),
+    ));
+    await t.pumpAndSettle();
+
+    final Finder card = find.byKey(const ValueKey<String>('item-ghost'));
+    expect(card, findsOneWidget,
+        reason: 'sentetik kart çizilmedi — fixture UI\'a ulaşmıyor, '
+            'bu kontrolün sonucu ANLAMSIZ');
+    await t.tap(card.first, warnIfMissed: false);
+    await t.pumpAndSettle();
+
+    // Kurs YOK.
+    expect(
+        find.byWidgetPredicate((Widget w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('course-')),
+        findsNothing,
+        reason: 'sentetik öğe kurs üretti — fixture yanlış kurulmuş');
+
+    // 🎯 ASIL İDDİA: dedektör bu kartı GEREKÇESİZ sayıyor → ÇIKMAZ.
+    expect(hasNamedReason('item-ghost'), isFalse,
+        reason: 'DEDEKTÖR ATEŞLENMİYOR: gerekçesi olmayan, kurssuz, AÇIK bir '
+            'kart "gerekçeli" sayıldı. J-230\'un "0 çıkmaz" sonucu bu '
+            'kontrol olmadan pozitif-kontrolsüzdü; bu test onu kapatıyor.');
+
+    // NEGATİF İKİZ: gerekçe VARSA dedektör susmalı (aksi hâlde kapı, dürüst
+    // kapalı yüzeyleri de çıkmaz sayardı — 10 meşru kova kırmızıya boyanırdı).
+    await t.pumpWidget(MaterialApp(
+      home: SelectPage(
+        library: const ShellLibrary(
+          title: 'Sentetik',
+          items: <ShellItem>[
+            ShellItem(
+              id: 'named',
+              title: 'Named',
+              status: ItemStatus.comingSoon,
+              courses: <ShellCourse>[],
+              measured: <String>[],
+              notMeasured: <String>['This discipline is not open'],
+            ),
+          ],
+          exclusions: <ShellExclusion>[],
+        ),
+        onOpenCourse: (_) {},
+        onOpenWhyNot: () {},
+        onOpenSettings: () {},
+      ),
+    ));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const ValueKey<String>('item-named')).first,
+        warnIfMissed: false);
+    await t.pumpAndSettle();
+    expect(hasNamedReason('item-named'), isTrue,
+        reason: 'gerekçeli bir kapalı yüzey ÇIKMAZ sayılıyor — kapı fazla '
+            'geniş, dürüst hâlleri kusur diye raporlar');
   });
 }
