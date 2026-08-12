@@ -235,6 +235,84 @@ void main() {
         reason: 'bir aşamaya yürünerek ulaşılamıyor');
   });
 
+  /// SÖZLEŞME (a)+(c) — aday küme KODDAN TÜRETİLİR, üyelik YÜRÜYEREK
+  /// kanıtlanır, ve **varılamayan aday AYRI raporlanır** (J-231).
+  ///
+  /// Koordinatör hükmü: *yalnız yürüyerek ölçen bir kural, ULAŞAMADIĞINI
+  /// göremez* — boyanmış kontrolü olmayan bir rota yürüyüşe hiç görünmez ve
+  /// *"orada bir şey yok"* ile *"var, varamadım"* ayırt edilemez.
+  /// > ***Yürüyüş VARLIĞI kanıtlar, YOKLUĞU kanıtlamaz — bir yokluk iddiası,
+  /// > BEKLENEN bir küme olmadan kurulamaz.***
+  ///
+  /// Bende eksik olan tek parça **(a)** idi: beklenen küme **elle** yazılıydı
+  /// (*hafızadan okuyan* kısım). Artık **koddan türetiliyor**; doğrulama
+  /// (yürüyüş) olduğu gibi kaldı.
+  ///
+  /// ⚠️ Türetim ilk hâlinde **BOZUKTU** ve pozitif kontrol yakaladı: `_XState`
+  /// sınıflarını eleyince **her StatefulWidget ekranı** kayboldu (8 aday, ve
+  /// `SelectPage`/`SessionScreen`/`OnboardingPage` yoktu). `_XState → X`
+  /// eşlemesiyle düzeltildi. *Bir desen, neyi kaçırdığı bilinmeden envanter
+  /// sayılamaz.*
+  test('SÖZLEŞME (a)+(c) — aday KODDAN türetiliyor, varılamayan AYRI', () {
+    final Set<String> derived = <String>{};
+    for (final FileSystemEntity e
+        in Directory('lib').listSync(recursive: true)) {
+      if (e is! File || !e.path.endsWith('.dart')) continue;
+      for (final String chunk in e.readAsStringSync().split(RegExp(r'\n(?=class )'))) {
+        final RegExpMatch? m = RegExp(r'class\s+(\w+)').firstMatch(chunk);
+        if (m == null || !chunk.contains('Scaffold(')) continue;
+        String name = m.group(1)!;
+        // StatefulWidget'ın Scaffold'u State'te yaşar: `_XState` → `X`.
+        if (name.startsWith('_') && name.endsWith('State')) {
+          name = name.substring(1, name.length - 5);
+        }
+        if (!name.startsWith('_')) derived.add(name);
+      }
+    }
+
+    // POZİTİF KONTROL: türetim, YÜRÜYEREK kanıtlanmış 6 ekranı içermeli.
+    const Set<String> walked = <String>{
+      'OnboardingPage', 'SelectPage', 'SettingsPage',
+      'WhyNotPage', 'CoursePage', 'SessionScreen',
+    };
+    expect(walked.difference(derived), isEmpty,
+        reason: 'türetim, yürüyerek VARILDIĞI kanıtlanmış ekranları '
+            'kaçırıyor: ${walked.difference(derived)} — desen bozuk, '
+            'aşağıdaki "varılamayan" listesi ANLAMSIZ olurdu');
+    expect(walked.length, kStrictRoutes,
+        reason: 'yürünen küme ile katı sayı ayrışmış');
+
+    // (c) ADAY OLUP VARILAMAYAN — kaybolmuyor, adıyla ve GEREKÇESİYLE duruyor.
+    const Map<String, String> unreachableWhy = <String, String>{
+      'CameraHarnessScreen': 'kDebugMode kapılı — sevk edilen üründe açılmıyor',
+      'ContentFailureScreen': 'yalnız içerik yüklenemezse çizilir; kontrole '
+          'basarak ulaşılmıyor',
+      'Root': 'uygulama kökünün YÜKLEME iskelesi — ayrı bir ekran değil',
+      'SessionFlowScaffold': 'SessionScreen\'in İÇİNDE kullanılan kabuk '
+          'parçası, ayrı rota değil',
+      'ItemPage': 'lib/shell_candidate/ — DONDURULMUŞ terfi envanteri',
+      'ShellScaffold': 'lib/shell_candidate/ — DONDURULMUŞ terfi envanteri',
+    };
+    final Set<String> unreachable = derived.difference(walked);
+    expect(unreachable, unreachableWhy.keys.toSet(),
+        reason: 'ADAY olup VARILAMAYAN küme DEĞİŞTİ.\n'
+            '  ölçülen : ${unreachable.toList()..sort()}\n'
+            '  kayıtlı : ${unreachableWhy.keys.toList()..sort()}\n'
+            'Yeni bir ekran eklenip yürüyüşe katılmadıysa burada görünür — '
+            '"orada bir şey yok" ile "var, varamadım" ayrı kovalardır.');
+    for (final MapEntry<String, String> e in unreachableWhy.entries) {
+      expect(e.value.length, greaterThan(25),
+          reason: '${e.key} gerekçesiz — varılamayan bir aday, SEBEBİ '
+              'yazılmadan listede duramaz');
+    }
+
+    // ignore: avoid_print
+    print('  GEZİLEBİLİRLİK · türetilen aday ${derived.length} = '
+        'yürünen ${walked.length} + varılamayan ${unreachable.length}');
+    expect(walked.length + unreachable.length, derived.length,
+        reason: 'payda TOPLAMIYOR — bir aday hiçbir kovaya girmemiş');
+  });
+
   test('SAYMA KURALI YAZILI — ve sayı ondan KOPMUYOR (J-221)', () {
     // Gravita'nın uyarısı: "sekmeleri farklı sayıyorsak iki sayı AYNI ŞEYİ
     // ÖLÇMÜYOR; fark içerik değil SAYMA KURALI olur." Sayı kapılıydı, KURAL
