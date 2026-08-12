@@ -11,6 +11,8 @@ import 'package:jablab/app/settings_page.dart';
 import 'package:jablab/shell_candidate/library_pages.dart' show WhyNotPage;
 import 'package:jablab/shell_candidate/session_flow.dart';
 
+import 'app_pump.dart';
+
 /// GEZİLEBİLİR EKRAN SAYISI — kapıdan ölçülür, beyandan değil (J-167).
 ///
 /// Koordinatörün sorusu: ***bugün, uygulamayı açan bir kullanıcı kaç ayrı
@@ -94,8 +96,8 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(
           const JabLabApp(onboarding: OnboardingStore(seenOverride: false)));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     expect(find.byType(OnboardingPage), findsOneWidget);
   });
@@ -109,8 +111,8 @@ void main() {
 
     await t.runAsync(() async {
       await t.pumpWidget(const JabLabApp(onboarding: seen));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     mark(SelectPage, 'select');
 
@@ -156,8 +158,8 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(
           const JabLabApp(onboarding: OnboardingStore(seenOverride: false)));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
 
     // Sayılan şey `_steps` sabiti DEĞİL, düğmeye basarak GERÇEKTEN görülen
@@ -181,8 +183,8 @@ void main() {
       (WidgetTester t) async {
     await t.runAsync(() async {
       await t.pumpWidget(const JabLabApp(onboarding: seen));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     await t.tap(find.byKey(const Key('item-boxing')));
     await t.pumpAndSettle();

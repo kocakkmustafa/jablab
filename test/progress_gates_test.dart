@@ -9,6 +9,8 @@ import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/progress_gates.dart';
 import 'package:jablab/app/session_store.dart';
 
+import 'app_pump.dart';
+
 /// İLERLEME KAPISI DEĞERLENDİRİCİSİ (J-208) — kapı sisteminin eksik
 /// TÜKETİCİSİ, ve bugün NE ÖLÇEBİLDİĞİ.
 ///
@@ -191,8 +193,8 @@ void _reachabilityGate() {
       await t.pumpWidget(JabLabApp(
           repository: ContentRepository(storeOverride: store),
           onboarding: const OnboardingStore(seenOverride: true)));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
 
     final Finder note = find.byKey(const Key('gate-note'));
@@ -237,8 +239,8 @@ void _reachabilityGate() {
       await t.pumpWidget(JabLabApp(
           repository: ContentRepository(storeOverride: store),
           onboarding: const OnboardingStore(seenOverride: true)));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     expect(find.byKey(const Key('gate-note')), findsNothing,
         reason: 'olay-sayımı kapısı OLMAYAN kursta kapı beyanı çiziliyor — '

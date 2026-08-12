@@ -8,6 +8,8 @@ import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/session_store.dart';
 
+import 'app_pump.dart';
+
 /// ADOPSİYON NÖBETİ — motion_core 0.11.0 (J-095, doc-75 test asgarisi).
 ///
 /// ## Neden ayrı dosya ve neden UÇTAN UCA
@@ -44,8 +46,8 @@ void main() {
           key: ValueKey<Object>(store),
           onboarding: _seen,
           repository: ContentRepository(storeOverride: store)));
-      await Future<void>.delayed(const Duration(milliseconds: 200));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
   }
 

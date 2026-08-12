@@ -9,6 +9,8 @@ import 'package:jablab/app/settings_page.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
 
+import 'app_pump.dart';
+
 /// KARŞILAMA (J-106) — yayın blokajının kapanışı.
 ///
 /// Sınanan şey "ekran çiziliyor mu" değil, **doğru şeyin doğru sırada
@@ -79,8 +81,8 @@ void main() {
   Future<void> pumpApp(WidgetTester t, OnboardingStore s) async {
     await t.runAsync(() async {
       await t.pumpWidget(JabLabApp(onboarding: s));
-      await Future<void>.delayed(const Duration(milliseconds: 200));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
   }
 
@@ -119,9 +121,10 @@ void main() {
       await t.pumpWidget(JabLabApp(onboarding: s));
       await t.pump();
       expect(find.byType(OnboardingPage), findsNothing);
-      await t.runAsync(() async {
-        await Future<void>.delayed(const Duration(milliseconds: 200));
-      });
+      // ⚠️ Burada `settleAppLoad` DEĞİL `settleUntil` — bu test yükleme
+      // penceresinin KENDİSİNİ sınıyor, ve "gösterge kalktı" ölçütü onun
+      // için fazla erken olabilir. Beklenen şey hedefin GÖRÜNMESİ.
+      await settleUntil(t, find.byType(OnboardingPage));
       await t.pumpAndSettle();
       expect(find.byType(OnboardingPage), findsOneWidget);
     });

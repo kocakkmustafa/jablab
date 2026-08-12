@@ -5,6 +5,8 @@ import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_page.dart';
 import 'package:jablab/app/onboarding_store.dart';
 
+import 'app_pump.dart';
+
 /// YERLEŞİM KAPISI — çakışan metin/ikon (J-128).
 ///
 /// ## Neden bu kapı vardı da yoktu
@@ -132,8 +134,8 @@ void main() {
       (WidgetTester t) async {
     await t.runAsync(() async {
       await t.pumpWidget(const JabLabApp(onboarding: seen));
-      await Future<void>.delayed(const Duration(milliseconds: 150));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     expectNoOverlap(t, 'Sayfa A');
   });

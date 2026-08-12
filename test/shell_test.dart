@@ -7,6 +7,8 @@ import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
+import 'app_pump.dart';
+
 /// G5 iskelet testleri — 2026-08-06 yeniden yapılandırma (design turu,
 /// koordinatör Hüküm 1/2/3).
 ///
@@ -51,8 +53,8 @@ void main() {
     // uğrar — sabit bir gecikmeyle "çözmek" yarış durumu üretirdi.
     await tester.runAsync(() async {
       await tester.pumpWidget(JabLabApp(repository: repo ?? const ContentRepository(), onboarding: _seen));
-      await Future<void>.delayed(const Duration(milliseconds: 150));
     });
+    await settleAppLoad(tester);
     await tester.pumpAndSettle();
   }
 

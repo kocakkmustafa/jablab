@@ -4,6 +4,8 @@ import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/shell_candidate/live_surface.dart';
 
+import 'app_pump.dart';
+
 /// ÖZET SAYISI — ölçülmüşse gösterilir, ölçülmemişse SUSULUR (J-156).
 ///
 /// ## Ölçülen kusur
@@ -97,8 +99,8 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(
           const JabLabApp(onboarding: OnboardingStore(seenOverride: true)));
-      await Future<void>.delayed(const Duration(milliseconds: 250));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     await t.tap(find.byKey(const Key('item-boxing')));
     await t.pumpAndSettle();

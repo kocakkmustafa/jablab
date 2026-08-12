@@ -11,6 +11,8 @@ import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
+import 'app_pump.dart';
+
 /// BAĞLANTI testi (J-079): bozuk içerik GERÇEKTEN dürüst hata ekranını açıyor
 /// mu?
 ///
@@ -77,12 +79,7 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(JabLabApp(repository: repo, onboarding: _seen));
     });
-    for (int i = 0; i < 40; i++) {
-      await t.runAsync(
-          () => Future<void>.delayed(const Duration(milliseconds: 50)));
-      await t.pump();
-      if (find.byType(CircularProgressIndicator).evaluate().isEmpty) break;
-    }
+    await settleAppLoad(t);
     await t.pumpAndSettle();
   }
 

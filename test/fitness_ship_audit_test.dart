@@ -9,6 +9,8 @@ import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/session_store.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
+import 'app_pump.dart';
+
 /// FITNESS-TRACK SHIP DENETİMİ — uçtan uca KOŞUM (J-070).
 ///
 /// **Bu dosya bir beyan değil, bir KANIT üreticisidir.** J-062'de "Fitness
@@ -123,8 +125,8 @@ void main() {
       await t.runAsync(() async {
         await t.pumpWidget(
             JabLabApp(key: ValueKey<String>(l.id), repository: repo, onboarding: _seen));
-        await Future<void>.delayed(const Duration(milliseconds: 200));
       });
+      await settleAppLoad(t);
       await t.pumpAndSettle();
 
       // 2026-08-06: Sayfa A (SelectPage) zaten GİRİŞ yüzeyi — `tab-library`
@@ -247,8 +249,8 @@ void main() {
           key: const ValueKey<String>('progress-leg'),
           onboarding: _seen,
           repository: ContentRepository(storeOverride: progressStore)));
-      await Future<void>.delayed(const Duration(milliseconds: 200));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
     // Bir seans koş, sonra kaydedilenin göründüğüne bak.
     // 2026-08-06: `tab-library` dokunuşu kalktı (Sayfa A zaten giriş

@@ -5,6 +5,8 @@ import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/session_store.dart';
 
+import 'app_pump.dart';
+
 /// DAR-CİHAZ TAŞMA KAPISI (Lissom + Ostinato emsali, koordinatör 2026-08-06).
 ///
 /// `flutter_test`in VARSAYILAN yüzeyi ~800pt geniş — gerçek telefonun
@@ -47,8 +49,8 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(
           JabLabApp(key: key, onboarding: _seen, repository: repo ?? const ContentRepository()));
-      await Future<void>.delayed(const Duration(milliseconds: 150));
     });
+    await settleAppLoad(t);
     await t.pumpAndSettle();
   }
 
