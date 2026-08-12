@@ -71,6 +71,9 @@ DEFTER = APP.parent / "workspace" / "DEFTER.md"
 # ⛔ Bu bir GEVŞETME değil: üç desenin üçü de KONUM-ÇAPALI (başlangıç,
 # conventional kapsam, ya da sondaki parantez). Cümle ORTASINDA geçen bir
 # numara hâlâ sayılmıyor — "sözünü etmek ≠ kayıt" korunuyor.
+# Herhangi bir yerde J-numarası ANAN başlık — A/B ayrımı için (J-227).
+_ANY_J = re.compile(r"J-\d+")
+
 _POSITIONS = (
     re.compile(r"^(J-\d+(?:/\d+)*)\b"),              # J-174: …
     re.compile(r"^[a-z]+\((J-\d+(?:/\d+)*)\)"),      # feat(J-072): …
@@ -127,8 +130,8 @@ def commit_numbers(limit: int) -> tuple[dict[str, str], int, int]:
     > kimlik bir ÖLÇÜM değildir.*** Bugün üç kez "vakum-doğru test"
     > yakaladım; dördüncüsü kendi payda denetimimdi.
 
-    Dönüş: `({numara: ilk başlık}, atıflı, atıfsız, taranan)` — hepsi BAŞLIK
-    birimi; `found` ise NUMARA birimi (ayrı birim, ayrı basılır).
+    Dönüş: `({numara: ilk başlık}, atıflı, atıfsız, anan, taranan)` — dördü
+    de BAŞLIK birimi; `found` ise NUMARA birimi (ayrı birim, ayrı basılır).
     """
     titles = subprocess.run(
         ["git", "-C", str(APP), "log", f"-{limit}", "--format=%s"],
@@ -137,7 +140,10 @@ def commit_numbers(limit: int) -> tuple[dict[str, str], int, int]:
     found: dict[str, str] = {}
     attributed = 0
     unattributed = 0          # ⚠️ BAĞIMSIZ sayılır, TÜRETİLMEZ (aşağı bak)
+    mentioning = 0            # ⚠️ O DA BAĞIMSIZ — A/B ayrımı için (J-227)
     for t in titles:
+        if _ANY_J.search(t):
+            mentioning += 1
         raw = _record_ref(t)
         if raw is None:
             unattributed += 1
@@ -146,7 +152,7 @@ def commit_numbers(limit: int) -> tuple[dict[str, str], int, int]:
         head, *rest = raw.split("/")
         for num in [head] + [f"J-{x}" for x in rest]:
             found.setdefault(num, t)
-    return found, attributed, unattributed, len(titles)
+    return found, attributed, unattributed, mentioning, len(titles)
 
 
 def self_test() -> bool:
@@ -180,12 +186,17 @@ def self_test() -> bool:
     check("defter-uydurma", "J-9999" in nums, False)
 
     # ⭐ PAYDA ARİTMETİĞİ — payda YAZMAK, paydayı DENETLEMEK değildir (J-226).
-    _ref, _att, _un, _scan = commit_numbers(400)
+    _ref, _att, _un, _men, _scan = commit_numbers(400)
     # İki sayaç BAĞIMSIZ; bu yüzden toplamları gerçek bir iddiadır.
     check("payda-toplamı", _att + _un, _scan)
     check("taranan-gerçek", _scan <= 400, True)
     check("birim-ayrı", _att >= len(_ref), True)  # başlık ≥ benzersiz numara
     check("sayaçlar-dolu", _att > 0 and _un > 0, True)
+    # A/B AYRIMI (J-227): ikisi BAĞIMSIZ sayılır, biri ötekinden türetilmez.
+    # Eşit olmaları meşrudur (226'da ikisi de 14'tü) — ama aynı şey
+    # olmadıkları için kapı onları AYRI basar.
+    check("anan >= çapalı", _men >= _att, True)
+    check("çapalı >= benzersiz", _att >= len(_ref), True)
 
     # ⭐ KENDİ ÖLÇÜLMÜŞ KİRLENME RİSKİM — Gravita'nın sentinel testi
     # KOPYALANMADI (o riski ölçtüm: bu depoda `J-9xx` yalnız BU dosyada
@@ -211,7 +222,7 @@ def main() -> int:
         return 0 if good else 1
 
     written = defter_numbers()
-    referenced, attributed, unattributed, scanned = commit_numbers(limit)
+    referenced, attributed, unattributed, mentioning, scanned = commit_numbers(limit)
     missing = sorted(
         (n for n in referenced if n not in written),
         key=lambda s: int(s.split("-")[1]),
@@ -226,12 +237,26 @@ def main() -> int:
     assert attributed + unattributed == scanned, (
         f"PAYDA TOPLAMIYOR: {attributed} + {unattributed} != {scanned}"
     )
+    # ⚠️ A ve B AYRI SATIR (J-227). 226 commit'te İKİSİ DE 14'tü ve bu bir
+    # RASTLANTIYDI: yapısal olarak farklı iki büyüklük aynı sayıya eşitti.
+    # Depo iki commit büyüyünce kendiliğinden ayrıştılar (A=14, B=15).
+    # > BİR EŞLEŞME BİR SEBEP DEĞİLDİR — ve tek satırda basılsalardı
+    # > "buldum" diyen biri YANLIŞ açıklamayı kabul edebilir, hiçbir şey de
+    # > ötmezdi çünkü sayı tutuyordu.
+    a_gap = mentioning - attributed      # anma, atıf DEĞİL
+    b_gap = attributed - len(referenced)  # bir numaraya birden çok commit
     print(
         f"DEFTER TAZELİĞİ · taranan başlık: {scanned} "
         f"(istenen üst sınır {limit}) = atıflı {attributed} + atıfsız "
-        f"{unattributed} ✓ · benzersiz kayıt numarası: {len(referenced)} "
-        f"(atıflı başlıktan {attributed - len(referenced)} eksik: aynı "
-        f"numaraya birden fazla commit) · deftere yazılı: {len(written)}"
+        f"{unattributed} ✓ · deftere yazılı: {len(written)}"
+    )
+    print(
+        f"  A · anan {mentioning} − çapalı {attributed} = {a_gap}  "
+        f"(J-numarası ANIYOR ama kayıt KONUMUNDA değil → sözünü etmek ≠ kayıt)"
+    )
+    print(
+        f"  B · çapalı {attributed} − benzersiz {len(referenced)} = {b_gap}  "
+        f"(aynı kayıt numarasına birden fazla commit)"
     )
     if not missing:
         print("  ✅ commit'te anılıp deftere YAZILMAMIŞ kayıt: 0")
