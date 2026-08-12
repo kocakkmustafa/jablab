@@ -54,11 +54,35 @@ void main() {
 
   /// Asset yüklemesi gerçek async I/O'dur; widget testinin sanal saati onu
   /// ilerletmez (shell_test'teki aynı gerekçe).
+  ///
+  /// ## ⚠️ SABİT GECİKME KALDIRILDI — bu test KARARSIZDI (J-218)
+  ///
+  /// Önceki hâli `runAsync` içinde **sabit 200 ms** bekliyordu. Süit tek
+  /// başına koşarken yetiyordu; **paralel yük altında yetmedi** ve bu test
+  /// 2026-08-12'de bir commit'i **yanlış yere** durdurdu (değişiklik tek bir
+  /// markdown dosyasıydı). İzole koşumda 4/4, tam süitte 315/315 — yani
+  /// başarısızlık **gerçek bir kusuru değil, zamanlamayı** ölçüyordu.
+  ///
+  /// > ***Kararsız bir kapı, YEŞİL de KIRMIZI da bilgi taşımaz hâle
+  /// > getirir*** — ve en tehlikelisi, kararsızlık bir kez kabul edilince
+  /// > **her kırmızı için bir mazeret** doğması.
+  ///
+  /// Panzehir, bu turda `reachable_screens_test`te kurulanla aynı:
+  /// **sabit süre değil, GERÇEK bir durum değişikliği beklenir** — burada
+  /// yükleme göstergesinin kaybolması (`_Root` içerik ya da hata gelene
+  /// kadar `CircularProgressIndicator` çiziyor, `jablab_app.dart:283`).
+  /// Sınırlı (≈2 s): takılan bir yükleme sessizce beklemez, `pumpAndSettle`
+  /// sonsuz animasyonda zaten patlar.
   Future<void> pumpApp(WidgetTester t, ContentRepository repo) async {
     await t.runAsync(() async {
       await t.pumpWidget(JabLabApp(repository: repo, onboarding: _seen));
-      await Future<void>.delayed(const Duration(milliseconds: 200));
     });
+    for (int i = 0; i < 40; i++) {
+      await t.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 50)));
+      await t.pump();
+      if (find.byType(CircularProgressIndicator).evaluate().isEmpty) break;
+    }
     await t.pumpAndSettle();
   }
 
