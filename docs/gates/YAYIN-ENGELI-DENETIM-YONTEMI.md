@@ -81,7 +81,7 @@ denetleniyor: **pozitif kontrol sütunu boş bir kalem eklenemez.**
 | 4 | platform eşiği | `targetSdk`/`minSdk` mağaza eşiğini karşılıyor mu? | `flutter.targetSdkVersion` → SDK'daki gerçek değer çözülür | SDK ağacı okunabildi mi (dosya sayısı > 0) | hat-yereli |
 | 5 | imza | release SESSİZCE debug anahtarıyla imzalanıyor mu? | `build.gradle.kts` release bloğu + `key.properties`/keystore varlığı | imzası **bilinen** bir projede (ör. LifeOS) desen isabet etmeli | **ikiye böl**: yapılandırma+kapı = hat-yereli · keystore = kurucu |
 | 6 | gizlilik manifesti | `PrivacyInfo.xcprivacy` var mı, beyanı ölçümle uyuşuyor mu? | dosya + üç anahtar; `AccessedAPITypes` **pinli çekirdeğe karşı** ölçülür | pinli çekirdek okunabildi mi (`JsonlSessionStore` bulunuyor mu) | hat-yereli |
-| 7 | ikon | uygulama ikonu hâlâ şablon varsayılanı mı? | ikon yollarına dokunan commit + dosya kimliği | ikon yolları bulunuyor mu (dosya sayısı > 0) | kurucu |
+| 7 | ikon | uygulama ikonu hâlâ şablon varsayılanı mı? | **HASH karşılaştırması**: her yoğunluk `md5` ile Flutter şablonuyla kıyaslanır (git geçmişi DEĞİL) | şablon dosyası bulunabildi mi — `md5` iki tarafta da hesaplandı mı | kurucu |
 | 8 | mağaza iddiaları | liste metnindeki HER cümle ölçüme dayanıyor mu? | her canlı alan ayrı iddiaya bölünür, tek tek koda karşı | canlı alan sayısı sayılır; "tamamı denetlendi" iddiası kapsam kanıtı ister | hat-yereli (içerik) · kurucu (onay) |
 | 9 | otomatik yayın | ASC `AFTER_APPROVAL` mı — onay anında kendiliğinden yayımlanır mı? | ASC sürüm ayarı (erişim gerektirir) | *(JabLab'da ASC kaydı YOK — kalem **uygulanamaz**, ama listede kalır)* | kurucu |
 | 10 | cihaz kanıtı | kamera/ölçüm yolu gerçek cihazda koştu mu? | `kanit/`-türü artefakt aranır; **yokluğu iddia edilmez** | artefakt dizini okunabiliyor mu | kurucu |
@@ -131,6 +131,41 @@ geneli `flutter config --jdk-dir` mi, yükseltme mi) **venture-ötesidir** —
 LifeOS ve Burun Farkı da aynı makinede. Hat yalnız **teşhis eder ve
 raporlar**; ara çözüm çağrı başına `JAVA_HOME`.
 
+---
+
+## 13 · DERLEME DOĞRULAMASI — metin kapısı bunu YAPAMAZ
+
+| # | katman | soru | nasıl ölçülür | pozitif kontrol | sınıf |
+|---|---|---|---|---|---|
+| 13 | derleme | eklediğim **build-sistemi kodu** (Kotlin DSL / Gradle / native config) gerçekten DERLENİYOR mu? | kaynak/metin kapısı YETMEZ — gerçek araç koşumu (`JAVA_HOME=… ./gradlew <görev> --dry-run`) | **sabotaj**: kasıtlı sözdizimi hatası konur, koşum **kırmızı** yanmalı; geri alınır, **yeşile** döner | hat-yereli |
+
+> ***Bir KAYNAK/METİN kapısı, denetlediği kodun DERLENDİĞİNİ doğrulayamaz.***
+
+2026-08-12'de iki hat aynı gün aynı işi yaptı (release imza kapısı) ve
+**metin kapıları ikisinde de yeşildi.** JabLab'ın Kotlin'i derlendi;
+**Lissom'unki derlenmedi** — `Unresolved reference: util`, çünkü Gradle
+Kotlin DSL'inde `java` adı `JavaPluginExtension`a çözümlenip **paket adını
+gölgeliyor** (`import java.util.Properties` zorunlu). Lissom'un cümlesi:
+
+> *"Metin kapım 'koruma VAR' diyordu ve **haklıydı** — ama koruma
+> **derlenmiyordu.** Bir kapının doğrulayabildiği şey, kapının **GÖRDÜĞÜ
+> KATMANLA** sınırlıdır."*
+
+⚠️ Derlenmeyen bir build script'i yalnız korumayı kaybettirmez: **debug
+dâhil her build'i kırar** — sessiz bir boşluk değil, gecikmiş bir kırmızı.
+
+## 14 · KAPI KONTROLÜ İKİ YÖNLÜ OLMALI
+
+| # | katman | soru | nasıl ölçülür | pozitif kontrol | sınıf |
+|---|---|---|---|---|---|
+| 14 | kapı sağlığı | kurduğum kapı, **koruduğu ürünün kendisini** engelliyor mu? | kaçış/izin yolu varsa koşulur (ör. `-PallowDebugSigning=true`) | **iki yönlü**: ötmesi gerekende **ötüyor** mu · ötmemesi gerekende **susuyor** mu | hat-yereli |
+
+Lissom ölçtü: `-PallowDebugSigning=true` → **BUILD SUCCESSFUL + "Play'e
+yüklenemez" uyarısı.** → ***Bir kapı, koruduğu ürünün KENDİSİNİ
+engellememelidir.*** Yalnız *ötme* tarafını sınamak yetmez: yanlış-pozitif
+üreten kapı kapatılır, ve **kapatılan bir kapı hiç kurulmamış olandan
+kötüdür** — güven bırakır, koruma bırakmaz.
+
 ### ⛔ Kalem 9 hakkında — JabLab'ın kendi durumu
 
 `AFTER_APPROVAL` **Lissom'un bulduğu kalem** ve JabLab'da bugün
@@ -150,3 +185,21 @@ görünür.** Yöntemin son adımı bu yüzden hat-dışıdır ve koordinatöre 
 > **Adım N:** hattın listesi çıktıktan sonra, **şablondan gelen kalemler**
 > (⑤⑥⑦⑧④) aile düzeyinde çapraz-taranır. Bir hattın *"bende yok"*u,
 > beşinde de aynıysa **bulgu değil arka plandır.**
+
+## ⚠️ ŞABLON KALEMLERİ "GÖRÜNÜŞE" GÖRE GEÇİLEMEZ — KİMLİKLE ÖLÇÜLÜR
+
+Gravita bu yöntemi koştu ve **hiç bakmadığı ÜÇ kalem** çıktı — üçü de
+şablon kaynaklı: **imza · `PrivacyInfo` · ikon.** Üçüncüsünü *varsayacaktı*;
+`md5` karşılaştırması **birebir** çıktı → ***tahmin değil KİMLİK.***
+
+JabLab'da aynı ölçüm (2026-08-12): Android **5/5 yoğunluk** ve **iOS 1024**
+Flutter şablonuyla **bayt-birebir** (`13e9c72e…` / `c785f893…`). Bu ölçüm
+git geçmişi okunamadığında bile geçerli — ve o gün `git log` binary yolda
+`mmap failed` verdiği için **tek yol buydu.**
+→ ***Bir varlığın "değiştirilmemiş" olduğu GEÇMİŞİNDEN değil KİMLİĞİNDEN
+okunur;*** geçmiş okunamayabilir, hash okunur.
+
+> **Gravita, yöntemi KULLANAN hat olarak:** ***"Kendi seçtiğin kalemleri
+> kapatmak, listeyi kimin yazdığını sormadan denetim yapmaktır."***
+
+Bu cümle, bu belgenin **neden var olduğunun** en iyi ifadesi.

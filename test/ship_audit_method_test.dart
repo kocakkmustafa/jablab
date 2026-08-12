@@ -18,22 +18,32 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final File doc = File('docs/gates/YAYIN-ENGELI-DENETIM-YONTEMI.md');
 
-  /// Denetim tablosunun satırları — başlık ve ayraç hariç.
+  /// Denetim tablolarının TÜM satırları — başlık ve ayraç hariç.
+  ///
+  /// ⚠️ **BİRDEN FAZLA TABLO taranıyor, ve bu bir düzeltme.** İlk hâli
+  /// yalnız İLK tabloyu okuyordu; belgeye 13. ve 14. kalemler **ayrı
+  /// tablolar** olarak eklenince o iki kalem kapının **dışında** kaldı —
+  /// yani liste, onu denetleyen kapının göremediği yerde büyüdü. Tam da bu
+  /// kapının önlemek için var olduğu şey. *Bir kapının kapsamı, denetlediği
+  /// belgenin BÜYÜME BİÇİMİYLE birlikte değişir; sabit bir çapa yetmez.*
   List<List<String>> auditRows() {
     final List<String> lines = doc.readAsLinesSync();
-    final int start = lines.indexWhere((String l) =>
-        l.startsWith('| # | katman | soru |'));
-    expect(start, greaterThanOrEqualTo(0),
+    final List<int> starts = <int>[
+      for (int i = 0; i < lines.length; i++)
+        if (lines[i].startsWith('| # | katman | soru |')) i,
+    ];
+    expect(starts, isNotEmpty,
         reason: 'denetim tablosunun başlığı bulunamadı — belge yeniden '
             'yapılandırılmış olabilir, bu kapının sonucu ANLAMSIZ olurdu');
     final List<List<String>> rows = <List<String>>[];
-    for (int i = start + 2; i < lines.length; i++) {
-      final String l = lines[i].trim();
-      if (!l.startsWith('|')) break;
-      final List<String> cells =
-          l.split('|').map((String c) => c.trim()).toList();
-      // baş ve son boş hücre atılır
-      rows.add(cells.sublist(1, cells.length - 1));
+    for (final int start in starts) {
+      for (int i = start + 2; i < lines.length; i++) {
+        final String l = lines[i].trim();
+        if (!l.startsWith('|')) break;
+        final List<String> cells =
+            l.split('|').map((String c) => c.trim()).toList();
+        rows.add(cells.sublist(1, cells.length - 1));
+      }
     }
     return rows;
   }
@@ -42,7 +52,7 @@ void main() {
     expect(doc.existsSync(), isTrue, reason: 'yöntem belgesi yok');
     final List<List<String>> rows = auditRows();
     // Vakum muhafızı: boş bir tablo, aşağıdaki her şeyi sessizce geçirirdi.
-    expect(rows.length, greaterThanOrEqualTo(10),
+    expect(rows.length, greaterThanOrEqualTo(14),
         reason: 'yalnız ${rows.length} denetim kalemi okundu — ayrıştırma '
             'bozuk ya da tablo daraldı; iki durumda da sonuç anlamsız');
     expect(rows.first.length, 6,
