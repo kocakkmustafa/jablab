@@ -25,3 +25,7 @@ build [0-9]*
 # `tool/fetch_pose_model.sh` + `test/model_pin_test.dart`. `latest` YASAK
 # (M-L-01: full varyantında latest≠1, aynı boyut farklı hash).
 assets/models/*.task
+
+# Python araçlarının derleme artefaktı (tool/*.py) — J-226 ölçümünde oluştu
+__pycache__/
+*.pyc
