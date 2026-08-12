@@ -48,6 +48,12 @@ final class ContentRepository {
 
   static const String cuesAsset = 'assets/content/cues.en.json';
 
+  /// İLERLEME KAPILARI (J-208). **Bu asset 2026-08-12'ye kadar üretimde HİÇ
+  /// YÜKLENMİYORDU** — paketleniyordu ama onu okuyan tek şey testlerdi, yani
+  /// 16 kapı bir içerik beyanıydı, bir ürün davranışı değil (J-207). Kapı
+  /// sisteminin eksik TÜKETİCİSİ buradan başlıyor.
+  static const String curriculumAsset = 'assets/content/curriculum.json';
+
   /// Eklem anahtarı → kullanıcıya gösterilen ad. `RuleSet.stanceCoachedOnlyJoints`
   /// bu sözlükten okunmadan ürüne çıkamaz (bkz. [coachedNotScoredLabels]) —
   /// bir eklem kovası değişince (M-F-51 türü yeniden hesap) metnin eski
@@ -207,6 +213,17 @@ final class ContentRepository {
   /// kadar sessiz bırakırdı ve kullanıcı sessizliği "sorun yok" diye okur.
   Future<CueBook> loadCues() async => CueBook.fromJson(
       await _loadString(cuesAsset), jabLabCueMapping);
+
+  /// İlerleme kapıları (J-208) — ham harita olarak.
+  ///
+  /// `Library`/`RuleSet` gibi tiplenmiş bir modele çevrilmiyor: bu turun
+  /// kapsamı **tek bir kapı sınıfı** (olay-sayımı) ve o sınıfı okuyan tek
+  /// yer [evaluateEventGate]. Dört sınıfın tamamını taşıyan bir tip
+  /// tanımlamak, bugün üçünün üreticisi yokken kullanılmayan üç dal
+  /// üretirdi — tam da bu hattın söktüğü ölü-mekanizma sınıfı.
+  Future<Map<String, dynamic>> loadCurriculum() async =>
+      (jsonDecode(await _loadString(curriculumAsset)) as Map)
+          .cast<String, dynamic>();
 
   Future<({Library library, RuleSet boxing})> load() async {
     final Library lib = Library.fromJson(

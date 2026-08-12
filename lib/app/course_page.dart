@@ -40,6 +40,7 @@ class CoursePage extends StatelessWidget {
     this.recorded = const <String, String>{},
     this.recordedNote,
     this.bands = const <String, String>{},
+    this.gateNote,
     this.onRetryHistory,
   });
 
@@ -58,6 +59,12 @@ class CoursePage extends StatelessWidget {
   final Map<String, String> recorded;
   final String? recordedNote;
   final Map<String, String> bands;
+
+  /// İLERLEME KAPISI beyanı (J-208) — `null` = bu kursta olay-sayımı kapısı
+  /// olan ders YOK, ve o zaman HİÇBİR ŞEY çizilmez. Koşulsuz uyaran bir
+  /// yüzey temiz-hâl ikizini geçemez (doc-75/6).
+  final String? gateNote;
+
   final VoidCallback? onRetryHistory;
 
   @override
@@ -135,6 +142,14 @@ class CoursePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   _HonestBands(bands: bands),
+                  if (gateNote != null) ...<Widget>[
+                    const SizedBox(height: 14),
+                    UnknownGlassPanel(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(gateNote!,
+                          key: const Key('gate-note'), style: JText.bodyMuted),
+                    ),
+                  ],
                   const SizedBox(height: 8),
                   Divider(color: JColors.hairline, height: 40),
                 ] else

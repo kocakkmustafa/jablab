@@ -15,6 +15,7 @@ import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
 import 'onboarding_page.dart';
 import 'onboarding_store.dart';
+import 'progress_gates.dart';
 import 'pose_model.dart';
 import 'select_page.dart';
 import 'session_narrator.dart';
@@ -106,6 +107,12 @@ class _RootState extends State<_Root> {
   /// `StateError` gövdesi görüyordu.
   ContentFailure? _failure;
 
+  /// İlerleme kapıları (J-208). `null` = henüz yüklenmedi. Yükleme
+  /// BAŞARISIZ olursa da `null` kalır ve kapı beyanı hiç çizilmez —
+  /// yüklenemeyen bir dosyadan hüküm doğmaz, ve bir kapı beyanı uğruna
+  /// dersin açılışını bloklamak çözümü sorundan kötü yapardı.
+  Map<String, dynamic>? _curriculum;
+
   /// Karşılama gösterilecek mi (J-106). **`null` = HENÜZ BİLİNMİYOR** ve bu
   /// üçüncü hâl şart: `false` başlatmak, bayrak diskten okunana kadar geçen
   /// bir karelik pencerede kabuğu gösterir, sonra karşılamayı üstüne
@@ -117,6 +124,13 @@ class _RootState extends State<_Root> {
   void initState() {
     super.initState();
     _loadContent();
+    unawaited(widget.repository.loadCurriculum().then((Map<String, dynamic> c) {
+      if (mounted) setState(() => _curriculum = c);
+    }).catchError((Object _) {
+      // Bilerek yutuluyor: kapı beyanı bir EK bilgidir, ürünün çalışması
+      // ona bağlı değil. Sessizlik burada güvenli çünkü yokluğun sonucu
+      // "beyan çizilmez" — yanlış bir beyan değil.
+    }));
     unawaited(widget.onboarding.seen().then((bool seen) {
       if (mounted) setState(() => _showOnboarding = !seen);
     }));
@@ -300,6 +314,7 @@ class _RootState extends State<_Root> {
         onOpenSelect: () => _openSelect(context, lib),
         isCurrent: true,
         resumeLesson: _resumeLesson,
+        gateNote: _gateNoteFor(current),
         historyUnavailable: _historyUnavailableText(),
         historyIncomplete: _historyIncompleteText(),
         recorded: _recordedRows(),
@@ -331,6 +346,52 @@ class _RootState extends State<_Root> {
       historyUnavailable: _historyUnavailableText(),
       onRetryHistory: _refreshRecorded,
     );
+  }
+
+  /// Bu kursun İLERLEME KAPISI beyanı (J-208) — kapı sisteminin ilk
+  /// kullanıcıya ulaşan hâli.
+  ///
+  /// ## Neden SAYI GÖSTERMİYOR
+  ///
+  /// Dört kapı yumruk SAYIYOR (`jab` 30 · `cross` 30 · `guard`/`range` 40) ve
+  /// o sayaç canlı aşamada GERÇEKTEN çalışıyor — ama hiçbir yere yazılmıyor:
+  /// `SessionRecord` olay sayısı taşımıyor, ve dört dersin dördü de plansız
+  /// olduğu için `_record()` onlar için hiç satır yazmıyor. Bu durumda
+  /// *"0/30"* göstermek, uygulamanın SAYIP ATTIĞI bir işi "hiç yapmadın"
+  /// diye raporlamak olurdu — doc-75/2'nin (*"açılamayan geçmişten sayı
+  /// doğmaz"*) kapı karşılığı, ve J-092'de kapattığımız yalanın aynısı.
+  ///
+  /// Cümledeki sayı TÜREVİ: kaç dersin olay-sayımı kapısı olduğu
+  /// `evaluateEventGate`ten sayılıyor, elle yazılmıyor (J-107/J-151 sınıfı —
+  /// elle yazılmış sayı, liste değişince sessizce yalan olur).
+  ///
+  /// `null` döner = bu kursta olay-sayımı kapısı olan ders YOK → hiçbir şey
+  /// çizilmez (doc-75/6 temiz-hâl sessizliği).
+  String? _gateNoteFor(ShellCourse course) {
+    final Map<String, dynamic>? cur = _curriculum;
+    if (cur == null) return null;
+    final RecordedGateEvidence evidence =
+        const RecordedGateEvidence(<SessionRecord>[]);
+    int gated = 0;
+    int notEvaluable = 0;
+    for (final ShellLesson l in course.lessons) {
+      final GateVerdict? v = evaluateEventGate(cur, l.id, evidence);
+      if (v == null) continue;
+      gated++;
+      if (v is GateNotEvaluable) notEvaluable++;
+    }
+    if (gated == 0) return null;
+    // Bugün gated == notEvaluable; ama eşitliği VARSAYMIYORUZ — kanıt
+    // kalıcı katmana geldiği gün bu dal kendiliğinden doğru cümleyi seçsin
+    // diye ayrı sayılıyor (bir dalın bugün ulaşılmaz olması, onu yanlış
+    // yazmak için gerekçe değil).
+    if (notEvaluable == 0) return null;
+    final String lessons = notEvaluable == 1 ? 'lesson' : 'lessons';
+    return '$notEvaluable $lessons here have a progress gate that counts '
+        'punches. We are not showing you a count, because we are not keeping '
+        'one: the session counts while it runs and then lets the number go. '
+        'A zero would tell you that you did nothing, and that is not what we '
+        'measured. Nothing here is blocked — the gates do not close anything.';
   }
 
   void _openSettings(BuildContext context, ShellLibrary lib) {
