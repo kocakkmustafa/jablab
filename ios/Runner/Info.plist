@@ -27,7 +27,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>JabLab watches your shadow boxing to coach your form. Video stays on this device and is never uploaded — the app only keeps the body landmarks it measures.</string>
+	<string>JabLab watches your shadow boxing to coach your form. The camera image stays on this device and is never uploaded, and nothing from the camera is saved — not the video, and not the body positions we read from it. Your session history (which lesson, when, how long) is stored on this device.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
