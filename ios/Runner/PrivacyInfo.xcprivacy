@@ -2,9 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <!-- İZLEME: yok. Ürün ağ isteği YAPMIYOR; ham video cihazda kalıyor ve
-       yalnız ölçülen vücut noktaları işleniyor (Info.plist'teki kamera
-       gerekçesiyle aynı cümle). -->
+  <!-- İZLEME: yok. Ürün ağ isteği YAPMIYOR (ölçüldü: üretim Dart'ında ağ
+       çağrısı ve ağ paketi importu 0, sabotaj-doğrulamalı tarama); ham video
+       cihazda kalıyor ve yalnız ölçülen vücut noktaları İŞLENİYOR — hiçbiri
+       SAKLANMIYOR.
+
+       ⚠️ ATIF KAYNAĞA BAĞLI, CÜMLEYE DEĞİL (J-213). Buranın önceki hâli
+       "Info.plist'teki kamera gerekçesiyle aynı cümle" diyordu; o cümle
+       J-211'de DEĞİŞTİ (yanlış bir saklama iddiası taşıyordu) ve atıf
+       sessizce bayatladı — manifestin İDDİASI doğru kalmıştı, bozulan
+       ATIF'tı. Bir düzeltme, ona atıfta bulunan her yüzeyi bayatlatır ve
+       atıf iddiadan daha SESSİZ bozulur.
+
+       Bağlayıcı kaynak artık bir cümle değil, bir ANAHTAR ve bir ÖLÇÜM:
+       · anahtar : ios/Runner/Info.plist -> NSCameraUsageDescription
+       · değişmez: kameradan gelen hiçbir şey (video ya da vücut noktası)
+                   diske YAZILMAZ. Diske yazılan tek şey seans geçmişi
+                   (sessions.jsonl) + karşılama bayrağı (onboarding_seen)
+                   + paketten çıkarılan poz modeli (.task, asset).
+       · kapı    : docs/store/listing.json <-> Info.plist tutarlılığı
+                   test/store_listing_test.dart ile zorlanıyor. -->
   <key>NSPrivacyTracking</key>
   <false/>
   <key>NSPrivacyTrackingDomains</key>
