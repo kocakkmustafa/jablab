@@ -14,20 +14,25 @@ icat edilmedi. Koordinatörün ilettiği üç tuzak burada da gömülü:
   ③ PAYDA HER ZAMAN YAZILIR — "0 gedik" cümlesi, kaç kaydın tarandığı
      bilinmeden okunamaz.
 
-## ⚠️ HATTA GÖRE DEĞİŞEN ŞEY: KONUM
+## ⚠️ HATTA GÖRE DEĞİŞEN ŞEY: KONUM — ve BU İKİ KEZ ÖLÇÜLDÜ
 
-Koordinatörün uyarısı *"defterin BİÇİMİ hatta göre değişir"* — ölçüldü ve
-JabLab'da **defter tek biçim** (223 tablo satırı, prose başlığı 0), yani
-Gravita'nın 47 yanlış-pozitif sebebi burada YOK.
+Koordinatörün uyarısı *"defterin BİÇİMİ hatta göre değişir"*. Ölçüldü:
+**defter tek biçim** (tablo satırı; prose başlığı **0**) → Gravita'nın 47
+yanlış-pozitif sebebi burada yok. Satır başında duran **6 düzyazı atfı**
+tek tek okundu: *kayıt değil, atıf* — desen gevşetilmedi, öz-testte
+sınanıyorlar.
 
-Ama aynı sınıf kusur **commit tarafında** çıktı: Gravita `J-NNN` başlığın
-BAŞINDA yazıyor; **JabLab SONDA, parantez içinde** — ölçüldü (son 60
-başlık: J-numarası içeren **39**, başında olan yalnız **10**). Gravita'nın
-"baştaki numara" ölçütü buraya olduğu gibi taşınsaydı kapı, gerçek
-kayıtların çoğunu **görmez** ve fark kümesi sahte gediklerle dolardı.
+🔴 **Ama aynı sınıf kusur COMMIT tarafında çıktı, ve ilk ölçümüm YANLIŞTI.**
+Konvansiyonu **60 başlıkta** ölçüp *"JabLab sonda parantez kullanır"* diye
+sonuca vardım. **225 başlıkta gerçek:** J taşıyan **148** · sonda **32** ·
+**başta `J-NNN:` 83** (baskın!) · conventional **20**. İlk sürüm yalnız
+sondakini tanıyordu → **kapsam %21**, ve o dar pencerede *"0 gedik"*
+diyordu. Genişletilince **hemen gerçek bir gedik çıktı: `J-171`** (08-07'de
+commit'lenmiş, deftere hiç geçmemiş).
 
-Bu yüzden ② burada **konum olarak** uygulanıyor: sondaki `(J-NNN …)`
-parantezi = *bu commit'in kayıt kalemi*. Ortada geçen bir numara sayılmaz.
+→ ***Bir konvansiyon zamanla değişir; onu DAR bir pencerede ölçmek, en yeni
+hâlini "tek hâl" sanmaktır.*** Ve *"temiz çıkmak, sistemin çalıştığını
+değil, o güne kadar şansın yaver gittiğini gösterebilir"* (Lissom).
 
 ⛔ **Yanlış-pozitif çıkarsa deseni GEVŞETME** — o, ②'yi geri getirir:
 *bir kapıyı yanlış-pozitiften kurtarmanın iki yolu var: deseni gevşetmek,
@@ -50,8 +55,36 @@ from pathlib import Path
 APP = Path(__file__).resolve().parent.parent
 DEFTER = APP.parent / "workspace" / "DEFTER.md"
 
-# ② KONUM ÖLÇÜTÜ — sondaki parantez. "(J-224)" · "(J-224 yan)" · "(J-185/186)"
-TRAILING = re.compile(r"\((J-\d+(?:/\d+)*)[^)]*\)\s*$")
+# ② KONUM ÖLÇÜTÜ — ÜÇ ölçülmüş konum (gevşetme DEĞİL, sayım).
+#
+# 🔴 İLK HÂLİ YALNIZ SONDAKİ PARANTEZİ TANIYORDU ve KAPSAMI %21'Dİ.
+# Sebebi bir ölçüm hatasıydı: konvansiyonu **60 başlıkta** ölçüp sonuca
+# vardım. 225 başlıkta gerçek şu:
+#     J-numarası taşıyan : 148
+#     sonda parantez     :  32   ← ilk hâlin gördüğü
+#     başta "J-NNN:"     :  83   ← GÖRMEDİĞİ (baskın gelenek!)
+#     conventional       :  20   ← GÖRMEDİĞİ
+# Yani commit geleneğim ZAMAN İÇİNDE DEĞİŞMİŞ, ve dar pencerede ölçmek
+# yeni geleneği "tek gelenek" sanmama yol açtı. Lissom'un defterinde iki
+# biçim vardı; bende COMMIT tarafında üç biçim var — aynı sınıf, karşı yaka.
+#
+# ⛔ Bu bir GEVŞETME değil: üç desenin üçü de KONUM-ÇAPALI (başlangıç,
+# conventional kapsam, ya da sondaki parantez). Cümle ORTASINDA geçen bir
+# numara hâlâ sayılmıyor — "sözünü etmek ≠ kayıt" korunuyor.
+_POSITIONS = (
+    re.compile(r"^(J-\d+(?:/\d+)*)\b"),              # J-174: …
+    re.compile(r"^[a-z]+\((J-\d+(?:/\d+)*)\)"),      # feat(J-072): …
+    re.compile(r"\((J-\d+(?:/\d+)*)[^)]*\)\s*$"),   # … (J-224) · (J-224 yan)
+)
+
+
+def _record_ref(title: str) -> str | None:
+    """Başlıkta KAYIT KONUMUNDA bir J numarası varsa döndürür."""
+    for pat in _POSITIONS:
+        m = pat.search(title)
+        if m:
+            return m.group(1)
+    return None
 # Defterdeki kayıt satırı — TEK biçim (ölçüldü: prose başlığı 0)
 ROW = re.compile(r"^\|\s*(J-\d+(?:/\d+)*)\s*\|")
 
@@ -80,11 +113,10 @@ def commit_numbers(limit: int) -> tuple[dict[str, str], int]:
     found: dict[str, str] = {}
     unattributed = 0
     for t in titles:
-        m = TRAILING.search(t)
-        if not m:
+        raw = _record_ref(t)
+        if raw is None:
             unattributed += 1
             continue
-        raw = m.group(1)
         head, *rest = raw.split("/")
         for num in [head] + [f"J-{x}" for x in rest]:
             found.setdefault(num, t)
@@ -102,13 +134,14 @@ def self_test() -> bool:
             ok = False
 
     # ② sözünü etmek ≠ kayıt
-    check("sonda-parantez", bool(TRAILING.search("kapı: bir şey (J-224)")), True)
-    check("sonda-ekli", bool(TRAILING.search("düzelt: x (J-224 yan)")), True)
-    check("ORTADA-anma", bool(TRAILING.search("J-224 hakkında not düşüldü")), False)
-    check("gövde-benzeri", bool(TRAILING.search("bkz (J-1) ve devamı")), False)
-    # birleşik kayıt açılıyor mu
-    m = TRAILING.search("kayıt: iki şey (J-185/186)")
-    check("birleşik", m.group(1) if m else None, "J-185/186")
+    # ÜÇ ÖLÇÜLMÜŞ KONUM — üçü de bu depoda GERÇEKTEN kullanılıyor
+    check("sonda-parantez", _record_ref("kapı: bir şey (J-224)"), "J-224")
+    check("sonda-ekli", _record_ref("düzelt: x (J-224 yan)"), "J-224")
+    check("başta", _record_ref("J-174: splash yer tutucu"), "J-174")
+    check("conventional", _record_ref("feat(J-072): emülatör smoke"), "J-072")
+    # ② sözünü etmek ≠ kayıt — ORTADA geçen numara sayılmaz
+    check("ORTADA-anma", _record_ref("kayıt notu artık J-224 diyor"), None)
+    check("birleşik", _record_ref("kayıt: iki şey (J-185/186)"), "J-185/186")
     # defter satırı biçimi
     check("defter-satırı", bool(ROW.match("| J-224 | ders | P0 | … |")), True)
     check("defter-prose", bool(ROW.match("## J-224 bir şey")), False)
@@ -119,6 +152,19 @@ def self_test() -> bool:
     for probe in ("J-001", "J-224"):
         check(f"defter-içeriyor-{probe}", probe in nums, True)
     check("defter-uydurma", "J-9999" in nums, False)
+
+    # ⭐ KENDİ ÖLÇÜLMÜŞ KİRLENME RİSKİM — Gravita'nın sentinel testi
+    # KOPYALANMADI (o riski ölçtüm: bu depoda `J-9xx` yalnız BU dosyada
+    # geçiyor, deftere ya da başlığa karışamaz). Onun yerine benim GERÇEK
+    # riskim sınanıyor: DEFTER'de satır başında duran **düzyazı atıfları**
+    # (ölçüldü: 6 satır — "**J-091 sonrası tek mühür kaydı.**" gibi).
+    # Bunlar KAYIT DEĞİL; ROW onları saymamalı.
+    # > Bir öz-testi kopyalamak, koruduğu RİSKİ de devraldığını varsaymaktır.
+    for prose in (
+        "**J-091 sonrası tek mühür kaydı.** Bu vardiyanın tam dökümü",
+        "3. analiz başlamamışken çıplak \"0\" — (J-096)",
+    ):
+        check(f"düzyazı-atıf-sayılmıyor[{prose[:14]}]", bool(ROW.match(prose)), False)
     return ok
 
 
