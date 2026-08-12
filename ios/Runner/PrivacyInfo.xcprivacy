@@ -2,10 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <!-- İZLEME: yok. Ürün ağ isteği YAPMIYOR (ölçüldü: üretim Dart'ında ağ
-       çağrısı ve ağ paketi importu 0, sabotaj-doğrulamalı tarama); ham video
-       cihazda kalıyor ve yalnız ölçülen vücut noktaları İŞLENİYOR — hiçbiri
-       SAKLANMIYOR.
+  <!-- İZLEME: yok.
+
+       ⚠️ KAPSAM DÜZELTMESİ (J-217). Buranın önceki hâli "Ürün ağ isteği
+       YAPMIYOR" diyordu ve YANLIŞTI. Ölçüm doğruydu (üretim Dart'ında
+       `HttpClient`/`package:http` 0, sabotaj-doğrulamalı) ama cümle o
+       ölçümden GENİŞTİ: `google_fonts` doğrudan bağımlılık, üretimde
+       kullanılıyor (`design_tokens.dart`), `allowRuntimeFetching`
+       kapatılmamış ve paketlenmiş font YOK → uygulama font yüzlerini
+       çalışma anında Google'ın sunucularından İNDİRİYOR.
+       → Kendi kodunda ağ olmaması, ÜRÜNÜNDE ağ olmaması demek değildir.
+       Kapı: test/network_deps_test.dart (pubspec.lock BÖLMESİ — her paket
+       sınıflandırılmadan eklenemez).
+
+       DOĞRU BEYAN: kullanıcının hiçbir verisi cihazdan ÇIKMIYOR — ham
+       video ve ölçülen vücut noktaları yalnız İŞLENİYOR, hiçbiri
+       SAKLANMIYOR ve hiçbiri GÖNDERİLMİYOR. Giden tek ağ isteği font
+       dosyası içindir ve kullanıcı verisi TAŞIMAZ.
 
        ⚠️ ATIF KAYNAĞA BAĞLI, CÜMLEYE DEĞİL (J-213). Buranın önceki hâli
        "Info.plist'teki kamera gerekçesiyle aynı cümle" diyordu; o cümle
