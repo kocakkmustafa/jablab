@@ -86,6 +86,50 @@ denetleniyor: **pozitif kontrol sütunu boş bir kalem eklenemez.**
 | 9 | otomatik yayın | ASC `AFTER_APPROVAL` mı — onay anında kendiliğinden yayımlanır mı? | ASC sürüm ayarı (erişim gerektirir) | *(JabLab'da ASC kaydı YOK — kalem **uygulanamaz**, ama listede kalır)* | kurucu |
 | 10 | cihaz kanıtı | kamera/ölçüm yolu gerçek cihazda koştu mu? | `kanit/`-türü artefakt aranır; **yokluğu iddia edilmez** | artefakt dizini okunabiliyor mu | kurucu |
 | 11 | sürüm | sürüm numarası bir BEYANDIR — `0.x` "ön sürüm" der | `pubspec.yaml` | — (tek satır, ölçüm değil karar) | kurucu |
+| 12 | **araç zinciri** | **Gradle görevleri gerçekten KOŞUYOR mu — koşmuyorsa sebep hangi KATMANDA?** | `./gradlew :app:assembleDebug --dry-run`; düşerse **yığın izi** alınır (aşağı bak) | debug dry-run **BUILD SUCCESSFUL** vermeli; vermiyorsa üstteki hiçbir Gradle-tabanlı kalem ölçülemez | hat-yereli (teşhis) · kurucu (makine geneli düzeltme) |
+
+### ⚠️ Kalem 12 neden EN ÖNE alınmalı — ve nasıl teşhis edilir
+
+**Bu kalem üstteki her Gradle-tabanlı ölçümün ÖN KOŞULUDUR.** Araç zinciri
+çalışmıyorsa ⑤ (imza) ve ④ (`targetSdk`) hakkında verdiğin her cevap
+*"ölçemedim"*dir — ama **öyle görünmez**, çünkü build bir hata mesajıyla
+düşer ve o mesaj bir sebep söylüyormuş gibi durur.
+
+🪤 **2026-08-12'de ÜÇ oturum aynı katmanı yanlış okudu.** Mesaj çıplak bir
+sürüm dizgesiydi:
+
+```
+* What went wrong:
+  25.0.2
+```
+
+`25.0.2` **NDK sürümlerine benziyor** ve NDK 25.x gerçekten var → üç okuyucu
+da NDK sandı. **Gerçek: JAVA sürümü** (Temurin 25.0.2); Gradle 8.14'ün gömülü
+Kotlin'i (2.0.21) onu ayrıştıramıyor → `.kts` **derlenemiyor** → *hiçbir*
+görev koşmuyor (debug dahil). Yığın izi bunu tek satırda söylüyordu:
+`JavaVersion.parse` → `KotlinCoreEnvironment`.
+
+**Teşhis sırası — mesajın BİÇİMİNE güvenme:**
+
+1. `--stacktrace` ile yeniden koş; **hangi bileşenin** fırlattığını oku.
+2. Katmanı adıyla ayır: **JDK** (script derlemesi) · **Android SDK/NDK**
+   (bileşen çözümü) · **yapılandırma** (senin kodun) · **ağ/offline**.
+3. Şüphelendiğin katmanı **ayrı ölç**: NDK kurulu mu, `flutter doctor` ne
+   diyor, depoda o sürüm dizgesi geçiyor mu (JabLab'da `25.0.2` referansı
+   **yoktu** — tek başına bu bile atfı çürütürdü).
+4. Düzeltmeyi **çağrı başına** dene (`JAVA_HOME=… ./gradlew …`), depoya
+   yazmadan. Çalışıyorsa kusur **makinede**, depoda değil.
+
+> ***Bir hata mesajının BİÇİMİ, kaynağı hakkında bir İDDİADIR — ve o iddia
+> da ölçülmelidir.*** Çıplak bir sürüm dizgesi hangi bileşene ait olduğunu
+> söylemez; benzerlik bir kanıt değildir.
+
+⛔ **Düzeltmenin ŞEKLİ hat kalemi DEĞİL:** `gradle.properties`'e makineye
+özel `org.gradle.java.home` yazmak depoyu **başka makinede ve CI'da kırar**;
+Gradle yükseltmesi **beş depoyu** birden değiştirir. Kalıcı çözüm (makine
+geneli `flutter config --jdk-dir` mi, yükseltme mi) **venture-ötesidir** —
+LifeOS ve Burun Farkı da aynı makinede. Hat yalnız **teşhis eder ve
+raporlar**; ara çözüm çağrı başına `JAVA_HOME`.
 
 ### ⛔ Kalem 9 hakkında — JabLab'ın kendi durumu
 
