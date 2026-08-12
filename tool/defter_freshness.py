@@ -91,19 +91,83 @@ def _record_ref(title: str) -> str | None:
 # Defterdeki kayıt satırı — TEK biçim (ölçüldü: prose başlığı 0)
 ROW = re.compile(r"^\|\s*(J-\d+(?:/\d+)*)\s*\|")
 
+# ══════════════════════════════════════════════════════════════════════
+# KATMAN ÇAPASI — kayıt satırı BİÇİMLE değil, TABLO ÜYELİĞİYLE tanınır
+#
+# 🔴 İlk sürüm bütün DOSYAYI tarıyor ve `^| J-n |` biçimli HER satırı
+# kayıt sayıyordu. Ölçüldü (2026-08-12): defterde **iki** tablo var —
+# 6 sütunlu KAYIT tablosu (`| ID | Tür | Şiddet | Bulgu | Durum |
+# Kapanış kanıtı |`) ve 2 sütunlu ANLATI tablosu (`| # | ne |`,
+# *"bu vardiyada kapanan dört kayıt"*). Anlatı satırları da desene
+# uyuyordu ⇒ kapı **`J-095`i YAZILI sanıyordu** (`True`), oysa kayıt
+# tablosunda satırı **YOK** ve **üç commit onu anıyor** (biri kanonik
+# `J-095:` konumunda).
+#
+# > ***Bir kapının güvencesi, GÖRDÜĞÜ KATMANLA sınırlıdır.*** *"Eksik
+# > kayıt 0"* hiçbir zaman *"her numara bir KAYITTIR"* demiyordu; yalnız
+# > *"her numara KAYIT BİÇİMLİ bir satırda geçiyor"* diyordu.
+#
+# 📌 Bu, yukarıdaki ② kuralının (*sözünü etmek ≠ kayıt*) **dördüncü**
+# biçimi — ve en sinsisi, çünkü öncekiler (commit gövdesi · kod yorumu ·
+# config `_why`) kayda BENZEMİYORDU; bu, **kaydın biçimini taşıyor.**
+#
+# ⚠️ AYIRT EDİCİ ÖLÇÜLDÜ, TAHMİN EDİLMEDİ — iki aday sınandı:
+#   · **hücre sayısı** → 🔴 ELENDİ. Kayıt satırları 8/9/10/11/12/13
+#     hücreli (metin içinde kaçaksız `|`), anlatı 4. Bir `>=8` süzgeci
+#     *bugün* çalışır ama bir **biçim sezgisidir**; ilk kısa kayıt
+#     satırında sessizce düşer. (Aynı kaçaksız-`|` tuzağı J-234'te
+#     envanteri 174/175 yapmıştı.)
+#   · **tablo üyeliği** → ✅ YAPISAL, seçilen bu. Kayıt gövdesi =
+#     6-sütunlu başlığın ayıracından sonraki **kesintisiz `|` bloğu**.
+#     Ölçüm: gövde 235 satır, **hepsi** `| J-n`, anlatı tablosu blok
+#     **dışında**, gövdede `| J-n` olmayan satır **0**.
+# ══════════════════════════════════════════════════════════════════════
+RECORD_HEADER = "| ID | Tür |"
+
+# ⚠️ ID HÜCRESİ DE GENİŞLETİLDİ, ve sebebi ölçüldü: eski `J-\d+(/\d+)*`
+# deseni **iki GERÇEK kaydı** düşürüyordu — `J-191 (devam)` ve `J-194b`.
+# Sayaç 235 yerine 233 diyordu ve fark **hiçbir yerde görünmüyordu.**
+# → *Bir kimliğin biçimi zamanla zenginleşir; onu ilk gördüğü biçimle
+#   sabitleyen sayaç, sonradan gelenleri SESSİZCE atar.*
+ID_CELL = re.compile(r"^\|\s*(J-\d[^|]*?)\s*\|")
+
+
+def record_rows() -> list[str]:
+    """KAYIT TABLOSUNUN GÖVDESİ — anlatı tablosu bilerek DIŞARIDA."""
+    lines = DEFTER.read_text(encoding="utf-8").splitlines()
+    start = next(
+        (i for i, ln in enumerate(lines) if ln.startswith(RECORD_HEADER)), None
+    )
+    if start is None:                       # başlık yoksa SESSİZ GEÇME
+        raise SystemExit(
+            f"KAYIT TABLOSU BAŞLIĞI BULUNAMADI ({RECORD_HEADER!r}) — "
+            "defterin yapısı değişmiş; kapı ne taradığını bilmiyor"
+        )
+    out: list[str] = []
+    for ln in lines[start + 2:]:            # +2: başlık + `|---|` ayıracı
+        if not ln.startswith("|"):
+            break
+        out.append(ln)
+    return out
+
+
+def record_ids() -> list[str]:
+    """Gövdedeki ID hücreleri — AYNEN, normalize edilmeden.
+
+    Benzersizlik çapası bunu kullanır: `J-191` ile `J-191 (devam)`
+    **farklı** hücrelerdir (kasıtlı devam), `J-105` ile `J-105`
+    **aynıdır** (çakışma). *Ayrımı kural icat ederek değil, yazarın
+    yazdığı dizgeye bakarak yapıyoruz.*
+    """
+    return [m.group(1) for ln in record_rows() if (m := ID_CELL.match(ln))]
+
 
 def defter_numbers() -> set[str]:
     """Deftere yazılmış J numaraları. Birleşik kayıt (J-185/186) AÇILIR."""
     out: set[str] = set()
-    for line in DEFTER.read_text(encoding="utf-8").splitlines():
-        m = ROW.match(line)
-        if not m:
-            continue
-        raw = m.group(1)                      # "J-185/186"
-        head, *rest = raw.split("/")          # "J-185", ["186"]
-        out.add(head)
-        for tail in rest:
-            out.add(f"J-{tail}")
+    for raw in record_ids():
+        for num in re.findall(r"\d+", raw):   # "J-185/186" → 185, 186
+            out.add(f"J-{num}")
     return out
 
 
@@ -177,6 +241,68 @@ def self_test() -> bool:
     # defter satırı biçimi
     check("defter-satırı", bool(ROW.match("| J-224 | ders | P0 | … |")), True)
     check("defter-prose", bool(ROW.match("## J-224 bir şey")), False)
+
+    # ⭐ KATMAN ÇAPASI — İKİ YÖNLÜ (J-237)
+    #
+    # ÖTMELİ yönü: anlatı satırı kayıt SAYILMAMALI. Bunu dizgeyle değil,
+    # GERÇEK dosyayla sınıyoruz — çünkü kusur tam olarak "desen doğruydu,
+    # KAPSAM yanlıştı"tı ve bir dizge fixture'ı o kapsamı taklit edemez.
+    body = record_rows()
+    check("gövde-dolu", len(body) > 200, True)
+    check("gövde-hepsi-kayıt", all(ID_CELL.match(ln) for ln in body), True)
+    # Anlatı tablosu GERÇEKTEN dışarıda mı.
+    #
+    # 🪤 İLK SÜRÜM BUNU `"J-095" not in defter_numbers()` DİYE SINADI ve
+    # **kusur kapanınca kontrol ÖLDÜ** — J-095'e gerçek kayıt yazıldığı an
+    # öz-test kırmızıya döndü, oysa çapa kusursuz çalışıyordu.
+    # > ***CANLI BİR KUSURA DAYANAN POZİTİF KONTROL, KUSUR DÜZELİNCE
+    # > YANLIŞ ALARMA DÖNÜŞÜR*** — kontrol, kusurun VARLIĞINI değil,
+    # > mekanizmanın DAVRANIŞINI ölçmeli.
+    # Kalıcı biçim: dosyada `| J-n` biçimli AMA gövde DIŞINDA satır var mı,
+    # ve çapa onları gerçekten dışarıda tutuyor mu. (Anlatı tablosu silinse
+    # bile bu kontrol anlamlı kalır: o zaman "dışarıda satır 0" olur ve
+    # aşağıdaki ikinci `check` kendiliğinden konuyu haber verir.)
+    raw = DEFTER.read_text(encoding="utf-8").splitlines()
+    body_set = set(body)
+    outside = [ln for ln in raw if ID_CELL.match(ln) and ln not in body_set]
+    check("gövde-dışı-satır-VAR", len(outside) > 0, True)  # bugün: anlatı ×4
+    check(
+        "gövde-dışı-hiçbiri-gövdede-değil",
+        any(ln in body_set for ln in outside),
+        False,
+    )
+    # SUSMALI yönü: gövdedeki gerçek kayıtlar hâlâ görülüyor. (Çapa fazla
+    # dar olsaydı burası düşerdi ve kapı 235 kaydı birden "eksik" sayardı.)
+    for probe in ("J-001", "J-094", "J-191", "J-194", "J-236"):
+        check(f"gövde-içeriyor-{probe}", probe in defter_numbers(), True)
+
+    # ⭐ GENİŞLETİLMİŞ ID HÜCRESİ — düşen iki kayıt geri geldi mi
+    cells = record_ids()
+    check("satır==hücre", len(cells), len(body))
+    for suffixed in ("J-191 (devam)", "J-194b"):
+        check(f"ekli-ID-{suffixed}", suffixed in cells, True)
+    check("eski-desen-bunu-kaçırıyordu",
+          bool(ROW.match("| J-194b | genişletme |")), False)
+
+    # ⭐ BENZERSİZLİK ÇAPASI — İKİ YÖNLÜ
+    def clash(seq: list[str]) -> list[str]:
+        d: dict[str, int] = {}
+        for x in seq:
+            d[x] = d.get(x, 0) + 1
+        return sorted(k for k, v in d.items() if v > 1)
+
+    # ÖTMELİ — aynı ID iki kez (gerçek hâl: J-105)
+    check("çakışma-ötüyor", clash(["J-105", "J-104", "J-105"]), ["J-105"])
+    # 🪤 AYNI KUSUR BURADA DA VARDI: ilk sürüm `clash(cells) == ["J-105"]`
+    # diyordu — yani **o günkü kusurun kendisini** bekliyordu. J-105
+    # `(kapanış)` ekini alınca öz-test kırmızıya döndü, oysa çapa doğru
+    # çalışıyordu. Bugün bu tuzağa **iki ayrı kontrolde** düştüm.
+    # > *Bir kontrol, düzeltilmesini istediğin şeyi BEKLİYORSA, düzeltme
+    # > geldiği gün seni cezalandırır.* Beklenen hâl DÜZELMİŞ hâldir;
+    # > kapının ötme yeteneği ise SENTETİK veriyle sınanır (üstteki satır).
+    check("gerçek-defterde-çakışma-YOK", clash(cells), [])
+    # SUSMALI — kasıtlı devam AYNI ID değildir; çapa bunu çakışma saymamalı
+    check("devam-susuyor", clash(["J-191", "J-191 (devam)", "J-194b"]), [])
 
     # ③ TABAN TEMİZ Mİ — Gravita'nın 47'yi yakalayan sorusu
     nums = defter_numbers()
@@ -258,9 +384,51 @@ def main() -> int:
         f"  B · çapalı {attributed} − benzersiz {len(referenced)} = {b_gap}  "
         f"(aynı kayıt numarasına birden fazla commit)"
     )
+    # ⭐ BENZERSİZLİK ÇAPASI (J-237) — "satır sayısı == benzersiz ID".
+    #
+    # Ölçüldü: gövdede **iki ayrı `J-105`** var (biri kapanış, biri bulgu)
+    # ⇒ ***bir atıf İKİ kayda çözülüyor*** ve hiçbir şey ötmüyordu. Sayı ile
+    # kimlik aynı şey değil: bir tabloda 235 satır olması, 235 kayıt olduğu
+    # anlamına gelmez. Çakışma **ID hücresi AYNEN eşitse** sayılır — bu
+    # yüzden `J-191` ↔ `J-191 (devam)` çakışma DEĞİL (kasıtlı devam).
+    ids = record_ids()
+    seen: dict[str, int] = {}
+    for one in ids:
+        seen[one] = seen.get(one, 0) + 1
+    clashes = sorted(k for k, v in seen.items() if v > 1)
+    rows_n = len(record_rows())
+    print(
+        f"  C · kayıt satırı {rows_n} · ID hücresi {len(ids)} · benzersiz "
+        f"{len(seen)} → çakışma {len(clashes)}"
+        + (f"  🔴 {clashes}" if clashes else "  ✅")
+    )
+    if rows_n != len(ids):
+        print(
+            f"  🔴 {rows_n - len(ids)} kayıt satırının ID HÜCRESİ okunamadı — "
+            "sayaç sessizce eksik sayıyor"
+        )
+
+    # Kimlik kusuru da KIRMIZI — bir atıfın iki kayda çözülmesi, bir kaydın
+    # hiç yazılmamış olması kadar ağırdır: ikisinde de "J-n" bir KAYDA
+    # götürmüyor. (Biri sıfır kayda, öteki ikiye.)
+    integrity = bool(clashes) or rows_n != len(ids)
+
+    # TAZELİK HÜKMÜ HER ZAMAN BASILIR — kimlik kusuru onu GİZLEMEZ.
+    # (Mutasyon 1'de ölçüldü: iki hüküm tek `return`e bağlıyken, kimlik
+    # kırmızıysa tazelik satırı hiç basılmıyordu. *İki ayrı ölçüm, iki ayrı
+    # satır* — A/B ayrımının aynısı, bu kez hükümlerde.)
     if not missing:
         print("  ✅ commit'te anılıp deftere YAZILMAMIŞ kayıt: 0")
+    if not missing and not integrity:
         return 0
+    if integrity:
+        print(
+            "\n  🔴 KİMLİK KUSURU: bir `J-n` atfı TEK bir kayda çözülmüyor.\n"
+            "  Çakışan ID, defterdeki en ucuz sessiz hatadır — okuyan\n"
+            "  yanlış kaydı okur ve YANLIŞ OKUDUĞUNU BİLMEZ."
+        )
+    if not missing:
+        return 1
     print(f"  🔴 DEFTERE YAZILMAMIŞ {len(missing)} kayıt:")
     for n in missing:
         print(f"     {n} ← {referenced[n]}")

@@ -40,7 +40,14 @@ echo "commit kapısı 3/4: motor süiti…"
 # kaydı ZORLAR. Böylece anlık iş bloklanmaz, BİRİKME imkânsızlaşır.
 # (2026-08-12'de altı kayıt tam böyle birikmişti: J-217…J-222 commit'lendi,
 # deftere hiç geçmedi, ve yalnız bir çapa aramasıyla fark edildi.)
+# ⚠️ ÖZ-TESTLER ÖNCE — bir kapının kendi doğruluğu, kapının SONUCUNDAN önce
+# gelir. Bugüne kadar `--self-test` HİÇBİR yerden koşulmuyordu: iki yönlü
+# sabotaj kontrolleri dosyada duruyordu ama hiç çalışmıyordu.
+# > *İzlenen bir kapı, tetiklenmiyorsa bir belgedir.* (Taze-klon `hooksPath`
+# > boşluğunun aynısı, bu kez kapının KENDİ öz-testinde.)
 echo "commit kapısı 4/4: defter tazeliği…"
+python3 tool/defter_freshness.py --self-test
+python3 tool/defter_inventory.py --self-test
 python3 tool/defter_freshness.py
 
 echo "commit kapısı: 4/4 yeşil — commit devam ediyor."
