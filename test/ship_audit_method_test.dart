@@ -52,7 +52,7 @@ void main() {
     expect(doc.existsSync(), isTrue, reason: 'yöntem belgesi yok');
     final List<List<String>> rows = auditRows();
     // Vakum muhafızı: boş bir tablo, aşağıdaki her şeyi sessizce geçirirdi.
-    expect(rows.length, greaterThanOrEqualTo(14),
+    expect(rows.length, greaterThanOrEqualTo(15),
         reason: 'yalnız ${rows.length} denetim kalemi okundu — ayrıştırma '
             'bozuk ya da tablo daraldı; iki durumda da sonuç anlamsız');
     expect(rows.first.length, 6,

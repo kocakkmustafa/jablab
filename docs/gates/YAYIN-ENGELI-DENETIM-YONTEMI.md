@@ -83,7 +83,7 @@ denetleniyor: **pozitif kontrol sütunu boş bir kalem eklenemez.**
 | 6 | gizlilik manifesti | `PrivacyInfo.xcprivacy` var mı, beyanı ölçümle uyuşuyor mu? | dosya + üç anahtar; `AccessedAPITypes` **pinli çekirdeğe karşı** ölçülür | pinli çekirdek okunabildi mi (`JsonlSessionStore` bulunuyor mu) | hat-yereli |
 | 7 | ikon | uygulama ikonu hâlâ şablon varsayılanı mı? | **HASH karşılaştırması**: her yoğunluk `md5` ile Flutter şablonuyla kıyaslanır (git geçmişi DEĞİL) | şablon dosyası bulunabildi mi — `md5` iki tarafta da hesaplandı mı | kurucu |
 | 8 | mağaza iddiaları | liste metnindeki HER cümle ölçüme dayanıyor mu? | her canlı alan ayrı iddiaya bölünür, tek tek koda karşı | canlı alan sayısı sayılır; "tamamı denetlendi" iddiası kapsam kanıtı ister | hat-yereli (içerik) · kurucu (onay) |
-| 9 | otomatik yayın | ASC `AFTER_APPROVAL` mı — onay anında kendiliğinden yayımlanır mı? | ASC sürüm ayarı (erişim gerektirir) | *(JabLab'da ASC kaydı YOK — kalem **uygulanamaz**, ama listede kalır)* | kurucu |
+| 9 | otomatik yayın | ASC `AFTER_APPROVAL` mı — onay anında kendiliğinden yayımlanır mı? | ASC `appStoreVersions.releaseType` **okunur** (app-publish MCP) | **kaynağa ERİŞİLDİ mi** — `apple_list_apps` kayıt döndürdü mü (bkz. 15) | kurucu (karar) · hat (ölçüm) |
 | 10 | cihaz kanıtı | kamera/ölçüm yolu gerçek cihazda koştu mu? | `kanit/`-türü artefakt aranır; **yokluğu iddia edilmez** | artefakt dizini okunabiliyor mu | kurucu |
 | 11 | sürüm | sürüm numarası bir BEYANDIR — `0.x` "ön sürüm" der | `pubspec.yaml` | — (tek satır, ölçüm değil karar) | kurucu |
 | 12 | **araç zinciri** | **Gradle görevleri gerçekten KOŞUYOR mu — koşmuyorsa sebep hangi KATMANDA?** | `./gradlew :app:assembleDebug --dry-run`; düşerse **yığın izi** alınır (aşağı bak) | debug dry-run **BUILD SUCCESSFUL** vermeli; vermiyorsa üstteki hiçbir Gradle-tabanlı kalem ölçülemez | hat-yereli (teşhis) · kurucu (makine geneli düzeltme) |
@@ -203,3 +203,42 @@ okunur;*** geçmiş okunamayabilir, hash okunur.
 > kapatmak, listeyi kimin yazdığını sormadan denetim yapmaktır."***
 
 Bu cümle, bu belgenin **neden var olduğunun** en iyi ifadesi.
+
+---
+
+## 15 · ERİŞİM GEREKTİREN KALEM — "YOK" ile "ÖLÇÜLEMEDİ" AYRI SINIFTIR
+
+| # | katman | soru | nasıl ölçülür | pozitif kontrol | sınıf |
+|---|---|---|---|---|---|
+| 15 | erişim | erişim gerektiren bir kalemi ölçerken **kaynağa gerçekten ERİŞTİM mi**? | kalemi ölçmeden önce kaynağın kendisi yoklanır (ör. `apple_list_apps` kayıt döndürüyor mu) | **erişim kanıtı**: kaynak **boş olmayan** bir sonuç döndürmeli; dönmüyorsa cevap *"YOK"* değil ***"ÖLÇÜLEMEDİ"*** | hat-yereli (ölçüm) |
+
+> ***Bir kaydın DEPODA olmaması, MAĞAZADA olmaması demek değildir.***
+> Erişim gerektiren bir kalemi **erişimsiz** ölçmeye çalışmak *"yok"* cevabı
+> üretir — **ve o cevap ölçüm gibi görünür.**
+
+🪤 **İKİ HAT AYNI HATAYI YAPTI, ikisi de kendi deposuna baktı:**
+Gravita ASC'yi **depoda** aradı (`grep com.yulalab.gravita`), bulamayınca
+*"kayıt YOK → kalem uygulanamaz"* yazdı. **JabLab aynısını yaptı** — ⑨'un
+ilk hâli *"JabLab'da ASC kaydı YOK, kalem uygulanamaz"* diyordu ve dayanağı
+kurucu brifinin *"repoda sıfır taslak … store kaydı bekliyor"* satırıydı:
+**devralınmış, ölçülmemiş bir iddia.**
+
+✅ **ÖLÇÜLDÜ (2026-08-12, bu hattın kendi erişimiyle — koordinatörün
+sonucunu kopyalamadan):** `apple_list_apps` **9 uygulama** döndürdü ve
+JabLab **kayıtlı**: `id 6794715669` · *"JabLab: Shadow Training"* ·
+`com.yulalab.jablab` · sku `yula-jablab-2026` · oluşturma **2026-07-25**.
+`apple_list_versions` → sürüm **`1.0`**, durum `PREPARE_FOR_SUBMISSION`,
+**`releaseType: AFTER_APPROVAL`.**
+
+→ Kalem **uygulanamaz DEĞİL, CANLI**: bugün gönderilip onaylansa **kimse
+bir düğmeye basmadan yayımlanır.**
+
+📌 Ve bu ölçüm iki satırı daha çürüttü:
+* *"ASC erişimi hiçbir hatta yok"* — **yanlış**, bu oturumdan okundu.
+* Sürüm kalemi (⑪) *"pubspec `0.1.0+1`"* diyordu; **ASC'de sürüm zaten
+  `1.0`** — yani iki yüzey **birbirinden farklı** ve karar sanıldığından
+  daha ilerlemiş.
+
+⚠️ **Kalemin sınıfı da ikiye bölündü** (⑤ imzayla aynı desen): **ölçüm**
+hat-yereli ve bugün yapılabiliyor · **karar** (otomatik yayın açık mı
+kalsın) kurucunun.
