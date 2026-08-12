@@ -10,5 +10,5 @@ Toplam: 1 · kategori kapısı: "unblocked by" olmayan HİÇBİRİ (varsa üreti
 
 - **kamera akışının gerçek görüntüsü (Texture tabanlı önizleme)**
   - unblocked by: Texture-based preview (registrar.textures), deliberately deferred, docs/70-KAMERA-KOPRUSU-SOZLESMESI.md
-  - kaynak: `lib/app/skeleton_overlay.dart:12`
+  - kaynak: `lib/app/skeleton_overlay.dart:13`
 
