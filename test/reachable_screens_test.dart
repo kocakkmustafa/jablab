@@ -9,6 +9,7 @@ import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/settings_page.dart';
 import 'package:jablab/shell_candidate/library_pages.dart' show WhyNotPage;
+import 'package:jablab/shell_candidate/session_flow.dart';
 
 /// GEZİLEBİLİR EKRAN SAYISI — kapıdan ölçülür, beyandan değil (J-167).
 ///
@@ -38,12 +39,38 @@ import 'package:jablab/shell_candidate/library_pages.dart' show WhyNotPage;
 /// sayının hangi kuralla çıktığı bilinmezse **hatlar karşılaştırılamaz**
 /// (koordinatörün Ostinato'da 3↔11 sapması tam bu).
 ///
+/// ## ⚠️ 2026-08-12 YENİDEN ÖLÇÜMÜ — GEVŞEK SAYI KAPISIZDI
+///
+/// J-167'de katı **6** bir kapıyla korunuyordu ama gevşek **11** yalnız bu
+/// yorumda yazılıydı. Korumasız bir sayı, dayandığı gerçek değiştiği gün
+/// **sessizce** yalan olur — ve bu sayı devir notuna, panoya ve aile
+/// karşılaştırmasına giriyor. *Kusur iddiada değil, korumasızlığındaydı*
+/// (M-F-436). Artık **her iki bileşen de YÜRÜNEREK** ölçülüyor: perdeler
+/// `onboarding-next`e basılarak, aşamalar `advance-button`a basılarak —
+/// **sabit okunarak değil**, çünkü bir sabitin değeri o değere GİDEN yolun
+/// varlığını kanıtlamaz (M-F-503).
+///
 /// ## ⚠️ SAYILMAYANLAR — adıyla
 ///
 /// * `CameraHarnessScreen` — `kDebugMode` dışında **açılmıyor**; sevk
 ///   edilen üründe kullanıcı oraya gidemez.
 /// * `ContentFailureScreen` — yalnız içerik yüklenemezse çiziliyor;
 ///   kontrole basarak ulaşılmıyor.
+/// Katı okuma: `pumpAndSettle` ile ulaşılan AYRI rota sayısı. Aşağıdaki
+/// "rota 2-6/6" testinin beklediği küme bu sayıyı zaten kilitliyor.
+const int kStrictRoutes = 6;
+
+/// Karşılama perdesi sayısı — "perde yürüyüşü" testi bunu YÜRÜYEREK doğrular.
+const int kOnboardingPanels = 3;
+
+/// Seans aşaması sayısı — "aşama yürüyüşü" testi bunu YÜRÜYEREK doğrular.
+const int kSessionStages = 4;
+
+/// Gevşek okuma: karşılama ve seans, katı okumada BİRER rota sayılıyor;
+/// gevşek okumada yerlerine kendi perdeleri/aşamaları geçiyor.
+const int kLooseScreens =
+    kStrictRoutes - 2 + kOnboardingPanels + kSessionStages;
+
 void main() {
   const OnboardingStore seen = OnboardingStore(seenOverride: true);
 
@@ -119,6 +146,99 @@ void main() {
       'onboarding', 'select', 'settings', 'whyNot', 'course', 'session',
     }, reason: 'gezilebilir rota kümesi değişti — sayı bayatladı, devir '
         'notu ve pano güncellenmeli (J-167)');
+  });
+
+  // ⚠️ Perde ve aşama yürüyüşleri AYRI testler — aynı gövdede iki kez
+  // `pumpWidget` bu koşumda ikinci ağacı güvenilir kurmuyor (yukarıdaki
+  // aynı not).
+  testWidgets('gevşek okuma ①: KARŞILAMA PERDELERİ yürünerek sayılıyor',
+      (WidgetTester t) async {
+    await t.runAsync(() async {
+      await t.pumpWidget(
+          const JabLabApp(onboarding: OnboardingStore(seenOverride: false)));
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    });
+    await t.pumpAndSettle();
+
+    // Sayılan şey `_steps` sabiti DEĞİL, düğmeye basarak GERÇEKTEN görülen
+    // perde sayısı: ulaşılamayan bir perde bu sayıya giremez.
+    int panels = 0;
+    while (find.byType(OnboardingPage).evaluate().isNotEmpty) {
+      panels++;
+      expect(panels, lessThanOrEqualTo(kOnboardingPanels + 4),
+          reason: 'karşılama kapanmıyor — "Start" son perdede bitirmiyor');
+      await t.tap(find.byKey(const Key('onboarding-next')));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 400));
+    }
+
+    expect(panels, kOnboardingPanels,
+        reason: 'perde sayısı değişti — gevşek ekran sayısı ($kLooseScreens) '
+            'artık yanlış; devir notu ve pano güncellenmeli');
+  });
+
+  testWidgets('gevşek okuma ②: SEANS AŞAMALARI yürünerek sayılıyor',
+      (WidgetTester t) async {
+    await t.runAsync(() async {
+      await t.pumpWidget(const JabLabApp(onboarding: seen));
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    });
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('item-boxing')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('course-boxing.foundations')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('lesson-boxing.foundations.stance')));
+    await t.pumpAndSettle();
+
+    // Aşama, RAY'dan (hep dört rozet çizer) değil, ekranın o an TAŞIDIĞI
+    // `stage` değerinden okunuyor — ray bir beyandır, bu bir konumdur.
+    final Finder flow = find.byType(SessionFlowScaffold);
+    SessionStage? stageNow() => flow.evaluate().isEmpty
+        ? null
+        : t.widget<SessionFlowScaffold>(flow).stage;
+
+    final Set<SessionStage> walked = <SessionStage>{};
+    int taps = 0;
+    for (SessionStage? s = stageNow(); s != null; s = stageNow()) {
+      walked.add(s);
+      expect(taps++, lessThanOrEqualTo(kSessionStages + 2),
+          reason: 'seans kapanmıyor — son aşamada "Done" ekrandan çıkarmıyor');
+      await t.tap(find.byKey(const Key('advance-button')));
+      await t.pump();
+      // ⚠️ SABİT SÜRE YETMİYOR — ölçüldü 2026-08-12. Son aşamadaki "Done"
+      // ekranı POP ediyor ve pop geçişi 400 ms'de bitmiyordu: döngü bir tur
+      // daha dönüyor, aşamayı İKİNCİ kez sayıyor (Set yuttuğu için sayı
+      // tesadüfen doğru kalıyordu) ve geçiş sırasında `IgnorePointer` altında
+      // kalan düğmeye basıp `tap()` ıskalatıyordu. *Iskalayan bir yürüyüş,
+      // yürünmemiş bir yolu yürünmüş sayabilir* — o yüzden burada sabit süre
+      // değil, GERÇEK bir durum değişikliği bekleniyor: aşama ilerledi ya da
+      // ekran kapandı. Sınırlı (1,2 s) — takılan bir geçiş sessizce beklemez,
+      // yukarıdaki tur sınırına çarpar.
+      for (int f = 0; f < 6; f++) {
+        await t.pump(const Duration(milliseconds: 200));
+        if (stageNow() != s) break;
+      }
+    }
+
+    expect(walked.length, kSessionStages,
+        reason: 'yürünen aşama sayısı değişti — gevşek ekran sayısı '
+            '($kLooseScreens) artık yanlış; devir notu ve pano '
+            'güncellenmeli. Yürünenler: ${walked.map((SessionStage s) => s.name)}');
+    // Bir aşamanın ENUM'da olması, ona GİDEN yolun olması değildir: kümeyi
+    // adıyla kilitliyoruz ki sessizce atlanan bir aşama sayıyı düşürmesin.
+    expect(walked, SessionStage.values.toSet(),
+        reason: 'bir aşamaya yürünerek ulaşılamıyor');
+  });
+
+  test('gevşek okuma ③: TÜRETİLEN SAYI — bileşen değişirse burası öter', () {
+    // Bilerek totoloji: bileşenlerden biri (① ya da ②) değiştiğinde bu satır
+    // düşer ve sabiti güncelleyen kişi, DIŞARIYA verilen sayının da
+    // değiştiğini görmek ZORUNDA kalır. J-167'de eksik olan tam buydu —
+    // gevşek sayı bir yorumda yaşıyordu, kimse ona çarpmıyordu.
+    expect(kLooseScreens, 11,
+        reason: 'gevşek ekran sayısı değişti: devir notu, 📊 pano ve aile '
+            'karşılaştırması bu sayıyı taşıyor — üçü de güncellenmeli');
   });
 
   test('SAYILMAYANLAR adıyla — ve gerekçeleri ÖLÇÜLÜ', () {
