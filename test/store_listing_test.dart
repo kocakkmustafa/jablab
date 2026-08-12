@@ -84,13 +84,21 @@ void main() {
   test('ÖLÇÜM-BEYANI ÜÇLÜSÜ description İÇİNDE VAR', () {
     // HonestyBox'ın (Discipline.measured/notMeasured) mağaza karşılığı —
     // ne ölçtüğünü/ölçmediğini söyleyen satır OLMALI (koordinatör şartı).
+    // ⚠️ Başlık J-212'de 'MEASURED AND GRADED' → 'MEASURED' oldu: bugün
+    // HİÇBİR ŞEY puanlanmıyor (lessonClass:'unscored' sabit, gradedBands
+    // '—', ruleset calibrationPending:true), yani 'GRADED' başlığı mağazada
+    // desteksiz bir tier iddia ediyordu. Üçlü YAPI şartı düşmedi.
+    //
+    // Ölçüt ESKİSİNDEN SIKI: başlık artık KENDİ SATIRI olmalı. Eski
+    // `contains('MEASURED AND GRADED')` gövde içinde geçen bir dizgeyle de
+    // tatmin olurdu; bölüm başlığı arıyorsak satır aramalıyız.
     final String desc = listing['description'] as String;
     for (final String marker in <String>[
-      'MEASURED AND GRADED',
+      'MEASURED',
       'WATCHED AND COACHED, NOT SCORED',
       'WHAT WE DO NOT MEASURE',
     ]) {
-      expect(desc, contains(marker),
+      expect(desc, contains('\n$marker\n'),
           reason: 'description ölçüm-beyanı üçlüsünün "$marker" bölümünü '
               'kaybetmiş — mağaza metni HonestyBox\'ın karşılığını taşımıyor');
     }
@@ -128,10 +136,10 @@ void main() {
     // `evaluateAt:['COMBINATION_END']` istiyor, `COMBINATION_END` motor
     // kodunda SIFIR yerde geçiyor, `sequenceMismatch` (condition alanı)
     // tek yerde deklare edilip HİÇBİR YERDE atanmıyor — bu iki hata
-    // KALICI ERİŞİLEMEZ. İddia MEASURED AND GRADED'dan NOT MEASURE'a
+    // KALICI ERİŞİLEMEZ. İddia MEASURED bölümünden NOT MEASURE'a
     // taşındı. Bu test o taşımanın GERİ ALINMADIĞINI korur.
     final String desc = listing['description'] as String;
-    final int measuredIdx = desc.indexOf('MEASURED AND GRADED');
+    final int measuredIdx = desc.indexOf('\nMEASURED\n');
     final int notMeasuredIdx = desc.indexOf('WHAT WE DO NOT MEASURE');
     expect(measuredIdx, greaterThanOrEqualTo(0));
     expect(notMeasuredIdx, greaterThan(measuredIdx));
