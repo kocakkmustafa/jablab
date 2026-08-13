@@ -149,6 +149,19 @@ void main() {
     await t.tap(find.byKey(const Key('settings-button')));
     await t.pumpAndSettle();
     kaydet(t, 'AYARLAR');
+
+    // ── NEDEN YOK sayfası — ayarlardan BİR TIK ötede, ve o da okunmuyordu.
+    // ⚠️ Bu sayfa `shell_candidate/` altında (DONMUŞ ağaç) ama **canlı bir
+    // rota**: `jablab_app.dart:427` onu `MaterialPageRoute` ile itiyor.
+    // *Donmuş olmak, ulaşılamaz olmak değildir* — ve ürünün 12 kapsam-dışı
+    // gerekçesinin tamamı burada yaşıyor, yani dürüstlük yükü en ağır
+    // yüzeylerden biri.
+    await t.tap(find.byKey(const Key('why-not-link')));
+    await t.pumpAndSettle();
+    kaydet(t, 'NEDEN YOK (kapsam-dışı gerekçeleri)');
+    await t.pageBack();
+    await t.pumpAndSettle();
+
     // Geri dön: yürüyüşün geri kalanı seçim ekranından devam ediyor.
     await t.pageBack();
     await t.pumpAndSettle();
