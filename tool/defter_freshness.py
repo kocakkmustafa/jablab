@@ -435,11 +435,42 @@ def yon_iki(referenced: set[str]) -> dict:
             continue
         aday += 1
         kova[siniflandir(c[2], c[-3], c[-2], resolve)].append(ident)
-    gedik = [i for i in kova["gedik"] if i not in MUAF]
+    # ══════════════════════════════════════════════════════════════════
+    # ⛔ UÇUŞTAKİ KAYIT — kapı kendi ürününü CEZALANDIRMASIN (J-245)
+    #
+    # 🔴 KUSUR CANLI ÖLÇÜLDÜ: `J-244` kaydı yazıldı, commit mesajı onu
+    # anıyordu, ama **pre-commit kapısı commit'ten ÖNCE koşuyor** ⇒ o anda
+    # kayıt "yazılı ama anılmıyor" ve kapı **commit'i reddetti**. Yani kapı,
+    # kendisini tatmin edecek commit'in oluşmasını engelliyordu.
+    # > ***BİR KAPI KENDİ ÜRÜNÜNÜN İLERLEMESİNİ CEZALANDIRIYORSA,
+    # > ÜRÜNÜN DÜŞMANIDIR.***
+    #
+    # 🪤 Ve `J-243` bunu **TESADÜFEN** aşmıştı: kapanış kanıtında BAŞKA
+    # kayıtların SHA'larını andığı için ③ onu `izli` saydı. Yani bu dosyada
+    # adıyla yazılı artık risk (ii) — *"③ commit'in VAR olduğunu doğrular,
+    # DOĞRU commit olduğunu değil"* — bir turu sessizce kurtardı ve kusuru
+    # bir tur GİZLEDİ. *Bir kusurun bir kez fark edilmemesi, o kusurun
+    # yokluğu değil; onu maskeleyen ikinci bir kusurun kanıtıdır.*
+    #
+    # ⚠️ DÜZELTME DAR TUTULDU — "en yeniyi affet" DEĞİL:
+    # Yalnız **en yeni ATIFLI kaydın ÖTESİNDEKİ** numaralar uçuşta sayılır.
+    # Eski bir gedik hâlâ kırmızıdır; sayaç geriye doğru KÖR DEĞİLDİR.
+    # (Aksi hâlde "her zaman en yeni kayıt muaf" derdik ve bir oturum
+    #  kayıtları sürekli tazeleyerek borcunu SONSUZA KADAR öteleyebilirdi.)
+    def _no(s: str) -> int:
+        return int(re.findall(r"\d+", s)[0])
+
+    son_atifli = max((_no(n) for n in referenced), default=0)
+    ucusta = [i for i in kova["gedik"] if _no(i) > son_atifli]
+    gedik = [
+        i for i in kova["gedik"] if i not in MUAF and i not in ucusta
+    ]
+    kova["uçuşta"] = ucusta
     return {
         "numara": len(oksuz_num), "satır": aday, **kova,
         "muaf_uygulanan": [i for i in kova["gedik"] if i in MUAF],
         "gedik_net": gedik, "erişilemeyen_depo": unreachable,
+        "son_atıflı": son_atifli,
     }
 
 
@@ -619,6 +650,22 @@ def self_test() -> bool:
     toplam = sum(len(y2[k]) for k in
                  ("açık", "iddia-etmez", "izli", "gedik", "okunamadı"))
     check("y2-payda-toplamı", toplam, y2["satır"])
+
+    # ⭐ UÇUŞ AFFI DAR MI (J-245) — yapısal değişmez.
+    # Af yalnız **en yeni atıflı kaydın ÖTESİNE** uygulanabilir; bir gün
+    # genişletilirse (örn. "son 5 kayıt muaf") burası düşer.
+    # > *Bir affın tehlikesi affettiğinde değil, SINIRI kayarken başlar.*
+    _no = lambda s: int(re.findall(r"\d+", s)[0])  # noqa: E731
+    check(
+        "uçuş-affı-yalnız-son-atıflının-ÖTESİ",
+        all(_no(i) > y2["son_atıflı"] for i in y2["uçuşta"]),
+        True,
+    )
+    check("uçuşta-gedikte-DEĞİL",
+          any(i in y2["gedik_net"] for i in y2["uçuşta"]), False)
+    # Af, ölçülen bir gerçeğe dayanmalı: hiç atıflı commit yoksa `son_atıflı`
+    # 0 olur ve af **her şeyi** yutardı. O hâl bir kusurdur, sessiz değil.
+    check("son-atıflı-ölçüldü", y2["son_atıflı"] > 0, True)
     return ok
 
 
@@ -712,6 +759,10 @@ def main() -> int:
         f"(kanıtta ÇÖZÜLEN SHA) + gedik-adayı "
         f"{len(y2['gedik_net']) + len(y2['muaf_uygulanan'])} + okunamadı "
         f"{len(y2['okunamadı'])} ✓"
+    )
+    print(
+        f"      UÇUŞTA (en yeni atıflı J-{y2['son_atıflı']} ÖTESİ, "
+        f"commit henüz oluşmadı): {len(y2['uçuşta'])} {sorted(y2['uçuşta'])}"
     )
     print(
         f"      MUAF (SABİT taban, kapı kaynağında): "

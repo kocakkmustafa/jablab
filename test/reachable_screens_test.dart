@@ -492,6 +492,52 @@ void main() {
       }
     }
 
+    // ══════════════════════════════════════════════════════════════════
+    // (a) — KOORDİNATÖR HÜKMÜNÜN İKİ ŞARTI (2026-08-13, J-244)
+    //
+    // Hüküm: *tek yönlü dedektör KABUL EDİLDİ, ikinci türetim KURULMAYACAK*
+    // — gerekçe bu ağaçta ölçüldü: ters yön YAPISAL OLARAK yanlış (kök
+    // takaslı `OnboardingPage`/`SelectPage` **hiç push edilmiyor**), yani
+    // simetrik bir uzlaşma daha güçlü değil **YANLIŞ** bir kapı kurardı.
+    //
+    // ⛔ ŞART-2 · ARTIK RİSK, ADIYLA — kapatılmadı, KAPATILAMAZ:
+    //
+    //   ***HİÇBİR KANALIN GÖRMEDİĞİ BİR EKRAN GÖRÜNMEZ KALIR.***
+    //
+    // Aday kümesi TEK kanaldan türüyor: `Scaffold(` kuran sınıf. Bu kanal
+    // yapısaldır ama TAM DEĞİLDİR — `Scaffold` kurmayan bir ekran-benzeri
+    // yüzey (kabuk içine monte olan bir görünüm, bir overlay) bu kapının
+    // paydasına HİÇ girmez ve eksikliği **sessizdir**: kapı onu "varılamadı"
+    // diye de saymaz, çünkü aday bile değildir.
+    // 📌 Ölçüldü, KOPYALANMADI — ve devralınan sayı YANLIŞ ÇIKTI:
+    //    devir notu *"ayrışma 4"* diyordu, **gerçek 5**. Türetim replikası
+    //    kapının `12`sini birebir ürettiği için replika sadık; eksik olan
+    //    **`LiveCoachSurface`** idi. Sebep ölçüldü: devralınan taramanın
+    //    deseni `Page|Screen|View`, `Surface` ile bitenleri **hiç görmüyor**.
+    //    > ***(a) MADDESİNİN KENDİ UYARISI, (a)'YI ÖLÇEN TARAMAYI ISIRDI:***
+    //    > *bir desenin kapsamı, onu yazanın adlandırma alışkanlığı kadardır.*
+    //    5 sınıf: `LibraryPage` · `ProgressPage` · `SessionSummaryView` ·
+    //    **`LiveCoachSurface`** (dördü dondurulmuş `shell_candidate/`) +
+    //    **`SkeletonPreview`** (`app/` altında — CANLI ağaçta, asıl soru bu).
+    //    ⛔ Ve BU sayı da tam değil: benim desenim de bir alışkanlık
+    //    (`Page|Screen|View|Preview|Surface`). İddia edilen tek şey **5 > 4**.
+    //    Kapsam hükmü koordinatörde.
+    //
+    // ⚠️ ŞART-1 · VAKUM — ARTIK DOĞRUDAN, ÖRTÜK DEĞİL.
+    // Koruma bugüne kadar `knownFloor ⊆ derived` üzerinden GEÇİŞLİYDİ ve
+    // gücü `knownFloor`un dolu kalmasına bağlıydı ⇒ o küme bir gün
+    // boşaltılsaydı **iki muhafız aynı anda vakuma düşerdi**.
+    // > ***İKİ KONTROLÜN AYNI VARSAYIMA DAYANMASI, İKİ KONTROL DEĞİL BİRDİR.***
+    // ══════════════════════════════════════════════════════════════════
+    expect(
+      derived,
+      isNotEmpty,
+      reason: 'VAKUM: `Scaffold(` deseni HİÇ aday bulamadı. Tek kanallı bir '
+          'türetimin en gerçek riski budur — kanal susarsa "0 varılamayan" '
+          'vakum-doğru olarak YEŞİL öter. `lib/` taranmadıysa ya da desen '
+          'bozulduysa burası ötmeli.',
+    );
+
     // ── (e) ELLE BİLİNEN KÜME — KAYNAK DEĞİL, TÜRETİMİN POZİTİF KONTROLÜ ──
     //
     // ⚠️ **BU KÜME BİR ALT SINIRDIR, TAM ENVANTER DEĞİLDİR.** Aday kümenin
