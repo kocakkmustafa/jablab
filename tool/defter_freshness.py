@@ -219,6 +219,230 @@ def commit_numbers(limit: int) -> tuple[dict[str, str], int, int]:
     return found, attributed, unattributed, mentioning, len(titles)
 
 
+# ══════════════════════════════════════════════════════════════════════
+# YÖN-2 — "deftere YAZILI ama hiçbir commit ANMIYOR" (J-243, A6)
+#
+# Kapı 2026-08-13'e kadar TEK YÖNLÜYDÜ: yalnız `referenced − written`.
+# Ters yön ölçüldü: **109 numara / 110 satır** (iki birim, aşağıda ayrı
+# basılır). Ham hâliyle kırmızı yapmak YANLIŞ olurdu — bir `bulgu` ya da
+# `karar` kaydının commit üretmemesi kusur değil, DOĞASIDIR.
+#
+# ## BİRİM NEREDEN GELDİ — iki kardeş, iki farklı birim, ve İKİSİ DE ALINMADI
+#
+# Gravita birimi (`Tür` sütunu) ve Lissom birimi (`Kapanış kanıtı` bir KOD
+# dosyası anıyor mu) bu ağaçta İKİSİ DE ölçüldü:
+#     ADAY-A → 34 kırmızı · ADAY-B → 26 kırmızı · KESİŞİM yalnız **13**
+# ⇒ İki birim aynı şeyi ÖLÇMÜYOR. Birini kopyalasaydım sonuç bir SAYI olurdu,
+#   bir ölçüm değil.
+# > ***AKTARILABİLİR OLAN DESEN DEĞİL KAVRAMDIR*** — ve ayrışma okununca
+# > her ikisinin de bu ağaca özgü yanlış-pozitifi göründü:
+#   · ADAY-B körlüğü YAPISAL: bu defterin `Kapanış kanıtı` sütunu uzun bir
+#     ANLATI; bir `bulgu` kaydı doğal olarak `engine_test.dart` diye
+#     BULGUNUN YERİNİ anar, DEĞİŞEN DOSYAYI değil. (Lissom'un alanı kısaydı.)
+#   · ADAY-A körlüğü: `görev` kayıtlarının bir kısmı kurucu-kapılı RAPORLA,
+#     plan dokümanıyla ya da BAŞKA BİR DEPODA kapanmış.
+#
+# ## KATMANLAR — hepsi bu defterin KENDİ sütunlarından türedi
+#
+#   ham 110 satır
+#     − ① `Durum` AÇIK        → borç YOK: iş henüz yapılmamış     (37)
+#     − ② `Tür` kod İDDİA ETMİYOR → bulgu/karar/ölçüm commit üretmez (44)
+#     − ③ kanıtta ÇÖZÜLEN SHA → ikinci provenans kanalı            (20)
+#     = 9 → muaf 3 → **GEDİK 0**
+#
+# 🔴 ①'i bulmam bir ÖZ-KUSUR düzeltmesiydi: önce yalnız `Tür`e bakıyordum ve
+# `açık` kayıtları gedik sayıyordum. *Bir AÇIK kaydın commit'i yoktur çünkü
+# İŞİ YAPILMAMIŞTIR.* Sütun oradaydı; bakmayan bendim.
+#
+# ⭐ ③ bu ağacın kendi bulgusu: 34 "öksüzün" **20'si hiç öksüz değildi** —
+# kaydın kendi kapanış kanıtı GERÇEK bir commit SHA'sı anıyor ve o SHA
+# çözülüyor. Kapı bunu göremiyordu çünkü yalnız COMMIT BAŞLIĞI kanalını
+# okuyordu. Kayıt→commit bağı bu defterde İKİ kanaldan kuruluyor.
+#
+# 🪤 VE BU ÖLÇÜM BENİ AZ KALSIN YANLIŞ BULGUYA GÖTÜRÜYORDU: ilk koşumda 3 SHA
+# "çözülmedi" çıktı ve *"provenans kusuru"* yazacaktım. Sebep: `motion-core`
+# bir git deposu DEĞİL — depo `motion-core/lib/` altında. Aracım oraya
+# YAPISAL OLARAK bakamıyordu.
+# > ***BİR ARACIN BULAMAMASI, ARANAN ŞEYİN YOKLUĞU DEĞİLDİR*** — ve fark,
+# > `❌` ile `⛔ ÖLÇÜLEMEDİ` arasındaki farktır. Bu yüzden aşağıda depo
+# > erişilemezse SHA "çözülmedi" DEĞİL, `ölçülemedi` sayılır.
+#
+# ## ⛔ ARTIK RİSK — ADIYLA (kapatılmadı, KAPATILAMAZ)
+#
+#   ① **Kayıt KENDİNİ sınıflandırıyor.** ① ve ② kaydın kendi `Durum`/`Tür`
+#      beyanına dayanır; `Tür=bulgu` yazan bir kayıt bu kapıdan geçer.
+#      Kapı YAZIM DİSİPLİNİNİ ölçmez, YAZILANI ölçer.
+#   ② **③ commit'in VAR olduğunu doğrular, DOĞRU commit olduğunu değil.**
+#      Çözülen bir SHA "bu iş orada kapandı" iddiasını KANITLAMAZ; yalnız
+#      iddianın gerçek bir commit'e işaret ettiğini gösterir.
+#   ③ **`workspace/` sürüm kontrolü DIŞINDA** (git kökü `jablab/app`).
+#      Ürünü DEFTER/PROGRESS olan bir kaydın commit'i OLAMAZ — muaf kümenin
+#      iki kalemi tam olarak bu.
+# ══════════════════════════════════════════════════════════════════════
+
+# 🔴 TÜRKÇE KİP TUZAĞI: Python `.lower()` `İ`de KÖRDÜR — `İÇERİK`.lower()
+# birleşen noktalı `i̇çerik` üretir ve `içerik` ile EŞLEŞMEZ. Ölçüldü: ham
+# taramada belirteç gerçekten `'i̇çeri̇k'` olarak çıktı.
+def _tr_lower(s: str) -> str:
+    return s.replace("İ", "i").replace("I", "ı").lower()
+
+
+def _norm(s: str) -> str:
+    """Süsü at — `**`, backtick, emoji. Kelimeleri BIRAK."""
+    s = re.sub(r"\*\*|\*|`", "", s)
+    return re.sub(r"[^\w\s+ığüşöçİĞÜŞÖÇ—-]", " ", s).strip()
+
+
+def tur_tokens(cell: str) -> set[str]:
+    """`Tür` hücresini belirteçlere ayır. `—` ve `(` SONRASI atılır (şerh)."""
+    t = _norm(cell).split("—")[0].split("(")[0]
+    return {_tr_lower(x).strip() for x in re.split(r"[+/,]", t) if x.strip()}
+
+
+# KOD İDDİA EDEN belirteçler — bu defterde GEÇEN 36 belirtecin tamamı
+# sınıflandırıldı (tam fonksiyon; `_UNKNOWN` yolu aşağıda).
+IDDIA_EDER = {
+    "görev", "düzeltme", "düzelt", "kapı", "betik", "genişletme",
+    "öz-düzeltme", "hüküm uygulandı", "denetim", "sabotaj", "içerik",
+}
+IDDIA_ETMEZ = {
+    "bulgu", "ölçüm", "karar", "risk", "hüküm", "ders", "envanter",
+    "sözleşme", "yöntem", "kayıt", "kural", "sınıflandırma", "öz-kusur",
+    "öz-denetim", "kusur", "eksik", "ürün", "tasarım cevabı", "p0",
+    "aile p0", "sınıf değişimi", "sessiz-yeşil bulgusu", "hüküm düzeltmesi",
+    "3 ölçüm kusuru", "kapı  2", "kapı 2",
+}
+# ⚠️ TANINMAYAN BELİRTEÇ **İDDİA EDER SAYILIR** — sessizce muaf DEĞİL.
+# Sebebi: yeni bir `Tür` kelimesi yazıldığı gün kapı SUSARSA, muafiyet
+# kümesi kimse fark etmeden büyür. *Bilinmeyen, kapıyı KONUŞTURMALIDIR.*
+
+_DURUM_ACIK = re.compile(r"\baçık\b|koordinatörde|kurucuda|sırada|devred", re.I)
+_DURUM_KAPALI = re.compile(
+    r"kapan|kapalı|düzeltildi|düzelti̇ldi̇|reddedil|rapor edildi", re.I
+)
+_SHA = re.compile(r"`([0-9a-f]{7,40})`")
+
+# ── MUAF KÜME — ⚠️ **SABİT TABAN**, ve KAPININ KAYNAĞINDA (izlenen dosya).
+#
+# 🔴 NEDEN DEFTER'DE DEĞİL: `workspace/` sürüm kontrolü DIŞINDA. Muafiyet
+# oraya bir işaretle yazılsaydı, bir sonraki oturum kendini **hiçbir iz
+# bırakmadan** muaf edebilirdi.
+# > ***BİR TABANI HAREKET ETTİREBİLEN KAPI, ÖLÇTÜĞÜ BORCU DA HAREKET ETTİRİR.***
+# Burada büyümesi bir KOD DEĞİŞİKLİĞİ + öz-test güncellemesi gerektirir.
+MUAF: dict[str, str] = {
+    "J-086": "kaydın KENDİSİ söylüyor: 'yama atıldı; hiçbir şey push edilmedi' "
+             "— commit tasarımı gereği YOK",
+    "J-236": "ürünü `workspace/DEFTER.md` (4 hücre) — depo DIŞINDA, "
+             "commit'lenemez",
+    "J-238": "ürünü tazelik kapısının KOŞUMU + DEFTER kaydı — depo DIŞINDA",
+}
+
+
+def siniflandir(tur: str, durum: str, kanit: str, sha_cozer) -> str:
+    """TEK kaydın hükmü. Saf fonksiyon ⇒ sentetik veriyle sınanabilir.
+
+    🪤 Bilerek SAF: canlı bir kusura dayanan pozitif kontrol, kusur
+    düzelince yanlış alarma döner (bu dosyada iki kez ısırdı).
+    """
+    d = _norm(durum)
+    acik, kapali = bool(_DURUM_ACIK.search(d)), bool(_DURUM_KAPALI.search(d))
+    if not (acik or kapali):
+        return "okunamadı"          # ⛔ SESSİZCE "kapalı" VARSAYMA
+    if acik and not kapali:
+        return "açık"               # ① iş yapılmamış — borç yok
+    # ② bulgu/karar/ölçüm — AMA yalnız SINIFLANDIRILMIŞ belirteçler muaftır.
+    #
+    # 🔴 İLK YAZIMIMDA BU SATIR `if not (tokens & IDDIA_EDER)` İDİ ve tanınmayan
+    # her kelimeyi SESSİZCE muaf ediyordu — üstelik hemen üstündeki yorum
+    # bunun TERSİNİ iddia ediyordu. Öz-test yakaladı (`y2-bilinmeyen-tür-ötüyor`).
+    # > ***BİR YORUMUN İDDİA ETTİĞİ KORUMA, KODDA VAR OLDUĞUNUN KANITI DEĞİLDİR***
+    # > — ve bunu bu gece BEN adlandırmıştım (`4.14`). Teşhis, bağışıklık değil.
+    tokens = tur_tokens(tur)
+    if not (tokens & IDDIA_EDER) and not (tokens - IDDIA_ETMEZ):
+        return "iddia-etmez"
+    for s in _SHA.findall(kanit):
+        if sha_cozer(s):
+            return "izli"           # ③ ikinci provenans kanalı
+    return "gedik"
+
+
+CORE = APP.parent.parent / "motion-core" / "lib"   # ⚠️ `lib/` — depo ORADA
+
+
+def _cells(row: str) -> list[str]:
+    """Satırı hücrelere ayır — **KAÇIRILMIŞ boruya saygı duyarak.**
+
+    🔴 Naif `split("|")` üç satırda YANLIŞ hücreyi `Durum` sanıyordu. Sebep
+    tahmin edilmedi, OKUNDU: `errorClass: form\\|setup` ve
+    `toleranceSource: floor\\|variance\\|ceiling` — yazar boruyu markdown
+    için KAÇIRMIŞ, ayırıcı saymamış. Kapı ise saymıştı.
+    > ***BİR AYIRICI, KAÇIŞ DİZGESİ OKUNMADAN AYIRICI DEĞİLDİR.***
+    """
+    return re.split(r"(?<!\\)\|", row)
+
+
+def _sha_resolver():
+    """`(çözer, erişilemeyen_depolar)` — depo YOKSA "çözülmedi" DEMEZ.
+
+    🪤 Bu ayrımı bir yanlış bulguya bir adım kala öğrendim: `motion-core`
+    kökü git deposu değil (depo `motion-core/lib/`), ve üç SHA "çözülmedi"
+    çıkmıştı. *Bir aracın bulamaması, aranan şeyin yokluğu değildir.*
+    """
+    repos, unreachable = [], []
+    for path in (APP, CORE):
+        ok = subprocess.run(
+            ["git", "-C", str(path), "rev-parse", "--git-dir"],
+            capture_output=True, text=True,
+        ).returncode == 0
+        (repos if ok else unreachable).append(path)
+    cache: dict[tuple[str, str], bool] = {}
+
+    def resolve(sha: str) -> bool:
+        for r in repos:
+            key = (str(r), sha)
+            if key not in cache:
+                p = subprocess.run(
+                    ["git", "-C", str(r), "cat-file", "-t", sha],
+                    capture_output=True, text=True,
+                )
+                cache[key] = p.returncode == 0 and p.stdout.strip() == "commit"
+            if cache[key]:
+                return True
+        return False
+
+    return resolve, unreachable
+
+
+def yon_iki(referenced: set[str]) -> dict:
+    """YÖN-2 — deftere yazılı ama hiçbir commit anmıyor.
+
+    ⚠️ İKİ BİRİM AYRI DÖNER: `numara` (küme farkı) ve `satır` (tablo).
+    Eşit DEĞİLLER ve olmaları da gerekmiyor — `J-194` ile `J-194b` **iki
+    satır, tek numara**. İlk ölçümümde 109 ve 110 yan yana çıktı; ikisini
+    tek sayı sanmak tam olarak bu dosyanın J-226'da düştüğü tuzaktı.
+    """
+    written = defter_numbers()
+    oksuz_num = written - referenced
+    resolve, unreachable = _sha_resolver()
+    kova: dict[str, list[str]] = {
+        "açık": [], "iddia-etmez": [], "izli": [], "gedik": [], "okunamadı": []
+    }
+    aday = 0
+    for ln in record_rows():
+        c = _cells(ln)
+        ident = c[1].strip()
+        if not ({f"J-{n}" for n in re.findall(r"\d+", ident)} & oksuz_num):
+            continue
+        aday += 1
+        kova[siniflandir(c[2], c[-3], c[-2], resolve)].append(ident)
+    gedik = [i for i in kova["gedik"] if i not in MUAF]
+    return {
+        "numara": len(oksuz_num), "satır": aday, **kova,
+        "muaf_uygulanan": [i for i in kova["gedik"] if i in MUAF],
+        "gedik_net": gedik, "erişilemeyen_depo": unreachable,
+    }
+
+
 def self_test() -> bool:
     """İKİ YÖNLÜ öz-test — kapı hem ötmeli hem susmalı."""
     ok = True
@@ -336,6 +560,65 @@ def self_test() -> bool:
         "3. analiz başlamamışken çıplak \"0\" — (J-096)",
     ):
         check(f"düzyazı-atıf-sayılmıyor[{prose[:14]}]", bool(ROW.match(prose)), False)
+
+    # ══════════════════════════════════════════════════════════════════
+    # ⭐ YÖN-2 SINIFLANDIRICI — SENTETİK veriyle, İKİ YÖNLÜ (J-243)
+    #
+    # `siniflandir` SAF olduğu için canlı deftere hiç dokunmadan sınanır.
+    # 🪤 Bu dosya iki kez şu tuzağa düştü: pozitif kontrol O GÜNKÜ KUSURU
+    # bekliyordu ve kusur düzelince kontrol yanlış alarma döndü. Sentetik
+    # girdi o bağı KESER — kontrol MEKANİZMAYI ölçer, defterin hâlini değil.
+    # ══════════════════════════════════════════════════════════════════
+    yok = lambda _s: False          # noqa: E731 — hiçbir SHA çözülmez
+    var = lambda _s: True           # noqa: E731 — her SHA çözülür
+
+    # ÖTMELİ — kapalı + kod iddia eden + izsiz = GEDİK
+    check("y2-gedik", siniflandir("görev", "**kapalı**", "bir kanıt", yok), "gedik")
+    # SUSMALI ① — AÇIK kaydın borcu yok (bu katmanı bulmam öz-kusur düzeltmesiydi)
+    check("y2-açık-susuyor", siniflandir("görev", "açık", "bir kanıt", yok), "açık")
+    # SUSMALI ② — bulgu/karar commit üretmez
+    for t in ("bulgu", "**karar**", "risk", "ölçüm"):
+        check(f"y2-iddia-etmez[{t}]",
+              siniflandir(t, "kapandı", "bir kanıt", yok), "iddia-etmez")
+    # SUSMALI ③ — kanıtta ÇÖZÜLEN SHA varsa izli
+    check("y2-izli", siniflandir("görev", "kapandı", "iz `1980a47`", var), "izli")
+    # ÖTMELİ ③′ — SHA ÇÖZÜLMÜYORSA iz sayılmaz (yoksa dizge yeter olurdu)
+    check("y2-çözülmeyen-sha-iz-değil",
+          siniflandir("görev", "kapandı", "iz `deadbee`", yok), "gedik")
+    # ÖTMELİ — `Durum` okunamıyorsa SESSİZCE "kapalı" varsayma
+    check("y2-okunamadı", siniflandir("görev", "variance", "x", yok), "okunamadı")
+    # 🔴 ÖTMELİ — TANINMAYAN `Tür` belirteci İDDİA EDER sayılır.
+    # Aksi hâlde yeni bir kelime yazıldığı gün muaf küme SESSİZCE büyürdü.
+    check("y2-bilinmeyen-tür-ötüyor",
+          siniflandir("zamazingo", "kapandı", "x", yok), "gedik")
+    # SUSMALI — bileşik `Tür`de kod iddia eden BİR belirteç yeter
+    check("y2-bileşik", siniflandir("**bulgu+düzelt**", "kapandı", "x", yok), "gedik")
+    # 🔴 TÜRKÇE KİP — `İÇERİK` büyük kipte de tanınmalı (`.lower()` `İ`de kör)
+    check("y2-türkçe-büyük-kip",
+          siniflandir("İÇERİK", "kapandı", "x", yok), "gedik")
+
+    # ⭐ KAÇIRILMIŞ BORU — ayırıcı, kaçış okunmadan ayırıcı değildir.
+    # ÖTMELİ yönü: naif `split` bu satırda 6 hücre görür, doğrusu 4.
+    kacisli = r"| J-037 | bulgu | `errorClass: form\|setup` | **kapalı** |"
+    check("kaçış-saygılı", len(_cells(kacisli)), 6)
+    check("naif-split-YANILIYOR", len(kacisli.split("|")), 7)
+    # SUSMALI yönü: kaçışsız satır bozulmamalı
+    check("kaçışsız-bozulmuyor", len(_cells("| a | b | c |")), 5)
+
+    # ⭐ SABİT TABAN — muaf küme büyürse öz-test DÜŞER (bilerek).
+    # > *Bir tabanı hareket ettirebilen kapı, ölçtüğü borcu da hareket ettirir.*
+    check("muaf-küme-SABİT", len(MUAF), 3)
+    check("muaf-gerekçeli", all(len(v) > 30 for v in MUAF.values()), True)
+
+    # ⭐ VAKUM KORUMASI — aday kümesi boşalırsa "0 gedik" ANLAMSIZDIR.
+    # (Tek kanallı bir ölçümün en gerçek riski: kanal susarsa kapı yeşil öter.)
+    y2 = yon_iki(set(commit_numbers(400)[0]))
+    check("y2-aday-kümesi-DOLU", y2["satır"] > 0, True)
+    check("y2-birimler-ayrı-basılıyor", y2["numara"] > 0 and y2["satır"] > 0, True)
+    # Katmanlar TOPLAMALI — payda denetimi (türetilmiş değil, bağımsız sayım)
+    toplam = sum(len(y2[k]) for k in
+                 ("açık", "iddia-etmez", "izli", "gedik", "okunamadı"))
+    check("y2-payda-toplamı", toplam, y2["satır"])
     return ok
 
 
@@ -413,13 +696,63 @@ def main() -> int:
     # götürmüyor. (Biri sıfır kayda, öteki ikiye.)
     integrity = bool(clashes) or rows_n != len(ids)
 
+    # ══════════════════════════════════════════════════════════════════
+    # YÖN-2 — HER ZAMAN BASILIR, ve muaf küme SAYIYLA (J-243, A6)
+    # > *Sessiz bir muafiyet altı ay sonra envanter sanılır.*
+    # ══════════════════════════════════════════════════════════════════
+    y2 = yon_iki(set(referenced))
+    print(
+        f"  D · YÖN-2 · deftere yazılı ama commit ANMIYOR: "
+        f"{y2['numara']} numara / {y2['satır']} satır  "
+        f"(eşit DEĞİL: `J-194`+`J-194b` = 2 satır 1 numara)"
+    )
+    print(
+        f"      = açık {len(y2['açık'])} (iş yapılmadı) + iddia-etmez "
+        f"{len(y2['iddia-etmez'])} (bulgu/karar) + izli {len(y2['izli'])} "
+        f"(kanıtta ÇÖZÜLEN SHA) + gedik-adayı "
+        f"{len(y2['gedik_net']) + len(y2['muaf_uygulanan'])} + okunamadı "
+        f"{len(y2['okunamadı'])} ✓"
+    )
+    print(
+        f"      MUAF (SABİT taban, kapı kaynağında): "
+        f"{len(y2['muaf_uygulanan'])}/{len(MUAF)} uygulandı "
+        f"→ {sorted(y2['muaf_uygulanan'])}"
+    )
+    if y2["okunamadı"]:
+        # ⛔ ÖLÇÜLEMEDİ ≠ YOK. Sessizce "kapalı" varsaymak, bu ailenin
+        # `sessiz-yeşil` sınıfıdır — bu yüzden ADIYLA basılır.
+        print(
+            f"      ⛔ `Durum` hücresi OKUNAMADI: {len(y2['okunamadı'])} "
+            f"{sorted(y2['okunamadı'])} — sınıflandırılMADI, gedik de "
+            "SAYILMADI. (Bugün tek satır: `J-199`, `Durum`u standart bir hâl "
+            "kelimesi taşımıyor: 'YENİ OTURUMUN 1. İŞİ'. Tek satıra desen "
+            "UYDURULMADI — bir satıra uydurulan desen ölçüm değil ezberdir; "
+            "elle hükmedildi: `Tür=kayıt` ⇒ gedik DEĞİL, J-243.)"
+        )
+    if y2["erişilemeyen_depo"]:
+        print(
+            f"      ⛔ SHA kanalı ÖLÇÜLEMEDİ (depo yok): "
+            f"{[p.name for p in y2['erişilemeyen_depo']]}"
+        )
+    yon2_kirmizi = bool(y2["gedik_net"])
+    if not yon2_kirmizi:
+        print("      ✅ YÖN-2 net gedik: 0")
+
     # TAZELİK HÜKMÜ HER ZAMAN BASILIR — kimlik kusuru onu GİZLEMEZ.
     # (Mutasyon 1'de ölçüldü: iki hüküm tek `return`e bağlıyken, kimlik
     # kırmızıysa tazelik satırı hiç basılmıyordu. *İki ayrı ölçüm, iki ayrı
     # satır* — A/B ayrımının aynısı, bu kez hükümlerde.)
     if not missing:
         print("  ✅ commit'te anılıp deftere YAZILMAMIŞ kayıt: 0")
-    if not missing and not integrity:
+    if yon2_kirmizi:
+        print(
+            f"\n  🔴 YÖN-2 GEDİK {len(y2['gedik_net'])}: "
+            f"{sorted(y2['gedik_net'])}\n"
+            "  Kapanmış, kod iddia eden, ama hiçbir commit'e bağlanmayan\n"
+            "  kayıt. İki kanal da sessiz: ne commit başlığı anıyor, ne de\n"
+            "  kaydın kapanış kanıtı çözülen bir SHA taşıyor."
+        )
+    if not missing and not integrity and not yon2_kirmizi:
         return 0
     if integrity:
         print(
