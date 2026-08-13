@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/session_narrator.dart';
+import 'package:jablab/app/rehearse_material.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/session_store.dart';
 import 'package:jablab/app/teach_material.dart';
@@ -71,6 +72,7 @@ void main() {
                       planProvenance: 'test',
                     ),
                     store: store,
+                    rehearseMaterial: const RehearseMaterialNone(reason: 'fixture: no drill named'),
                     teachMaterial:
                         const TeachMaterialNone(reason: 'test: materyal yok'),
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/design_tokens.dart';
 import 'package:jablab/app/session_narrator.dart';
+import 'package:jablab/app/rehearse_material.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/session_store.dart';
 import 'package:jablab/app/skeleton_overlay.dart';
@@ -53,6 +54,7 @@ void main() {
         plan: plan,
         intervalPlan: intervalPlan,
         store: store,
+        rehearseMaterial: const RehearseMaterialNone(reason: 'fixture: no drill named'),
         teachMaterial:
             const TeachMaterialNone(reason: 'test: materyal yok'),
       ),

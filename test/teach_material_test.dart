@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/session_narrator.dart';
+import 'package:jablab/app/rehearse_material.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/teach_material.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
@@ -28,6 +29,7 @@ void main() {
         coachedNotScored: const <String>['Rear guard hand position'],
         bands: const <String, String>{'Stance': '—'},
         plan: null,
+        rehearseMaterial: const RehearseMaterialNone(reason: 'fixture: no drill named'),
         teachMaterial: material,
       ),
     ));

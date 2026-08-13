@@ -660,6 +660,10 @@ class _RootState extends State<_Root> {
                   // değil. Comp geldiğinde değişecek yer orası.
                   teachMaterial:
                       widget.repository.teachMaterialFor(_domain!, l.id),
+                  // J-247: prova materyali de AYNI yerden — aşama artık
+                  // dersin `techniques`/`combinations` alanlarını gösteriyor.
+                  rehearseMaterial:
+                      widget.repository.rehearseMaterialFor(_domain!, l.id),
                   store: _store,
                   liveJab: live.controller,
                   liveJabSetupFailure: live.failure,

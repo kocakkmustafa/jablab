@@ -11,6 +11,7 @@ import 'session_narrator.dart';
 import 'live_honesty.dart';
 import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
+import 'rehearse_material.dart';
 import 'session_store.dart';
 import 'skeleton_overlay.dart';
 import 'teach_material.dart';
@@ -39,6 +40,7 @@ class SessionScreen extends StatefulWidget {
     required this.bands,
     required this.plan,
     required this.teachMaterial,
+    required this.rehearseMaterial,
     this.intervalPlan,
     this.store,
     this.liveJab,
@@ -90,6 +92,15 @@ class SessionScreen extends StatefulWidget {
   /// "kimse sormadı" aynı değere düşerdi ve ekran ikisini ayırt edemezdi —
   /// bu ekranın düzelttiği kusurun ta kendisi.
   final TeachMaterial teachMaterial;
+
+  /// Prova aşamasının materyali (J-247) —
+  /// `ContentRepository.rehearseMaterialFor` üretir, ekran ondan TÜRETİR.
+  ///
+  /// `teachMaterial` ile aynı sebeple zorunlu ve nullable DEĞİL: `null`
+  /// geçilebilse "teknik listelenmemiş" ile "kimse sormadı" aynı değere
+  /// düşerdi. Bu aşama tam olarak o ayrımı kaybettiği için 19 derste tek
+  /// cümle gösteriyordu.
+  final RehearseMaterial rehearseMaterial;
 
   /// Kaç sayımda bir kilometre taşı söylenir — **yalnız test dikişi**
   /// (J-121). Üretimde `null` ve `SessionNarrator`ın kendi sabiti (25)
@@ -235,7 +246,9 @@ class _SessionScreenState extends State<SessionScreen> {
             lesson: widget.lesson,
             material: widget.teachMaterial,
           ),
-          SessionStage.rehearse => const _Rehearse(),
+          SessionStage.rehearse => _Rehearse(
+            material: widget.rehearseMaterial,
+          ),
           SessionStage.live => _Live(
             cues: widget.cues,
             plan: widget.plan,
@@ -323,24 +336,97 @@ class _Teach extends StatelessWidget {
   }
 }
 
+/// Prova aşaması — **artık dersi tanıyor** (J-247).
+///
+/// Eskiden `const _Rehearse()` idi: ders girdisi YOKTU ve 19 dersin
+/// 19'unda da ekranda yalnız *"Go slow…"* yazıyordu. O cümle hâlâ burada
+/// ve hâlâ doğru — ama artık **neyi** yavaş yapacağını da söylüyor, ve
+/// söylediği her şey `library.json`da yazılı (bkz. `rehearse_material.dart`).
 class _Rehearse extends StatelessWidget {
-  const _Rehearse();
+  const _Rehearse({required this.material});
+
+  /// Materyal DIŞARIDAN gelir — ekran kendi içeriğini icat etmez
+  /// (`_Teach` ile aynı sözleşme).
+  final RehearseMaterial material;
 
   @override
-  Widget build(BuildContext context) => const Padding(
-    padding: EdgeInsets.all(24),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Icon(Icons.timer_outlined, size: 36),
-        SizedBox(height: 16),
-        Text(
-          'Go slow. One thing at a time, no clock.',
-          key: Key('rehearse-copy'),
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    // KAYDIRILABİLİR — J-118'in dersi burada ÖNCEDEN uygulanıyor: bu aşama
+    // bugün kısa, ama teknik/kombinasyon listesi içerikten geliyor ve
+    // içerik uzayabilir. `_Teach` aynı hatayı gerçek metin gelince ödedi.
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Icon(Icons.timer_outlined, size: 36),
+            const SizedBox(height: 16),
+            // Aşamanın DEĞİŞMEYEN sözü: hüküm yok, saat yok. Materyalden
+            // bağımsız ve her hâlde doğru.
+            const Text(
+              'Go slow. One thing at a time, no clock.',
+              key: Key('rehearse-copy'),
+            ),
+            const SizedBox(height: 20),
+            switch (material) {
+              RehearseMaterialDrill(
+                techniques: final List<String> techniques,
+                combinations: final List<String> combinations,
+              ) =>
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'What to run through',
+                      key: const Key('rehearse-drill-heading'),
+                      style: theme.textTheme.titleSmall,
+                    ),
+                    const SizedBox(height: 8),
+                    for (final String t in techniques)
+                      Padding(
+                        key: Key('rehearse-technique-$t'),
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Text('· $t', style: theme.textTheme.bodyMedium),
+                      ),
+                    // BOŞ kombinasyon listesi hiç çizilmez — "kombinasyon
+                    // yok" diye duyurmak gürültü olurdu (bkz. varyant dokümanı).
+                    if (combinations.isNotEmpty) ...<Widget>[
+                      const SizedBox(height: 16),
+                      // ⚠️ BAŞLIK "Then put them together" DEĞİL — ölçüldü:
+                      // `combinations` TEK yumrukları da taşıyor
+                      // (`first_round` ve `r3`: `['1','2','1-2',…]`). Tek
+                      // yumruğu "bunları birleştir" başlığı altına koymak
+                      // içeriğin söylemediği bir şeyi söylemek olurdu.
+                      // Alan aslında ÇALIŞILACAK SIRALAR listesi.
+                      Text(
+                        'Sequences to run',
+                        key: const Key('rehearse-combos-heading'),
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      for (final String c in combinations)
+                        Padding(
+                          key: Key('rehearse-combination-$c'),
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child:
+                              Text('· $c', style: theme.textTheme.bodyMedium),
+                        ),
+                    ],
+                  ],
+                ),
+              RehearseMaterialNone(reason: final String reason) => Text(
+                reason,
+                key: const Key('rehearse-material-none'),
+                style: theme.textTheme.bodySmall,
+              ),
+            },
+          ],
         ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }
 
 /// Canlı tur: süre AKAR ve anlatı konuşur, hüküm SUSAR.

@@ -8,6 +8,7 @@ import 'content_failure.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
 import 'pose_model.dart';
+import 'rehearse_material.dart';
 import 'teach_material.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
@@ -195,6 +196,32 @@ final class ContentRepository {
         reason: 'There is no lesson material to watch or read here — we '
             'have not made it. The session still works: the next step is you '
             'moving, and nothing is scored while you learn the shape.');
+  }
+
+  /// Prova aşamasının materyali (J-247) — `teachMaterialFor`un kardeşi.
+  ///
+  /// Aynı sözleşme: ders bulunamazsa FIRLATMAZ, yokluğu AYRI bir sebeple
+  /// döner. İki farklı durumu ("teknik listelenmemiş" / "ders yok") tek
+  /// cümleye düşürmek, ekranın onları ayırt etmesini imkânsız kılardı.
+  RehearseMaterial rehearseMaterialFor(Library lib, String lessonId) {
+    final Lesson? l = _lessonFor(lib, lessonId);
+    if (l == null) {
+      return const RehearseMaterialNone(
+          reason: 'We could not find this lesson in the library, so there is '
+              'nothing to name here.');
+    }
+    // İÇERİKTEN TÜRETİLİR — hiçbir dizge burada UYDURULMUYOR; `techniques`
+    // ve `combinations` `library.json`da yazılı ve aynı ders kartının alt
+    // başlığında zaten gösteriliyor.
+    if (l.techniques.isEmpty) {
+      return const RehearseMaterialNone(
+          reason: 'This lesson does not drill a named technique — the shape '
+              'itself is the work. Move through it slowly and stay in frame.');
+    }
+    return RehearseMaterialDrill(
+      techniques: l.techniques,
+      combinations: l.combinations,
+    );
   }
 
   Lesson? _lessonFor(Library lib, String lessonId) {
