@@ -163,21 +163,29 @@ class SettingsPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 14),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: JColors.ember,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          child: Center(
-                            child: Text('Continue',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 15, color: Color(0xFF180A05))),
-                          ),
-                        ),
-                      ),
+                      // ⛔ BURADA ÖLÜ BİR "Continue" DÜĞMESİ VARDI — KALDIRILDI
+                      // (J-254). Ekranın görsel olarak EN BASKIN öğesiydi:
+                      // tam genişlik, ember dolgu, `PRICE / Pricing is not
+                      // set.` satırının hemen altında. Ve **hiçbir şey
+                      // yapmıyordu**: dosyadaki üç `onTap` geri (61) ·
+                      // why-not (189) · kamera köprüsü (228); bu blokta
+                      // `InkWell`/`GestureDetector` YOKTU (ölçüldü).
+                      //
+                      // İki ayrı kusur taşıyordu:
+                      //  1. **Ölü affordance** — J-094'ün sınıfı: ekran,
+                      //     kullanıcıya yapamayacağı bir eylemi sunuyordu.
+                      //  2. **Var olmayan bir akışı İMÂ ediyordu** — aynı
+                      //     panel `NO PAYWALL` · `Everything is open` ·
+                      //     `Pricing is not set.` diyor. Bir satın alma
+                      //     CTA'sı, olmayan bir ödeme adımını vaat eder;
+                      //     J-151'de *"before anything is asked of you"*
+                      //     cümlesi tam bu sebeple silinmişti — **cümleyi
+                      //     silip DÜĞMEYİ bırakmışız.**
+                      //
+                      // ⚠️ Fiyat GELDİĞİNDE geri gelecek olan şey bir düğme
+                      // değil bir AKIŞTIR; o gün buraya işleyicisiyle birlikte
+                      // konur. Boş kabuğu şimdiden bırakmak, J-044'ün 17 ölü
+                      // alanının yüzey karşılığı olurdu.
                     ],
                   ),
                 ),
