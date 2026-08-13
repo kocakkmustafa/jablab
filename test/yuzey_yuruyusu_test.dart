@@ -138,6 +138,24 @@ void main() {
     expect(find.byType(SelectPage), findsWidgets);
     kaydet(t, 'SEÇİM');
 
+    // ── AYARLAR — YÜRÜYÜŞE J-254'TEN SONRA EKLENDİ ──────────────────────
+    // Bu yüzey **canlı bir rota** olduğu hâlde yürüyüşte YOKTU, ve o boşluk
+    // bir kusuru barındırdı: ayarlarda tam genişlik, ember dolgulu, ekranın
+    // en baskın öğesi olan bir `Continue` düğmesi duruyordu ve **hiçbir şey
+    // yapmıyordu** (ölü affordans + olmayan bir ödeme adımını ima). Kusuru
+    // bulan şey bir kapı değil, simülatörde ELLE yürümek oldu.
+    // > ***BİR YÜZEYİ HİÇBİR KAPI OKUMUYORSA, ORADAKİ HER İDDİA
+    // > DENETİMSİZDİR*** — o yüzden yüzey artık okunuyor.
+    await t.tap(find.byKey(const Key('settings-button')));
+    await t.pumpAndSettle();
+    kaydet(t, 'AYARLAR');
+    // Geri dön: yürüyüşün geri kalanı seçim ekranından devam ediyor.
+    await t.pageBack();
+    await t.pumpAndSettle();
+    expect(find.byType(SelectPage), findsWidgets,
+        reason: 'ayarlardan dönüşte seçim ekranı yok — yürüyüşün geri kalanı '
+            'yanlış yüzeyden devam ederdi');
+
     // 🪤 `item-boxing` SAYFA DEĞİŞTİRMİYOR — `setState` ile YERİNDE açılıyor
     // (`select_page.dart`); kurs kartları AYNI `SelectPage`'de beliriyor.
     // İlk yazımımda burada `CoursePage` bekledim ve kapı **yüksek sesle**
