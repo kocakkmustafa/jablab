@@ -121,3 +121,28 @@ fi
 
 echo
 echo "✅ TAMAM — artefakt: $APP"
+echo
+# ⚠️ YAN ETKİ — ÖLÇÜLDÜ, TAHMİN DEĞİL (J-253).
+#
+# Bu betik bir CİHAZ derlemesidir ve cihaz derlemesi, paylaşılan native-asset
+# artefaktının üzerine yazıyor: `objective_c.framework` simülatör paketine
+# **platform 2 (cihaz)** olarak giriyor, dyld reddediyor, `package:objective_c`
+# başlatılamıyor ve ona bağımlı `path_provider` HER çağrıda patlıyor ⇒
+# simülatörde kalıcılık (onboarding bayrağı, seans geçmişi) SESSİZCE ölür.
+#
+# Tek değişkenli olarak üretildi: önce platform 7 → bu betik → artımlı
+# `flutter run` → platform 2 + `DOBJC_initializeApi` istisnası.
+#
+# ⭐ J-245'in dersi yeni bir kılıkta: BİR KAPININ YAN ETKİSİ, KORUDUĞU ŞEYİ
+#    BOZUYORSA, KAPI BUNU KENDİSİ SÖYLEMELİDİR. Sessiz kalsaydı bir sonraki
+#    oturum "kaydetmiyor" diye var olmayan bir ÜRÜN kusuru kovalardı — bu gece
+#    tam olarak bu oldu ve bir turu yedi.
+echo "⚠️  SİMÜLATÖR DOĞRULAMASI ARTIK ZEHİRLİ (yan etki, ölçüldü — J-253)."
+echo "    Cihaz derlemesi, simülatörün native-asset artefaktını platform 2'ye"
+echo "    düşürür ⇒ path_provider ölür ⇒ 'kaydetmiyor' gibi görünen SAHTE bir"
+echo "    ürün kusuru üretir. Simülatörde ölçüm yapacaksan ÖNCE:"
+echo "      flutter clean && ln -s \$BUILD_OUT build && flutter run -d <sim>"
+echo "    (⛔ 'flutter clean' build/ symlink'ini SİLER — iCloud panzehiri, geri koy.)"
+echo "    Ve güvenmeden ÖNCE doğrula:"
+echo "      otool -l \"\$(xcrun simctl get_app_container <UDID> $BUNDLE app)/Frameworks/objective_c.framework/objective_c\" | grep -A2 LC_BUILD_VERSION"
+echo "    platform 7 değilse o koşumdaki hiçbir kalıcılık gözlemi geçerli değildir."
