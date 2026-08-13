@@ -523,6 +523,29 @@ void main() {
     //    (`Page|Screen|View|Preview|Surface`). İddia edilen tek şey **5 > 4**.
     //    Kapsam hükmü koordinatörde.
     //
+    // ✅ **`SkeletonPreview` HÜKMÜ VERİLDİ (J-252, 2026-08-14) — ölçümle:**
+    //    Devir notu bunu *"asıl soru"* diye bırakmıştı (`app/` altında, canlı
+    //    ağaçta). Cevap: **BU BİR EKRAN DEĞİL, BİR BİLEŞENDİR** — dolayısıyla
+    //    bu kapının paydasında EKSİK DEĞİL, **ALAKASIZ**.
+    //    Kanıt (hepsi bu gece ölçüldü, biri iddia değil):
+    //     1. Hiçbir rotası yok: `LiveCoachSurface.preview` yuvasına monte
+    //        oluyor, o da `SessionScreen`in canlı aşamasının içinde. Tek
+    //        başına "varılabilir" değil — `Navigator` onu hiç görmüyor.
+    //     2. Dört çağrı yerinin dördü de aynı ekranın içinde
+    //        (`session_screen.dart` 834 · 866 · 884 · 907).
+    //     3. ⭐ Ve KAPSAMSIZ DEĞİL: J-250'de bu bileşenin CÜMLESİ üç ayrı
+    //        kapıyla ölçülüyor (`live_celiski_test`), ayrıca
+    //        `placeholder_surface_test` + `live_honesty_bucket_test` onu
+    //        doğrudan pump ediyor ve YÜZEY YÜRÜYÜŞÜ çıktısında dizgeleri
+    //        görünüyor (aşama 3). Yani bir rotanın alacağından **daha fazla**
+    //        kanıt taşıyor.
+    //    > ***BİR ADLANDIRMA DESENİNİN YAKALADIĞI ŞEY, O ŞEYİN ROLÜ DEĞİL
+    //    > ADIDIR*** — `…Preview` ile biten bir sınıf "ekran" olmak zorunda
+    //    > değil. (a) taraması ROL değil AD ölçüyor; bu kalem o farkın örneği.
+    //    ⚠️ Kalan dördü (`LibraryPage` · `ProgressPage` · `SessionSummaryView`
+    //    · `LiveCoachSurface`) donmuş `shell_candidate/` altında ve hükmü
+    //    HÂLÂ koordinatörde — onlar için bir şey iddia edilmiyor.
+    //
     // ⚠️ ŞART-1 · VAKUM — ARTIK DOĞRUDAN, ÖRTÜK DEĞİL.
     // Koruma bugüne kadar `knownFloor ⊆ derived` üzerinden GEÇİŞLİYDİ ve
     // gücü `knownFloor`un dolu kalmasına bağlıydı ⇒ o küme bir gün
