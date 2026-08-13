@@ -287,7 +287,9 @@ void main() {
               eventCount: null,
               noVerdictReason: 'test',
               preview: SkeletonPreview(
-                  state: LiveState.noVerdict, bucket: bucket),
+                  state: LiveState.noVerdict,
+                  bucket: bucket,
+                  analysisRunning: false),
             ),
           ),
         ),
@@ -315,7 +317,10 @@ void main() {
     for (final LiveHonestyBucket bucket in LiveHonestyBucket.values) {
       await t.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: SkeletonPreview(state: LiveState.noVerdict, bucket: bucket),
+          body: SkeletonPreview(
+              state: LiveState.noVerdict,
+              bucket: bucket,
+              analysisRunning: false),
         ),
       ));
       expect(find.byIcon(bucket.icon), findsOneWidget,

@@ -831,7 +831,11 @@ extension on _LiveState {
           eventCount: null,
           narration: _line,
           noVerdictReason: _failureSentence(failure),
-          preview: SkeletonPreview(state: LiveState.noVerdict, bucket: bucket),
+          preview: SkeletonPreview(
+            state: LiveState.noVerdict,
+            bucket: bucket,
+            analysisRunning: false,
+          ),
         ),
       );
     }
@@ -864,6 +868,7 @@ extension on _LiveState {
                   'either. Work at your own pace and move on when you are '
                   'done.',
           preview: const SkeletonPreview(
+            analysisRunning: false,
             state: LiveState.noVerdict,
             bucket: LiveHonestyBucket.none,
           ),
@@ -882,6 +887,7 @@ extension on _LiveState {
           narration: _line,
           noVerdictReason: 'Getting the camera ready…',
           preview: const SkeletonPreview(
+            analysisRunning: false,
             state: LiveState.noVerdict,
             bucket: LiveHonestyBucket.none,
           ),
@@ -905,6 +911,7 @@ extension on _LiveState {
         narration: r.narration ?? _line,
         noVerdictReason: r.noVerdictReason,
         preview: SkeletonPreview(
+          analysisRunning: true,
           state: r.surface,
           skeleton: r.skeleton,
           bucket: r.bucket,

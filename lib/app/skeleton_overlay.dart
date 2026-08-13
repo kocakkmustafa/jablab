@@ -37,9 +37,33 @@ class SkeletonPreview extends StatelessWidget {
   const SkeletonPreview({
     super.key,
     required this.state,
+    required this.analysisRunning,
     this.skeleton,
     this.bucket = LiveHonestyBucket.none,
   });
+
+  /// Analiz GERÇEKTEN koşuyor mu (J-250).
+  ///
+  /// ## Neden var: yer tutucunun cümlesi KOŞULSUZDU, doğruluğu KOŞULLU
+  ///
+  /// Altyazı sabitti: *"Camera preview is left out on purpose — **analysis
+  /// runs without it**"*. Bu cümle yalnız `LiveJabRunning` dalında doğru.
+  /// Diğer ÜÇ dalda ekran onu yine basıyordu ve **yanlıştı**:
+  ///  * kamera arızası (izin reddi / açılamama / kurulum hatası),
+  ///  * kamerasız ders (`liveJab == null`) — analiz hiç yok,
+  ///  * *"Getting the camera ready…"* — analiz henüz başlamadı.
+  ///
+  /// Simülatörde yürünürken **aynı ekranda** şu ikisi yan yana ölçüldü:
+  /// *"analysis runs without it"* ve *"Nothing is analysed without it"*.
+  /// İkisi de tek başına savunulabilir (*"it"* birinde ÖNİZLEME, diğerinde
+  /// KAMERA), ama kullanıcı ikisini birlikte okur — J-094'ün sınıfı:
+  /// *gövde "materyal yok" derken sekme "Watch" diyordu.*
+  ///
+  /// **`required` ve varsayılansız BİLEREK:** varsayılan `true` eski yalanı
+  /// sessizce sürdürürdü, varsayılan `false` yeni çağrı yerlerinde doğru
+  /// cümleyi sessizce düşürürdü. Zorunlu alan, her çağıranı **hangi hâlde
+  /// olduğunu SÖYLEMEYE** mecbur eder — derleyici dört yeri de yakaladı.
+  final bool analysisRunning;
 
   /// SORUMLULUK KOVASI (J-110). Donmuş `LiveCoachSurface`in ikonu sabit
   /// (`visibility_off_outlined`) ve değiştirilemiyor; ikon ekseni bu yüzden
@@ -57,7 +81,7 @@ class SkeletonPreview extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        _CameraPlaceholder(bucket: bucket),
+        _CameraPlaceholder(bucket: bucket, analysisRunning: analysisRunning),
         if (skeleton != null)
           CustomPaint(
             key: const Key('skeleton-overlay'),
@@ -69,9 +93,12 @@ class SkeletonPreview extends StatelessWidget {
 }
 
 class _CameraPlaceholder extends StatelessWidget {
-  const _CameraPlaceholder({required this.bucket});
+  const _CameraPlaceholder({required this.bucket, required this.analysisRunning});
 
   final LiveHonestyBucket bucket;
+
+  /// bkz. `SkeletonPreview.analysisRunning` — cümlenin İKİNCİ yarısı buna bağlı.
+  final bool analysisRunning;
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -112,8 +139,20 @@ class _CameraPlaceholder extends StatelessWidget {
               Icon(bucket.icon, size: 28, color: bucket.accent),
               const SizedBox(height: 8),
               Text(
-                'Camera preview is left out on purpose — analysis runs '
-                'without it',
+                // İKİNCİ YARI KOŞULLU (J-250). Analiz koşmuyorken *"analysis
+                // runs without it"* basmak, ekranın hemen altındaki arıza
+                // cümlesiyle ÇELİŞİR ve yanlıştır. Sorumluluğu üstlenen ilk
+                // yarı ("left out on purpose") her hâlde doğru ve KALIYOR —
+                // önizlemenin yokluğu bir tercih, bir arıza değil.
+                //
+                // Analiz koşmuyorken SEBEP burada tekrarlanmıyor: onu
+                // `LiveCoachSurface.noVerdictReason` zaten söylüyor ve iki
+                // yüzeyin aynı sebebi iki farklı cümleyle anlatması
+                // J-047'nin elle-kopyalanmış listesi sınıfına girerdi.
+                analysisRunning
+                    ? 'Camera preview is left out on purpose — analysis runs '
+                          'without it'
+                    : 'Camera preview is left out on purpose',
                 key: const Key('camera-preview-placeholder'),
                 textAlign: TextAlign.center,
                 // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin

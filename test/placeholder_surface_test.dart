@@ -48,6 +48,7 @@ void main() {
           child: SkeletonPreview(
             state: LiveState.clean,
             bucket: LiveHonestyBucket.ours,
+            analysisRunning: true,
           ),
         ),
       ),
