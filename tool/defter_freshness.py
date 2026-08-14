@@ -53,7 +53,7 @@ import sys
 from pathlib import Path
 
 APP = Path(__file__).resolve().parent.parent
-DEFTER = APP.parent / "workspace" / "DEFTER.md"
+DEFTER = APP / "workspace" / "DEFTER.md"
 
 # ② KONUM ÖLÇÜTÜ — ÜÇ ölçülmüş konum (gevşetme DEĞİL, sayım).
 #
