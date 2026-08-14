@@ -47,6 +47,31 @@ import 'app_pump.dart';
 ///
 /// Koşum: `flutter test test/yuzey_yuruyusu_test.dart`
 ///
+/// ## ⛔ A3 İLE BİRLEŞTİRİLMEDİ — ve bu bir KARAR, atlama değil (J-260)
+///
+/// Devir notu (`DEVIR-2026-08-13`, madde ③) şunu öneriyordu: *"yüzey kapısını
+/// A3'le birleştir; ikisi aynı yürüyüşten beslenirse 'sessiz yüzey 0' iddiası
+/// tek kapıdan doğrulanır."* **Ölçtüm ve BİRLEŞTİRMEDİM** — çünkü ikisi
+/// **farklı birimleri** sayıyor ve zorla tek sayıya indirmek bilgi ÜRETMEZ:
+///
+/// | kapı | BİRİM | bugünkü ölçüm |
+/// |---|---|---|
+/// | `dead_end_test` (A3) | **KONTROL** (basılabilir öğe) | `30 = 20 iş sunan + 10 adıyla boş + 0 ÇIKMAZ` (8 disiplin + 3 kurs + 19 ders) |
+/// | bu kapı | **YÜZEY** (varılan ekran) | **13 yüzey**, her biri en az bir dizge okuyor |
+///
+/// A3 *"bastığım şey beni bir yere götürüyor mu"* sorusunu; bu kapı
+/// *"vardığım yerde bir şey yazıyor mu"* sorusunu cevaplıyor. Paydalar
+/// farklı (30 kontrol ↔ 13 yüzey), sorular farklı.
+/// > ***AKTARILABİLİR OLAN DESEN DEĞİL KAVRAMDIR*** — J-243'te iki kardeş
+/// > hattın birimini kopyalamayı reddederken öğrendiğim kural, bu kez
+/// > **kendi iki kapım** arasında geçerli. Birleştirilmiş bir *"0 sessiz"*
+/// > sayısı, iki farklı yokluğu tek hücreye yıkardı ve hangisinin
+/// > ölçülmediğini kimse göremezdi.
+///
+/// ⚠️ **SINIR, KARIŞMASIN DİYE ADIYLA:** A3'ün `ÇIKMAZ 0`ı bu kapının
+/// *"sessiz yüzey yok"*unu **KAPSAMAZ**, tersi de doğru değil. İkisi
+/// komşudur, biri ötekinin yerine geçmez.
+///
 /// 🪤 Bu satır bir tur önce `integration_test/… -d <udid>` diyordu ve dosya
 /// `test/` altına inince **yalan olmuştu** — kapı (`unintended_html_in_doc_comment`)
 /// onu başka bir sebeple yakaladı ve bayatlık öyle görüldü.
