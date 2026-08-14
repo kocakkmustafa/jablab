@@ -71,7 +71,24 @@ final class RecordedSummary {
 
   /// İnsan-okur süre. Saniye GÖSTERİLMEZ: bir antrenman süresinde saniye
   /// hassasiyeti bilgi taşımaz, yalnız kesinlik izlenimi verir.
+  ///
+  /// ## ⚠️ SIFIR İKİ FARKLI OLGUYU ANLATIYORDU (J-257)
+  ///
+  /// `17 sn` çalışan bir kullanıcı **`0 min`** görüyordu — hiç çalışmayanla
+  /// **birebir aynı dize**. İki ayrı olgu tek değere düşüyordu:
+  ///  * `workedSeconds == 0` → gerçekten hiçbir şey yapılmadı,
+  ///  * `0 < workedSeconds < 60` → **yapıldı**, ama bir dakikadan kısa.
+  ///
+  /// Çıplak `0`ın *"hiç yapmadın"* diye okunması bu defterin **J-096**'da
+  /// zaten bedelini ödediği sınıf (orada *"sıfır yumruk attın"* idi).
+  /// Gerçek bir seansta ölçüldü: 17 saniyelik koşum diske `workedSeconds:17`
+  /// yazdı, ilerleme kutusu **`Time worked: 0 min`** bastı.
+  ///
+  /// ⛔ Saniye hâlâ GÖSTERİLMİYOR — yukarıdaki gerekçe sağlam. Değişen tek
+  /// şey, **yapılmış bir işin yapılmamış gibi okunmaması.**
   String get workedLabel {
+    // Sıfır-olmayan ama bir dakikadan kısa: iş VAR, süresi yuvarlanamıyor.
+    if (workedSeconds > 0 && workedSeconds < 60) return 'under a minute';
     final int m = workedSeconds ~/ 60;
     if (m < 60) return '$m min';
     final int h = m ~/ 60;

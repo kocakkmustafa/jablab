@@ -261,6 +261,31 @@ void main() {
           reason: 'sıfır kayıplı "kısmi" beyanı yalandır (doc-75/1)');
     });
 
+    test('⭐ SIFIR İKİ OLGU DEĞİL: bir dakikadan kısa iş "0 min" DEMİYOR',
+        () async {
+      // J-257 — gerçek bir seansta ölçüldü: 17 sn çalışan kullanıcı hiç
+      // çalışmayanla BİREBİR aynı dizeyi görüyordu. Çıplak `0`ın "hiç
+      // yapmadın" diye okunması J-096'nın sınıfı.
+      final RecordedSummary kisa = await RecordedSummary.from(
+          _MemStore(<SessionRecord>[rec(worked: 17, rounds: 0, planned: 4)]));
+      expect(kisa.workedLabel, isNot('0 min'),
+          reason: 'yapılmış bir iş, yapılmamış gibi okunuyor — iki farklı '
+              'olgu (hiç çalışmadı / bir dakikadan az çalıştı) tek değere '
+              'düşüyor');
+      expect(kisa.workedLabel, 'under a minute');
+      // ⛔ SANİYE HÂLÂ GÖSTERİLMİYOR — eski gerekçe sağlam, yalnız sıfır
+      // vakası ayrıldı.
+      expect(kisa.workedLabel, isNot(contains('17')),
+          reason: 'saniye sızdı — sahte kesinlik izlenimi geri geldi');
+      // NEGATİF İKİZ: GERÇEK sıfır hâlâ "0 min" demeli, yoksa bu düzeltme
+      // "hiç çalışmadı"yı da yumuşatmış olurdu.
+      final RecordedSummary bos =
+          await RecordedSummary.from(_MemStore(<SessionRecord>[]));
+      expect(bos.workedLabel, '0 min',
+          reason: 'gerçek sıfır artık "0 min" demiyor — düzeltme fazla '
+              'geniş, hiç çalışmamayı da gizliyor');
+    });
+
     test('boş depoda her şey sıfır, patlamıyor', () async {
       final RecordedSummary sum =
           await RecordedSummary.from(_MemStore(<SessionRecord>[]));
