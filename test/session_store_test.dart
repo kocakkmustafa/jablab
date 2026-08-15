@@ -138,6 +138,48 @@ void main() {
       expect(s.sessions, 1, reason: 'sağlam kayıt da götürüldü');
     });
 
+    test('GEÇERLİ JSON + YANLIŞ TİP → TypeError, sağlam kayıt kaybolmaz (H-21)',
+        () async {
+      // H-21 sınıfı (Lissom `L-326`): dar `on FormatException` bir cast
+      // TypeError'ını YAKALAMAZ (geçerli JSON + yanlış tip ⇒ ayrıştırma
+      // hatası değil, tip hatası). Yukarıdaki "bozuk satır" testi
+      // `jsonDecode`in KENDİSİNİ düşürüyor (`FormatException`); burası
+      // FARKLI bir istisna sınıfını sınıyor — geçerli JSON ama
+      // `SessionRecord.fromJson`ın `(j['workedSeconds'] as num)` cast'i
+      // `TypeError` fırlatır (motion_core session_store.dart:90). Çekirdeğin
+      // satır 253'teki `on Object catch (_)` (dar değil, GENİŞ) bunu da
+      // yakalamalı — ölçülmeden varsayılmadı, kaynak okunup doğrulandı.
+      await store.append(SessionRecord(
+        lessonId: 'saglam',
+        completedAt: DateTime.utc(2026, 8, 4),
+        workedSeconds: 540,
+        unitsCompleted: 3,
+        plannedUnits: 3,
+        unitLabel: 'round',
+        lessonClass: 'unscored',
+      ));
+      await file.writeAsString(
+        '${jsonEncode(<String, dynamic>{
+          'v': 2,
+          'lessonId': 'yanlis-tip',
+          'completedAt': DateTime.utc(2026, 8, 5).toIso8601String(),
+          'workedSeconds': 'kırk', // ⚠️ sayı yerine dize — GEÇERLİ JSON, YANLIŞ TİP
+          'unitsCompleted': 1,
+          'plannedUnits': 1,
+          'unitLabel': 'round',
+          'lessonClass': 'unscored',
+        })}\n',
+        mode: FileMode.append,
+      );
+
+      final RecordedSummary s = await RecordedSummary.from(store);
+      expect(s.status, isA<HistoryPartial>(),
+          reason: 'TypeError açılışı ÇÖKERTMEMELİ ve sessizce yutulmamalı');
+      expect((s.status as HistoryPartial).unreadable, 1);
+      expect(s.sessions, 1,
+          reason: 'sağlam kayıt yanlış-tip satırı yüzünden kaybolmamalı');
+    });
+
     test('AÇILAMAYAN geçmiş FIRLATIR — sıfır-dolu özet DÖNMEZ', () async {
       // doc-75/2 (totals-nullable): yol var ama dosya değil. Sessizce boş
       // özet dönmek, dosya-açamamayı "0 seans, 0 dk" diye render ettirirdi.
