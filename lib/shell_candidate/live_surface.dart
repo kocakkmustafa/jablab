@@ -141,6 +141,9 @@ class SessionSummaryView extends StatelessWidget {
     required this.bands,
     required this.coachedNotScored,
     this.topIssue,
+    this.unitsCompleted = 0,
+    this.unitLabel = '',
+    this.workedSeconds = 0,
   });
 
   /// Bu seansta sayılan olay — **`null` = ANALİZ HİÇ KOŞMADI** (J-156).
@@ -168,6 +171,49 @@ class SessionSummaryView extends StatelessWidget {
 
   final String? topIssue;
 
+  /// Bu seansta tamamlanan birim sayısı (J-259). `_SessionScreenState`
+  /// içinde zaten izleniyor ve diske yazılıyordu
+  /// ([SessionRecord.unitsCompleted]) — özete hiç geçmiyordu. Varsayılan
+  /// `0` diğer alanlarla tutarlı (canlı aşamaya hiç girilmezse zaten 0'da
+  /// kalır — bu ekrana yalnız `live`dan SONRA gelinir).
+  final int unitsCompleted;
+
+  /// Birimin ADI — **app'ten TAM ÇÖZÜLMÜŞ hâliyle gelir** (M-F-25 terfi
+  /// kapısı, `test/shell_promotion_test.dart`): kabuk klasörü gelecekte
+  /// 5 app'e ortak terfi edecek, ve alan kelimesi (`round`/`interval`)
+  /// buraya sabit yazılamaz.
+  ///
+  /// ⚠️ TEKİL/ÇOĞUL DA BURADA KARAR VERİLMEZ — çoğulluk bir SUNUM kuralı
+  /// değil bir DİL kuralıdır (İngilizce sayıdan sonra çoğul ister, Türkçe
+  /// istemez). Kabuğa "N==1 ise tekil" mantığı koymak, bugün yalnız
+  /// İngilizce doğru olan bir kuralı ortak katmana gömerdi — kelimeden
+  /// daha tehlikeli bir sızıntı, çünkü kapı onu YAKALAMAZ. Desen
+  /// [SessionRecord.unitLabel]den (session_screen.dart) taşındı, icat
+  /// edilmedi.
+  final String unitLabel;
+
+  /// Bu seansta çalışılan süre, saniye (J-259). Diske zaten yazılıyordu.
+  ///
+  /// ⚠️ SIFIR İKİ FARKLI OLGUYU ANLATABİLİR (J-257 dersi, burada da
+  /// geçerli): `_workedLabel` 0 < sn < 60 durumunu "under a minute" diye
+  /// ayırır — 17 saniye çalışan kullanıcı "0 min" GÖRMEMELİ.
+  final int workedSeconds;
+
+  /// `RecordedSummary.workedLabel` (session_store.dart) ile AYNI kural —
+  /// iki ekran aynı olguyu farklı cümlelerle anlatırsa biri bayatlar.
+  /// Burada kopya duruyor çünkü `RecordedSummary` ÇOKLU-seans toplamıdır
+  /// (dosyadan okunur); bu tek, henüz kaydedilmemiş seans için o sınıfı
+  /// kurmak yanlış soyutlama olurdu.
+  String get _workedLabel {
+    if (workedSeconds <= 0) return 'no time recorded';
+    if (workedSeconds < 60) return 'under a minute';
+    final int m = workedSeconds ~/ 60;
+    if (m < 60) return '$m min';
+    final int h = m ~/ 60;
+    final int rem = m % 60;
+    return rem == 0 ? '${h}h' : '${h}h ${rem}m';
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -183,6 +229,31 @@ class SessionSummaryView extends StatelessWidget {
               style: theme.textTheme.displayMedium),
           Text('recorded this session', style: theme.textTheme.bodySmall),
           const SizedBox(height: 20),
+        ],
+        // J-259: seans yapısı (tur+süre) `eventCount` (kameranın saydığı
+        // yumruk) ile AYNI ŞEY DEĞİL — kamera hiç bağlı olmasa/hüküm
+        // veremese bile kullanıcı turu bitirmiş, süre çalışmış olabilir.
+        // Ayrı yuva, karıştırılmaz.
+        Text(
+          '$unitsCompleted $unitLabel • $_workedLabel',
+          key: const Key('summary-worked'),
+          style: theme.textTheme.titleSmall,
+        ),
+        const SizedBox(height: 20),
+        if (bands.isNotEmpty) ...<Widget>[
+          // J-251: bantlar hep "—" basıyordu, hiçbir açıklama yoktu — oysa
+          // hemen altındaki "Coached but not scored" bölümünün gerekçesi
+          // VARDI (H-24 dürüstlük asimetrisi: yalnız engellide konuşuyorduk).
+          // Metin `course_page.dart`taki `_HonestBands`ten AYNEN alındı
+          // (`bands-only-note`) — aynı olgu, tek cümle, iki yerde tutarlı.
+          Text(
+            'Scores are shown as bands until the thresholds are calibrated '
+            'on real recordings. A precise-looking number we cannot back up '
+            'would be worse than no number.',
+            key: const Key('summary-bands-note'),
+            style: theme.textTheme.bodySmall,
+          ),
+          const SizedBox(height: 8),
         ],
         ...bands.entries.map((MapEntry<String, String> e) => ListTile(
               key: Key('summary-band-${e.key}'),

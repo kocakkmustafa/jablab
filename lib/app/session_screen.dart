@@ -151,6 +151,16 @@ class _SessionScreenState extends State<SessionScreen> {
   int _workedSeconds = 0;
   int _roundsCompleted = 0;
 
+  /// TAM ÇÖZÜLMÜŞ birim etiketi — [_record]in `unitLabel` alanıyla AYNI
+  /// desen (`plan != null ? 'round' : 'interval'`), artık tekil/çoğul da
+  /// dahil. Kabuğa (`SessionSummaryView`, M-F-25 terfi kapısı) yalnız bu
+  /// ÇÖZÜLMÜŞ dize geçer — çoğulluk kararı app'te kalır (İngilizce'ye
+  /// özgü "N==1 ise tekil" kuralı, dile göre değişir).
+  String get _unitLabel {
+    final String singular = widget.plan != null ? 'round' : 'interval';
+    return _roundsCompleted == 1 ? singular : '${singular}s';
+  }
+
   void _advance() {
     final bool leavingLive = _stage == SessionStage.live;
     final int i = SessionStage.values.indexOf(_stage);
@@ -268,6 +278,9 @@ class _SessionScreenState extends State<SessionScreen> {
             coachedNotScored: widget.coachedNotScored,
             bands: widget.bands,
             eventCount: _countedEvents,
+            unitsCompleted: _roundsCompleted,
+            unitLabel: _unitLabel,
+            workedSeconds: _workedSeconds,
           ),
         },
       ),
@@ -945,6 +958,9 @@ class _Summary extends StatelessWidget {
     required this.coachedNotScored,
     required this.bands,
     required this.eventCount,
+    required this.unitsCompleted,
+    required this.unitLabel,
+    required this.workedSeconds,
   });
 
   /// `null` = analiz hiç koşmadı → özet SAYI GÖSTERMEZ (J-156).
@@ -955,6 +971,16 @@ class _Summary extends StatelessWidget {
   /// Kural setinin `trackedComponents`ından TÜRETİLİR (J-144) — elle
   /// yazılmaz. Elle yazıldığı sürece iki ekran iki farklı üçlü gösterdi.
   final Map<String, String> bands;
+
+  /// J-259: `_SessionScreenState`in zaten izlediği + diske yazdığı
+  /// olgular — bu widget'a kadar hiç ULAŞMIYORLARDI.
+  final int unitsCompleted;
+
+  /// TAM ÇÖZÜLMÜŞ (tekil/çoğul dahil) — [SessionRecord.unitLabel]'ın
+  /// AYNI deseni, `_SessionScreenState`de hesaplanır. Kabuk (M-F-25 terfi
+  /// kapısı) ne alan kelimesi ne çoğul mantığı taşıyabilir.
+  final String unitLabel;
+  final int workedSeconds;
 
   @override
   Widget build(BuildContext context) => SessionSummaryView(
@@ -971,5 +997,8 @@ class _Summary extends StatelessWidget {
     // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
     // yazılmaz — bkz. widget dokümanı.
     coachedNotScored: coachedNotScored,
+    unitsCompleted: unitsCompleted,
+    unitLabel: unitLabel,
+    workedSeconds: workedSeconds,
   );
 }
