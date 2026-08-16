@@ -13,6 +13,7 @@ library;
 
 export 'src/library.dart';
 export 'src/measures.dart';
+export 'src/reliability_stats.dart';
 export 'src/ruleset.dart';
 export 'src/stance.dart';
 export 'src/striking_engine.dart';
