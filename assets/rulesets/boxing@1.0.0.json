@@ -1183,7 +1183,7 @@
       "displayName": "Timing",
       "graded": false,
       "gradedWhyNot": "Tempo is read as a band and is not shown as a score.",
-      "$gradedWhy": "honesty.measured: 'Tempo as a band (controlled / brisk / fast)... there is no screen that shows you the band'."
+      "$gradedWhy": "honesty.measured: 'Tempo as a band (controlled / brisk / fast)... the session summary shows the band you spent the most time in' (D18, session_screen.dart)."
     },
     {
       "id": "trackingConfidence",
