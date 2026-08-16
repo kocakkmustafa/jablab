@@ -1095,6 +1095,22 @@
         "$staleEligibilityClosed": "M-F-138 UYGULANDI: pencereler --manifests ile kesildi, uygunluk KARAR ANINDA kaynagin GUNCEL kaydindan cozuldu (14/14 pencere taze, eligibilityStale damgasi YOK). Onceki turda bu artefakt kesim-anindaki BAYAT uygunlukla kurulmustu ve bu yuzden BAGLANMAMISTI — kapi-atlatma yolunun uzerine urun kurmamak icin. O yol artik kapali."
       },
       "$report": "docs/g3/JAB-REFERANS-RAPORU.txt"
+    },
+    "cross": {
+      "techniqueId": "cross",
+      "bindingStatus": "demo-only",
+      "$bindingClass": "GECICI (provisional/temporary), KALICI (permanent) DEGIL. Aile ayrimi (H-64/H-65, 2026-08-16, Choreia'nin Running Man kararina karsi olculdu): tikanikligin SINIFI onu belirler. Choreia'nin kalici demo-only'si landmark GUVENILMEZLIGIdir — daha cok veri onu degistirmez. Bunun sebebi MALZEME KITLIGIdir — daha cok veri COZER. Bu yuzden 'permanent' YAZILMADI: o, 'bu asla olmayacak' derdi, ve bu YANLIS olurdu.",
+      "$whyNotBound": "F4 (2026-08-16), F3'un bulduğu 3 bagimsiz kimlikle (Precision Striking · FightCamp · Tony Jeffries) build denendi. Teknik olarak 30 derecede GECTI (6 take, 3 kaynak, dislanan yok) ama teshis ONU IPTAL ETTI — iki bagimsiz katman bulundu, ikisi de DEFTER J-280'de tam anlatili: (1) FightCamp'in TEK penceresi 3629ms non-jab malzeme tasiyordu (--strict ile duzeltildi, TEK BASINA yetersiz kaldi); (2) Precision Striking'in TEK videosu (pVvOF2kQuIQ) KARISIK duruş tasiyordu — 2 penceresi southpaw, digeri net degildi (M-F-06 geometrik testiyle olculdu). Orkestrator hukmu: bu DURUST teknik-varyansi DEGIL, IKI FARKLI HAREKETI (orthodox cross + southpaw cross) tek banda toplamaktir. --lead-side-prior ile zorla aynalama DENENDI (M-J-06 emsali) ve SEVK EDILMEDI — kume mesafeleri temizlenmedi (M-J-06'nin simetrik-teknik varsayimi BU VERI ICIN sinanmadi/tutmuyor). Gercek TEMIZ pencere sayisi hicbir zaman 4/1/1 degildi: 3 — her kaynaktan 1'er orthodox pencere. Bu 3'le (aynalama gerekmeden) build ~31 derecede GECER ama n=3/kare istatistiksel kararsizligi uretir (trunk_tilt p90=83,6 derece iken medyan=6,4 derece — p90 uc degerin yalnizca EN BUYUGU, gercek yuzdelik degil). Sonuc: mevcut malzeme SAGLAM bir referans KURAMAZ.",
+      "$graduationCondition": "OLCULEBILIR mezuniyet kosulu (H-58: sonraki tur tahmin etmesin). Kaynak basina >=3 temiz orthodox pencere (M-F-38(1)'in kendi esigi). Su an: 3 kaynak x 1'er = 3 toplam. Gerekli: >=9 toplam (3x3), HER kaynaktan ayri ayri >=3. Bu sayi karsilandiginda cross build'i YENIDEN denenir; karsilanmadan yeniden denemek ayni n=3 gurultusunu uretir.",
+      "$materialExpansion": "Malzeme genislemesi (yeni FightCamp adayi + Precision Striking'in ek TEMIZ orthodox pencereleri + Tony Jeffries'ten ek pencere) AYRI, sevkiyat-disi bir istir (M-F-38(4)). F4'u REHIN ALMAZ — onaylandi ama F4'un ARKASINA sıraya alindi, simdi baslatilmadi.",
+      "$productEffect": "Cross GOSTERILIR (teknik zaten tespit ediliyor, tempo/sayim calisiyor — boxing.foundations.cross dersi CANLI) ama FORM SKORLANMAZ. REAR_HAND_LOW/TORSO_FALLING_FORWARD gibi hatalar KOCLANIR (mevcut genel punchMechanics gerekcesi kapsar — 'the arm is where coaches disagree most'), skorlama acilirsa (K8) bu teknik icin acilmaz ta ki mezuniyet kosulu karsilanana kadar.",
+      "sourceArtifact": {
+        "boundTo": null,
+        "attemptedAt": "2026-08-16",
+        "attemptedTakes": 6,
+        "attemptedSources": 3,
+        "inspected": "scratchpad build denemeleri (reference-boxing-cross*.json), hicbiri motion-core/workspace/artifacts'a kopyalanmadi — bagli olmayan bir seyi 'artefakt' diye depolamak, orada bir sey varmis izlenimi verirdi"
+      }
     }
   },
   "$unreadFields": {
@@ -1117,6 +1133,9 @@
     "techniques.*.scheduledPhase": "faz siralamasi makinede; alan belge amacli",
     "references.stance.leadSide": "referansin uretildigi oncu taraf (3/3 orthodox). Kod okumuyor: motor oncu tarafi HER KARE geometrik olarak kendisi cozuyor (M-F-06), referanstan devralmiyor — devralsaydi southpaw kullanici yanlis tarafa gore olculurdu.",
     "references.stance.sourceArtifact.inspected": "denetlenen artefaktin adi — koken kaydi; kod okumuyor, test yalnizca boundTo ve gerekce alanlarini zorluyor.",
+    "references.cross.sourceArtifact.attemptedAt": "F4 build denemesinin tarihi — koken kaydi; kod okumuyor, boundTo zaten null oldugu icin skorlama bu teknige hic ulasmiyor.",
+    "references.cross.sourceArtifact.attemptedTakes": "denenen ham take sayisi (6) — koken kaydi, $whyNotBound'un anlattigi olcumun sayisal izi; kod okumuyor.",
+    "references.cross.sourceArtifact.attemptedSources": "denenen bagimsiz kaynak sayisi (3) — koken kaydi; kod okumuyor. $graduationCondition'daki >=9 hedefiyle KARISTIRILMASIN: bu alan DENENEN kaynak sayisi, o alan HEDEF toplam pencere sayisi.",
     "drills.*.durationSec": "sure UI'da sabit; config'ten okunmuyor. ⚠️ J-148 GENISLETMESI: `RuleSet.fromJson` aslinda drills dizisinin TAMAMINI okumuyor (id/displayKey/durationSec hicbiri) — id ve displayKey bu kapidan gecer cunku ayni ADLAR baska siniflarda okunuyor (TechniqueConfig.displayKey), yani muafiyet ad-cakismasindan geliyor, okunuyor olmalarindan DEGIL. Eksik bir beyan yanlis olandan sinsidir: `displayKey`e canli sanip guvenilebilirdi. SILINMEDI — bu gece 'kimse okumuyor' olcumunde IKI KEZ yanildim (J-145), o yuzden SILME esigi BEYAN esiginden yuksek. Curriculum ile cakisan tek alan `durationSec` ve degerler bugun ESIT; esit kalmasini `drill_consistency_test` zorluyor. 🪤 VE BU ANAHTARIN BICIMI MAKINE-OKUR: reference_contract_test anahtarin SON nokta-parcasini yaprak adi sayiyor. Once anahtari 'drills (TUM DIZI)' diye yeniden adlandirmistim — insana daha dogru, makineye OKUNMAZ. Anahtar makineye, DEGER insana konusur."
   },
   "$testEnforcedFields": {
