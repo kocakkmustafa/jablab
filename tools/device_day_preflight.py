@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""F5 — cihaz günü ön-uçuş kontrolü (2026-08-16).
+"""F5 — cihaz günü ön-uçuş kontrolü (2026-08-16, v2: dağıtım-profili
+gölgeleme kusuru düzeltildi).
 
 Kurucu telefonu bağladığında BEŞ DAKİKADA çalıştırılacak tek komut: bağlı
 cihazı bulur, GERÇEK UDID'sini çözer (`devicectl`in kendi pairing
@@ -13,6 +14,26 @@ emsal); içerik (APP_ID) JabLab'ın kendisi. Mekanizma İCAT EDİLMEDİ.
 "bu neden patlayabilir"i söyler. `codesign geçti` ≠ `kurulur` ayrımı
 (H-9): profil olması yetmez, O CİHAZIN UDID'si `ProvisionedDevices`te
 olmalı; yoksa çözüm kod değil TAZELEME (`xcodebuild -allowProvisioningUpdates`).
+
+## v2'de DÜZELEN kusur (2026-08-16, Gravita'nın canlı ölçümüyle bulundu)
+
+`find_jablab_profile()` (v1) "aynı app-id'li profiller arasında EN YENİ
+`CreationDate`" kuralıyla seçim yapıyordu — bu YANLIŞ varsayımdı: bir App
+Store DAĞITIM profili (`ProvisionedDevices` TASARIM GEREĞİ boş) bir
+geliştirme derlemesinden SONRA oluşturulursa tarihçe olarak daha yeni olur
+ve YANLIŞLIKLA "en iyi" seçilir — cihaz GERÇEKTEN kayıtlıyken bile betik
+"profildeki 0 cihaz arasında YOK" diye YANLIŞ ALARM verebilir.
+
+Bu kusur ŞEMA'dan (Ostinato O-160, `find_ostinato_profile()`) miras — bu
+dosyanın kendisi de o şemadan BİREBİR kopyalanmıştı (J-284). Gravita
+kendi ölçümünde bulup düzeltti (`PROFIL-GOLGELEME-DUZELTMESI.md`,
+M-F-677); bu dosya AYNI düzeltmeyi taşıyor — icat edilmedi, kopyalandı.
+
+Düzeltme: adaylar önce `ProvisionedDevices` TAŞIYANLARA daraltılır (bir
+App Store profili kategorik olarak cihaza doğrudan kurulum için
+KULLANILAMAZ, ne kadar yeni olursa olsun), YALNIZ o alt kümede en yeni
+seçilir. Cihaz-kapsamlı profil HİÇ yoksa bu ayrı ve daha kötü bir durum
+olarak raporlanır (sessizce "profil yok" ile karıştırılmaz).
 """
 from __future__ import annotations
 
@@ -35,9 +56,19 @@ def run(cmd: list[str]) -> str:
 
 def find_jablab_profile() -> dict | None:
     """`ProvisionedDevices`/`ExpirationDate` gibi alanları taşıyan, BUGÜN
-    JabLab'a ait profili bulur — dosya adına (UUID, KOŞUM-BAĞIMLI,
-    profil yenilendikçe değişir) değil, İÇERİĞE göre arar."""
-    best = None
+    JabLab'a ait profili bulur — dosya adına (UUID, KOŞUM-BAĞIMLI, profil
+    yenilendikçe değişir) değil, İÇERİĞE göre arar.
+
+    ⚠️ SADECE "en son oluşturulan" YETMEZ (v2 düzeltmesi, yukarıdaki
+    docstring): bir App Store dağıtım profili (`ProvisionedDevices` YOK,
+    tasarım gereği) sonradan oluşturulursa tarihçe olarak "en yeni" olur
+    ve GERÇEKTE cihaza kurulum için KULLANILAMAZ bir profili "en iyi" diye
+    seçtirir. Bu yüzden önce `ProvisionedDevices` TAŞIYAN (geliştirme/
+    ad-hoc) profillere daralt, YALNIZ sonra o alt kümede en yeniyi seç.
+    Cihaz-kapsamlı profil HİÇ yoksa, o BAŞKA (ve daha kötü) bir durumdur —
+    `_no_device_scoped` işaretiyle ayrıştırılır, sessizce "profil yok"a
+    düşmez."""
+    candidates = []
     for d in PROFILE_DIRS:
         if not d.exists():
             continue
@@ -53,9 +84,17 @@ def find_jablab_profile() -> dict | None:
             appid = doc.get("Entitlements", {}).get("application-identifier", "")
             if appid != f"{TEAM_ID}.{APP_ID}":
                 continue
-            if best is None or doc.get("CreationDate", "") > best.get("CreationDate", ""):
-                best = doc
-                best["_file"] = str(f)
+            doc["_file"] = str(f)
+            candidates.append(doc)
+
+    if not candidates:
+        return None
+
+    device_scoped = [c for c in candidates if c.get("ProvisionedDevices")]
+    pool = device_scoped if device_scoped else candidates
+    best = max(pool, key=lambda c: c.get("CreationDate", ""))
+    if not device_scoped:
+        best["_no_device_scoped"] = True
     return best
 
 
@@ -114,9 +153,19 @@ def main() -> int:
         problems.append(f"[profil] `{APP_ID}` için HİÇBİR provisioning profili "
                          f"bulunamadı — `xcodebuild -allowProvisioningUpdates` "
                          f"koşulmalı (Automatic signing profili kendi üretir).")
+    elif profile.get("_no_device_scoped"):
+        problems.append(
+            f"[profil] `{APP_ID}` için bulunan TÜM profiller DAĞITIM-tipi "
+            f"(`ProvisionedDevices` boş) — hiçbir geliştirme/ad-hoc profili "
+            f"yok. En yenisi: {profile.get('Name')} (`{profile['_file']}`, "
+            f"bitiş {profile.get('ExpirationDate')}). Doğrudan cihaza kurulum "
+            f"İMKANSIZ bu profille — `xcodebuild -workspace "
+            f"ios/Runner.xcworkspace -scheme Runner -configuration Release "
+            f"-destination \"id=<UDID>\" -allowProvisioningUpdates build` ile "
+            f"bir geliştirme profili üretilmeli.")
     else:
         exp = profile.get("ExpirationDate")
-        ok.append(f"[profil] bulundu: {profile.get('Name')} "
+        ok.append(f"[profil] bulundu (cihaz-kapsamlı): {profile.get('Name')} "
                    f"(`{profile['_file']}`, bitiş {exp})")
         provisioned = set(profile.get("ProvisionedDevices", []))
 
