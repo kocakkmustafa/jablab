@@ -94,11 +94,58 @@ karşılandı — hiçbiri "bakılmadı/sırada" değil):
 | coach_anthony | ⛔ triyaj-elendi | 4 ayrı video, hepsi netlik<40 (aile hook-hasadının 39,2 bulgusuyla tutarlı) |
 | kennyweldon | ⛔ erişim-elendi | kanal yok, tek gerçek aday 403'te kalıcı takıldı (2 deneme) |
 
-**Turu-1 NİHAİ SAYIM: 2 bağımsız kimlik, 4 kanıt barını BİRDEN geçti.
+**Turu-1 İLK SAYIM: 2 bağımsız kimlik, 4 kanıt barını BİRDEN geçti.
 M-C-04 ≥3 tabanının ALTINDA.**
 
-D17'nin penceresi ≤2 tur — turu-1 bunun 1'i. Plan B **HENÜZ tetiklenmedi**
-(pencere tükenmedi, 1 tur hakkı kaldı) — turu-2 gerekiyorsa GENUINELY yeni
-(havuzda hiç olmayan) kanal keşfi gerektirecek, ki bu hem triyaj hem H-48
-kimlik-kaydı yükü daha ağır. Orkestratöre bildiriliyor, tek taraflı
-turu-2'ye geçilmedi.
+D17'nin penceresi ≤2 tur — turu-1 bunun 1'i. Plan B **tetiklenmedi**
+(pencere tükenmedi, 1 tur hakkı kaldı) — orkestratöre bildirildi, tek
+taraflı turu-2'ye geçilmedi.
+
+## §6 KÖK-SEBEP DÜZELTMESİ — "4/4 yeni aday aynı şekilde düştü" bir
+sınıflandırıcı boşluğu DEĞİL, benim lokal `motion-core` checkout'umun
+bayatlığıydı
+
+Orkestratör transkript-dilini benden istedi (marker tasarımı için); önce
+çekirdeği okurken `motion-core/lib` (workspace, `.git` ayrı) `feat/lissom-
+v3-onayi` dalında, `origin/main`in **9 commit gerisinde** olduğu ölçüldü —
+tam `rom_mode.py` üzerinde. `origin/main`de ZATEN VAR: `FIRST_PERSON_DEMO_
+MARKERS` (M-F-104) · `MOVEMENT_CUE_MARKERS` (M-F-137) · `POSTURE_CUE_
+MARKERS` (M-F-143) · `FIRST_PERSON_PLURAL_CUE_MARKERS` (M-F-213) ·
+`WEAK_ACTIVE_MARKERS` (M-F-208) — lokal kopyamda BUNLARIN HİÇBİRİ yoktu.
+
+Aile-geneli `mdfind` taraması (orkestratör, H-55/H-57) **21 kopya** buldu,
+2-8 sınıf arasında değişen sürümlerde. Kanonik kaynak: `~/motion-core-main`
+(iCloud DIŞINDA taze klon, `main`/`63a0b3e`, 8 sınıf, `rig_staleness_
+warning()` temiz).
+
+**4 adayı bu taze rig'le YENİDEN sınıflandırdım** (`HarvestManifest.load/
+record/save` ile — GERÇEK aracın kendi mekanizması, elle-yama DEĞİL,
+M-F-138 disiplini):
+
+| video | eski (bayat rig) | yeni (taze rig, `63a0b3e`) | isabetler |
+|---|---|---|---|
+| vyTaKpylOcU (Tony Jeffries) | unknown/False | **active/True** | i throw, i step, i am stepping, i punch |
+| e5ciNJ0h-dw (MyBoxingCoach) | unknown/False | active/True | i drive, i rotate |
+| gA8Se6i8mAI (Marvin Cook) | unknown/False | active/True | i step, throw your punch, we're going to throw |
+| z-zev0ftmSQ (Yankello) | unknown/False | active/True | push your weight, we throw, your chin down |
+
+**`vyTaKpylOcU` (Tony Jeffries) şimdi 4/4 kanıt barını BİRDEN geçiyor:**
+netlik 313,2 (✓, zaten ölçülmüştü) · transkript-doğrulanmış coaching ✓
+(yeni) · romMode=active+eligible=True ✓ (yeni, taze rig'den, `--manifests`
+ile doğrulandı) · ≥1 gerçek cross penceresi ✓ (1, 72 kare, 1902ms —
+zaten ölçülmüştü, sonuç DEĞİŞMEDİ, yalnız artık ATTESTED).
+
+## §7 TURU-1 NİHAİ SONUÇ — 3/3 BAĞIMSIZ KİMLİK BULUNDU, TABAN KARŞILANDI
+
+**Precision Striking** (4 pencere) · **FightCamp** (1 pencere) ·
+**Tony Jeffries** (1 pencere, yeni). M-C-04 ≥3 tabanı KARŞILANDI. D17/Plan B
+sorusu ARTIK GÜNDEM DIŞI — turu-2 gerekmedi.
+
+⚠️ **Adıyla bırakılan, ÇÖZÜLMEMİŞ bir yan-bulgu** (jab'a uygulanan aynı
+M-F-239 çoğunluk-clause ölçütüyle, kendi kendime tutarlı davranarak): bu 3
+kimliğin pencere dağılımı (4/1/1=6 toplam) Precision Striking'e **%66,7**
+veriyor — "çoğunluk" (%50+) düz okumasını aşıyor. Bu, F3 turu-1'in
+"bulundu" barını (malzeme yeterliliği ≥1 pencere/kimlik) ETKİLEMEZ — ama
+GERÇEK cross referansı kurulurken (bu turun kapsamı DIŞINDA, sonraki bir
+adım) aynı yoğunlaşma sorusu sorulacaktır. Kendim işaretliyorum, kendim
+karar vermiyorum — tıpkı jab'ın kendi durumunda olduğu gibi.
