@@ -136,8 +136,17 @@ void main(List<String> args) {
         '$outDir/${srcPath.split('/').last.replaceAll('.full.json', '')}'
         '_${techniqueId}_$i.json';
     File(outPath).writeAsStringSync(jsonEncode(outJson));
+    // H-65: `f.digest.extensionMs` bir DIGEST özelliğidir, KESİLEN pencereye
+    // değil TAM tespit edilen denemeye ait — `--strict` `start`ı değiştirir
+    // ama bu alanı DEĞİŞTİRMEZ. Ölçüldü: KcagWYVfvBg_cross_1 hem varsayılan
+    // hem --strict kesimde "4171ms" YAZDIRIYORDU, ama --strict'in GERÇEK
+    // kare aralığı 751ms'ydi (dosyanın kendi `t` damgalarından ölçüldü).
+    // Yazdırılan sayı artık dilimin KENDİSİNDEN türetiliyor — pencere hangi
+    // kuralla kesilirse kesilsin doğru kalır.
+    final num firstT = (slice.first as Map<String, dynamic>)['t'] as num;
+    final num lastT = (slice.last as Map<String, dynamic>)['t'] as num;
     stdout.writeln('  -> $outPath (${slice.length} kare, '
-        '${f.digest.extensionMs?.toStringAsFixed(0)}ms uzanma, '
+        '${(lastT - firstT).toStringAsFixed(0)}ms uzanma, '
         '${f.digest.tempoBand})');
   }
 }
