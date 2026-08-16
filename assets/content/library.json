@@ -26,7 +26,7 @@
           "Combination order and timing, for the punches we model. A combination built from hooks or uppercuts is not ordered, because those punches are not recognised in the first place",
           "Stance width, crossed feet, balance — these are graded",
           "Guard hand position — detected and coached, but NOT graded. Coaches disagree about it: across our reference takes the rear forearm spread past 45 degrees, and we do not know how far past. We will flag a dropping hand; we will not put a number on it",
-          "Tempo as a band (controlled / brisk / fast), derived from how long the punch takes to extend — not from pixel speed. The engine uses it today to decide when to say slow down; there is no screen that shows you the band"
+          "Tempo as a band (controlled / brisk / fast), derived from how long the punch takes to extend — not from pixel speed. The engine uses it to decide when to say slow down, and the session summary shows the band you spent the most time in"
         ],
         "notMeasured": [
           "Punch force or power — a camera cannot measure force, and we will not pretend otherwise",

@@ -144,6 +144,7 @@ class SessionSummaryView extends StatelessWidget {
     this.unitsCompleted = 0,
     this.unitLabel = '',
     this.workedSeconds = 0,
+    this.tempoBand,
   });
 
   /// Bu seansta sayılan olay — **`null` = ANALİZ HİÇ KOŞMADI** (J-156).
@@ -199,6 +200,13 @@ class SessionSummaryView extends StatelessWidget {
   /// ayırır — 17 saniye çalışan kullanıcı "0 min" GÖRMEMELİ.
   final int workedSeconds;
 
+  /// D18: motor bir tempo bandı üretiyordu, hiçbir yüzey göstermiyordu.
+  /// `null` = bu seansta hiç ölçülmüş deneme yok — GÖSTERİLMEZ (K8'in
+  /// "bilmiyorum" ≠ "en düşük bant" ilkesi). App'ten TAM ÇÖZÜLMÜŞ
+  /// (`unitLabel` ile aynı disiplin) — kabuk hangi bandın "en sık"
+  /// olduğuna karar VERMEZ, yalnız gösterir.
+  final String? tempoBand;
+
   /// `RecordedSummary.workedLabel` (session_store.dart) ile AYNI kural —
   /// iki ekran aynı olguyu farklı cümlelerle anlatırsa biri bayatlar.
   /// Burada kopya duruyor çünkü `RecordedSummary` ÇOKLU-seans toplamıdır
@@ -239,6 +247,17 @@ class SessionSummaryView extends StatelessWidget {
           key: const Key('summary-worked'),
           style: theme.textTheme.titleSmall,
         ),
+        // D18: motor bandı üretiyordu, hiçbir yüzey göstermiyordu. `null`
+        // ise yuva da yok — hiç ölçülmüş deneme olmadığında "controlled"
+        // yazmak varsayılan bir bant UYDURMAK olurdu.
+        if (tempoBand != null) ...<Widget>[
+          const SizedBox(height: 4),
+          Text(
+            'Pace: $tempoBand',
+            key: const Key('summary-tempo-band'),
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
         const SizedBox(height: 20),
         if (bands.isNotEmpty) ...<Widget>[
           // J-251: bantlar hep "—" basıyordu, hiçbir açıklama yoktu — oysa

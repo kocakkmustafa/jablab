@@ -89,6 +89,22 @@ final class LiveJabController {
   bool _running = false;
   int _completed = 0;
 
+  /// D18: motor her tamamlanmış denemede bir tempo bandı üretiyordu
+  /// (ADR-001, `AttemptDigest.tempoBand`) ve hiçbir yüzey göstermiyordu —
+  /// ürünün kendi dürüstlük metni bunu itiraf ediyordu ("there is no
+  /// screen that shows you the band"). Bant SAYI değil (K8 bunu
+  /// zorlamıyor bile — ADR-001 zaten sayı değil bant üretiyor), yani
+  /// kalibrasyon kapısına takılmaz.
+  ///
+  /// Tekil bant yerine SAYAÇ tutuluyor: bir seansta yumruklar farklı
+  /// bantlara düşebilir (yorgunluk yavaşlatır), "son yumruk" o değişimi
+  /// gizler. Özet ekranı en SIK görüleni gösterir — [dominantTempoBand].
+  final Map<String, int> _tempoBandCounts = <String, int>{};
+
+  /// Bu seansta en çok görülen tempo bandı — `null` = hiç tamamlanmış
+  /// deneme yok (ölçülmedi, sıfır DEĞİL).
+  String? get dominantTempoBand => modeOfCounts(_tempoBandCounts);
+
   /// Son TAMAMLANMIŞ denemenin ilk hata kodu — `cue.corrected`in tek girdisi
   /// (J-105). `null` iki şey demek olabilir: henüz deneme yok, ya da son
   /// deneme temizdi; ikisinde de "düzeltildi" DİYEMEYİZ, çünkü ortada
@@ -176,6 +192,7 @@ final class LiveJabController {
   void _startFor(CameraSessionInfo info) {
     _running = true;
     _completed = 0;
+    _tempoBandCounts.clear();
     _source = _sourceFactory(_driver);
     _sub = _camera.frames().listen(_onEnvelope, onError: _onStreamError);
     _states.add(const LiveJabState.starting());
@@ -260,6 +277,10 @@ final class LiveJabController {
     String? correctedLine;
     if (out.completedAttempt?.completed ?? false) {
       _completed += 1;
+      final String? band = out.completedAttempt?.tempoBand;
+      if (band != null) {
+        _tempoBandCounts[band] = (_tempoBandCounts[band] ?? 0) + 1;
+      }
       final String? previous = _lastAttemptIssueCode;
       final String? current = out.issues.isEmpty ? null : out.issues.first.code;
       // GÖRÜNÜRLÜK kodları hariç: "seni göremiyordum, artık görüyorum" bir
@@ -545,4 +566,24 @@ final class LiveJabFailed extends LiveJabState {
   const LiveJabFailed(this.failure);
 
   final LiveSessionFailure failure;
+}
+
+/// D18: `counts`taki en sık anahtarı döner — `LiveJabController` durumundan
+/// bağımsız SAF fonksiyon (kamera/motor kurmadan doğrudan test edilir).
+///
+/// `counts` boşsa `null` — hiç tamamlanmış deneme yoktu, "controlled"
+/// UYDURULMAZ. Eşitlikte İLK EKLENEN anahtar kazanır (Dart `Map` ekleme
+/// sırasını korur) — kararsız/rastgele bir seçim yerine deterministik.
+@visibleForTesting
+String? modeOfCounts(Map<String, int> counts) {
+  if (counts.isEmpty) return null;
+  String best = counts.keys.first;
+  int bestCount = counts[best]!;
+  for (final MapEntry<String, int> e in counts.entries) {
+    if (e.value > bestCount) {
+      best = e.key;
+      bestCount = e.value;
+    }
+  }
+  return best;
 }

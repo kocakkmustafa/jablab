@@ -281,6 +281,7 @@ class _SessionScreenState extends State<SessionScreen> {
             unitsCompleted: _roundsCompleted,
             unitLabel: _unitLabel,
             workedSeconds: _workedSeconds,
+            tempoBand: widget.liveJab?.dominantTempoBand,
           ),
         },
       ),
@@ -961,6 +962,7 @@ class _Summary extends StatelessWidget {
     required this.unitsCompleted,
     required this.unitLabel,
     required this.workedSeconds,
+    required this.tempoBand,
   });
 
   /// `null` = analiz hiç koşmadı → özet SAYI GÖSTERMEZ (J-156).
@@ -982,6 +984,12 @@ class _Summary extends StatelessWidget {
   final String unitLabel;
   final int workedSeconds;
 
+  /// D18: motor `AttemptDigest.tempoBand` üretiyordu (ADR-001, "controlled/
+  /// brisk/fast"), hiçbir yüzey göstermiyordu. `null` = bu seansta hiç
+  /// tamamlanmış deneme yok — ölçülmedi, "controlled" DEĞİL (K8'in
+  /// "bilmiyorum" ≠ "en düşük bant" ilkesiyle aynı sınıf).
+  final String? tempoBand;
+
   @override
   Widget build(BuildContext context) => SessionSummaryView(
     // J-156: burada SABİT `0` duruyordu ve yanındaki K8 yorumu onu
@@ -1000,5 +1008,6 @@ class _Summary extends StatelessWidget {
     unitsCompleted: unitsCompleted,
     unitLabel: unitLabel,
     workedSeconds: workedSeconds,
+    tempoBand: tempoBand,
   );
 }

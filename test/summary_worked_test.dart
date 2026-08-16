@@ -40,6 +40,7 @@ void main() {
           {int units = 0,
           String unitLabel = 'rounds',
           int seconds = 0,
+          String? tempoBand,
           Map<String, String> bands = const <String, String>{}}) =>
       t.pumpWidget(MaterialApp(
         home: Scaffold(
@@ -50,6 +51,7 @@ void main() {
             unitsCompleted: units,
             unitLabel: unitLabel,
             workedSeconds: seconds,
+            tempoBand: tempoBand,
           ),
         ),
       ));
@@ -88,6 +90,23 @@ void main() {
       await pump(t, units: 1, unitLabel: 'zörgleplix', seconds: 5);
       expect(find.text('1 zörgleplix • under a minute'), findsOneWidget,
           reason: 'kabuk etiketi YORUMLUYOR gibi görünüyor — yalnız TAŞIMALI');
+    });
+  });
+
+  group('D18 — tempo bandı', () {
+    testWidgets('bant YOKSA yuva da YOK (hiç ölçülmüş deneme yok)',
+        (WidgetTester t) async {
+      await pump(t);
+      expect(find.byKey(const Key('summary-tempo-band')), findsNothing,
+          reason: 'ölçülmemiş deneme için varsayılan bant UYDURULMAMALI '
+              '("controlled" yazmak "bilmiyorum"u "en düşük" gibi gösterir)');
+    });
+
+    testWidgets('bant VARSA GÖSTERİLİR — kabuk hangi kelime olduğuna karışmaz',
+        (WidgetTester t) async {
+      await pump(t, tempoBand: 'brisk');
+      expect(find.byKey(const Key('summary-tempo-band')), findsOneWidget);
+      expect(find.text('Pace: brisk'), findsOneWidget);
     });
   });
 

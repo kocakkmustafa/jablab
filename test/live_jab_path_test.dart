@@ -102,6 +102,39 @@ void main() {
 
   group('sayı yuvası', _countSlotTests);
 
+  group('D18 — modeOfCounts SAF fonksiyon', () {
+    // Kamera/motor kurmadan doğrudan sınanır — bkz. dosya sonundaki
+    // "D18 — tamamlanan denemenin tempo bandı SAYILIYOR" testi (TELİ
+    // kanıtlar), bu grup ALGORİTMAYI kanıtlar (boş/tekil/kazanan/eşitlik).
+    test('BOŞ harita → null (hiç tamamlanmış deneme yok, "controlled" DEĞİL)',
+        () {
+      expect(modeOfCounts(<String, int>{}), isNull);
+    });
+
+    test('TEK bant → o bant', () {
+      expect(modeOfCounts(<String, int>{'brisk': 3}), 'brisk');
+    });
+
+    test('AÇIK KAZANAN → en çok görülen', () {
+      expect(
+          modeOfCounts(<String, int>{
+            'controlled': 2,
+            'brisk': 5,
+            'fast': 1,
+          }),
+          'brisk');
+    });
+
+    test('EŞİTLİK → İLK EKLENEN kazanır (rastgele DEĞİL, deterministik)', () {
+      final Map<String, int> tie = <String, int>{};
+      tie['fast'] = 4;
+      tie['controlled'] = 4;
+      expect(modeOfCounts(tie), 'fast',
+          reason: 'eşitlikte eklenme sırası korunmalı — her koşumda AYNI '
+              'sonucu vermeyen bir kapı, kararsız bir özet üretir');
+    });
+  });
+
   group('canlı hat', () {
     test('SENTETİK jab SAYILIYOR ve faz bildiriliyor', () async {
       final _FakeCamera cam = _FakeCamera();
@@ -122,6 +155,33 @@ void main() {
           reason: 'sentetik jab hiç sayılmadı — zincir kopuk');
       expect(runs.any((LiveJabRunning r) => r.phase != null), isTrue,
           reason: 'faz geri bildirimi hiç gelmedi');
+      await c.dispose();
+    });
+
+    test('D18 — tamamlanan denemenin tempo bandı SAYILIYOR (J-096 sınıfı)',
+        () async {
+      // `_completed`in aynı sınıf kusuru: bileşen (`modeOfCounts`, ayrı
+      // test edildi) kusursuz olup CONTROLLER onu hiç BESLEMİYOR olabilir.
+      // Bu test yalnız TELİ kanıtlıyor — engine'in ürettiği tempoBand'ın
+      // gerçekten controller'ın sayacına ULAŞTIĞINI.
+      final _FakeCamera cam = _FakeCamera();
+      final LiveJabController c = build(cam, permission: () async => true);
+
+      expect(c.dominantTempoBand, isNull,
+          reason: 'seans başlamadan bant iddiası olmamalı');
+
+      expect(await c.start(), isNull);
+      expect(c.dominantTempoBand, isNull,
+          reason: 'YENİ seansta ÖNCEKİ testin kalıntısı sızmamalı — '
+              '_startFor sıfırlamalı');
+      for (final PoseFrame f in _jabSequence()) {
+        cam.emit(_envelope(f));
+      }
+      await Future<void>.delayed(Duration.zero);
+
+      expect(c.dominantTempoBand, isNotNull,
+          reason: 'motor tempoBand üretti ama controller sayamadı — '
+              'D18 teli kopuk');
       await c.dispose();
     });
 
