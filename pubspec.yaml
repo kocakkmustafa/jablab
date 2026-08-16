@@ -57,7 +57,11 @@ dependencies:
   # Design turu (2026-08-06): JabLab.dc.html spec board iki tipografi ailesi
   # zorunlu kılıyor — Familjen Grotesk (insan sesi) + IBM Plex Mono (yalnız
   # ÖLÇÜLEN şeyler: saat, sayaç, teknik sebep). İkisi de sistem fontu değil.
-  google_fonts: ^6.2.1
+  #
+  # ⚠️ D1 (2026-08-16, F2): önceden `google_fonts` ile ÇALIŞMA ANINDA
+  # fonts.gstatic.com'dan çekiliyordu — J-264/J-217'nin ölçtüğü olgu.
+  # `fonts:` bildirimi aşağıda .ttf'leri PAKETLİYOR; artık runtime ağ
+  # isteği YOK. Bkz. `test/network_deps_test.dart` (regresyon kapısı).
 
 dev_dependencies:
   flutter_test:
@@ -68,10 +72,6 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   crypto: ^3.0.7
-  # test/flutter_test_config.dart'ın google_fonts ön-ısınması için — TRANSITIVE
-  # bir bağımlılıktı (path_provider üzerinden), doğrudan import edildiği için
-  # burada AÇIKÇA listelendi (depend_on_referenced_packages).
-  path_provider_platform_interface: ^2.1.2
 
 flutter:
   uses-material-design: true
@@ -83,3 +83,28 @@ flutter:
     # hash'i zorlar, yoksa İSİMLİ sebeple atlar (sessiz geçmez).
     - assets/models/
     - assets/rulesets/
+    # D1 — OFL lisans metinleri asset OLARAK bildirilir (kaynağı görünür
+    # kılmak için); `.ttf`'leri AŞAĞIDAKİ `fonts:` bildirimi ayrıca paketler.
+    - assets/fonts/FamiljenGrotesk/OFL.txt
+    - assets/fonts/IBMPlexMono/OFL.txt
+  fonts:
+    # D1 (2026-08-16, F2): önceden `google_fonts` ile ÇALIŞMA ANINDA
+    # fonts.gstatic.com'dan çekiliyordu (J-264/J-217). Artık PAKETLİ, OFL
+    # 1.1. Ağırlıklar ÖLÇÜLENLE birebir (`grep -rohn 'FontWeight\.w[0-9]\+
+    # \|GoogleFonts\.' lib/app/design_tokens.dart`): Familjen Grotesk
+    # 400/700, IBM Plex Mono 400/500/600 — yeni bir ağırlık koda girerse bu
+    # listeye de eklenmeli, yoksa en yakın bildirilen ağırlığa sessizce düşer.
+    - family: Familjen Grotesk
+      fonts:
+        - asset: assets/fonts/FamiljenGrotesk/FamiljenGrotesk-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/FamiljenGrotesk/FamiljenGrotesk-Bold.ttf
+          weight: 700
+    - family: IBM Plex Mono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono/IBMPlexMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IBMPlexMono/IBMPlexMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexMono/IBMPlexMono-SemiBold.ttf
+          weight: 600

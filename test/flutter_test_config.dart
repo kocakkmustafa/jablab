@@ -1,105 +1,91 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:google_fonts/src/google_fonts_base.dart' show pendingFontFutures;
-import 'package:jablab/app/design_tokens.dart';
-import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:flutter/services.dart' show FontLoader, ByteData;
+import 'package:flutter_test/flutter_test.dart' show TestWidgetsFlutterBinding;
 
-/// TÜM test dosyaları için TEK giriş — Flutter bunu otomatik bulup sarar
-/// (`test/` altında `flutter_test_config.dart` adı özel; HER test DOSYASI
-/// için AYRI çalışır, yani aşağıdaki ön-ısınma her dosyada bir kez tekrar
-/// eder).
+/// TÜM test dosyaları için TEK giriş (Flutter bunu otomatik bulup sarar).
 ///
-/// ## Neden burada bir ön-ısınma var
+/// ## Neden var — D1 sonrası (F2, 2026-08-16)
 ///
-/// `google_fonts` (`JText`, design_tokens.dart) her `GoogleFonts.x(...)`
-/// çağrısında özel font YÜZÜNÜ (glyph) arka planda ağdan indirip diske
-/// kaydediyor — dönen `TextStyle` SENKRON üretiliyor, yükleme bitene kadar
-/// sistem varsayılan fontuna DÜŞEREK; yani indirme başarısız olsa BİLE
-/// `find.text(...)`/`find.byKey(...)`/taşma denetimleri ETKİLENMİYOR.
+/// D1 `google_fonts`u kaldırdı (fonts.gstatic.com'dan çalışma-anında
+/// çekme, J-264/J-217) ve `.ttf`leri `pubspec.yaml`'ın `fonts:` bildirimiyle
+/// PAKETLEDİ. Ama `flutter test` bildirilen fontları OTOMATİK yüklemez —
+/// widget testleri varsayılan bir yer-tutucu fontla ölçer, gerçek glyph
+/// genişlikleriyle DEĞİL. Ölçüldü: bu dosya silinip yerine hiçbir şey
+/// konmadan koşulunca `narrow_viewport_overflow_test.dart` YENİ bir taşma
+/// buldu — gerçek fontun ürettiği satır sarması, yer-tutucunkinden farklı.
 ///
-/// **ÖLÇÜLDÜ (design turu Parça 2, 2026-08-06) — DÖRT aşamalı teşhis,
-/// sırayla giderildi:**
-/// 1. `flutter test` `TestWidgetsFlutterBinding` aktifken kurulan HER
-///    `HttpClient`i 400'e ZORLUYOR (Flutter'ın kasıtlı test-izolasyonu).
-///    `google_fonts`un arka plan indirmesi bu yüzden `fitness_ship_audit_
-///    test.dart`ta patladı (bu dosya ilk kez `SessionScreen`i CANLI
-///    aşamaya kadar pompalıyor; `jablabSessionTheme`in ihtiyaç duyduğu
-///    `ibmPlexMono` w500 bu makinede hiç istenmemişti).
-/// 2. Ham `dart:io HttpClient`, binding henüz YOKKEN, AYNI URL'de 200
-///    dönüyor — genel ağ erişimi sorun değil, kusur binding'in kurduğu
-///    `HttpOverrides.global`de.
-/// 3. Binding aktifleşmeden ÖNCE ön-ısınmak da OLMUYOR: `google_fonts`
-///    önce YEREL asset'i kontrol ediyor ve bu `ServicesBinding.instance`
-///    istiyor.
-/// 4. Binding kurup `HttpOverrides.global`ı geçici açınca indirme
-///    BAŞARILI oluyor ama bu kez `google_fonts`un indirdiğini DİSKE
-///    yazma adımı `path_provider`in platform kanalını (`getApplication
-///    SupportDirectory`) çağırıyor — `flutter test`in saf Dart-VM ortamında
-///    gerçek bir platform kanalı YOK, `MissingPluginException` atıyor.
-///
-/// **Çözüm — DÖRDÜ BİRDEN:** binding kur (3) → `HttpOverrides.global`ı
-/// geçici `null`a al (1-2) → `PathProviderPlatform.instance`ı GERÇEK bir
-/// dizine (bu koşunun kendi geçici klasörü) yazan sahte bir uygulamayla
-/// değiştir (4) → `JText`in TÜM alanlarını bir kez okuyup yüklemeyi
-/// TETİKLE, tamamlanmalarını bekle, İKİSİNİ de GERİ TAK. Böylece asıl
-/// testler çalışmaya başladığında ihtiyaç duyulan her ağırlık zaten
-/// `google_fonts`un kendi bellek-içi önbelleğinde (`_loadedFonts`) — YENİ
-/// bir indirme denemesi hiç tetiklenmiyor.
+/// Eski sürüm (`google_fonts` ön-ısınması) çok daha karmaşıktı çünkü
+/// ASENKRON bir ağ indirmesini + disk yazmasını test ortamında taklit
+/// etmesi gerekiyordu (4 aşamalı teşhis, HttpOverrides + PathProvider
+/// sahteleri). Artık dosyalar YEREL asset — `FontLoader` doğrudan bayt
+/// okuyup kaydediyor, ağ/disk taklidi YOK.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
+  // ⚠️ İLK SATIR — eski sürümün de ilk satırıydı, ve bu sürümde YANLIŞLIKLA
+  // düşmüştü: `ContentRepository.load()` gerçek asset bundle'ı okuyor
+  // (`rootBundle`), o da `ServicesBinding.instance` istiyor — binding
+  // kurulmadan HERHANGİ bir asset okuyan `setUpAll` "Binding has not yet
+  // been initialized" ile düşer. Font yüklemenin kendisiyle ilgisi yok;
+  // bütün widget-test altyapısının ön-koşulu.
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final HttpOverrides? previousHttpOverrides = HttpOverrides.current;
-  final PathProviderPlatform previousPathProvider =
-      PathProviderPlatform.instance;
-  final Directory fontCacheDir =
-      Directory.systemTemp.createTempSync('jablab_test_fonts_');
+  await _loadFont('Familjen Grotesk', <String>[
+    'assets/fonts/FamiljenGrotesk/FamiljenGrotesk-Regular.ttf',
+    'assets/fonts/FamiljenGrotesk/FamiljenGrotesk-Bold.ttf',
+  ]);
+  await _loadFont('IBM Plex Mono', <String>[
+    'assets/fonts/IBMPlexMono/IBMPlexMono-Regular.ttf',
+    'assets/fonts/IBMPlexMono/IBMPlexMono-Medium.ttf',
+    'assets/fonts/IBMPlexMono/IBMPlexMono-SemiBold.ttf',
+  ]);
 
-  HttpOverrides.global = null;
-  PathProviderPlatform.instance = _TempPathProvider(fontCacheDir.path);
-  try {
-    JText.correction;
-    JText.clock;
-    JText.pageTitle;
-    JText.body;
-    JText.bodyMuted;
-    JText.label;
-    JText.mono;
-    // `TextStyle` SENKRON döner, yükleme arka planda başlar — sabit bir
-    // bekleme yerine paketin KENDİ takip ettiği `pendingFontFutures`i
-    // bekliyoruz: her dosya yalnız GERÇEKTEN gerektiği kadar bekliyor
-    // (genelde <1sn), sabit bir sayı ne fazla yavaşlatıyor ne de yavaş bir
-    // bağlantıda yetersiz kalıyor.
-    await Future.wait(pendingFontFutures.toList());
-  } finally {
-    HttpOverrides.global = previousHttpOverrides;
-    PathProviderPlatform.instance = previousPathProvider;
-  }
+  // D1 REGRESYON KAPISI (Gravita `G-227` emsali, üç katmandan #2 — test-
+  // zamanı sayım). `TestWidgetsFlutterBinding` zaten kurduğu bir
+  // `HttpOverrides` ile gerçek istekleri 400'e ZORLUYOR (eski dosyanın
+  // ölçtüğü olgu) — ama bu SESSİZ bir varsayılan, GÖRÜNÜR bir iddia
+  // değil. Burada override EDİLEREK her `HttpClient` kurma denemesi
+  // ANINDA ve ADIYLA (hangi dosyanın hangi satırı) düşürülüyor — google_
+  // fonts sessizce geri gelirse ("bir bağımlılık yükseltmesi transitif
+  // olarak http'yi geri getirdi" gibi) 361 testin İLK ağa çıkanı BURADA
+  // yakalar, "0 bulundu" diye sessizce geçmez.
+  HttpOverrides.global = _NoNetworkOverrides();
+
   await testMain();
-  try {
-    fontCacheDir.deleteSync(recursive: true);
-  } on Object {
-    // Temizlik başarısız olsa bile TESTLERİN sonucu etkilenmez — geçici
-    // klasör zaten sistemin kendi temp dizininde, işletim sistemi süpürür.
+}
+
+class _NoNetworkOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    throw StateError(
+      'D1 REGRESYONU: bir test GERÇEK bir HttpClient kurmaya çalıştı. '
+      'JabLab çalışma-anında ağa çıkmaz (google_fonts kaldırıldı, D1) — '
+      'bu ya bir bağımlılığın sessizce ağ-yapabilir hâle döndüğünü ya da '
+      'yeni bir ağ bağımlılığının test/network_deps_test.dart\'a hiç '
+      'sorulmadan eklendiğini gösterir. Stack trace HANGİ testin '
+      'tetiklediğini gösterir.',
+    );
   }
 }
 
-/// `google_fonts`un indirdiği font baytlarını diske yazabilmesi için — GERÇEK
-/// bir platform kanalı yerine bu koşunun kendi geçici klasörünü döndürüyor.
-/// `path_provider`in kendi paket testinin izlediği desenin AYNISI
-/// (`FakePathProviderPlatform`, `google_fonts` paket kaynağı).
-class _TempPathProvider extends PathProviderPlatform {
-  _TempPathProvider(this._path) : super();
+/// Bir aileye AİT birden fazla ağırlık dosyasını TEK `FontLoader`a
+/// ekliyoruz — Flutter'ın kendi deseni: aynı `family` adına yüklenen her
+/// dosya, o ailenin İÇİNDEKİ bir varyant olarak kaydolur (gerçek uygulamada
+/// `pubspec.yaml`ın `fonts:` listesinin AYNISI).
+Future<void> _loadFont(String family, List<String> assetPaths) async {
+  final FontLoader loader = FontLoader(family);
+  for (final String path in assetPaths) {
+    loader.addFont(_readAsset(path));
+  }
+  await loader.load();
+}
 
-  final String _path;
-
-  @override
-  Future<String?> getApplicationSupportPath() async => _path;
-
-  @override
-  Future<String?> getTemporaryPath() async => _path;
-
-  @override
-  Future<String?> getApplicationDocumentsPath() async => _path;
+/// `rootBundle.load` KULLANILMAZ: bu, `testMain()` çağrılmadan ÖNCE
+/// koşuyor ve `TestWidgetsFlutterBinding` henüz KURULMAMIŞ olabilir —
+/// asset bundle'ın platform kanalına ihtiyacı var. Doğrudan dosya sistemi
+/// okuması bağımsız: `flutter test` çalışma dizini zaten paket köküdür.
+Future<ByteData> _readAsset(String relativePath) async {
+  final List<int> bytes = await File(relativePath).readAsBytes();
+  return ByteData.view(Uint8List.fromList(bytes).buffer);
 }

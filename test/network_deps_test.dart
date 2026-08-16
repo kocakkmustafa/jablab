@@ -4,21 +4,20 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// BAĞIMLILIK DÜRÜSTLÜĞÜ — "ağa çıkmıyoruz" iddiasını KAPIYA bağlar (J-217).
 ///
-/// ## Neden var — ve neden bugün BİR YALAN buldu
+/// ## D1 (2026-08-16, F2) — google_fonts KALDIRILDI, bölme YENİDEN ÖLÇÜLDÜ
 ///
-/// *"Ürün ağ isteği yapmıyor"* iddiası **ölçülmüştü ve ölçüm doğruydu**:
-/// üretim Dart'ında `HttpClient`/`package:http` **0** (sabotaj-doğrulamalı).
-/// Ama o ölçüm **kendi kodumu** kapsıyordu, ***ürünü değil.***
+/// `google_fonts` çalışma-anında fonts.gstatic.com'dan font çekiyordu
+/// (J-264/J-217) — D1 paketleyip kaldırdı. `flutter pub get` bunu bağımsız
+/// doğruladı: "no longer being depended on: google_fonts, http, http_parser"
+/// (`http`/`http_parser` yalnız google_fonts'un transitifiydi, kendi
+/// başlarına HİÇBİR ŞEY onları gerektirmiyordu — `sync_http`/`webdriver`/
+/// `fuchsia_remote_debug_protocol`/`vm_service` hâlâ burada çünkü onlar
+/// `flutter_driver`/`integration_test`in transitifi, google_fonts'un DEĞİL).
 ///
-/// `google_fonts` **doğrudan bağımlılık**, `design_tokens.dart`ta üretimde
-/// kullanılıyor, `allowRuntimeFetching` **hiç kapatılmamış** (varsayılan
-/// açık) ve depoda **paketlenmiş font YOK** → uygulama font yüzlerini
-/// **çalışma anında Google'ın sunucularından indiriyor.**
-///
-/// > ***Kendi kodunda ağ olmaması, ürününde ağ olmaması demek değildir.***
-///
-/// Bu, tam olarak bu hattın bütün gün düzelttiği sınıf — bu kez KAPSAM
-/// hatası bende: doğru ölçüm, fazla geniş cümle.
+/// ⚠️ ESKİ POZİTİF KONTROL (`http`/`http_parser` önek-paylaşımı) artık
+/// ÇALIŞAMAZ — ikisi de lock'ta yok. `path_provider` ailesi AYNI özelliği
+/// taşıyor (`path_provider_android`/`_foundation`/`_platform_interface`/...)
+/// ve hâlâ gerçek bir bağımlılık — onunla değiştirildi.
 ///
 /// ## Ölçütün ŞEKLİ — BÖLME (tamlık-zorlayan), liste değil
 ///
@@ -36,15 +35,6 @@ void main() {
   ///
   /// Bu küme büyürse kapı öter: bir ağ bağımlılığı **sessizce** giremez.
   const Map<String, String> networkCapable = <String, String>{
-    'google_fonts':
-        'ÜRETİMDE AĞA ÇIKIYOR. design_tokens.dart GoogleFonts.familjenGrotesk/'
-            'ibmPlexMono kullanıyor; allowRuntimeFetching kapatılmamış ve '
-            'paketlenmiş font yok → font yüzleri çalışma anında indiriliyor. '
-            'Kullanıcı verisi GÖNDERİLMİYOR (istek font dosyası için) ama '
-            '"ürün ağa çıkmıyor" cümlesi bu paket yüzünden YANLIŞTIR.',
-    'http':
-        'google_fonts ve test altyapısının transitif bağımlılığı; üretim '
-            'kodumuz onu import ETMİYOR (ölçüldü, sabotaj-doğrulamalı).',
     'sync_http':
         'flutter_driver/webdriver zincirinin transitif bağımlılığı — yalnız '
             'test/sürücü yolunda, sevk edilen uygulamaya girmiyor.',
@@ -65,7 +55,7 @@ void main() {
     'args', 'async', 'boolean_selector', 'characters', 'clock', 'code_assets',
     'collection', 'crypto', 'fake_async', 'ffi', 'file', 'flutter',
     'flutter_driver', 'flutter_lints', 'flutter_test', 'flutter_web_plugins',
-    'hooks', 'http_parser', 'integration_test', 'jablab_engine', 'jni',
+    'hooks', 'integration_test', 'jablab_engine', 'jni',
     'jni_flutter', 'jni_util', 'leak_tracker', 'leak_tracker_flutter_testing',
     'leak_tracker_testing', 'lints', 'logging', 'matcher',
     'material_color_utilities', 'meta', 'motion_camera', 'motion_core',
@@ -103,9 +93,12 @@ void main() {
     expect(pkgs.length, greaterThan(50),
         reason: 'yalnız ${pkgs.length} paket okundu — ayrıştırma bozuk, '
             'bölme testinin sonucu ANLAMSIZ olurdu');
-    // Ostinato'nun kusurunun ikizi: önek paylaşan ad GÖRÜNÜYOR mu?
-    expect(pkgs, contains('http'), reason: 'ayrıştırıcı `http`yi görmüyor');
-    expect(pkgs, contains('http_parser'),
+    // Önek-paylaşan ad GÖRÜNÜYOR mu? (Ostinato'nun kusurunun ikizi.)
+    // `http`/`http_parser` D1'le lock'tan çıktı — `path_provider` ailesi
+    // AYNI özelliği taşıyor ve hâlâ gerçek bir bağımlılık.
+    expect(pkgs, contains('path_provider'),
+        reason: 'ayrıştırıcı `path_provider`ı görmüyor');
+    expect(pkgs, contains('path_provider_platform_interface'),
         reason: 'önek paylaşan ad görünmüyor — Ostinato\'nun bulduğu kusur '
             'burada da olurdu');
   });
@@ -145,23 +138,53 @@ void main() {
     // Küme değişirse öt: yeni bir ağ bağımlılığı, ürünün gizlilik
     // cümlelerini yeniden yazmayı gerektirebilir.
     expect(networkCapable.keys.toSet(), <String>{
-      'google_fonts', 'http', 'sync_http', 'webdriver',
-      'fuchsia_remote_debug_protocol', 'vm_service',
+      'sync_http', 'webdriver', 'fuchsia_remote_debug_protocol', 'vm_service',
     });
   });
 
-  test('⛔ "ürün ağa çıkmıyor" DENEMEZ — google_fonts üretimde ağa çıkıyor',
+  test(
+      '✅ "ürün ağa çıkmıyor" artık DOĞRU — google_fonts D1 ile kaldırıldı',
       () {
-    // Bu testin varlık sebebi: bugün PrivacyInfo.xcprivacy'de tam o cümle
-    // vardı ve YANLIŞTI. Cümle geri gelirse burası öter.
+    // NEGATİF İKİZİN TERSİ (H-40): D1'den ÖNCE bu test "ürün ağa çıkmıyor
+    // DENEMEZ" derdi (google_fonts gerçekten çıkıyordu). D1 sonrası olgu
+    // TERSİNE DÖNDÜ — artık manifestte kalan herhangi bir "font CDN'i
+    // istisnası" cümlesi BAYATTIR ve buradaki eski (ters yönlü) test onu
+    // yakalayamazdı. Kapının sabotaj yönü de tersine döndü (H-40 dersi):
+    // eskiden "yanlış iddia geri gelirse öt" derdi, şimdi "eski istisna
+    // cümlesi hâlâ DURUYORSA öt" diyor.
     final String manifest =
         File('ios/Runner/PrivacyInfo.xcprivacy').readAsStringSync();
-    expect(manifest.contains('ağ isteği YAPMIYOR'), isFalse,
-        reason: 'gizlilik manifesti "ürün ağ isteği yapmıyor" diyor ama '
-            'google_fonts üretimde font indiriyor — kapsamı KAMERA/kullanıcı '
-            'verisiyle sınırla, ürünün tamamı hakkında konuşma');
+    // ⚠️ "font" kelimesinin kendisi ARANMAZ — TARİHÎ not (J-217) bilerek
+    // korunuyor (M-F-634 ⑤: geçmiş silinmez, üstüne tarih atılır) ve o
+    // not "font" kelimesini meşru biçimde taşıyor. Aranan şey GÜNCEL bir
+    // İSTİSNA iddiası — eski cümlenin TAM KALIBI.
+    expect(manifest.contains('Giden tek ağ isteği font'), isFalse,
+        reason: 'manifest hâlâ GÜNCEL bir font-CDN istisnası iddia ediyor '
+            'ama google_fonts KALDIRILDI (D1) — bayat bir istisna, H-40 '
+            'gereği güncellenmeliydi (tarihî not KALABİLİR, güncel iddia '
+            'kalamaz)');
+    expect(manifest, contains('Giden HİÇBİR ağ isteği yok'),
+        reason: 'D1 sonrası güncel beyan (istisnasız) manifestte yok');
     // POZİTİF KONTROL: dosya gerçekten okunuyor.
     expect(manifest, contains('NSPrivacyTracking'),
         reason: 'manifest okunamadı — yukarıdaki "yok" sonucu anlamsız');
+  });
+
+  test(
+      '🔒 D1 REGRESYON KAPISI GERÇEKTEN ISIRIYOR — sabotajsız kanıt DEĞİLDİR',
+      () {
+    // flutter_test_config.dart'taki `_NoNetworkOverrides` (D1, üç
+    // katmandan #2) burada TEKRAR yazılmıyor — o TÜM test koşumunu
+    // koruyor. Ama "kurulu" ile "gerçekten çalışıyor" ayrı şeyler
+    // (bu ailenin defalarca öğrendiği ders) — burada SABOTAJLA kanıtlanıyor:
+    // gerçek bir HttpClient kurmayı DENE, ANINDA düşmeli.
+    expect(
+      () => HttpClient(),
+      throwsA(isA<StateError>()),
+      reason: 'HttpOverrides.global HttpClient kurulmasını engellemiyor — '
+          'D1 regresyon kapısı KURULU ama ISIRMIYOR, ki bu "0 ağ isteği" '
+          'iddiasını anlamsız kılar (kapı ötmeden geçen bir sabotaj, kapı '
+          'yok demektir)',
+    );
   });
 }

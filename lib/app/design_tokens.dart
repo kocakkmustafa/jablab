@@ -13,7 +13,6 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// OKLCH(lightness 0-1, chroma, hue-derece) → sRGB [Color].
 ///
@@ -76,26 +75,34 @@ class JColors {
 class JText {
   JText._();
 
-  static TextStyle correction = GoogleFonts.familjenGrotesk(
+  static const String _familjenGrotesk = 'Familjen Grotesk';
+  static const String _ibmPlexMono = 'IBM Plex Mono';
+
+  static const TextStyle correction = TextStyle(
+      fontFamily: _familjenGrotesk,
       fontSize: 40, fontWeight: FontWeight.w700, height: .96, letterSpacing: -1.4, color: JColors.ink);
 
-  static TextStyle clock = GoogleFonts.ibmPlexMono(
+  static const TextStyle clock = TextStyle(
+      fontFamily: _ibmPlexMono,
       fontSize: 76,
       fontWeight: FontWeight.w500,
       height: .9,
       letterSpacing: -3.0,
       color: JColors.ink,
-      fontFeatures: const <FontFeature>[FontFeature.tabularFigures()]);
+      fontFeatures: <FontFeature>[FontFeature.tabularFigures()]);
 
-  static TextStyle pageTitle = GoogleFonts.familjenGrotesk(
+  static const TextStyle pageTitle = TextStyle(
+      fontFamily: _familjenGrotesk,
       fontSize: 46, fontWeight: FontWeight.w700, height: 1, letterSpacing: -1.6, color: JColors.ink);
 
-  static TextStyle body = GoogleFonts.familjenGrotesk(
+  static const TextStyle body = TextStyle(
+      fontFamily: _familjenGrotesk,
       fontSize: 17, fontWeight: FontWeight.w400, height: 1.35, color: JColors.ink);
 
-  static TextStyle bodyMuted = body.copyWith(color: JColors.ink2, fontSize: 15);
+  static final TextStyle bodyMuted = body.copyWith(color: JColors.ink2, fontSize: 15);
 
-  static TextStyle label = GoogleFonts.ibmPlexMono(
+  static final TextStyle label = TextStyle(
+      fontFamily: _ibmPlexMono,
       fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 1.8, color: JColors.cool2);
 
   /// ⚠️ Varsayılan renk `ink3`ten `ink2`ye ÇEKİLDİ (J-116). ÖLÇÜLDÜ:
@@ -106,7 +113,8 @@ class JText {
   /// Sönüklük hiyerarşisi KAYBOLMADI: `ink` (18,43) ile `ink2` (7,61)
   /// arasında hâlâ belirgin bir fark var ve ikisi de eşiği geçiyor.
   /// Kaybolan tek şey, okunamayacak kadar sönük olma seçeneği.
-  static TextStyle mono = GoogleFonts.ibmPlexMono(fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink2);
+  static final TextStyle mono =
+      TextStyle(fontFamily: _ibmPlexMono, fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink2);
 }
 
 /// Ders akışının frozen kabuk parçalarını (`SessionFlowScaffold`,
