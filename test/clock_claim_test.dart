@@ -89,4 +89,26 @@ void main() {
         reason: 'saatli derste saat iddiası kaybolmuş — J-159 plansız '
             'dersi kapsam dışı bıraktı, cümleyi kaldırmadı');
   });
+
+  testWidgets('⛔ NEGATİF İKİZ — "voice coach" YOK (D2, V1 SESSİZ)',
+      (WidgetTester t) async {
+    // Aynı cümle J-159 kapanışında bir de var-olmayan bir yeteneği
+    // "çalışıyor" diye anlatıyordu: "...The round timer and the voice
+    // coach both work." V1'de ses YOK — D2 kararı. Bu ikiz olmadan
+    // yukarıdaki "runs on the clock" testi geçerdi ama YANLIŞ bir cümlenin
+    // YARISINI hiç görmezdi.
+    await pumpLive(t,
+        plan: const RoundPlan(
+            rounds: 2,
+            roundSeconds: 60,
+            restSeconds: 30,
+            planProvenance: 'test'));
+    expect(find.textContaining('voice coach'), findsNothing,
+        reason: 'V1 sessiz — var olmayan bir "voice coach"un çalıştığı '
+            'iddia ediliyor (D2 ihlali)');
+    expect(find.textContaining('round timer'), findsNothing,
+        reason: 'bu kalem shell_candidate/live_surface.dart DEĞİL app '
+            'katmanında — ama yine de alan-nötr "timer" tercih edildi, '
+            'gelecekte kabuğa taşınırsa hazır');
+  });
 }

@@ -10,6 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 /// terfi turunda 5 app'in ortak katmanına boks sözlüğü taşınır.
 void main() {
   final Directory dir = Directory('lib/shell_candidate');
+  // ⚠️ YALNIZ `.dart` — BİLEREK, ve nedeni ADIYLA: `README.md` bu klasörün
+  // KENDİ kuralını anlatırken yasaklı kelimeleri ÖRNEK olarak taşıyor
+  // ("punch, jab, round, boxing gibi kelimeler geçmez"). O metin taransaydı
+  // KURALIN KENDİSİ kuralı ihlal ederdi. Bu yazılı değildiyse bir gün biri
+  // "kural kitabını temizleyeyim" diyip kuralı silebilirdi — ihlal DEĞİL,
+  // kuralın KENDİSİ, ölçülmeden fark edilmezdi (orkestratörün bağımsız
+  // taramasında yaşandı: `round`/`interval`/`punch` eşleşti, hepsi
+  // README'de VEYA "adı bilerek 'round' değil" yorumlarında çıktı).
   final List<File> sources = dir
       .listSync()
       .whereType<File>()

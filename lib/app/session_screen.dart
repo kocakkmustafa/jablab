@@ -876,7 +876,7 @@ extension on _LiveState {
           narration: _line,
           noVerdictReason: timed
               ? 'This lesson runs on the clock — nothing is being judged. '
-                  'The round timer and the voice coach both work.'
+                  'The timer and the on-screen pacing cues still work.'
               : 'Nothing is being judged here, and there is no clock '
                   'either. Work at your own pace and move on when you are '
                   'done.',
