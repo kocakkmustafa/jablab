@@ -96,11 +96,40 @@ GERÇEK bir insan gövdesini okuyup okumadığı bu proje için **hiç
 kontrol" değil **asıl soru** olarak çerçeveliyor (Ostinato'nun kendi
 çerçevesi, aile-geneli).
 
+## 3b — Otomatik canlılık probu (madde 5-6'nın YERİNE değil YANINA — ölçüm, göz değil)
+
+Yukarıdaki madde 5-6 "iskelet noktaları çiziliyor mu" diye GÖZLE bakar —
+göz bir sayı üretmez. `integration_test/device_liveness_probe_test.dart`
+(H-82 görevi, 2026-08-17) AYNI zinciri (izin→model→kamera→30 sn ölçüm)
+kodla sürer ve bir **artefakt dosyası** bırakır: fps (judged/captured/
+judgedRatio/meanInferenceUs), **ilk-poz gecikmesi** (hiçbir yerde
+tutulmuyordu — YENİ), **landmark geçerlilik oranı** (kaç zarfta model
+bir insan gördü — `judgedRatio`dan FARKLI, o kanalı ölçer bu modeli) ve
+kendiliğinden ayırt edilen **düşme modu** (`permission_denied` ·
+`model_materialize_failed` · `camera_start_failed` · `no_envelope_flow`
+· `no_person_detected` · `stream_error` · ya da hiçbiri = temiz koşum).
+
+```bash
+flutter test integration_test/device_liveness_probe_test.dart -d <cihaz-id>
+```
+
+Madde 5'e girip canlı seansı açtıktan sonra (kameranın kendine baktığından
+emin ol) koş — 30 saniye boyunca telefonu kendine doğru tut. Artefakt
+uygulamanın Documents dizinine JSON olarak yazılır, tam yol terminale
+basılır (Xcode "Cihaz ve Simülatörler" ya da eşdeğeriyle çekilebilir).
+
+**Durum (2026-08-17 yazıldı):** `flutter analyze` temiz, kod cihaz
+BAĞLI DEĞİLKEN yazıldı — bu turun kendi ölçümü GERÇEK cihazda henüz
+KOŞULMADI (H-68: yazıldı ≠ koşuldu, iki ayrı durum). Cihaz günü ilk
+koşum bu betiğin kendisini de sınayacak.
+
 ---
 
 ## Kaynaklar
 
 - Ön-uçuş betiği: `tools/device_day_preflight.py`
+- Canlılık probu: `integration_test/device_liveness_probe_test.dart`
+  (H-82, 2026-08-17 — artefakt yazan, tek komutlu ölçüm)
 - İmza/kurulum dersi: kişisel hafıza `feedback-ios-cihaz-kurulum-imza.md`
   (aile çapında `H-9`, Ostinato `O-129`/`O-130`)
 - İçerik/dürüstlük zemini: bu reçete `lib/app/onboarding_page.dart` ·

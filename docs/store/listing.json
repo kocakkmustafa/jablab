@@ -17,7 +17,7 @@
     "$source": "ios/Runner/Info.plist NSCameraUsageDescription — BURAYA KOPYALANDI, DEGISTIRILMEDI. Tutarlilik: description'daki 'never leaves your device' cumlesiyle BIREBIR ayni iddia.",
     "$correctedWhy": "J-211 (2026-08-12): onceki metin *'the app only keeps the body landmarks it measures'* diyordu ve OLCULDU — uygulama HICBIR landmark saklamiyor. Diske yazilan her sey: sessions.jsonl (lessonId, completedAt, workedSeconds, unitsCompleted, plannedUnits, unitLabel, lessonClass — vucut verisi YOK) + onboarding_seen (tek bayt) + poz modeli .task (paketten cikarilan asset). Landmark yalniz o KARE icin yasiyor (resolution.frame!.landmarks -> iskelet cizimi), tampon yok. Cumle gerceklesmeyen bir saklamayi iddia ediyordu. 'never uploaded' yarisi DOGRU: uretim Dart'inda (34 dosya) ag cagrisi 0, ag paketi importu 0 — sabotaj-dogrulamali tarama (HttpClient enjekte->1, geri al->0). NOT: bu cumlenin IKINCI bir yuzeyi vardi ve onu `store_listing_test`in plist-tutarlilik kapisi buldu — plist duzeltilince kapi otedi, yani yanlis cumle magaza listesine de girmisti."
   },
-  "ageRating": {
+  "$ageRating": {
     "expectedTier": "App Store 4+ / Google Play Everyone (PEGI 3) — TAHMIN, nihai sonuc ASC/Play'in kendi sureci",
     "rationale": [
       "Realistic or cartoon violence: NONE — solo shadow boxing, hicbir rakip TASVIR EDILMIYOR, dovus mekanigi yok",
