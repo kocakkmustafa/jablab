@@ -1,0 +1,109 @@
+{
+  "$doc": "JAB-E-001 kanit dosyasi (21-JABLAB-MASTER-ROADMAP.md SS16). Makine-okur; test/canonical_shell_reachability_test.dart bu dosyayi calisma-zamaninda okur ve canonicalShell.layerB_deadCandidate + layerA_sharedInfraPendingPromotion listelerini dogrular. Nokta-zamanli kanittir (git alani commit'lendigi haldeki HEAD'i tasir); yeniden olcum icin BASELINE-MUHUR-2026-08-19.md prosedurunu tekrarla.",
+  "claimId": "JAB-E-001",
+  "claim": "Baseline/canonical shell dogru",
+  "state": "EVIDENCE_RECORDED",
+  "measuredAt": "2026-08-19",
+  "git": {
+    "baselineHead": "1a8615dd0dba9d5eb173062745bebbc320232b33",
+    "branch": "main",
+    "workingTreeAtMeasurement": "clean",
+    "originSync": "0/0",
+    "commonPin": "f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d",
+    "$source": "workspace/BASELINE-MUHUR-2026-08-19.md, bagimsiz olcum"
+  },
+  "gates": {
+    "flutterAnalyze": "0 issue",
+    "appTests": "368/368 PASS",
+    "engineTests": "129/129 PASS",
+    "$source": "ayni oturum, borusuz koşum"
+  },
+  "canonicalShell": {
+    "$doc": "21-JABLAB-MASTER-ROADMAP.md JAB-P0-001 Step 1 makine-okur envanteri. Roadmap SS1 cumlesi ('lib/shell_candidate/ shipped shell degildir; iki shell paralel yasamamali') basitlestirilmis — gercekte UC katman var, iki degil. Kaynak: lib/shell_candidate/README.md (kanonik) + bu oturumun bagimsiz grep dogrulamasi (import satiri + Scaffold( icerik taramasi, hepsi asagida $verifiedBy alaninda).",
+    "layerA_sharedInfraPendingPromotion": {
+      "$doc": "Zaten shipped'in CANLI bagimliligi; motion_shell aile-paketine (M-F-25) terfi bekliyor. Roadmap'in 'aday' kelimesi bunlar icin yaniltici.",
+      "entries": [
+        {
+          "file": "lib/shell_candidate/shell_models.dart",
+          "symbols": ["ShellLibrary", "ShellItem", "ShellCourse", "ShellLesson", "ShellExclusion"],
+          "consumers": ["lib/app/jablab_app.dart", "lib/app/onboarding_page.dart", "lib/app/course_page.dart", "lib/app/content_repository.dart", "lib/app/select_page.dart"]
+        },
+        {
+          "file": "lib/shell_candidate/live_surface.dart",
+          "symbols": ["LiveState", "LiveCoachSurface", "SessionSummaryView"],
+          "consumers": ["lib/app/live_jab_controller.dart", "lib/app/skeleton_overlay.dart", "lib/app/session_screen.dart"]
+        },
+        {
+          "file": "lib/shell_candidate/session_flow.dart",
+          "symbols": ["SessionStage", "SessionFlowScaffold", "IntervalTimer"],
+          "consumers": ["lib/app/session_screen.dart"]
+        },
+        {
+          "file": "lib/shell_candidate/honesty_box.dart",
+          "symbols": ["HonestyBox"],
+          "consumers": ["lib/app/select_page.dart"]
+        },
+        {
+          "file": "lib/shell_candidate/library_pages.dart",
+          "symbols": ["WhyNotPage"],
+          "consumers": ["lib/app/jablab_app.dart"],
+          "note": "yalniz WhyNotPage — 'show WhyNotPage' ile kisitli import; ayni dosyanin diger 3 sinifi (LibraryPage/ItemPage/CoursePage) Layer B'dir, asagida"
+        }
+      ],
+      "$verifiedBy": "grep -rn \"^import '\\.\\./shell_candidate/\" lib/app/ — bu oturum, 2026-08-19"
+    },
+    "layerB_deadCandidate": {
+      "$doc": "JabLab'in kendi app akisi ARTIK cagirmiyor (README'nin kendi kaydi, 2026-08-06/07). JAB-P0-001'in asil hedefi: bu 6 sembolun uretimde ASLA erisilemez oldugunu ISPATLA ve KALICI KIL. Terfi/silme karari aile-genel (koordinator), bu gorevin kapsami DEGIL.",
+      "entries": [
+        {
+          "file": "lib/shell_candidate/shell_scaffold.dart",
+          "symbol": "ShellScaffold",
+          "verificationMethod": "codeOnlyContainmentOutsideFolder",
+          "priorCoverage": "test/reachable_screens_test.dart zaten kapsiyordu (mentionedOutside)"
+        },
+        {
+          "file": "lib/shell_candidate/shell_scaffold.dart",
+          "symbol": "ProgressPage",
+          "verificationMethod": "codeOnlyContainmentOutsideFolder",
+          "priorCoverage": "GORULMEZ — Scaffold( DEGIL ListView( donduruyor, reachable_screens_test.dart'in aday-turetme deseni (`class` govdesinde 'Scaffold(' arar) bunu hic aday saymiyor, kanit-eksikligi degil kor-nokta"
+        },
+        {
+          "file": "lib/shell_candidate/shell_scaffold.dart",
+          "symbol": "PaywallStub",
+          "verificationMethod": "codeOnlyContainmentOutsideFolder",
+          "priorCoverage": "GORULMEZ — ayni kor-nokta, Card( donduruyor"
+        },
+        {
+          "file": "lib/shell_candidate/library_pages.dart",
+          "symbol": "LibraryPage",
+          "verificationMethod": "codeOnlyContainmentOutsideFolder",
+          "priorCoverage": "GORULMEZ — ayni kor-nokta, ListView( donduruyor"
+        },
+        {
+          "file": "lib/shell_candidate/library_pages.dart",
+          "symbol": "ItemPage",
+          "verificationMethod": "codeOnlyContainmentOutsideFolder",
+          "priorCoverage": "test/reachable_screens_test.dart zaten kapsiyordu (mentionedOutside)"
+        },
+        {
+          "file": "lib/shell_candidate/library_pages.dart",
+          "symbol": "CoursePage",
+          "verificationMethod": "importGraphShowClause",
+          "priorCoverage": "YANLIS-POZITIF RISKI — Scaffold( kuruyor, yani reachable_screens_test.dart'in aday kumesine GIRIYOR, ama lib/app/course_page.dart'taki GERCEK/shipped CoursePage ile AYNI CIPLAK ADI tasidigi icin Set<String> aritmetiginde ikisi TEK girdiye COKUYOR — gercek olan yuruyorken (walked) bu tekil ad kumeden dusuyor ve adaydan-varilamayana hic dusmuyor. Isim CATISMASI yuzunden ad-tabanli denetim SAGLIKSIZ; bu yuzden bu sembol icin import-grafigi yontemi kullanildi: lib/ altinda library_pages.dart'i ice aktaran HER satir 'show WhyNotPage' ile TAM eslesmeli (bugun tek satir, jablab_app.dart) — boylece CoursePage/ItemPage/LibraryPage hicbir dosyanin ad alanina asla girmez, Dart derleyicisinin kendisi bunu zorlar."
+        }
+      ],
+      "$verifiedBy": "bu oturum: shell_scaffold.dart + library_pages.dart tam okuma (hangi sinif Scaffold( kuruyor) + grep import satirlari, 2026-08-19"
+    },
+    "layerC_staleGreenTests": {
+      "$doc": "Layer B'yi DOGRUDAN pompalayan testler — bilesenin KOD BUTUNLUGUNU kanitlar, KULLANICI ERISILEBILIRLIGINI degil. README'nin kendi uyarisi zaten bunu adiyla yaziyor.",
+      "entries": [
+        {"file": "test/progress_recorded_test.dart", "constructs": ["ProgressPage"]},
+        {"file": "test/shell_test.dart", "constructs": ["ShellScaffold"]}
+      ]
+    },
+    "decisions": {
+      "layerA_not_moved_to_lib_app_shell": "Roadmap Step 3 harfiyen 'onaylanan bileşenleri lib/app/shell/ altina tasi' diyor. YAPILMADI: lib/shell_candidate/README.md (kanonik, 2026-07-29/08-06 tarihli) Layer A'yi zaten aile-capinda motion_shell paketine (M-F-25) taahhut etmis durumda; simdi JabLab-yerel bir lib/app/shell/'e tasimak yanlis-hedefli bir sapma olur ve terfi geldiginde IKINCI bir tasima turu dogurur, ayrica README'nin tek-yonlu 'app -> shell_candidate' bagimlilik sozlesmesini ara donemde ihlal eder. Roadmap'in harfi metni SOLO sozlesmesi SS1 geregi gercege duzeltildi; kabul hedefi ('tek canonical shell') tasima olmadan zaten karsilaniyor — runtime bugun de TEK kabuk aciyor (asagidaki layerB dogrulamasi kanit).",
+      "layerB_delete_vs_promote_still_open": "6 olu-aday sembolun nihayetinde silinip silinmeyecegi ya da Layer A ile birlikte motion_shell'e terfi edip etmeyecegi capraz-repo (5 app) mimari bir soru — README bunu zaten aile/koordinator seviyesine dogru sekilde birakmis, JabLab-solo karari DEGIL. JAB-P0-001'in kapsami DIŞINDA. JAB-P0-001'in isi yalniz mevcut erisilemezligi ISPATLANABILIR ve KALICI kilmak — bunu artik test/canonical_shell_reachability_test.dart yapiyor."
+    }
+  }
+}

@@ -3,6 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
+// Bu iki içe aktarma "candidate" klasöründen ama TERK EDİLMİŞ değil: ikisi
+// de aile-çapında motion_shell paketine (M-F-25) terfi bekleyen CANLI
+// paylaşılan altyapı — bkz. lib/shell_candidate/README.md "Katman A".
+// Aynı klasördeki GERÇEKTEN donmuş 6 sembol (ShellScaffold/ProgressPage/
+// PaywallStub/LibraryPage/ItemPage/candidate-CoursePage) buradan asla
+// içe aktarılmaz; bu değişmez artık test/canonical_shell_reachability_
+// test.dart tarafından zorlanıyor (JAB-P0-001, docs/evidence/production-
+// line/baseline.json).
 import '../shell_candidate/library_pages.dart' show WhyNotPage;
 import '../shell_candidate/shell_models.dart';
 import 'package:permission_handler/permission_handler.dart';

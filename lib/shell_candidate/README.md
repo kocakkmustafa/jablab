@@ -100,3 +100,26 @@ Terfi sonrası bu klasör boşalır ve `motion_shell` bağımlılığı gelir; a
 ## Bilinen borç
 
 - Widget testleri şu an `lib/app/` üzerinden uçtan uca koşuyor (gerçek `library.json` ile). Terfi şartı #4 bunların **kabuk modeliyle beslenen** sürümlerini istiyor; ayrıştırma terfi turunda yapılacak.
+
+> ## ✅ ŞERH (2026-08-19, JAB-P0-001) — "JabLab çağırmıyor" artık BEYAN değil KAPI
+>
+> Yukarıdaki tablonun "⚠️ JabLab çağırmıyor" satırları (2026-08-06/07
+> tarihli) o günün ÖLÇÜMÜYDÜ — koruması yoktu, bir sonraki oturum bu altı
+> bileşenden birini yanlışlıkla `lib/app/`e bağlarsa hiçbir test kırmızı
+> ötmezdi. Ölçüldü: `test/shell_promotion_test.dart` (halihazırda mevcut)
+> bunu SINAMIYOR — sözlük/bağımlılık terfi ön-koşulunu ölçüyor, kullanıcı
+> erişilebilirliğini değil (isim çakışması: JAB-P0-001'in beklediği
+> "duplicate route/dead candidate FAIL" testi bu DEĞİL). Ve
+> `test/reachable_screens_test.dart`nin aday-türetme deseni (`Scaffold(`
+> gövde-içi araması) `ProgressPage`/`PaywallStub`/`LibraryPage`yi HİÇ
+> görmüyor (düz `ListView(`/`Card(` döndürüyorlar) ve candidate
+> `CoursePage`yi `lib/app/course_page.dart`taki AYNI-ADLI gerçek sınıfla
+> karıştırıp "varılan" sanıyor (`Set<String>` ad çakışması).
+>
+> `test/canonical_shell_reachability_test.dart` + `docs/evidence/
+> production-line/baseline.json` artık altı bileşenin ALTISINI da eşit
+> sıkılıkla zorluyor: beşi kod-metni taraması (`mentionedOutside`,
+> yorumsuz), `CoursePage` isim çakışması yüzünden import-grafiği/`show`
+> kısıtlaması ile (derleyicinin kendisi zorluyor, metin taraması değil).
+> Terfi/silme kararı **hâlâ koordinatörde** — bu şerh o kararı ÖNCELEMİYOR,
+> yalnız "çağırmıyor" iddiasını sessizce bayatlayamaz hâle getiriyor.
