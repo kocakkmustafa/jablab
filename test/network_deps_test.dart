@@ -69,6 +69,16 @@ void main() {
     'sky_engine', 'source_span', 'stack_trace', 'stream_channel',
     'string_scanner', 'term_glyph', 'test_api', 'typed_data', 'vector_math',
     'web', 'xdg_directories', 'yaml',
+    // JAB-P0-002 (2026-08-19): `device_info_plus` eklendi (yalnız
+    // `integration_test/` — `isPhysicalDevice`, dev-dependency, release
+    // binary'ye girmez). Kendisi + platform arayüzü yerel OS sorgusu
+    // yapar, ağa çıkmaz. `win32`/`win32_registry`/`ffi_leak_tracker`
+    // TRANSİTİF: `device_info_plus`ın desteklediği Windows platformunun
+    // kayıt-defteri/FFI bağlayıcıları (bu proje Windows'a DERLENMİYOR ama
+    // `pub` yine de çözüyor) — üçü de yerel sistem çağrısı, HTTP/soket
+    // içermez.
+    'device_info_plus', 'device_info_plus_platform_interface',
+    'ffi_leak_tracker', 'win32', 'win32_registry',
   };
 
   List<String> lockPackages() {

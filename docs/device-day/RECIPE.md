@@ -100,28 +100,44 @@ kontrol" değil **asıl soru** olarak çerçeveliyor (Ostinato'nun kendi
 
 Yukarıdaki madde 5-6 "iskelet noktaları çiziliyor mu" diye GÖZLE bakar —
 göz bir sayı üretmez. `integration_test/device_liveness_probe_test.dart`
-(H-82 görevi, 2026-08-17) AYNI zinciri (izin→model→kamera→30 sn ölçüm)
-kodla sürer ve bir **artefakt dosyası** bırakır: fps (judged/captured/
-judgedRatio/meanInferenceUs), **ilk-poz gecikmesi** (hiçbir yerde
-tutulmuyordu — YENİ), **landmark geçerlilik oranı** (kaç zarfta model
-bir insan gördü — `judgedRatio`dan FARKLI, o kanalı ölçer bu modeli) ve
-kendiliğinden ayırt edilen **düşme modu** (`permission_denied` ·
-`model_materialize_failed` · `camera_start_failed` · `no_envelope_flow`
-· `no_person_detected` · `stream_error` · ya da hiçbiri = temiz koşum).
+(H-82 görevi, 2026-08-17; JAB-P0-002'de 2026-08-19'da genişletildi) AYNI
+zinciri (izin→model→kamera→ölçüm penceresi) kodla sürer ve bir
+**artefakt dosyası** bırakır: fps (judged/captured/judgedRatio/
+meanInferenceUs anlık + **p10/p50/p95, YENİ**), **ilk-poz gecikmesi**,
+**landmark geçerlilik oranı** (`judgedRatio`dan FARKLI, kanal-teslimatı
+değil MODELİN kimseyi görüp görmediğini ölçer), **termal (en kötü
+kademe + zaman-serisi, YENİ)** ve kendiliğinden ayırt edilen **düşme
+modu** (`permission_denied` · `model_materialize_failed` ·
+`camera_start_failed` · `no_envelope_flow` · `no_person_detected` ·
+`stream_error` · `not_physical_device` (**YENİ** — simülatör/emülatörde
+artık KIRMIZI) · ya da hiçbiri = temiz koşum).
+
+⚠️ **Bulaniklik (blur bucket) YAZILAMADI, adıyla:** `motion_camera`
+(pinli) kamera zarfı ham piksel taşımıyor, yalnız poz-iskelet sonucu —
+app katmanında çözülemeyen bir mimari sınır, bkz. `docs/evidence/
+production-line/device-matrix.json` `codeReadiness.metricsBlocked`.
 
 ```bash
+# Varsayılan pencere 20 dk (roadmap Step 3). Dev-check için kısaltma:
+#   --dart-define=LIVENESS_WINDOW_SECONDS=30
 flutter test integration_test/device_liveness_probe_test.dart -d <cihaz-id>
 ```
 
 Madde 5'e girip canlı seansı açtıktan sonra (kameranın kendine baktığından
-emin ol) koş — 30 saniye boyunca telefonu kendine doğru tut. Artefakt
-uygulamanın Documents dizinine JSON olarak yazılır, tam yol terminale
-basılır (Xcode "Cihaz ve Simülatörler" ya da eşdeğeriyle çekilebilir).
+emin ol) koş — pencere boyunca telefonu kendine doğru tut (varsayılan
+20 dakika — termal/FPS-düşüşü bu sürede gözlemlenebilir hâle gelir,
+30 saniyede DEĞİL). Artefakt uygulamanın Documents dizinine JSON olarak
+yazılır, tam yol terminale basılır (Xcode "Cihaz ve Simülatörler" ya da
+eşdeğeriyle çekilebilir).
 
-**Durum (2026-08-17 yazıldı):** `flutter analyze` temiz, kod cihaz
-BAĞLI DEĞİLKEN yazıldı — bu turun kendi ölçümü GERÇEK cihazda henüz
-KOŞULMADI (H-68: yazıldı ≠ koşuldu, iki ayrı durum). Cihaz günü ilk
-koşum bu betiğin kendisini de sınayacak.
+**Durum (2026-08-19 güncellendi, JAB-P0-002):** `flutter analyze` temiz,
+app 381/381 + motor 129/129. Yeni native kod (termal MethodChannel)
+**derleme-doğrulandı**: `flutter build apk --debug` ✅ ve `flutter build
+ios --debug --simulator` (bu turda koşuluyor) — ama gerçek termal SİNYAL
+yalnız fiziksel cihazda anlamlı (simülatör/emülatör hep "nominal" döner).
+Kod cihaz BAĞLI DEĞİLKEN yazıldı — bu turun kendi ölçümü GERÇEK cihazda
+henüz KOŞULMADI (H-68: yazıldı ≠ koşuldu, iki ayrı durum). Cihaz günü
+ilk koşum bu betiğin kendisini de sınayacak.
 
 ---
 

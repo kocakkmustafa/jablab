@@ -1,0 +1,55 @@
+{
+  "$doc": "JAB-E-002 kanit dosyasi (21-JABLAB-MASTER-ROADMAP.md SS16). Gravita'nin (G-266) emsaliyle ayni disiplin: PASS/FAIL degil, olcum+esik+engel ADIYLA. Fiziksel cihaz kosumu (roadmap JAB-P0-002 Step 3-4) bu oturumda EXTERNAL_GATE — SOLO sozlesmesi SS1.6: kod/test/sema hazirlandi, veri toplama kurucu/insan isi.",
+  "claimId": "JAB-E-002",
+  "claim": "Fast-motion device gate gecti",
+  "state": "EXTERNAL_GATE",
+  "measuredAt": "2026-08-19",
+  "codeReadiness": {
+    "$doc": "Bu oturumda YAZILAN ve TEST EDILEN kisim — cihaz gerektirmeyen kanit.",
+    "probe": "integration_test/device_liveness_probe_test.dart",
+    "windowSeconds": "varsayilan 1200 (20 dk, roadmap Step 3), --dart-define=LIVENESS_WINDOW_SECONDS ile kisaltilabilir",
+    "metricsImplemented": [
+      {"metric": "fps.judgedPerSecond/capturedPerSecond/judgedRatio/meanInferenceUs", "status": "ONCEDEN VARDI (J-288, H-82)", "source": "motion_camera ThroughputMonitor, degistirilmedi"},
+      {"metric": "fps p10/p50/p95", "status": "YENI (JAB-P0-002)", "method": "1 sn'de bir PeriodicSampler ile monitor.judgedPerSecond ornekleniyor, jablab_engine'in reliablePercentile'i (J-283) ile hesaplaniyor — kucuk-orneklem korumasi ODUNC ALINDI, icat edilmedi", "unitTested": "test/liveness_metrics_test.dart, cihaz gerektirmez"},
+      {"metric": "firstPoseLatencyMs", "status": "ONCEDEN VARDI (J-288)"},
+      {"metric": "landmarkValidity.ratio", "status": "ONCEDEN VARDI (J-288)"},
+      {"metric": "thermal (worstTier + zaman-serisi)", "status": "YENI (JAB-P0-002)", "method": "app-ozel MethodChannel com.yulalab.jablab/thermal — iOS ProcessInfo.thermalState (4 kademe) + Android PowerManager.getCurrentThermalStatus (7 kademe, 4'e indirgenir, esleme lib/app/thermal_channel.dart'ta dokumante) — motion_core/motion_camera'dan BAGIMSIZ (SERT KURAL: pin READ-ONLY korundu)", "unitTested": "test/liveness_metrics_test.dart (mantik) + native derleme dogrulamasi asagida", "signalVerified": false, "signalVerifiedWhy": "gercek termal deger yalniz fiziksel cihazda anlamli; simulator/emulator hep nominal doner"}
+    ],
+    "metricsBlocked": [
+      {
+        "metric": "blur bucket",
+        "status": "MIMARI OLARAK ENGELLI — yazilmadi, taklit edilmedi",
+        "why": "packages/motion_camera (pin f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d) frame_envelope.dart dogrulandi: CameraFrameEnvelope yalniz zaman damgasi + poz-iskelet sonucu (32 float x 2 gecis) tasir, HAM PIKSEL/PARLAKLIK ASLA DART KATMANINA GECMIYOR. Native katman kareyi isleyip ATIYOR. Bulaniklik/keskinlik olcumu (orn. Laplacian varyansi) RAW PIKSEL gerektirir — bu app katmaninda COZULEMEZ.",
+        "wouldRequire": "motion_camera'nin native katmaninin (Swift/Kotlin) ayrica bir keskinlik metrigi hesaplayip zarfa EKLEMESI — bu bir motion-core (aile-capinda, 5 app) API degisikligi, JabLab-solo kapsaminin DISINDA ve bu oturumun SERT KURALI ('motion-core READ-ONLY') tarafindan zaten yasaklaniyor",
+        "sahteYapilmadi": "landmark-jitter gibi zayif bir vekil sinyal kullanip 'blur bucket' diye sunmak SECILMEDI — roadmap'in kendi sayisal kapisi ('Blur/low-light hucrelerinde yanlis event artisi baseline'in 1.5 katini asmaz') gercek bulaniklik zeminine karsi olculecek; sahte bir vekil bu olcumu KORKUTUR, yardim etmez"
+      }
+    ],
+    "physicalDeviceGuard": {
+      "status": "YENI (JAB-P0-002 Step 2)",
+      "method": "device_info_plus (dev-dependency) isPhysicalDevice — simulator/emulatorde probe KIRMIZI olur, 'simulator kanit degildir' roadmap kuralinin kod karsiligi",
+      "liveVerified": "bu makinedeki iOS Simulator'e karsi DENENMEDI bu turda (yalniz derleme dogrulandi) — bir sonraki turda ya da cihaz gununde canli sinanabilir"
+    },
+    "score-stop-on-degraded": {
+      "status": "YAPILMADI — roadmap Step 4 (FPS/blur/thermal esik altindayken score durur, isimli fallback) canli kocluk motorunda (jablab_engine / LiveJabController) SAYISAL ESIGE bagli bir RUNTIME davranis gerektiriyor, bu probun (device_liveness_probe_test.dart) OLCUM gorevinden AYRI bir ozellik. Bilerek ERTELENDI, sessizce atlanmadi — DEFTER J-293'te adiyla."
+    }
+  },
+  "buildVerification": {
+    "$doc": "Native platform-kanali kodu (AppDelegate.swift + MainActivity.kt) DERLEME dogrulamasi. Doldurulacak.",
+    "ios": "PASS — flutter build ios --debug --simulator basarili (Xcode build 34,3s), build/ios/iphonesimulator/Runner.app (Swift FlutterImplicitEngineBridge/applicationRegistrar.messenger() koprusu gercek Xcode toolchain'inde derlendi, mock/stub degil)",
+    "android": "PASS — flutter build apk --debug basarili, build/app/outputs/flutter-apk/app-debug.apk (Kotlin MethodChannel + PowerManager kodu gercek Gradle/AGP toolchain'inde derlendi, mock/stub degil)"
+  },
+  "thresholds": {
+    "$doc": "21-JABLAB-MASTER-ROADMAP.md SS10 'Device/performance' — henuz hicbiri OLCULMEDI (EXTERNAL_GATE), yalniz kopyalandi ki bu dosya kapiyi TEK basina anlatabilsin.",
+    "firstValidPoseP95Seconds": 2.0,
+    "processedFpsP10LowClassMin": 24,
+    "sustainedBelow20fpsSecondsBeforeScoreStops": 3,
+    "eventToAudioP95Ms": 250,
+    "seriousCriticalThermalIn20Min": "yok olmali",
+    "blurLowLightFalseEventMultiplierMax": 1.5
+  },
+  "externalGate": {
+    "reason": "fiziksel cihaz bagli degil — 'flutter devices' yalniz kablosuz-eslesmis (USB DEGIL) bir iPhone + bir iOS simulator gosteriyor; J-290'in (2026-08-17) tespitiyle AYNI, bu oturumda yeniden dogrulandi (2026-08-19)",
+    "requiredAction": "MANUAL-JABLAB-DEVICE-20260818 paketi (roadmap SS14, 75 dk) — kurucu, USB fiziksel baglanti + kameraya 20 dk bakma",
+    "command": "flutter test integration_test/device_liveness_probe_test.dart -d <fiziksel-cihaz-id>"
+  }
+}

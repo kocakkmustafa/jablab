@@ -3,14 +3,18 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data' show ByteData;
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:jablab/app/pose_model.dart';
+import 'package:jablab/app/thermal_channel.dart';
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart' show BodyOrientation;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'liveness_metrics.dart';
 
 /// F5 — CİHAZ GÜNÜ KAMERA-CANLILIK ÖLÇÜM PROBU (H-82 görevi, 2026-08-17).
 ///
@@ -24,40 +28,75 @@ import 'package:permission_handler/permission_handler.dart';
 /// Koşum (cihaz USB ya da güvenilir Wi-Fi ile bağlıyken):
 ///   flutter test integration_test/device_liveness_probe_test.dart -d CIHAZ_ID
 ///
+/// Pencere `--dart-define=LIVENESS_WINDOW_SECONDS=N` ile geçersiz kılınabilir
+/// (dev-check için kısa, örn. 30) — varsayılan JAB-P0-002 Step 3'ün istediği
+/// 20 dakika (1200 sn), roadmap'in Run: komutu ekstra bayrak taşımıyor.
+///
 /// Artefakt: uygulamanın Documents dizinine
 /// `device_liveness_probe_<epoch-ms>.json` — tam yol test çıktısına basılır.
 ///
-/// Ölçtükleri (H-82'nin istediği dörtlü + düşme modları):
-///   * fps                  — `ThroughputMonitor` (motion_camera'da zaten
-///     var; burada yeniden icat edilmedi, aynı ölçüm sınıfı kullanıldı).
+/// Ölçtükleri (H-82'nin orijinal dörtlüsü + JAB-P0-002'nin eklediği ikisi):
+///   * fps (anlık + p10/p50/p95) — anlık değerler `ThroughputMonitor`
+///     (motion_camera'da zaten var, yeniden icat edilmedi). Yüzdelikler
+///     YENİ: 1 sn'de bir örneklenip `reliablePercentile`e (`jablab_engine`,
+///     J-283) verilir — o fonksiyonun küçük-örneklem koruması burada da
+///     geçerli, kısa bir koşumdan p95 basmak yanıltıcı olurdu.
 ///   * ilk-poz gecikmesi     — kamera seansı başladıktan `pass()`ın İLK
-///     non-null döndüğü zarfa kadar geçen süre. Bu YENİ bir ölçüm: hiçbir
-///     yerde tutulmuyordu (`camera_harness_screen.dart` yalnız "kaç kez"
-///     sayıyor — `_emptyPasses` — "ne kadar sürdü" değil).
+///     non-null döndüğü zarfa kadar geçen süre. Hiçbir yerde tutulmuyordu
+///     (`camera_harness_screen.dart` yalnız "kaç kez" sayıyor —
+///     `_emptyPasses` — "ne kadar sürdü" değil).
 ///   * landmark geçerlilik oranı — judged zarfların kaçında `pass()` bir
 ///     insan döndürdü. `ThroughputMonitor.judgedRatio`dan FARKLI: o
 ///     kanal-teslimatını (kaç zarf düşmedi) ölçer, bu MODELİN kimseyi
 ///     görüp görmediğini ölçer — ikisi karışırsa "akış var ama kimse
 ///     görülmüyor" durumu "akış yok" ile aynı sayı gibi okunur.
+///   * termal (YENİ, JAB-P0-002) — `ThermalChannel` (`lib/app/
+///     thermal_channel.dart`, app-özel platform kanalı, motion_core'dan
+///     BAĞIMSIZ), 5 sn'de bir örneklenir, tüm okumaların EN KÖTÜSÜ +
+///     zaman-serisinin tamamı artefakta yazılır.
+///   * blur bucket — YAZILAMADI, adıyla: `CameraFrameEnvelope` (motion_
+///     camera, pinli) ham piksel/parlaklık taşımıyor, yalnız poz-iskelet
+///     sonucu — bkz. `docs/evidence/production-line/device-matrix.json`
+///     `codeReadiness.metricsBlocked`. App katmanında çözülemeyen bir
+///     eksik, icat edilmedi/taklit edilmedi.
 ///   * düşme modları        — betik kendi kendine ayırt eder (izin/model/
 ///     kanal/kişi-yok), "çalışmıyor" un görünümünü İSİMLİ kaydeder (H-68:
 ///     bir yokluk raporu ortam adıyla yazılır — burada "ortam" düşme
 ///     modunun kendisidir).
 ///
+/// ⛔ FİZİKSEL CİHAZ ZORUNLU (JAB-P0-002 Step 2, YENİ): `device_info_plus`
+/// ile `isPhysicalDevice` ölçülür, simülatör/emülatörde test KIRMIZI olur
+/// — "simülatör kanıt değildir" roadmap kuralının kod karşılığı. Artefakt
+/// bu durumda da yazılır (H-68).
+///
 /// ⛔ `H-69` aynen geçerli: bu prob YALNIZ ölçer, atlatma/tolerans
 /// gevşetme YOK. Kendi deponda kalır (kapsam: `com.yulalab.jablab`).
+/// Ölçüm penceresi — varsayılan JAB-P0-002 Step 3'ün istediği 20 dakika,
+/// `--dart-define=LIVENESS_WINDOW_SECONDS=N` ile dev-check için kısaltılır.
+const int _windowSeconds =
+    int.fromEnvironment('LIVENESS_WINDOW_SECONDS', defaultValue: 20 * 60);
+
+/// FPS örnekleme aralığı — p10/p50/p95'in anlamlı olması için pencere
+/// başına en az birkaç yüz örnek hedefler (20 dk'da ~1200).
+const Duration _fpsSampleInterval = Duration(seconds: 1);
+
+/// Termal daha yavaş değişen bir sinyal — her saniye sormak gereksiz OS
+/// çağrısı biriktirir, 5 sn yeterli çözünürlük verir.
+const Duration _thermalSampleInterval = Duration(seconds: 5);
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('cihaz günü canlılık probu — artefakt yazar',
       (WidgetTester tester) async {
     final Map<String, dynamic> artifact = <String, dynamic>{
-      'schemaVersion': 1,
+      'schemaVersion': 2, // 1→2: p10/p50/p95 fps + termal eklendi (JAB-P0-002)
       'probe': 'device_liveness_probe',
       'app': 'com.yulalab.jablab',
       'generatedAtUtc': DateTime.now().toUtc().toIso8601String(),
       'platform': Platform.operatingSystem,
       'platformVersion': Platform.operatingSystemVersion,
+      'windowSeconds': _windowSeconds,
     };
     String? failureMode;
     String? failureDetail;
@@ -77,6 +116,32 @@ void main() {
       print(body);
       // ignore: avoid_print
       print('ARTEFAKT: $path');
+    }
+
+    // 0) FİZİKSEL CİHAZ ZORUNLU (JAB-P0-002 Step 2) — "simülatör kanıt
+    //    değildir" roadmap kuralının kod karşılığı. İzinden bile ÖNCE:
+    //    simülatörde kamera izni genelde otomatik reddedilir, o zaman bu
+    //    kapı hiç ötmeden `permission_denied`e düşer ve gerçek sebep
+    //    (yanlış hedef) gizlenir.
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    bool isPhysicalDevice;
+    if (Platform.isIOS) {
+      isPhysicalDevice = (await deviceInfo.iosInfo).isPhysicalDevice;
+    } else if (Platform.isAndroid) {
+      isPhysicalDevice = (await deviceInfo.androidInfo).isPhysicalDevice;
+    } else {
+      failureMode = 'unsupported_platform';
+      failureDetail = 'canlılık probu yalnız iOS/Android hedefler, '
+          'platform: ${Platform.operatingSystem}';
+      await writeArtifact();
+      fail(failureDetail);
+    }
+    if (!isPhysicalDevice) {
+      failureMode = 'not_physical_device';
+      failureDetail = 'simülatör/emülatörde koşuldu — bu ölçüm SAYILMAZ '
+          '(roadmap §2: "simülatör kanıt değildir"); gerçek cihaz gerekir';
+      await writeArtifact();
+      fail(failureDetail);
     }
 
     // 1) İZİN — reddi KENDİ BAŞINA bir düşme modudur; ölçüm burada durur
@@ -134,14 +199,32 @@ void main() {
     artifact['libraryTag'] = session.libraryTag;
     artifact['modelId'] = PoseModelPin.modelId;
 
-    // 4) ÖLÇÜM PENCERESİ — 30 sn, `camera_smoke_test.dart` ile AYNI taban
-    //    (sözleşme §7.3).
-    const Duration window = Duration(seconds: 30);
+    // 4) ÖLÇÜM PENCERESİ — varsayılan 20 dk (JAB-P0-002 Step 3), dev-check
+    //    için `--dart-define`la kısaltılabilir (bkz. dosya başlığı).
+    //    `camera_smoke_test.dart`ın 32 sn'lik sabit tesisat-smoke'u AYRI
+    //    bir kapı — o "akıyor mu" sorar, bu "ne kadar İYİ akıyor, 20 dk
+    //    boyunca" sorar.
+    final Duration window = Duration(seconds: _windowSeconds);
     int envelopeCount = 0;
     int judgedWithPerson = 0;
     int judgedEmpty = 0;
     Duration? firstPoseLatency;
     Object? streamError;
+
+    // JAB-P0-002 — FPS p10/p50/p95 için periyodik örnekleyici. Kaynak
+    // `monitor.judgedPerSecond` ZATEN var olan bir kayan-pencere anlık
+    // değer (bkz. rate_meter.dart) — bu örnekleyici onu ZAMANA YAYARAK
+    // bir SERİYE çevirir, yüzdelik BURADAN türer.
+    final PeriodicSampler<double> fpsSampler = PeriodicSampler<double>(
+      interval: _fpsSampleInterval,
+      read: () async => monitor.judgedPerSecond,
+    );
+    // Termal daha yavaş değişir; ayrı kanal (motion_core'dan bağımsız).
+    final PeriodicSampler<ThermalReading> thermalSampler =
+        PeriodicSampler<ThermalReading>(
+      interval: _thermalSampleInterval,
+      read: const ThermalChannel().read,
+    );
 
     final StreamSubscription<CameraFrameEnvelope> sub =
         camera.frames().listen(
@@ -157,7 +240,11 @@ void main() {
       },
       onError: (Object err) => streamError = err,
     );
+    fpsSampler.start();
+    thermalSampler.start();
     await Future<void>.delayed(window);
+    fpsSampler.stop();
+    thermalSampler.stop();
     await sub.cancel();
     try {
       await camera.stop();
@@ -171,8 +258,9 @@ void main() {
       failureDetail = '$streamError';
     } else if (envelopeCount == 0) {
       failureMode = 'no_envelope_flow';
-      failureDetail = '30 sn içinde tek bir zarf gelmedi — kanal/çıkarım '
-          'tesisatı canlı değil (emülatörde kanıtlanmıştı, cihazda değil)';
+      failureDetail = '$_windowSeconds sn içinde tek bir zarf gelmedi — '
+          'kanal/çıkarım tesisatı canlı değil (emülatörde kanıtlanmıştı, '
+          'cihazda değil)';
     } else if (judgedWithPerson == 0) {
       failureMode = 'no_person_detected';
       failureDetail = '$envelopeCount zarf geldi ama hiçbirinde insan '
@@ -187,6 +275,13 @@ void main() {
       'judgedRatio': monitor.judgedRatio,
       'meanInferenceUs': monitor.meanInferenceUs,
       'sessionDroppedCount': monitor.sessionDroppedCount,
+      // YENİ (JAB-P0-002 Step 1) — zaman içine yayılmış örneklemden
+      // türetilen yüzdelikler; `reliablePercentile`in kendi küçük-örneklem
+      // koruması `Unmeasured` olarak taşınır, sessizce basılmaz.
+      'judgedPerSecondSampleCount': fpsSampler.samples.length,
+      'judgedPerSecondP10': percentileToJson(fpsSampler.percentile(0.10)),
+      'judgedPerSecondP50': percentileToJson(fpsSampler.percentile(0.50)),
+      'judgedPerSecondP95': percentileToJson(fpsSampler.percentile(0.95)),
     };
     artifact['firstPoseLatencyMs'] = firstPoseLatency?.inMilliseconds;
     artifact['envelopeCount'] = envelopeCount;
@@ -196,6 +291,28 @@ void main() {
       // Ölçülemeyen "—" (null) olarak taşınır, 0 olarak DEĞİL (kapı
       // sözleşmesi genel — camera_harness_screen._fmt'in aynı kuralı).
       'ratio': envelopeCount == 0 ? null : judgedWithPerson / envelopeCount,
+    };
+    // YENİ (JAB-P0-002) — termal zaman-serisi + en kötü kademe. Kanal
+    // desteklenmiyorsa (`read()` hep null dönerse) `samples` boş kalır ve
+    // bu SESSİZCE "nominal" sayılmaz — `worstTierMeasured:false` adıyla.
+    final ThermalTier? worst = worstTier(thermalSampler.samples);
+    artifact['thermal'] = <String, dynamic>{
+      'sampleCount': thermalSampler.samples.length,
+      'worstTier': worst?.name,
+      // API<29 Android'de `measured:false` olabilir (bkz. thermal_channel.
+      // dart) — worstTier yine de güvenlik tarafına (critical) yuvarlanmış
+      // olabilir, bu alan o farkı taşır.
+      'worstTierAllMeasured': thermalSampler.samples.isEmpty
+          ? null
+          : thermalSampler.samples.every((ThermalReading r) => r.measured),
+      'series': thermalSampler.samples
+          .map((ThermalReading r) => <String, dynamic>{
+                'tier': r.tier.name,
+                'platform': r.platform,
+                'raw': r.raw,
+                'measured': r.measured,
+              })
+          .toList(),
     };
 
     await writeArtifact();
@@ -208,5 +325,7 @@ void main() {
         reason: 'canlılık probu bir düşme modu buldu: '
             '$failureMode — $failureDetail (artefakt yine de yazıldı, '
             'yol yukarıda)');
-  }, timeout: const Timeout(Duration(minutes: 2)));
+    // Pencere + izin/model/kamera kurulumu + 3 dk tampon (varsayılan 20 dk
+    // pencerede eski sabit 2 dk yetmezdi — JAB-P0-002).
+  }, timeout: Timeout(Duration(seconds: _windowSeconds) + const Duration(minutes: 3)));
 }

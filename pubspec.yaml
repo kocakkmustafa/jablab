@@ -72,6 +72,12 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   crypto: ^3.0.7
+  # JAB-P0-002 Step 2: cihaz-canlılık probunun simülatör/emülatörde
+  # koşmasını KIRMIZI yapmak için (`isPhysicalDevice`) — "simülatör kanıt
+  # değildir" roadmap kuralının kod karşılığı. `dev_dependency`: yalnız
+  # `integration_test/`ten çağrılıyor, `lib/`e HİÇ import edilmiyor —
+  # release binary'ye girmez (fluttercommunity.dev, yaygın/bakımlı paket).
+  device_info_plus: ^13.2.0
 
 flutter:
   uses-material-design: true
