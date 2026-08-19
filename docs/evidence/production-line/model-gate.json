@@ -1,0 +1,44 @@
+{
+  "$doc": "JAB-E-003 kanit dosyasi (21-JABLAB-MASTER-ROADMAP.md SS16, JAB-P0-003). Gravita G-266 emsaliyle ayni disiplin: PASS/FAIL degil, olcum+esik+engel ADIYLA. Roadmap'in gercek 3.000-etiketli/20-kisi holdout esigi bu oturumda EXTERNAL_GATE (veri toplama insan/kurucu isi) — burada olculen, DEDEKTOR MANTIGININ (faz-durum-makinesi) sentetik fixture'larla dogrulugu, GERCEK-DUNYA model dogrulugu DEGIL. Iki soru asla karistirilmiyor.",
+  "claimId": "JAB-E-003",
+  "claim": "Boxing model gate gecti",
+  "state": "EXTERNAL_GATE",
+  "measuredAt": "2026-08-19",
+  "step1_negativeFixtures": {
+    "$doc": "packages/jablab_engine/test/negative_motion_rejection_test.dart, 8/8 PASS. Sentetik fixture'lar bu oturumda StrikingEngine'e karsi EMPIRIK KALIBRE edildi (guardPose/midPose gibi mevcut isimlerin extensionRatio degerleri TAHMIN edilmedi, olculdu — midPose 'yari yol' adiyla 0,84-0,89 cikti, PEAK esigine (0,85) bitisik, ilk varsayimin YANLIS oldugunu kanitladi).",
+    "results": [
+      {"class": "slip (govde egimi, kol gard'ta sabit)", "outcome": "DOGRU REDDEDILDI", "mechanism": "GUARD_READY'den hic cikmadi (ATTEMPT_ABORTED bile yok)"},
+      {"class": "gard resetleme (gard-ici kucuk ayar)", "outcome": "DOGRU REDDEDILDI", "mechanism": "ayni"},
+      {"class": "feint (extensionRatio ~0,77, minPeakExtension 0,70'i asar, PEAK 0,85'e ulasmaz)", "outcome": "DOGRU REDDEDILDI", "mechanism": "abortOnRetreat -> ATTEMPT_ABORTED, sinir-kontrolu testiyle (t=0,65) fixture'in esigin DOGRU tarafinda oldugu ayrica kanitlandi"},
+      {"class": "yavas (500ms) yuruyus-temposu kol sallama", "outcome": "DOGRU REDDEDILDI", "mechanism": "EXTENSION timeout'u (400ms) asildi"},
+      {"class": "tempolu (250ms) rastgele kol sallama — walk-by/kosarken kol", "outcome": "⚠️ YANLIS-POZITIF, olculmus gercek bulgu", "mechanism": "extensionRatio yalniz DUZLUGU olcer, YONU olcmez — guard(~0,15)'tan elde-sarkik-duz(~1,0, SyntheticPose.neutral) 250ms'de gecen bir kol EXTENSION(400ms)+PEAK(150ms) pencerelerine sigar ve GERCEK jab olarak TAMAMLANIR", "severity": "P1 — urun kalitesi bulgusu, algoritma tasarim degisikligi gerektirir (yon/vektor kisiti), bu oturumun kapsami DISI, motion-cv-engineer danisman gozden gecirmesi onerilir (CLAUDE.md danisman listesi)", "trackedIn": "workspace/DEFTER.md J-294"}
+    ],
+    "$note": "8 testten 7'si 'motor dogru davraniyor' kanitliyor; 1'i (tempolu kol sallama) BILEREK BASARILI/yesil GORUNUYOR CUNKU bugunku (istenmeyen) davranisi kayit altina aliyor — yesillik 'sorun yok' anlamina GELMIYOR, testin kendi reason metni bunu adiyla soyluyor."
+  },
+  "step2_d2Baseline": {
+    "$doc": "Mevcut 128 punch (D2, 2026-07-26) raporlaniyor ama acceptance cohort'una DAHIL EDILMIYOR — bu ayrim daha once MODEL-KAPISI-VERI-TOPLAMA-PLANI-2026-08-19.md'de kuruldu, burada resmiyete tasindi.",
+    "count": 128,
+    "clips": 6,
+    "medianExtensionMs": 128.2,
+    "acceptanceCohort": false,
+    "why": "D2'nin kendi kaydi: bu 128 zaten JAB-P0-003'un kendisi tarafindan 'yalniz hiz-metodolojisi dogrulamasi icindi, model egitimi/kabulu icin degil' diye isaretliydi. 1 kisilik havuz + 3. parti lisansli klipler (yeniden dagitilamaz) roadmap'in istedigi 20-kisi/3.000-punch cesitlilik+riza gereksinimini karsilamiyor."
+  },
+  "step3_rulesetVersionBinding": {
+    "$doc": "packages/jablab_engine/test/negative_motion_rejection_test.dart son grubu — ADANMIS test.",
+    "rulesetIdVersionBinding": "ZATEN VARDI — StrikingEngine._buildDigest her tamamlanan denemeye rulesetId@version otomatik damgaliyor (ruleset.dart + striking_engine.dart), daha once yalniz engine_test.dart icinde TEK bir assertion'a gomuluydu (satir 74), simdi kendi adanmis testinde",
+    "calibratedForModelBinding": "BILEREK BAGLANMADI — boxing@1.0.0.json'in kendi $unreadFields notu (J-048) bunu gercek kamera-koprusune (ADR-002) bagliyor; donanima bagli, JabLab-solo kapsaminin disinda",
+    "typedAttemptProvenanceClass": "motion_core'da (pinli, degistirilmedi) AttemptProvenance + comparabilityIssues()/isLongitudinallyComparableWith() ZATEN VAR ama jablab_engine kullanmiyor (AttemptDigest.provenance gevsek Map<String,String>) — versiyon-sapmasi tespiti icin dogal mekanizma olurdu, migrate etmek bu oturumun kapsami DISI (AttemptDigest her yerde kullanilan cekirdek tip, degisikligi genis capli)"
+  },
+  "step4_realWorldMetrics": {
+    "$doc": "Roadmap SS10 Model kapisinin GERCEK sayisal esikleri — hicbiri bu oturumda OLCULEMEZ, hepsi 3.000-punch/20-kisi holdout'una bagli.",
+    "macroF1JabCross": "EXTERNAL_GATE — >=0.90 esigi, holdout yok",
+    "countErrorPer20Punches": "EXTERNAL_GATE — <=1 esigi, holdout yok",
+    "falseEventPerMinuteNonPunch": "EXTERNAL_GATE — <=1/dk esigi, ANCAK step1'in tempolu-kol-sallama bulgusu bu esigin GERCEK kullanimda dusme RISKINI onceden isaretliyor",
+    "eventBoundaryMedianAbsErrorMs": "EXTERNAL_GATE — <=100ms esigi, holdout yok",
+    "stanceGuardCohensKappa": "EXTERNAL_GATE — >=0.75 esigi, holdout yok"
+  },
+  "externalGate": {
+    "reason": "3.000 etiketli/20-kisi holdout yok — eldeki 128 punch acceptance icin kullanilamaz (step2). Veri toplama/etiketleme/riza sureci (workspace/MODEL-KAPISI-VERI-TOPLAMA-PLANI-2026-08-19.md) TASLAK, kurucu onayi bekliyor.",
+    "requiredAction": "kurucu: recruitment kanali + telafi karari (plan SS2.3) + onam metni hukuk onayi (plan SS4) + cekim organizasyonu"
+  }
+}
