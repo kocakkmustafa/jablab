@@ -180,6 +180,46 @@
           ]
         },
         {
+          "id": "boxing.footwork",
+          "displayName": "Footwork",
+          "level": "beginner",
+          "goal": "Move without losing the stance and balance Foundations built.",
+          "estimatedMinutes": 20,
+          "$courseWhy": "JAB-P1-001 Step 2 — roadmap'in kendi kurs listesindeki bagimsiz Footwork kursu. Iki dersin ikisi de YENI tespit gerektirmiyor: FEET_CROSSED (drill.footwork_basics, curriculum.json'da ONCEDEN gateable:true) ve BALANCE_LOSS (boxing.conditioning.technique_round/boxing.intermediate.fatigue'de ONCEDEN kullanilan, ama SADECE yorgunluk baglaminda — burada ILK kez HAREKET baglaminda). 14 tespit-edilebilir hatanin (ruleset errors[]) 12'si ZATEN bir dersin authoringFocus'unda kapliydi (J-188 emsali olcum, bu turda dogrulandi) — yeni kurs bu ikisini YENIDEN kullaniyor, yeni motor yuzeyi ACMIYOR.",
+          "lessons": [
+            {
+              "id": "boxing.footwork.moving",
+              "displayName": "Moving without crossing your feet",
+              "teach": "Your stance does not survive movement by accident — it survives because you move it as one piece, not two.\n\nStep with the foot closest to where you are going, and let the other foot follow the same distance. Moving forward: lead foot goes first, rear foot catches up to the width you started with. Moving back: rear foot goes first, lead foot catches up. Neither foot ever passes the other — the moment they cross, you have no base to punch from and none to defend from either.\n\nSmall steps beat big ones. A big step closes distance fast but leaves you standing on one foot a beat too long; a small step keeps both feet live the whole time you are moving.\n\nStay on the balls of your feet, not flat. Flat feet react a fraction of a second slower in every direction — forward, back, or out of the way.\n\nWe can see when your feet cross, and we call it out. What we do not see is whether the step itself was the right size or the right moment to take it — that is a coach's eye, not a camera's.",
+              "techniques": [],
+              "focus": "footwork",
+              "authoringFocus": [
+                "FEET_CROSSED"
+              ],
+              "minutes": 10,
+              "usesCamera": true,
+              "$cameraBasis": "ADR-005 emsali (boxing.foundations.stance ile AYNI desen): techniques:[] + usesCamera:true, cunku FEET_CROSSED tespiti belirli bir yumruk teknigi gerektirmiyor (drill.footwork_basics'in kendi tanimi, curriculum.json). $gateableWhy orada zaten A-bandi/gateable:true diyor — bu ders o VAROLAN tespiti ODAKLIYOR, yeni bir dedektor icat etmiyor.",
+              "$progressionOpenly": "curriculum.json'in 'progression' haritasinda bu ders icin BILEREK bir kapi girisi YOK — boxing.intermediate.counter/footwork_combo emsaliyle ayni sinif (bazi dersler kapisiz kaliyor). Yeni bir 'kac dogru adim' esigi ICAT ETMEK bu turun kapsami DISI birakildi; drill.footwork_basics zaten 'gateable:true' tasiyor, ders-duzeyinde bir ikinci kapi eklemek onu COGALTIRDI."
+            },
+            {
+              "id": "boxing.footwork.step_then_punch",
+              "displayName": "Step, then punch",
+              "teach": "The range lesson said it plainly: reaching is a footwork problem wearing an arm's clothes. This lesson is the footwork side of that sentence.\n\nClose the distance first. Step until you are actually in range, let your foot land, and only then throw. A punch thrown while you are still moving forward borrows its power from momentum instead of your stance — it can land harder by accident and leaves you off balance by design.\n\nThe tell is what happens right after the punch lands. If your weight keeps travelling forward after the fist arrives, the step and the punch happened at the same time instead of one after the other. If you settle back into your stance instead, they were sequenced correctly.\n\nThis is not about slowing down. Fast fighters step and plant just as we describe here — the sequence is still step, then punch, only compressed into less time.\n\nWe can see when you lose your balance coming out of a punch, and we call it out. We cannot tell you whether that happened because you rushed the step or skipped it — only that your base was not there when the punch landed.",
+              "techniques": [
+                "jab"
+              ],
+              "focus": "footwork",
+              "authoringFocus": [
+                "BALANCE_LOSS"
+              ],
+              "minutes": 10,
+              "usesCamera": true,
+              "$cameraBasis": "Teknik listesi ['jab'] (emsal: boxing.foundations.jab/range) — BALANCE_LOSS'un olcumu yumruk fazi gerektirir (denge KAYBI bir vurustan SONRA olculur). $gapBasis: BALANCE_LOSS onceden yalniz YORGUNLUK baglaminda ogretiliyordu (technique_round/fatigue, ikisi de conditioning) — burada ILK kez HAREKET/adim baglaminda, farkli bir ogretim acisi, ayni tespitin TEKRARI degil.",
+              "$progressionOpenly": "boxing.footwork.moving ile AYNI gerekce — bilerek kapisiz."
+            }
+          ]
+        },
+        {
           "id": "boxing.conditioning",
           "displayName": "Rounds and conditioning",
           "level": "all",

@@ -17,12 +17,13 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// ## Neden bugün KIRMIZI (JAB-P1-001 Step 1'in kendi talimatı)
 ///
-/// Mevcut: **19 ders** (Foundations 8 · Conditioning 7 · Intermediate 4,
-/// `workspace/ICERIK-KAYNAK-ARASTIRMASI-30-DERS-2026-08-19.md`taki PREP
-/// ölçümüyle birebir). Roadmap §4 hedefi **≥30**. Bu test şimdi KIRMIZI
-/// yazılıyor — sayı gerçek içerik eklenmeden YEŞİL olmayacak, ve
-/// olmamalı: kırmızı, yazılmamış 11 dersin var olduğu YALANINI
-/// söylemekten daha dürüst bir durumdur.
+/// Mevcut: **21 ders** (Foundations 8 · Footwork 2 · Conditioning 7 ·
+/// Intermediate 4 — Footwork bu turda AÇILDI, `workspace/ICERIK-KAYNAK-
+/// ARASTIRMASI-30-DERS-2026-08-19.md`taki PREP ölçümü 19'du, bayatladı).
+/// Roadmap §4 hedefi **≥30**. Bu test şimdi KIRMIZI yazılıyor — sayı
+/// gerçek içerik eklenmeden YEŞİL olmayacak, ve olmamalı: kırmızı,
+/// yazılmamış 9 dersin var olduğu YALANINI söylemekten daha dürüst bir
+/// durumdur.
 ///
 /// ## "≥30" — hangi kurslardan, hangileri BİLEREK dışarıda
 ///
@@ -31,10 +32,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// Bugünkü karşılıkları:
 ///   * fundamentals → `boxing.foundations` (8, VAR)
 ///   * jab/cross     → `boxing.foundations` İÇİNDE zaten (ayrı kurs değil)
+///   * footwork     → `boxing.footwork` (2, YENİ — AÇILDI ama TAMAM DEĞİL;
+///     ikisi de ZATEN kalibre edilmiş FEET_CROSSED/BALANCE_LOSS'u
+///     kullanıyor, yeni motor/cue işi gerekmedi)
 ///   * conditioning → `boxing.conditioning` (7, VAR)
 ///   * combo        → `boxing.intermediate` (4, KISMEN — asıl `combinations`
 ///     dersi KİLİTLİ, bkz. aşağıdaki not)
-///   * footwork     → YOK, bağımsız kurs açılmamış (GERÇEK boşluk)
 ///   * defense      → YOK, bağımsız kurs açılmamış (GERÇEK boşluk)
 ///   * hook/uppercut → YOK — `assets/content/library.json`ın kendi kaydı
 ///     (`boxing.intermediate.combinations.$lockedWhy`) bunu MODEL KAPISINA
@@ -94,14 +97,14 @@ void main() {
     // TOLERANS taşır: gerçekten KIRMIZI bir test hiçbir commit'i
     // GEÇİRMEZ (bu da doğru — "P0 açıkken yeni kapsam yok" disiplininin
     // ta kendisi). O yüzden hedef `skip` ile İZLENEBİLİR kılındı: sayı
-    // (19/30) burada, `flutter test` çıktısında GÖRÜNÜR kalır (SKIPPED
+    // (21/30) burada, `flutter test` çıktısında GÖRÜNÜR kalır (SKIPPED
     // olarak, sessizce SİLİNMİŞ değil) ama süiti kırmızı yapıp her
     // commit'i durdurmaz. `expect()` çağrısı KORUNDU (yalnız yorum satırı
     // silinip skip eklenseydi, bir gün biri skip'i kaldırdığında hangi
     // sayıya karşı sınayacağını bilemezdi).
-    skip: 'JAB-P1-001 Step 2-5 tamamlanana kadar açık hedef — bugün 19/30 '
-        '(11 ders eksik: bağımsız Footwork kursu + bağımsız Defense kursu '
-        '+ Combo genişlemesi; Hook/Uppercut model-kapısına bağlı, bkz. '
+    skip: 'JAB-P1-001 Step 2-5 tamamlanana kadar açık hedef — bugün 21/30 '
+        '(9 ders eksik: bağımsız Defense kursu + Footwork/Combo '
+        'genişlemesi; Hook/Uppercut model-kapısına bağlı, bkz. '
         'assets/content/library.json boxing.intermediate.combinations.'
         '\$lockedWhy — içerikle AÇILMAZ). Skip\'i kaldırmak İÇERİK '
         'eklemeden bu testi KIRMIZI yapar ve her commit\'i durdurur — '

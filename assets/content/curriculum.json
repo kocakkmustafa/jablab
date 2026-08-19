@@ -381,6 +381,36 @@
           "direction": "decreasing"
         }
       ]
+    },
+    "boxing.footwork.moving": {
+      "gates": [
+        {
+          "sessionMinutes": 4,
+          "withValidAnalysisRatio": 0.7,
+          "$why": "JAB-P1-001 — bu dersin techniques'i BOS (stance emsali): FEET_CROSSED bir yumruk fazi gerektirmiyor, yani range/guard'in 'N tamamlanmis jab' KATILIM kapisi burada UYGULANAMAZ (sayilacak yumruk yok). first_round'un AYNI kapi ailesi (sessionMinutes+withValidAnalysisRatio) kullanildi — icat degil. 4 dk, dersin 10 dk'lik toplaminin (ogret+dene+canli+ozet) first_round'daki oranina yakin bir KATILIM dilimi (first_round: 8 dk toplamda 3 dk canli tur)."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.feet_crossed",
+          "direction": "decreasing"
+        }
+      ]
+    },
+    "boxing.footwork.step_then_punch": {
+      "gates": [
+        {
+          "event": "jab",
+          "minCompletedAttempts": 40,
+          "$why": "range/guard ile AYNI gerekce: BALANCE_LOSS'un esigi KALIBRE EDILMEMIS (bu ders coach-not-graded), kapi bu yuzden KATILIM sayiyor — 40 jab, jab tespiti A bandinda (%100, D2)."
+        }
+      ],
+      "signals": [
+        {
+          "cue": "cue.balance_loss",
+          "direction": "decreasing"
+        }
+      ]
     }
   },
   "$lateralityWhy": "J-142: 'Right order, right hand, every time.' -> 'Correct order, rear hand, every time.'. Ikinci 'right' bir VUCUT TARAFI atfiydi ve southpaw duruşta yanlis. Bu dosyanin tuketicisi BUGUN testler (uygulama okumuyor, J-129'da olculdu) — yani sizinti kullaniciya ULASMIYOR; drill'ler baglandigi gun ulasirdi. Sinif: gizli, kapida.",
@@ -400,7 +430,8 @@
     "boxing.conditioning.technique_round",
     "boxing.conditioning.tempo",
     "boxing.foundations.first_round",
+    "boxing.footwork.moving",
     "boxing.intermediate.fatigue"
   ],
-  "$gateRatioPrimitiveWithoutProducerWhy": "OLCULDU 2026-08-12 (J-207). `$gatePrimitivesWithoutProducer` olcutu YALNIZ event/combination primitiflerini denetliyor ve `sessionMinutes`/`withValidAnalysisRatio` sinifini ADIYLA disarida birakmisti — ama o sinifin uretici sorusu hic SORULMADI, ve sorulmayan soru 'cevabi iyi' diye okunur. Simdi olculdu: `withValidAnalysisRatio` uretim kodunda (lib/ + packages/jablab_engine/lib/, yorumlar haric) SIFIR kez geciyor — pozitif kontrol ayni taramada `usesCamera`yi BULUYOR, yani sifir gercek. Yani bu 9 kapinin primitifi de ureticisiz: toplam 16 canli kapinin 11'i ureticisiz (2 event-sinifi + 9 ratio-sinifi), 4'u ureticili olay-sayimi (jab/cross), 1'i kombinasyon (`1-2`, ucuncu-katman COMBINATION_END riski J-203'te adiyla acik). ⚠️ VE BUNUN ALTINDA AYRI BIR KATMAN VAR: hicbir kapinin TUKETICISI yok — `curriculum.json` asset olarak paketleniyor ama uretim kodu onu hic YUKLEMIYOR (`ContentRepository` yalnizca library.json + boxing@1.0.0.json + cues.en.json okuyor); `progression|minCompletedAttempts|minOccurrences|minSeconds|minCorrectSequences` uretimde SIFIR isabet (pozitif kontrol: ayni aramada `usesCamera` bulunuyor); `'gates'` anahtarini okuyan her dosya bir TEST. Bu kayit yalnizca URETICI sorusunu kapatir; TUKETICI sorusu koordinatore soruldu (uretici yazmak, tuketicisi olmayan bir hatta iki uretici daha eklemek olurdu — COMBINATION_END ile ayni olu-mekanizma sinifi)."
+  "$gateRatioPrimitiveWithoutProducerWhy": "OLCULDU 2026-08-12 (J-207). `$gatePrimitivesWithoutProducer` olcutu YALNIZ event/combination primitiflerini denetliyor ve `sessionMinutes`/`withValidAnalysisRatio` sinifini ADIYLA disarida birakmisti — ama o sinifin uretici sorusu hic SORULMADI, ve sorulmayan soru 'cevabi iyi' diye okunur. Simdi olculdu: `withValidAnalysisRatio` uretim kodunda (lib/ + packages/jablab_engine/lib/, yorumlar haric) SIFIR kez geciyor — pozitif kontrol ayni taramada `usesCamera`yi BULUYOR, yani sifir gercek. Yani bu 9 kapinin primitifi de ureticisiz: (JAB-P1-001 guncellemesi, 2026-08-19: boxing.footwork.moving +1 ratio-sinifi sessionMinutes kapisi, boxing.footwork.step_then_punch +1 ureticili jab-sayimi kapisi ekledi — sinif SAYISI degil dagilim degisti) toplam 18 canli kapinin 12'si ureticisiz (2 event-sinifi + 10 ratio-sinifi), 5'i ureticili olay-sayimi (jab/cross), 1'i kombinasyon (`1-2`, ucuncu-katman COMBINATION_END riski J-203'te adiyla acik). ⚠️ VE BUNUN ALTINDA AYRI BIR KATMAN VAR: hicbir kapinin TUKETICISI yok — `curriculum.json` asset olarak paketleniyor ama uretim kodu onu hic YUKLEMIYOR (`ContentRepository` yalnizca library.json + boxing@1.0.0.json + cues.en.json okuyor); `progression|minCompletedAttempts|minOccurrences|minSeconds|minCorrectSequences` uretimde SIFIR isabet (pozitif kontrol: ayni aramada `usesCamera` bulunuyor); `'gates'` anahtarini okuyan her dosya bir TEST. Bu kayit yalnizca URETICI sorusunu kapatir; TUKETICI sorusu koordinatore soruldu (uretici yazmak, tuketicisi olmayan bir hatta iki uretici daha eklemek olurdu — COMBINATION_END ile ayni olu-mekanizma sinifi)."
 }

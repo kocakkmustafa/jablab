@@ -122,9 +122,12 @@ void main() {
     });
   });
 
-  test('KAPSAM SAYISI KİLİTLİ — olay-sayımı kapısı tam 4 tane', () {
-    // Beşincisi eklenirse bu test öter: yeni kapı bu değerlendiricinin
+  test('KAPSAM SAYISI KİLİTLİ — olay-sayımı kapısı tam 5 tane', () {
+    // Altıncısı eklenirse bu test öter: yeni kapı bu değerlendiricinin
     // kapsamına GİRER ve o bir ürün kararıdır, sessizce olmamalı.
+    // (JAB-P1-001, 2026-08-19: boxing.footwork.step_then_punch eklendi —
+    // 4→5, range/guard ile AYNI gerekçe: kalibre edilmemiş eşik, kapı
+    // KATILIM sayıyor.)
     final Map<String, dynamic> pr =
         (curriculum['progression'] as Map).cast<String, dynamic>();
     final List<String> eventGates = <String>[
@@ -138,6 +141,7 @@ void main() {
     ]..sort();
 
     expect(eventGates, <String>[
+      'boxing.footwork.step_then_punch',
       'boxing.foundations.cross',
       'boxing.foundations.guard',
       'boxing.foundations.jab',

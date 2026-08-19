@@ -139,7 +139,7 @@ void main() {
   });
 }
 
-/// RATIO SINIFI — ② ölçütünün ADIYLA dışında bıraktığı 9 kapı, ÖLÇÜLDÜ
+/// RATIO SINIFI — ② ölçütünün ADIYLA dışında bıraktığı 10 kapı, ÖLÇÜLDÜ
 /// (2026-08-12, J-207).
 ///
 /// Yukarıdaki doc bu sınıfı *"ayrı bir primitif sınıfı … bu turda ayrı bir
@@ -166,7 +166,7 @@ void main() {
 /// ölçüldü: `curriculum.json` üretimde hiç yüklenmiyor). Burada yalnız
 /// primitifin üretilip üretilmediği sorulur.
 void _ratioClassProducerGate() {
-  test('RATIO sınıfı (9 kapı) — üreticisi ÖLÇÜLDÜ, varsayılmadı', () {
+  test('RATIO sınıfı (10 kapı) — üreticisi ÖLÇÜLDÜ, varsayılmadı', () {
     final Map<String, dynamic> cur =
         (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
                 as Map)
@@ -227,6 +227,6 @@ void _ratioClassProducerGate() {
         reason: 'İYİ HABER: `withValidAnalysisRatio` artık üretim kodunda '
             'geçiyor — bu sınıfın üreticisi yazılmış olabilir. Ölç, '
             'doğruysa `\$gateRatioPrimitiveWithoutProducerWhy` beyanını ve '
-            'ADR-005\'i güncelle: 9 kapı geçilemezlikten çıkar.');
+            'ADR-005\'i güncelle: 10 kapı geçilemezlikten çıkar.');
   });
 }
