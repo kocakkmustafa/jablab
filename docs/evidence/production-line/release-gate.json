@@ -1,0 +1,39 @@
+{
+  "$doc": "JAB-P0-004 kanit dosyasi (release CI, privacy, signing). Gravita G-266/Lissom emsalleriyle ayni disiplin: PASS/FAIL degil, olcum+esik+engel ADIYLA. Buradaki 'release build basarili' iddiasi KOD YOLUNUN derlendigini kanitlar — Play/App Store'a YUKLENEBILIR imzali bir artefakt ANLAMINA GELMEZ (ikisi bilerek AYRI).",
+  "measuredAt": "2026-08-19",
+  "step1_negativeTests": {
+    "androidDebugSigning": {"status": "ONCEDEN VARDI (J-215, test/android_signing_test.dart)", "note": "bu turda YENI iki test eklendi: CI kacis bayraginin (-PallowDebugSigning) aciklikla kodlu oldugu + bayraksiz yolun hala gurultuyle durdugu (iki-yonlu, Gravita'nin kendi dersi)"},
+    "undisclosedNetworkPackage": {"status": "ONCEDEN VARDI (test/network_deps_test.dart, JAB-P0-002'de device_info_plus+4 transitif icin genisletildi)"},
+    "emptyRequiredReason": {"status": "YENI (JAB-P0-004)", "file": "test/ios_required_reason_api_test.dart", "method": "Apple'in resmi 'required reason API' 5 kategorisi (developer.apple.com'dan bu oturumda CANLI dogrulandi, tahmin edilmedi) icin ios/Runner/*.swift birinci-taraf kaynagi taraniyor; herhangi bir API sembolu bulunursa PrivacyInfo.xcprivaycy'de karsilik gelen kategori ZORUNLU. Sabotaj testi dahil.", "scope": "yalniz birinci-taraf Runner/ kodu — CocoaPod bagimliliklari Xcode 15+'in kendi arsiv-zamani birlestirmesine birakildi, yeniden icat edilmedi"}
+  },
+  "step2_privacyManifestAndSigning": {
+    "privacyManifestPopulatedByBinaryUsage": {
+      "status": "ZATEN DOGRU — bu turda YENIDEN DOGRULANDI, degistirilmedi",
+      "note": "PrivacyInfo.xcprivacy NSPrivacyAccessedAPITypes bilerek BOS — JAB-P0-002'nin termal-kanalı (ProcessInfo.thermalState) Apple'in 5 kategorisinden HICBIRINE girmiyor (canli sayfa dogrulamasi), bu yuzden manifest degisikligi GEREKMEDI. device_info_plus (JAB-P0-002) yalniz integration_test/'ten cagriliyor, release binary'ye HIC girmiyor."
+    },
+    "releaseSigningFailClosed": {
+      "android": "ZATEN VARDI (J-215) + bu turda CI-kacis-bayragi (-PallowDebugSigning) EKLENDI, aile-emsaliyle (Gravita) ayni desen — hem kaçış bayrağının çalıştığı hem bayraksız yolun hâlâ durduğu GERÇEK Gradle koşumuyla doğrulandı (aşağıda)",
+      "ios": "Xcode'un kendi mekanizması — CI 'flutter build ios --release --no-codesign' kullanıyor, gerçek codesign kimliği hiç aranmıyor (kimlik hesap-sahibi kalemi); bu adım yalnız derleme yolunu kanıtlıyor"
+    }
+  },
+  "step3_ci": {
+    "status": "YENI (JAB-P0-004) — .github/workflows/ ONCEDEN HIC yoktu",
+    "file": ".github/workflows/checks.yml",
+    "adaptedFrom": "ventures/gravita/app/.github/workflows/checks.yml + ventures/lissom/app/.github/workflows/checks.yml — icat edilmedi, aile-dogrulanmis desen uyarlandi (motion-core private-repo erisim sorunu ikisinde de ONCEDEN cozulmustu: MOTION_CORE_RO_TOKEN secret'i yoksa adim sessizce atlanir)",
+    "jobs": ["gates (analyze+app+engine test)", "android-release-build (kod-yolu, imzasiz)", "ios-release-build (kod-yolu, no-codesign)"],
+    "notYetRun": "GitHub Actions'ta HENUZ calismadi — push/PR tetiklenmeden calismaz, bu commit push edildiginde ilk gercek CI kosumunu goreceğiz; yerel olarak workflow'un COMMANDS'ları tek tek dogrulandi (asagida)"
+  },
+  "step4_localVerification": {
+    "$doc": "CI'in çalıştıracağı komutlar bu oturumda YEREL olarak GERÇEKTEN kosuldu, tahmin edilmedi.",
+    "flutterAnalyze": "0 issue (app + jablab_engine)",
+    "appTestSuite": "411/411 PASS (405 onceki taban + 6 yeni: android_signing_test.dart +2, ios_required_reason_api_test.dart +4)",
+    "engineTestSuite": "137/137 PASS (degismedi — JAB-P0-004 motor koduna dokunmadi)",
+    "androidReleaseBuildNoFlag": {"result": "DOGRU SEKILDE REDDEDILDI (beklenen)", "exitCode": 1, "durationSeconds": 5.9, "evidence": "J-215 fail-closed kapisi GERCEK Gradle kosumuyla dogrulandi"},
+    "androidReleaseBuildWithFlag": {"result": "BASARILI", "command": "flutter build appbundle --release -PallowDebugSigning=true", "durationSeconds": 34.6, "artifact": "build/app/outputs/bundle/release/app-release.aab", "sizeMB": 84, "sha256": "603d0a32104eda566bf41cae0ea99d9f342bf0062055b52d7f827eb54ded476a", "warning": "DEBUG anahtariyla imzali — Play'e YUKLENEMEZ, yalniz kod-yolu kaniti"},
+    "iosReleaseBuildNoCodesign": {"result": "BASARILI", "command": "flutter build ios --release --no-codesign", "durationSeconds": 43.1, "target": "ios-release (gercek cihaz mimarisi, simulator DEGIL)", "artifact": "build/ios/iphoneos/Runner.app", "sizeMB": 44, "aggregateSha256OfAllFiles": "be184883d844a2df507e3e88616e8497f648412b8ed6d14a10dd406543243023", "note": "imzasiz — App Store'a YUKLENEMEZ, yalniz kod-yolu kaniti. sha256 tum dosyalarin tek-tek hash'lerinin siralanmis listesinin hash'i (bundle bir dizin, tek dosya degil)"}
+  },
+  "externalGate": {
+    "reason": "Gercek imzali/yuklenebilir artefaktlar icin: Android keystore (kurucu, ~/.secrets/yula/) + iOS codesign kimligi/provisioning profili (kurucu, Apple hesabi) YOK bu ortamda — SIR, workspace'e ASLA girmez. CI secret'i MOTION_CORE_RO_TOKEN de HENUZ eklenmedi (GitHub arayuzunden kurucu eklemeli), yani CI bugun push edildiginde 'gates' isi motion-core cekemeyip KIRMIZI kalabilir — secret eklenene kadar beklenen durum, YENI bir bozulma degil.",
+    "requiredAction": "kurucu: (1) GitHub repo Settings > Secrets > MOTION_CORE_RO_TOKEN (salt-okunur deploy-key/PAT) ekle, (2) gercek Android keystore + android/key.properties (store-submit oncesi, ayri kurucu kalemi), (3) iOS signing kimligi (Xcode/ASC, store-submit oncesi)"
+  }
+}

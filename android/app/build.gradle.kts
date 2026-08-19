@@ -37,6 +37,18 @@ val keystoreProps = Properties().apply {
     if (hasKeystore) FileInputStream(keystorePropsFile).use { load(it) }
 }
 
+// JAB-P0-004 — CI KAÇIŞ KAPISI (Gravita'nın kendi build.gradle.kts'i bu
+// deponun mekanizmasını "JabLab: key.properties yoksa signingConfig=null,
+// debug'a DÜŞMEZ" diye kaynak gösterip Lissom'un `-PallowDebugSigning`
+// bayrağıyla BİRLEŞTİRMİŞTİ — burada o birleşimin JabLab tarafı tamamlanıyor
+// (icat değil, aile-doğrulanmış desen). CI'ın gerçek keystore'u YOK ve
+// OLMAMALI (sır, kurucuda) ama Step 3'ün "Android release build" kanıtı
+// istediği şey RELEASE KOD YOLUNUN derlendiği, Play'e yüklenebilir bir
+// artefakt DEĞİL — bayrak bilerek AÇIK bir karar gerektirir, sessiz
+// varsayılan değildir.
+val allowDebugSigning: Boolean =
+    (project.findProperty("allowDebugSigning") as String?) == "true"
+
 android {
     namespace = "com.yulalab.jablab"
     compileSdk = flutter.compileSdkVersion
@@ -76,9 +88,20 @@ android {
 
     buildTypes {
         release {
-            // ⚠️ `null` BİLEREK: debug'a düşmüyoruz. Anahtar yoksa imza YOK,
-            // ve aşağıdaki kapı release görevini zaten başlatmıyor.
-            signingConfig = if (hasKeystore) signingConfigs.getByName("release") else null
+            // ⚠️ Üç hâl, `when` ile AÇIKÇA ayrılmış (bir `if/else` zinciri
+            // "bayrak sessizce debug'a düştü" ihtimalini gizlerdi):
+            //   1) gerçek anahtar VAR → onunla imzala (üretim yolu).
+            //   2) anahtar YOK ama `-PallowDebugSigning=true` AÇIKÇA verildi
+            //      → debug anahtarıyla imzala (yalnız CI/yerel kod-yolu
+            //      kanıtı; aşağıdaki kapı bunu GÜRÜLTÜLÜ uyarır, Play'e
+            //      yüklenebilir bir artefakt DEĞİLDİR).
+            //   3) ikisi de yok → `null`, aşağıdaki kapı release görev
+            //      grafiğini GradleException ile durdurur (J-215, DEĞİŞMEDİ).
+            signingConfig = when {
+                hasKeystore -> signingConfigs.getByName("release")
+                allowDebugSigning -> signingConfigs.getByName("debug")
+                else -> null
+            }
         }
     }
 }
@@ -94,6 +117,20 @@ if (!hasKeystore) {
                 listOf("assemble", "bundle", "package", "install").any { task.name.startsWith(it) }
         }
         if (releaseTasks.isNotEmpty()) {
+            // ⚠️ İKİ YÖNDE ölçülür (Gravita'nın bulduğu tuzak, `test/
+            // android_signing_test.dart`ta adıyla korunuyor): bayrak
+            // VERİLMEDİĞİNDE hâlâ ÖTMELİ (aşağıda), VERİLDİĞİNDE ise SUSUP
+            // yalnız uyarı basmalı — bir kapı, kendi kaçış bayrağını
+            // ENGELLERSE o bayrak hiç var olmamış demektir.
+            if (allowDebugSigning) {
+                logger.warn(
+                    "⚠️  ANDROID RELEASE DEBUG ANAHTARIYLA İMZALANIYOR " +
+                        "(-PallowDebugSigning=true, JAB-P0-004). Bu artefakt " +
+                        "yalnız RELEASE KOD YOLUNUN derlendiğini kanıtlar — " +
+                        "Play'e YÜKLENEMEZ, yerel/CI denemesi içindir."
+                )
+                return@whenReady
+            }
             throw GradleException(
                 """
                 |
@@ -119,6 +156,9 @@ if (!hasKeystore) {
                 |
                 |Debug etkilenmedi: `flutter run`, `flutter test` ve commit kapısı
                 |bu kapıya hiç çarpmaz.
+                |
+                |Yalnız RELEASE KOD YOLUNUN derlendiğini (imzalı yayın DEĞİL)
+                |kanıtlamak için: ./gradlew :app:assembleRelease -PallowDebugSigning=true
                 """.trimMargin()
             )
         }

@@ -66,6 +66,48 @@ void main() {
             'reddedilecek artefaktı yine üretmek olurdu');
   });
 
+  test('🔒 JAB-P0-004 — CI kaçış bayrağı (-PallowDebugSigning) AÇIKÇA '
+      'kodlu, sessiz varsayılan DEĞİL', () {
+    final String src = gradle.readAsStringSync();
+    // Gravita'nın (aile emsali) build.gradle.kts'i bu deponun KENDİ
+    // mekanizmasını (key.properties yoksa signingConfig=null) kaynak
+    // göstererek Lissom'un `-PallowDebugSigning` bayrağıyla birleştirmişti
+    // (bkz. o depoda J-215/L-286 çapraz atfı) — burada o birleşimin JabLab
+    // tarafı tamamlanıyor, icat edilmiyor.
+    expect(src, contains('allowDebugSigning'),
+        reason: 'CI kaçış bayrağı kaybolmuş — CI\'ın Android release KOD '
+            'YOLUNU derleme kanıtı üretecek yolu yok');
+    expect(
+        RegExp(r'\(project\.findProperty\("allowDebugSigning"\)\s*as\s*String\?\)\s*==\s*"true"')
+            .hasMatch(src),
+        isTrue,
+        reason: 'bayrak okuma deseni değişmiş — testin kendisi artık '
+            'yanlış deseni arıyor olabilir, kaynağı elle karşılaştır');
+  });
+
+  test('🔒 İKİ YÖNDE — bayrak VERİLMEDİĞİNDE hâlâ ÖTÜYOR (kaçış kapısı '
+      'gürültülü-durmayı SESSİZLEŞTİRMEMİŞ)', () {
+    final String src = gradle.readAsStringSync();
+    // Gravita'nın kendi dersi: bir kaçış bayrağı eklemek, ONA
+    // ÇARPMAYAN yolu (bayraksız) SESSİZLEŞTİREBİLİR — burada iki NEGATİF
+    // kontrolle sınanıyor: throw hâlâ KOŞULSUZ (yalnız allowDebugSigning
+    // dalının İÇİNDE `return@whenReady` ile atlanıyor, throw'un kendisi
+    // silinmemiş) ve throw ifadesi hâlâ `releaseTasks.isNotEmpty()`
+    // bloğunun İÇİNDE (bir üst kapsama TAŞINMAMIŞ, ki taşınsaydı
+    // bayraktan bağımsız her zaman çalışırdı — YANLIŞ yönde bir hata).
+    expect(src, contains('throw GradleException('),
+        reason: 'GradleException fırlatma satırı kaybolmuş — kaçış '
+            'bayrağı eklenirken KOŞULSUZ durma mekanizması da silinmiş '
+            'olabilir');
+    final int allowIdx = src.indexOf('if (allowDebugSigning)');
+    final int throwIdx = src.indexOf('throw GradleException(');
+    expect(allowIdx, greaterThan(-1));
+    expect(throwIdx, greaterThan(allowIdx),
+        reason: 'throw, allowDebugSigning kontrolünden ÖNCE geliyor — '
+            'kaçış bayrağı throw\'u hiç görmeden atlıyor olabilir, sıra '
+            'ters');
+  });
+
   test('⛔ SIR DEPOYA GİREMEZ — key.properties ve keystore git-dışı', () {
     // Kapının yan etkisi: kurucu bir keystore ürettiğinde onu yanlışlıkla
     // commit etmek MÜMKÜN OLMAMALI.
