@@ -969,3 +969,75 @@ mutasyon **9/9 adıyla öttü**, `P0` sessiz.
 - **(a)** aday kümesi tek kanaldan türüyor — *iki bağımsız türetimin uzlaşması* yok.
 - ⛔ `codeOnly` bir ayrıştırıcı değil: içinde `//` geçen **dizge sabiti** taranan
   kopyada kırpılır. Kapanmadı, **adıyla** duruyor.
+
+## 2026-08-19 — SOLO rejimi altında dört P0 kapandı + Footwork kursu
+
+**Bağlam:** 14-oturumlu orkestrasyon modeli bugün kurucu kararıyla iptal edildi (oturumlar
+silindi, koordinatör posta kutusu artık kaynak değil); bu tur **v3 SOLO model**in ilk JabLab
+çalıştırması — roadmap aynı (`21-JABLAB-MASTER-ROADMAP.md`), ama orkestrasyon/mesajlaşma yok.
+
+### JAB-P0-001 — canonical shell, iddia gerçeğe karşı ölçüldü
+
+Roadmap'in "shell_candidate ölü" beyanı yanlış ölçüldü: 6 semboldan 4'ü zaten üretimde
+(`reachable_screens_test.dart`'ın `Scaffold(` arama deseni onları görmüyordu ya da `CoursePage`
+isim çakışmasıyla yanlış-pozitif kapsıyordu). Yeni `canonical_shell_reachability_test.dart`
+(13 test) `docs/evidence/production-line/baseline.json`ı çalışma-zamanında okuyor — üç katman
+(A paylaşılan/B ekran/C sözleşme) ayrı ayrı doğrulanıyor. Layer A bilerek `lib/app/shell/`e
+taşınmadı (aile-çapında `motion_shell` terfisi bekliyor, taşımak çifte-iş olurdu).
+
+### JAB-P0-002 — fast-motion liveness + termal
+
+FPS p10/p50/p95 + YENİ bir termal-durum MethodChannel'ı (iOS `ProcessInfo.thermalState` +
+Android `PowerManager.getCurrentThermalStatus()`, ikisi de gerçek derlemeyle doğrulandı,
+motion_core/motion_camera pinine dokunulmadı). Blur-bucket mimari olarak imkansız ölçüldü
+(kamera zarfı ham piksel taşımıyor) — taklit edilmedi. Apple'ın 5 "gerekli sebep" API
+kategorisi canlı sayfadan doğrulandı (WebFetch JS sayfasını okuyamadı, Browser aracıyla
+okundu); termal kanal manifest değişikliği gerektirmedi.
+
+### JAB-P0-003 — boxing event validity: gerçek bir dedektör açığı bulundu
+
+Sentetik negatif fixture'lar (`negative_motion_rejection_test.dart`, 8 test) `StrikingEngine`ye
+karşı EMPİRİK kalibre edildi (varsayımla değil — `midPose`nin adının "yarı yol" olması onu
+güvenli feint fixture'ı sanmama az kalsın yol açıyordu, ölçünce gerçek `extensionRatio`sunun
+0,84-0,89 olduğu, yani PEAK eşiğine neredeyse eşit olduğu çıktı).
+
+> ***`extensionRatio` kol düzlüğünü ölçer, yönünü ölçmez.*** Tempolu (250ms) bir kol sallama
+> bugün gerçek jab olarak tamamlanıyor; yavaş (500ms) olan doğru reddediliyor. Repo-geneli
+> ilk kez ölçüldü.
+
+Düzeltme (yön/vektör kısıtı) bilerek bu turda YAPILMADI — `StrikingEngine`in çekirdek mantığını
+değiştiren bir karar, tek taraflı bir fixture turunda alınmaz. `model-gate.json`da P1 adıyla.
+
+### JAB-P0-004 — release CI + privacy + signing
+
+`.github/workflows/checks.yml` Gravita/Lissom'dan uyarlandı (motion-core private-repo erişim
+duvarını onlar zaten çözmüştü — `MOTION_CORE_RO_TOKEN`, yoksa no-op). Android
+`-PallowDebugSigning=true` kaçış kapısı: bayrak verilmezse hâlâ `throw GradleException` — iki
+yönde gerçek Gradle koşumuyla doğrulandı (`android_signing_test.dart`ta 2 yeni test).
+
+### JAB-P1-001 (kısmi) — Footwork kursu, dört gerçek kapıyı ötürdü
+
+30-ders hedefi `lesson_inventory_test.dart`ta `skip:` ile sayıyla çapalandı (izlenebilir,
+commit kapısını bloke etmeden). Yeni `boxing.footwork` kursu (2 ders, ikisi de zaten kalibre
+edilmiş tespit — FEET_CROSSED/BALANCE_LOSS) eklenince dört ayrı test bağımsız kırmızı çıktı:
+vaat-dili ("yet"), eksik ilerleme-kapısı (`[J-038]` — her canlı ders bir kapı taşımalı), ve iki
+hardcoded sayım (`progress_gates_test.dart`, `gate_primitive_producer_test.dart`). Hepsi
+düzeltildi, sebep-sonuç DEFTER `J-297`de.
+
+### Kapılar
+
+`flutter analyze` 0 · app **414/414 + 1 izlenen skip** · motor (`jablab_engine`) **137/137**.
+Commit'ler: `5129328`→`fcd6c79` (7 commit), DEFTER `J-291`→`J-297`. Push doğrulandı,
+`origin/main` ile aynı.
+
+### Açık kalanlar
+
+- **JAB-P0-003'ün tempolu-kol-sallama açığı** — ölçüldü, kayıtlı, düzeltilmedi
+  (`motion-cv-engineer` danışman turu önerilir; yön/vektör kısıtı gerektirir).
+- **JAB-P1-001 Step 2-5** — Defense kursu + Footwork/Combo genişlemesi, HASAT-TURU kaynak
+  triyajından geçmedi, gelecek oturuma bırakıldı (kaynak havuzu hazır: `ICERIK-KAYNAK-
+  ARASTIRMASI-30-DERS-2026-08-19.md`).
+- **EXTERNAL_GATE'ler değişmedi:** 3.000-punch model-holdout (`model-gate.json`), 20dk
+  fiziksel cihaz koşumu (`device-matrix.json`) — ikisi de kurucu/insan işi, kod tarafı hazır.
+- **`MOTION_CORE_RO_TOKEN` GitHub secret'ı henüz eklenmedi** — eklenene kadar CI'ın `gates`
+  işi motion-core'u çekemeyip kırmızı kalabilir (beklenen, yeni bir bozulma değil).
