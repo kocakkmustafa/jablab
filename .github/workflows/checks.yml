@@ -41,6 +41,9 @@ jobs:
 
       - run: flutter pub get
 
+      - name: jablab_engine test bağımlılıkları
+        run: (cd packages/jablab_engine && dart pub get)
+
       - name: flutter analyze
         run: flutter analyze
 
