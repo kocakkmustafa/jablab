@@ -2,70 +2,50 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <!-- İZLEME: yok.
-
-       🔓 D1 GÜNCELLEMESİ (2026-08-16, F2, H-40). Aşağıdaki J-217 notu
-       KENDİ GÜNÜNÜN doğrusuydu — silinmedi, üstüne tarih atıldı
-       (M-F-634 ⑤). O günkü olgu (google_fonts çalışma-anında font
-       çekiyordu) artık GEÇERSİZ: D1 google_fonts'u TAMAMEN KALDIRDI,
-       iki tipografi ailesi (Familjen Grotesk, IBM Plex Mono) OFL 1.1 ile
-       PAKETLENDİ (`assets/fonts/`, `pubspec.yaml` `fonts:`). Ölçüldü: hem
-       `pubspec.lock` hem test-zamanı bir `HttpOverrides` kapısı (gerçek
-       `HttpClient` kurma denemesi ANINDA düşer) hem gerçek simülatör
-       koşumu — üçü de sıfır ağ isteği doğruluyor
-       (`test/network_deps_test.dart`).
-       → GÜNCEL BEYAN: ürün çalışma anında HİÇBİR ağ isteği yapmaz —
-       font dahil, artık istisna YOK.
-
-       ⚠️ TARİHÎ NOT (J-217, artık SÜPERSEDE — yalnız kayıt için). Buranın
-       önceki hâli "Ürün ağ isteği YAPMIYOR" diyordu ve O GÜN YANLIŞTI.
-       Ölçüm doğruydu (üretim Dart'ında `HttpClient`/`package:http` 0,
-       sabotaj-doğrulamalı) ama cümle o ölçümden GENİŞTİ: `google_fonts`
-       doğrudan bağımlılık, üretimde kullanılıyordu (`design_tokens.dart`),
-       `allowRuntimeFetching` kapatılmamıştı ve paketlenmiş font YOKTU →
-       uygulama font yüzlerini çalışma anında Google'ın sunucularından
-       İNDİRİYORDU. → Kendi kodunda ağ olmaması, ÜRÜNÜNDE ağ olmaması
-       demek değildir — bu ders hâlâ geçerli, yalnız BUGÜNKÜ olgu değişti.
-       Kapı: test/network_deps_test.dart (pubspec.lock BÖLMESİ — her paket
-       sınıflandırılmadan eklenemez).
-
-       DOĞRU BEYAN: kullanıcının hiçbir verisi cihazdan ÇIKMIYOR — ham
-       video ve ölçülen vücut noktaları yalnız İŞLENİYOR, hiçbiri
-       SAKLANMIYOR ve hiçbiri GÖNDERİLMİYOR. Giden HİÇBİR ağ isteği yok
-       (D1 öncesi tek istisna fontlardı, artık paketli).
-
-       ⚠️ ATIF KAYNAĞA BAĞLI, CÜMLEYE DEĞİL (J-213). Buranın önceki hâli
-       "Info.plist'teki kamera gerekçesiyle aynı cümle" diyordu; o cümle
-       J-211'de DEĞİŞTİ (yanlış bir saklama iddiası taşıyordu) ve atıf
-       sessizce bayatladı — manifestin İDDİASI doğru kalmıştı, bozulan
-       ATIF'tı. Bir düzeltme, ona atıfta bulunan her yüzeyi bayatlatır ve
-       atıf iddiadan daha SESSİZ bozulur.
-
-       Bağlayıcı kaynak artık bir cümle değil, bir ANAHTAR ve bir ÖLÇÜM:
-       · anahtar : ios/Runner/Info.plist -> NSCameraUsageDescription
-       · değişmez: kameradan gelen hiçbir şey (video ya da vücut noktası)
-                   diske YAZILMAZ. Diske yazılan tek şey seans geçmişi
-                   (sessions.jsonl) + karşılama bayrağı (onboarding_seen)
-                   + paketten çıkarılan poz modeli (.task, asset).
-       · kapı    : docs/store/listing.json <-> Info.plist tutarlılığı
-                   test/store_listing_test.dart ile zorlanıyor. -->
-  <key>NSPrivacyTracking</key>
-  <false/>
-  <key>NSPrivacyTrackingDomains</key>
-  <array/>
-
-  <!-- TOPLANAN VERİ: yok. Seans kaydı YALNIZ cihazda, uygulama destek
-       dizininde; hiçbir yere gönderilmiyor. -->
-  <key>NSPrivacyCollectedDataTypes</key>
-  <array/>
-
-  <!-- GEREKÇELİ API'LER.
-       Ölçüldü: app kodu dosya YAZIP OKUYOR (`onboarding_seen`, seans
-       geçmişi) ama zaman damgası okumuyor; `permission_handler_apple`
-       KENDİ manifestini taşıyor, `path_provider_foundation` taşımıyor
-       ama dizin çözümlemesi (`URLsForDirectory:`) gerekçeli API listesinde
-       değil. Bu yüzden liste BOŞ bırakıldı. -->
-  <key>NSPrivacyAccessedAPITypes</key>
-  <array/>
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeEmailAddress</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeName</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeUserID</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
 </dict>
 </plist>

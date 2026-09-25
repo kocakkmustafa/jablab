@@ -6,6 +6,7 @@ import 'package:jablab_engine/jablab_engine.dart' show IntervalPlan, RoundPlan;
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
 import '../shell_candidate/shell_models.dart';
+import 'course_locale.dart';
 import 'design_tokens.dart';
 import 'session_narrator.dart';
 import 'live_honesty.dart';
@@ -15,6 +16,9 @@ import 'rehearse_material.dart';
 import 'session_store.dart';
 import 'skeleton_overlay.dart';
 import 'teach_material.dart';
+import 'teach_locale.dart';
+import 'summary_locale.dart';
+import 'ui_language.dart';
 
 /// Canlı seans ekranı — **app'e özgü**, `motion_shell`'e terfi ETMEZ.
 ///
@@ -247,18 +251,18 @@ class _SessionScreenState extends State<SessionScreen> {
     return Theme(
       data: jablabSessionTheme,
       child: SessionFlowScaffold(
-        title: widget.lesson.title,
+        title: lessonTitle(context, widget.lesson.id, widget.lesson.title),
         stage: _stage,
-        advanceLabel: _stage == SessionStage.summary ? 'Done' : 'Continue',
+        advanceLabel: UiLanguage.isTurkish(context)
+            ? (_stage == SessionStage.summary ? 'Bitti' : 'Devam et')
+            : (_stage == SessionStage.summary ? 'Done' : 'Continue'),
         onAdvance: _advance,
         child: switch (_stage) {
           SessionStage.teach => _Teach(
             lesson: widget.lesson,
             material: widget.teachMaterial,
           ),
-          SessionStage.rehearse => _Rehearse(
-            material: widget.rehearseMaterial,
-          ),
+          SessionStage.rehearse => _Rehearse(material: widget.rehearseMaterial),
           SessionStage.live => _Live(
             cues: widget.cues,
             plan: widget.plan,
@@ -313,7 +317,10 @@ class _Teach extends StatelessWidget {
           children: <Widget>[
             const Icon(Icons.school_outlined, size: 36),
             const SizedBox(height: 16),
-            Text(lesson.title, style: theme.textTheme.headlineSmall),
+            Text(
+              lessonTitle(context, lesson.id, lesson.title),
+              style: theme.textTheme.headlineSmall,
+            ),
             const SizedBox(height: 8),
             if (lesson.subtitle.isNotEmpty)
               Text(lesson.subtitle, style: theme.textTheme.bodyMedium),
@@ -324,12 +331,12 @@ class _Teach extends StatelessWidget {
             // yapamayacağı bir eylem söyleniyordu.
             switch (material) {
               TeachMaterialText(body: final String body) => Text(
-                body,
+                localizedTeachBody(context, lesson.id, body),
                 key: const Key('teach-material'),
                 style: theme.textTheme.bodyMedium,
               ),
               TeachMaterialNone(reason: final String reason) => Text(
-                reason,
+                localizedMaterialReason(context, reason),
                 key: const Key('teach-material-none'),
                 style: theme.textTheme.bodySmall,
               ),
@@ -338,8 +345,11 @@ class _Teach extends StatelessWidget {
             // Bu cümle materyalden BAĞIMSIZ ve her hâlde doğru: hüküm
             // aşamanın kendisinde susuyor (`SessionStage.teach.judges == false`).
             Text(
-              'Nothing is being analysed during this part. Scoring you while '
-              'you are still learning the shape would punish learning.',
+              UiLanguage.text(
+                context,
+                en: 'Nothing is being analysed during this part. Scoring you while you are still learning the shape would punish learning.',
+                tr: 'Bu bölümde analiz yapılmıyor. Hareketi öğrenirken puan vermek öğrenmeyi cezalandırır.',
+              ),
               key: const Key('teach-no-analysis'),
               style: theme.textTheme.bodySmall,
             ),
@@ -379,9 +389,13 @@ class _Rehearse extends StatelessWidget {
             const SizedBox(height: 16),
             // Aşamanın DEĞİŞMEYEN sözü: hüküm yok, saat yok. Materyalden
             // bağımsız ve her hâlde doğru.
-            const Text(
-              'Go slow. One thing at a time, no clock.',
-              key: Key('rehearse-copy'),
+            Text(
+              UiLanguage.text(
+                context,
+                en: 'Go slow. One thing at a time, no clock.',
+                tr: 'Yavaş ilerleyin. Her seferinde bir şeye odaklanın; süre sınırı yok.',
+              ),
+              key: const Key('rehearse-copy'),
             ),
             const SizedBox(height: 20),
             switch (material) {
@@ -393,7 +407,11 @@ class _Rehearse extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'What to run through',
+                      UiLanguage.text(
+                        context,
+                        en: 'What to run through',
+                        tr: 'Çalışılacak hareketler',
+                      ),
                       key: const Key('rehearse-drill-heading'),
                       style: theme.textTheme.titleSmall,
                     ),
@@ -415,7 +433,11 @@ class _Rehearse extends StatelessWidget {
                       // içeriğin söylemediği bir şeyi söylemek olurdu.
                       // Alan aslında ÇALIŞILACAK SIRALAR listesi.
                       Text(
-                        'Sequences to run',
+                        UiLanguage.text(
+                          context,
+                          en: 'Sequences to run',
+                          tr: 'Çalışılacak diziler',
+                        ),
                         key: const Key('rehearse-combos-heading'),
                         style: theme.textTheme.titleSmall,
                       ),
@@ -424,14 +446,16 @@ class _Rehearse extends StatelessWidget {
                         Padding(
                           key: Key('rehearse-combination-$c'),
                           padding: const EdgeInsets.symmetric(vertical: 3),
-                          child:
-                              Text('· $c', style: theme.textTheme.bodyMedium),
+                          child: Text(
+                            '· $c',
+                            style: theme.textTheme.bodyMedium,
+                          ),
                         ),
                     ],
                   ],
                 ),
               RehearseMaterialNone(reason: final String reason) => Text(
-                reason,
+                localizedMaterialReason(context, reason),
                 key: const Key('rehearse-material-none'),
                 style: theme.textTheme.bodySmall,
               ),
@@ -589,8 +613,10 @@ class _LiveState extends State<_Live> {
       // olmadığı için `cue.milestone` pratikte ulaşılamazdı.
       final List<NarrationEvent> counted = _narrator.counted(_completedJabs);
       if (counted.isNotEmpty) {
-        final String? said = widget.cues.say(counted.last,
-            vars: <String, Object>{'n': _completedJabs});
+        final String? said = widget.cues.say(
+          counted.last,
+          vars: <String, Object>{'n': _completedJabs},
+        );
         if (said != null && mounted) setState(() => _line = said);
       }
       // Sayım DEĞİŞTİĞİNDE bildiriliyor, tik attığında değil (J-157).
@@ -783,9 +809,13 @@ class _LiveState extends State<_Live> {
           ),
         if (ivl != null)
           Text(
-            _resting
-                ? 'Recover — burst ${_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2} of ${ivl.bursts} next'
-                : 'Burst ${_roundIndex + 1} of ${ivl.bursts}',
+            UiLanguage.isTurkish(context)
+                ? (_resting
+                      ? 'Toparlanma — sıradaki seri ${_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2}/${ivl.bursts}'
+                      : 'Seri ${_roundIndex + 1}/${ivl.bursts}')
+                : (_resting
+                      ? 'Recover — burst ${_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2} of ${ivl.bursts} next'
+                      : 'Burst ${_roundIndex + 1} of ${ivl.bursts}'),
             key: const Key('live-burst-position'),
             style: Theme.of(context).textTheme.labelLarge,
           ),
@@ -794,9 +824,13 @@ class _LiveState extends State<_Live> {
         // hesaplayamaz.
         if (plan != null && plan.rounds > 1)
           Text(
-            _resting
-                ? 'Rest — round ${_roundIndex + 2} of ${plan.rounds} next'
-                : 'Round ${_roundIndex + 1} of ${plan.rounds}',
+            UiLanguage.isTurkish(context)
+                ? (_resting
+                      ? 'Dinlenme — sıradaki tur ${_roundIndex + 2}/${plan.rounds}'
+                      : 'Tur ${_roundIndex + 1}/${plan.rounds}')
+                : (_resting
+                      ? 'Rest — round ${_roundIndex + 2} of ${plan.rounds} next'
+                      : 'Round ${_roundIndex + 1} of ${plan.rounds}'),
             key: const Key('live-round-position'),
             style: Theme.of(context).textTheme.labelLarge,
           ),
@@ -875,12 +909,16 @@ extension on _LiveState {
           state: LiveState.noVerdict,
           eventCount: null,
           narration: _line,
-          noVerdictReason: timed
-              ? 'This lesson runs on the clock — nothing is being judged. '
-                  'The timer and the on-screen pacing cues still work.'
-              : 'Nothing is being judged here, and there is no clock '
-                  'either. Work at your own pace and move on when you are '
-                  'done.',
+          noVerdictReason: UiLanguage.isTurkish(context)
+              ? (timed
+                    ? 'Bu ders süreyle ilerler; hareketiniz değerlendirilmez. Zamanlayıcı ve ekrandaki tempo yönergeleri çalışmaya devam eder.'
+                    : 'Bu bölümde hareketiniz değerlendirilmez ve zamanlayıcı yoktur. Kendi hızınızda çalışıp bitirdiğinizde ilerleyin.')
+              : (timed
+                    ? 'This lesson runs on the clock — nothing is being judged. '
+                          'The timer and the on-screen pacing cues still work.'
+                    : 'Nothing is being judged here, and there is no clock '
+                          'either. Work at your own pace and move on when you are '
+                          'done.'),
           preview: const SkeletonPreview(
             analysisRunning: false,
             state: LiveState.noVerdict,
@@ -899,7 +937,11 @@ extension on _LiveState {
           state: LiveState.noVerdict,
           eventCount: null,
           narration: _line,
-          noVerdictReason: 'Getting the camera ready…',
+          noVerdictReason: UiLanguage.text(
+            context,
+            en: 'Getting the camera ready…',
+            tr: 'Kamera hazırlanıyor…',
+          ),
           preview: const SkeletonPreview(
             analysisRunning: false,
             state: LiveState.noVerdict,
@@ -936,7 +978,22 @@ extension on _LiveState {
 
   /// Tipli hâl → kullanıcı cümlesi. **Ham `detail` KULLANILMIYOR** (doc-75/5
   /// kamera tarafı): teşhis dizesi geliştirici içindir.
-  String _failureSentence(LiveSessionFailure f) => switch (f) {
+  String _failureSentence(LiveSessionFailure f) => UiLanguage.isTurkish(context)
+      ? _failureSentenceTr(f)
+      : _failureSentenceEn(f);
+
+  String _failureSentenceTr(LiveSessionFailure f) => switch (f) {
+    LivePermissionDenied(permanentlyDenied: final bool permanent) =>
+      permanent
+          ? 'JabLab için kamera erişimi kapalı ve sistem yeniden izin istemeyecek. Ayarlar bölümünden açabilirsiniz. Kamera olmadan da tur saati çalışır.'
+          : 'Jab hareketinizi izlemek için kameraya ihtiyacımız var. Kamera olmadan analiz yapılmaz; tur saati çalışmaya devam eder.',
+    LiveCameraUnavailable() =>
+      'Bu cihazda kamera açılamadı, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.',
+    LiveSetupFailed() =>
+      'Kamera hazırlanırken bir sorun oluştu, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.',
+  };
+
+  String _failureSentenceEn(LiveSessionFailure f) => switch (f) {
     LivePermissionDenied(permanentlyDenied: final bool permanent) =>
       permanent
           // "Tekrar dene" demek anlamsız: sistem bir daha sormayacak.
@@ -1000,14 +1057,26 @@ class _Summary extends StatelessWidget {
     eventCount: eventCount,
     // K8 (M-F-04): kalibrasyon kapısı geçilmeden BANT sayısı yok.
     // Liste TÜREVİ (J-144).
-    bands: bands,
+    bands: <String, String>{
+      for (final MapEntry<String, String> entry in bands.entries)
+        componentLabel(context, entry.key): entry.value,
+    },
     // J-033: eğitmenler gard/kol pozisyonunda ayrışıyor → koçlanır ama
     // SKORLANMAZ. Liste config'ten gelir (ContentRepository), elle
     // yazılmaz — bkz. widget dokümanı.
-    coachedNotScored: coachedNotScored,
+    coachedNotScored: <String>[
+      for (final String label in coachedNotScored)
+        componentLabel(context, label),
+    ],
     unitsCompleted: unitsCompleted,
-    unitLabel: unitLabel,
+    unitLabel: UiLanguage.isTurkish(context)
+        ? switch (unitLabel) {
+            'interval' || 'intervals' => 'aralık',
+            'round' || 'rounds' => 'tur',
+            _ => unitLabel,
+          }
+        : unitLabel,
     workedSeconds: workedSeconds,
-    tempoBand: tempoBand,
+    tempoBand: tempoBandLabel(context, tempoBand),
   );
 }

@@ -10,8 +10,8 @@ import 'package:flutter_test/flutter_test.dart';
 /// `promise_language_test.dart` bilerek `docs/` klasörünü taramaz — sevk
 /// edilmiyor. Mağaza liste metni de `docs/store/listing.json`da yaşıyor
 /// (kod değil, taslak) ama ürünün DİĞER yüzeylerinden farklı bir şey:
-/// **kullanıcının satın almadan ÖNCE gördüğü tek yüzey.** Düzeltme şansı
-/// yok — kullanıcı zaten karar vermiş oluyor. Koordinatör hükmü: *"mağaza
+/// **kullanıcının yüklemeden ÖNCE gördüğü yüzey.** İlk sürümde satış yok;
+/// kullanıcı yine bu metinle karar veriyor. Koordinatör hükmü: *"mağaza
 /// metni de bir yüzeydir ve bayatlar"* — bu yüzden `docs/` istisnasının
 /// KENDİ istisnası: bu dosya taranır.
 ///
@@ -81,78 +81,16 @@ void main() {
             'destekleyecek bir ölçüm yok.');
   });
 
-  test('ÖLÇÜM-BEYANI ÜÇLÜSÜ description İÇİNDE VAR', () {
-    // HonestyBox'ın (Discipline.measured/notMeasured) mağaza karşılığı —
-    // ne ölçtüğünü/ölçmediğini söyleyen satır OLMALI (koordinatör şartı).
-    // ⚠️ Başlık J-212'de 'MEASURED AND GRADED' → 'MEASURED' oldu: bugün
-    // HİÇBİR ŞEY puanlanmıyor (lessonClass:'unscored' sabit, gradedBands
-    // '—', ruleset calibrationPending:true), yani 'GRADED' başlığı mağazada
-    // desteksiz bir tier iddia ediyordu. Üçlü YAPI şartı düşmedi.
-    //
-    // Ölçüt ESKİSİNDEN SIKI: başlık artık KENDİ SATIRI olmalı. Eski
-    // `contains('MEASURED AND GRADED')` gövde içinde geçen bir dizgeyle de
-    // tatmin olurdu; bölüm başlığı arıyorsak satır aramalıyız.
-    final String desc = listing['description'] as String;
-    for (final String marker in <String>[
-      'MEASURED',
-      'WATCHED AND COACHED, NOT SCORED',
-      'WHAT WE DO NOT MEASURE',
-    ]) {
-      expect(desc, contains('\n$marker\n'),
-          reason: 'description ölçüm-beyanı üçlüsünün "$marker" bölümünü '
-              'kaybetmiş — mağaza metni HonestyBox\'ın karşılığını taşımıyor');
-    }
-  });
-
-  test('description library.json\'ın notMeasured GERÇEK cümlesini taşıyor', () {
-    // İcat kontrolü: "hook and uppercut" iddiası uydurulmadı mı, uygulamanın
-    // KENDİ ölçülmüş cümlesinden mi geldi — negatif ikiz.
-    final Map<String, dynamic> lib = (jsonDecode(
-                File('assets/content/library.json').readAsStringSync())
-            as Map)
-        .cast<String, dynamic>();
-    final Map<String, dynamic> boxing = (lib['disciplines'] as List<dynamic>)
-        .cast<Map<String, dynamic>>()
-        .firstWhere((Map<String, dynamic> d) => d['id'] == 'boxing');
-    final List<String> notMeasured =
-        (((boxing['honesty'] as Map)['notMeasured'] as List<dynamic>?) ??
-                const <dynamic>[])
-            .cast<String>();
-    final bool hookSourced = notMeasured.any(
-        (String s) => s.contains('missed almost every hook'));
-    expect(hookSourced, isTrue,
-        reason: 'library.json\'ın hook/uppercut cümlesi değişmiş olabilir — '
-            'mağaza metnindeki karşılığı elle güncellenmeli');
-    expect(listing['description'] as String,
-        contains('missed almost every hook'),
-        reason: 'mağaza metni library.json\'ın gerçek ölçülmüş cümlesini '
-            'taşımıyor — icat edilmiş bir gerekçe olabilir');
-  });
-
-  test('KOMBİNASYON SIRASI iddiası MEASURED\'da DEĞİL — motor kanıtı yok', () {
-    // Koordinatör çapraz kontrolü (2026-08-12): "Combination order and
-    // timing" iddiası J-162/163'ün açık sorusuna bağlıydı. Ölçüm KESİN
-    // sonuç verdi: WRONG_HAND_FOR_COMBINATION/COMBINATION_ORDER_ERROR
-    // `evaluateAt:['COMBINATION_END']` istiyor, `COMBINATION_END` motor
-    // kodunda SIFIR yerde geçiyor, `sequenceMismatch` (condition alanı)
-    // tek yerde deklare edilip HİÇBİR YERDE atanmıyor — bu iki hata
-    // KALICI ERİŞİLEMEZ. İddia MEASURED bölümünden NOT MEASURE'a
-    // taşındı. Bu test o taşımanın GERİ ALINMADIĞINI korur.
-    final String desc = listing['description'] as String;
-    final int measuredIdx = desc.indexOf('\nMEASURED\n');
-    final int notMeasuredIdx = desc.indexOf('WHAT WE DO NOT MEASURE');
-    expect(measuredIdx, greaterThanOrEqualTo(0));
-    expect(notMeasuredIdx, greaterThan(measuredIdx));
-    final String measuredBlock =
-        desc.substring(measuredIdx, notMeasuredIdx).toLowerCase();
-    expect(measuredBlock, isNot(contains('combination')),
-        reason: 'MEASURED bölümünde "combination" geçiyor — '
-            'WRONG_HAND_FOR_COMBINATION/COMBINATION_ORDER_ERROR motorda '
-            'KALICI ERİŞİLEMEZ (evaluateAt COMBINATION_END, motor onu hiç '
-            'üretmiyor), bu iddia desteksiz');
-    expect(desc.toLowerCase(), contains('combination order and timing'),
-        reason: 'kombinasyon-sırası bulgusu NOT MEASURE\'dan da düşmüş — '
-            'bu bir dürüstlük geri çekilmesi, sessiz silinmemeli');
+  test('ilk sürümde kamera koçluğu ve abonelik satışı vaat edilmiyor', () {
+    final String desc = (listing['description'] as String).toLowerCase();
+    final String short =
+        ((listing['playStore'] as Map)['shortDescription'] as String)
+            .toLowerCase();
+    expect(desc, contains('camera coaching, punch counting, training '
+        'sessions and subscriptions are not available'));
+    expect(short, contains('camera coaching is not open'));
+    expect(desc, isNot(contains('live solo shadow-boxing with')));
+    expect(desc, isNot(contains('active jablab or motion+ subscription')));
   });
 
   test('kamera izin metni Info.plist ile TUTARLI', () {

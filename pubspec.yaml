@@ -9,6 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  # Ortak hesap, çekirdek ve kamera aynı değişmez Git sürümünden çözülür.
+  motion_account:
+    git:
+      url: https://github.com/kocakkmustafa/motion-core.git
+      path: packages/motion_account
+      ref: f2ea161c7e974d57b114ba7773836c72be17a381
   jablab_engine:
     path: packages/jablab_engine
   # F-3/J-064: seans geçmişi Fitness vaadinin ("çalıştığını kaydet") VERİ
@@ -16,16 +24,15 @@ dependencies:
   # uygulamanın kendisinde (append-only JSONL, `lib/app/session_store.dart`).
   # 3. taraf DB BİLEREK YOK: sorgu ihtiyacı ölçülünce gelir.
   path_provider: ^2.1.0
+  crypto: ^3.0.7
   # KAMERA KÖPRÜSÜ (J-071). TAG'e pinli git-dep (M-F-154 rejimi + M-F-03):
   # path bağımlılığı paylaşımlı ağaçta o an hangi dal çıkılıysa onu okur,
   # yani bağımlılığımız başka bir oturumun dal değiştirmesiyle sessizce
   # değişirdi.
   #
   # ⚠️ PİN EŞİTLİĞİ ZORUNLU: bu plugin `motion_core`u PATH ile çekiyor
-  # (aynı repo). `motion_camera-v0.1.2` ve `motion_core-v0.11.0` AYNI
-  # COMMIT (f13bdc9) — bu yüzden `jablab_engine` de 0.11.0'a yükseltildi.
-  # (Tag'ler ayrı commit'lerde duruyor ama f13bdc9 İKİSİNİ birden taşıyor;
-  # tek pin, çift-kaynak çatışması yok — M-F-260.)
+  # (aynı repo). Onaylı `f2ea161c` commit'i kamera, core ve hesap/üyelik
+  # paketlerini birlikte taşır; motor da aynı tam ref'e sabitlenir.
   # Farklı ref'ler olsaydı pub aynı paket için iki kaynak görüp çözemezdi.
   # `test/dependency_pin_test.dart` bu eşitliği zorluyor.
   # `motion_core` DOĞRUDAN da bildiriliyor: harness `BodyOrientation`ı
@@ -37,7 +44,7 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_core
-      ref: f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d
+      ref: f2ea161c7e974d57b114ba7773836c72be17a381
   motion_camera:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
@@ -49,10 +56,10 @@ dependencies:
       #   "motion_camera from git is incompatible with jablab_engine from path"
       # Bu yuzden pin daima tag'in COMMIT'i olarak yazilir; hangi tag oldugu
       # yorumda durur ve `dependency_pin_test` esitligi zorlar.
-      #   f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d == motion_camera-v0.1.2
+      #   f2ea161c7e974d57b114ba7773836c72be17a381 == kabul edilen ortak Core/Camera pini
       # (v0.1.0'in iOS Swift katmani 0.10.21'e karsi DERLENMIYORDU — J-071;
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
-      ref: f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d
+      ref: f2ea161c7e974d57b114ba7773836c72be17a381
   permission_handler: ^12.0.3
   # Design turu (2026-08-06): JabLab.dc.html spec board iki tipografi ailesi
   # zorunlu kılıyor — Familjen Grotesk (insan sesi) + IBM Plex Mono (yalnız
@@ -64,6 +71,7 @@ dependencies:
   # isteği YOK. Bkz. `test/network_deps_test.dart` (regresyon kapısı).
 
 dev_dependencies:
+  supabase_flutter: 2.17.2
   flutter_test:
     sdk: flutter
   # CİHAZDA koşan smoke için (J-072): köprünün gerçek native katmanı yalnız
@@ -71,7 +79,6 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  crypto: ^3.0.7
   # JAB-P0-002 Step 2: cihaz-canlılık probunun simülatör/emülatörde
   # koşmasını KIRMIZI yapmak için (`isPhysicalDevice`) — "simülatör kanıt
   # değildir" roadmap kuralının kod karşılığı. `dev_dependency`: yalnız

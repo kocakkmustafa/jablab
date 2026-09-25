@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../shell_candidate/shell_models.dart';
+import 'course_locale.dart';
 import 'design_tokens.dart';
+import 'ui_language.dart';
 
 /// Sayfa B — Kurs Sayfası (design: `docs/design/DESIGN-PANEL-PROMPT.md` §2
 /// Sayfa B). Bir kurs "güncel" sayılıyorsa (kullanıcının içinde bulunduğu
@@ -69,103 +71,123 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: JColors.ground,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[const Color(0xFF170809), JColors.ground],
-              stops: const <double>[0, .42],
-            ),
-          ),
-          child: SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
+    backgroundColor: JColors.ground,
+    body: DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[const Color(0xFF170809), JColors.ground],
+          stops: const <double>[0, .42],
+        ),
+      ),
+      child: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
+          children: <Widget>[
+            Row(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    // Hüküm 3: KÖK+güncelken geri değil, disiplin ızgarasına
-                    // dönüş; pushla açılan bir kursta ise sıradan geri —
-                    // ikisi aynı anda DOĞRU olamaz (sınıf dokümanı).
-                    if (isCurrent && onOpenSelect != null)
-                      GlassIconButton(
-                        key: const Key('open-select'),
-                        icon: Icons.grid_view_outlined,
-                        tooltip: 'Choose a discipline',
-                        onTap: onOpenSelect!,
-                      )
-                    else
-                      GlassIconButton(
-                        icon: Icons.arrow_back_ios_new_rounded,
-                        // `tooltip: 'Back'` yalnız erişilebilirlik süsü DEĞİL
-                        // — `tester.pageBack()` (fitness_ship_audit_test.dart
-                        // dahil, DOKUNULMAYAN pre-existing testler) TAM BU
-                        // dizeyi arıyor (flutter_test kaynağı: önce
-                        // `find.byTooltip('Back')`, sonra Cupertino'ya düşer).
-                        tooltip: 'Back',
-                        onTap: () => Navigator.of(context).maybePop(),
-                      ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        course.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: JText.pageTitle.copyWith(fontSize: 26, letterSpacing: -.8),
-                      ),
+                // Hüküm 3: KÖK+güncelken geri değil, disiplin ızgarasına
+                // dönüş; pushla açılan bir kursta ise sıradan geri —
+                // ikisi aynı anda DOĞRU olamaz (sınıf dokümanı).
+                if (isCurrent && onOpenSelect != null)
+                  GlassIconButton(
+                    key: const Key('open-select'),
+                    icon: Icons.grid_view_outlined,
+                    tooltip: UiLanguage.text(
+                      context,
+                      en: 'Choose a discipline',
+                      tr: 'Disiplin seç',
                     ),
-                    const SizedBox(width: 12),
-                    GlassIconButton(
-                      key: const Key('settings-button'),
-                      icon: Icons.settings_outlined,
-                      tooltip: 'Settings',
-                      onTap: onOpenSettings,
-                    ),
-                  ],
-                ),
-                if (course.goal.isNotEmpty) ...<Widget>[
-                  const SizedBox(height: 16),
-                  Text(course.goal, style: JText.body.copyWith(color: JColors.ink2, fontSize: 15)),
-                ],
-                if (isCurrent) ...<Widget>[
-                  const SizedBox(height: 20),
-                  _WhereYouLeftOff(
-                    resumeLesson: resumeLesson,
-                    historyUnavailable: historyUnavailable,
-                    historyIncomplete: historyIncomplete,
-                    recorded: recorded,
-                    recordedNote: recordedNote,
-                    onResume:
-                        resumeLesson == null ? null : () => onStart(resumeLesson!),
-                    onRetry: onRetryHistory,
+                    onTap: onOpenSelect!,
+                  )
+                else
+                  GlassIconButton(
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    // `tooltip: 'Back'` yalnız erişilebilirlik süsü DEĞİL
+                    // — `tester.pageBack()` (fitness_ship_audit_test.dart
+                    // dahil, DOKUNULMAYAN pre-existing testler) TAM BU
+                    // dizeyi arıyor (flutter_test kaynağı: önce
+                    // `find.byTooltip('Back')`, sonra Cupertino'ya düşer).
+                    tooltip: UiLanguage.text(context, en: 'Back', tr: 'Geri'),
+                    onTap: () => Navigator.of(context).maybePop(),
                   ),
-                  const SizedBox(height: 14),
-                  _HonestBands(bands: bands),
-                  if (gateNote != null) ...<Widget>[
-                    const SizedBox(height: 14),
-                    UnknownGlassPanel(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(gateNote!,
-                          key: const Key('gate-note'), style: JText.bodyMuted),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    courseTitle(context, course.id, course.title),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: JText.pageTitle.copyWith(
+                      fontSize: 26,
+                      letterSpacing: -.8,
                     ),
-                  ],
-                  const SizedBox(height: 8),
-                  Divider(color: JColors.hairline, height: 40),
-                ] else
-                  const SizedBox(height: 20),
-                // Kilitli ders LİSTEDE KALIR ama açılmaz — göster, açma, SEBEBİNİ
-                // yaz (shell_candidate/library_pages.dart'ın CoursePage'inden
-                // birebir taşınan davranış; bkz. sınıf dokümanı).
-                ...course.lessons.map((ShellLesson l) => Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: _LessonRow(lesson: l, onTap: onStart),
-                    )),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                GlassIconButton(
+                  key: const Key('settings-button'),
+                  icon: Icons.settings_outlined,
+                  tooltip: UiLanguage.text(
+                    context,
+                    en: 'Settings',
+                    tr: 'Ayarlar',
+                  ),
+                  onTap: onOpenSettings,
+                ),
               ],
             ),
-          ),
+            if (course.goal.isNotEmpty) ...<Widget>[
+              const SizedBox(height: 16),
+              Text(
+                courseGoal(context, course.id, course.goal),
+                style: JText.body.copyWith(color: JColors.ink2, fontSize: 15),
+              ),
+            ],
+            if (isCurrent) ...<Widget>[
+              const SizedBox(height: 20),
+              _WhereYouLeftOff(
+                resumeLesson: resumeLesson,
+                historyUnavailable: historyUnavailable,
+                historyIncomplete: historyIncomplete,
+                recorded: recorded,
+                recordedNote: recordedNote,
+                onResume: resumeLesson == null
+                    ? null
+                    : () => onStart(resumeLesson!),
+                onRetry: onRetryHistory,
+              ),
+              const SizedBox(height: 14),
+              _HonestBands(bands: bands),
+              if (gateNote != null) ...<Widget>[
+                const SizedBox(height: 14),
+                UnknownGlassPanel(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    gateNote!,
+                    key: const Key('gate-note'),
+                    style: JText.bodyMuted,
+                  ),
+                ),
+              ],
+              const SizedBox(height: 8),
+              Divider(color: JColors.hairline, height: 40),
+            ] else
+              const SizedBox(height: 20),
+            // Kilitli ders LİSTEDE KALIR ama açılmaz — göster, açma, SEBEBİNİ
+            // yaz (shell_candidate/library_pages.dart'ın CoursePage'inden
+            // birebir taşınan davranış; bkz. sınıf dokümanı).
+            ...course.lessons.map(
+              (ShellLesson l) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _LessonRow(lesson: l, onTap: onStart),
+              ),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _LessonRow extends StatelessWidget {
@@ -205,28 +227,47 @@ class _LessonRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(lesson.title,
-                      style: JText.body.copyWith(color: fg, fontWeight: FontWeight.w600)),
+                  Text(
+                    lessonTitle(context, lesson.id, lesson.title),
+                    style: JText.body.copyWith(
+                      color: fg,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   if (locked) ...<Widget>[
                     const SizedBox(height: 4),
-                    Text(lesson.lockedReason!,
-                        key: Key('locked-why-${lesson.id}'),
-                        style: JText.bodyMuted.copyWith(fontSize: 12.5)),
+                    Text(
+                      lessonLockedReason(
+                        context,
+                        lesson.id,
+                        lesson.lockedReason,
+                      )!,
+                      key: Key('locked-why-${lesson.id}'),
+                      style: JText.bodyMuted.copyWith(fontSize: 12.5),
+                    ),
                   ] else if (lesson.subtitle.isNotEmpty) ...<Widget>[
                     const SizedBox(height: 4),
-                    Text(lesson.subtitle, style: JText.bodyMuted.copyWith(fontSize: 12.5)),
+                    Text(
+                      lesson.subtitle,
+                      style: JText.bodyMuted.copyWith(fontSize: 12.5),
+                    ),
                   ],
                 ],
               ),
             ),
             if (lesson.minutes != 0) ...<Widget>[
               const SizedBox(width: 8),
-              Text('${lesson.minutes} min',
-                  // Kilitli ders SÖNÜK ama okunur: `ink4` 1,80:1 veriyordu
-                  // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
-                  // "daha az önemli" demek, "okunmasın" demek değil.
-                  style: JText.mono
-                      .copyWith(color: locked ? JColors.ink2 : JColors.cool2)),
+              Text(
+                UiLanguage.isTurkish(context)
+                    ? '${lesson.minutes} dk'
+                    : '${lesson.minutes} min',
+                // Kilitli ders SÖNÜK ama okunur: `ink4` 1,80:1 veriyordu
+                // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
+                // "daha az önemli" demek, "okunmasın" demek değil.
+                style: JText.mono.copyWith(
+                  color: locked ? JColors.ink2 : JColors.cool2,
+                ),
+              ),
             ],
           ],
         ),
@@ -269,13 +310,21 @@ class _WhereYouLeftOff extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Where you left off',
-                key: const Key('recorded-heading'),
-                style: JText.body.copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              UiLanguage.text(
+                context,
+                en: 'Where you left off',
+                tr: 'Kaldığın yer',
+              ),
+              key: const Key('recorded-heading'),
+              style: JText.body.copyWith(fontWeight: FontWeight.w600),
+            ),
             const SizedBox(height: 4),
-            Text(unavailable,
-                key: const Key('recorded-unavailable'),
-                style: JText.bodyMuted),
+            Text(
+              unavailable,
+              key: const Key('recorded-unavailable'),
+              style: JText.bodyMuted,
+            ),
             if (onRetry != null) ...<Widget>[
               const SizedBox(height: 12),
               OutlinedButton(
@@ -285,7 +334,9 @@ class _WhereYouLeftOff extends StatelessWidget {
                   side: BorderSide(color: JColors.border),
                 ),
                 onPressed: onRetry,
-                child: const Text('Try again'),
+                child: Text(
+                  UiLanguage.text(context, en: 'Try again', tr: 'Tekrar dene'),
+                ),
               ),
             ],
           ],
@@ -303,13 +354,22 @@ class _WhereYouLeftOff extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Where you left off',
-              key: const Key('recorded-heading'),
-              style: JText.body.copyWith(fontWeight: FontWeight.w600)),
+          Text(
+            UiLanguage.text(
+              context,
+              en: 'Where you left off',
+              tr: 'Kaldığın yer',
+            ),
+            key: const Key('recorded-heading'),
+            style: JText.body.copyWith(fontWeight: FontWeight.w600),
+          ),
           const SizedBox(height: 4),
           Text(
-            'These are measurements, not marks. Nothing here is a judgement '
-            'about how well you moved.',
+            UiLanguage.text(
+              context,
+              en: 'These are measurements, not marks. Nothing here is a judgement about how well you moved.',
+              tr: 'Bunlar ölçümdür, not değildir. Hiçbiri ne kadar iyi hareket ettiğine dair bir yargı içermez.',
+            ),
             key: const Key('recorded-vs-judged-note'),
             style: JText.bodyMuted,
           ),
@@ -317,9 +377,11 @@ class _WhereYouLeftOff extends StatelessWidget {
           // eksik oldukları bilinmeli.
           if (historyIncomplete != null) ...<Widget>[
             const SizedBox(height: 8),
-            Text(historyIncomplete!,
-                key: const Key('recorded-incomplete'),
-                style: JText.bodyMuted),
+            Text(
+              historyIncomplete!,
+              key: const Key('recorded-incomplete'),
+              style: JText.bodyMuted,
+            ),
           ],
           const SizedBox(height: 10),
           // `ListTile` DEĞİL: title+trailing ikisi de uzayabiliyor
@@ -329,27 +391,41 @@ class _WhereYouLeftOff extends StatelessWidget {
           // yakaladı (koordinatör 2026-08-06, Lissom/Ostinato emsali).
           // `Expanded` + `Flexible` ile iki taraf da esner, hiçbiri
           // sabit-genişlik varsayımıyla diğerini kilitlemiyor.
-          ...recorded.entries.map((MapEntry<String, String> e) => Padding(
-                key: Key('recorded-${e.key}'),
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(child: Text(e.key, style: JText.body.copyWith(fontSize: 14))),
-                    const SizedBox(width: 12),
-                    Flexible(
-                      child: Text(e.value,
-                          style: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
-                          textAlign: TextAlign.end),
+          ...recorded.entries.map(
+            (MapEntry<String, String> e) => Padding(
+              key: Key('recorded-${e.key}'),
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      e.key,
+                      style: JText.body.copyWith(fontSize: 14),
                     ),
-                  ],
-                ),
-              )),
+                  ),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      e.value,
+                      style: JText.body.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           if (recordedNote != null)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Text(recordedNote!,
-                  key: const Key('recorded-note'),
-                  style: JText.bodyMuted),
+              child: Text(
+                recordedNote!,
+                key: const Key('recorded-note'),
+                style: JText.bodyMuted,
+              ),
             ),
           if (resumeLesson != null) ...<Widget>[
             const SizedBox(height: 14),
@@ -369,9 +445,16 @@ class _WhereYouLeftOff extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Center(
-                        child: Text('Resume ${resumeLesson!.title}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 15, color: Color(0xFF180A05))),
+                        child: Text(
+                          UiLanguage.isTurkish(context)
+                              ? '${lessonTitle(context, resumeLesson!.id, resumeLesson!.title)} dersine devam et'
+                              : 'Resume ${resumeLesson!.title}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            color: Color(0xFF180A05),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -403,9 +486,16 @@ class _HonestBands extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Scores are shown as bands until the thresholds are calibrated '
-            'on real recordings. A precise-looking number we cannot back up '
-            'would be worse than no number.',
+            UiLanguage.text(
+              context,
+              en:
+                  'Scores are unavailable because the thresholds have not been '
+                  'calibrated on real recordings. A precise-looking number we '
+                  'cannot back up would be worse than no number.',
+              tr:
+                  'Eşikler gerçek kayıtlarla kalibre edilmediği için puan '
+                  'gösterilmiyor. Dayanağı olmayan kesin bir sayı yanıltıcı olur.',
+            ),
             key: const Key('bands-only-note'),
             style: JText.bodyMuted,
           ),
@@ -414,21 +504,33 @@ class _HonestBands extends StatelessWidget {
             // `ListTile` değil — aynı 375pt taşma sınıfı `_WhereYouLeftOff`teki
             // gibi burada da mümkün (bkz. o widget'ın yorumu); değerler bugün
             // hep "—" ama alan `Map<String,String>` — savunma tüm sınıfa.
-            ...bands.entries.map((MapEntry<String, String> e) => Padding(
-                  key: Key('band-${e.key}'),
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(child: Text(e.key, style: JText.body.copyWith(fontSize: 14))),
-                      const SizedBox(width: 12),
-                      Flexible(
-                        child: Text(e.value,
-                            style: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
-                            textAlign: TextAlign.end),
+            ...bands.entries.map(
+              (MapEntry<String, String> e) => Padding(
+                key: Key('band-${e.key}'),
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        e.key,
+                        style: JText.body.copyWith(fontSize: 14),
                       ),
-                    ],
-                  ),
-                )),
+                    ),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Text(
+                        e.value,
+                        style: JText.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ],
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../shell_candidate/shell_models.dart';
 import 'design_tokens.dart';
+import 'ui_language.dart';
+import 'why_not_locale.dart';
 
 /// KARŞILAMA — ürünün ilk cümlesi ve **dürüstlük ön-beyanı** (J-106).
 ///
@@ -87,10 +89,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: switch (_step) {
                     0 => _Welcome(key: const Key('onboarding-welcome')),
                     1 => _Honesty(
-                        key: const Key('onboarding-honesty'),
-                        library: widget.library,
-                        onOpenWhyNot: widget.onOpenWhyNot,
-                      ),
+                      key: const Key('onboarding-honesty'),
+                      library: widget.library,
+                      onOpenWhyNot: widget.onOpenWhyNot,
+                    ),
                     _ => _Setup(key: const Key('onboarding-setup')),
                   },
                 ),
@@ -106,10 +108,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     foregroundColor: JColors.ink,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
-                  child: Text(_step + 1 < _steps ? 'Next' : 'Start',
-                      style: JText.body.copyWith(fontWeight: FontWeight.w600)),
+                  child: Text(
+                    _step + 1 < _steps
+                        ? UiLanguage.text(context, en: 'Next', tr: 'İleri')
+                        : UiLanguage.text(context, en: 'Start', tr: 'Başla'),
+                    style: JText.body.copyWith(fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
             ],
@@ -129,19 +136,43 @@ class _Welcome extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('THE CORNER', style: JText.label),
+        Text(
+          UiLanguage.text(context, en: 'THE CORNER', tr: 'KÖŞEN'),
+          style: JText.label,
+        ),
         const SizedBox(height: 10),
-        Text('Boxing practice\nyou can do alone.', style: JText.pageTitle),
+        Text(
+          UiLanguage.text(
+            context,
+            en: 'Boxing practice\nyou can do alone.',
+            tr: 'Tek başına\nboks pratiği.',
+          ),
+          style: JText.pageTitle,
+        ),
         const SizedBox(height: 18),
         Text(
-          'Put your phone down, step back, and work. No bag, no gloves, no '
-          'sensors — a camera and floor space are the whole kit.',
+          UiLanguage.text(
+            context,
+            en:
+                'Put your phone down, step back, and work. No bag, no gloves, no '
+                'sensors — a camera and floor space are the whole kit.',
+            tr:
+                'Telefonu yerleştir, geri çekil ve çalış. Kum torbası, eldiven '
+                've sensör gerekmiyor; kamera ile biraz boş alan yeterli.',
+          ),
           style: JText.body,
         ),
         const SizedBox(height: 14),
         Text(
-          'Everything runs on your phone. Video is read as you move and is '
-          'never stored or sent anywhere.',
+          UiLanguage.text(
+            context,
+            en:
+                'Everything runs on your phone. Video is read as you move and is '
+                'never stored or sent anywhere.',
+            tr:
+                'Her şey telefonunda çalışır. Video hareket ederken işlenir; '
+                'kaydedilmez veya başka bir yere gönderilmez.',
+          ),
           style: JText.bodyMuted,
         ),
       ],
@@ -169,14 +200,36 @@ class _Honesty extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('BEFORE YOU START', style: JText.label),
+        Text(
+          UiLanguage.text(
+            context,
+            en: 'BEFORE YOU START',
+            tr: 'BAŞLAMADAN ÖNCE',
+          ),
+          style: JText.label,
+        ),
         const SizedBox(height: 10),
-        Text('What this\ncannot do.', style: JText.pageTitle),
+        Text(
+          UiLanguage.text(
+            context,
+            en: 'What this\ncannot do.',
+            tr: 'Neleri\nyapamaz.',
+          ),
+          style: JText.pageTitle,
+        ),
         const SizedBox(height: 18),
         Text(
-          'A single camera sees shape and timing. It does not see force, and '
-          'it does not see another person. So there is no power number here, '
-          'and no score for anything that needs a partner.',
+          UiLanguage.text(
+            context,
+            en:
+                'A single camera sees shape and timing. It does not see force, and '
+                'it does not see another person. So there is no power number here, '
+                'and no score for anything that needs a partner.',
+            tr:
+                'Tek kamera duruşu ve zamanlamayı görebilir; darbe gücünü '
+                'veya başka bir kişiyi ölçemez. Bu yüzden güç puanı ve '
+                'partner gerektiren hareketlere puan yoktur.',
+          ),
           style: JText.body,
         ),
         const SizedBox(height: 16),
@@ -185,13 +238,22 @@ class _Honesty extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('LEFT OUT ON PURPOSE', style: JText.label),
+              Text(
+                UiLanguage.text(
+                  context,
+                  en: 'LEFT OUT ON PURPOSE',
+                  tr: 'BİLEREK DIŞARIDA',
+                ),
+                style: JText.label,
+              ),
               const SizedBox(height: 8),
               // Sayı da veriden: liste büyürse bu cümle kendiliğinden doğru
               // kalır. Elle yazılmış bir "6 things" bir sonraki içerik
               // turunda sessizce yalan olurdu.
               Text(
-                excluded == 1
+                UiLanguage.isTurkish(context)
+                    ? '$excluded özellik bilinçli olarak uygulamada yok.'
+                    : excluded == 1
                     ? 'One thing is deliberately not in this app.'
                     : '$excluded things are deliberately not in this app.',
                 key: const Key('onboarding-excluded-count'),
@@ -199,7 +261,7 @@ class _Honesty extends StatelessWidget {
               ),
               if (intro.isNotEmpty) ...<Widget>[
                 const SizedBox(height: 8),
-                Text(intro, style: JText.bodyMuted),
+                Text(whyNotIntro(context, intro), style: JText.bodyMuted),
               ],
               const SizedBox(height: 12),
               GestureDetector(
@@ -208,11 +270,18 @@ class _Honesty extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text('See the list',
-                        style: JText.body.copyWith(
-                            color: JColors.cool,
-                            decoration: TextDecoration.underline,
-                            decorationColor: JColors.cool3)),
+                    Text(
+                      UiLanguage.text(
+                        context,
+                        en: 'See the list',
+                        tr: 'Listeyi gör',
+                      ),
+                      style: JText.body.copyWith(
+                        color: JColors.cool,
+                        decoration: TextDecoration.underline,
+                        decorationColor: JColors.cool3,
+                      ),
+                    ),
                     const SizedBox(width: 6),
                     Icon(Icons.arrow_forward, size: 16, color: JColors.cool),
                   ],
@@ -223,8 +292,15 @@ class _Honesty extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'When the camera cannot read you, the app says so instead of going '
-          'quiet. Silence would read as approval.',
+          UiLanguage.text(
+            context,
+            en:
+                'When the camera cannot read you, the app says so instead of going '
+                'quiet. Silence would read as approval.',
+            tr:
+                'Kamera seni okuyamadığında uygulama bunu söyler. Sessizlik '
+                'yanlışlıkla onay gibi anlaşılmasın.',
+          ),
           style: JText.bodyMuted,
         ),
       ],
@@ -250,41 +326,81 @@ class _Setup extends StatelessWidget {
         // J-153'ün sınıfı: **çerçeve, içeriğin desteklemediği bir iddia
         // taşıyor.** Ve `EVERY SESSION` yalnız daha dürüst değil, daha
         // FAYDALI: kullanıcıya bunun rutin olduğunu söylüyor.
-        Text('EVERY SESSION', style: JText.label),
+        Text(
+          UiLanguage.text(context, en: 'EVERY SESSION', tr: 'HER SEANSTA'),
+          style: JText.label,
+        ),
         const SizedBox(height: 10),
-        Text('Where to put\nthe phone.', style: JText.pageTitle),
+        Text(
+          UiLanguage.text(
+            context,
+            en: 'Where to put\nthe phone.',
+            tr: 'Telefonu\nnereye koymalı.',
+          ),
+          style: JText.pageTitle,
+        ),
         const SizedBox(height: 18),
         // ADR-003: ön-eğik ~30-45°. Bir ÖNERİ olarak yazılıyor, ölçüm
         // iddiası olarak değil — uygulama açının kaç derece olduğunu
         // ölçmüyor ve "45 derece dur" demek ölçtüğümüz izlenimi verirdi.
         _SetupLine(
           n: '1',
-          text: 'Lean it somewhere stable at about waist height.',
+          text: UiLanguage.text(
+            context,
+            en: 'Lean it somewhere stable at about waist height.',
+            tr: 'Bel yüksekliğinde sağlam bir yere yasla.',
+          ),
         ),
         _SetupLine(
           n: '2',
-          text: 'Stand back until your feet and hands both fit in frame.',
+          text: UiLanguage.text(
+            context,
+            en: 'Stand back until your feet and hands both fit in frame.',
+            tr: 'Ellerin ve ayakların kadraja girene kadar geri çekil.',
+          ),
         ),
         _SetupLine(
           n: '3',
-          text: 'Turn slightly toward the camera rather than square on — '
-              'a front-oblique angle reads your guard best.',
+          text: UiLanguage.text(
+            context,
+            en:
+                'Turn slightly toward the camera rather than square on — '
+                'a front-oblique angle reads your guard best.',
+            tr:
+                'Kameraya tam karşıdan değil, hafif açılı dur. Bu açı '
+                'gardının görünmesine yardımcı olur.',
+          ),
         ),
         const SizedBox(height: 18),
         GlassPanel(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('IF YOU SAY NO TO THE CAMERA', style: JText.label),
+              Text(
+                UiLanguage.text(
+                  context,
+                  en: 'IF YOU SAY NO TO THE CAMERA',
+                  tr: 'KAMERAYA İZİN VERMEZSEN',
+                ),
+                style: JText.label,
+              ),
               const SizedBox(height: 8),
               // Bu bir vaat DEĞİL, bugünkü davranışın beyanı: kamerasız ders
               // saat ve anlatıyla TAM koşuyor (`SessionScreen.liveJab` null
               // olabilir ve akış bozulmaz). Çıkmaz sokak olmaması UI-BRIEF
               // §3.1'in açık şartı.
               Text(
-                'Conditioning rounds still run — the round clock and the '
-                'coach both work without it. Only the form feedback needs '
-                'to see you.',
+                UiLanguage.text(
+                  context,
+                  en:
+                      'Conditioning rounds still run — the round clock and the '
+                      'coach both work without it. Only the form feedback needs '
+                      'to see you.',
+                  tr:
+                      'Kondisyon turları çalışır; tur saati ve sesli koç '
+                      'kamerasız da kullanılabilir. Yalnız form geri '
+                      'bildirimi için kamera gerekir.',
+                ),
                 key: const Key('onboarding-permission-note'),
                 style: JText.body,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'content_failure.dart';
+import 'ui_language.dart';
 
 /// DÜRÜST HATA EKRANI (J-079) — UI-BRIEF §4/3.
 ///
@@ -46,6 +47,7 @@ class ContentFailureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final bool tr = UiLanguage.isTurkish(context);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -56,13 +58,13 @@ class ContentFailureScreen extends StatelessWidget {
                 size: 48, color: theme.colorScheme.error),
             const SizedBox(height: 16),
             Text(
-              _headline,
+              tr ? _headlineTr : _headline,
               key: const Key('failure-headline'),
               style: theme.textTheme.headlineSmall,
             ),
             const SizedBox(height: 12),
             Text(
-              _body,
+              tr ? _bodyTr : _body,
               key: const Key('failure-body'),
               style: theme.textTheme.bodyLarge,
             ),
@@ -71,7 +73,7 @@ class ContentFailureScreen extends StatelessWidget {
               FilledButton(
                 key: const Key('failure-retry'),
                 onPressed: () => onRetry!(),
-                child: const Text('Try again'),
+                child: Text(tr ? 'Tekrar dene' : 'Try again'),
               ),
             const SizedBox(height: 24),
             // Ayrıntı KATLANMIŞ: birincil mesaj insan cümlesi, ikincil
@@ -79,14 +81,16 @@ class ContentFailureScreen extends StatelessWidget {
             Card(
               child: ExpansionTile(
                 key: const Key('failure-detail-tile'),
-                title: const Text('Technical detail'),
-                subtitle: const Text('What to send us if you report this'),
+                title: Text(tr ? 'Teknik ayrıntı' : 'Technical detail'),
+                subtitle: Text(tr
+                    ? 'Sorunu bildirirken paylaşabileceğiniz bilgi'
+                    : 'What to send us if you report this'),
                 childrenPadding:
                     const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 children: <Widget>[
                   SelectableText(
                     failure.detail.isEmpty
-                        ? '(no detail reported)'
+                        ? (tr ? '(ayrıntı bildirilmedi)' : '(no detail reported)')
                         : failure.detail,
                     key: const Key('failure-detail'),
                     style: theme.textTheme.bodySmall
@@ -106,6 +110,18 @@ class ContentFailureScreen extends StatelessWidget {
         // kullanıcıya ne yapacağını bırakmaz.
         ContentFailureKind.integrity => 'We stopped ourselves',
         ContentFailureKind.unreadable => 'We could not read our own content',
+      };
+
+  String get _headlineTr => switch (failure.kind) {
+        ContentFailureKind.integrity => 'İçeriği durdurduk',
+        ContentFailureKind.unreadable => 'Uygulama içeriği okunamadı',
+      };
+
+  String get _bodyTr => switch (failure.kind) {
+        ContentFailureKind.integrity =>
+          'Bu sürümle gelen eğitim içeriği kendi doğruluk kontrollerimizden geçmedi. Uygulamanın ölçemeyeceği bir şeyi vaat ediyor olabilir. Güvenle sunamadığımız için içeriği göstermiyoruz. Sorun cihazınızda değil; yeniden denemek sonucu değiştirmez. Bunu yeni bir sürümle düzeltmemiz gerekiyor.',
+        ContentFailureKind.unreadable =>
+          'Uygulama, içindeki eğitim içeriğini okuyamadı. Yükleme zarar görmüş olabilir. Bir kez yeniden deneyin; sorun sürerse uygulamayı yeniden yüklemek yardımcı olabilir.',
       };
 
   String get _body => switch (failure.kind) {

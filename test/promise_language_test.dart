@@ -59,23 +59,28 @@ void main() {
   /// anahtarını ihlal saymak, görünmeyen bir adı değiştirmeye zorlardı —
   /// görünen kusuru düzeltmeden gürültü üretmek.
   List<String> dartStrings(String source) {
-    final String noKeys =
-        source.replaceAll(RegExp(r"Key\('[^']*'\)"), 'Key(_)');
-    final String noBlock =
-        noKeys.replaceAll(RegExp(r'/\*.*?\*/', dotAll: true), '');
+    final String noKeys = source.replaceAll(
+      RegExp(r"Key\('[^']*'\)"),
+      'Key(_)',
+    );
+    final String noBlock = noKeys.replaceAll(
+      RegExp(r'/\*.*?\*/', dotAll: true),
+      '',
+    );
     final String noLine = noBlock
         .split('\n')
         .where((String l) => !l.trimLeft().startsWith('//'))
         .join('\n');
-    return RegExp(r"'((?:[^'\\\n]|\\.)*)'")
-        .allMatches(noLine)
-        .map((RegExpMatch m) => m.group(1)!)
-        .toList();
+    return RegExp(
+      r"'((?:[^'\\\n]|\\.)*)'",
+    ).allMatches(noLine).map((RegExpMatch m) => m.group(1)!).toList();
   }
 
   test('lib/ — kullanıcı dizgelerinde vaat dili YOK', () {
     final List<String> hits = <String>[];
-    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       // DONDURULMUŞ ağaç — sınıf dokümanındaki gerekçe.
       if (f.path.contains('shell_candidate')) continue;
@@ -83,17 +88,22 @@ void main() {
         if (promise.hasMatch(s)) hits.add('${f.path}: "$s"');
       }
     }
-    expect(hits, isEmpty,
-        reason: 'VAAT DİLİ: ${hits.join(" · ")}\n'
-            'Gerekçenin varlığı bunu affetmiyor — bir zaman taahhüdü '
-            'veriyorsun ve onu tutan hiçbir şey yok. Cümlenin geri kalanı '
-            'zaten dürüstse, taahhüdü SİL: "Not open yet" → "Not open".');
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'VAAT DİLİ: ${hits.join(" · ")}\n'
+          'Gerekçenin varlığı bunu affetmiyor — bir zaman taahhüdü '
+          'veriyorsun ve onu tutan hiçbir şey yok. Cümlenin geri kalanı '
+          'zaten dürüstse, taahhüdü SİL: "Not open yet" → "Not open".',
+    );
   });
 
   test('assets/content — kullanıcı metinlerinde vaat dili YOK', () {
     final List<String> hits = <String>[];
-    for (final FileSystemEntity f
-        in Directory('assets/content').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'assets/content',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.json')) continue;
       void walk(Object? node, String path) {
         if (node is String) {
@@ -115,8 +125,7 @@ void main() {
 
       walk(jsonDecode(f.readAsStringSync()), '');
     }
-    expect(hits, isEmpty,
-        reason: 'VAAT DİLİ (içerik): ${hits.join(" · ")}');
+    expect(hits, isEmpty, reason: 'VAAT DİLİ (içerik): ${hits.join(" · ")}');
   });
 
   test('KAPALI disiplinlerde GELECEK-ZAMAN iddiası YOK', () {
@@ -142,10 +151,14 @@ void main() {
         if (future.hasMatch(text)) hits.add('${d['id']}: "$text"');
       }
     }
-    expect(hits, isEmpty,
-        reason: 'kapalı bir disiplin hakkında GELECEK ZAMAN: '
-            '${hits.join(" · ")}\nKart zaten "not open" diyor; bu metnin '
-            'işi NEDEN kapalı olduğunu söylemek, ne geleceğini değil.');
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'kapalı bir disiplin hakkında GELECEK ZAMAN: '
+          '${hits.join(" · ")}\nKart zaten "not open" diyor; bu metnin '
+          'işi NEDEN kapalı olduğunu söylemek, ne geleceğini değil.',
+    );
   });
 
   test('KAPALI disiplinlerin hepsi kapalı olma SEBEBİNİ taşıyor', () {
@@ -161,17 +174,22 @@ void main() {
     // hatırlatıcısı. Kaliteyi insan okuması doğrular; bu ayrımı silmek
     // testi yalancı yapar.
     final RegExp blocker = RegExp(
-        r"\b(not in|not built|missing|reference|cannot|can't|do not|"
-        r"does not|we have one|refuses|stays out|is not)\b",
-        caseSensitive: false);
+      r"\b(not in|not built|missing|reference|cannot|can't|do not|"
+      r"does not|we have one|refuses|stays out|is not)\b",
+      caseSensitive: false,
+    );
     final List<String> silent = <String>[];
     for (final Map<String, dynamic> d in _comingSoon()) {
       final String blurb = (d['blurb'] as String?) ?? '';
       if (!blocker.hasMatch(blurb)) silent.add(d['id'] as String);
     }
-    expect(silent, isEmpty,
-        reason: 'kapalı ama NEDEN kapalı olduğunu söylemeyen disiplin: '
-            '$silent');
+    expect(
+      silent,
+      isEmpty,
+      reason:
+          'kapalı ama NEDEN kapalı olduğunu söylemeyen disiplin: '
+          '$silent',
+    );
   });
 
   test('VAR OLMAYAN MEKANİZMA anlatılmıyor — "unlock" (J-124)', () {
@@ -190,16 +208,22 @@ void main() {
     // bakıyor, tanımlayıcılara değil.
     final List<String> hits = <String>[];
     final RegExp mech = RegExp(r'\bunlock', caseSensitive: false);
-    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       for (final String str in dartStrings(f.readAsStringSync())) {
         if (mech.hasMatch(str)) hits.add('${f.path}: "$str"');
       }
     }
-    expect(hits, isEmpty,
-        reason: 'kullanıcıya var olmayan bir kilit-açma mekanizması '
-            'anlatılıyor: ${hits.join(" · ")}. Böyle bir kapı yazılırsa bu '
-            'testin kapsamı da değişmeli — cümle ondan ÖNCE gelemez.');
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'kullanıcıya var olmayan bir kilit-açma mekanizması '
+          'anlatılıyor: ${hits.join(" · ")}. Böyle bir kapı yazılırsa bu '
+          'testin kapsamı da değişmeli — cümle ondan ÖNCE gelemez.',
+    );
   });
 
   test('İÇERİKTE geliştirici-sözleşmesi mekanizması anlatılmıyor (J-131)', () {
@@ -233,7 +257,9 @@ void main() {
     // Bu yüzden liste DAR ve KANITA dayalı: yalnız geliştirici-tarafı
     // doğrulama sözleşmesini adlandıran ifadeler.
     const List<String> devContract = <String>[
-      'progress gate', 'sessionMinutes', 'curriculum',
+      'progress gate',
+      'sessionMinutes',
+      'curriculum',
     ];
     final List<String> hits = <String>[];
     void walk(Object? node, String path) {
@@ -256,47 +282,35 @@ void main() {
         });
       }
     }
-    walk(
-        jsonDecode(File('assets/content/library.json').readAsStringSync()),
-        'library.json');
 
-    expect(hits, isEmpty,
-        reason: 'GELİŞTİRİCİ SÖZLEŞMESİ kullanıcı metnine sızdı — sayı '
-            'gerçek olabilir ama mekanizma kullanıcının GÖZLEYEBİLECEĞİ bir '
-            'şey değilse anlatılamaz (J-131): ${hits.join(" · ")}');
+    walk(
+      jsonDecode(File('assets/content/library.json').readAsStringSync()),
+      'library.json',
+    );
+
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'GELİŞTİRİCİ SÖZLEŞMESİ kullanıcı metnine sızdı — sayı '
+          'gerçek olabilir ama mekanizma kullanıcının GÖZLEYEBİLECEĞİ bir '
+          'şey değilse anlatılamaz (J-131): ${hits.join(" · ")}',
+    );
   });
 
-  test('FİYAT sabit yazılmıyor — "Pricing is not set." korunuyor (J-136)', () {
-    // ## Koruma denetiminin bulduğu tek boşluk
-    //
-    // Ayarlar sayfası *"Pricing is not set."* diyor. J-133'ün ölçütü:
-    // **bunu yanlışa çevirecek en makul değişiklik ne?** — IAP bağlanınca
-    // birinin fiyatı ekrana elle yazması. Kurucu kuralı zaten *"fiyat sabit
-    // yazılmaz"*, ama kuralı **hiçbir şey zorlamıyordu**.
-    //
-    // ## Neden LİTERAL taranıyor, ekran değil
-    //
-    // IAP bağlandığında mağazanın verdiği **yerelleştirilmiş fiyat dizesini**
-    // göstermek DOĞRUdur — kullanıcının para birimiyle, mağazadan gelen
-    // gerçek değer. Yanlış olan, fiyatı **kaynağa gömmek**: o an fiyat
-    // ülkeye, indirime ve mağaza kararına göre değişirken ekran sabit bir
-    // sayı gösterir. Bu yüzden kural kaynak literaline bakıyor; çalışma
-    // zamanı değeri kapsam DIŞI ve bu **kasıtlı**.
-    //
-    // ## ⚠️ NE ÖLÇMÜYOR
-    //
-    // * Çalışma zamanında gelen fiyatın **doğruluğunu**.
-    // * Fiyatın **içerik dosyalarından** gelmesini — bugün orada fiyat alanı
-    //   yok; eklenirse bu kapı genişletilmeli (sınıf: *ölçüm yöntemi*).
-    // * Sayısız ifade edilen bir fiyat vaadini (*"cheaper than a gym"*) —
-    //   o vaat dili kapısının konusu.
+  test('FİYAT kaynakta sabit yazılmıyor (J-136)', () {
+    // Kullanıcının para birimi ve gerçek teklif mağazadan gelir. Bu kaynak
+    // denetimi yerel mağaza teklifinin doğruluğunu ölçmez.
     final RegExp priceLiteral = RegExp(
-        r'[$€£₺]\s?\d|\d+[.,]\d{2}\s*(?:USD|EUR|GBP|TRY)\b|'
-        r'\d\s*(?:/\s*(?:mo|month|yr|year)|per\s+(?:month|year))',
-        caseSensitive: false);
+      r'[$€£₺]\s?\d|\d+[.,]\d{2}\s*(?:USD|EUR|GBP|TRY)\b|'
+      r'\d\s*(?:/\s*(?:mo|month|yr|year)|per\s+(?:month|year))',
+      caseSensitive: false,
+    );
     final List<String> hits = <String>[];
     int scanned = 0;
-    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       for (final String s in dartStrings(f.readAsStringSync())) {
         scanned++;
@@ -304,77 +318,72 @@ void main() {
       }
     }
     // VAKUM KAPISI: hiç dize taranmadıysa kural boşa döner.
-    expect(scanned, greaterThan(50),
-        reason: 'yalnız $scanned dize tarandı — tarama kendi girdisini '
-            'bulamamış olabilir');
-    expect(hits, isEmpty,
-        reason: 'FİYAT KAYNAĞA GÖMÜLMÜŞ. Ekran "Pricing is not set." diyor '
-            've fiyat ülkeye/indirime göre değişir — sabit sayı ikisini de '
-            'yalanlar. Mağazadan gelen yerelleştirilmiş dizeyi göster '
-            '(J-136): ${hits.join(" · ")}');
+    expect(
+      scanned,
+      greaterThan(50),
+      reason:
+          'yalnız $scanned dize tarandı — tarama kendi girdisini '
+          'bulamamış olabilir',
+    );
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'FİYAT KAYNAĞA GÖMÜLMÜŞ. Fiyat ülkeye ve mağaza teklifine '
+          'göre değişir. Mağazadan gelen yerelleştirilmiş dizeyi göster '
+          '(J-136): ${hits.join(" · ")}',
+    );
   });
 
-  test('NEGATİF İKİZ — korunan CÜMLE hâlâ ekranda (J-136)', () {
-    // Yukarıdaki kapı, cümle tamamen kaldırılırsa da yeşil öterdi: fiyat
-    // literali yok çünkü fiyattan hiç söz edilmiyor. O zaman kapı bir
-    // iddiayı değil, bir SESSİZLİĞİ korurdu.
-    final String settings = File('lib/app/settings_page.dart').readAsStringSync();
-    expect(settings, contains('Pricing is not set.'),
-        reason: 'korunan cümle ayarlar sayfasından kalkmış — kapı artık bir '
-            'iddiayı değil bir sessizliği koruyor olabilir');
-    expect(settings, isNot(contains('not set yet')),
-        reason: '"yet" bir zaman taahhüdü (M-F-186) — donmuş ağaçtaki eski '
-            'biçim canlı sayfaya sızmış olabilir');
+  test('MAĞAZA FİYATLARI için hesap yönlendirmesi korunuyor (J-136)', () {
+    final String settings = File(
+      'lib/app/settings_page.dart',
+    ).readAsStringSync();
+    expect(
+      settings,
+      contains('Monthly and yearly prices appear in Motion account.'),
+      reason: 'mağaza fiyatına giden kullanıcı yönlendirmesi kalkmış',
+    );
+    expect(
+      settings,
+      isNot(contains('not set yet')),
+      reason:
+          '"yet" bir zaman taahhüdü (M-F-186) — donmuş ağaçtaki eski '
+          'biçim canlı sayfaya sızmış olabilir',
+    );
   });
 
-  test('PLAN HİYERARŞİSİ iddia edilmiyor — ne IAP var ne ikinci plan (J-152)',
-      () {
-    // ## Yapısal vaadin üçüncü biçimi: BİR HİYERARŞİ
-    //
-    // Ayarlar `SUBSCRIPTION` başlığı + `FREE PLAN` rozeti taşıyordu. İkisi
-    // birlikte bir **plan sistemi** iddia ediyordu — *"free olan varsa
-    // başkası da vardır"*. Ölçüm: **ne IAP var ne ikinci plan.** J-124'ün
-    // sınıfı (üretici yok, beyan onu anlatıyor) ve J-150'nin kardeşi (vaat
-    // sözcükte değil **yapıda**).
-    //
-    // Ve ikisi altındaki DÜRÜST cümleyi de zehirliyordu: *"Pricing is not
-    // set"* tek başına dürüsttü; hiyerarşiyle okununca *"fiyatlandırma
-    // geliyor"* oluyordu. **Doğru bir cümle, yanlış bir çerçevede yanlış
-    // okunuyor.**
-    //
-    // ⚠️ NE ÖLÇMÜYOR: yeni bir plan-adı sözcüğü (`tier`, `premium`,
-    // `upgrade`) — liste dar ve kanıta dayalı; IAP gerçekten geldiğinde bu
-    // kapı GÜNCELLENMELİ, gevşetilmemeli.
-    const List<String> planWords = <String>[
-      'SUBSCRIPTION', 'FREE PLAN', 'Free plan', 'PREMIUM', 'UPGRADE',
-      // J-155: kademe SÖZCÜKLERİ kaldırılmıştı ama kademe ADI kalmıştı —
-      // `Full corner` (*'tam' olan varsa eksik olan da vardır*), ve o ad
-      // başka hiçbir yerde geçmiyordu. Aynı iddia, bir satır yukarıda.
-      'Full corner',
+  test('ESKİ ÜCRETSİZ ERİŞİM BEYANLARI geri gelmiyor (J-152)', () {
+    const List<String> staleClaims = <String>[
+      'NO PAYWALL',
+      'Available lessons are free',
+      'Pricing is not set.',
+      'You can train without signing in',
     ];
     final String src = File('lib/app/settings_page.dart').readAsStringSync();
-    final List<String> hits = <String>[];
-    for (final String s in dartStrings(src)) {
-      for (final String w in planWords) {
-        if (s.contains(w)) hits.add('"$s" ← "$w"');
-      }
+    for (final claim in staleClaims) {
+      expect(
+        dartStrings(src).any((s) => s.contains(claim)),
+        isFalse,
+        reason: 'eski ücretsiz erişim iddiası geri geldi: $claim',
+      );
     }
-    expect(hits, isEmpty,
-        reason: 'PLAN HİYERARŞİSİ iddiası: ${hits.join(" · ")}. Bugün ne '
-            'IAP var ne ikinci plan; bir plan adı, olmayan bir sistemi '
-            'beyan eder (J-152)');
   });
 
-  test('NEGATİF İKİZ — ödeme durumu HÂLÂ beyan ediliyor (J-152)', () {
-    // Plan sözcüklerini yasaklamak, bölümün tamamen susmasını da geçerli
-    // sayardı — ve o zaman kapı bir iddiayı değil **bir sessizliği**
-    // korurdu. Ödeme durumu SÖYLENMELİ; söylenmemesi de bir belirsizlik.
+  test('CANLI KAPSAM ve üyelik şartı söyleniyor (J-152)', () {
     final String src = File('lib/app/settings_page.dart').readAsStringSync();
-    expect(src, contains('Pricing is not set.'),
-        reason: 'fiyat beyanı kalkmış');
-    expect(src, contains('behind a payment'),
-        reason: 'ödeme duvarı olmadığı beyanı kalkmış — kapı plan '
-            'sözcüklerini yasaklarken bölümü susturmuş olabilir');
+    expect(
+      src,
+      contains(
+        'Live jab, cross, and stance practice requires a Motion account',
+      ),
+      reason: 'bugünkü canlı kapsam veya Motion hesabı şartı eksik',
+    );
+    expect(
+      src,
+      contains('JabLab or Motion+ membership'),
+      reason: 'uygulama ve aile üyeliği ayrımı eksik',
+    );
   });
 
   test('KİLİTLİ ders içeren KURSUN hedefi bunu söylüyor (J-132)', () {
@@ -405,12 +414,11 @@ void main() {
     //   (`tempo control`). Anlam işi, mekanikleştirilemez — sınıfı
     //   **imkânsız**, ve bu yüzden kovalanmıyor.
     // * **Gerekçenin KALİTESİNİ**: işareti taşımak yeterli sayılıyor.
-    const List<String> limitMarkers = <String>[
-      'locked', 'not open', 'closed',
-    ];
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
+    const List<String> limitMarkers = <String>['locked', 'not open', 'closed'];
+    final Map<String, dynamic> lib =
+        (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
     final List<String> hits = <String>[];
     int coursesWithLocks = 0;
     for (final dynamic d in lib['disciplines'] as List<dynamic>) {
@@ -426,19 +434,29 @@ void main() {
         coursesWithLocks++;
         final String goal = (course['goal'] as String? ?? '').toLowerCase();
         if (!limitMarkers.any(goal.contains)) {
-          hits.add('${course['id']}: ${locked.length}/${lessons.length} ders '
-              'kilitli ama hedef bunu SÖYLEMİYOR → "${course['goal']}"');
+          hits.add(
+            '${course['id']}: ${locked.length}/${lessons.length} ders '
+            'kilitli ama hedef bunu SÖYLEMİYOR → "${course['goal']}"',
+          );
         }
       }
     }
     // VAKUM KAPISI: kilitli dersi olan kurs hiç bulunamazsa kural boşa döner
     // ve kapı sessizce geçer (aile dersi #4).
-    expect(coursesWithLocks, greaterThan(0),
-        reason: 'kilitli ders içeren kurs bulunamadı — kapı kendi girdisini '
-            'bulamamış olabilir');
-    expect(hits, isEmpty,
-        reason: 'KURS HEDEFİ açılamayan bir kursu açılabilir gibi tarif '
-            'ediyor: ${hits.join(" · ")}');
+    expect(
+      coursesWithLocks,
+      greaterThan(0),
+      reason:
+          'kilitli ders içeren kurs bulunamadı — kapı kendi girdisini '
+          'bulamamış olabilir',
+    );
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'KURS HEDEFİ açılamayan bir kursu açılabilir gibi tarif '
+          'ediyor: ${hits.join(" · ")}',
+    );
   });
 
   test('NEGATİF İKİZ — kilitsiz kurstan CAVEAT İSTENMİYOR (J-132)', () {
@@ -446,9 +464,10 @@ void main() {
     // `foundations` ve `conditioning` kırmızıya döner — oysa oralarda
     // kilitli ders YOK ve söylenecek bir sınır da yok. **Olmayan bir
     // sınırı beyan etmek, dürüstlük değil gürültüdür.**
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
+    final Map<String, dynamic> lib =
+        (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
     final List<String> clean = <String>[];
     for (final dynamic d in lib['disciplines'] as List<dynamic>) {
       for (final dynamic c
@@ -465,33 +484,47 @@ void main() {
         }
       }
     }
-    expect(clean, isNotEmpty,
-        reason: 'kilitsiz her kurs da sınır işareti taşıyor — kapı fazla '
-            'genişlemiş ve olmayan bir sınırı beyan ettiriyor olabilir');
+    expect(
+      clean,
+      isNotEmpty,
+      reason:
+          'kilitsiz her kurs da sınır işareti taşıyor — kapı fazla '
+          'genişlemiş ve olmayan bir sınırı beyan ettiriyor olabilir',
+    );
   });
 
-  test('NEGATİF İKİZ — kapı FAZLA GENİŞ değil: gözlenebilir mekanizma DURUYOR',
-      () {
-    // Bu ikiz alışılmışın tersini koruyor. Normalde ikiz *"düzeltme
-    // kaldırılırsa kırılır mı"* diye sorar; bu ikiz **kapının kendisi fazla
-    // genişlerse** kırılır.
-    //
-    // Somut risk: bir sonraki tur *"gate kelimesini tamamen yasaklayalım"*
-    // diyebilir. O an `muay_thai`in *"our confidence gate already refuses
-    // to judge"* cümlesi ölür — oysa o mekanizma ÇALIŞIYOR ve kullanıcı
-    // sonucunu ekranda görüyor. Onu silmek, çalışan bir dürüstlüğü
-    // kelimenin biçimi yüzünden kaybetmek olurdu.
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
-    final String muay = ((lib['disciplines'] as List<dynamic>)
-            .firstWhere((dynamic d) => (d as Map)['id'] == 'muay_thai')
-        as Map)['blurb'] as String;
-    expect(muay.toLowerCase(), contains('confidence gate'),
-        reason: 'gözlenebilir bir mekanizmanın adı içerikten kalkmış — '
+  test(
+    'NEGATİF İKİZ — kapı FAZLA GENİŞ değil: gözlenebilir mekanizma DURUYOR',
+    () {
+      // Bu ikiz alışılmışın tersini koruyor. Normalde ikiz *"düzeltme
+      // kaldırılırsa kırılır mı"* diye sorar; bu ikiz **kapının kendisi fazla
+      // genişlerse** kırılır.
+      //
+      // Somut risk: bir sonraki tur *"gate kelimesini tamamen yasaklayalım"*
+      // diyebilir. O an `muay_thai`in *"our confidence gate already refuses
+      // to judge"* cümlesi ölür — oysa o mekanizma ÇALIŞIYOR ve kullanıcı
+      // sonucunu ekranda görüyor. Onu silmek, çalışan bir dürüstlüğü
+      // kelimenin biçimi yüzünden kaybetmek olurdu.
+      final Map<String, dynamic> lib =
+          (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                  as Map)
+              .cast<String, dynamic>();
+      final String muay =
+          ((lib['disciplines'] as List<dynamic>).firstWhere(
+                    (dynamic d) => (d as Map)['id'] == 'muay_thai',
+                  )
+                  as Map)['blurb']
+              as String;
+      expect(
+        muay.toLowerCase(),
+        contains('confidence gate'),
+        reason:
+            'gözlenebilir bir mekanizmanın adı içerikten kalkmış — '
             'kapı fazla genişlemiş olabilir. J-131 ölçütü kelimeye değil '
-            'MEKANİZMANIN GÖZLENEBİLİRLİĞİNE bakar');
-  });
+            'MEKANİZMANIN GÖZLENEBİLİRLİĞİNE bakar',
+      );
+    },
+  );
 
   test('İTHAL EDİLEN kabuk sınıflarında VAAT DİLİ YOK (J-123)', () {
     // ## Kategori düzeltmesi: "donmuş" konum değil, ERİŞİM
@@ -515,9 +548,13 @@ void main() {
     // çevirir (ders #5'in test tarafı, J-120'de bir kez ödendi). Bu yüzden
     // kapsam SINIFA iniyor: `show` varsa yalnız o sınıfların gövdesi.
     final Map<String, Set<String>?> imported = _importedShellFiles();
-    expect(imported, isNotEmpty,
-        reason: 'app donmuş ağaçtan hiçbir şey ithal etmiyor görünüyor — '
-            'tarama kendi girdisini bulamamış, kapı vakum-doğru');
+    expect(
+      imported,
+      isNotEmpty,
+      reason:
+          'app donmuş ağaçtan hiçbir şey ithal etmiyor görünüyor — '
+          'tarama kendi girdisini bulamamış, kapı vakum-doğru',
+    );
 
     final List<String> live = <String>[];
     imported.forEach((String file, Set<String>? shown) {
@@ -535,10 +572,14 @@ void main() {
       }
     });
 
-    expect(live, isEmpty,
-        reason: 'KULLANICIYA GÖRÜNEN vaat dili: ${live.join(" · ")}\n'
-            'Bu dosya donmuş ağaçta olabilir ama app onu İTHAL EDİYOR — '
-            'konum freeze verir, erişim vermez.');
+    expect(
+      live,
+      isEmpty,
+      reason:
+          'KULLANICIYA GÖRÜNEN vaat dili: ${live.join(" · ")}\n'
+          'Bu dosya donmuş ağaçta olabilir ama app onu İTHAL EDİYOR — '
+          'konum freeze verir, erişim vermez.',
+    );
   });
 
   test('ERİŞİLEMEZ kabuk borcu SESSİZ DEĞİL — sayı ölçülü', () {
@@ -548,8 +589,9 @@ void main() {
     // devraldığını bilsin.
     final Map<String, Set<String>?> imported = _importedShellFiles();
     int unreachable = 0;
-    for (final FileSystemEntity f
-        in Directory('lib/shell_candidate').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib/shell_candidate',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       final String name = f.uri.pathSegments.last;
       final String src = f.readAsStringSync();
@@ -567,9 +609,13 @@ void main() {
         unreachable += dartStrings(body).where(promise.hasMatch).length;
       });
     }
-    expect(unreachable, lessThanOrEqualTo(5),
-        reason: 'erişilemez kabuk borcu ARTTI ($unreachable) — donmuş bir '
-            'ağaca yeni ihlal eklenmiş olamaz, biri dosyayı değiştirdi');
+    expect(
+      unreachable,
+      lessThanOrEqualTo(5),
+      reason:
+          'erişilemez kabuk borcu ARTTI ($unreachable) — donmuş bir '
+          'ağaca yeni ihlal eklenmiş olamaz, biri dosyayı değiştirdi',
+    );
   });
 }
 
@@ -615,20 +661,22 @@ List<String> _userText(Object? node) {
 Map<String, Set<String>?> _importedShellFiles() {
   final Map<String, Set<String>?> out = <String, Set<String>?>{};
   final RegExp imp = RegExp(
-      r"""^\s*import\s+'[^']*shell_candidate/([a-z_]+\.dart)'([^;]*);""",
-      multiLine: true);
+    r"""^\s*import\s+'[^']*shell_candidate/([a-z_]+\.dart)'([^;]*);""",
+    multiLine: true,
+  );
   final List<File> sources = <File>[
     File('lib/main.dart'),
-    ...Directory('lib/app')
-        .listSync()
-        .whereType<File>()
-        .where((File f) => f.path.endsWith('.dart')),
+    ...Directory(
+      'lib/app',
+    ).listSync().whereType<File>().where((File f) => f.path.endsWith('.dart')),
   ];
   for (final File f in sources) {
     for (final RegExpMatch m in imp.allMatches(f.readAsStringSync())) {
       final String file = m.group(1)!;
       final String tail = m.group(2)!;
-      final RegExpMatch? show = RegExp(r'show\s+([A-Za-z0-9_,\s]+)').firstMatch(tail);
+      final RegExpMatch? show = RegExp(
+        r'show\s+([A-Za-z0-9_,\s]+)',
+      ).firstMatch(tail);
       final Set<String>? names = show
           ?.group(1)!
           .split(',')
@@ -654,8 +702,10 @@ Map<String, Set<String>?> _importedShellFiles() {
 /// derleyicilik değil, KAPSAM belirlemek.
 Map<String, String> _classBodies(String source) {
   final Map<String, String> out = <String, String>{};
-  final RegExp head = RegExp(r'^(?:abstract\s+|final\s+|sealed\s+)*class\s+(\w+)',
-      multiLine: true);
+  final RegExp head = RegExp(
+    r'^(?:abstract\s+|final\s+|sealed\s+)*class\s+(\w+)',
+    multiLine: true,
+  );
   for (final RegExpMatch m in head.allMatches(source)) {
     final int braceStart = source.indexOf('{', m.end);
     if (braceStart < 0) continue;

@@ -4,6 +4,7 @@ import 'package:motion_core/motion_core.dart' show Lm, PoseLandmark;
 import '../shell_candidate/live_surface.dart' show LiveState;
 import 'design_tokens.dart';
 import 'live_honesty.dart';
+import 'ui_language.dart';
 
 /// Canlı seansın önizleme yuvası — `LiveCoachSurface.preview`e verilir.
 ///
@@ -149,10 +150,14 @@ class _CameraPlaceholder extends StatelessWidget {
                 // `LiveCoachSurface.noVerdictReason` zaten söylüyor ve iki
                 // yüzeyin aynı sebebi iki farklı cümleyle anlatması
                 // J-047'nin elle-kopyalanmış listesi sınıfına girerdi.
-                analysisRunning
-                    ? 'Camera preview is left out on purpose — analysis runs '
-                          'without it'
-                    : 'Camera preview is left out on purpose',
+                UiLanguage.isTurkish(context)
+                    ? (analysisRunning
+                        ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
+                        : 'Kamera önizlemesi bilerek gösterilmiyor.')
+                    : (analysisRunning
+                        ? 'Camera preview is left out on purpose — analysis runs '
+                            'without it'
+                        : 'Camera preview is left out on purpose'),
                 key: const Key('camera-preview-placeholder'),
                 textAlign: TextAlign.center,
                 // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin

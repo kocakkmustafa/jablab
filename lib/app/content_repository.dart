@@ -5,6 +5,7 @@ import 'package:flutter/services.dart' show ByteData, rootBundle;
 import 'package:path_provider/path_provider.dart';
 
 import 'content_failure.dart';
+import 'account_bridge.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
 import 'pose_model.dart';
@@ -21,7 +22,14 @@ import '../shell_candidate/shell_models.dart';
 /// `motion_shell`'e terfi ettiğinde boks kural motorunu da beraberinde
 /// taşırdı. Alan → kabuk dönüşümü **yalnız burada** olur.
 final class ContentRepository {
-  const ContentRepository({this.storeOverride, this.loadStringOverride});
+  const ContentRepository({
+    this.storeOverride,
+    this.loadStringOverride,
+    this.historyDirectoryOverride,
+  });
+
+  /// Filesystem seam for account journal tests; production uses app support.
+  final Directory? historyDirectoryOverride;
 
   /// Asset okuma dikişi — YALNIZ test için, `storeOverride` ile aynı gerekçe.
   ///
@@ -123,11 +131,12 @@ final class ContentRepository {
   /// `path_provider` yalnız uygulama-özel dizini bulmak için; depolama
   /// biçiminin kendisi uygulamada (append-only JSONL). Üçüncü-taraf DB
   /// bilerek yok — sorgu ihtiyacı ÖLÇÜLDÜĞÜNDE gelir.
-  Future<SessionStore> openStore() async {
+  Future<SessionStore> openStore({String? accountUserId}) async {
     final SessionStore? injected = storeOverride;
     if (injected != null) return injected;
-    final Directory dir = await getApplicationSupportDirectory();
-    return JsonlSessionStore(File('${dir.path}/sessions.jsonl'));
+    final Directory dir =
+        historyDirectoryOverride ?? await getApplicationSupportDirectory();
+    return JsonlSessionStore(sessionFileFor(dir, accountUserId));
   }
 
   /// Bir dersin tur planını alan kütüphanesinden arar (J-063).

@@ -41,19 +41,25 @@ class _ShellScaffoldState extends State<ShellScaffold> {
         onDestinationSelected: (int i) => setState(() => _index = i),
         destinations: const <NavigationDestination>[
           NavigationDestination(
-              key: Key('tab-home'), icon: Icon(Icons.today), label: 'Today'),
+            key: Key('tab-home'),
+            icon: Icon(Icons.today),
+            label: 'Today',
+          ),
           NavigationDestination(
-              key: Key('tab-library'),
-              icon: Icon(Icons.grid_view),
-              label: 'Library'),
+            key: Key('tab-library'),
+            icon: Icon(Icons.grid_view),
+            label: 'Library',
+          ),
           NavigationDestination(
-              key: Key('tab-progress'),
-              icon: Icon(Icons.show_chart),
-              label: 'Progress'),
+            key: Key('tab-progress'),
+            icon: Icon(Icons.show_chart),
+            label: 'Progress',
+          ),
           NavigationDestination(
-              key: Key('tab-profile'),
-              icon: Icon(Icons.person_outline),
-              label: 'Profile'),
+            key: Key('tab-profile'),
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
         ],
       ),
     );
@@ -130,38 +136,46 @@ class ProgressPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                'Scores are shown as bands until the thresholds are calibrated '
-                'on real recordings. A precise-looking number we cannot back up '
-                'would be worse than no number.',
+                'Scores are unavailable because the thresholds have not been '
+                'calibrated on real recordings. A precise-looking number we '
+                'cannot back up would be worse than no number.',
                 key: const Key('bands-only-note'),
                 style: theme.textTheme.bodySmall,
               ),
             ),
           ),
-        ...bands.entries.map((MapEntry<String, String> e) => ListTile(
-              key: Key('band-${e.key}'),
-              title: Text(e.key),
-              trailing: Text(e.value, style: theme.textTheme.titleSmall),
-            )),
+        ...bands.entries.map(
+          (MapEntry<String, String> e) => ListTile(
+            key: Key('band-${e.key}'),
+            title: Text(e.key),
+            trailing: Text(e.value, style: theme.textTheme.titleSmall),
+          ),
+        ),
         // Geçmiş okunamadığında bölüm YİNE çizilir — sayısız. Onu gizlemek,
         // hiç çalışmamış kullanıcının ekranıyla aynı şeyi göstermek olurdu.
         if (historyUnavailable != null) ...<Widget>[
           const Divider(height: 32),
-          Text('What we recorded',
-              key: const Key('recorded-heading'),
-              style: theme.textTheme.titleSmall),
+          Text(
+            'What we recorded',
+            key: const Key('recorded-heading'),
+            style: theme.textTheme.titleSmall,
+          ),
           const SizedBox(height: 4),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(historyUnavailable!,
-                key: const Key('recorded-unavailable'),
-                style: theme.textTheme.bodySmall),
+            child: Text(
+              historyUnavailable!,
+              key: const Key('recorded-unavailable'),
+              style: theme.textTheme.bodySmall,
+            ),
           ),
         ] else if (recorded.isNotEmpty) ...<Widget>[
           const Divider(height: 32),
-          Text('What we recorded',
-              key: const Key('recorded-heading'),
-              style: theme.textTheme.titleSmall),
+          Text(
+            'What we recorded',
+            key: const Key('recorded-heading'),
+            style: theme.textTheme.titleSmall,
+          ),
           const SizedBox(height: 4),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -184,23 +198,29 @@ class ProgressPage extends StatelessWidget {
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(historyIncomplete!,
-                  key: const Key('recorded-incomplete'),
-                  style: theme.textTheme.bodySmall),
+              child: Text(
+                historyIncomplete!,
+                key: const Key('recorded-incomplete'),
+                style: theme.textTheme.bodySmall,
+              ),
             ),
           ],
-          ...recorded.entries.map((MapEntry<String, String> e) => ListTile(
-                key: Key('recorded-${e.key}'),
-                title: Text(e.key),
-                trailing: Text(e.value, style: theme.textTheme.titleSmall),
-              )),
+          ...recorded.entries.map(
+            (MapEntry<String, String> e) => ListTile(
+              key: Key('recorded-${e.key}'),
+              title: Text(e.key),
+              trailing: Text(e.value, style: theme.textTheme.titleSmall),
+            ),
+          ),
           if (recordedNote != null)
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Text(recordedNote!,
-                    key: const Key('recorded-note'),
-                    style: theme.textTheme.bodySmall),
+                child: Text(
+                  recordedNote!,
+                  key: const Key('recorded-note'),
+                  style: theme.textTheme.bodySmall,
+                ),
               ),
             ),
         ],
@@ -218,21 +238,18 @@ class PaywallStub extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text('Subscription',
-                  style: Theme.of(context).textTheme.titleSmall),
-              const SizedBox(height: 6),
-              Text(freeUntil,
-                  style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(height: 6),
-              const Text('Pricing is not set yet.',
-                  key: Key('pricing-not-set')),
-            ],
-          ),
-        ),
-      );
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Subscription', style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: 6),
+          Text(freeUntil, style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: 6),
+          const Text('Pricing is not set yet.', key: Key('pricing-not-set')),
+        ],
+      ),
+    ),
+  );
 }

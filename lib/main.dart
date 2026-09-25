@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motion_account/motion_account.dart';
 
+import 'app/account_bridge.dart';
 import 'app/jablab_app.dart';
 
 /// PORTRE KİLİDİ (J-109, koordinatör hükmü 2026-08-07).
@@ -28,7 +30,37 @@ import 'app/jablab_app.dart';
 /// aynı olması, "kilit var" cümlesinin her katmanda doğru olması demek.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-      <DeviceOrientation>[DeviceOrientation.portraitUp]);
-  runApp(const JabLabApp());
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+  ]);
+  final MotionAccountRuntime runtime = await MotionAccountRuntime.initialize(
+    url: const String.fromEnvironment('MOTION_SUPABASE_URL'),
+    publishableKey: const String.fromEnvironment(
+      'MOTION_SUPABASE_PUBLISHABLE_KEY',
+    ),
+    app: MotionApp.jablab,
+    emailRedirectTo: 'com.yulalab.jablab://auth/callback',
+    onDeletedAccount: clearLocalHistoryFor,
+    localAccountIds: localHistoryAccountIds,
+  );
+  Widget accountPage(BuildContext _) => MotionAccountPage(
+    account: runtime.account,
+    onRetryIdentity: runtime.refreshIdentity,
+    initialPasswordRecovery: runtime.isPasswordRecovery,
+    clearLocalData: clearLocalHistoryFor,
+  );
+  runApp(
+    MotionIdentityGate(
+      runtime: runtime,
+      child: JabLabApp(
+        accountUserId: runtime.userId,
+        accountPageBuilder: accountPage,
+        beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
+          lessonContext,
+          account: runtime.account,
+          accountPageBuilder: accountPage,
+        ),
+      ),
+    ),
+  );
 }
