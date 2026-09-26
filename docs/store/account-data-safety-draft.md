@@ -10,6 +10,51 @@ doğrulanacak; bu dosya konsolda onaylanmış nihai beyan değildir.
 Mevcut ilk kurs, yerel ilerleme ve native izin dosyaları kontrol edildi.
 Mağaza formlarının final paket/SDK ve sağlayıcı kabulü ayrıca yapılır.
 
+## Sağlayıcı günlükleri ve kimlik doğrulama — 2026-09-27
+
+Üretim sağlayıcısının 2026-09-26 21:36 UTC tarihli salt okunur alan/sayı
+makbuzu, cihaz dışındaki Auth ve edge günlüklerinin saklandığını doğrular.
+Ölçüm anına kadar dönen örnekte edge günlüklerinin 6/6 kaydında IP, user-agent ve
+ülke/bölge/şehir alanları; Auth günlüklerinin 6/6 kaydında IP ve 2/6 kaydında
+hesap kimliği; ayrı Auth audit deposunun 1/1 kaydında kimlik ve user-agent
+vardır. Veritabanındaki `auth.audit_log_entries` satır sayısının sıfır olması,
+[ayrı Auth günlük deposunun](https://supabase.com/docs/guides/auth/audit-logs)
+boş olduğu anlamına gelmez. Ham IP, kimlik, parola veya günlük içeriği bu
+belgeye alınmamıştır. Makbuz ortak servise aittir; her uygulamada yeni bir
+canlı ağ oturumu ölçüldüğü iddiası değildir.
+
+| Sunucuda saklanan veri | Apple manifest türü | Amaç ve bağlantı |
+|---|---|---|
+| IP, user-agent, istemci platform/sürüm bilgisi ve Auth/istek güvenlik günlükleri | `NSPrivacyCollectedDataTypeOtherDiagnosticData` | İşletim, güvenlik ve teknik tanılama; App Functionality, kullanıcıya bağlı, tracking yok |
+| Edge isteğine eklenen IP tabanlı ülke/bölge/şehir | `NSPrivacyCollectedDataTypeCoarseLocation` | Aynı hizmetin işletim/güvenlik kaydı; App Functionality, kullanıcıya bağlı, tracking yok; GPS veya kesin konum izni değildir |
+| Parola kimlik doğrulama verisi ve saklanan parola hash'i | `NSPrivacyCollectedDataTypeOtherDataTypes` | Hesap doğrulama; App Functionality, kullanıcıya bağlı, tracking yok |
+
+[Supabase Auth](https://supabase.com/docs/guides/auth/password-security)
+parolanın bcrypt hash'ini `auth.users.encrypted_password` alanında tutar;
+parola uygulamanın kurs/seans geçmişine yazılmaz. Apple parola için ayrı
+bir tür adlandırmadığından **Other Data Types eşlemesi bu projede yapılan
+bir sınıflandırma çıkarımıdır**. Kullanıcı kimliğinin tek yönlü özetiyle
+tutulan hesap silme makbuzu da güvenlik/hesap verisidir; hash olması tek
+başına anonim veri olduğu anlamına gelmez. IP ve hesap ilişkisinin toplama
+öncesinde kaldırıldığı kanıtlanmadığından bu üç tür `Linked=true` beyan edilir.
+
+Manifest artık e-posta, isteğe bağlı ad, kullanıcı ID'si ve bu üç türden
+oluşan **altı** collected-data kaydı taşır. Hepsinde
+`NSPrivacyCollectedDataTypePurposeAppFunctionality`, `Linked=true` ve
+`Tracking=false` vardır. Bu, davranış analitiği veya reklam amacı eklendiği
+anlamına gelmez. Kamera/kareler, cihazda kalan kurs ilerlemesi ve seans
+geçmişi için collection beyanı eklenmez; Ostinato'nun isteğe bağlı ham sesi
+de yalnız cihazdaki sınırlı RAM'de kalır. Diğer dört uygulama mikrofon
+kullanmaz. Sunucu günlükleri, cihaz içi geçici işleme ile aynı şey değildir.
+
+[Apple collection ve kullanım tanımları](https://developer.apple.com/app-store/app-privacy-details/)
+ve [manifest tür/anahtarları](https://developer.apple.com/documentation/bundleresources/describing-data-use-in-privacy-manifests)
+bu ayrımın temelidir. Apple manifestinin güncellenmesi App Store Connect
+veya Play Data safety formunun girildiği/onaylandığı anlamına gelmez.
+Play kategorileri kendi form tanımlarıyla ayrıca eşleştirilir. Sağlayıcı
+saklama süreleri, günlüklerin silme/erişim politikası, gerçek hesap silme
+akışı ve son paket/SDK gizlilik raporu ayrı kabul kapılarıdır.
+
 | Veri | Mevcut hesap tasarımı | Beyan adayı |
 |---|---|---|
 | E-posta | Kayıt, giriş, doğrulama ve parola kurtarma için Supabase Auth'a gönderilir | Apple: `NSPrivacyCollectedDataTypeEmailAddress`; Play: Personal info / Email address; hesaba bağlı, uygulama işlevi |
@@ -21,7 +66,7 @@ Mağaza formlarının final paket/SDK ve sağlayıcı kabulü ayrıca yapılır.
 | Seans geçmişi | Kullanıcıya ayrılmış yerel JSONL dosyasında kalır; guest geçmişi girişte devralınmaz | Sunucuya aktarılmadığı sürece Apple/Play “collected” tanımına girmez; manifestte yerel geçmiş için ayrı collected data türü yoktur |
 | Mikrofon/ses | İlk kurs mikrofon kullanmaz; iOS mikrofon gerekçesi ve Android `RECORD_AUDIO` yoktur | Ses collected beyanı yoktur; Ostinato'nun isteğe bağlı mikrofon kararı JabLab'a uygulanmaz |
 
-Kaynakta iOS `PrivacyInfo.xcprivacy` üç Apple hesap veri tipini `Linked=true`, `Tracking=false`, `PurposeAppFunctionality` ile beyan eder; Android INTERNET ve exact `com.yulalab.jablab://auth/callback` kaydı var. Tracking false kalır. Mikrofon API'si kullanılmadığı sürece mikrofon izni eklenmez. Supabase ve native eklentilerin birleşik Xcode privacy raporu, Android manifest merge ve gerçek mağaza formları ayrı release kapısıdır. Hesap silme uzakta başarılı olduktan sonra yalnız ilgili kullanıcıya ait yerel seans dosyası silinir; sunucu hatasında yerel dosya korunur.
+Kaynakta iOS `PrivacyInfo.xcprivacy` altı hesap/sağlayıcı veri tipini `Linked=true`, `Tracking=false`, `PurposeAppFunctionality` ile beyan eder; Android INTERNET ve exact `com.yulalab.jablab://auth/callback` kaydı var. Tracking false kalır. Mikrofon API'si kullanılmadığı sürece mikrofon izni eklenmez. Supabase ve native eklentilerin birleşik Xcode privacy raporu, Android manifest merge ve gerçek mağaza formları ayrı release kapısıdır. Hesap silme uzakta başarılı olduktan sonra yalnız ilgili kullanıcıya ait yerel seans dosyası silinir; sunucu hatasında yerel dosya korunur.
 
 2026-09-26 kontrolde `account_bridge.dart` hesap silmede yerel kurs JSON'unu
 ve seans JSONL'ini birlikte kapsar. Çözümlenen `motion_account` paketindeki
