@@ -335,14 +335,16 @@ void main() {
     );
   });
 
-  test('MAĞAZA FİYATLARI için hesap yönlendirmesi korunuyor (J-136)', () {
+  test('KAPALI SATIŞ mağaza fiyatı mevcutmuş gibi sunulmuyor (J-136)', () {
     final String settings = File(
       'lib/app/settings_page.dart',
     ).readAsStringSync();
     expect(
       settings,
-      contains('Monthly and yearly prices appear in Motion account.'),
-      reason: 'mağaza fiyatına giden kullanıcı yönlendirmesi kalkmış',
+      contains(
+        'Subscription sales are closed in this release. No purchase is needed for the course.',
+      ),
+      reason: 'kapalı satış ve kursun satın alma gerektirmemesi belirtilmeli',
     );
     expect(
       settings,
@@ -370,19 +372,19 @@ void main() {
     }
   });
 
-  test('CANLI KAPSAM ve üyelik şartı söyleniyor (J-152)', () {
+  test('GÜNCEL KURS kapsamı ve kapalı canlı seans söyleniyor (J-152)', () {
     final String src = File('lib/app/settings_page.dart').readAsStringSync();
     expect(
       src,
-      contains(
-        'Live jab, cross, and stance practice requires a Motion account',
-      ),
-      reason: 'bugünkü canlı kapsam veya Motion hesabı şartı eksik',
+      contains('Practise the solo boxing course without an account or camera'),
+      reason: 'bugünkü misafir kurs kapsamı eksik',
     );
     expect(
       src,
-      contains('JabLab or Motion+ membership'),
-      reason: 'uygulama ve aile üyeliği ayrımı eksik',
+      contains(
+        'Live camera sessions and subscription sales are closed in this release',
+      ),
+      reason: 'kapalı canlı seans üyelikle erişilebilir gösterilmemeli',
     );
   });
 

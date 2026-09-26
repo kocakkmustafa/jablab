@@ -96,11 +96,7 @@ class SettingsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          UiLanguage.text(
-                            context,
-                            en: 'MEMBERSHIP',
-                            tr: 'ÜYELİK',
-                          ),
+                          UiLanguage.text(context, en: 'COURSE', tr: 'KURS'),
                           style: JText.label.copyWith(
                             color: JColors.ink2,
                             letterSpacing: 1,
@@ -113,8 +109,8 @@ class SettingsPage extends StatelessWidget {
                   Text(
                     UiLanguage.text(
                       context,
-                      en: 'Live training access',
-                      tr: 'Canlı antrenman erişimi',
+                      en: 'Solo boxing course',
+                      tr: 'Solo boks kursu',
                     ),
                     style: JText.pageTitle.copyWith(
                       fontSize: 28,
@@ -125,8 +121,8 @@ class SettingsPage extends StatelessWidget {
                   Text(
                     UiLanguage.text(
                       context,
-                      en: 'Live jab, cross, and stance practice requires a Motion account and an active JabLab or Motion+ membership. Other lessons remain closed for the measurement reason shown on each lesson.',
-                      tr: 'Canlı jab, cross ve duruş pratiği için Motion hesabı ve aktif JabLab veya Motion+ üyeliği gerekir. Diğer dersler, her derste gösterilen ölçüm gerekçesiyle kapalıdır.',
+                      en: 'Practise the solo boxing course without an account or camera. Course progress stays on this device and reflects your own practice record. A Motion account is optional. Live camera sessions and subscription sales are closed in this release.',
+                      tr: 'Solo boks kursunu hesap veya kamera olmadan çalışabilirsiniz. Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydınızı gösterir. Motion hesabı isteğe bağlıdır. Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.',
                     ),
                     style: JText.body.copyWith(
                       fontSize: 14,
@@ -187,8 +183,8 @@ class SettingsPage extends StatelessWidget {
                               Text(
                                 UiLanguage.text(
                                   context,
-                                  en: 'STORE PRICES',
-                                  tr: 'MAĞAZA FİYATLARI',
+                                  en: 'SUBSCRIPTIONS',
+                                  tr: 'ABONELİKLER',
                                 ),
                                 style: JText.label.copyWith(fontSize: 9),
                               ),
@@ -196,8 +192,8 @@ class SettingsPage extends StatelessWidget {
                               Text(
                                 UiLanguage.text(
                                   context,
-                                  en: 'Monthly and yearly prices appear in Motion account.',
-                                  tr: 'Aylık ve yıllık fiyatlar Motion hesabında görünür.',
+                                  en: 'Subscription sales are closed in this release. No purchase is needed for the course.',
+                                  tr: 'Bu sürümde abonelik satışı kapalıdır. Kurs için satın alma gerekmez.',
                                 ),
                                 key: const Key('store-prices-in-account'),
                                 style: JText.mono.copyWith(

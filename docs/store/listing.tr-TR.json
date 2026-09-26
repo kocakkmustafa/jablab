@@ -2,18 +2,29 @@
   "$doc": "Türkçe mağaza metni taslağı. İngilizce kaynak: listing.json. Sağlayıcıya gönderilmedi; mağaza ve cihaz kabulü açık.",
   "appStore": {
     "name": "JabLab: Gölge Boksu",
-    "subtitle": "Tek kişilik boks rehberi",
-    "promotionalText": "Gölge boksu ders bilgilerini ve ölçüm sınırlarını incele. Kamera koçluğu ve abonelikler bu sürümde açık değil.",
+    "subtitle": "Solo boks pratiğini geliştir",
+    "promotionalText": "Duruş ve garddan ayak çalışması, yumruk şekilleri, planlı savunma, kombinasyon ve bağımsız rauntlara temassız gölge boksu çalış.",
     "keywords": "boks,gölge boksu,jab,cross,duruş,koruma,tek kişilik antrenman,referans"
   },
   "playStore": {
-    "shortDescription": "Gölge boksu ders bilgilerini incele; kamera koçluğu açık değil."
+    "shortDescription": "Solo boks dersleri, öz denetim ve ilerleme kaydı; kamera koçluğu açık değil."
   },
-  "description": "JabLab; jab, cross, duruş ve koruma gibi tek kişilik gölge boksu ders bilgilerini incelemeni sağlar. Hazırlanan kamera çalışmasının neleri değerlendirebileceğini ve sınırlarını açıklar.\n\nBu ilk sürümde katalog ve isteğe bağlı ortak Motion hesabı vardır. Canlı kamera koçluğu, vuruş sayma, antrenman seansları ve abonelikler açık değildir. Uygulamada eşli veya temaslı antrenman yoktur.\n\nMotion hesabı e-posta adresini, hesap kimliğini ve eklersen görünen adını kullanır. Hesap silmeyi uygulamadan isteyebilirsin. JabLab bir antrenman referansıdır; tıbbi veya sakatlanmayı önleyici tavsiye vermez.",
+  "description": "JabLab, 8 modülde 39 özgün Türkçe ve İngilizce solo boks dersi sunar. Duruş, gard, ayak çalışması, düz ve kavisli yumruk şekilleri, planlı savunma ve kombinasyonları öğren. Rehberli çalışma ve öz denetim, kendi temassız gölge boksu rauntlarına ilerler. Bu yol sparring öğretmez veya temaslı boksa hazır olduğun hükmünü vermez.\n\nÖzgün metin derslerini oku, uygulama görevlerini takip et, kendi çalışmanı değerlendir ve cihazdaki ders kaydından devam et. Hesabın olmadan kataloğu gezebilir, isteğe bağlı ortak Motion hesabını kullanabilirsin. Hesap; e-posta, hesap kimliği ve eklediysen görünen adını kullanır; uygulamadan hesap silme isteği yapabilirsin. Kurs kayıtları cihazda mevcut konuk veya hesap kapsamında kalır. Ders bitirme ustalık belgesi değildir. Bu içerik hazırlığı sürümünde gösterim videosu bulunmaz.\n\nÇalışmanı ve tamamlamayı kendin kaydedersin. Kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı açık değildir. Kurs darbe kuvveti, yumruk hızı veya kişisel güvenliği ölçmez.",
   "cameraPermissionRationale": {
     "ios": "JabLab, gölge boksundaki hareketlerine geri bildirim vermek için kamerayı kullanır. Kamera görüntüsü cihazında kalır ve yüklenmez; video veya okunan vücut konumları saklanmaz. Oturum geçmişin (hangi ders, ne zaman, ne kadar süre) bu cihazda tutulur."
   },
   "supportUrl": "https://yulalab.com/support",
   "privacyPolicyUrl": "https://yulalab.com/privacy/motion",
-  "$releasePolicy20260925": "Founder deferred all paid camera sessions and subscription sales in the first release. Provider listings must use only the external fields above; older dollar-prefixed research notes describe deferred capabilities."
+  "$releasePolicy20260925": "Founder deferred all paid camera sessions and subscription sales in the first release. Provider listings must use only the external fields above; older dollar-prefixed research notes describe deferred capabilities.",
+  "$coursePreparation20260926": {
+    "status": "local_content_preparation_not_provider_readback_or_release_acceptance",
+    "asset": "assets/content/solo_boxing_course.v1.json",
+    "sha256": "88dff18822d8427ea75f3ece941d63e80aa0f57c4365c4537d9be90f7c83a64f",
+    "lessonCount": 39,
+    "moduleCount": 8,
+    "mediaIncluded": false,
+    "physicalDeviceAccepted": false
+  },
+  "$sourceOfFacts": "Current course: assets/content/solo_boxing_course.v1.json; its app-local UI and account-scoped practice store. Camera paid-access policy is unchanged. Readback of provider metadata is separate.",
+  "$notClaimed": "No independent skill/mastery outcome, physical-phone performance, clinical suitability, camera form grade or approved AI demonstration is asserted. This local content-preparation draft has not been uploaded."
 }

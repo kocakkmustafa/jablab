@@ -83,8 +83,9 @@ void main() {
   testWidgets('ÖDEME BEYANLARI ÇELİŞMİYOR', (WidgetTester t) async {
     // J-250'nin dersi: erişim ve ödeme cümleleri birlikte doğru olmalı.
     await pumpSettings(t);
-    expect(find.text('Live training access'), findsOneWidget);
-    expect(find.textContaining('requires a Motion account'), findsOneWidget);
+    expect(find.text('Solo boxing course'), findsOneWidget);
+    expect(find.textContaining('subscription sales are closed'), findsWidgets);
+    expect(find.textContaining('requires a Motion account'), findsNothing);
     expect(find.byKey(const Key('store-prices-in-account')), findsOneWidget);
     for (final String s in <String>[
       'Buy',

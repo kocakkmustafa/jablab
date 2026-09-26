@@ -5,6 +5,7 @@ import '../shell_candidate/shell_models.dart';
 import 'catalog_locale.dart';
 import 'course_locale.dart';
 import 'design_tokens.dart';
+import 'solo_boxing_course_page.dart';
 import 'ui_language.dart';
 
 /// Sayfa A — Disiplin & Kurs Seçimi (design: `docs/design/DESIGN-PANEL-PROMPT.md`
@@ -33,6 +34,7 @@ class SelectPage extends StatefulWidget {
     required this.onOpenCourse,
     required this.onOpenWhyNot,
     required this.onOpenSettings,
+    this.onOpenSoloCourse,
     this.historyUnavailable,
     this.onRetryHistory,
   });
@@ -41,6 +43,7 @@ class SelectPage extends StatefulWidget {
   final void Function(ShellCourse) onOpenCourse;
   final VoidCallback onOpenWhyNot;
   final VoidCallback onOpenSettings;
+  final VoidCallback? onOpenSoloCourse;
 
   /// Geçmiş TAMAMEN okunamadıysa (hangi dersin/kursun "güncel" olduğu bile
   /// bilinemiyor — bu yüzden Sayfa B'ye değil buraya düşülüyor) gösterilecek
@@ -154,6 +157,10 @@ class _SelectPageState extends State<SelectPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 16),
+            ],
+            if (widget.onOpenSoloCourse != null) ...<Widget>[
+              SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),
               const SizedBox(height: 16),
             ],
             ...widget.library.items.map(

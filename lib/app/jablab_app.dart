@@ -32,6 +32,7 @@ import 'session_narrator.dart';
 import 'session_store.dart';
 import 'session_screen.dart';
 import 'settings_page.dart';
+import 'solo_boxing_course_page.dart';
 import 'ui_language.dart';
 import 'why_not_locale.dart';
 
@@ -421,6 +422,7 @@ class _RootState extends State<_Root> {
         course: current,
         onStart: _openSession,
         onOpenSettings: () => _openSettings(context, lib),
+        onOpenSoloCourse: () => _openSoloCourse(context),
         onOpenSelect: () => _openSelect(context, lib),
         isCurrent: true,
         resumeLesson: _resumeLesson,
@@ -450,6 +452,7 @@ class _RootState extends State<_Root> {
       onOpenCourse: (ShellCourse c) => _openCourse(context, lib, c),
       onOpenWhyNot: () => _openWhyNot(context, lib),
       onOpenSettings: () => _openSettings(context, lib),
+      onOpenSoloCourse: () => _openSoloCourse(context),
       // current==null buraya iki farklı sebepten düşebilir: hiç kayıt yok
       // (sağlıklı, banner YOK) ya da kayıt okunamadı (banner VAR) —
       // `_historyUnavailableText()` zaten bu ayrımı yapıyor.
@@ -545,6 +548,7 @@ class _RootState extends State<_Root> {
           onOpenCourse: (ShellCourse c) => _openCourse(context, lib, c),
           onOpenWhyNot: () => _openWhyNot(context, lib),
           onOpenSettings: () => _openSettings(context, lib),
+          onOpenSoloCourse: () => _openSoloCourse(context),
           historyUnavailable: _historyUnavailableText(),
           onRetryHistory: _refreshRecorded,
         ),
@@ -559,6 +563,18 @@ class _RootState extends State<_Root> {
           course: c,
           onStart: _openSession,
           onOpenSettings: () => _openSettings(context, lib),
+          onOpenSoloCourse: () => _openSoloCourse(context),
+        ),
+      ),
+    );
+  }
+
+  void _openSoloCourse(BuildContext context) {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => SoloBoxingCoursePage(
+          repository: widget.repository,
+          accountUserId: widget.accountUserId,
         ),
       ),
     );

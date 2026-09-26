@@ -137,17 +137,17 @@ void main() {
 
   group('FEİNT — EXTENSION\'a girip PEAK\'e (0,85) ULAŞMADAN geri çekiliyor',
       () {
-    /// `guardPose.lerp(SyntheticPose.neutral, t)`nin ÖLÇÜLEN extensionRatio
-    /// eğrisi (bu turun kalibrasyonu, doğrusal DEĞİL): t=0,5→~0,77 ·
-    /// t=0,55→~0,81 · t=0,6→~0,85 (PEAK sınırı) · t=0,65→~0,88 (PEAK'i
-    /// AŞAR, artık feint değil gerçek-hızlı-yumruk sayılır).
+    /// İleri doğrultudaki `extendedPose` yönüne kısmi uzanma: amplitüd
+    /// sınırın altında kalırsa feint, PEAK'i aşarsa düz yumruk adayıdır.
+    /// Aşağı sarkan `SyntheticPose.neutral` pozitif kontrol olamaz; bu
+    /// yön kapısının reddetmek için eklendiği negatif hareketin kendisidir.
     const double feintT = 0.5;
 
     List<PoseFrame> feintSequence(double t) => sequence(<SyntheticKeyframe>[
           SyntheticKeyframe(0, guardPose),
           SyntheticKeyframe(100000, guardPose),
-          SyntheticKeyframe(250000, guardPose.lerp(SyntheticPose.neutral, t)),
-          SyntheticKeyframe(320000, guardPose.lerp(SyntheticPose.neutral, t)),
+          SyntheticKeyframe(250000, guardPose.lerp(extendedPose, t)),
+          SyntheticKeyframe(320000, guardPose.lerp(extendedPose, t)),
           SyntheticKeyframe(450000, guardPose),
           SyntheticKeyframe(650000, guardPose),
         ]);
@@ -182,8 +182,8 @@ void main() {
     });
   });
 
-  group('YÜRÜYÜŞ/RASTGELE KOL SALLAMA — hız FARKI mantıksal sınırı '
-      'oluşturuyor (M-F-436: kusur iddiada değil KORUMASIZLIĞINDA)', () {
+  group('YÜRÜYÜŞ/RASTGELE KOL SALLAMA — düz kolun aşağı yönü '
+      'düz yumruk olayını tetiklememeli', () {
     /// Guard'tan `SyntheticPose.neutral`e (ÖLÇÜLDÜ: elde-sarkık bir kolun
     /// extensionRatio'su 1,0 — TAM UZANMIŞ bir yumrukla AYNI, çünkü
     /// extensionRatio yalnız DÜZLÜĞÜ ölçer, YÖNÜ ÖLÇMEZ) yükselen bir
@@ -206,40 +206,14 @@ void main() {
               'KORUMUYOR demektir');
     });
 
-    test(
-        '⚠️ BİLİNEN AÇIK, ÖRTÜLMEDİ — tempolu (250 ms) kol sallama BUGÜN '
-        'GERÇEK bir jab olarak SAYILIYOR (yön ayrımı YOK)', () {
-      // Bu test BAŞARILI bir korumayı KANITLAMIYOR — TAM TERSİNE, bugünkü
-      // motorun GERÇEK bir sınırını ADIYLA KAYIT ALTINA ALIYOR (M-F-436:
-      // "kusur iddiada değil korumasızlığındadır" — burada iddia zaten
-      // yok, motor hiçbir yerde "yön de ölçerim" demiyor, ama bu sınır da
-      // hiçbir yerde YAZILI değildi; artık BURADA, ölçülü ve kalıcı).
-      //
-      // Kök sebep: `extensionRatio` yalnız |bilek-omuz| / (üstkol+önkol)
-      // oranını ölçer — kolun İLERİ mi (yumruk) yoksa AŞAĞI/YANA mı
-      // (yürürken sarkan/sallanan kol) uzandığını AYIRT ETMEZ. Tempolu bir
-      // kol sallama (koşarken, telefonla konuşurken el kaldırma, vb.)
-      // guard'tan (~0,15) sarkık-düz (~1,0) konuma 250 ms'de geçerse,
-      // EXTENSION (400ms timeout) ve PEAK (150ms timeout) pencerelerinin
-      // İKİSİNE de sığar ve `jab` olarak TAMAMLANIR.
-      //
-      // Bunu DÜZELTMEK bu turun kapsamı DIŞINDA bırakıldı, kaçırılmadı:
-      // gerçek düzeltme (yön/vektör kısıtı ya da bir minimum "kameraya
-      // doğru" bileşeni eklemek) StrikingEngine'in çekirdek eşleşme
-      // mantığını değiştiren, `motion-cv-engineer` danışman gözden
-      // geçirmesi hak eden bir tasarım kararı (CLAUDE.md) — bir fixture
-      // dosyasında tek taraflı icat edilmez. Kayıt: DEFTER J-294 +
-      // `docs/evidence/production-line/model-gate.json`.
+    test('250 ms aşağı kol sallama jab veya yedek vuruş SAYILMAZ', () {
+      // 2026-09-26 öncesi bu aynı dizi `jab` üretiyordu. Bileğin omza
+      // göre 2B düşüş oranı PEAK kapısına eklendi. Bu yalnız sentetik
+      // mantık regresyonudur; gerçek kamera yanlış-pozitif oranı değildir.
       final result = drive(swing(250000));
-      expect(result.digests, isNotEmpty,
-          reason: 'BEKLENEN (bugünkü, İSTENMEYEN) davranış artık '
-              'DEĞİŞTİYSE — yani kol sallama artık DOĞRU reddediliyorsa — '
-              'bu SEVİNDİRİCİ bir kırmızı: yön-ayrımı düzeltmesi gelmiş '
-              'demektir, bu testi ve yukarıdaki DEFTER/model-gate '
-              'kayıtlarını GÜNCELLE (açık artık kapandı)');
-      expect(result.digests.first.techniqueId, 'jab',
-          reason: 'YALNIZCA hangi teknik olarak yanlış sınıflandığını '
-              'belgelemek için — asıl bulgu digest\'in VAR OLMASI');
+      expect(result.digests, isEmpty,
+          reason: 'Aşağı salınan kol yumruk olarak sayıldı; yedek '
+              'unclassified_strike dahil hiçbir olay üretilmemeli');
     });
   });
 
@@ -262,6 +236,10 @@ void main() {
               'yazıyor olabilir — bu binding zaten VARDI (engine_test.dart '
               'içinde TEK bir assertion\'a gömülüydü), burada KENDİ '
               'adanmış testi var ki gelecekte sessizce kırılmasın');
+      expect(result.digests.first.provenance['eventLogicRevision'],
+          'wrist-drop-2d@1',
+          reason: 'Yeni olay mantigi eski boxing@1.0.0 kaydiyla ayni '
+              'politikaya aitmis gibi gorunmemeli');
       // Adaylık DEĞİL — bilerek YAZILMAYAN alan: `calibratedForModel`.
       // boxing@1.0.0.json'ın kendi `$unreadFields` notu (provenance.
       // calibratedForModel) bunu J-048'den beri ADIYLA bekliyor: gerçek

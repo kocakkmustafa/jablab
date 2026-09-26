@@ -154,11 +154,13 @@ class _Welcome extends StatelessWidget {
           UiLanguage.text(
             context,
             en:
-                'Put your phone down, step back, and work. No bag, no gloves, no '
-                'sensors — a camera and floor space are the whole kit.',
+                'Learn solo boxing through progressive lessons, practice tasks '
+                'and self-checks. No bag, gloves, account or camera is needed '
+                'for the course. Prepare a clear, non-slip space.',
             tr:
-                'Telefonu yerleştir, geri çekil ve çalış. Kum torbası, eldiven '
-                've sensör gerekmiyor; kamera ile biraz boş alan yeterli.',
+                'Solo boksu sıralı dersler, çalışma görevleri ve öz '
+                'denetimlerle öğren. Kurs için kum torbası, eldiven, hesap '
+                'veya kamera gerekmez. Açık, kaymaz bir alan hazırla.',
           ),
           style: JText.body,
         ),
@@ -167,11 +169,13 @@ class _Welcome extends StatelessWidget {
           UiLanguage.text(
             context,
             en:
-                'Everything runs on your phone. Video is read as you move and is '
-                'never stored or sent anywhere.',
+                'Course progress stays on this device and reflects your own '
+                'practice record. Live camera sessions and subscription sales '
+                'are closed in this release. The course does not capture video.',
             tr:
-                'Her şey telefonunda çalışır. Video hareket ederken işlenir; '
-                'kaydedilmez veya başka bir yere gönderilmez.',
+                'Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydını '
+                'gösterir. Bu sürümde canlı kamera seansları ve abonelik '
+                'satışı kapalıdır. Kurs video yakalamaz.',
           ),
           style: JText.bodyMuted,
         ),
@@ -222,13 +226,13 @@ class _Honesty extends StatelessWidget {
           UiLanguage.text(
             context,
             en:
-                'A single camera sees shape and timing. It does not see force, and '
-                'it does not see another person. So there is no power number here, '
-                'and no score for anything that needs a partner.',
+                'The course uses your own practice record. It does not '
+                'automatically grade punch technique, speed, impact force or '
+                'mastery. Practise without contact or a sparring partner.',
             tr:
-                'Tek kamera duruşu ve zamanlamayı görebilir; darbe gücünü '
-                'veya başka bir kişiyi ölçemez. Bu yüzden güç puanı ve '
-                'partner gerektiren hareketlere puan yoktur.',
+                'Kurs kendi çalışma kaydını kullanır. Yumruk tekniğini, hızını, '
+                'darbe gücünü veya ustalığı otomatik puanlamaz. Temassız ve '
+                'sparring partneri olmadan çalış.',
           ),
           style: JText.body,
         ),
@@ -295,11 +299,11 @@ class _Honesty extends StatelessWidget {
           UiLanguage.text(
             context,
             en:
-                'When the camera cannot read you, the app says so instead of going '
-                'quiet. Silence would read as approval.',
+                'Complete a lesson using your practice record and self-checks. '
+                'Completion does not certify correct technique.',
             tr:
-                'Kamera seni okuyamadığında uygulama bunu söyler. Sessizlik '
-                'yanlışlıkla onay gibi anlaşılmasın.',
+                'Dersi çalışma kaydın ve öz denetimlerinle tamamla. '
+                'Tamamlama, doğru teknik belgesi değildir.',
           ),
           style: JText.bodyMuted,
         ),
@@ -334,8 +338,8 @@ class _Setup extends StatelessWidget {
         Text(
           UiLanguage.text(
             context,
-            en: 'Where to put\nthe phone.',
-            tr: 'Telefonu\nnereye koymalı.',
+            en: 'Prepare your\npractice space.',
+            tr: 'Çalışma\nalanını hazırla.',
           ),
           style: JText.pageTitle,
         ),
@@ -347,16 +351,16 @@ class _Setup extends StatelessWidget {
           n: '1',
           text: UiLanguage.text(
             context,
-            en: 'Lean it somewhere stable at about waist height.',
-            tr: 'Bel yüksekliğinde sağlam bir yere yasla.',
+            en: 'Choose a clear, non-slip floor with room to step.',
+            tr: 'Adım atabileceğin açık ve kaymaz bir zemin seç.',
           ),
         ),
         _SetupLine(
           n: '2',
           text: UiLanguage.text(
             context,
-            en: 'Stand back until your feet and hands both fit in frame.',
-            tr: 'Ellerin ve ayakların kadraja girene kadar geri çekil.',
+            en: 'Set your phone where you can read the lesson without holding it.',
+            tr: 'Telefonu, tutmadan dersi okuyabileceğin bir yere koy.',
           ),
         ),
         _SetupLine(
@@ -364,11 +368,9 @@ class _Setup extends StatelessWidget {
           text: UiLanguage.text(
             context,
             en:
-                'Turn slightly toward the camera rather than square on — '
-                'a front-oblique angle reads your guard best.',
+                'Practise controlled movements without contact. Stop if it hurts.',
             tr:
-                'Kameraya tam karşıdan değil, hafif açılı dur. Bu açı '
-                'gardının görünmesine yardımcı olur.',
+                'Temassız ve kontrollü hareketlerle çalış. Ağrı olursa dur.',
           ),
         ),
         const SizedBox(height: 18),
@@ -379,8 +381,8 @@ class _Setup extends StatelessWidget {
               Text(
                 UiLanguage.text(
                   context,
-                  en: 'IF YOU SAY NO TO THE CAMERA',
-                  tr: 'KAMERAYA İZİN VERMEZSEN',
+                  en: 'CAMERA IS NOT NEEDED',
+                  tr: 'KAMERA GEREKMEZ',
                 ),
                 style: JText.label,
               ),
@@ -393,13 +395,12 @@ class _Setup extends StatelessWidget {
                 UiLanguage.text(
                   context,
                   en:
-                      'Conditioning rounds still run — the round clock and the '
-                      'coach both work without it. Only the form feedback needs '
-                      'to see you.',
+                      'The whole solo boxing course works without camera '
+                      'permission. Live camera sessions and subscription '
+                      'sales are closed in this release.',
                   tr:
-                      'Kondisyon turları çalışır; tur saati ve sesli koç '
-                      'kamerasız da kullanılabilir. Yalnız form geri '
-                      'bildirimi için kamera gerekir.',
+                      'Solo boks kursunun tamamı kamera izni olmadan çalışır. '
+                      'Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.',
                 ),
                 key: const Key('onboarding-permission-note'),
                 style: JText.body,

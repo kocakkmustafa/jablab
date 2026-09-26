@@ -478,6 +478,7 @@ final class StrikingEngine {
         'ruleSetVersion': '${ruleSet.rulesetId}@${ruleSet.version}',
         'thresholdStatus': ruleSet.thresholdStatus,
         ...provenance,
+        'eventLogicRevision': ruleSet.eventLogicRevision,
       },
     );
   }

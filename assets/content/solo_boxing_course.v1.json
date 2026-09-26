@@ -1,0 +1,2342 @@
+{
+  "schemaVersion": 1,
+  "courseId": "jablab.solo_boxing",
+  "version": 1,
+  "title": {
+    "en": "Solo boxing: from first stance to independent rounds",
+    "tr": "Solo boks: ilk duruştan bağımsız raunta"
+  },
+  "goal": {
+    "en": "Build a repeatable stance, footwork, straight and curved punch shapes, planned defensive movements and self-directed shadowboxing. Practice is non-contact and completion is self-reported, not certified mastery.",
+    "tr": "Tekrarlanabilir duruş, ayak çalışması, düz ve kavisli yumruk şekilleri, planlı savunma hareketleri ve bağımsız gölge boksu kur. Çalışma temassızdır; bitirme öz beyandır, belgelenmiş ustalık değildir."
+  },
+  "healthNotice": {
+    "en": "If you have an injury, pregnancy or a chronic condition, treat the adaptation ideas as general information and ask a clinician and a qualified coach about your individual limits before deciding what to practise. This course cannot determine personal safety. Contact boxing is outside this course and should be avoided during pregnancy. Stop for chest pain, dizziness, unusual breathlessness or new pain.",
+    "tr": "Sakatlık, gebelik veya kronik durum varsa uyarlama fikirlerini genel bilgi olarak değerlendir; neyi çalışacağına karar vermeden kişisel sınırlarını sağlık uzmanına ve nitelikli antrenöre danış. Bu kurs kişisel güvenliği belirleyemez. Temaslı boks kurs dışıdır ve gebelikte kaçınılmalıdır. Göğüs ağrısı, baş dönmesi, olağandışı nefes darlığı veya yeni ağrıda dur."
+  },
+  "sources": [
+    {
+      "id": "boxing_canada_beginner",
+      "publisher": "Boxing Canada",
+      "title": "Instruction Beginners Reference Manual",
+      "url": "https://boxingcanada.org/wp-content/uploads/2025/01/Instruction-Beginners-Reference-Manual-EN.pdf"
+    },
+    {
+      "id": "boxing_canada_competition",
+      "publisher": "Boxing Canada",
+      "title": "Competition Introduction Manual",
+      "url": "https://boxingcanada.org/wp-content/uploads/2025/06/Competition-Introduction-manual-EN.pdf"
+    },
+    {
+      "id": "england_boxing_level1",
+      "publisher": "England Boxing",
+      "title": "Boxing Coaching Handbook Part 1",
+      "url": "https://www.englandboxing.org/wp-content/uploads/2022/03/EB_Boxing-Coaching-Handbook-Part-1_v8-002.pdf"
+    },
+    {
+      "id": "acog_pregnancy",
+      "publisher": "American College of Obstetricians and Gynecologists",
+      "title": "Exercise During Pregnancy",
+      "url": "https://www.acog.org/womens-health/faqs/exercise-during-pregnancy"
+    },
+    {
+      "id": "cdc_activity",
+      "publisher": "US Centers for Disease Control and Prevention",
+      "title": "Adding Physical Activity as an Adult",
+      "url": "https://www.cdc.gov/physical-activity-basics/adding-adults/index.html"
+    }
+  ],
+  "modules": [
+    {
+      "id": "boxing.start",
+      "title": {
+        "en": "Start safely",
+        "tr": "Güvenli başlangıç"
+      },
+      "intro": {
+        "en": "Prepare a clear solo space, then learn a balanced stance before throwing a punch.",
+        "tr": "Yumruk atmadan önce boş bir çalışma alanı ve dengeli duruş kur."
+      },
+      "lessons": [
+        {
+          "id": "boxing.start.space",
+          "title": {
+            "en": "Your space and the rules",
+            "tr": "Alan ve çalışma kuralları"
+          },
+          "objective": {
+            "en": "Set up a non-contact practice space and understand what this course can observe.",
+            "tr": "Temassız çalışma alanını hazırla ve kursun neyi gözlemleyebildiğini öğren."
+          },
+          "steps": [
+            {
+              "en": "Clear an arm's reach plus two small steps in every direction. Use a stable floor, shoes that do not slip, and no partner or bag.",
+              "tr": "Her yönde kol erişimi ve iki küçük adım kadar alanı boşalt. Kaymayan zemin ve ayakkabı kullan; eş veya torba kullanma."
+            },
+            {
+              "en": "Start with relaxed shadowboxing. This course records your own practice report; it cannot measure impact, joint safety or mastery.",
+              "tr": "Rahat gölge boksuyla başla. Bu kurs kendi çalışma beyanını kaydeder; darbe gücünü, eklem güvenliğini veya ustalığı ölçemez."
+            }
+          ],
+          "practice": {
+            "en": "Walk the perimeter, extend one arm slowly, then make two easy steps in each direction without touching an object.",
+            "tr": "Alanı dolaş, bir kolunu yavaşça uzat ve hiçbir nesneye değmeden her yöne iki kolay adım at."
+          },
+          "selfChecks": [
+            {
+              "en": "I can move without hitting furniture or another person.",
+              "tr": "Mobilyaya veya birine çarpmadan hareket edebiliyorum."
+            },
+            {
+              "en": "I know this is solo practice, not a contact or safety assessment.",
+              "tr": "Bunun temas veya güvenlik değerlendirmesi değil, tek başına çalışma olduğunu biliyorum."
+            }
+          ],
+          "adaptation": {
+            "en": "Begin with a shorter seated orientation or smaller steps if standing practice is difficult; a clinician can advise on condition-specific limits.",
+            "tr": "Ayakta çalışma zorsa daha kısa oturarak hazırlık veya küçük adımlar seç; duruma özel sınırlar için sağlık uzmanına danış."
+          },
+          "stopSignal": {
+            "en": "Stop if the floor feels unsafe, you feel dizzy, or you develop chest pain or unusual breathlessness.",
+            "tr": "Zemin güvensiz gelirse, başın dönerse, göğüs ağrısı veya olağandışı nefes darlığı olursa dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead room diagram and side view: clear floor, no partner, no impact; subtitles in both languages.",
+            "tr": "Özgün üstten alan şeması ve yandan görünüm: boş zemin, eş ve darbe yok; iki dilde altyazı."
+          },
+          "prerequisites": [],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "cdc_activity",
+            "acog_pregnancy"
+          ],
+          "minutes": 6,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.start.stance",
+          "title": {
+            "en": "Find your stance",
+            "tr": "Duruşunu bul"
+          },
+          "objective": {
+            "en": "Choose a comfortable lead side and return to a balanced base.",
+            "tr": "Rahat bir ön taraf seç ve dengeli tabana dönebil."
+          },
+          "steps": [
+            {
+              "en": "Place one foot a small step ahead and keep space between the feet. Knees stay soft; keep the head over the base rather than leaning to reach.",
+              "tr": "Bir ayağını küçük bir adım öne al ve ayaklar arasında açıklık bırak. Dizleri rahat tut; uzanmak için öne eğilmek yerine başını tabanın üzerinde tut."
+            },
+            {
+              "en": "Try both lead sides without forcing a 'correct' dominant side. Make a tiny forward and backward rock; neither heel nor toe should carry you away.",
+              "tr": "Zorunlu bir baskın taraf seçmeden iki önü de dene. Çok küçük öne ve arkaya salın; topuğa veya parmak ucuna düşme."
+            }
+          ],
+          "practice": {
+            "en": "Hold each side for three relaxed breaths, then step out and rebuild the same stance five times.",
+            "tr": "Her tarafı üç rahat nefes tut, sonra çıkıp aynı duruşu beş kez yeniden kur."
+          },
+          "selfChecks": [
+            {
+              "en": "My feet are separated rather than on one line.",
+              "tr": "Ayaklarım tek çizgide değil, aralarında açıklık var."
+            },
+            {
+              "en": "I can stop the small rock without needing a rescue step.",
+              "tr": "Küçük salınımı ek denge adımı atmadan durdurabiliyorum."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a shorter stance or hold a wall during orientation; avoid a stance width that causes discomfort.",
+            "tr": "İlk öğrenmede daha kısa duruş veya duvar desteği kullan; rahatsız eden açıklığı zorlama."
+          },
+          "stopSignal": {
+            "en": "Stop if the stance causes joint pain or you cannot keep balance in the available space.",
+            "tr": "Duruş eklem ağrısı yaparsa veya alanda dengeyi koruyamazsan dur."
+          },
+          "mediaBrief": {
+            "en": "Original front and side silhouettes show foot separation and neutral balance, without numerical angle labels.",
+            "tr": "Özgün ön ve yan siluetler ayak açıklığını ve dengeli ağırlığı gösterir; sayısal açı etiketi kullanma."
+          },
+          "prerequisites": [
+            "boxing.start.space"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.start.guard",
+          "title": {
+            "en": "A relaxed guard",
+            "tr": "Rahat gard"
+          },
+          "objective": {
+            "en": "Keep both hands available without stiffening the shoulders.",
+            "tr": "Omuzları kasmadan iki eli de hazır tut."
+          },
+          "steps": [
+            {
+              "en": "For this non-contact practice, curl the fingers gently and rest the thumb outside them, never tucked inside. Keep the wrist comfortably in line with the forearm and avoid squeezing hard; this is not an impact or bag drill.",
+              "tr": "Bu temassız çalışma için parmakları hafifçe kıvır; başparmak dışlarında dursun, içeride sıkışmasın. Bileği önkolla rahat hizada tut, eli sert sıkma; bu darbe veya torba alıştırması değildir."
+            },
+            {
+              "en": "Bring the rear hand near the cheek and the lead hand slightly ahead. Keep elbows comfortably toward the ribs and eyes forward.",
+              "tr": "Arka eli yanağa yakın, ön eli biraz önde tut. Dirsekleri rahatça kaburgalara yaklaştır, bakışı ileri ver."
+            },
+            {
+              "en": "Release the shoulders and hands between repetitions. A guard is a movable starting place, not a frozen pose.",
+              "tr": "Tekrarlar arasında omuz ve elleri gevşet. Gard donmuş bir poz değil, hareketli bir başlangıç yeridir."
+            }
+          ],
+          "practice": {
+            "en": "Raise the guard, lower it, and rebuild it ten slow times. Turn slightly side-on while keeping both hands visible to yourself.",
+            "tr": "Gardı kaldır, indir ve on kez yavaşça yeniden kur. İki elini de görebilerek hafif yana dön."
+          },
+          "selfChecks": [
+            {
+              "en": "I can see ahead without hiding behind my gloves.",
+              "tr": "Ellerimin arkasına saklanmadan ileriyi görebiliyorum."
+            },
+            {
+              "en": "My shoulders can relax while the hands remain ready.",
+              "tr": "Eller hazırken omuzlarımı gevşetebiliyorum."
+            }
+          ],
+          "adaptation": {
+            "en": "Lower the hands between sets or shorten the hold if shoulders tire; choose a comfortable range with a qualified coach if needed.",
+            "tr": "Omuzlar yorulursa setler arasında elleri indir veya tutuşu kısalt; gerekirse rahat aralığı nitelikli antrenörle seç."
+          },
+          "stopSignal": {
+            "en": "Stop for sharp shoulder, elbow or wrist pain; fatigue is not a reason to force the guard higher.",
+            "tr": "Keskin omuz, dirsek veya bilek ağrısında dur; yorgunluk gardı zorla yükseltme nedeni değildir."
+          },
+          "mediaBrief": {
+            "en": "Original three-quarter view: begin with a close-up of the thumb outside softly curled fingers and comfortable wrist, then show hands, elbows and sightline with relaxed shoulders. No impact demonstration.",
+            "tr": "Özgün üç çeyrek görünüm: önce hafif kıvrılmış parmakların dışındaki başparmağı ve rahat bileği yakından, ardından elleri, dirsekleri ve bakışı gevşek omuzlarla göster. Darbe gösterimi yok."
+          },
+          "prerequisites": [
+            "boxing.start.stance"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.start.breath",
+          "title": {
+            "en": "Breath and easy pace",
+            "tr": "Nefes ve rahat tempo"
+          },
+          "objective": {
+            "en": "Move and breathe without holding the breath during effort.",
+            "tr": "Çaba sırasında nefesi tutmadan hareket et."
+          },
+          "steps": [
+            {
+              "en": "Take an ordinary breath while settling in guard; exhale gently as one hand extends and breathe again on the return.",
+              "tr": "Gardda normal nefes al; bir el uzanırken yumuşakça nefes ver ve dönüşte yeniden nefes al."
+            },
+            {
+              "en": "Keep a pace at which you could still speak a short sentence. This is preparation, not a speed test.",
+              "tr": "Kısa bir cümle söyleyebileceğin tempoda kal. Bu hazırlıktır, hız sınavı değil."
+            }
+          ],
+          "practice": {
+            "en": "Alternate ten tiny hand reaches with easy breathing; rest whenever you need it.",
+            "tr": "Kolay nefesle dönüşümlü on küçük el uzatması yap; gerektiğinde dinlen."
+          },
+          "selfChecks": [
+            {
+              "en": "I did not hold my breath to finish a reach.",
+              "tr": "Uzanmayı bitirmek için nefesimi tutmadım."
+            },
+            {
+              "en": "I could slow down without losing my stance.",
+              "tr": "Duruşumu bozmadan yavaşlayabildim."
+            }
+          ],
+          "adaptation": {
+            "en": "Reduce the number of reaches or practise breathing in a supported stance; seek condition-specific advice before exertion when appropriate.",
+            "tr": "Uzanma sayısını azalt veya destekli duruşta nefes çalış; gerektiğinde efor öncesi duruma özel danışmanlık al."
+          },
+          "stopSignal": {
+            "en": "Stop if breathing feels unusually difficult, you feel faint, or chest discomfort appears.",
+            "tr": "Nefes olağandışı zorlaşırsa, bayılacak gibi olursan veya göğüs rahatsızlığı başlarsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original close and wide alternation: gentle exhale with one reach, visible pause, no speed meter.",
+            "tr": "Özgün yakın ve geniş açı geçişi: tek uzanmada yumuşak nefes veriş, görünür ara, hız sayacı yok."
+          },
+          "prerequisites": [
+            "boxing.start.guard"
+          ],
+          "sourceIds": [
+            "cdc_activity",
+            "england_boxing_level1"
+          ],
+          "minutes": 8,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.start.reset",
+          "title": {
+            "en": "Return to your base",
+            "tr": "Tabanına geri dön"
+          },
+          "objective": {
+            "en": "Recover the same stance and guard after each small movement.",
+            "tr": "Her küçük hareketten sonra aynı duruş ve garda dön."
+          },
+          "steps": [
+            {
+              "en": "From guard, step a little to one side, stop, check the space between your feet, then bring the hands back to their ready place.",
+              "tr": "Garddan yana küçük adım at, dur, ayak açıklığını kontrol et, sonra elleri hazır yerine getir."
+            },
+            {
+              "en": "Repeat on both sides. Keep each reset unhurried; later punches will end in this base.",
+              "tr": "İki tarafta tekrarla. Her dönüşü acele etmeden yap; ileride yumruklar bu tabanda bitecek."
+            }
+          ],
+          "practice": {
+            "en": "Make five small side steps each way with a full pause and reset after every step.",
+            "tr": "Her yöne beş küçük yan adım at; her adım sonrası tam durup yeniden yerleş."
+          },
+          "selfChecks": [
+            {
+              "en": "I can pause without crossing my feet.",
+              "tr": "Ayaklarımı çaprazlamadan durabiliyorum."
+            },
+            {
+              "en": "Both hands return before I start the next step.",
+              "tr": "Sonraki adımdan önce iki elim de yerine dönüyor."
+            }
+          ],
+          "adaptation": {
+            "en": "Use only a weight shift if stepping is uncomfortable; keep support close during early practice.",
+            "tr": "Adım rahatsız ediyorsa yalnız ağırlık aktar; ilk çalışmada desteği yakın tut."
+          },
+          "stopSignal": {
+            "en": "Stop if resetting requires a sudden catch step or causes pain.",
+            "tr": "Yeniden yerleşmek ani kurtarma adımı gerektirirse veya ağrı yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original wide front view with a pause frame after each step; highlight foot spacing and hand return.",
+            "tr": "Özgün geniş ön görünümde her adımdan sonra duraklama karesi; ayak açıklığı ve el dönüşünü vurgula."
+          },
+          "prerequisites": [
+            "boxing.start.breath"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.footwork",
+      "title": {
+        "en": "Move the base",
+        "tr": "Tabanı hareket ettir"
+      },
+      "intro": {
+        "en": "Learn small steps before adding punches; the feet return to a usable stance after every move.",
+        "tr": "Yumruk eklemeden önce küçük adımları öğren; her hareketten sonra ayaklar kullanılabilir duruşa döner."
+      },
+      "lessons": [
+        {
+          "id": "boxing.footwork.forward_back",
+          "title": {
+            "en": "Forward and back",
+            "tr": "İleri ve geri"
+          },
+          "objective": {
+            "en": "Move in either direction without narrowing or crossing the stance.",
+            "tr": "Duruşu daraltmadan veya ayakları çaprazlamadan iki yönde hareket et."
+          },
+          "steps": [
+            {
+              "en": "Forward: lead foot starts, rear foot follows. Backward: rear foot starts, lead foot follows. Keep the step small enough to stop midway.",
+              "tr": "İleri: önce ön ayak, sonra arka ayak. Geri: önce arka ayak, sonra ön ayak. Adımı yarıda durabilecek kadar küçük tut."
+            },
+            {
+              "en": "Pause after each pair of steps and check your original foot spacing. Speed comes after you can stop balanced.",
+              "tr": "Her adım çiftinden sonra durup başlangıçtaki ayak açıklığını kontrol et. Hız, dengede durabildikten sonra gelir."
+            }
+          ],
+          "practice": {
+            "en": "Trace a short line on the floor mentally: five forward-follow steps, five backward-follow steps, each with a pause.",
+            "tr": "Zihninde yerde kısa bir çizgi izle: beş ileri-takip, beş geri-takip adımı; her birinde dur."
+          },
+          "selfChecks": [
+            {
+              "en": "The foot nearest the travel direction moved first.",
+              "tr": "Gidiş yönüne yakın ayak önce hareket etti."
+            },
+            {
+              "en": "My feet never met or passed one another.",
+              "tr": "Ayaklarım birleşmedi veya birbirini geçmedi."
+            }
+          ],
+          "adaptation": {
+            "en": "Reduce travel to a small weight shift or use a stable support if balance is uncertain.",
+            "tr": "Denge belirsizse yolu küçük bir ağırlık aktarımına indir veya sağlam destek kullan."
+          },
+          "stopSignal": {
+            "en": "Stop if you stumble, the floor slips, or pain changes your gait.",
+            "tr": "Tökezlersen, zemin kayarsa veya ağrı yürüyüşünü değiştirirse dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead foot map and wide side view; arrows show lead-then-rear and rear-then-lead, never crossing.",
+            "tr": "Özgün üstten ayak haritası ve geniş yan görünüm; oklar ön-arka ve arka-ön sırasını, çaprazlamamayı gösterir."
+          },
+          "prerequisites": [
+            "boxing.start.reset"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.footwork.lateral",
+          "title": {
+            "en": "Side steps",
+            "tr": "Yan adımlar"
+          },
+          "objective": {
+            "en": "Carry the stance to either side while keeping the same usable spacing.",
+            "tr": "Aynı kullanılabilir açıklığı koruyarak duruşu iki yana taşı."
+          },
+          "steps": [
+            {
+              "en": "To the lead side, lead foot starts; to the rear side, rear foot starts. The other foot follows rather than overtaking.",
+              "tr": "Ön tarafa giderken ön ayak, arka tarafa giderken arka ayak başlar. Diğeri geçmek yerine takip eder."
+            },
+            {
+              "en": "Keep the head within the base and the hands in guard. Do not drag the trailing foot across the floor.",
+              "tr": "Başını tabanın içinde, elleri gardda tut. Arkadan gelen ayağı zeminde sürükleme."
+            }
+          ],
+          "practice": {
+            "en": "Take four small steps to each side and reset after each pair; reverse your lead side and repeat once.",
+            "tr": "Her yana dört küçük adım at ve her çiftte yeniden yerleş; ön tarafı değiştirip bir kez tekrarla."
+          },
+          "selfChecks": [
+            {
+              "en": "I could freeze after each step without leaning.",
+              "tr": "Her adım sonrası eğilmeden donabildim."
+            },
+            {
+              "en": "My trailing foot restored, rather than erased, stance width.",
+              "tr": "Takip eden ayağım duruş açıklığını silmek yerine yeniden kurdu."
+            }
+          ],
+          "adaptation": {
+            "en": "Use two-inch side shifts or a supported standing position when the full step is difficult.",
+            "tr": "Tam adım zorsa çok küçük yan kaymalar veya destekli ayakta duruş kullan."
+          },
+          "stopSignal": {
+            "en": "Stop if the knees or ankles hurt or you cannot keep the path clear.",
+            "tr": "Diz veya ayak bileği ağrırsa ya da yolu boş tutamazsan dur."
+          },
+          "mediaBrief": {
+            "en": "Original front wide shot with floor arrows and freeze frames for restored stance; no foot-speed claim.",
+            "tr": "Özgün geniş ön çekim, zemin okları ve yeniden kurulan duruşun duraklama kareleri; ayak hızı iddiası yok."
+          },
+          "prerequisites": [
+            "boxing.footwork.forward_back"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.footwork.diagonal",
+          "title": {
+            "en": "Diagonal steps",
+            "tr": "Çapraz yönlere adım"
+          },
+          "objective": {
+            "en": "Change both distance and side without tangling the feet.",
+            "tr": "Ayakları dolaştırmadan hem mesafeyi hem yönü değiştir."
+          },
+          "steps": [
+            {
+              "en": "Aim a small step toward a front corner with the nearer foot and let the other restore the base. Repeat toward a back corner.",
+              "tr": "Ön köşeye yakın ayakla küçük adım at, diğer ayak tabanı yeniden kursun. Arka köşeye de tekrarla."
+            },
+            {
+              "en": "Think of the corner as a direction on the floor, not an opponent to chase. Stop before any foot crosses the other.",
+              "tr": "Köşeyi kovalanacak rakip değil, zemindeki yön olarak düşün. Ayaklar çaprazlanmadan dur."
+            }
+          ],
+          "practice": {
+            "en": "Draw a small X mentally and travel one arm-length along each ray, returning to the centre between rays.",
+            "tr": "Zihninde küçük bir X çiz; her kola bir kol boyu ilerle ve aralarda merkeze dön."
+          },
+          "selfChecks": [
+            {
+              "en": "Each trip ended in the same stance width.",
+              "tr": "Her yol aynı duruş açıklığında bitti."
+            },
+            {
+              "en": "I could name which foot started each direction.",
+              "tr": "Her yönde hangi ayağın başladığını söyleyebiliyorum."
+            }
+          ],
+          "adaptation": {
+            "en": "Shrink the X or trace it with weight shifts only; keep a stable reference point nearby.",
+            "tr": "X'i küçült veya yalnız ağırlık aktarımıyla izle; yakında sağlam referans bulundur."
+          },
+          "stopSignal": {
+            "en": "Stop if turning a corner brings dizziness or unexpected joint pain.",
+            "tr": "Köşe değişimi baş dönmesi veya beklenmedik eklem ağrısı yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead X diagram plus front three-quarter performer view, pausing after each diagonal.",
+            "tr": "Özgün üstten X şeması ve üç çeyrek ön oyuncu görünümü; her çaprazdan sonra durakla."
+          },
+          "prerequisites": [
+            "boxing.footwork.lateral"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.footwork.pivot",
+          "title": {
+            "en": "A small pivot",
+            "tr": "Küçük dönüş"
+          },
+          "objective": {
+            "en": "Reorient the stance without twisting a planted knee.",
+            "tr": "Sabit diz üzerinde burulmadan duruş yönünü değiştir."
+          },
+          "steps": [
+            {
+              "en": "Move the rear foot in a small arc while the lead foot turns comfortably on the ball; let hips and shoulders face the new direction together.",
+              "tr": "Arka ayağı küçük yayda taşı, ön ayak rahatça ön kısmında dönsün; kalça ve omuzlar birlikte yeni yöne baksın."
+            },
+            {
+              "en": "Make only a modest turn, stop, and rebuild the guard. A pivot is an exit to a new line, not a spin for speed.",
+              "tr": "Yalnız ölçülü dön, dur ve gardı yeniden kur. Pivot hız için dönme değil, yeni hatta çıkıştır."
+            }
+          ],
+          "practice": {
+            "en": "Make three small turns each way with a full reset and a pause after each.",
+            "tr": "Her yöne üç küçük dönüş yap; her birinden sonra tam yerleş ve dur."
+          },
+          "selfChecks": [
+            {
+              "en": "My knee followed the foot rather than twisting under it.",
+              "tr": "Dizim sabit ayak altında burulmak yerine ayağı izledi."
+            },
+            {
+              "en": "I could hold the final stance without a catching step.",
+              "tr": "Son duruşu kurtarma adımı olmadan tutabildim."
+            }
+          ],
+          "adaptation": {
+            "en": "Use an even smaller arc or step the lead foot to turn if pivoting on one foot is uncomfortable.",
+            "tr": "Tek ayak üzerinde dönmek rahatsızsa yayı küçült veya ön ayağı da adımlayarak dön."
+          },
+          "stopSignal": {
+            "en": "Stop with knee, ankle or hip pain, or if the surface grips the foot and forces twisting.",
+            "tr": "Diz, ayak bileği veya kalça ağrısında ya da zemin ayağı tutup burulmaya zorlarsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead shoe path with no fixed angle target; side cut shows knee and foot turning together.",
+            "tr": "Özgün üstten ayak yolu, sabit açı hedefi yok; yan kesit dizle ayağın birlikte döndüğünü gösterir."
+          },
+          "prerequisites": [
+            "boxing.footwork.diagonal"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.footwork.enter_exit",
+          "title": {
+            "en": "Enter and leave range",
+            "tr": "Mesafeye gir ve çık"
+          },
+          "objective": {
+            "en": "Use footwork to approach an imagined target and leave in balance.",
+            "tr": "Hayalî hedefe adımla yaklaş ve dengede uzaklaş."
+          },
+          "steps": [
+            {
+              "en": "Choose a spot ahead at comfortable arm's reach. Step in until a relaxed straight reach could arrive without leaning; do not actually strike an object.",
+              "tr": "Önde rahat kol erişiminde bir nokta seç. Eğilmeden düz uzanma yetişecek kadar gir; gerçek bir nesneye vurma."
+            },
+            {
+              "en": "Step back or diagonally out before resetting. Keep the feet underneath you on entry and exit.",
+              "tr": "Yeniden yerleşmeden önce geriye veya çapraza çık. Giriş ve çıkışta ayaklarını altında tut."
+            }
+          ],
+          "practice": {
+            "en": "Repeat five entry-pause-exit cycles, alternating the exit direction; the hands stay in guard.",
+            "tr": "Çıkış yönünü değiştirerek beş gir-dur-çık döngüsü yap; eller gardda kalsın."
+          },
+          "selfChecks": [
+            {
+              "en": "I reached the imagined spot without folding at the waist.",
+              "tr": "Hayalî noktaya belden katlanmadan eriştim."
+            },
+            {
+              "en": "My exit left space and a stable base for the next move.",
+              "tr": "Çıkış sonraki hareket için alan ve dengeli taban bıraktı."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a shorter entry or mark a closer imagined spot if balance or reach is limited.",
+            "tr": "Denge veya erişim sınırlıysa daha kısa giriş veya daha yakın hayalî nokta seç."
+          },
+          "stopSignal": {
+            "en": "Stop if you begin lunging into furniture or pain changes how you step.",
+            "tr": "Mobilyaya doğru hamle yapmaya başlarsan veya ağrı adımını değiştirirse dur."
+          },
+          "mediaBrief": {
+            "en": "Original side-on wide frame shows imagined target line, step-in pause and diagonal exit; no impact effect.",
+            "tr": "Özgün geniş yan kadraj hayalî hedef hattını, giriş duruşunu ve çapraz çıkışı gösterir; darbe efekti yok."
+          },
+          "prerequisites": [
+            "boxing.footwork.pivot"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.straights",
+      "title": {
+        "en": "Straight punches",
+        "tr": "Düz yumruklar"
+      },
+      "intro": {
+        "en": "Learn the lead and rear straight line slowly, with a complete return to guard after each action.",
+        "tr": "Ön ve arka düz hattı yavaşça öğren; her harekette garda tam dön."
+      },
+      "lessons": [
+        {
+          "id": "boxing.straights.jab_line",
+          "title": {
+            "en": "The lead-hand jab",
+            "tr": "Ön el jab"
+          },
+          "objective": {
+            "en": "Extend the lead hand on a direct path while the rear hand stays ready.",
+            "tr": "Arka el hazır kalırken ön eli doğrudan bir hatta uzat."
+          },
+          "steps": [
+            {
+              "en": "Begin in guard. Let the lead hand travel toward an imagined eye-level point, without winding it behind the shoulder first.",
+              "tr": "Garddan başla. Ön eli önce omuz arkasına çekmeden hayalî göz hizası noktasına götür."
+            },
+            {
+              "en": "Keep the rear hand near the cheek and the head over the feet. Reach within your comfortable range; do not lock or snap the elbow.",
+              "tr": "Arka el yanağa yakın, baş ayakların üzerinde kalsın. Rahat menzile uzan; dirseği kilitleme veya sertçe açma."
+            }
+          ],
+          "practice": {
+            "en": "Perform six slow lead-hand reaches to one imagined point, fully pausing in guard between them.",
+            "tr": "Tek hayalî noktaya altı yavaş ön el uzatması yap; aralarda gardda tam dur."
+          },
+          "selfChecks": [
+            {
+              "en": "The lead hand took a direct path rather than a wide arc.",
+              "tr": "Ön el geniş yay yerine doğrudan yol izledi."
+            },
+            {
+              "en": "The rear hand stayed available while the lead hand moved.",
+              "tr": "Ön el giderken arka el hazır kaldı."
+            }
+          ],
+          "adaptation": {
+            "en": "Shorten the reach and reduce repetitions if the shoulder or elbow is uncomfortable; do not force full extension.",
+            "tr": "Omuz veya dirsek rahatsızsa erişimi ve tekrarı azalt; tam açılmayı zorlama."
+          },
+          "stopSignal": {
+            "en": "Stop if the wrist, elbow or shoulder hurts sharply or if balance moves beyond the lead foot.",
+            "tr": "Bilek, dirsek veya omuz keskin ağrırsa ya da denge ön ayağın dışına giderse dur."
+          },
+          "mediaBrief": {
+            "en": "Original three-quarter and side views show lead-hand path and rear-hand guard; no speed or force number.",
+            "tr": "Özgün üç çeyrek ve yan görünüm ön el yolunu ve arka el gardını gösterir; hız veya kuvvet sayısı yok."
+          },
+          "prerequisites": [
+            "boxing.footwork.enter_exit"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.straights.jab_return",
+          "title": {
+            "en": "The jab comes home",
+            "tr": "Jab geri döner"
+          },
+          "objective": {
+            "en": "Finish a jab by bringing the lead hand back to guard before moving again.",
+            "tr": "Yeni harekete geçmeden ön eli garda getirerek jabı bitir."
+          },
+          "steps": [
+            {
+              "en": "Reach to the same imagined point as before. Reverse the path with the elbow and hand returning together; avoid letting the hand hang low on the way back.",
+              "tr": "Önceki hayalî noktaya uzan. Dirsek ve eli birlikte geri getir; dönüşte elin aşağıda asılı kalmasına izin verme."
+            },
+            {
+              "en": "Pause with both hands visible in your own field of view. One reach plus return is a whole repetition.",
+              "tr": "İki el de kendi görüş alanında iken dur. Bir uzanma ve dönüş tek tam tekrardır."
+            }
+          ],
+          "practice": {
+            "en": "Do two sets of five slow jabs. On each return say 'home' quietly before the next one.",
+            "tr": "İki set beş yavaş jab yap. Her dönüşte sonraki jabdan önce sessizce 'yerinde' de."
+          },
+          "selfChecks": [
+            {
+              "en": "I waited for the hand to return before the next reach.",
+              "tr": "Sonraki uzanmadan önce elin dönüşünü bekledim."
+            },
+            {
+              "en": "My chin and balance did not follow the fist forward.",
+              "tr": "Çenem ve dengem yumruğu ileri izlemedi."
+            }
+          ],
+          "adaptation": {
+            "en": "Use fewer repetitions and a partial reach; a clean return matters more than reaching far.",
+            "tr": "Daha az tekrar ve kısmi uzanma kullan; temiz dönüş uzak erişimden önemlidir."
+          },
+          "stopSignal": {
+            "en": "Stop when return quality breaks down or any upper-limb pain appears.",
+            "tr": "Dönüş niteliği bozulursa veya kolda ağrı başlarsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original split-screen: outbound and return paths with a freeze on the recovered guard, not a punch counter.",
+            "tr": "Özgün iki bölmeli görüntü: gidiş ve dönüş yolları, yeniden kurulan gardda duraklama; yumruk sayacı yok."
+          },
+          "prerequisites": [
+            "boxing.straights.jab_line"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.straights.double_jab",
+          "title": {
+            "en": "Two jabs, one base",
+            "tr": "İki jab, tek taban"
+          },
+          "objective": {
+            "en": "Repeat the lead straight without losing the rear-hand guard or foot spacing.",
+            "tr": "Arka el gardını ve ayak açıklığını kaybetmeden ön düz yumruğu tekrarla."
+          },
+          "steps": [
+            {
+              "en": "Send one small jab, let it return, then send a second. The second begins from guard, not from a hand left in midair.",
+              "tr": "Bir küçük jab gönder, geri getir, sonra ikincisini gönder. İkincisi havada kalmış elden değil garddan başlar."
+            },
+            {
+              "en": "Keep the same imagined target and an easy rhythm. Do not speed up until both returns are complete.",
+              "tr": "Aynı hayalî hedefi ve rahat ritmi koru. İki dönüş de tamamlanmadan hızlanma."
+            }
+          ],
+          "practice": {
+            "en": "Perform five double-jab pairs with a full stance reset between pairs.",
+            "tr": "Çiftler arasında tam duruş dönüşüyle beş çift jab yap."
+          },
+          "selfChecks": [
+            {
+              "en": "I could distinguish two separate starts from guard.",
+              "tr": "Garddan başlayan iki ayrı çıkışı ayırt edebildim."
+            },
+            {
+              "en": "The rear hand did not follow the jabs downward.",
+              "tr": "Arka el jablarla birlikte aşağı inmedi."
+            }
+          ],
+          "adaptation": {
+            "en": "Practise one jab at a time until the return is clear; a smaller reach is acceptable.",
+            "tr": "Dönüş belirginleşene kadar tek jab çalış; daha küçük erişim kabul edilir."
+          },
+          "stopSignal": {
+            "en": "Stop when the pair becomes a rushed arm flail or balance is lost.",
+            "tr": "Çift hareket acele kol savurmaya dönerse veya denge kaybolursa dur."
+          },
+          "mediaBrief": {
+            "en": "Original front three-quarter shot labels start, return, start, return; show rear hand in every frame.",
+            "tr": "Özgün üç çeyrek ön çekim çıkış, dönüş, çıkış, dönüşü gösterir; her karede arka el görünür."
+          },
+          "prerequisites": [
+            "boxing.straights.jab_return"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.straights.rear_straight",
+          "title": {
+            "en": "The rear straight",
+            "tr": "Arka düz yumruk"
+          },
+          "objective": {
+            "en": "Coordinate the rear hand with a comfortable turn through the base.",
+            "tr": "Arka eli tabandan gelen rahat dönüşle eşgüdümle."
+          },
+          "steps": [
+            {
+              "en": "From guard, allow the rear foot, hip and shoulder to turn as the rear hand travels on a straight imagined line. Keep the lead hand ready.",
+              "tr": "Garddan arka ayak, kalça ve omzun rahatça dönmesine izin ver; arka el hayalî düz hatta giderken ön el hazır kalsın."
+            },
+            {
+              "en": "Do not force a large twist or chase reach by leaning. The whole body stops in a base from which the hand can return.",
+              "tr": "Büyük burulmayı zorlama veya eğilerek uzak menzili kovalama. Bütün vücut elin dönebileceği tabanda durur."
+            }
+          ],
+          "practice": {
+            "en": "Make six slow rear-hand straights, checking the lead guard and foot position after each.",
+            "tr": "Altı yavaş arka düz yap; her birinden sonra ön gardı ve ayakları kontrol et."
+          },
+          "selfChecks": [
+            {
+              "en": "The turn felt comfortable through foot, hip and shoulder, not forced in one joint.",
+              "tr": "Dönüş tek eklemde zorlanmak yerine ayak, kalça ve omuz boyunca rahattı."
+            },
+            {
+              "en": "The lead hand stayed near guard.",
+              "tr": "Ön el garda yakın kaldı."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a small torso turn or a shorter reach; ask a qualified coach about individual movement limits.",
+            "tr": "Küçük gövde dönüşü veya kısa erişim kullan; kişisel hareket sınırları için nitelikli antrenöre danış."
+          },
+          "stopSignal": {
+            "en": "Stop for back, hip, knee, shoulder or wrist pain, especially during the turn.",
+            "tr": "Özellikle dönüşte bel, kalça, diz, omuz veya bilek ağrısında dur."
+          },
+          "mediaBrief": {
+            "en": "Original rear-side three-quarter view and foot inset show comfortable whole-body turn, no fixed angle target.",
+            "tr": "Özgün arka üç çeyrek görünüm ve ayak yakın planı rahat bütün-vücut dönüşünü gösterir; sabit açı hedefi yok."
+          },
+          "prerequisites": [
+            "boxing.straights.double_jab"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.straights.rear_return",
+          "title": {
+            "en": "Recover after the rear straight",
+            "tr": "Arka düzden sonra toparlan"
+          },
+          "objective": {
+            "en": "Return the rear hand and base together before another action.",
+            "tr": "Yeni harekete geçmeden arka eli ve tabanı birlikte geri getir."
+          },
+          "steps": [
+            {
+              "en": "After a slow rear straight, bring the rear hand to the cheek as the turning foot and hip settle back into stance.",
+              "tr": "Yavaş arka düzden sonra dönen ayak ve kalça duruşa yerleşirken arka eli yanağa getir."
+            },
+            {
+              "en": "Avoid leaving the rear shoulder ahead or the hand low. Pause after every return and check both hands and feet.",
+              "tr": "Arka omzu önde veya eli aşağıda bırakma. Her dönüşte durup iki eli ve ayağı kontrol et."
+            }
+          ],
+          "practice": {
+            "en": "Alternate one rear straight and a three-breath guard pause for five repetitions.",
+            "tr": "Beş kez bir arka düz ve üç nefeslik gard duruşu dönüşümlü yap."
+          },
+          "selfChecks": [
+            {
+              "en": "The rear hand arrived home before I began again.",
+              "tr": "Yeniden başlamadan arka el yerine vardı."
+            },
+            {
+              "en": "My stance after the punch matched the stance before it.",
+              "tr": "Yumruk sonrası duruşum öncesindekiyle aynıydı."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a shorter rear-hand path and more time to settle if coordination is hard.",
+            "tr": "Eşgüdüm zorsa arka el yolunu kısalt ve yerleşmek için daha fazla süre ayır."
+          },
+          "stopSignal": {
+            "en": "Stop if repeated turning causes discomfort or dizziness.",
+            "tr": "Tekrarlanan dönüş rahatsızlık veya baş dönmesi yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original side-on sequence includes start, extension, hand return and feet reset as four distinct frames.",
+            "tr": "Özgün yan dizi başlangıç, uzanma, el dönüşü ve ayak yerleşmesini dört ayrı karede gösterir."
+          },
+          "prerequisites": [
+            "boxing.straights.rear_straight"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.straights.one_two",
+          "title": {
+            "en": "Jab then rear straight",
+            "tr": "Jab sonra arka düz"
+          },
+          "objective": {
+            "en": "Link one lead straight and one rear straight while preserving the guard between them.",
+            "tr": "Aradaki gardı koruyarak bir ön ve bir arka düz yumruğu bağla."
+          },
+          "steps": [
+            {
+              "en": "Send a jab and start its return. Then turn into the rear straight while the lead hand comes home; do not send both hands away together.",
+              "tr": "Jabı gönder ve dönüşünü başlat. Ön el yerine gelirken arka düze dön; iki eli aynı anda uzaklaştırma."
+            },
+            {
+              "en": "Finish in the original stance with both hands ready. Make each pair slow enough to identify its two parts.",
+              "tr": "İki el hazır ve ilk duruşunda bitir. Her çifti iki parçasını seçebilecek kadar yavaş yap."
+            }
+          ],
+          "practice": {
+            "en": "Do six slow one-two pairs with a full pause after each pair; imagine a target, never a person.",
+            "tr": "Her çift sonrası tam durarak altı yavaş bir-iki yap; insan değil hayalî hedef düşün."
+          },
+          "selfChecks": [
+            {
+              "en": "The lead hand was returning as the rear hand departed.",
+              "tr": "Arka el çıkarken ön el dönüyordu."
+            },
+            {
+              "en": "I ended in a stance I could step from.",
+              "tr": "Adım atabileceğim bir duruşta bitirdim."
+            }
+          ],
+          "adaptation": {
+            "en": "Separate the pair with an extra guard pause or return to single punches if timing becomes tangled.",
+            "tr": "Zamanlama karışırsa çiftin arasına gard duruşu ekle veya tek yumruklara dön."
+          },
+          "stopSignal": {
+            "en": "Stop if you lose balance or upper-limb pain appears while linking the two actions.",
+            "tr": "İki hareketi bağlarken denge kaybolursa veya kolda ağrı olursa dur."
+          },
+          "mediaBrief": {
+            "en": "Original wide three-quarter demonstration with two distinct numbered phases and a visible final reset; no combination score.",
+            "tr": "Özgün geniş üç çeyrek gösterim, iki ayrı numaralı faz ve görünür son yerleşme; kombinasyon puanı yok."
+          },
+          "prerequisites": [
+            "boxing.straights.rear_return"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 12,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.defence",
+      "title": {
+        "en": "Solo defensive shapes",
+        "tr": "Tek başına savunma şekilleri"
+      },
+      "intro": {
+        "en": "Rehearse planned exits and guard movements without claiming a real attack or reaction time.",
+        "tr": "Gerçek saldırı veya tepki süresi iddiası olmadan planlı çıkış ve gard hareketleri çalış."
+      },
+      "lessons": [
+        {
+          "id": "boxing.defence.distance",
+          "title": {
+            "en": "First defend with distance",
+            "tr": "Önce mesafeyle savun"
+          },
+          "objective": {
+            "en": "Leave an imagined attack line by stepping to a stable position.",
+            "tr": "Hayalî saldırı hattından dengeli konuma adımlayarak çık."
+          },
+          "steps": [
+            {
+              "en": "Mark an imagined line from in front of you. Take one small backward step, recover the trailing foot, then stop in guard.",
+              "tr": "Önünden gelen hayalî bir hat belirle. Küçük bir geri adım at, takip eden ayağı yerleştir ve gardda dur."
+            },
+            {
+              "en": "Repeat with a diagonal exit. These are rehearsed directions, not a tested response to an opponent.",
+              "tr": "Çapraz çıkışla tekrarla. Bunlar rakibe karşı sınanmış tepki değil, prova edilen yönlerdir."
+            }
+          ],
+          "practice": {
+            "en": "Alternate five backward and five diagonal planned exits, resetting the feet and guard each time.",
+            "tr": "Beş geri ve beş çapraz planlı çıkış yap; her seferinde ayakları ve gardı yeniden kur."
+          },
+          "selfChecks": [
+            {
+              "en": "I finished each exit balanced and able to move again.",
+              "tr": "Her çıkışı dengede ve yeniden hareket edebilir halde bitirdim."
+            },
+            {
+              "en": "I did not call this a measured defensive reflex.",
+              "tr": "Bunu ölçülmüş savunma refleksi saymadım."
+            }
+          ],
+          "adaptation": {
+            "en": "Use shorter exits or a supported weight shift when space or balance is limited.",
+            "tr": "Alan veya denge sınırlıysa kısa çıkış veya destekli ağırlık aktarımı kullan."
+          },
+          "stopSignal": {
+            "en": "Stop if an exit approaches an obstacle or makes you stumble.",
+            "tr": "Çıkış engelle yakınlaşır veya tökezletirse dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead line and two exit arrows; no incoming human punch or reflex timer.",
+            "tr": "Özgün üstten hat ve iki çıkış oku; gelen insan yumruğu veya refleks süresi yok."
+          },
+          "prerequisites": [
+            "boxing.straights.one_two"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.defence.cover",
+          "title": {
+            "en": "Compact cover",
+            "tr": "Toplu korunma"
+          },
+          "objective": {
+            "en": "Bring the hands close without losing sight or collapsing the stance.",
+            "tr": "Görüşü veya duruşu kaybetmeden elleri yaklaştır."
+          },
+          "steps": [
+            {
+              "en": "From relaxed guard, bring both hands a little closer to the temples and let elbows settle comfortably toward the body.",
+              "tr": "Rahat garddan iki eli şakaklara biraz yaklaştır ve dirsekleri rahatça gövdeye indir."
+            },
+            {
+              "en": "Take one small step out, then return to ordinary guard. Avoid squeezing so hard that shoulders rise and breathing stops.",
+              "tr": "Küçük bir çıkış adımı at, sonra normal garda dön. Omuzları kaldıracak veya nefesi kesecek kadar sıkma."
+            }
+          ],
+          "practice": {
+            "en": "Practise six cover-step-reset cycles slowly, alternating exit sides.",
+            "tr": "Çıkış yönünü değiştirerek altı yavaş korun-adımla-dön döngüsü yap."
+          },
+          "selfChecks": [
+            {
+              "en": "I could still see the imagined line ahead.",
+              "tr": "Öndeki hayalî hattı hâlâ görebiliyordum."
+            },
+            {
+              "en": "My shoulders relaxed again on returning to guard.",
+              "tr": "Garda dönerken omuzlarım yeniden gevşedi."
+            }
+          ],
+          "adaptation": {
+            "en": "Keep the hands lower within a comfortable range or practise the cover without stepping.",
+            "tr": "Elleri rahat aralıkta biraz daha aşağıda tut veya adım atmadan korunmayı çalış."
+          },
+          "stopSignal": {
+            "en": "Stop if neck or shoulder tension becomes painful or breathing is restricted.",
+            "tr": "Boyun veya omuz gerilimi ağrılı olur ya da nefes kısıtlanırsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original front and side close views show sightline, relaxed shoulders and return to guard.",
+            "tr": "Özgün ön ve yan yakın çekim görüş hattını, rahat omuzları ve garda dönüşü gösterir."
+          },
+          "prerequisites": [
+            "boxing.defence.distance"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.defence.catch_parry",
+          "title": {
+            "en": "Catch and parry rehearsal",
+            "tr": "Karşılama ve yönlendirme provası"
+          },
+          "objective": {
+            "en": "Distinguish a rear-hand catch from a short outside parry against an imagined jab.",
+            "tr": "Hayalî jaba karşı arka elle karşılama ile kısa dışa yönlendirmeyi ayırt et."
+          },
+          "steps": [
+            {
+              "en": "Begin in your stance and imagine a slow jab toward the chin. For the catch, turn the rear palm toward that line close to its guard position; do not reach out.",
+              "tr": "Duruşunu kurup çeneye doğru yavaş jab hayal et. Karşılamada arka avucu gard konumuna yakınken bu hatta çevir; ileri uzanma."
+            },
+            {
+              "en": "Rehearse a small receiving shape with the rear forearm behind the hand. The front hand stays in guard; there is no punch or contact to catch here.",
+              "tr": "Arka önkol elin arkasındayken küçük karşılama şekli prova et. Ön el gardda kalır; burada karşılanacak gerçek yumruk veya temas yoktur."
+            },
+            {
+              "en": "For the outside parry, use the rear hand again: guide it a short distance across the imagined jab line toward the front shoulder, with a small controlled turn. Avoid a wide sweep or pulling the head back.",
+              "tr": "Dışa yönlendirmede yine arka eli kullan: küçük kontrollü dönüşle eli hayalî jab hattında ön omuza doğru kısa mesafe kaydır. Geniş savurma veya başı geriye çekme."
+            },
+            {
+              "en": "Bring the rear hand back to the cheek and reset after either shape. This planned solo drill does not teach reacting to a real punch; live timing needs supervised partner instruction.",
+              "tr": "İki şekilden sonra da arka eli yanağa getirip yeniden kur. Bu planlı solo alıştırma gerçek yumruğa tepki vermeyi öğretmez; canlı zamanlama gözetimli eş öğretimi gerektirir."
+            }
+          ],
+          "practice": {
+            "en": "Do five small rear-hand catches, then five rear-hand outside parries against an imagined jab. Pause at guard after each and name which shape receives and which redirects.",
+            "tr": "Hayalî jaba karşı arka elle beş küçük karşılama, ardından beş dışa yönlendirme yap. Her birinden sonra gardda dur; hangi şeklin karşıladığını, hangisinin yönlendirdiğini söyle."
+          },
+          "selfChecks": [
+            {
+              "en": "I could distinguish receiving from redirecting without a wide hand sweep.",
+              "tr": "Eli geniş savurmadan karşılama ile yönlendirmeyi ayırt edebildim."
+            },
+            {
+              "en": "The front hand stayed in guard and the rear hand returned after each shape.",
+              "tr": "Ön el gardda kaldı; arka el her şekilden sonra yerine döndü."
+            }
+          ],
+          "adaptation": {
+            "en": "Use even smaller hand motions or keep the elbow supported if upper-limb movement is limited.",
+            "tr": "Kol hareketi sınırlıysa eli daha az hareket ettir veya dirseği destekle."
+          },
+          "stopSignal": {
+            "en": "Stop if the shoulder or wrist hurts; do not add an untrained partner strike.",
+            "tr": "Omuz veya bilek ağrırsa dur; eğitimsiz eş yumruğu ekleme."
+          },
+          "mediaBrief": {
+            "en": "Show two labeled rear-hand shapes from front and side: catch near guard, then short outside parry toward the front shoulder. Keep the front guard visible and show the reset. Use an imagined jab line only, without contact or successful-defence claims.",
+            "tr": "Önden ve yandan etiketli iki arka el şekli göster: garda yakın karşılama, ardından ön omuza doğru kısa dışa yönlendirme. Ön gardı ve toparlanmayı göster. Yalnız hayalî jab hattı kullan; temas veya başarılı savunma iddiası yok."
+          },
+          "prerequisites": [
+            "boxing.defence.cover"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.defence.slip",
+          "title": {
+            "en": "Small slips",
+            "tr": "Küçük sıyrılmalar"
+          },
+          "objective": {
+            "en": "Move the head slightly off an imagined straight line while staying over the feet.",
+            "tr": "Ayakların üzerinde kalarak başı hayalî düz hattan biraz çıkar."
+          },
+          "steps": [
+            {
+              "en": "With eyes ahead and guard available, shift a little through ankles, knees and torso to one side; keep the bend modest.",
+              "tr": "Bakış ileride ve gard hazırken ayak bileği, diz ve gövdeden biraz yana kay; eğilmeyi ölçülü tut."
+            },
+            {
+              "en": "Return to the middle, then try the other side. Avoid dropping the head below the hands or folding sharply at the waist.",
+              "tr": "Ortaya dön, sonra diğer tarafı dene. Başı ellerin çok altına düşürme veya belden sert katlanma."
+            }
+          ],
+          "practice": {
+            "en": "Make three slow left-middle-right-middle sequences, with a breath and reset between them.",
+            "tr": "Aralarda nefes ve yeniden yerleşmeyle üç yavaş sol-orta-sağ-orta dizisi yap."
+          },
+          "selfChecks": [
+            {
+              "en": "I could stop at either side without falling forward.",
+              "tr": "İki tarafta da öne düşmeden durabildim."
+            },
+            {
+              "en": "My eyes and guard stayed oriented ahead.",
+              "tr": "Bakışım ve gardım ileride kaldı."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a very small weight shift or skip the head movement if neck or balance symptoms make it unsuitable.",
+            "tr": "Boyun veya denge belirtileri uygunsuz kılıyorsa çok küçük ağırlık aktarımı kullan veya baş hareketini atla."
+          },
+          "stopSignal": {
+            "en": "Stop for dizziness, headache, neck pain or loss of balance.",
+            "tr": "Baş dönmesi, baş ağrısı, boyun ağrısı veya denge kaybında dur."
+          },
+          "mediaBrief": {
+            "en": "Original front wide view marks centre and two modest positions; avoid a large dramatic head drop.",
+            "tr": "Özgün geniş ön görünüm merkez ve iki küçük konumu işaretler; büyük gösterişli baş düşüşünden kaçın."
+          },
+          "prerequisites": [
+            "boxing.defence.catch_parry"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.defence.roll",
+          "title": {
+            "en": "Controlled roll shape",
+            "tr": "Kontrollü yuvarlanma şekli"
+          },
+          "objective": {
+            "en": "Link a small bend and side shift without twisting or rushing.",
+            "tr": "Burulmadan veya acele etmeden küçük bükülme ve yan kaymayı bağla."
+          },
+          "steps": [
+            {
+              "en": "From guard, soften knees a little, move under an imagined high arc, then stand back into a stable stance on the other side.",
+              "tr": "Garddan dizleri biraz yumuşat, hayalî yüksek yayın altından geç ve diğer yanda dengeli duruşa kalk."
+            },
+            {
+              "en": "Keep the arc small and the back comfortable. This rehearses a movement path, not proof that a real hook was avoided.",
+              "tr": "Yayı küçük, beli rahat tut. Bu bir hareket yolu provasıdır; gerçek kroşeden kaçıldığı kanıtı değildir."
+            }
+          ],
+          "practice": {
+            "en": "Try four slow half-rolls each way with a full upright reset after every one.",
+            "tr": "Her yöne dört yavaş yarım yuvarlanma dene; her birinden sonra tamamen dikleş."
+          },
+          "selfChecks": [
+            {
+              "en": "My feet stayed separated and my head returned over the base.",
+              "tr": "Ayaklarım ayrı kaldı ve başım tabanın üzerine döndü."
+            },
+            {
+              "en": "I could breathe and stop anywhere in the path.",
+              "tr": "Yolun herhangi yerinde nefes alıp durabildim."
+            }
+          ],
+          "adaptation": {
+            "en": "Replace the roll with a small lateral step if bending is uncomfortable; there is no required depth.",
+            "tr": "Bükülme rahatsızsa yuvarlanma yerine küçük yan adım kullan; zorunlu derinlik yok."
+          },
+          "stopSignal": {
+            "en": "Stop for dizziness or knee, back or neck pain; do not force a low duck.",
+            "tr": "Baş dönmesi veya diz, bel ya da boyun ağrısında dur; alçak çömelmeyi zorlama."
+          },
+          "mediaBrief": {
+            "en": "Original wide side view of a modest arc and final stance, with no exact depth or avoidance score.",
+            "tr": "Özgün geniş yan görünüm küçük yayı ve son duruşu gösterir; kesin derinlik veya kaçınma puanı yok."
+          },
+          "prerequisites": [
+            "boxing.defence.slip"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.curves",
+      "title": {
+        "en": "Curved punches",
+        "tr": "Kavisli yumruklar"
+      },
+      "intro": {
+        "en": "Introduce hooks and uppercuts as controlled solo shapes after straight punches and a reliable return to guard.",
+        "tr": "Düz yumruk ve güvenilir gard dönüşünden sonra kroşe ve aparkatı kontrollü solo şekiller olarak öğren."
+      },
+      "lessons": [
+        {
+          "id": "boxing.curves.lead_hook",
+          "title": {
+            "en": "Lead hook shape",
+            "tr": "Ön kroşe şekli"
+          },
+          "objective": {
+            "en": "Trace a compact lead-hand arc with the body turning together.",
+            "tr": "Gövde birlikte dönerken ön elle toplu bir yay çiz."
+          },
+          "steps": [
+            {
+              "en": "From guard, rotate comfortably through the feet and trunk as the lead hand traces a short arc toward an imagined side target.",
+              "tr": "Garddan ayak ve gövde boyunca rahatça dön; ön el hayalî yan hedefe kısa yay çizsin."
+            },
+            {
+              "en": "Keep the wrist comfortable and the elbow neither pinned against the ribs nor thrown far behind. Return the hand and stance together.",
+              "tr": "Bileği rahat tut; dirseği ne kaburgaya yapıştır ne de geriye savur. Eli ve duruşu birlikte geri getir."
+            }
+          ],
+          "practice": {
+            "en": "Trace six slow lead hooks in the air with a full guard pause between repetitions.",
+            "tr": "Tekrarlar arasında tam gard duruşuyla havada altı yavaş ön kroşe çiz."
+          },
+          "selfChecks": [
+            {
+              "en": "The arc stayed compact rather than swinging the whole arm behind me.",
+              "tr": "Yay kolu geriye savurmak yerine toplu kaldı."
+            },
+            {
+              "en": "The rear hand and final stance remained available.",
+              "tr": "Arka el ve son duruş hazır kaldı."
+            }
+          ],
+          "adaptation": {
+            "en": "Make a smaller arc or rehearse only the gentle body turn if the arm path is uncomfortable.",
+            "tr": "Kol yolu rahatsızsa yayı küçült veya yalnız yumuşak gövde dönüşünü çalış."
+          },
+          "stopSignal": {
+            "en": "Stop for wrist, elbow, shoulder, back or knee pain; do not strike a bag with an unreviewed shape.",
+            "tr": "Bilek, dirsek, omuz, bel veya diz ağrısında dur; denetlenmemiş şekille torbaya vurma."
+          },
+          "mediaBrief": {
+            "en": "Original overhead hand arc and three-quarter body view; show return to guard, no elbow-angle number or impact.",
+            "tr": "Özgün üstten el yayı ve üç çeyrek gövde görünümü; gard dönüşü göster, dirsek açısı sayısı veya darbe yok."
+          },
+          "prerequisites": [
+            "boxing.defence.roll"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.curves.rear_hook",
+          "title": {
+            "en": "Rear hook shape",
+            "tr": "Arka kroşe şekli"
+          },
+          "objective": {
+            "en": "Coordinate the rear-hand arc with a small turn and an intact lead guard.",
+            "tr": "Arka el yayını küçük dönüş ve korunan ön gardla eşgüdümle."
+          },
+          "steps": [
+            {
+              "en": "Begin in stance, let the rear foot and trunk turn comfortably, and draw a compact rear-hand arc across an imagined line.",
+              "tr": "Duruştan başla; arka ayak ve gövde rahatça dönsün, arka elle hayalî hat üzerinden toplu yay çiz."
+            },
+            {
+              "en": "Keep the lead hand near guard. Let the rear hand return before moving the feet again; do not over-rotate past a balanced base.",
+              "tr": "Ön eli garda yakın tut. Ayakları yeniden oynatmadan arka eli getir; dengeli tabanı geçecek kadar dönme."
+            }
+          ],
+          "practice": {
+            "en": "Practise four very slow rear hooks, reset, then four more from the opposite lead stance.",
+            "tr": "Dört çok yavaş arka kroşe çalış, yerleş, sonra ters ön duruştan dört tane daha yap."
+          },
+          "selfChecks": [
+            {
+              "en": "The opposite hand did not leave guard.",
+              "tr": "Diğer el gardı terk etmedi."
+            },
+            {
+              "en": "I ended able to stop and step, without spinning.",
+              "tr": "Dönüp savrulmadan durup adımlayabilir halde bitirdim."
+            }
+          ],
+          "adaptation": {
+            "en": "Reduce both the turn and arm arc if coordination or joint comfort is limited.",
+            "tr": "Eşgüdüm veya eklem rahatlığı sınırlıysa hem dönüşü hem kol yayını küçült."
+          },
+          "stopSignal": {
+            "en": "Stop if rotational pain appears or you need an uncontrolled extra step.",
+            "tr": "Dönüş ağrısı başlarsa veya kontrolsüz ek adım gerekiyorsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original rear three-quarter shot with small foot-turn inset and static guard-hand marker.",
+            "tr": "Özgün arka üç çeyrek çekim, küçük ayak dönüşü yakın planı ve sabit gard eli işareti."
+          },
+          "prerequisites": [
+            "boxing.curves.lead_hook"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.curves.lead_uppercut",
+          "title": {
+            "en": "Lead uppercut shape",
+            "tr": "Ön aparkat şekli"
+          },
+          "objective": {
+            "en": "Lift a compact lead-hand path without dropping the hand far below guard.",
+            "tr": "Eli gardın çok altına indirmeden toplu ön el yükselişi yap."
+          },
+          "steps": [
+            {
+              "en": "Start with the lead hand near guard. Soften the knees a little, then let the hand rise on a short imagined inside line as the body returns upright.",
+              "tr": "Ön el gard yakınında başlasın. Dizleri biraz yumuşat, sonra gövde dikleşirken el hayalî iç hatta kısa yükselsin."
+            },
+            {
+              "en": "Do not swing from behind the hip or snap the elbow. Bring the hand back to guard before another repetition.",
+              "tr": "Kalça arkasından savurma veya dirseği sertçe açma. Sonraki tekrardan önce eli garda getir."
+            }
+          ],
+          "practice": {
+            "en": "Perform six slow lead uppercut paths at a comfortable height with a full reset.",
+            "tr": "Rahat yükseklikte altı yavaş ön aparkat yolu yap ve tamamen yerleş."
+          },
+          "selfChecks": [
+            {
+              "en": "The hand began and ended close to guard.",
+              "tr": "El garda yakın başlayıp bitti."
+            },
+            {
+              "en": "The knees softened without a deep or painful dip.",
+              "tr": "Dizler derin veya ağrılı çöküş olmadan yumuşadı."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a smaller rise or omit the knee bend if it is uncomfortable.",
+            "tr": "Rahatsızsa yükselişi küçült veya diz bükülmesini çıkar."
+          },
+          "stopSignal": {
+            "en": "Stop for knee, back, shoulder, elbow or wrist pain; do not force a low starting position.",
+            "tr": "Diz, bel, omuz, dirsek veya bilek ağrısında dur; alçak başlangıcı zorlama."
+          },
+          "mediaBrief": {
+            "en": "Original side and front views show short upward hand path from guard, without a deep dip or impact target.",
+            "tr": "Özgün yan ve ön görünüm garddan kısa yukarı el yolunu gösterir; derin çöküş veya darbe hedefi yok."
+          },
+          "prerequisites": [
+            "boxing.curves.rear_hook"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.curves.rear_uppercut",
+          "title": {
+            "en": "Rear uppercut shape",
+            "tr": "Arka aparkat şekli"
+          },
+          "objective": {
+            "en": "Use a compact rear-hand rising path while keeping the lead guard.",
+            "tr": "Ön gardı koruyarak arka elle toplu yükselen yol kullan."
+          },
+          "steps": [
+            {
+              "en": "Begin with both hands ready. Allow a small rear-side turn and a gentle knee-softening while the rear hand rises close to the torso.",
+              "tr": "İki el hazır başla. Arka el gövdeye yakın yükselirken küçük arka taraf dönüşü ve yumuşak diz hareketine izin ver."
+            },
+            {
+              "en": "Finish without throwing the shoulder upward or reaching far past the stance; return the rear hand and settle the feet.",
+              "tr": "Omzu yukarı savurmadan veya duruşu aşan erişim olmadan bitir; arka eli ve ayakları yerine getir."
+            }
+          ],
+          "practice": {
+            "en": "Make five rear uppercut paths slowly and pause after each to check the lead hand.",
+            "tr": "Beş arka aparkat yolunu yavaşça yap ve her birinde ön eli kontrol etmek için dur."
+          },
+          "selfChecks": [
+            {
+              "en": "The lead hand stayed available near guard.",
+              "tr": "Ön el garda yakın hazır kaldı."
+            },
+            {
+              "en": "The movement finished balanced, not leaning behind the target.",
+              "tr": "Hareket hedefin arkasına eğilmeden dengede bitti."
+            }
+          ],
+          "adaptation": {
+            "en": "Keep the rear turn minimal or rehearse the hand path alone if the coordinated move is uncomfortable.",
+            "tr": "Eşgüdümlü hareket rahatsızsa arka dönüşü azalt veya yalnız el yolunu çalış."
+          },
+          "stopSignal": {
+            "en": "Stop for back, knee or upper-limb pain, or if you must hold your breath to finish.",
+            "tr": "Bel, diz veya kol ağrısında ya da bitirmek için nefes tutman gerekiyorsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original rear-side and front split view: short inside rising path, lead guard and final reset.",
+            "tr": "Özgün arka yan ve ön iki bölmeli görünüm: kısa iç yükseliş, ön gard ve son yerleşme."
+          },
+          "prerequisites": [
+            "boxing.curves.lead_uppercut"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.curves.targets",
+          "title": {
+            "en": "Change imagined target level",
+            "tr": "Hayalî hedef düzeyini değiştir"
+          },
+          "objective": {
+            "en": "Distinguish head and body lines without changing into a reach or a deep bend.",
+            "tr": "Uzanmaya veya derin eğilmeye dönüşmeden baş ve gövde hattını ayır."
+          },
+          "steps": [
+            {
+              "en": "Visualise two empty points at different heights. For the lower point, soften knees slightly and redirect the path while keeping the head over the feet.",
+              "tr": "Farklı yükseklikte iki boş nokta hayal et. Alçak nokta için dizleri hafif yumuşat, baş ayakların üzerinde kalırken yolu yeniden yönlendir."
+            },
+            {
+              "en": "Alternate one comfortable straight at the higher line and one controlled curved shape at the lower line. Never punch a person or object.",
+              "tr": "Yüksek hatta rahat bir düz, alçak hatta kontrollü bir kavisli şekil dönüşümlü yap. İnsana veya nesneye vurma."
+            }
+          ],
+          "practice": {
+            "en": "Trace four high-low pairs with a guard reset after each pair and no demand for exact height.",
+            "tr": "Her çift sonrası gard dönüşüyle dört yüksek-alçak çift izle; kesin yükseklik hedefi yok."
+          },
+          "selfChecks": [
+            {
+              "en": "I changed level without falling over the lead foot.",
+              "tr": "Ön ayağın üzerine düşmeden düzey değiştirdim."
+            },
+            {
+              "en": "The hands returned to guard after both paths.",
+              "tr": "İki yoldan sonra eller garda döndü."
+            }
+          ],
+          "adaptation": {
+            "en": "Choose two closer, comfortable imaginary levels or keep both at the same level if bending is unsuitable.",
+            "tr": "Bükülme uygun değilse birbirine yakın rahat iki hayalî düzey seç veya ikisini aynı düzeyde tut."
+          },
+          "stopSignal": {
+            "en": "Stop if lowering the target produces knee, back or shoulder pain.",
+            "tr": "Hedefi alçaltmak diz, bel veya omuz ağrısı yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original side view marks two imagined empty target lines and a modest body-level change; no numerical angle or hit animation.",
+            "tr": "Özgün yan görünüm iki hayalî boş hedef hattını ve küçük gövde düzeyi değişimini gösterir; sayısal açı veya isabet animasyonu yok."
+          },
+          "prerequisites": [
+            "boxing.curves.rear_uppercut"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.combinations",
+      "title": {
+        "en": "Short combinations",
+        "tr": "Kısa kombinasyonlar"
+      },
+      "intro": {
+        "en": "Join familiar shapes in short, explainable sequences; each ends with guard and balance.",
+        "tr": "Tanıdık şekilleri kısa, anlaşılır dizilerde bağla; her biri gard ve dengede biter."
+      },
+      "lessons": [
+        {
+          "id": "boxing.combinations.double_jab_cross",
+          "title": {
+            "en": "Double jab, rear straight",
+            "tr": "Çift jab, arka düz"
+          },
+          "objective": {
+            "en": "Use the second jab as a separate action before the rear straight.",
+            "tr": "Arka düzden önce ikinci jabı ayrı hareket olarak kullan."
+          },
+          "steps": [
+            {
+              "en": "Send jab, return, jab, return, then rear straight. Count the three starts from guard aloud while learning.",
+              "tr": "Jab, dönüş, jab, dönüş, sonra arka düz gönder. Öğrenirken garddan üç çıkışı sesli say."
+            },
+            {
+              "en": "Keep the feet quiet and the rear hand ready during both jabs. After the rear straight, bring it home before stepping away.",
+              "tr": "İki jab sırasında ayakları sakin, arka eli hazır tut. Arka düzden sonra uzaklaşmadan önce eli yerine getir."
+            }
+          ],
+          "practice": {
+            "en": "Perform five slow three-punch sequences, each followed by a backward exit and full reset.",
+            "tr": "Beş yavaş üçlü dizi yap; her birinden sonra geri çıkıp tam yerleş."
+          },
+          "selfChecks": [
+            {
+              "en": "I could pause between the two jabs without losing the sequence.",
+              "tr": "İki jab arasında diziyi kaybetmeden durabildim."
+            },
+            {
+              "en": "Only one hand left guard at a time.",
+              "tr": "Bir anda yalnız bir el garddan ayrıldı."
+            }
+          ],
+          "adaptation": {
+            "en": "Add a full guard pause between every action or return to the two-jab lesson.",
+            "tr": "Her hareket arasına tam gard duruşu ekle veya çift jab dersine dön."
+          },
+          "stopSignal": {
+            "en": "Stop when pace makes the hands hang low or the exit becomes unsafe.",
+            "tr": "Tempo elleri aşağı bırakırsa veya çıkış güvensizleşirse dur."
+          },
+          "mediaBrief": {
+            "en": "Original wide three-quarter sequence with 1-1-2 captions and a clearly visible backward exit, no order score.",
+            "tr": "Özgün geniş üç çeyrek dizide 1-1-2 altyazısı ve belirgin geri çıkış; sıra puanı yok."
+          },
+          "prerequisites": [
+            "boxing.curves.targets"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.combinations.one_two_hook",
+          "title": {
+            "en": "One-two, lead hook",
+            "tr": "Bir-iki, ön kroşe"
+          },
+          "objective": {
+            "en": "Add one compact curved action after two controlled straights.",
+            "tr": "İki kontrollü düzden sonra bir toplu kavisli hareket ekle."
+          },
+          "steps": [
+            {
+              "en": "Jab and return, rear straight and return, then draw the lead hook arc. Keep each action distinct before linking the rhythm.",
+              "tr": "Jab ve dönüş, arka düz ve dönüş, sonra ön kroşe yayı çiz. Ritmi bağlamadan önce her hareketi ayrı tut."
+            },
+            {
+              "en": "The hook begins from a recovered lead guard, not from a hand left extended after the jab. End with both hands ready.",
+              "tr": "Kroşe jabdan sonra uzatılmış elden değil, yeniden kurulmuş ön garddan başlar. İki el hazır bitir."
+            }
+          ],
+          "practice": {
+            "en": "Trace four slow 1-2-hook sequences with a complete rest and stance reset between them.",
+            "tr": "Aralarında tam ara ve duruş dönüşüyle dört yavaş 1-2-kroşe dizisi çiz."
+          },
+          "selfChecks": [
+            {
+              "en": "The hook was compact rather than an arm swing from behind.",
+              "tr": "Kroşe geriden kol savurma yerine topluydu."
+            },
+            {
+              "en": "My stance could support a step after the third action.",
+              "tr": "Üçüncü hareketten sonra duruşum bir adımı destekleyebilirdi."
+            }
+          ],
+          "adaptation": {
+            "en": "Practise 1-2 alone or use a smaller final arc until the sequence is comfortable.",
+            "tr": "Dizi rahatlayana kadar yalnız 1-2 çalış veya son yayı küçült."
+          },
+          "stopSignal": {
+            "en": "Stop for shoulder, elbow or rotational pain, or when the third action pulls you off balance.",
+            "tr": "Omuz, dirsek veya dönüş ağrısında ya da üçüncü hareket dengeni bozarsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original three-quarter demonstration with separate jab, rear straight, compact hook frames and full guard recovery.",
+            "tr": "Özgün üç çeyrek gösterimde ayrı jab, arka düz, toplu kroşe kareleri ve tam gard dönüşü."
+          },
+          "prerequisites": [
+            "boxing.combinations.double_jab_cross"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.combinations.one_two_uppercut",
+          "title": {
+            "en": "One-two, lead uppercut",
+            "tr": "Bir-iki, ön aparkat"
+          },
+          "objective": {
+            "en": "Follow two straights with a small inside rising path while retaining balance.",
+            "tr": "İki düzden sonra dengeyi koruyarak küçük iç yükseliş ekle."
+          },
+          "steps": [
+            {
+              "en": "Complete the jab and rear straight as separate actions. After the rear hand returns, soften the knees slightly and lift the lead hand on its short inside line.",
+              "tr": "Jab ve arka düzü ayrı ayrı bitir. Arka el dönünce dizleri hafif yumuşat ve ön eli kısa iç hattında yükselt."
+            },
+            {
+              "en": "Do not dive forward to create the uppercut. Return upright with the lead hand back at guard.",
+              "tr": "Aparkat için öne dalma. Ön el gardda olacak şekilde dikleş."
+            }
+          ],
+          "practice": {
+            "en": "Make four careful sequences at a speaking pace; pause after each to check both knees and hands.",
+            "tr": "Konuşabilecek tempoda dört dikkatli dizi yap; her birinde dizleri ve elleri kontrol etmek için dur."
+          },
+          "selfChecks": [
+            {
+              "en": "The uppercut started near guard, not below the waist.",
+              "tr": "Aparkat bel altından değil, garda yakın başladı."
+            },
+            {
+              "en": "I could stop after the third action without an extra step.",
+              "tr": "Üçüncü hareketten sonra ek adım olmadan durabildim."
+            }
+          ],
+          "adaptation": {
+            "en": "Replace the uppercut with a short lead-hand reach or omit the knee movement if uncomfortable.",
+            "tr": "Rahatsızsa aparkatı kısa ön el uzanmasıyla değiştir veya diz hareketini çıkar."
+          },
+          "stopSignal": {
+            "en": "Stop for back, knee or arm pain, or if breathing becomes strained.",
+            "tr": "Bel, diz veya kol ağrısında ya da nefes zorlanırsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original side and front split view distinguishes the straight line from the final short rising line; no impact.",
+            "tr": "Özgün yan ve ön iki bölmeli görünüm düz hattı son kısa yükselen hattan ayırır; darbe yok."
+          },
+          "prerequisites": [
+            "boxing.combinations.one_two_hook"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.combinations.defend_return",
+          "title": {
+            "en": "Planned defend-and-return",
+            "tr": "Planlı savunma ve dönüş"
+          },
+          "objective": {
+            "en": "Rehearse a small exit followed by a single straight without claiming reaction skill.",
+            "tr": "Tepki becerisi iddia etmeden küçük çıkıştan sonra tek düz çalış."
+          },
+          "steps": [
+            {
+              "en": "Choose the sequence before starting: cover, diagonal step, reset, jab. Move on your own cue; nobody is attacking.",
+              "tr": "Başlamadan diziyi seç: korun, çapraz adım, yerleş, jab. Kendi işaretinle hareket et; kimse saldırmıyor."
+            },
+            {
+              "en": "The step must end in balance before the jab. Finish with a hand return and a backward exit.",
+              "tr": "Jabdan önce adım dengede bitmeli. El dönüşü ve geri çıkışla tamamla."
+            }
+          ],
+          "practice": {
+            "en": "Do three rehearsals to each diagonal side, slowly enough to name all five parts.",
+            "tr": "Beş parçayı adlandırabilecek kadar yavaş, her çapraz tarafa üç prova yap."
+          },
+          "selfChecks": [
+            {
+              "en": "I did not punch while still falling into the step.",
+              "tr": "Adıma doğru düşerken yumruk atmadım."
+            },
+            {
+              "en": "I understand this does not test response to a real opponent.",
+              "tr": "Bunun gerçek rakibe tepkiyi sınamadığını biliyorum."
+            }
+          ],
+          "adaptation": {
+            "en": "Use cover-step-reset only, without a punch, if the full chain is tiring or uncomfortable.",
+            "tr": "Tam zincir yorucu veya rahatsızsa yumruksuz korun-adımla-yerleş yap."
+          },
+          "stopSignal": {
+            "en": "Stop if you rush into an obstacle or the sequence causes pain or dizziness.",
+            "tr": "Engele doğru acele edersen veya dizi ağrı ya da baş dönmesi yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original wide floor diagram shows a self-cued five-step sequence; no opponent, incoming strike or reflex score.",
+            "tr": "Özgün geniş zemin şeması kişinin kendi işaretiyle beş adımı gösterir; rakip, gelen yumruk veya refleks puanı yok."
+          },
+          "prerequisites": [
+            "boxing.combinations.one_two_uppercut"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.combinations.angle_exit",
+          "title": {
+            "en": "Combination and angle exit",
+            "tr": "Kombinasyon ve açılı çıkış"
+          },
+          "objective": {
+            "en": "Finish a short combination by changing the line and restoring guard.",
+            "tr": "Kısa kombinasyonu hattı değiştirip gardı kurarak bitir."
+          },
+          "steps": [
+            {
+              "en": "Choose either jab-cross or jab-jab-cross. After the last hand returns, make one small side step or pivot to an open line.",
+              "tr": "Jab-cross veya jab-jab-cross seç. Son el döndükten sonra boş hatta küçük yan adım veya pivot yap."
+            },
+            {
+              "en": "Keep the exit separate at first. Count 'hands home, then feet' to avoid moving with both hands away.",
+              "tr": "Önce çıkışı ayrı tut. İki el uzaktayken hareket etmemek için 'eller yerinde, sonra ayaklar' diye say."
+            }
+          ],
+          "practice": {
+            "en": "Perform five combinations, alternating a side-step and a modest pivot exit.",
+            "tr": "Beş kombinasyon yap; yan adım ve küçük pivot çıkışını dönüşümlü kullan."
+          },
+          "selfChecks": [
+            {
+              "en": "Both hands were back before my exit began.",
+              "tr": "Çıkış başlamadan iki elim dönmüştü."
+            },
+            {
+              "en": "The exit ended in a stance I could continue from.",
+              "tr": "Çıkış devam edebileceğim duruşta bitti."
+            }
+          ],
+          "adaptation": {
+            "en": "Choose the side step instead of pivoting if rotation is uncomfortable; reduce the combination to one jab.",
+            "tr": "Dönüş rahatsızsa pivot yerine yan adım seç; kombinasyonu tek jaba indir."
+          },
+          "stopSignal": {
+            "en": "Stop if the exit crosses the feet, approaches an obstacle, or causes joint pain.",
+            "tr": "Çıkış ayakları çaprazlar, engele yaklaşır veya eklem ağrısı yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead path and wide performer view show clear punch-return-exit phases with no success score.",
+            "tr": "Özgün üstten yol ve geniş oyuncu görünümü ayrı yumruk-dönüş-çıkış fazlarını gösterir; başarı puanı yok."
+          },
+          "prerequisites": [
+            "boxing.combinations.defend_return"
+          ],
+          "sourceIds": [
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.rounds",
+      "title": {
+        "en": "Build a round",
+        "tr": "Raunt kur"
+      },
+      "intro": {
+        "en": "Apply a small number of cues in short solo rounds. Time is a practice aid, not a fitness or technique score.",
+        "tr": "Kısa solo rauntlarda az sayıda ipucu uygula. Süre bir çalışma yardımcısıdır; kondisyon veya teknik puanı değildir."
+      },
+      "lessons": [
+        {
+          "id": "boxing.rounds.short_round",
+          "title": {
+            "en": "A short quality round",
+            "tr": "Kısa ve temiz raunt"
+          },
+          "objective": {
+            "en": "Keep one simple theme for a short interval without chasing a punch count.",
+            "tr": "Yumruk sayısı kovalamadan kısa sürede tek basit tema koru."
+          },
+          "steps": [
+            {
+              "en": "Choose jab and guard return as the only theme. Work for up to one easy minute, pausing whenever the shape or breathing changes.",
+              "tr": "Tek tema olarak jab ve gard dönüşünü seç. Şekil veya nefes değişirse durarak en çok bir rahat dakika çalış."
+            },
+            {
+              "en": "Rest and reflect on one cue only. A round is useful even when you stop early; quality does not require a fixed number of punches.",
+              "tr": "Dinlen ve yalnız bir ipucunu düşün. Erken dursan da raunt yararlıdır; kalite sabit yumruk sayısı gerektirmez."
+            }
+          ],
+          "practice": {
+            "en": "Try one 60-second ceiling round with optional pauses, then name one action you could repeat.",
+            "tr": "İsteğe bağlı duraklamalarla üst sınırı 60 saniye olan tek raunt dene, sonra tekrarlayabileceğin bir hareketi adlandır."
+          },
+          "selfChecks": [
+            {
+              "en": "I kept the chosen theme clear instead of adding extra techniques.",
+              "tr": "Ek teknik eklemek yerine seçilen temayı açık tuttum."
+            },
+            {
+              "en": "I took a pause when breathing or control asked for it.",
+              "tr": "Nefes veya kontrol gerektirdiğinde ara verdim."
+            }
+          ],
+          "adaptation": {
+            "en": "Work for 20-30 seconds or replace punches with guard and easy steps if needed.",
+            "tr": "Gerekirse 20-30 saniye çalış veya yumruk yerine gard ve kolay adım kullan."
+          },
+          "stopSignal": {
+            "en": "Stop for dizziness, chest pain, unusual breathlessness or a sudden technique breakdown.",
+            "tr": "Baş dönmesi, göğüs ağrısı, olağandışı nefes darlığı veya ani teknik bozulmada dur."
+          },
+          "mediaBrief": {
+            "en": "Original single fixed wide shot and simple optional timer; no punch score, fatigue estimate or dramatic impact.",
+            "tr": "Özgün tek sabit geniş çekim ve basit isteğe bağlı sayaç; yumruk puanı, yorgunluk tahmini veya darbe yok."
+          },
+          "prerequisites": [
+            "boxing.combinations.angle_exit"
+          ],
+          "sourceIds": [
+            "england_boxing_level1",
+            "cdc_activity"
+          ],
+          "minutes": 8,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.rounds.footwork_round",
+          "title": {
+            "en": "A movement-only round",
+            "tr": "Yalnız hareket rauntu"
+          },
+          "objective": {
+            "en": "Sustain a short planned footwork pattern without crossing the feet.",
+            "tr": "Ayakları çaprazlamadan kısa planlı adım örüntüsünü sürdür."
+          },
+          "steps": [
+            {
+              "en": "Choose forward, back, side, reset as a four-part loop. Keep hands in guard and use no punches for this round.",
+              "tr": "Dört parçalı döngü seç: ileri, geri, yan, yerleş. Eller gardda kalsın; bu rauntta yumruk yok."
+            },
+            {
+              "en": "Move slowly enough to stop after any step. Change direction only after the base is restored.",
+              "tr": "Her adımda durabilecek kadar yavaş git. Yönü ancak taban yeniden kurulduktan sonra değiştir."
+            }
+          ],
+          "practice": {
+            "en": "Repeat the loop for up to one minute, then pause and note where spacing drifted.",
+            "tr": "Döngüyü en çok bir dakika tekrarla, sonra durup açıklığın nerede kaydığını not et."
+          },
+          "selfChecks": [
+            {
+              "en": "I could stop balanced after every segment.",
+              "tr": "Her bölümden sonra dengede durabildim."
+            },
+            {
+              "en": "I noticed and corrected foot spacing before moving again.",
+              "tr": "Yeniden hareket etmeden ayak açıklığını fark edip düzelttim."
+            }
+          ],
+          "adaptation": {
+            "en": "Use a smaller loop or weight shifts only when travel space or balance is limited.",
+            "tr": "Yol veya denge sınırlıysa daha küçük döngü veya yalnız ağırlık aktarımı kullan."
+          },
+          "stopSignal": {
+            "en": "Stop if you stumble, the floor becomes slippery, or joint pain appears.",
+            "tr": "Tökezlersen, zemin kayarsa veya eklem ağrısı olursa dur."
+          },
+          "mediaBrief": {
+            "en": "Original overhead four-direction floor loop and wide front stance view; no footwork grade.",
+            "tr": "Özgün üstten dört yönlü zemin döngüsü ve geniş ön duruş görünümü; ayak çalışması notu yok."
+          },
+          "prerequisites": [
+            "boxing.rounds.short_round"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.rounds.imagined_target",
+          "title": {
+            "en": "One imagined target",
+            "tr": "Tek hayalî hedef"
+          },
+          "objective": {
+            "en": "Choose a consistent empty target line without increasing reach to chase it.",
+            "tr": "Hedefi kovalamak için uzanmayı artırmadan tutarlı boş hedef hattı seç."
+          },
+          "steps": [
+            {
+              "en": "Pick a point in empty air within comfortable reach. Use a jab, rear straight and pause in guard while keeping eyes on the same point.",
+              "tr": "Rahat erişimde havada bir nokta seç. Aynı noktaya bakarken jab, arka düz ve gard duruşu yap."
+            },
+            {
+              "en": "If you would need to lean, take a small step first and reset. Accuracy here is your own path check, not a camera-measured hit.",
+              "tr": "Eğilmen gerekecekse önce küçük adım atıp yerleş. Buradaki isabet kendi yol kontrolündür; kameranın ölçtüğü vuruş değil."
+            }
+          ],
+          "practice": {
+            "en": "Work up to 45 seconds on one target, then change to another comfortable empty point for a second short set.",
+            "tr": "Tek hedefte en çok 45 saniye çalış, sonra ikinci kısa set için başka rahat boş nokta seç."
+          },
+          "selfChecks": [
+            {
+              "en": "I did not lengthen my reach by leaning.",
+              "tr": "Eğilerek erişimimi uzatmadım."
+            },
+            {
+              "en": "I could return to guard and see the imagined point again.",
+              "tr": "Garda dönüp hayalî noktayı yeniden görebildim."
+            }
+          ],
+          "adaptation": {
+            "en": "Keep the point closer or use only hand tracing if stepping is unsuitable.",
+            "tr": "Adım uygun değilse noktayı yaklaştır veya yalnız el izleme yap."
+          },
+          "stopSignal": {
+            "en": "Stop if aiming causes shoulder pain, neck strain or a loss of balance.",
+            "tr": "Hedefleme omuz ağrısı, boyun gerilimi veya denge kaybı yaparsa dur."
+          },
+          "mediaBrief": {
+            "en": "Original empty translucent target dot at two positions, three-quarter view and no hit marker or precision score.",
+            "tr": "Özgün boş yarı saydam hedef noktası iki konumda, üç çeyrek görünüm; isabet işareti veya hassasiyet puanı yok."
+          },
+          "prerequisites": [
+            "boxing.rounds.footwork_round"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "england_boxing_level1"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.rounds.pace",
+          "title": {
+            "en": "Change pace on purpose",
+            "tr": "Temponu bilinçli değiştir"
+          },
+          "objective": {
+            "en": "Move between easy and moderate self-chosen rhythms while preserving full returns.",
+            "tr": "Tam dönüşü koruyarak kendin seçtiğin kolay ve orta ritim arasında geç."
+          },
+          "steps": [
+            {
+              "en": "Begin with a few very easy jab-return cycles, then use a slightly quicker but still controlled rhythm for a short block.",
+              "tr": "Birkaç çok rahat jab-dönüş döngüsüyle başla, sonra kısa bölümde biraz daha hızlı ama kontrollü ritim kullan."
+            },
+            {
+              "en": "Return to easy pace before fatigue changes guard or breathing. These are subjective rhythms; the app does not measure punch speed.",
+              "tr": "Yorgunluk gardı veya nefesi değiştirmeden kolay tempoya dön. Bunlar öznel ritimlerdir; uygulama yumruk hızını ölçmez."
+            }
+          ],
+          "practice": {
+            "en": "Do three cycles of 20 seconds easy, up to 10 seconds moderate, then rest as needed.",
+            "tr": "Üç kez 20 saniye kolay, en çok 10 saniye orta tempo ve gerektiği kadar dinlenme yap."
+          },
+          "selfChecks": [
+            {
+              "en": "I could name the moment control began to fade and slow down.",
+              "tr": "Kontrolün azalmaya başladığı anı fark edip yavaşlayabildim."
+            },
+            {
+              "en": "The hand still returned fully in both rhythms.",
+              "tr": "İki ritimde de el tamamen döndü."
+            }
+          ],
+          "adaptation": {
+            "en": "Keep all blocks easy or reduce work intervals; avoid prescribed exertion targets for health conditions.",
+            "tr": "Tüm bölümleri kolay tut veya çalışma aralıklarını kısalt; sağlık durumlarında sabit efor hedefi dayatma."
+          },
+          "stopSignal": {
+            "en": "Stop immediately for chest pain, dizziness, unusual breathlessness or new joint pain.",
+            "tr": "Göğüs ağrısı, baş dönmesi, olağandışı nefes darlığı veya yeni eklem ağrısında hemen dur."
+          },
+          "mediaBrief": {
+            "en": "Original side-by-side easy/moderate examples show equal guard returns; no velocity, heart-rate or effort score.",
+            "tr": "Özgün kolay/orta yan yana örnekler eşit gard dönüşünü gösterir; hız, nabız veya efor puanı yok."
+          },
+          "prerequisites": [
+            "boxing.rounds.imagined_target"
+          ],
+          "sourceIds": [
+            "england_boxing_level1",
+            "cdc_activity"
+          ],
+          "minutes": 10,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.rounds.personal_plan",
+          "title": {
+            "en": "Plan your own short round",
+            "tr": "Kendi kısa rauntunu planla"
+          },
+          "objective": {
+            "en": "Choose a manageable theme, work window and rest before starting.",
+            "tr": "Başlamadan yönetilebilir tema, çalışma süresi ve dinlenme seç."
+          },
+          "steps": [
+            {
+              "en": "Choose one footwork pattern, one straight-punch pattern and one planned exit. Put them in an order you can explain aloud.",
+              "tr": "Bir ayak örüntüsü, bir düz yumruk örüntüsü ve bir planlı çıkış seç. Sesli anlatabileceğin sıraya koy."
+            },
+            {
+              "en": "Pick a short time ceiling and a rest option. A changed plan after symptoms or fatigue is good judgement, not failure.",
+              "tr": "Kısa süre üst sınırı ve dinlenme seçeneği belirle. Belirti veya yorgunlukta planı değiştirmek başarısızlık değil, iyi karardır."
+            }
+          ],
+          "practice": {
+            "en": "Write or say a three-part plan, practise one easy round, then note one part to repeat next time.",
+            "tr": "Üç parçalı planı yaz veya söyle, bir rahat raunt çalış, sonra gelecek sefere tekrarlanacak bir parçayı not et."
+          },
+          "selfChecks": [
+            {
+              "en": "I could explain each action's place in the sequence.",
+              "tr": "Dizide her hareketin yerini açıklayabildim."
+            },
+            {
+              "en": "My plan allowed rest and a safe early stop.",
+              "tr": "Planım dinlenmeye ve güvenli erken bitirmeye izin verdi."
+            }
+          ],
+          "adaptation": {
+            "en": "Choose only stance and one step if a full round is unsuitable; keep the plan individual rather than copying a fixed workload.",
+            "tr": "Tam raunt uygun değilse yalnız duruş ve tek adım seç; sabit yükü kopyalamak yerine planı kişiselleştir."
+          },
+          "stopSignal": {
+            "en": "Stop or revise the plan if symptoms, pain or lost balance appear.",
+            "tr": "Belirti, ağrı veya denge kaybı olursa dur ya da planı değiştir."
+          },
+          "mediaBrief": {
+            "en": "Original editable-looking three-card plan storyboard: movement, technique, exit, with a visible rest choice.",
+            "tr": "Özgün düzenlenebilir görünümlü üç kart plan: hareket, teknik, çıkış; dinlenme seçeneği görünür."
+          },
+          "prerequisites": [
+            "boxing.rounds.pace"
+          ],
+          "sourceIds": [
+            "england_boxing_level1",
+            "cdc_activity"
+          ],
+          "minutes": 12,
+          "evidenceMode": "self_report"
+        }
+      ]
+    },
+    {
+      "id": "boxing.integration",
+      "title": {
+        "en": "Independent practice",
+        "tr": "Bağımsız çalışma"
+      },
+      "intro": {
+        "en": "Review the chain, rehearse it twice, then complete a self-directed solo round without a claimed mastery score.",
+        "tr": "Zinciri gözden geçir, iki kez prova et, sonra ustalık puanı iddiası olmadan kendi solo rauntunu tamamla."
+      },
+      "lessons": [
+        {
+          "id": "boxing.integration.skill_review",
+          "title": {
+            "en": "Check the whole chain",
+            "tr": "Bütün zinciri kontrol et"
+          },
+          "objective": {
+            "en": "Identify the parts you can perform and the parts that still need slow practice.",
+            "tr": "Yapabildiğin ve yavaş tekrar gerektiren parçaları ayırt et."
+          },
+          "steps": [
+            {
+              "en": "In order, rebuild stance and guard, move forward and back, jab and return, rear straight and return, then make one small planned exit.",
+              "tr": "Sırayla duruş ve gardı kur, ileri-geri hareket et, jab ve dönüş, arka düz ve dönüş yap, sonra küçük planlı çıkış yap."
+            },
+            {
+              "en": "Add a compact hook or uppercut only if its separate lesson felt comfortable. Mark anything uncertain for repeat rather than hiding it in a fast sequence.",
+              "tr": "Küçük kroşe veya aparkatı yalnız ayrı dersi rahat geldiyse ekle. Belirsiz parçayı hızlı dizide gizlemek yerine tekrar için işaretle."
+            }
+          ],
+          "practice": {
+            "en": "Walk through the chain three times, speaking the action names and pausing at guard after each.",
+            "tr": "Hareket adlarını söyleyip her birinden sonra gardda durarak zinciri üç kez geç."
+          },
+          "selfChecks": [
+            {
+              "en": "I could name one strength and one movement to practise again.",
+              "tr": "Bir güçlü yönümü ve tekrar çalışacağım bir hareketi adlandırabildim."
+            },
+            {
+              "en": "I did not use speed to cover a missing return or unstable step.",
+              "tr": "Eksik dönüşü veya dengesiz adımı örtmek için hıza başvurmadım."
+            }
+          ],
+          "adaptation": {
+            "en": "Review only the first three elements or omit curved punches; an honest partial chain still informs the next practice.",
+            "tr": "Yalnız ilk üç parçayı gözden geçir veya kavisli yumrukları çıkar; dürüst kısmi zincir bile sonraki çalışmayı yönlendirir."
+          },
+          "stopSignal": {
+            "en": "Stop for pain, dizziness, unusual breathlessness or a loss of safe space.",
+            "tr": "Ağrı, baş dönmesi, olağandışı nefes darlığı veya güvenli alan kaybında dur."
+          },
+          "mediaBrief": {
+            "en": "Original seven-card recap storyboard shows one clean action per card and a user-chosen repeat marker; no grades.",
+            "tr": "Özgün yedi kartlık özet her kartta temiz bir hareket ve kullanıcı seçimi tekrar işareti gösterir; not yok."
+          },
+          "prerequisites": [
+            "boxing.rounds.personal_plan"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "boxing_canada_competition",
+            "england_boxing_level1"
+          ],
+          "minutes": 12,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.integration.two_round_rehearsal",
+          "title": {
+            "en": "Two short rehearsal rounds",
+            "tr": "İki kısa prova rauntu"
+          },
+          "objective": {
+            "en": "Sustain a chosen theme, rest, and repeat while keeping the same safe base.",
+            "tr": "Seçilen temayı sürdür, dinlen ve aynı güvenli tabanla tekrarla."
+          },
+          "steps": [
+            {
+              "en": "Round one: simple footwork and two straight punches. Rest as long as needed. Round two: the same base with one optional curved punch or planned exit.",
+              "tr": "Birinci raunt: basit ayak çalışması ve iki düz yumruk. Gerektiği kadar dinlen. İkinci raunt: aynı tabanla isteğe bağlı bir kavisli yumruk veya planlı çıkış."
+            },
+            {
+              "en": "Keep each work window short enough to preserve control. Change or omit the optional element when quality falls; there is no fixed output target.",
+              "tr": "Her çalışma aralığını kontrolü koruyacak kadar kısa tut. Kalite düşerse isteğe bağlı parçayı değiştir veya çıkar; sabit çıktı hedefi yok."
+            }
+          ],
+          "practice": {
+            "en": "Try two easy rounds of up to one minute each with an unhurried rest between; note one difference you felt.",
+            "tr": "Aralarında acele etmeden dinlenerek en çok birer dakikalık iki rahat raunt dene; hissettiğin bir farkı not et."
+          },
+          "selfChecks": [
+            {
+              "en": "My hands and feet returned to a usable starting position in both rounds.",
+              "tr": "İki rauntta da ellerim ve ayaklarım kullanılabilir başlangıca döndü."
+            },
+            {
+              "en": "I adjusted the second round based on the first rather than forcing a preset workload.",
+              "tr": "Önceden belirlenmiş yükü zorlamak yerine ikinci rauntu ilkine göre uyarladım."
+            }
+          ],
+          "adaptation": {
+            "en": "Use shorter rounds, longer rest, or one round only when needed; condition-specific exercise limits belong with a clinician.",
+            "tr": "Gerektiğinde daha kısa raunt, uzun ara veya tek raunt kullan; duruma özel egzersiz sınırları sağlık uzmanıyla belirlenir."
+          },
+          "stopSignal": {
+            "en": "Stop for chest pain, dizziness, unusual breathlessness, new pain or loss of control.",
+            "tr": "Göğüs ağrısı, baş dönmesi, olağandışı nefes darlığı, yeni ağrı veya kontrol kaybında dur."
+          },
+          "mediaBrief": {
+            "en": "Original two-panel round storyboard with optional rest and editable work windows; no endurance score or camera verdict.",
+            "tr": "Özgün iki panelli raunt panosu, isteğe bağlı ara ve ayarlanabilir çalışma aralıkları; dayanıklılık puanı veya kamera hükmü yok."
+          },
+          "prerequisites": [
+            "boxing.integration.skill_review"
+          ],
+          "sourceIds": [
+            "england_boxing_level1",
+            "cdc_activity"
+          ],
+          "minutes": 14,
+          "evidenceMode": "self_report"
+        },
+        {
+          "id": "boxing.integration.independent_round",
+          "title": {
+            "en": "Your independent solo round",
+            "tr": "Bağımsız solo rauntun"
+          },
+          "objective": {
+            "en": "Choose, perform and reflect on a complete non-contact shadowboxing plan.",
+            "tr": "Tam temassız gölge boksu planını seç, uygula ve değerlendir."
+          },
+          "steps": [
+            {
+              "en": "Write a short plan: stance and footwork, a straight combination, a controlled curved shape if comfortable, and a planned exit. Identify a rest and stop option before beginning.",
+              "tr": "Kısa plan yaz: duruş ve adım, düz kombinasyon, rahatsa kontrollü kavisli şekil ve planlı çıkış. Başlamadan dinlenme ve durma seçeneğini belirle."
+            },
+            {
+              "en": "Work one self-chosen easy round, then reflect on balance, guard recovery and breathing. Record what you practised and what to revisit; the app cannot certify boxing skill.",
+              "tr": "Kendi seçtiğin bir rahat raunt çalış, sonra dengeyi, gard dönüşünü ve nefesi değerlendir. Çalıştığını ve yeniden bakacağını kaydet; uygulama boks becerisini belgelendiremez."
+            }
+          ],
+          "practice": {
+            "en": "Complete one round of a comfortable length, followed by a spoken or written review of two strengths and one next practice goal.",
+            "tr": "Rahat sürede bir raunt yap; ardından iki güçlü yön ve bir sonraki çalışma hedefini sözlü veya yazılı gözden geçir."
+          },
+          "selfChecks": [
+            {
+              "en": "I chose the sequence and could explain why each part was included.",
+              "tr": "Diziyi ben seçtim ve her parçanın neden bulunduğunu açıklayabildim."
+            },
+            {
+              "en": "I stopped, rested or adapted when needed and named a realistic next goal.",
+              "tr": "Gerektiğinde durup dinlendim veya uyarladım ve gerçekçi bir sonraki hedef belirledim."
+            }
+          ],
+          "adaptation": {
+            "en": "The complete task can be a very short stance-step-jab-return plan; omit any move that is uncomfortable and seek qualified guidance for individual limits.",
+            "tr": "Tam görev çok kısa bir duruş-adım-jab-dönüş planı olabilir; rahatsız eden hareketi çıkar ve kişisel sınırlar için nitelikli destek al."
+          },
+          "stopSignal": {
+            "en": "Stop for chest pain, dizziness, unusual breathlessness, new pain, or an unsafe environment; contact boxing is outside this course.",
+            "tr": "Göğüs ağrısı, baş dönmesi, olağandışı nefes darlığı, yeni ağrı veya güvensiz ortamda dur; temaslı boks bu kursun dışındadır."
+          },
+          "mediaBrief": {
+            "en": "Original wide continuous solo demo with chapter markers for plan, practice, rest and reflection; no opponent, impact, mastery badge or numeric form grade.",
+            "tr": "Özgün geniş kesintisiz solo gösterim; plan, çalışma, dinlenme ve öz değerlendirme bölüm işaretleri; rakip, darbe, ustalık rozeti veya sayısal form notu yok."
+          },
+          "prerequisites": [
+            "boxing.integration.two_round_rehearsal"
+          ],
+          "sourceIds": [
+            "boxing_canada_beginner",
+            "boxing_canada_competition",
+            "england_boxing_level1",
+            "cdc_activity",
+            "acog_pregnancy"
+          ],
+          "minutes": 18,
+          "evidenceMode": "self_report"
+        }
+      ]
+    }
+  ]
+}

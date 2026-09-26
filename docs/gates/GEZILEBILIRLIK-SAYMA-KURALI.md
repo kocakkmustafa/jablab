@@ -1,6 +1,6 @@
 # 🧭 GEZİLEBİLİRLİK SAYMA KURALI — JabLab (J-221, 2026-08-12)
 
-> **Sayı:** katı **6** · gevşek **11** — kapı: `test/reachable_screens_test.dart`.
+> **Sayı (2026-09-26):** katı **8** · gevşek **13** — kapı: `test/reachable_screens_test.dart`.
 > **Bu belge sayıyı DEĞİŞTİRMEZ**, sayının hangi kuralla çıktığını yazar.
 > Gravita'nın uyarısı: *"sekmeleri farklı sayıyorsak iki sayı AYNI ŞEYİ
 > ÖLÇMÜYOR; fark içerik değil SAYMA KURALI olur."*
@@ -25,7 +25,7 @@ açılıştan başlayıp **ekranda görünen kontrollere basarak** gezip ulaşt�
 ekranları işaretliyor, sonra **isimli beklenen kümeyle** karşılaştırıyor:
 
 ```
-{onboarding, select, settings, whyNot, course, session}
+{onboarding, select, soloCourse, soloLesson, settings, whyNot, course, session}
 ```
 
 Gravita **desenden türetiyor**, Lissom **elle tutuyor** (deseni bir ekranı
@@ -46,7 +46,7 @@ değil. Bunun sonucu: **karşılama ölçümün İÇİNDE** (aşağı bak) ve
 * **Gevşek okumada 3** — üç perdesi ayrı sayılıyor (yürüyerek ölçülüyor).
 
 `kLooseScreens = kStrictRoutes − 2 + kOnboardingPanels + kSessionStages`
-= `6 − 2 + 3 + 4` = **11**. Çıkarılan 2, katıda birer sayılan **karşılama**
+= `8 − 2 + 3 + 4` = **13**. Çıkarılan 2, katıda birer sayılan **karşılama**
 ve **seans**; yerlerine kendi perdeleri/aşamaları geçiyor.
 
 ---
@@ -90,3 +90,13 @@ nokta bugün **kapalı ama korumasız**: yeni bir ekran eklenip yürüyüşe
 katılmazsa, sayı sessizce eksik kalır ve **hiçbir test ötmez.**
 *Kusur iddiada değil, korumasızlığında* (M-F-436) — kayda geçti, bu turda
 kapatılmadı (ölçüyü değiştirme sınırı).
+
+## 2026-09-26 güncel yöntem
+
+Yukarıdaki tek seferlik tarama ve altı ekran anlatımı tarihsel temeldir.
+Güncel kapı `Scaffold(` adaylarını çalışan kaynak metninden türetir,
+tanıklı tek kök yürüyüşündeki varışlarla karşılaştırır ve altı varılamayan
+adayın gerekçelerini ayrı sınar. Yeni solo kurs ve solo ders ekranları
+ilk açılış kataloğundaki görünür karttan yürünür; ikisi de `push` varışıdır.
+Katı sekiz ekran iki kök varış ve altı gerçek `push` ekranından oluşur.
+Bu widget ölçümü gerçek cihaz, kamera veya mağaza kabulü değildir.

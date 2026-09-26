@@ -8,6 +8,8 @@ import 'content_failure.dart';
 import 'account_bridge.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
+import 'solo_boxing_course.dart';
+import 'solo_boxing_progress.dart';
 import 'pose_model.dart';
 import 'rehearse_material.dart';
 import 'teach_material.dart';
@@ -53,6 +55,8 @@ final class ContentRepository {
   final SessionStore? storeOverride;
 
   static const String libraryAsset = 'assets/content/library.json';
+  static const String soloBoxingCourseAsset =
+      'assets/content/solo_boxing_course.v1.json';
   static const String boxingRuleSetAsset = 'assets/rulesets/boxing@1.0.0.json';
 
   static const String cuesAsset = 'assets/content/cues.en.json';
@@ -137,6 +141,17 @@ final class ContentRepository {
     final Directory dir =
         historyDirectoryOverride ?? await getApplicationSupportDirectory();
     return JsonlSessionStore(sessionFileFor(dir, accountUserId));
+  }
+
+  Future<SoloBoxingCourse> loadSoloBoxingCourse() async =>
+      SoloBoxingCourse.fromJsonString(await _loadString(soloBoxingCourseAsset));
+
+  Future<SoloCourseProgressStore> openSoloProgressStore({
+    String? accountUserId,
+  }) async {
+    final Directory directory =
+        historyDirectoryOverride ?? await getApplicationSupportDirectory();
+    return soloProgressStoreFor(directory, accountUserId);
   }
 
   /// Bir dersin tur planını alan kütüphanesinden arar (J-063).

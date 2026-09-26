@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../shell_candidate/shell_models.dart';
 import 'course_locale.dart';
 import 'design_tokens.dart';
+import 'solo_boxing_course_page.dart';
 import 'ui_language.dart';
 
 /// Sayfa B — Kurs Sayfası (design: `docs/design/DESIGN-PANEL-PROMPT.md` §2
@@ -34,6 +35,7 @@ class CoursePage extends StatelessWidget {
     required this.course,
     required this.onStart,
     required this.onOpenSettings,
+    this.onOpenSoloCourse,
     this.onOpenSelect,
     this.isCurrent = false,
     this.resumeLesson,
@@ -49,6 +51,7 @@ class CoursePage extends StatelessWidget {
   final ShellCourse course;
   final void Function(ShellLesson) onStart;
   final VoidCallback onOpenSettings;
+  final VoidCallback? onOpenSoloCourse;
 
   /// Yalnız bu sayfa KÖK/giriş (landing) iken doldurulur — pushla açılan bir
   /// kursta geri gitmek zaten Navigator'ın kendi geri okuna aittir.
@@ -143,6 +146,10 @@ class CoursePage extends StatelessWidget {
                 courseGoal(context, course.id, course.goal),
                 style: JText.body.copyWith(color: JColors.ink2, fontSize: 15),
               ),
+            ],
+            if (onOpenSoloCourse != null) ...<Widget>[
+              const SizedBox(height: 16),
+              SoloCourseEntryCard(onOpen: onOpenSoloCourse!),
             ],
             if (isCurrent) ...<Widget>[
               const SizedBox(height: 20),

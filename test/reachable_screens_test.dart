@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/camera_harness_screen.dart';
+import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/course_page.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_page.dart';
@@ -10,6 +11,7 @@ import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/settings_page.dart';
+import 'package:jablab/app/solo_boxing_course_page.dart';
 import 'package:jablab/shell_candidate/library_pages.dart' show WhyNotPage;
 import 'package:jablab/shell_candidate/session_flow.dart';
 
@@ -62,7 +64,8 @@ import 'app_pump.dart';
 ///   kontrole basarak ulaşılmıyor.
 /// Katı okuma: `pumpAndSettle` ile ulaşılan AYRI rota sayısı. Aşağıdaki
 /// "rota 2-6/6" testinin beklediği küme bu sayıyı zaten kilitliyor.
-const int kStrictRoutes = 6;
+// 2026-09-26: the visible solo-course path adds two witnessed push routes.
+const int kStrictRoutes = 8;
 
 /// Karşılama perdesi sayısı — "perde yürüyüşü" testi bunu YÜRÜYEREK doğrular.
 const int kOnboardingPanels = 3;
@@ -222,6 +225,7 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(JabLabApp(
         onboarding: fresh,
+        repository: ContentRepository(historyDirectoryOverride: tmp),
         navigatorObservers: <NavigatorObserver>[witness],
       ));
     });
@@ -285,6 +289,20 @@ void main() {
     // > ***BİR EKRANIN KAYBOLMASI, BİR BAŞKASININ GELDİĞİ ANLAMINA
     // > GELMEZ.*** Çıkışın İNDİĞİ yer artık ölçülüyor.
     visit(SelectPage, 'select');
+
+    // The first product path must be reachable through the visible catalogue.
+    await t.tap(find.byKey(const Key('open-solo-boxing-course')));
+    await settleUntil(t, find.byKey(const Key('solo-course-progress')));
+    await t.pumpAndSettle();
+    visit(SoloBoxingCoursePage, 'soloCourse');
+    await t.tap(find.byKey(const Key('solo-next-lesson')));
+    await settleUntil(t, find.text('LEARN'));
+    await t.pumpAndSettle();
+    visit(SoloBoxingLessonPage, 'soloLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
 
     // ── 3/6 AYARLAR (push) ────────────────────────────────────────────
     final Finder gear = find.byIcon(Icons.settings_outlined);
@@ -367,6 +385,8 @@ void main() {
     expect(walkArrivals, <String, Arrival>{
       'onboarding': Arrival.root,
       'select': Arrival.root,
+      'soloCourse': Arrival.push,
+      'soloLesson': Arrival.push,
       'settings': Arrival.push,
       'whyNot': Arrival.push,
       'course': Arrival.push,
@@ -584,6 +604,7 @@ void main() {
     const Set<String> knownFloor = <String>{
       'OnboardingPage', 'SelectPage', 'SettingsPage',
       'WhyNotPage', 'CoursePage', 'SessionScreen',
+      'SoloBoxingCoursePage', 'SoloBoxingLessonPage',
     };
     expect(knownFloor.difference(derived), isEmpty,
         reason: 'türetim, bilinen taban ekranlarını kaçırıyor: '
@@ -864,7 +885,7 @@ void main() {
     // düşer ve sabiti güncelleyen kişi, DIŞARIYA verilen sayının da
     // değiştiğini görmek ZORUNDA kalır. J-167'de eksik olan tam buydu —
     // gevşek sayı bir yorumda yaşıyordu, kimse ona çarpmıyordu.
-    expect(kLooseScreens, 11,
+    expect(kLooseScreens, 13,
         reason: 'gevşek ekran sayısı değişti: devir notu, 📊 pano ve aile '
             'karşılaştırması bu sayıyı taşıyor — üçü de güncellenmeli');
   });

@@ -86,8 +86,9 @@ void main() {
     final String short =
         ((listing['playStore'] as Map)['shortDescription'] as String)
             .toLowerCase();
-    expect(desc, contains('camera coaching, punch counting, training '
-        'sessions and subscriptions are not available'));
+    expect(desc, contains('39 original english and turkish solo boxing lessons'));
+    expect(desc, contains('camera coaching, automatic punch counting '
+        'and subscription sales are not available'));
     expect(short, contains('camera coaching is not open'));
     expect(desc, isNot(contains('live solo shadow-boxing with')));
     expect(desc, isNot(contains('active jablab or motion+ subscription')));
