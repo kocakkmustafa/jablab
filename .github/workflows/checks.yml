@@ -41,6 +41,9 @@ jobs:
 
       - run: flutter pub get
 
+      - name: Solo boks kurs manifesti kaynakla aynı mı
+        run: dart run tool/build_solo_boxing_integrity_manifest.dart --check
+
       - name: jablab_engine test bağımlılıkları
         run: (cd packages/jablab_engine && dart pub get)
 

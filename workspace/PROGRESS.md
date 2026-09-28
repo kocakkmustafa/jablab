@@ -1,5 +1,23 @@
 # JabLab — İlerleme Kaydı
 
+## 2026-09-28 — Solo Boks paket ve şema kapısı
+
+Mevcut 39 derslik kurs JSON'u (196.906 bayt; SHA
+`5dc65d034569922ba5c85eeedff5ca9a361e5b61c6c7f8c3b23eebb6415f67c3`)
+tek varlıklı Motion Content manifestiyle doğrulanıyor. Ana ekran ve doğrudan
+kurs rotası doğrulama tamamlanmadan dersi açmıyor. Eksik paket veya SHA
+uyuşmazlığı ve manifestle eşleşse bile 39 ders şemasına aykırılık,
+yeniden denemeye açık geçici okuma gibi gösterilmiyor. Kurs rotasındaki
+hata ekranında görünür geri dönüş var; TR/EN metinler paket sorunu ile
+geçici okuma sorununu ayırıyor.
+
+Bağımsız incelemenin iki P2 bulgusu ve takipteki eksik-paket sınıflandırma
+açığı kapatıldı (`scratch/2026-09-28-jablab-runtime-integrity-peer/ADDENDUM.md`).
+Yerel **49/49** odak Flutter testi, tam analiz, manifest `--check` ve
+`git diff --check` geçti. Ders JSON'u, 39 kimlik/sıra ve ilerleme şeması
+değişmedi. Gerçek video, kişi-ayrık uzman gard/yumruk modeli, native cihaz
+ve kurucu fiziksel kabulü hâlâ açık.
+
 ## 2026-09-28 — Solo boks ilk kursu; içerik köprüsü dar PASS, ürün kabulü açık
 
 İlk solo boks kursu **39 ders** ve canlı v8d kaynak paketinde. Hazırlık,

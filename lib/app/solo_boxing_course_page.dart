@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motion_content/motion_content.dart';
 
+import 'content_failure.dart';
+import 'content_failure_screen.dart';
 import 'content_repository.dart';
 import 'design_tokens.dart';
 import 'solo_boxing_course.dart';
@@ -97,6 +100,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   bool _loading = true;
   bool _opening = false;
   bool _failed = false;
+  ContentFailure? _contentFailure;
   int _generation = 0;
 
   @override
@@ -132,6 +136,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         _loading = true;
         _opening = false;
         _failed = false;
+        _contentFailure = null;
       });
     }
     try {
@@ -147,12 +152,15 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         _progress = progress;
         _loading = false;
       });
-    } on Object {
+    } on Object catch (error) {
       if (!mounted || generation != _generation) return;
       setState(() {
         _progress = null;
         _loading = false;
         _failed = true;
+        if (error is ContentException) {
+          _contentFailure = ContentFailure.from(error);
+        }
       });
     }
   }
@@ -206,6 +214,16 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
 
   @override
   Widget build(BuildContext context) {
+    final ContentFailure? contentFailure = _contentFailure;
+    if (contentFailure != null) {
+      return ContentFailureScreen(
+        failure: contentFailure,
+        onRetry: _load,
+        onExit: Navigator.of(context).canPop()
+            ? () => Navigator.of(context).pop()
+            : null,
+      );
+    }
     final SoloBoxingCourse? course = _course;
     final SoloCourseProgress? progress = _progress;
     return Scaffold(

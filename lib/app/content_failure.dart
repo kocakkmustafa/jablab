@@ -14,18 +14,20 @@
 /// bunu görmez. O yüzden fırlatan taraf sınıfı KENDİSİ beyan ediyor.
 library;
 
+import 'package:motion_content/motion_content.dart';
+
 /// Ne tür bir başarısızlık — ve bu ayrım kullanıcıya SUNULAN EYLEMİ belirler.
 enum ContentFailureKind {
-  /// İçerik okunabildi ama KENDİ İÇİNDE tutarsız: kural setinde olmayan bir
-  /// tekniğe atıf, gerekçesiz kapsam-dışı madde, boş dürüstlük bloğu…
+  /// Paketlenmiş içerik eksik veya KENDİ İÇİNDE tutarsız: eksik kurs varlığı,
+  /// kural setinde olmayan teknik, gerekçesiz kapsam-dışı madde…
   ///
   /// Bu bir bizim-hatamız sınıfıdır ve **kasıtlı olarak bloklayıcıdır**:
   /// uygulama, doğruluğuna kefil olamadığı bir kütüphaneyi göstermek yerine
   /// hiç göstermemeyi seçiyor. Tekrar denemek anlamsız — asset aynı.
   integrity,
 
-  /// İçerik OKUNAMADI veya çözümlenemedi: asset yok, JSON bozuk, I/O hatası.
-  /// Kurulum bozulmuş olabilir; yeniden kurmak GERÇEKTEN çözebilir.
+  /// Geçici okuma/erişim hatası: zaman aşımı veya I/O. İçeriğin paket içinde
+  /// eksik olması bu sınıfa girmez; aynı sürümün tekrar denenmesi onu üretmez.
   unreadable,
 }
 
@@ -52,10 +54,18 @@ final class ContentFailure {
   /// Herhangi bir yakalanmış hatayı sınıflandırır.
   ///
   /// Bilinmeyen bir hata tipi [ContentFailureKind.unreadable] sayılır:
-  /// yanlış tarafa düşmek gerekiyorsa, "yeniden kurmayı dene" demek
+  /// yanlış tarafa düşmek gerekiyorsa, "bir kez yeniden dene" demek
   /// "bu bizim içerik hatamız" demekten daha az yanlıştır — ikincisi
-  /// kullanıcıya bizim adımıza teşhis koyar.
+  /// kullanıcıya bizim adımıza kesin teşhis koyar.
   factory ContentFailure.from(Object error) {
+    if (error is ContentException) {
+      final ContentFailureKind kind = switch (error.error.code) {
+        ContentErrorCode.timeout ||
+        ContentErrorCode.io => ContentFailureKind.unreadable,
+        _ => ContentFailureKind.integrity,
+      };
+      return ContentFailure(kind: kind, detail: error.error.toString());
+    }
     if (error is ContentIntegrityException) {
       return ContentFailure(
         kind: ContentFailureKind.integrity,
