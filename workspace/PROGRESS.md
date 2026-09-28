@@ -1,5 +1,20 @@
 # JabLab — İlerleme Kaydı
 
+## 2026-09-28 — Solo boks ilk kursu; içerik köprüsü dar PASS, ürün kabulü açık
+
+İlk solo boks kursu **39 ders** ve canlı v8d kaynak paketinde. Hazırlık,
+pratik ve ilerleme akışı kaynak/widget düzeyinde denetlendi; gerçek onaylı
+video, eğitmen kişi-ayrık gard/yumruk hata verisi ve tam-kurs form modeli
+**0**. Sabit Motion Core `motion_content` okuyucusu güncel kurs JSON'unu
+SHA ile doğruladı; odak testi **4/4**, bağımsız dar peer PASS
+(`scratch/2026-09-28-jablab-content-bridge-peer-v1/REPORT.md`). Üretim
+manifesti, ekran/oynatıcı, gerçek cihaz ve kurucu fiziksel kabulü açık.
+
+Güncel kurs ve kaynak düzeyi içerik köprüsü `28f6fe8` commitinde mevcut PR #1
+incelemesine taşındı. GitHub Actions'ın üç işi bütçe engeliyle başlamadı;
+bu kaynaklar için yararlı CI, merge veya mağaza kabulü yok. Kanonik devam:
+`holding/plans/MOTION-MODEL-RESUME-2026-09-27.md`.
+
 ## 2026-07-25 — Venture AÇILDI (ayrı repo; kod YOK)
 - Kurucu kararıyla monorepo'dan ayrı repoya kuruldu (`kocakkmustafa/jablab`); plan + kilitli CLAUDE.md + defterler hazır; bundle-id `com.yulalab.jablab` rezerve.
 

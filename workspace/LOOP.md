@@ -1,5 +1,12 @@
 # JabLab — LOOP
 
+## 2026-09-28 güncel kuyruk
+1. PR #1'e taşınan 39 derslik Solo Boks kaynağında Actions bütçe engeli kalkınca son başta yararlı CI al.
+2. Üretim içerik manifesti, gerçek eğitmen gösterimi/altyazı ve uygulama oynatması için ayrı cihaz kabulü yap; gösterim fiziksel pratik kaydı değildir.
+3. Kişi-ayrık uzman gard/yumruk hata etiketi olmadan tam-kurs form modeli fit veya otomatik güvenli-form hükmü yok.
+4. Kurucu bütün dersleri en son toplu test eder; mağaza kapıları ayrıca doğrulanır.
+
+
 ## Oturum protokolü
 1. `../VENTURE.md` + PROGRESS son mühür + DEFTER açık maddeler OKU.
 2. 🔓 **Kod kilidi 2026-07-26'da AÇILDI** (kurucu tetiği verildi). Artık üretim kodu yazılabilir.
