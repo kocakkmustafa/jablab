@@ -87,7 +87,7 @@ void main() {
     await tap(const Key('solo-next-lesson'));
     await capture('jablab-lesson');
     await tap(const Key('solo-mark-practised'));
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < course.lessons.first.selfChecks.length; i++) {
       await tap(Key('solo-check-boxing.start.space-$i'), delta: -600);
     }
     await tap(const Key('solo-mark-complete'));

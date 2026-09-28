@@ -72,5 +72,24 @@ void main() {
       () => SoloBoxingCourse.fromJsonString(jsonEncode(shortCourse)),
       throwsFormatException,
     );
+
+    final Map<String, dynamic> emptyAppendedCheck = parsed();
+    final Map<String, dynamic> lastCheck =
+        ((emptyAppendedCheck['modules'] as List).first['lessons'] as List)
+            .first['selfChecks']
+            .last
+            .cast<String, dynamic>();
+    lastCheck['en'] = '';
+    expect(
+      () => SoloBoxingCourse.fromJsonString(jsonEncode(emptyAppendedCheck)),
+      throwsFormatException,
+    );
+
+    final Map<String, dynamic> nonHttpsSource = parsed();
+    (nonHttpsSource['sources'] as List).last['url'] = 'http://example.com';
+    expect(
+      () => SoloBoxingCourse.fromJsonString(jsonEncode(nonHttpsSource)),
+      throwsFormatException,
+    );
   });
 }

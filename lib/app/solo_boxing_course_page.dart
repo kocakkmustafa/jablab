@@ -429,6 +429,7 @@ class SoloBoxingLessonPage extends StatefulWidget {
     required this.initialProgress,
     required this.accountAtOpen,
     this.accountUserId,
+    this.preparationClock,
   });
 
   final SoloBoxingCourse course;
@@ -438,14 +439,70 @@ class SoloBoxingLessonPage extends StatefulWidget {
   final ValueListenable<String?>? accountUserId;
   final String? accountAtOpen;
 
+  /// Optional clock for deterministic date-boundary tests; never persisted.
+  final DateTime Function()? preparationClock;
+
   @override
   State<SoloBoxingLessonPage> createState() => _SoloBoxingLessonPageState();
 }
 
-class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
+class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
+    with WidgetsBindingObserver {
   late SoloLessonProgress? _progress;
   late List<bool> _checks;
   bool _saving = false;
+  DateTime? _preparedAt;
+  Timer? _preparationExpiry;
+  bool _foreground = true;
+  bool _practisedThisSession = false;
+  int _sessionEpoch = 0;
+  DateTime get _now =>
+      (widget.preparationClock?.call() ?? DateTime.now()).toLocal();
+  bool get _sessionPrepared {
+    final prepared = _preparedAt;
+    final now = _now;
+    return _foreground &&
+        prepared != null &&
+        prepared.year == now.year &&
+        prepared.month == now.month &&
+        prepared.day == now.day;
+  }
+
+  bool get _preparationBlocked => _needsSessionPreparation && !_sessionPrepared;
+  bool get _needsSessionPreparation =>
+      widget.lesson.id != 'boxing.start.space' &&
+      widget.lesson.id != 'boxing.start.breath';
+
+  String _specificPreparation(BuildContext context) {
+    final module = widget.lesson.id.split('.')[1];
+    return switch (module) {
+      'footwork' => UiLanguage.text(
+        context,
+        en: 'Rehearse your stance and small steps at walking pace before changing direction.',
+        tr: 'Yön değiştirmeden önce duruşunu ve küçük adımları yürüyüş hızında prova et.',
+      ),
+      'straights' => UiLanguage.text(
+        context,
+        en: 'Recall stance and guard, then extend and return a few easy straight punches into open air.',
+        tr: 'Duruş ve gardı hatırla; ardından açık havaya birkaç rahat düz yumruk uzatıp geri çek.',
+      ),
+      'defence' => UiLanguage.text(
+        context,
+        en: 'Rehearse small supported weight shifts and your known guard before the defence task.',
+        tr: 'Savunma görevinden önce küçük destekli ağırlık geçişlerini ve bildiğin gardı prova et.',
+      ),
+      'curves' => UiLanguage.text(
+        context,
+        en: 'Move shoulders and elbows gently; rehearse a small, slow arc into open air without impact.',
+        tr: 'Omuz ve dirsekleri rahatça hareket ettir; temas olmadan küçük, yavaş bir kavis prova et.',
+      ),
+      _ => UiLanguage.text(
+        context,
+        en: 'Rehearse familiar stance, a small step and known punches slowly before the new sequence.',
+        tr: 'Yeni diziden önce bildiğin duruşu, küçük adımı ve tanıdık yumrukları yavaşça prova et.',
+      ),
+    };
+  }
 
   @override
   void initState() {
@@ -453,23 +510,70 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
     _progress = widget.initialProgress;
     _checks = List<bool>.filled(widget.lesson.selfChecks.length, false);
     widget.accountUserId?.addListener(_accountChanged);
+    WidgetsBinding.instance.addObserver(this);
+    _foreground =
+        WidgetsBinding.instance.lifecycleState == null ||
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
   }
 
   @override
   void dispose() {
+    _preparationExpiry?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     widget.accountUserId?.removeListener(_accountChanged);
     super.dispose();
   }
 
   void _accountChanged() {
     if (widget.accountUserId?.value != widget.accountAtOpen && mounted) {
+      _resetPreparation();
       Navigator.of(context).maybePop();
     }
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _foreground = state == AppLifecycleState.resumed;
+    if (!_foreground) {
+      _resetPreparation();
+    } else if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _resetPreparation() {
+    _preparationExpiry?.cancel();
+    _preparationExpiry = null;
+    _sessionEpoch++;
+    if (!mounted) return;
+    setState(() {
+      _preparedAt = null;
+      _practisedThisSession = false;
+      _checks = List<bool>.filled(widget.lesson.selfChecks.length, false);
+    });
+  }
+
+  void _acknowledgePreparation(bool value) {
+    _resetPreparation();
+    if (!value || !_foreground) return;
+    final now = _now;
+    setState(() => _preparedAt = now);
+    // Calendar invalidation is not a physiological warm-up duration claim.
+    _preparationExpiry = Timer(
+      DateTime(now.year, now.month, now.day + 1).difference(now),
+      _resetPreparation,
+    );
+  }
+
   Future<void> _save({required bool complete}) async {
-    if (_saving || widget.accountUserId?.value != widget.accountAtOpen) return;
+    if (_saving ||
+        widget.accountUserId?.value != widget.accountAtOpen ||
+        _preparationBlocked ||
+        (complete && _needsSessionPreparation && !_practisedThisSession)) {
+      return;
+    }
     setState(() => _saving = true);
+    final sessionEpoch = _sessionEpoch;
     try {
       final SoloCourseProgress updated = complete
           ? await widget.store.markCompleted(
@@ -483,6 +587,9 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
       }
       setState(() {
         _progress = updated.forLesson(widget.lesson, widget.course.version);
+        if (!complete && sessionEpoch == _sessionEpoch && _sessionPrepared) {
+          _practisedThisSession = true;
+        }
         _saving = false;
       });
     } on Object {
@@ -550,6 +657,69 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
               style: JText.bodyMuted,
             ),
           ],
+          if (_needsSessionPreparation) ...<Widget>[
+            const SizedBox(height: 12),
+            _section(
+              context,
+              UiLanguage.text(
+                context,
+                en: 'PREPARE THIS SESSION',
+                tr: 'BU OTURUMA HAZIRLAN',
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    UiLanguage.text(
+                      context,
+                      en: 'Clear your space. Begin with comfortable walking in place and gentle joint movement, then gradually rehearse familiar boxing movements at low effort without tiring yourself. Take the preparation time you need; a short lesson or reading this card does not establish readiness. You may read without performing the movement.',
+                      tr: 'Alanı boşalt. Yerinde rahat yürüyüş ve nazik eklem hareketleriyle başla; ardından tanıdık boks hareketlerini yorulmadan düşük eforla kademeli prova et. Hazırlığa gereken zamanı ayır; kısa bir ders veya bu kartı okumak hazır oluşunu göstermez. Hareketi yapmadan okuyabilirsin.',
+                    ),
+                    style: JText.body,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(_specificPreparation(context), style: JText.body),
+                  const SizedBox(height: 8),
+                  Text(
+                    UiLanguage.text(
+                      context,
+                      en: 'After practice, step and breathe more slowly; stop for pain, dizziness or feeling unwell.',
+                      tr: 'Çalışma sonunda adımı ve nefesi yavaşlat; ağrı, baş dönmesi veya kötü hissetmede dur.',
+                    ),
+                    style: JText.bodyMuted,
+                  ),
+                  CheckboxListTile(
+                    key: const Key('solo-session-prepared'),
+                    contentPadding: EdgeInsets.zero,
+                    value: _sessionPrepared,
+                    onChanged: _saving || !_foreground
+                        ? null
+                        : (value) => _acknowledgePreparation(value ?? false),
+                    title: Text(
+                      UiLanguage.text(
+                        context,
+                        en: 'I prepared for this session · self-report, not a readiness check',
+                        tr: 'Bu oturuma hazırlandım · öz beyan, hazır oluş kontrolü değil',
+                      ),
+                      style: JText.bodyMuted,
+                    ),
+                  ),
+                  if (_sessionPrepared)
+                    TextButton(
+                      key: const Key('solo-session-break'),
+                      onPressed: _resetPreparation,
+                      child: Text(
+                        UiLanguage.text(
+                          context,
+                          en: 'After a break · prepare again',
+                          tr: 'Moladan sonra · yeniden hazırlan',
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 18),
           _section(
             context,
@@ -582,7 +752,17 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
           _section(
             context,
             UiLanguage.text(context, en: 'PRACTISE', tr: 'ÇALIŞ'),
-            Text(_copy(context, lesson.practice), style: JText.body),
+            _preparationBlocked
+                ? Text(
+                    UiLanguage.text(
+                      context,
+                      en: 'Prepare above before physical practice. You can read the lesson without trying the movements; this does not record physical practice.',
+                      tr: 'Fiziksel çalışmadan önce yukarıdaki hazırlığı yap. Hareketleri denemeden dersi okuyabilirsin; bu, fiziksel pratik olarak kaydedilmez.',
+                    ),
+                    key: const Key('solo-preparation-required'),
+                    style: JText.body,
+                  )
+                : Text(_copy(context, lesson.practice), style: JText.body),
           ),
           const SizedBox(height: 12),
           _section(
@@ -601,8 +781,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
                       _copy(context, lesson.selfChecks[i]),
                       style: JText.body.copyWith(fontSize: 15),
                     ),
-                    onChanged: (bool? value) =>
-                        setState(() => _checks[i] = value ?? false),
+                    onChanged: _saving || _preparationBlocked
+                        ? null
+                        : (bool? value) =>
+                              setState(() => _checks[i] = value ?? false),
                   ),
               ],
             ),
@@ -639,7 +821,9 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
           const SizedBox(height: 18),
           FilledButton(
             key: const Key('solo-mark-practised'),
-            onPressed: _saving ? null : () => _save(complete: false),
+            onPressed: _saving || _preparationBlocked
+                ? null
+                : () => _save(complete: false),
             child: Text(
               UiLanguage.text(
                 context,
@@ -656,7 +840,11 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage> {
           OutlinedButton(
             key: const Key('solo-mark-complete'),
             onPressed:
-                _saving || !practised || !_checks.every((bool value) => value)
+                _saving ||
+                    _preparationBlocked ||
+                    (_needsSessionPreparation && !_practisedThisSession) ||
+                    !practised ||
+                    !_checks.every((bool value) => value)
                 ? null
                 : () => _save(complete: true),
             child: Text(
