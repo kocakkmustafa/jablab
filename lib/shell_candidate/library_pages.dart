@@ -28,10 +28,9 @@ class LibraryPage extends StatelessWidget {
       children: <Widget>[
         Text(library.title, style: Theme.of(context).textTheme.headlineSmall),
         const SizedBox(height: 12),
-        ...library.items.map((ShellItem i) => _ItemCard(
-              item: i,
-              onTap: () => onOpenItem(i),
-            )),
+        ...library.items.map(
+          (ShellItem i) => _ItemCard(item: i, onTap: () => onOpenItem(i)),
+        ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           key: const Key('why-not-button'),
@@ -68,9 +67,9 @@ class _ItemCard extends StatelessWidget {
             ? const Icon(Icons.chevron_right)
             : Chip(
                 key: Key('soon-${item.id}'),
-                label: Text(item.waveLabel.isEmpty
-                    ? 'Soon'
-                    : 'Soon · ${item.waveLabel}'),
+                label: Text(
+                  item.waveLabel.isEmpty ? 'Soon' : 'Soon · ${item.waveLabel}',
+                ),
               ),
         onTap: onTap,
       ),
@@ -117,25 +116,31 @@ class ItemPage extends StatelessWidget {
             const SizedBox(height: 8),
             ...item.courses
                 .where((ShellCourse c) => c.lessons.isNotEmpty)
-                .map((ShellCourse c) => Card(
-                      child: ListTile(
-                        key: Key('course-${c.id}'),
-                        title: Text(c.title),
-                        subtitle: Text(c.goal),
-                        trailing: Text('${c.lessons.length} lessons'),
-                        onTap: () => onOpenCourse(c),
-                      ),
-                    )),
+                .map(
+                  (ShellCourse c) => Card(
+                    child: ListTile(
+                      key: Key('course-${c.id}'),
+                      title: Text(c.title),
+                      subtitle: Text(c.goal),
+                      trailing: Text('${c.lessons.length} lessons'),
+                      onTap: () => onOpenCourse(c),
+                    ),
+                  ),
+                ),
           ],
           if (item.pendingNotes.isNotEmpty) ...<Widget>[
             const SizedBox(height: 16),
-            Text('Not open yet in this section',
-                style: theme.textTheme.titleSmall),
+            Text(
+              'Not open yet in this section',
+              style: theme.textTheme.titleSmall,
+            ),
             const SizedBox(height: 6),
-            ...item.pendingNotes.map((String n) => Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text('• $n', style: theme.textTheme.bodySmall),
-                )),
+            ...item.pendingNotes.map(
+              (String n) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text('• $n', style: theme.textTheme.bodySmall),
+              ),
+            ),
           ],
         ],
       ),
@@ -163,25 +168,28 @@ class CoursePage extends StatelessWidget {
           // Kilitli ders LİSTEDE KALIR ama açılmaz. Gizlemek kapsamı
           // saklardı; açmak ölçemediğimiz bir beceriye seans vermek olurdu.
           // Üçüncü yol: göster, açma, SEBEBİNİ yaz.
-          ...course.lessons.map((ShellLesson l) => Card(
-                child: ListTile(
-                  key: Key('lesson-${l.id}'),
-                  enabled: !l.isLocked,
-                  leading: Icon(l.isLocked
-                      ? Icons.lock_outline
-                      : Icons.play_circle_outline),
-                  title: Text(l.title),
-                  subtitle: l.isLocked
-                      ? Text(l.lockedReason!,
-                          key: Key('locked-why-${l.id}'),
-                          style: theme.textTheme.bodySmall)
-                      : (l.subtitle.isEmpty ? null : Text(l.subtitle)),
-                  isThreeLine: l.isLocked,
-                  trailing:
-                      l.minutes == 0 ? null : Text('${l.minutes} min'),
-                  onTap: l.isLocked ? null : () => onStart(l),
+          ...course.lessons.map(
+            (ShellLesson l) => Card(
+              child: ListTile(
+                key: Key('lesson-${l.id}'),
+                enabled: !l.isLocked,
+                leading: Icon(
+                  l.isLocked ? Icons.lock_outline : Icons.play_circle_outline,
                 ),
-              )),
+                title: Text(l.title),
+                subtitle: l.isLocked
+                    ? Text(
+                        l.lockedReason!,
+                        key: Key('locked-why-${l.id}'),
+                        style: theme.textTheme.bodySmall,
+                      )
+                    : (l.subtitle.isEmpty ? null : Text(l.subtitle)),
+                isThreeLine: l.isLocked,
+                trailing: l.minutes == 0 ? null : Text('${l.minutes} min'),
+                onTap: l.isLocked ? null : () => onStart(l),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -189,33 +197,44 @@ class CoursePage extends StatelessWidget {
 }
 
 class WhyNotPage extends StatelessWidget {
-  const WhyNotPage({super.key, required this.library});
+  const WhyNotPage({
+    super.key,
+    required this.library,
+    this.title,
+    this.intro,
+    this.exclusions,
+  });
 
   final ShellLibrary library;
+  final String? title;
+  final String? intro;
+  final List<ShellExclusion>? exclusions;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Why isn't my art here?")),
+      appBar: AppBar(title: Text(title ?? "Why isn't my art here?")),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: <Widget>[
-          Text(library.whyNotIntro, style: theme.textTheme.bodyMedium),
+          Text(intro ?? library.whyNotIntro, style: theme.textTheme.bodyMedium),
           const SizedBox(height: 16),
-          ...library.exclusions.map((ShellExclusion e) => Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(e.title, style: theme.textTheme.titleSmall),
-                      const SizedBox(height: 6),
-                      Text(e.reason, style: theme.textTheme.bodySmall),
-                    ],
-                  ),
+          ...(exclusions ?? library.exclusions).map(
+            (ShellExclusion e) => Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(e.title, style: theme.textTheme.titleSmall),
+                    const SizedBox(height: 6),
+                    Text(e.reason, style: theme.textTheme.bodySmall),
+                  ],
                 ),
-              )),
+              ),
+            ),
+          ),
         ],
       ),
     );

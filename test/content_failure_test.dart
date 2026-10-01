@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_failure.dart';
 import 'package:jablab/app/content_failure_screen.dart';
+import 'package:motion_content/motion_content.dart';
 
 /// DÜRÜST HATA EKRANI değişmezleri (J-079) — UI-BRIEF §4/3.
 ///
@@ -28,8 +29,32 @@ void main() {
           ContentFailureKind.integrity);
     });
 
+    test('paket içi eksik varlık bütünlük; geçici erişim okunamazdır', () {
+      for (final ContentErrorCode code in <ContentErrorCode>[
+        ContentErrorCode.missingAsset,
+        ContentErrorCode.schema,
+        ContentErrorCode.hashMismatch,
+      ]) {
+        expect(
+          ContentFailure.from(ContentException(ContentError(code: code))).kind,
+          ContentFailureKind.integrity,
+          reason: '$code: aynı paket tekrar denenince değişmez',
+        );
+      }
+      for (final ContentErrorCode code in <ContentErrorCode>[
+        ContentErrorCode.timeout,
+        ContentErrorCode.io,
+      ]) {
+        expect(
+          ContentFailure.from(ContentException(ContentError(code: code))).kind,
+          ContentFailureKind.unreadable,
+          reason: '$code: geçici erişim hatası yeniden denenebilir',
+        );
+      }
+    });
+
     test('BİLİNMEYEN hata tipi unreadable tarafına düşer', () {
-      // Yanlış tarafa düşmek gerekiyorsa: "yeniden kurmayı dene" demek,
+      // Yanlış tarafa düşmek gerekiyorsa: "bir kez yeniden dene" demek,
       // "bu bizim içerik hatamız" demekten daha az yanlış — ikincisi
       // kullanıcıya bizim adımıza teşhis koyar.
       expect(ContentFailure.from(const FormatException('bozuk JSON')).kind,
@@ -174,12 +199,13 @@ void main() {
         reason: 'bütünlük hatası bizim hatamız — suç kullanıcıya atılamaz');
   });
 
-  testWidgets('OKUNAMAZ metni yeniden-kurmayı önerir, BİZİM hatamız demez',
+  testWidgets('OKUNAMAZ metni bir yeniden deneme önerir, paket teşhisi koymaz',
       (WidgetTester t) async {
     await pump(t, unreadable);
     final String body =
         t.widget<Text>(find.byKey(const Key('failure-body'))).data!;
-    expect(body.toLowerCase(), contains('reinstall'));
+    expect(body.toLowerCase(), contains('trying again'));
+    expect(body.toLowerCase(), contains('contact support'));
     // Bu sınıfta içeriğin YANLIŞ olduğunu iddia etmiyoruz — okunamadı.
     expect(body.toLowerCase(), isNot(contains('honesty check')));
   });

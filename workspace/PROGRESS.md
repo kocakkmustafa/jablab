@@ -1,5 +1,80 @@
 # JabLab — İlerleme Kaydı
 
+## 2026-10-01 — Taşınabilir CI ve harici referans NO_CALL
+
+PR #1'in üç Actions işinden Android imzasız ve iOS no-codesign derlemeleri
+geçti; motor işindeki 12 kırmızı test, temiz checkout'ta bulunmayan üç
+`motion-core/workspace/artifacts/reference-boxing-{jab,stance}.json` ve
+`reference-sample-synthetic.json` dosyasını kişisel mutlak yoldan okuyordu.
+Jab dosyası 2026-09-21'de 23.739 baytlık iCloud dataless yer tutucusu olarak
+silinmişti; silme makbuzu `holding/migration-evidence/cleanup-2026-09-21/
+authorized-delete-current-dataless-from-134099-20260921.jsonl:77908`.
+Kaynağın içeriği geri kazanılmadı; sentetik veya başka kliple doldurulmadı.
+
+Artefakt karşılaştırmaları şimdi yalnız `JABLAB_REFERENCE_ARTIFACT_DIR`
+açıkça verildiğinde çalışıyor. Değişken yoksa 12 test isimli **NO_CALL**;
+değişken yanlış/eksik bir dizini gösterirse kırmızı. Yerel tam motor süitinde
+**127 geçti + 12 NO_CALL**, uygulama testinde **515 geçti**, kasıtlı eksik
+dizin negatif kontrolü kırmızı, `flutter analyze` temiz. CI işi de
+`external reference NO_CALL` adı ve
+GitHub iş özetiyle sınırını görünür tutuyor. Üç farklı `sources` etiketi testi
+artık yalnız metadata tekilliği diyor; J-278'deki ekran kişisi kimliği ve
+tek kaynak çoğunluğu ölçümü hâlâ **açık**. `numericScoresUnlocked=false`,
+`calibrationPending=true`, `thresholdStatus=raw-signal-pending-revision`
+korundu. Özgün artefakt geri kazanımı, bağımsız kişi doğrulaması, kamera
+modeli ve kurucu fiziksel kabulü yeşil CI'dan çıkarılamaz.
+
+## 2026-10-01 — QA oynatıcı eşzamanlı kapanış çiti
+
+Bağımsız beş-app medya incelemesi, `play()` hesap iptalini kendi çağrısı
+içinde bildirdiğinde bekleyen native Future kaydedilmeden portun emekliye
+ayrılabildiğini buldu. Ayrı port fabrikası callback'i de native yuvayı
+sızdırabiliyordu. Her iki yol eski kodda deterministik kırmızı testle
+yeniden üretildi. Native işlem bekleme işareti init/play/pause çağrısından
+önce ayrıldı; fabrika dönüşünde hesap/epoch tekrar okunup yeni port gerekirse
+emekliye alınıyor. Fabrika/init/play/pause eşzamanlı iptal testleri **4/4**,
+ilgili medya ve 292 satır kaynak projeksiyonu **26/26**; hedefli analiz ve
+diff kontrolü temiz. Kanıt:
+`scratch/2026-10-01-jablab-reentrant-media-retirement-v1/REPORT.md`.
+Bağımsız son yama incelemesi dar PASS; yeni P1/P2 yok
+(`scratch/2026-10-01-jablab-reentrant-retire-postfix-peer-v1/REPORT.md`).
+Gerçek native cihaz kabulü açık; üretim kataloğu boş, gerçek medya/model
+kabulü yok.
+
+
+## 2026-09-28 — Solo Boks paket ve şema kapısı
+
+Mevcut 39 derslik kurs JSON'u (196.906 bayt; SHA
+`5dc65d034569922ba5c85eeedff5ca9a361e5b61c6c7f8c3b23eebb6415f67c3`)
+tek varlıklı Motion Content manifestiyle doğrulanıyor. Ana ekran ve doğrudan
+kurs rotası doğrulama tamamlanmadan dersi açmıyor. Eksik paket veya SHA
+uyuşmazlığı ve manifestle eşleşse bile 39 ders şemasına aykırılık,
+yeniden denemeye açık geçici okuma gibi gösterilmiyor. Kurs rotasındaki
+hata ekranında görünür geri dönüş var; TR/EN metinler paket sorunu ile
+geçici okuma sorununu ayırıyor.
+
+Bağımsız incelemenin iki P2 bulgusu ve takipteki eksik-paket sınıflandırma
+açığı kapatıldı (`scratch/2026-09-28-jablab-runtime-integrity-peer/ADDENDUM.md`).
+Yerel **49/49** odak Flutter testi, tam analiz, manifest `--check` ve
+`git diff --check` geçti. Ders JSON'u, 39 kimlik/sıra ve ilerleme şeması
+değişmedi. Gerçek video, kişi-ayrık uzman gard/yumruk modeli, native cihaz
+ve kurucu fiziksel kabulü hâlâ açık.
+
+## 2026-09-28 — Solo boks ilk kursu; içerik köprüsü dar PASS, ürün kabulü açık
+
+İlk solo boks kursu **39 ders** ve canlı v8d kaynak paketinde. Hazırlık,
+pratik ve ilerleme akışı kaynak/widget düzeyinde denetlendi; gerçek onaylı
+video, eğitmen kişi-ayrık gard/yumruk hata verisi ve tam-kurs form modeli
+**0**. Sabit Motion Core `motion_content` okuyucusu güncel kurs JSON'unu
+SHA ile doğruladı; odak testi **4/4**, bağımsız dar peer PASS
+(`scratch/2026-09-28-jablab-content-bridge-peer-v1/REPORT.md`). Üretim
+manifesti, ekran/oynatıcı, gerçek cihaz ve kurucu fiziksel kabulü açık.
+
+Güncel kurs ve kaynak düzeyi içerik köprüsü `28f6fe8` commitinde mevcut PR #1
+incelemesine taşındı. GitHub Actions'ın üç işi bütçe engeliyle başlamadı;
+bu kaynaklar için yararlı CI, merge veya mağaza kabulü yok. Kanonik devam:
+`holding/plans/MOTION-MODEL-RESUME-2026-09-27.md`.
+
 ## 2026-07-25 — Venture AÇILDI (ayrı repo; kod YOK)
 - Kurucu kararıyla monorepo'dan ayrı repoya kuruldu (`kocakkmustafa/jablab`); plan + kilitli CLAUDE.md + defterler hazır; bundle-id `com.yulalab.jablab` rezerve.
 

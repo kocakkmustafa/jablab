@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/camera_harness_screen.dart';
+import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/course_page.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_page.dart';
@@ -10,6 +11,7 @@ import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/settings_page.dart';
+import 'package:jablab/app/solo_boxing_course_page.dart';
 import 'package:jablab/shell_candidate/library_pages.dart' show WhyNotPage;
 import 'package:jablab/shell_candidate/session_flow.dart';
 
@@ -62,7 +64,8 @@ import 'app_pump.dart';
 ///   kontrole basarak ulaşılmıyor.
 /// Katı okuma: `pumpAndSettle` ile ulaşılan AYRI rota sayısı. Aşağıdaki
 /// "rota 2-6/6" testinin beklediği küme bu sayıyı zaten kilitliyor.
-const int kStrictRoutes = 6;
+// 2026-09-26: the visible solo-course path adds two witnessed push routes.
+const int kStrictRoutes = 8;
 
 /// Karşılama perdesi sayısı — "perde yürüyüşü" testi bunu YÜRÜYEREK doğrular.
 const int kOnboardingPanels = 3;
@@ -207,23 +210,30 @@ void main() {
   /// `OnboardingStore.markSeen` `seenOverride != null` ise **erken dönüyor**,
   /// yani kalıcılık yolu hiç çalışmazdı. *Bir test double, gerçeğin kuralını
   /// uygulamaz.*)
-  testWidgets(
-      'A1 · TAM AKIŞ — taze kurulum → karşılama → seçim → oturum → SONUÇ',
-      (WidgetTester t) async {
+  testWidgets('A1 · TAM AKIŞ — taze kurulum → karşılama → seçim → oturum → SONUÇ', (
+    WidgetTester t,
+  ) async {
     // ── ③ TAZE KURULUM ────────────────────────────────────────────────
     final File flagFile = File('${tmp.path}/${OnboardingStore.fileName}');
-    expect(flagFile.existsSync(), isFalse,
-        reason: 'taze kurulum DEĞİL — bayrak zaten diskte, karşılama hiç '
-            'çıkmayacak ve bu yürüyüş ③\'ü ölçemez');
+    expect(
+      flagFile.existsSync(),
+      isFalse,
+      reason:
+          'taze kurulum DEĞİL — bayrak zaten diskte, karşılama hiç '
+          'çıkmayacak ve bu yürüyüş ③\'ü ölçemez',
+    );
     final OnboardingStore fresh = OnboardingStore(fileOverride: flagFile);
 
     final _RouteWitness witness = _RouteWitness();
 
     await t.runAsync(() async {
-      await t.pumpWidget(JabLabApp(
-        onboarding: fresh,
-        navigatorObservers: <NavigatorObserver>[witness],
-      ));
+      await t.pumpWidget(
+        JabLabApp(
+          onboarding: fresh,
+          repository: ContentRepository(historyDirectoryOverride: tmp),
+          navigatorObservers: <NavigatorObserver>[witness],
+        ),
+      );
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
@@ -232,10 +242,14 @@ void main() {
     // tanığı ilk yazımda **tanımlıydı ama BAĞLI DEĞİLDİ**. Kök rota
     // kurulduğunda tanık BİR push görmüş olmalı; görmemişse tanık bağlı
     // değildir ve aşağıdaki her "varış" ölçümü ANLAMSIZDIR.
-    expect(witness.pushes, 1,
-        reason: 'tanık kök rotayı görmedi (${witness.pushes} push) — '
-            'NavigatorObserver bağlı değil, bu yürüyüşün varış KİPİ '
-            'ölçümlerinin hepsi anlamsız olurdu');
+    expect(
+      witness.pushes,
+      1,
+      reason:
+          'tanık kök rotayı görmedi (${witness.pushes} push) — '
+          'NavigatorObserver bağlı değil, bu yürüyüşün varış KİPİ '
+          'ölçümlerinin hepsi anlamsız olurdu',
+    );
 
     int lastPushes = witness.pushes;
 
@@ -243,11 +257,16 @@ void main() {
     /// okur. Tanık son çağrıdan beri yeni bir push gördüyse `push`,
     /// görmediyse `root` (kök rota ya da onun içinde `setState` takası).
     void visit(Type screen, String name) {
-      expect(find.byType(screen), findsWidgets,
-          reason: '$name: kontrole basıldı ama ekran gelmedi — yürüyüş '
-              'modeli yanlış, bu üyelik SAYILAMAZ');
-      final Arrival mode =
-          witness.pushes > lastPushes ? Arrival.push : Arrival.root;
+      expect(
+        find.byType(screen),
+        findsWidgets,
+        reason:
+            '$name: kontrole basıldı ama ekran gelmedi — yürüyüş '
+            'modeli yanlış, bu üyelik SAYILAMAZ',
+      );
+      final Arrival mode = witness.pushes > lastPushes
+          ? Arrival.push
+          : Arrival.root;
       lastPushes = witness.pushes;
       walkedClasses.add(screen.toString());
       walkArrivals[name] = mode;
@@ -261,23 +280,34 @@ void main() {
     int panels = 0;
     while (find.byType(OnboardingPage).evaluate().isNotEmpty) {
       panels++;
-      expect(panels, lessThanOrEqualTo(kOnboardingPanels + 4),
-          reason: 'karşılama kapanmıyor — "Start" son perdede bitirmiyor');
+      expect(
+        panels,
+        lessThanOrEqualTo(kOnboardingPanels + 4),
+        reason: 'karşılama kapanmıyor — "Start" son perdede bitirmiyor',
+      );
       await t.tap(find.byKey(const Key('onboarding-next')));
       await t.pump();
       await t.pump(const Duration(milliseconds: 400));
     }
     walkedPanels = panels;
-    expect(panels, kOnboardingPanels,
-        reason: 'perde sayısı değişti — gevşek ekran sayısı ($kLooseScreens) '
-            'artık yanlış; devir notu ve pano güncellenmeli');
+    expect(
+      panels,
+      kOnboardingPanels,
+      reason:
+          'perde sayısı değişti — gevşek ekran sayısı ($kLooseScreens) '
+          'artık yanlış; devir notu ve pano güncellenmeli',
+    );
 
     // ③'ÜN KALICILIK YARISI — çıkış yalnız EKRANI değiştirmedi, bayrağı
     // DİSKE yazdı. Bu satır olmadan "çıkış var" demek, dönen kullanıcının
     // karşılamayı bir daha görmeyeceğini SÖYLEMEZ.
-    expect(flagFile.existsSync(), isTrue,
-        reason: 'karşılama geçildi ama bayrak diske YAZILMADI — kullanıcı '
-            'her açılışta karşılamayı yeniden görür');
+    expect(
+      flagFile.existsSync(),
+      isTrue,
+      reason:
+          'karşılama geçildi ama bayrak diske YAZILMADI — kullanıcı '
+          'her açılışta karşılamayı yeniden görür',
+    );
 
     // ── 2/6 SEÇİM ─────────────────────────────────────────────────────
     // ⚠️ Eski hâlde burası HİÇ SINANMIYORDU: karşılamayı yürüyen test
@@ -285,6 +315,20 @@ void main() {
     // > ***BİR EKRANIN KAYBOLMASI, BİR BAŞKASININ GELDİĞİ ANLAMINA
     // > GELMEZ.*** Çıkışın İNDİĞİ yer artık ölçülüyor.
     visit(SelectPage, 'select');
+
+    // The first product path must be reachable through the visible catalogue.
+    await t.tap(find.byKey(const Key('open-solo-boxing-course')));
+    await settleUntil(t, find.byKey(const Key('solo-course-progress')));
+    await t.pumpAndSettle();
+    visit(SoloBoxingCoursePage, 'soloCourse');
+    await t.tap(find.byKey(const Key('solo-next-lesson')));
+    await settleUntil(t, find.text('LEARN'));
+    await t.pumpAndSettle();
+    visit(SoloBoxingLessonPage, 'soloLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
 
     // ── 3/6 AYARLAR (push) ────────────────────────────────────────────
     final Finder gear = find.byIcon(Icons.settings_outlined);
@@ -328,8 +372,11 @@ void main() {
     int taps = 0;
     for (SessionStage? s = stageNow(); s != null; s = stageNow()) {
       stages.add(s);
-      expect(taps++, lessThanOrEqualTo(kSessionStages + 2),
-          reason: 'seans kapanmıyor — son aşamada "Done" ekrandan çıkarmıyor');
+      expect(
+        taps++,
+        lessThanOrEqualTo(kSessionStages + 2),
+        reason: 'seans kapanmıyor — son aşamada "Done" ekrandan çıkarmıyor',
+      );
       await t.tap(find.byKey(const Key('advance-button')));
       await t.pump();
       // ⚠️ SABİT SÜRE YETMİYOR — ölçüldü 2026-08-12. Son aşamadaki "Done"
@@ -346,42 +393,67 @@ void main() {
     }
     walkedStages = stages.length;
 
-    expect(stages.length, kSessionStages,
-        reason: 'yürünen aşama sayısı değişti — gevşek ekran sayısı '
-            '($kLooseScreens) artık yanlış; devir notu ve pano '
-            'güncellenmeli. Yürünenler: ${stages.map((SessionStage s) => s.name)}');
+    expect(
+      stages.length,
+      kSessionStages,
+      reason:
+          'yürünen aşama sayısı değişti — gevşek ekran sayısı '
+          '($kLooseScreens) artık yanlış; devir notu ve pano '
+          'güncellenmeli. Yürünenler: ${stages.map((SessionStage s) => s.name)}',
+    );
     // Bir aşamanın ENUM'da olması, ona GİDEN yolun olması değildir.
-    expect(stages, SessionStage.values.toSet(),
-        reason: 'bir aşamaya yürünerek ulaşılamıyor');
+    expect(
+      stages,
+      SessionStage.values.toSet(),
+      reason: 'bir aşamaya yürünerek ulaşılamıyor',
+    );
 
     // AKIŞ KAPANDI: seans POP etti ve kullanıcı kursa döndü. Bir akış,
     // bittiği yerde kullanıcıyı bırakmıyorsa "baştan sona çalışıyor"
     // sayılmaz.
-    expect(witness.pops, greaterThan(0),
-        reason: 'seans hiç POP etmedi — "Done" kullanıcıyı akıştan '
-            'çıkarmıyor, akış SONUÇTA kapanmıyor');
-    expect(find.byType(CoursePage), findsWidgets,
-        reason: 'seans kapandı ama kullanıcı kurs sayfasına dönmedi');
+    expect(
+      witness.pops,
+      greaterThan(0),
+      reason:
+          'seans hiç POP etmedi — "Done" kullanıcıyı akıştan '
+          'çıkarmıyor, akış SONUÇTA kapanmıyor',
+    );
+    expect(
+      find.byType(CoursePage),
+      findsWidgets,
+      reason: 'seans kapandı ama kullanıcı kurs sayfasına dönmedi',
+    );
 
     // ── ⭐ (b) VARIŞ KİPİ — beyansız varış KIRMIZI ─────────────────────
-    expect(walkArrivals, <String, Arrival>{
-      'onboarding': Arrival.root,
-      'select': Arrival.root,
-      'settings': Arrival.push,
-      'whyNot': Arrival.push,
-      'course': Arrival.push,
-      'session': Arrival.push,
-    }, reason: 'bir üyenin VARIŞ KİPİ değişti. Bu sayı-değil-KİP ölçümü, '
-        'eski toplam-assert\'in görünmez kıldığı şeydi: bir ekran artık '
-        'push ile mi geliyor, kökte mi takas ediliyor?');
+    expect(
+      walkArrivals,
+      <String, Arrival>{
+        'onboarding': Arrival.root,
+        'select': Arrival.root,
+        'soloCourse': Arrival.push,
+        'soloLesson': Arrival.push,
+        'settings': Arrival.push,
+        'whyNot': Arrival.push,
+        'course': Arrival.push,
+        'session': Arrival.push,
+      },
+      reason:
+          'bir üyenin VARIŞ KİPİ değişti. Bu sayı-değil-KİP ölçümü, '
+          'eski toplam-assert\'in görünmez kıldığı şeydi: bir ekran artık '
+          'push ile mi geliyor, kökte mi takas ediliyor?',
+    );
 
     final int rootArrivals = walkArrivals.values
         .where((Arrival a) => a == Arrival.root)
         .length;
-    expect(rootArrivals, kRootArrivals,
-        reason: 'kök varış sayısı $kRootArrivals değil $rootArrivals — '
-            'ÜÇÜNCÜ bir kök varış bir BEYAN değil BULGUDUR; sözleşme (b) '
-            'bunu görünür kılmak için var');
+    expect(
+      rootArrivals,
+      kRootArrivals,
+      reason:
+          'kök varış sayısı $kRootArrivals değil $rootArrivals — '
+          'ÜÇÜNCÜ bir kök varış bir BEYAN değil BULGUDUR; sözleşme (b) '
+          'bunu görünür kılmak için var',
+    );
 
     // ⚠️ TANIĞIN VARSAYIMI DA SINANIYOR — VE İLK YAZIMDA YANLIŞTI.
     //
@@ -397,28 +469,45 @@ void main() {
     // etmeye yetmiyor** — dört gerçek varışın dördü de `null`, yani ada
     // bakan bir tanık onları birbirinden ayıramaz ve *sessizce boş* kalır.
     // Bu yüzden tanık **olay** sayıyor.
-    expect(witness.pushedNames.first, '/',
-        reason: 'kök rotanın adı değişti (${witness.pushedNames.first}) — '
-            'tanığın kök/push ayrımı bu varsayıma dayanıyor');
-    expect(witness.pushedNames.skip(1).every((String? n) => n == null), isTrue,
-        reason: 'bir GEZİNME rotası artık AD taşıyor '
-            '(${witness.pushedNames}) — adlar boş olduğu için tanık olay '
-            'sayıyordu; artık ada da bakılabilir, ölçüm GÜÇLENDİRİLEBİLİR');
+    expect(
+      witness.pushedNames.first,
+      '/',
+      reason:
+          'kök rotanın adı değişti (${witness.pushedNames.first}) — '
+          'tanığın kök/push ayrımı bu varsayıma dayanıyor',
+    );
+    expect(
+      witness.pushedNames.skip(1).every((String? n) => n == null),
+      isTrue,
+      reason:
+          'bir GEZİNME rotası artık AD taşıyor '
+          '(${witness.pushedNames}) — adlar boş olduğu için tanık olay '
+          'sayıyordu; artık ada da bakılabilir, ölçüm GÜÇLENDİRİLEBİLİR',
+    );
 
     // ignore: avoid_print
-    print('  A1 TAM AKIŞ · varılan ${walkedClasses.length} ekran '
-        '(push ${walkArrivals.values.where((Arrival a) => a == Arrival.push).length} + '
-        'kök $rootArrivals) · perde $panels · aşama ${stages.length} · '
-        'tanık: ${witness.pushes} push / ${witness.pops} pop');
+    print(
+      '  A1 TAM AKIŞ · varılan ${walkedClasses.length} ekran '
+      '(push ${walkArrivals.values.where((Arrival a) => a == Arrival.push).length} + '
+      'kök $rootArrivals) · perde $panels · aşama ${stages.length} · '
+      'tanık: ${witness.pushes} push / ${witness.pops} pop',
+    );
   });
 
   test('gevşek okuma ①+②: perde ve aşama YÜRÜYÜŞTEN geliyor', () {
     // ⛔ VAKUM MUHAFIZI: yürüyüş koşmadıysa bu kontrol sessizce geçerdi.
-    expect(walkedPanels, isNotNull,
-        reason: 'yürüyüş koşmadı — perde sayısı ölçülmedi, bu kontrol '
-            'ANLAMSIZ olurdu');
-    expect(walkedStages, isNotNull,
-        reason: 'yürüyüş koşmadı — aşama sayısı ölçülmedi');
+    expect(
+      walkedPanels,
+      isNotNull,
+      reason:
+          'yürüyüş koşmadı — perde sayısı ölçülmedi, bu kontrol '
+          'ANLAMSIZ olurdu',
+    );
+    expect(
+      walkedStages,
+      isNotNull,
+      reason: 'yürüyüş koşmadı — aşama sayısı ölçülmedi',
+    );
     expect(walkedPanels, kOnboardingPanels);
     expect(walkedStages, kSessionStages);
   });
@@ -467,8 +556,9 @@ void main() {
         .join('\n');
 
     final Map<String, String> libSrc = <String, String>{};
-    for (final FileSystemEntity e
-        in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity e in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (e is! File || !e.path.endsWith('.dart')) continue;
       libSrc[e.path] = codeOnly(e.readAsStringSync());
     }
@@ -555,7 +645,8 @@ void main() {
     expect(
       derived,
       isNotEmpty,
-      reason: 'VAKUM: `Scaffold(` deseni HİÇ aday bulamadı. Tek kanallı bir '
+      reason:
+          'VAKUM: `Scaffold(` deseni HİÇ aday bulamadı. Tek kanallı bir '
           'türetimin en gerçek riski budur — kanal susarsa "0 varılamayan" '
           'vakum-doğru olarak YEŞİL öter. `lib/` taranmadıysa ya da desen '
           'bozulduysa burası ötmeli.',
@@ -582,13 +673,23 @@ void main() {
     // kusurlu olduğu anlamına gelmez.* Kaynak olarak yanlış, KONTROL olarak
     // doğru → silinmedi, **rütbesi düşürüldü.**
     const Set<String> knownFloor = <String>{
-      'OnboardingPage', 'SelectPage', 'SettingsPage',
-      'WhyNotPage', 'CoursePage', 'SessionScreen',
+      'OnboardingPage',
+      'SelectPage',
+      'SettingsPage',
+      'WhyNotPage',
+      'CoursePage',
+      'SessionScreen',
+      'SoloBoxingCoursePage',
+      'SoloBoxingLessonPage',
     };
-    expect(knownFloor.difference(derived), isEmpty,
-        reason: 'türetim, bilinen taban ekranlarını kaçırıyor: '
-            '${knownFloor.difference(derived)} — desen bozuk, aşağıdaki '
-            '"varılamayan" listesi ANLAMSIZ olurdu');
+    expect(
+      knownFloor.difference(derived),
+      isEmpty,
+      reason:
+          'türetim, bilinen taban ekranlarını kaçırıyor: '
+          '${knownFloor.difference(derived)} — desen bozuk, aşağıdaki '
+          '"varılamayan" listesi ANLAMSIZ olurdu',
+    );
 
     // ── (b) DENKLEMİN "VARILAN" TARAFI — ARTIK YÜRÜYÜŞTEN ──────────────
     //
@@ -603,45 +704,69 @@ void main() {
     //
     // ⛔ VAKUM MUHAFIZI: yürüyüş koşmadıysa küme boş olur ve bölme
     // *"her şey varılamaz"* diye **vakum-doğru** geçerdi.
-    expect(walkedClasses, isNotEmpty,
-        reason: 'A1 yürüyüşü koşmadı — `walkedClasses` boş. Bu bölme '
-            'testinin sonucu ANLAMSIZ olurdu: türetilen her aday '
-            '"varılamayan" sayılırdı ve kapı yine YEŞİL geçerdi');
+    expect(
+      walkedClasses,
+      isNotEmpty,
+      reason:
+          'A1 yürüyüşü koşmadı — `walkedClasses` boş. Bu bölme '
+          'testinin sonucu ANLAMSIZ olurdu: türetilen her aday '
+          '"varılamayan" sayılırdı ve kapı yine YEŞİL geçerdi',
+    );
     final Set<String> walked = walkedClasses;
 
     // (e) POZİTİF KONTROL — elle taban, YÜRÜYÜŞÜN de altında mı? Yürüyüş
     // bir ekranı sessizce atlarsa (kontrol kayboldu, tap ıskaladı) burası
     // öter. *Elle liste kaynak olarak yanlış, KONTROL olarak doğru.*
-    expect(knownFloor.difference(walked), isEmpty,
-        reason: 'yürüyüş, bilinen taban ekranlarına VARAMADI: '
-            '${knownFloor.difference(walked)} — bir kontrol kayboldu ya da '
-            'tap ıskaladı; "varılamayan" kovası YANLIŞ büyür');
-    expect(walked.length, kStrictRoutes,
-        reason: 'yürünen küme ile katı sayı ayrışmış');
+    expect(
+      knownFloor.difference(walked),
+      isEmpty,
+      reason:
+          'yürüyüş, bilinen taban ekranlarına VARAMADI: '
+          '${knownFloor.difference(walked)} — bir kontrol kayboldu ya da '
+          'tap ıskaladı; "varılamayan" kovası YANLIŞ büyür',
+    );
+    expect(
+      walked.length,
+      kStrictRoutes,
+      reason: 'yürünen küme ile katı sayı ayrışmış',
+    );
 
     // (c) ADAY OLUP VARILAMAYAN — kaybolmuyor, adıyla ve GEREKÇESİYLE duruyor.
     const Map<String, String> unreachableWhy = <String, String>{
       'CameraHarnessScreen': 'kDebugMode kapılı — sevk edilen üründe açılmıyor',
-      'ContentFailureScreen': 'yalnız içerik yüklenemezse çizilir; kontrole '
+      'ContentFailureScreen':
+          'yalnız içerik yüklenemezse çizilir; kontrole '
           'basarak ulaşılmıyor',
+      'JabLabAccountStartupFailure':
+          'hesap hizmeti başlatılamazsa uygulama '
+          'kökünde çizilen hata ekranı; normal kurulu oturum yürüyüşünde rota değil',
       'Root': 'uygulama kökünün YÜKLEME iskelesi — ayrı bir ekran değil',
-      'SessionFlowScaffold': 'SessionScreen\'in İÇİNDE kullanılan kabuk '
+      'SessionFlowScaffold':
+          'SessionScreen\'in İÇİNDE kullanılan kabuk '
           'parçası, ayrı rota değil',
       'ItemPage': 'lib/shell_candidate/ — DONDURULMUŞ terfi envanteri',
       'ShellScaffold': 'lib/shell_candidate/ — DONDURULMUŞ terfi envanteri',
     };
     final Set<String> registered = unreachableWhy.keys.toSet();
     final Set<String> unreachable = derived.difference(walked);
-    expect(unreachable, registered,
-        reason: 'ADAY olup VARILAMAYAN küme DEĞİŞTİ.\n'
-            '  ölçülen : ${unreachable.toList()..sort()}\n'
-            '  kayıtlı : ${unreachableWhy.keys.toList()..sort()}\n'
-            'Yeni bir ekran eklenip yürüyüşe katılmadıysa burada görünür — '
-            '"orada bir şey yok" ile "var, varamadım" ayrı kovalardır.');
+    expect(
+      unreachable,
+      registered,
+      reason:
+          'ADAY olup VARILAMAYAN küme DEĞİŞTİ.\n'
+          '  ölçülen : ${unreachable.toList()..sort()}\n'
+          '  kayıtlı : ${unreachableWhy.keys.toList()..sort()}\n'
+          'Yeni bir ekran eklenip yürüyüşe katılmadıysa burada görünür — '
+          '"orada bir şey yok" ile "var, varamadım" ayrı kovalardır.',
+    );
     for (final MapEntry<String, String> e in unreachableWhy.entries) {
-      expect(e.value.length, greaterThan(25),
-          reason: '${e.key} gerekçesiz — varılamayan bir aday, SEBEBİ '
-              'yazılmadan listede duramaz');
+      expect(
+        e.value.length,
+        greaterThan(25),
+        reason:
+            '${e.key} gerekçesiz — varılamayan bir aday, SEBEBİ '
+            'yazılmadan listede duramaz',
+      );
     }
 
     // ── (c) GEREKÇELER ARTIK BEYAN DEĞİL, ÖLÇÜLÜ (J-242) ─────────────────
@@ -662,14 +787,18 @@ void main() {
     final Set<String> routed = <String>{};
     for (final String src in libSrc.values) {
       for (final RegExpMatch m in RegExp(
-              r'MaterialPageRoute<[^>]*>\(\s*builder:\s*\([^)]*\)\s*=>\s*(?:const\s+)?(\w+)\s*\(')
-          .allMatches(src)) {
+        r'MaterialPageRoute<[^>]*>\(\s*builder:\s*\([^)]*\)\s*=>\s*(?:const\s+)?(\w+)\s*\(',
+      ).allMatches(src)) {
         routed.add(m.group(1)!);
       }
     }
-    expect(routed, isNotEmpty,
-        reason: 'rota kanalı BOŞ döndü — desen bozulmuş olmalı; aşağıdaki '
-            '"rota hedefi değil" gerekçeleri VAKUM-DOĞRU geçerdi');
+    expect(
+      routed,
+      isNotEmpty,
+      reason:
+          'rota kanalı BOŞ döndü — desen bozulmuş olmalı; aşağıdaki '
+          '"rota hedefi değil" gerekçeleri VAKUM-DOĞRU geçerdi',
+    );
 
     // ⭐ İKİ KANALIN UZLAŞMASI — ve (d)'nin GÖLGELİ yönünün CANLI karşılığı.
     //
@@ -683,18 +812,24 @@ void main() {
     // ⛔ TERS YÖN İSTENMİYOR: `derived ⊄ routed` meşru (kök takasıyla gelen
     //    `OnboardingPage`/`SelectPage` hiç `push` edilmiyor — J-240'ın kök
     //    varış bulgusu). İki kanal aynı şeyi ölçmüyor; uzlaşma TEK YÖNLÜ.
-    expect(routed.difference(derived), isEmpty,
-        reason: 'İKİ KANAL AYRIŞTI — rota hedefi olan sınıf aday değil: '
-            '${routed.difference(derived)}. Rota onu EKRAN sayıyor, '
-            '`Scaffold(` deseni GÖREMİYOR ⇒ türetim kör ve "varılamayan" '
-            'kovası bu ekranı hiç sormaz.');
+    expect(
+      routed.difference(derived),
+      isEmpty,
+      reason:
+          'İKİ KANAL AYRIŞTI — rota hedefi olan sınıf aday değil: '
+          '${routed.difference(derived)}. Rota onu EKRAN sayıyor, '
+          '`Scaffold(` deseni GÖREMİYOR ⇒ türetim kör ve "varılamayan" '
+          'kovası bu ekranı hiç sormaz.',
+    );
 
-    bool mentionedOutside(String name, String dir) => libSrc.entries
-        .any((MapEntry<String, String> e) =>
-            !e.key.startsWith(dir) && e.value.contains(name));
+    bool mentionedOutside(String name, String dir) => libSrc.entries.any(
+      (MapEntry<String, String> e) =>
+          !e.key.startsWith(dir) && e.value.contains(name),
+    );
     bool builtSomewhere(String name, String declPath) => libSrc.entries.any(
-        (MapEntry<String, String> e) =>
-            e.key != declPath && e.value.contains('$name('));
+      (MapEntry<String, String> e) =>
+          e.key != declPath && e.value.contains('$name('),
+    );
 
     // Her gerekçe bir YÜKLEM taşır; yüklem gerekçenin KENDİ iddiasını ölçer.
     final Map<String, bool Function()> reasonHolds = <String, bool Function()>{
@@ -702,21 +837,35 @@ void main() {
       // ve onu açan HER çağrı yeri kapının arkasında mı?
       'CameraHarnessScreen': () {
         const String decl = 'lib/app/camera_harness_screen.dart';
-        final bool gateFromDebug = RegExp(r'isAvailable\s*=>\s*kDebugMode')
-            .hasMatch(libSrc[decl] ?? '');
+        final bool gateFromDebug = RegExp(
+          r'isAvailable\s*=>\s*kDebugMode',
+        ).hasMatch(libSrc[decl] ?? '');
         final Iterable<String> callers = libSrc.entries
-            .where((MapEntry<String, String> e) =>
-                e.key != decl && e.value.contains('CameraHarnessScreen('))
+            .where(
+              (MapEntry<String, String> e) =>
+                  e.key != decl && e.value.contains('CameraHarnessScreen('),
+            )
             .map((MapEntry<String, String> e) => e.value);
         return gateFromDebug &&
             callers.isNotEmpty &&
-            callers.every((String s) => s.contains('CameraHarnessScreen.isAvailable'));
+            callers.every(
+              (String s) => s.contains('CameraHarnessScreen.isAvailable'),
+            );
       },
       // iddia: "kontrole basarak ulaşılmıyor" → rota hedefi DEĞİL, ama bir
       // yerde çiziliyor (hiç çizilmiyorsa gerekçe başka olurdu: ölü kod).
       'ContentFailureScreen': () =>
           !routed.contains('ContentFailureScreen') &&
-          builtSomewhere('ContentFailureScreen', 'lib/app/content_failure_screen.dart'),
+          builtSomewhere(
+            'ContentFailureScreen',
+            'lib/app/content_failure_screen.dart',
+          ),
+      'JabLabAccountStartupFailure': () {
+        final String main = libSrc['lib/main.dart'] ?? '';
+        return main.contains('class JabLabAccountStartupFailure') &&
+            main.contains('runApp(const JabLabAccountStartupFailure());') &&
+            !routed.contains('JabLabAccountStartupFailure');
+      },
       // iddia: "ayrı bir ekran değil, kökün iskelesi" → sınıf ÖZEL (`_Root`,
       // dışarıdan rota hedefi olamaz) ve yalnız `home:` olarak bağlanıyor.
       'Root': () {
@@ -729,37 +878,50 @@ void main() {
       // değil" → rota hedefi değil VE SessionScreen onu kuruyor.
       'SessionFlowScaffold': () =>
           !routed.contains('SessionFlowScaffold') &&
-          (libSrc['lib/app/session_screen.dart'] ?? '')
-              .contains('SessionFlowScaffold('),
+          (libSrc['lib/app/session_screen.dart'] ?? '').contains(
+            'SessionFlowScaffold(',
+          ),
       // iddia: "lib/shell_candidate/ — DONDURULMUŞ envanter" → orada tanımlı VE
       // o dizinin DIŞINDAN hiç anılmıyor. (Ayrımı gerçek kılan şey:
       // `SessionFlowScaffold` de orada tanımlı ama DIŞARIDAN anılıyor — bu
       // yüzden gerekçesi ayrı, ve yüklem ikisini birbirine karıştırmıyor.)
       'ItemPage': () =>
-          (libSrc['lib/shell_candidate/library_pages.dart'] ?? '')
-              .contains('class ItemPage') &&
+          (libSrc['lib/shell_candidate/library_pages.dart'] ?? '').contains(
+            'class ItemPage',
+          ) &&
           !mentionedOutside('ItemPage', 'lib/shell_candidate/'),
       'ShellScaffold': () =>
-          (libSrc['lib/shell_candidate/shell_scaffold.dart'] ?? '')
-              .contains('class ShellScaffold') &&
+          (libSrc['lib/shell_candidate/shell_scaffold.dart'] ?? '').contains(
+            'class ShellScaffold',
+          ) &&
           !mentionedOutside('ShellScaffold', 'lib/shell_candidate/'),
     };
 
     // ⛔ YÜKLEMSİZ KAYIT KALAMAZ — yeni bir varılamayan aday eklenip yüklemi
     // yazılmazsa burası öter; yoksa (c) sessizce "beyan"a geri düşerdi.
-    expect(reasonHolds.keys.toSet(), registered,
-        reason: 'her varılamayan adayın gerekçesi ÖLÇÜLMEK ZORUNDA — '
-            'yüklemi olmayan kayıt: ${registered.difference(reasonHolds.keys.toSet())} · '
-            'kaydı olmayan yüklem: ${reasonHolds.keys.toSet().difference(registered)}');
+    expect(
+      reasonHolds.keys.toSet(),
+      registered,
+      reason:
+          'her varılamayan adayın gerekçesi ÖLÇÜLMEK ZORUNDA — '
+          'yüklemi olmayan kayıt: ${registered.difference(reasonHolds.keys.toSet())} · '
+          'kaydı olmayan yüklem: ${reasonHolds.keys.toSet().difference(registered)}',
+    );
     for (final MapEntry<String, bool Function()> e in reasonHolds.entries) {
-      expect(e.value(), isTrue,
-          reason: '${e.key} — GEREKÇE ARTIK DOĞRU DEĞİL: '
-              '"${unreachableWhy[e.key]}". Kaynak değişti ve kayıt eskidi; '
-              'gerekçeyi düzelt ya da ekranı yürüyüşe kat.');
+      expect(
+        e.value(),
+        isTrue,
+        reason:
+            '${e.key} — GEREKÇE ARTIK DOĞRU DEĞİL: '
+            '"${unreachableWhy[e.key]}". Kaynak değişti ve kayıt eskidi; '
+            'gerekçeyi düzelt ya da ekranı yürüyüşe kat.',
+      );
     }
     // ignore: avoid_print
-    print('  (c) GEREKÇE · ${reasonHolds.length}/${registered.length} '
-        'varılamayan adayın sebebi ÖLÇÜLÜ (rota kanalı: ${routed.length} hedef)');
+    print(
+      '  (c) GEREKÇE · ${reasonHolds.length}/${registered.length} '
+      'varılamayan adayın sebebi ÖLÇÜLÜ (rota kanalı: ${routed.length} hedef)',
+    );
 
     // ── (d) BÖLME — YÖN ADIYLA SINANIR, ARİTMETİKLE DEĞİL (J-241) ────────
     //
@@ -790,11 +952,15 @@ void main() {
     // türetim `Scaffold(` kuran sınıfa bakar; `Scaffold`unu ortak bir kabuğa
     // DEVREDEN bir ekran aday olmaz ama YÜRÜNEBİLİR — o zaman "varılamayan"
     // kovası onu hiç sormaz ve envanter sessizce eksilir.
-    expect(walked.difference(derived), isEmpty,
-        reason: 'YÜRÜYÜŞ, türetimin aday saymadığı bir ekrana vardı: '
-            '${walked.difference(derived)} — desen bu ekranı GÖREMİYOR '
-            '((a) kör noktası). Aday olmadığı için "varılamayan" kovasına da '
-            'hiç sorulmaz: envanter SESSİZCE eksilir.');
+    expect(
+      walked.difference(derived),
+      isEmpty,
+      reason:
+          'YÜRÜYÜŞ, türetimin aday saymadığı bir ekrana vardı: '
+          '${walked.difference(derived)} — desen bu ekranı GÖREMİYOR '
+          '((a) kör noktası). Aday olmadığı için "varılamayan" kovasına da '
+          'hiç sorulmaz: envanter SESSİZCE eksilir.',
+    );
 
     // ⚠️ VE BU YÖN BUGÜN CANLI DEĞİL — yeşilliği kanıt sayılmasın diye YAZILIYOR.
     // `knownFloor ⊆ walked` (yukarıda, (e) pozitif kontrolü) + `|walked| ==
@@ -808,55 +974,83 @@ void main() {
     //    eşitlik yazmak onu envantere geri çevirir (J-233 sözleşmesi).
     final bool splitDirectionLive = walked.length > knownFloor.length;
     // ignore: avoid_print
-    print('  (d) YÖN · "walked ⊄ derived" kontrolü: '
-        '${splitDirectionLive ? "CANLI" : "GÖLGELİ"} '
-        '(yürünen ${walked.length} · taban ${knownFloor.length} — '
-        'taban yürüyüşe eşitken ihlal kurulamaz)');
+    print(
+      '  (d) YÖN · "walked ⊄ derived" kontrolü: '
+      '${splitDirectionLive ? "CANLI" : "GÖLGELİ"} '
+      '(yürünen ${walked.length} · taban ${knownFloor.length} — '
+      'taban yürüyüşe eşitken ihlal kurulamaz)',
+    );
 
     // Denklemin İKİ YANI AYRI KAYNAKTAN: sol = kod deseni, sağ = tanıklı
     // yürüyüş + elle gerekçeli kayıt. Sayı değişmedi; NEYLE KANITLANDIĞI
     // değişti (J-240'ın provenans dersi, bu kez raporlamada).
     // ignore: avoid_print
-    print('  GEZİLEBİLİRLİK · türetilen aday ${derived.length} (kod deseni) = '
-        'yürünen ${walked.length} (tanıklı yürüyüş) + '
-        'varılamayan ${registered.length} (elle kayıt, gerekçeli)');
+    print(
+      '  GEZİLEBİLİRLİK · türetilen aday ${derived.length} (kod deseni) = '
+      'yürünen ${walked.length} (tanıklı yürüyüş) + '
+      'varılamayan ${registered.length} (elle kayıt, gerekçeli)',
+    );
   });
 
   test('SAYMA KURALI YAZILI — ve sayı ondan KOPMUYOR (J-221)', () {
     // Gravita'nın uyarısı: "sekmeleri farklı sayıyorsak iki sayı AYNI ŞEYİ
     // ÖLÇMÜYOR; fark içerik değil SAYMA KURALI olur." Sayı kapılıydı, KURAL
     // değildi — kuralsız bir sayı hatlar arasında kıyaslanamaz.
-    final File rule =
-        File('docs/gates/GEZILEBILIRLIK-SAYMA-KURALI.md');
-    expect(rule.existsSync(), isTrue,
-        reason: 'sayma kuralı belgesi yok — 6/11 sayısı kuralsız kalır');
+    final File rule = File('docs/gates/GEZILEBILIRLIK-SAYMA-KURALI.md');
+    expect(
+      rule.existsSync(),
+      isTrue,
+      reason: 'sayma kuralı belgesi yok — 6/11 sayısı kuralsız kalır',
+    );
     final String src = rule.readAsStringSync();
     // Dört sorunun dördü de cevaplanmış olmalı.
     for (final String q in <String>[
-      'Sekme', 'envanteri', 'nereden başlıyor', 'Onboarding içeride mi',
+      'Sekme',
+      'envanteri',
+      'nereden başlıyor',
+      'Onboarding içeride mi',
     ]) {
       expect(src, contains(q), reason: '"$q" sorusu belgeden düşmüş');
     }
     // Sayılar belgede ve kodda AYNI olmalı — belge bayatlarsa öter.
-    expect(src, contains('katı **$kStrictRoutes**'),
-        reason: 'belgedeki katı sayı koddan KOPMUŞ');
-    expect(src, contains('gevşek **$kLooseScreens**'),
-        reason: 'belgedeki gevşek sayı koddan KOPMUŞ');
-    expect(src, contains('$kStrictRoutes − 2 + $kOnboardingPanels + '
-        '$kSessionStages'),
-        reason: 'türetim formülü belgede koddakiyle aynı değil');
+    expect(
+      src,
+      contains('katı **$kStrictRoutes**'),
+      reason: 'belgedeki katı sayı koddan KOPMUŞ',
+    );
+    expect(
+      src,
+      contains('gevşek **$kLooseScreens**'),
+      reason: 'belgedeki gevşek sayı koddan KOPMUŞ',
+    );
+    expect(
+      src,
+      contains(
+        '$kStrictRoutes − 2 + $kOnboardingPanels + '
+        '$kSessionStages',
+      ),
+      reason: 'türetim formülü belgede koddakiyle aynı değil',
+    );
     // Kör nokta kendi BÖLÜMÜYLE durmalı.
     //
     // ⚠️ İlk hâli `src.toUpperCase().contains('KÖR NOKTA')` idi ve MUTASYONU
     // GEÇTİ: başlığı sildiğimde gövdedeki küçük harfli geçişler ("bu kör
     // nokta bir kez ölçüldü") kapıyı tatmin etti. *Bir kavramdan SÖZ eden
     // cümle, o kavramın BÖLÜMÜ değildir* — kapı bölüm başlığını arıyor.
-    expect(src, contains('## ⚠️ ENVANTER YÖNTEMİNİN KÖR NOKTASI'),
-        reason: 'envanter yönteminin kör-nokta BÖLÜMÜ belgeden düşmüş; bir '
-            'sayma kuralı, neyi göremediğini söylemeden tam değildir');
-    expect(src, contains('KAPILI DEĞİL'),
-        reason: 'kör noktanın KORUMASIZ olduğu beyanı düşmüş — bugün boş '
-            'çıkan bir tarama, korunmadığı yazılmazsa güvence sanılır');
+    expect(
+      src,
+      contains('## ⚠️ ENVANTER YÖNTEMİNİN KÖR NOKTASI'),
+      reason:
+          'envanter yönteminin kör-nokta BÖLÜMÜ belgeden düşmüş; bir '
+          'sayma kuralı, neyi göremediğini söylemeden tam değildir',
+    );
+    expect(
+      src,
+      contains('KAPILI DEĞİL'),
+      reason:
+          'kör noktanın KORUMASIZ olduğu beyanı düşmüş — bugün boş '
+          'çıkan bir tarama, korunmadığı yazılmazsa güvence sanılır',
+    );
   });
 
   test('gevşek okuma ③: TÜRETİLEN SAYI — bileşen değişirse burası öter', () {
@@ -864,15 +1058,23 @@ void main() {
     // düşer ve sabiti güncelleyen kişi, DIŞARIYA verilen sayının da
     // değiştiğini görmek ZORUNDA kalır. J-167'de eksik olan tam buydu —
     // gevşek sayı bir yorumda yaşıyordu, kimse ona çarpmıyordu.
-    expect(kLooseScreens, 11,
-        reason: 'gevşek ekran sayısı değişti: devir notu, 📊 pano ve aile '
-            'karşılaştırması bu sayıyı taşıyor — üçü de güncellenmeli');
+    expect(
+      kLooseScreens,
+      13,
+      reason:
+          'gevşek ekran sayısı değişti: devir notu, 📊 pano ve aile '
+          'karşılaştırması bu sayıyı taşıyor — üçü de güncellenmeli',
+    );
   });
 
   test('SAYILMAYANLAR adıyla — ve gerekçeleri ÖLÇÜLÜ', () {
     // Harness sevk edilen üründe açılmıyor: kapı `kDebugMode`.
-    expect(CameraHarnessScreen.isAvailable, isTrue,
-        reason: 'test derlemesi debug — bu satır kapının VAR olduğunu '
-            'gösteriyor; ürün derlemesinde false olur ve ekran açılmaz');
+    expect(
+      CameraHarnessScreen.isAvailable,
+      isTrue,
+      reason:
+          'test derlemesi debug — bu satır kapının VAR olduğunu '
+          'gösteriyor; ürün derlemesinde false olur ve ekran açılmaz',
+    );
   });
 }

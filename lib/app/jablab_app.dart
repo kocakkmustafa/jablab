@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
 // Bu iki içe aktarma "candidate" klasöründen ama TERK EDİLMİŞ değil: ikisi
@@ -30,6 +32,9 @@ import 'session_narrator.dart';
 import 'session_store.dart';
 import 'session_screen.dart';
 import 'settings_page.dart';
+import 'solo_boxing_course_page.dart';
+import 'ui_language.dart';
+import 'why_not_locale.dart';
 
 /// JabLab uygulaması — kabuğu içerikle bağlar.
 class JabLabApp extends StatelessWidget {
@@ -38,9 +43,22 @@ class JabLabApp extends StatelessWidget {
     this.repository = const ContentRepository(),
     this.onboarding = const OnboardingStore(),
     this.navigatorObservers = const <NavigatorObserver>[],
+    this.accountUserId,
+    this.accountPageBuilder,
+    this.beforeLessonStart,
   });
 
   final ContentRepository repository;
+
+  /// Filled by a host adapter after the shared Motion account package is
+  /// pinned. `null` means the existing guest journal.
+  final ValueListenable<String?>? accountUserId;
+
+  /// Real account page route, supplied by the host after Core is pinned.
+  final WidgetBuilder? accountPageBuilder;
+
+  /// Production verifies paid access before preparing a camera session.
+  final Future<bool> Function(BuildContext)? beforeLessonStart;
 
   /// "Karşılama görüldü mü" bayrağı (J-106). Enjekte ediliyor ki testler
   /// gerçek dosya sistemine dokunmadan İKİ yolu da (ilk açılış / dönen
@@ -65,23 +83,46 @@ class JabLabApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'JabLab',
+      supportedLocales: const <Locale>[Locale('en'), Locale('tr')],
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       navigatorObservers: navigatorObservers,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFB3261E), brightness: Brightness.dark),
+          seedColor: const Color(0xFFB3261E),
+          brightness: Brightness.dark,
+        ),
         useMaterial3: true,
       ),
-      home: _Root(repository: repository, onboarding: onboarding),
+      home: _Root(
+        repository: repository,
+        onboarding: onboarding,
+        accountUserId: accountUserId,
+        accountPageBuilder: accountPageBuilder,
+        beforeLessonStart: beforeLessonStart,
+      ),
     );
   }
 }
 
 class _Root extends StatefulWidget {
-  const _Root({required this.repository, required this.onboarding});
+  const _Root({
+    required this.repository,
+    required this.onboarding,
+    required this.accountUserId,
+    required this.accountPageBuilder,
+    required this.beforeLessonStart,
+  });
 
   final ContentRepository repository;
   final OnboardingStore onboarding;
+  final ValueListenable<String?>? accountUserId;
+  final WidgetBuilder? accountPageBuilder;
+  final Future<bool> Function(BuildContext)? beforeLessonStart;
 
   @override
   State<_Root> createState() => _RootState();
@@ -101,6 +142,7 @@ class _RootState extends State<_Root> {
   /// gelmemişken seans açılırsa akış çalışır, yalnız o seans KAYDEDİLMEZ —
   /// açılışı bloklamak, kayıt için kullanıcıyı bekletmek olurdu.
   SessionStore? _store;
+  int _historyGeneration = 0;
 
   /// KAYDEDİLEN olgu özeti (F-4). Boşken ilerleme sayfası yalnız bantları
   /// gösterir — sıfır satırlık bir "kaydedilenler" bölümü, hiç seans
@@ -147,36 +189,81 @@ class _RootState extends State<_Root> {
   @override
   void initState() {
     super.initState();
+    widget.accountUserId?.addListener(_onAccountChanged);
     _loadContent();
-    unawaited(widget.repository.loadCurriculum().then((Map<String, dynamic> c) {
-      if (mounted) setState(() => _curriculum = c);
-    }).catchError((Object _) {
-      // Bilerek yutuluyor: kapı beyanı bir EK bilgidir, ürünün çalışması
-      // ona bağlı değil. Sessizlik burada güvenli çünkü yokluğun sonucu
-      // "beyan çizilmez" — yanlış bir beyan değil.
-    }));
-    unawaited(widget.onboarding.seen().then((bool seen) {
-      if (mounted) setState(() => _showOnboarding = !seen);
-    }));
-    unawaited(widget.repository.openStore().then((SessionStore s) async {
-      if (!mounted) return;
-      setState(() => _store = s);
-      await _refreshRecorded();
-    }).catchError((Object e) {
-      // Kalıcılık kurulamazsa uygulama ÇALIŞMAYA DEVAM EDER, yalnız kayıt
-      // tutmaz. Depolama hatası yüzünden antrenmanı engellemek, çözümü
-      // sorundan kötü yapardı.
-      //
-      // ⚠️ AMA SESSİZ KALMAZ (J-092). Eskiden yalnız `_store = null` yazıyordu
-      // ve ilerleme sayfası "kaydedilenler" bölümünü hiç çizmiyordu — ekran,
-      // hiç antrenman yapmamış kullanıcınınkiyle BİREBİR aynı görünüyordu.
-      if (mounted) {
-        setState(() {
-          _store = null;
-          _historyUnavailable = HistoryUnavailable(e.toString());
-        });
-      }
-    }));
+    unawaited(
+      widget.repository
+          .loadCurriculum()
+          .then((Map<String, dynamic> c) {
+            if (mounted) setState(() => _curriculum = c);
+          })
+          .catchError((Object _) {
+            // Bilerek yutuluyor: kapı beyanı bir EK bilgidir, ürünün çalışması
+            // ona bağlı değil. Sessizlik burada güvenli çünkü yokluğun sonucu
+            // "beyan çizilmez" — yanlış bir beyan değil.
+          }),
+    );
+    unawaited(
+      widget.onboarding.seen().then((bool seen) {
+        if (mounted) setState(() => _showOnboarding = !seen);
+      }),
+    );
+    _openHistoryForCurrentAccount();
+  }
+
+  void _openHistoryForCurrentAccount() {
+    final int generation = ++_historyGeneration;
+    final String? accountUserId = widget.accountUserId?.value;
+    unawaited(
+      widget.repository
+          .openStore(accountUserId: accountUserId)
+          .then((SessionStore s) async {
+            if (!mounted || generation != _historyGeneration) return;
+            setState(() => _store = s);
+            await _refreshRecorded();
+          })
+          .catchError((Object e) {
+            // Kalıcılık kurulamazsa uygulama ÇALIŞMAYA DEVAM EDER, yalnız kayıt
+            // tutmaz. Depolama hatası yüzünden antrenmanı engellemek, çözümü
+            // sorundan kötü yapardı.
+            //
+            // ⚠️ AMA SESSİZ KALMAZ (J-092). Eskiden yalnız `_store = null` yazıyordu
+            // ve ilerleme sayfası "kaydedilenler" bölümünü hiç çizmiyordu — ekran,
+            // hiç antrenman yapmamış kullanıcınınkiyle BİREBİR aynı görünüyordu.
+            if (mounted && generation == _historyGeneration) {
+              setState(() {
+                _store = null;
+                _historyUnavailable = HistoryUnavailable(e.toString());
+              });
+            }
+          }),
+    );
+  }
+
+  void _onAccountChanged() {
+    if (!mounted) return;
+    setState(() {
+      _store = null;
+      _recorded = null;
+      _lastLessonId = null;
+      _historyUnavailable = null;
+    });
+    _openHistoryForCurrentAccount();
+  }
+
+  @override
+  void didUpdateWidget(covariant _Root oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.accountUserId == widget.accountUserId) return;
+    oldWidget.accountUserId?.removeListener(_onAccountChanged);
+    widget.accountUserId?.addListener(_onAccountChanged);
+    _onAccountChanged();
+  }
+
+  @override
+  void dispose() {
+    widget.accountUserId?.removeListener(_onAccountChanged);
+    super.dispose();
   }
 
   /// İçeriği yükler. **Yeniden çağrılabilir** olması J-079'un gereği: hata
@@ -217,6 +304,7 @@ class _RootState extends State<_Root> {
   Future<void> _refreshRecorded() async {
     final SessionStore? s = _store;
     if (s == null) return;
+    final int generation = _historyGeneration;
     try {
       final RecordedSummary sum = await RecordedSummary.from(s);
       // "Güncel kurs" (Hüküm 3) EN SON tamamlanan seansın dersinden
@@ -234,7 +322,7 @@ class _RootState extends State<_Root> {
           lastId = r.lessonId;
         }
       }
-      if (mounted) {
+      if (mounted && generation == _historyGeneration) {
         // Başarılı okuma önceki beyanı KALDIRIR: geçici bir I/O hatasından
         // sonra "geçmişini okuyamıyorum" cümlesini ekranda bırakmak, artık
         // doğru olmayan bir şeyi söylemeye devam etmek olurdu.
@@ -247,7 +335,7 @@ class _RootState extends State<_Root> {
     } on Object catch (e) {
       // Elde BAYAT bir özet varsa onu da düşürüyoruz: yanında "okuyamadım"
       // yazan eski sayılar, iki çelişik iddiayı aynı anda göstermek olurdu.
-      if (mounted) {
+      if (mounted && generation == _historyGeneration) {
         setState(() {
           // doc-75/2: açılamayan geçmişten SAYI DOĞMAZ. Bayat bir özeti
           // "okuyamadım" cümlesinin yanında bırakmak iki çelişik iddiayı
@@ -303,8 +391,7 @@ class _RootState extends State<_Root> {
     final ShellLibrary? lib = _library;
     final bool? showOnboarding = _showOnboarding;
     if (lib == null || showOnboarding == null) {
-      return const Scaffold(
-          body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     // KARŞILAMA, kabuktan ÖNCE (J-106). Dürüstlük ön-beyanı ürünün içine
@@ -335,6 +422,7 @@ class _RootState extends State<_Root> {
         course: current,
         onStart: _openSession,
         onOpenSettings: () => _openSettings(context, lib),
+        onOpenSoloCourse: () => _openSoloCourse(context),
         onOpenSelect: () => _openSelect(context, lib),
         isCurrent: true,
         resumeLesson: _resumeLesson,
@@ -364,6 +452,7 @@ class _RootState extends State<_Root> {
       onOpenCourse: (ShellCourse c) => _openCourse(context, lib, c),
       onOpenWhyNot: () => _openWhyNot(context, lib),
       onOpenSettings: () => _openSettings(context, lib),
+      onOpenSoloCourse: () => _openSoloCourse(context),
       // current==null buraya iki farklı sebepten düşebilir: hiç kayıt yok
       // (sağlıklı, banner YOK) ya da kayıt okunamadı (banner VAR) —
       // `_historyUnavailableText()` zaten bu ayrımı yapıyor.
@@ -394,8 +483,9 @@ class _RootState extends State<_Root> {
   String? _gateNoteFor(ShellCourse course) {
     final Map<String, dynamic>? cur = _curriculum;
     if (cur == null) return null;
-    final RecordedGateEvidence evidence =
-        const RecordedGateEvidence(<SessionRecord>[]);
+    final RecordedGateEvidence evidence = const RecordedGateEvidence(
+      <SessionRecord>[],
+    );
     int gated = 0;
     int notEvaluable = 0;
     for (final ShellLesson l in course.lessons) {
@@ -421,18 +511,29 @@ class _RootState extends State<_Root> {
   void _openSettings(BuildContext context, ShellLibrary lib) {
     Navigator.of(context).push<void>(
       MaterialPageRoute<void>(
-        builder: (_) =>
-            SettingsPage(
-              onOpenWhyNot: () => _openWhyNot(context, lib),
-              excludedCount: lib.exclusions.length,
-            ),
+        builder: (_) => SettingsPage(
+          onOpenWhyNot: () => _openWhyNot(context, lib),
+          excludedCount: lib.exclusions.length,
+          accountPageBuilder: widget.accountPageBuilder,
+        ),
       ),
     );
   }
 
   void _openWhyNot(BuildContext context, ShellLibrary lib) {
     Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(builder: (_) => WhyNotPage(library: lib)),
+      MaterialPageRoute<void>(
+        builder: (BuildContext pageContext) => WhyNotPage(
+          library: lib,
+          title: UiLanguage.text(
+            pageContext,
+            en: "Why isn't my art here?",
+            tr: 'Disiplinim neden burada yok?',
+          ),
+          intro: whyNotIntro(pageContext, lib.whyNotIntro),
+          exclusions: whyNotExclusions(pageContext, lib.exclusions),
+        ),
+      ),
     );
   }
 
@@ -447,6 +548,7 @@ class _RootState extends State<_Root> {
           onOpenCourse: (ShellCourse c) => _openCourse(context, lib, c),
           onOpenWhyNot: () => _openWhyNot(context, lib),
           onOpenSettings: () => _openSettings(context, lib),
+          onOpenSoloCourse: () => _openSoloCourse(context),
           historyUnavailable: _historyUnavailableText(),
           onRetryHistory: _refreshRecorded,
         ),
@@ -461,6 +563,18 @@ class _RootState extends State<_Root> {
           course: c,
           onStart: _openSession,
           onOpenSettings: () => _openSettings(context, lib),
+          onOpenSoloCourse: () => _openSoloCourse(context),
+        ),
+      ),
+    );
+  }
+
+  void _openSoloCourse(BuildContext context) {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => SoloBoxingCoursePage(
+          repository: widget.repository,
+          accountUserId: widget.accountUserId,
         ),
       ),
     );
@@ -509,11 +623,11 @@ class _RootState extends State<_Root> {
     return _recorded == null || _recorded!.sessions == 0
         ? null
         : 'These minutes are your history, not credit. Only lessons with a '
-            'round clock are counted here — the free-practice lessons have '
-            'no timer, so their time is not measured and they leave no line. '
-            'Nothing here opens with time either: the lessons that are '
-            'closed are closed for a named technical reason, and each one '
-            'tells you its own.';
+              'round clock are counted here — the untimed practice lessons have '
+              'no timer, so their time is not measured and they leave no line. '
+              'Nothing here opens with time either: the lessons that are '
+              'closed are closed for a named technical reason, and each one '
+              'tells you its own.';
   }
 
   /// Geçmiş HİÇ okunamadıysa gösterilecek cümle (J-092), yoksa `null`.
@@ -618,7 +732,8 @@ class _RootState extends State<_Root> {
   /// `null` controller + hata = ders kameralı ama hat kurulamadı → seans
   /// yine AÇILIR, saat koşar, analiz yokluğu BEYAN EDİLİR.
   ({LiveJabController? controller, LiveSessionFailure? failure}) _liveJabFor(
-      String lessonId) {
+    String lessonId,
+  ) {
     final Library? lib = _domain;
     final RuleSet? rules = _boxing;
     if (lib == null || rules == null) {
@@ -648,34 +763,38 @@ class _RootState extends State<_Root> {
   }
 
   Future<void> _openSession(ShellLesson l) async {
+    final guard = widget.beforeLessonStart;
+    if (guard != null && !await guard(context)) return;
+    if (!mounted) return;
     // Hat SENKRON kurulur ve model yolu GEÇ çözülür: ders açılışını 9 MB'lık
     // bir asset çıkarmasına bağlamak, kullanıcının derse dokunup hiçbir şey
     // olmamasını izlemesi demekti (testler yakaladı).
     final ({LiveJabController? controller, LiveSessionFailure? failure}) live =
         _liveJabFor(l.id);
     await Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(
-            builder: (_) => SessionScreen(
-                  lesson: l,
-                  cues: _cues!,
-                  coachedNotScored:
-                      widget.repository.coachedNotScoredLabels(_boxing!),
-                  bands: widget.repository.gradedBands(_boxing!),
-                  plan: widget.repository.roundPlanFor(_domain!, l.id),
-                  intervalPlan:
-                      widget.repository.intervalPlanFor(_domain!, l.id),
-                  // J-094: materyal kararı TEK yerde (repository), ekranda
-                  // değil. Comp geldiğinde değişecek yer orası.
-                  teachMaterial:
-                      widget.repository.teachMaterialFor(_domain!, l.id),
-                  // J-247: prova materyali de AYNI yerden — aşama artık
-                  // dersin `techniques`/`combinations` alanlarını gösteriyor.
-                  rehearseMaterial:
-                      widget.repository.rehearseMaterialFor(_domain!, l.id),
-                  store: _store,
-                  liveJab: live.controller,
-                  liveJabSetupFailure: live.failure,
-                )));
+      MaterialPageRoute<void>(
+        builder: (_) => SessionScreen(
+          lesson: l,
+          cues: _cues!,
+          coachedNotScored: widget.repository.coachedNotScoredLabels(_boxing!),
+          bands: widget.repository.gradedBands(_boxing!),
+          plan: widget.repository.roundPlanFor(_domain!, l.id),
+          intervalPlan: widget.repository.intervalPlanFor(_domain!, l.id),
+          // J-094: materyal kararı TEK yerde (repository), ekranda
+          // değil. Comp geldiğinde değişecek yer orası.
+          teachMaterial: widget.repository.teachMaterialFor(_domain!, l.id),
+          // J-247: prova materyali de AYNI yerden — aşama artık
+          // dersin `techniques`/`combinations` alanlarını gösteriyor.
+          rehearseMaterial: widget.repository.rehearseMaterialFor(
+            _domain!,
+            l.id,
+          ),
+          store: _store,
+          liveJab: live.controller,
+          liveJabSetupFailure: live.failure,
+        ),
+      ),
+    );
     // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce yaptığı
     // işi ilerleme sayfasında göremez ve kaydın çalışmadığını sanar
     // (çalışıyor ama görünmüyor, en kötü kombinasyon).

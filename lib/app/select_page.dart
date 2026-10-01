@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../shell_candidate/honesty_box.dart';
 import '../shell_candidate/shell_models.dart';
+import 'catalog_locale.dart';
+import 'course_locale.dart';
 import 'design_tokens.dart';
+import 'solo_boxing_course_page.dart';
+import 'ui_language.dart';
 
 /// Sayfa A — Disiplin & Kurs Seçimi (design: `docs/design/DESIGN-PANEL-PROMPT.md`
 /// §2). Bu app'in giriş yüzeyi; hiç kurs başlatılmamışsa uygulamayı ilk
@@ -30,6 +34,7 @@ class SelectPage extends StatefulWidget {
     required this.onOpenCourse,
     required this.onOpenWhyNot,
     required this.onOpenSettings,
+    this.onOpenSoloCourse,
     this.historyUnavailable,
     this.onRetryHistory,
   });
@@ -38,6 +43,7 @@ class SelectPage extends StatefulWidget {
   final void Function(ShellCourse) onOpenCourse;
   final VoidCallback onOpenWhyNot;
   final VoidCallback onOpenSettings;
+  final VoidCallback? onOpenSoloCourse;
 
   /// Geçmiş TAMAMEN okunamadıysa (hangi dersin/kursun "güncel" olduğu bile
   /// bilinemiyor — bu yüzden Sayfa B'ye değil buraya düşülüyor) gösterilecek
@@ -60,108 +66,149 @@ class _SelectPageState extends State<SelectPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: JColors.ground,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[const Color(0xFF170809), JColors.ground],
-              stops: const <double>[0, .42],
-            ),
-          ),
-          child: SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
+    backgroundColor: JColors.ground,
+    body: DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[const Color(0xFF170809), JColors.ground],
+          stops: const <double>[0, .42],
+        ),
+      ),
+      child: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
+          children: <Widget>[
+            Row(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        widget.library.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: JText.pageTitle.copyWith(fontSize: 22, letterSpacing: -.6),
-                      ),
+                Expanded(
+                  child: Text(
+                    UiLanguage.text(
+                      context,
+                      en: widget.library.title,
+                      tr: 'JabLab — Tek başına dövüş antrenmanı',
                     ),
-                    const SizedBox(width: 12),
-                    GlassIconButton(
-                      key: const Key('settings-button'),
-                      icon: Icons.settings_outlined,
-                      tooltip: 'Settings',
-                      onTap: widget.onOpenSettings,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: JText.pageTitle.copyWith(
+                      fontSize: 22,
+                      letterSpacing: -.6,
                     ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                if (widget.historyUnavailable != null) ...<Widget>[
-                  // Tier 2-d: "hangi kurs güncel" bile bilinemiyor — bu TAM
-                  // OLARAK `UnknownGlassPanel`in rezerve ettiği "bilmiyorum"
-                  // (Sayfa B'nin aynı beyanla AYNI tier'ı kullanmasıyla
-                  // tutarlı, bkz. course_page.dart).
-                  UnknownGlassPanel(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text('Where you left off',
-                            key: const Key('recorded-heading'),
-                            style: JText.body.copyWith(fontWeight: FontWeight.w600)),
-                        const SizedBox(height: 4),
-                        Text(widget.historyUnavailable!,
-                            key: const Key('recorded-unavailable'),
-                            style: JText.bodyMuted),
-                        if (widget.onRetryHistory != null) ...<Widget>[
-                          const SizedBox(height: 12),
-                          OutlinedButton(
-                            key: const Key('retry-history'),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: JColors.ink,
-                              side: BorderSide(color: JColors.border),
-                            ),
-                            onPressed: widget.onRetryHistory,
-                            child: const Text('Try again'),
-                          ),
-                        ],
-                      ],
-                    ),
+                const SizedBox(width: 12),
+                GlassIconButton(
+                  key: const Key('settings-button'),
+                  icon: Icons.settings_outlined,
+                  tooltip: UiLanguage.text(
+                    context,
+                    en: 'Settings',
+                    tr: 'Ayarlar',
                   ),
-                  const SizedBox(height: 16),
-                ],
-                ...widget.library.items.map((ShellItem i) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: _ItemBlock(
-                        item: i,
-                        expanded: _expandedId == i.id,
-                        onTap: () => setState(
-                            () => _expandedId = _expandedId == i.id ? null : i.id),
-                        onOpenCourse: widget.onOpenCourse,
-                      ),
-                    )),
-                const SizedBox(height: 6),
-                GlassPanel(
-                  padding: const EdgeInsets.all(16),
-                  child: InkWell(
-                    key: const Key('why-not-button'),
-                    onTap: widget.onOpenWhyNot,
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.help_outline, color: JColors.ember, size: 18),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text("Why isn't my art here?",
-                              style: JText.body.copyWith(fontSize: 15, fontWeight: FontWeight.w600)),
-                        ),
-                        Icon(Icons.chevron_right, color: JColors.ember, size: 18),
-                      ],
-                    ),
-                  ),
+                  onTap: widget.onOpenSettings,
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 20),
+            if (widget.historyUnavailable != null) ...<Widget>[
+              // Tier 2-d: "hangi kurs güncel" bile bilinemiyor — bu TAM
+              // OLARAK `UnknownGlassPanel`in rezerve ettiği "bilmiyorum"
+              // (Sayfa B'nin aynı beyanla AYNI tier'ı kullanmasıyla
+              // tutarlı, bkz. course_page.dart).
+              UnknownGlassPanel(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      UiLanguage.text(
+                        context,
+                        en: 'Where you left off',
+                        tr: 'Kaldığın yer',
+                      ),
+                      key: const Key('recorded-heading'),
+                      style: JText.body.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      widget.historyUnavailable!,
+                      key: const Key('recorded-unavailable'),
+                      style: JText.bodyMuted,
+                    ),
+                    if (widget.onRetryHistory != null) ...<Widget>[
+                      const SizedBox(height: 12),
+                      OutlinedButton(
+                        key: const Key('retry-history'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: JColors.ink,
+                          side: BorderSide(color: JColors.border),
+                        ),
+                        onPressed: widget.onRetryHistory,
+                        child: Text(
+                          UiLanguage.text(
+                            context,
+                            en: 'Try again',
+                            tr: 'Tekrar dene',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+            if (widget.onOpenSoloCourse != null) ...<Widget>[
+              SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),
+              const SizedBox(height: 16),
+            ],
+            ...widget.library.items.map(
+              (ShellItem i) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _ItemBlock(
+                  item: i,
+                  expanded: _expandedId == i.id,
+                  onTap: () => setState(
+                    () => _expandedId = _expandedId == i.id ? null : i.id,
+                  ),
+                  onOpenCourse: widget.onOpenCourse,
+                ),
+              ),
+            ),
+            const SizedBox(height: 6),
+            GlassPanel(
+              padding: const EdgeInsets.all(16),
+              child: InkWell(
+                key: const Key('why-not-button'),
+                onTap: widget.onOpenWhyNot,
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.help_outline, color: JColors.ember, size: 18),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        UiLanguage.text(
+                          context,
+                          en: "Why isn't my art here?",
+                          tr: 'Disiplinim neden burada yok?',
+                        ),
+                        style: JText.body.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.chevron_right, color: JColors.ember, size: 18),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _ItemBlock extends StatelessWidget {
@@ -196,13 +243,22 @@ class _ItemBlock extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(item.title,
-                            style: JText.body.copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
+                        Text(
+                          catalogTitle(context, item.id, item.title),
+                          style: JText.body.copyWith(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         const SizedBox(height: 3),
                         Text(
                           live
-                              ? '${item.courses.length} course${item.courses.length == 1 ? '' : 's'}'
-                              : item.blurb,
+                              ? UiLanguage.text(
+                                  context,
+                                  en: '${item.courses.length} course${item.courses.length == 1 ? '' : 's'}',
+                                  tr: '${item.courses.length} kurs',
+                                )
+                              : catalogBlurb(context, item.id, item.blurb),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: JText.bodyMuted,
@@ -212,8 +268,10 @@ class _ItemBlock extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   if (live)
-                    Icon(expanded ? Icons.expand_less : Icons.expand_more,
-                        color: JColors.ink3)
+                    Icon(
+                      expanded ? Icons.expand_less : Icons.expand_more,
+                      color: JColors.ink3,
+                    )
                   else
                     // `waveLabel` BİLEREK GEÇİLMİYOR (J-150, koordinatör
                     // hükmü 10:12). Değerler `W1`→`W4` idi ve iki kusur
@@ -244,16 +302,30 @@ class _ItemBlock extends StatelessWidget {
                         // biri cümlede. Yeni metin NEDEN listelediğimizi
                         // söylüyor (kapsamı görünür kılmak), NEREYE gittiğini
                         // değil.
-                        'Not open. We list it so you can see the whole scope '
-                        'of what this app covers — there are no placeholder '
-                        'lessons behind this page.',
+                        UiLanguage.text(
+                          context,
+                          en:
+                              'Not open. We list it so you can see the whole scope '
+                              'of what this app covers — there are no placeholder '
+                              'lessons behind this page.',
+                          tr:
+                              'Bu disiplin açık değil. Uygulamanın kapsamını '
+                              'göstermek için listeliyoruz; bu sayfanın '
+                              'arkasında örnek ders yok.',
+                        ),
                         key: const Key('coming-soon-note'),
                         style: JText.bodyMuted,
                       ),
                     ),
                   if (item.blurb.isNotEmpty && live) ...<Widget>[
                     const SizedBox(height: 8),
-                    Text(item.blurb, style: JText.body.copyWith(color: JColors.ink2, fontSize: 14)),
+                    Text(
+                      catalogBlurb(context, item.id, item.blurb),
+                      style: JText.body.copyWith(
+                        color: JColors.ink2,
+                        fontSize: 14,
+                      ),
+                    ),
                   ],
                   // `HonestyBox` frozen (shell_candidate) — `Theme.of(context)`
                   // üzerinden besleniyor, JColors'ı doğrudan okuyamıyor.
@@ -282,58 +354,109 @@ class _ItemBlock extends StatelessWidget {
                     Theme(
                       data: _honestyBoxTheme,
                       child: HonestyBox(
-                          measured: item.measured, notMeasured: item.notMeasured),
+                        measured: catalogMeasured(
+                          context,
+                          item.id,
+                          item.measured,
+                        ),
+                        notMeasured: catalogNotMeasured(
+                          context,
+                          item.id,
+                          item.notMeasured,
+                        ),
+                        measuredHeading: UiLanguage.text(
+                          context,
+                          en: 'What this measures',
+                          tr: 'Neleri ölçer',
+                        ),
+                        notMeasuredHeading: UiLanguage.text(
+                          context,
+                          en: "What it doesn't",
+                          tr: 'Neleri ölçmez',
+                        ),
+                      ),
                     ),
                   if (live) ...<Widget>[
                     const SizedBox(height: 6),
-                    Text('Courses', style: JText.body.copyWith(fontWeight: FontWeight.w600)),
+                    Text(
+                      UiLanguage.text(context, en: 'Courses', tr: 'Kurslar'),
+                      style: JText.body.copyWith(fontWeight: FontWeight.w600),
+                    ),
                     const SizedBox(height: 8),
                     ...item.courses
                         .where((ShellCourse c) => c.lessons.isNotEmpty)
-                        .map((ShellCourse c) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: GlassPanel(
-                                tier: GlassTier.observation,
-                                padding: const EdgeInsets.all(14),
-                                child: InkWell(
-                                  key: Key('course-${c.id}'),
-                                  onTap: () => onOpenCourse(c),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(c.title,
-                                                style: JText.body.copyWith(fontWeight: FontWeight.w600)),
-                                            if (c.goal.isNotEmpty) ...<Widget>[
-                                              const SizedBox(height: 3),
-                                              Text(c.goal,
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: JText.bodyMuted.copyWith(fontSize: 12.5)),
-                                            ],
+                        .map(
+                          (ShellCourse c) => Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: GlassPanel(
+                              tier: GlassTier.observation,
+                              padding: const EdgeInsets.all(14),
+                              child: InkWell(
+                                key: Key('course-${c.id}'),
+                                onTap: () => onOpenCourse(c),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            courseTitle(context, c.id, c.title),
+                                            style: JText.body.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          if (c.goal.isNotEmpty) ...<Widget>[
+                                            const SizedBox(height: 3),
+                                            Text(
+                                              courseGoal(context, c.id, c.goal),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: JText.bodyMuted.copyWith(
+                                                fontSize: 12.5,
+                                              ),
+                                            ),
                                           ],
-                                        ),
+                                        ],
                                       ),
-                                      const SizedBox(width: 10),
-                                      Text('${c.lessons.length} lessons',
-                                          style: JText.mono.copyWith(color: JColors.cool2)),
-                                    ],
-                                  ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      UiLanguage.isTurkish(context)
+                                          ? '${c.lessons.length} ders'
+                                          : '${c.lessons.length} lessons',
+                                      style: JText.mono.copyWith(
+                                        color: JColors.cool2,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                   ],
                   if (item.pendingNotes.isNotEmpty) ...<Widget>[
                     const SizedBox(height: 10),
-                    Text('Not open in this section',
-                        style: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 14)),
+                    Text(
+                      UiLanguage.text(
+                        context,
+                        en: 'Not open in this section',
+                        tr: 'Bu bölümde açık değil',
+                      ),
+                      style: JText.body.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
                     const SizedBox(height: 6),
-                    ...item.pendingNotes.map((String n) => Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Text('• $n', style: JText.bodyMuted),
-                        )),
+                    ...item.pendingNotes.map(
+                      (String n) => Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text('• $n', style: JText.bodyMuted),
+                      ),
+                    ),
                   ],
                 ],
               ),
@@ -372,22 +495,22 @@ class _SoonBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-        decoration: BoxDecoration(
-          border: Border.all(color: JColors.border),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          'NOT OPEN',
-          // ⚠️ `ink3` idi ve ÖLÇÜLDÜ: 10 puntoda zemine karşı **3,51:1**,
-          // WCAG 2.2 AA normal-metin eşiği 4,5. J-108'de bu rozetin
-          // SÖZCÜĞÜNÜ düzelttim (`SOON` → `NOT OPEN`) ve KONTRASTINI hiç
-          // ölçmedim; kontrast kapısı da onu göremedi çünkü token
-          // VARSAYILANLARINI ölçüyor, yerinde `copyWith(color:)` ile
-          // geçilenleri değil (J-126). Rozet 7 kapalı disiplin kartında var.
-          style: JText.label.copyWith(color: JColors.ink2, letterSpacing: 1),
-        ),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+    decoration: BoxDecoration(
+      border: Border.all(color: JColors.border),
+      borderRadius: BorderRadius.circular(4),
+    ),
+    child: Text(
+      UiLanguage.text(context, en: 'NOT OPEN', tr: 'KAPALI'),
+      // ⚠️ `ink3` idi ve ÖLÇÜLDÜ: 10 puntoda zemine karşı **3,51:1**,
+      // WCAG 2.2 AA normal-metin eşiği 4,5. J-108'de bu rozetin
+      // SÖZCÜĞÜNÜ düzelttim (`SOON` → `NOT OPEN`) ve KONTRASTINI hiç
+      // ölçmedim; kontrast kapısı da onu göremedi çünkü token
+      // VARSAYILANLARINI ölçüyor, yerinde `copyWith(color:)` ile
+      // geçilenleri değil (J-126). Rozet 7 kapalı disiplin kartında var.
+      style: JText.label.copyWith(color: JColors.ink2, letterSpacing: 1),
+    ),
+  );
 }
 
 /// `HonestyBox`un okuduğu tek yüzey (`Card`+`titleSmall`/`bodySmall`) —
@@ -399,7 +522,9 @@ final ThemeData _honestyBoxTheme = ThemeData(
   cardColor: const Color(0x13E4ECF3),
   cardTheme: const CardThemeData(
     elevation: 0,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    ),
   ),
   iconTheme: IconThemeData(color: JColors.ink3),
   textTheme: TextTheme(

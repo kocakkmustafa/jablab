@@ -1,0 +1,91 @@
+{
+  "task_id": "CORE-ADOPT-001-JABLAB-2026-09-02",
+  "state": "ACCEPTED",
+  "writer_acceptance": false,
+  "writer": "JabLab PRODUCT-WRITER standalone clone",
+  "review_requirement": "Independent R2 inspected the exact diff and evidence before local commit eligibility.",
+  "reviewer": "/root/gravita_core_adopt_r2",
+  "verdict": "ACCEPTED",
+  "local_commit_eligibility": "ALLOWED: exact six task-local paths only",
+  "clone": {
+    "path": "/Users/mustafakaankocak/motion-consumer-clones/2026-09-02-jablab-core-adopt-01",
+    "branch": "codex/jablab-core-adopt-20260902-01",
+    "origin": "https://github.com/kocakkmustafa/jablab.git",
+    "origin_main": "a325bae789bc323251ec737049984c980627a1c2",
+    "start_head": "a325bae789bc323251ec737049984c980627a1c2",
+    "start_status": "clean"
+  },
+  "approved_core_sha": "07af0d0963dc14aede8046518a7902650a31ceaa",
+  "historical_pin_rejected": "f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d",
+  "allowed_paths_changed": [
+    "pubspec.yaml",
+    "pubspec.lock",
+    "packages/jablab_engine/pubspec.yaml",
+    "packages/jablab_engine/pubspec.lock",
+    "test/core_adoption_contract_test.dart",
+    "docs/evidence/production-line/CORE-ADOPT-001-JABLAB/core-adoption.json"
+  ],
+  "dependency_contract": {
+    "descriptors": {
+      "pubspec.yaml": {
+        "motion_core": "07af0d0963dc14aede8046518a7902650a31ceaa",
+        "motion_camera": "07af0d0963dc14aede8046518a7902650a31ceaa"
+      },
+      "packages/jablab_engine/pubspec.yaml": {
+        "motion_core": "07af0d0963dc14aede8046518a7902650a31ceaa"
+      }
+    },
+    "locks": {
+      "pubspec.lock": {
+        "motion_core": {
+          "ref": "07af0d0963dc14aede8046518a7902650a31ceaa",
+          "resolved_ref": "07af0d0963dc14aede8046518a7902650a31ceaa"
+        },
+        "motion_camera": {
+          "ref": "07af0d0963dc14aede8046518a7902650a31ceaa",
+          "resolved_ref": "07af0d0963dc14aede8046518a7902650a31ceaa"
+        }
+      },
+      "packages/jablab_engine/pubspec.lock": {
+        "motion_core": {
+          "ref": "07af0d0963dc14aede8046518a7902650a31ceaa",
+          "resolved_ref": "07af0d0963dc14aede8046518a7902650a31ceaa"
+        }
+      }
+    },
+    "negative_cases": [
+      "historical f13 descriptor pin fails",
+      "mixed approved ref plus historical resolved-ref fails"
+    ]
+  },
+  "commands": [
+    {"cwd": ".", "command": "flutter test test/core_adoption_contract_test.dart", "result": "RED against historical f13 pin; descriptor and lock assertions failed"},
+    {"cwd": ".", "command": "flutter test test/core_adoption_contract_test.dart", "exit_code": 0, "result": "4 passed after adoption"},
+    {"cwd": "packages/jablab_engine", "command": "dart pub get", "exit_code": 0},
+    {"cwd": ".", "command": "flutter pub get", "exit_code": 0},
+    {"cwd": ".", "command": "flutter test", "exit_code": 0, "result": "417 passed, 2 tracked skips"},
+    {"cwd": "packages/jablab_engine", "command": "dart analyze", "exit_code": 0, "result": "No issues found"},
+    {"cwd": "packages/jablab_engine", "command": "dart test", "exit_code": 0, "result": "137 passed"},
+    {"cwd": ".", "command": "flutter analyze", "exit_code": 1, "result": "pre-existing standalone-clone warning: assets/models/ directory absent; no asset was fetched or created"},
+    {"cwd": ".", "command": "flutter build appbundle --release", "exit_code": 1, "result": "J-215 fail-closed: android/key.properties absent; debug-signing bypass was not run"},
+    {"cwd": ".", "command": "flutter build ios --release --no-codesign", "exit_code": 0, "artifact": "build/ios/iphoneos/Runner.app", "artifact_aggregate_sha256": "fc73608085f6b61732aa218a42f0def842fd8923d561e241a2b5e207d132b18f"}
+  ],
+  "verification": {
+    "old_pin_absent_from_changed_descriptors_and_locks": true,
+    "git_diff_check_exit_code": 0,
+    "raw_media_or_ui_source_changed": false,
+    "forbidden_path_changed": false
+  },
+  "changed_file_sha256": {
+    "pubspec.yaml": "c58e2ba4396efe5ab945aa5a53af875895cfecf3a497ef68ce9d49909022f0e4",
+    "pubspec.lock": "8ac0a8fe4a270504b93ef1b149b6ff8c5ddd2d688ad382856b9d194d0a196a02",
+    "packages/jablab_engine/pubspec.yaml": "f1ab2cff7c67ecaf3c762b89a4c039bf348a41580b778770ffcb1304ebcb01aa",
+    "packages/jablab_engine/pubspec.lock": "1d0bdc2ae6da33a144f84a31a77aab45d76a5682412c6b4afca3b003211d70b9",
+    "test/core_adoption_contract_test.dart": "86885679309311be304acf8fd6f9db8522331529d617bab0af5c50e32a64334d"
+  },
+  "manual_gates": [
+    "Android production signing remains founder-owned and was not bypassed.",
+    "No push, PR, merge, deploy, signing, store action, account action, or release was performed."
+  ],
+  "rollback": "No commit exists. Preserve the standalone clone and stop for review; do not reset, delete, or overwrite the clone or any protected worktree."
+}

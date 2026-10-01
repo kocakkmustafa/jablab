@@ -1,0 +1,964 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:motion_content/motion_content.dart';
+
+import 'content_failure.dart';
+import 'content_failure_screen.dart';
+import 'content_repository.dart';
+import 'design_tokens.dart';
+import 'lesson_media_slot.dart';
+import 'solo_boxing_course.dart';
+import 'solo_boxing_progress.dart';
+import 'ui_language.dart';
+
+String _copy(BuildContext context, CourseCopy value) =>
+    value.inLanguage(turkish: UiLanguage.isTurkish(context));
+
+/// A visible route to the complete course from both the first-run catalogue
+/// and an existing legacy course. Its promise is a learning path, not a score.
+class SoloCourseEntryCard extends StatelessWidget {
+  const SoloCourseEntryCard({super.key, required this.onOpen});
+
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) => GlassPanel(
+    tier: GlassTier.observation,
+    padding: const EdgeInsets.all(18),
+    child: InkWell(
+      key: const Key('open-solo-boxing-course'),
+      onTap: onOpen,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            UiLanguage.text(
+              context,
+              en: 'SOLO BOXING PATH',
+              tr: 'SOLO BOKS YOLU',
+            ),
+            style: JText.body.copyWith(
+              color: JColors.cool,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            UiLanguage.text(
+              context,
+              en: '39 lessons · from stance to your own round',
+              tr: '39 ders · duruştan kendi rauntuna',
+            ),
+            style: JText.body.copyWith(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            UiLanguage.text(
+              context,
+              en: 'Non-contact practice with a clear next step and saved self-reported progress.',
+              tr: 'Temassız çalışma, belirgin sıradaki adım ve kaydedilen öz beyan ilerlemesi.',
+            ),
+            style: JText.bodyMuted,
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Text(
+                UiLanguage.text(context, en: 'Open course', tr: 'Kursu aç'),
+                style: JText.body.copyWith(color: JColors.cool),
+              ),
+              const SizedBox(width: 6),
+              const Icon(Icons.arrow_forward, size: 18, color: JColors.cool),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class SoloBoxingCoursePage extends StatefulWidget {
+  const SoloBoxingCoursePage({
+    super.key,
+    required this.repository,
+    this.accountUserId,
+  });
+
+  final ContentRepository repository;
+  final ValueListenable<String?>? accountUserId;
+
+  @override
+  State<SoloBoxingCoursePage> createState() => _SoloBoxingCoursePageState();
+}
+
+class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
+  SoloBoxingCourse? _course;
+  SoloCourseProgress? _progress;
+  SoloCourseProgressStore? _store;
+  bool _loading = true;
+  bool _opening = false;
+  bool _failed = false;
+  ContentFailure? _contentFailure;
+  int _generation = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.accountUserId?.addListener(_load);
+    unawaited(_load());
+  }
+
+  @override
+  void didUpdateWidget(covariant SoloBoxingCoursePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.accountUserId != widget.accountUserId) {
+      oldWidget.accountUserId?.removeListener(_load);
+      widget.accountUserId?.addListener(_load);
+      unawaited(_load());
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.accountUserId?.removeListener(_load);
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    final int generation = ++_generation;
+    final String? account = widget.accountUserId?.value;
+    if (mounted) {
+      setState(() {
+        _progress = null; // previous account must disappear immediately
+        _store = null;
+        _loading = true;
+        _opening = false;
+        _failed = false;
+        _contentFailure = null;
+      });
+    }
+    try {
+      final SoloBoxingCourse course =
+          _course ?? await widget.repository.loadSoloBoxingCourse();
+      final SoloCourseProgressStore store = await widget.repository
+          .openSoloProgressStore(accountUserId: account);
+      final SoloCourseProgress progress = await store.load();
+      if (!mounted || generation != _generation) return;
+      setState(() {
+        _course = course;
+        _store = store;
+        _progress = progress;
+        _loading = false;
+      });
+    } on Object catch (error) {
+      if (!mounted || generation != _generation) return;
+      setState(() {
+        _progress = null;
+        _loading = false;
+        _failed = true;
+        if (error is ContentException) {
+          _contentFailure = ContentFailure.from(error);
+        }
+      });
+    }
+  }
+
+  Future<void> _openLesson(SoloLesson lesson) async {
+    final SoloBoxingCourse? course = _course;
+    final SoloCourseProgressStore? store = _store;
+    if (_opening || course == null || store == null) return;
+    final String? account = widget.accountUserId?.value;
+    setState(() => _opening = true);
+    try {
+      final SoloCourseProgress viewed = await store.markViewed(course, lesson);
+      if (!mounted || account != widget.accountUserId?.value) return;
+      setState(() => _progress = viewed);
+      await Navigator.of(context).push<void>(
+        MaterialPageRoute<void>(
+          builder: (_) => SoloBoxingLessonPage(
+            course: course,
+            lesson: lesson,
+            store: store,
+            accountUserId: widget.accountUserId,
+            accountAtOpen: account,
+            initialProgress: viewed.forLesson(lesson, course.version),
+          ),
+        ),
+      );
+      if (mounted && account == widget.accountUserId?.value) {
+        setState(() => _opening = false);
+        final SoloCourseProgress latest = await store.load();
+        if (mounted && account == widget.accountUserId?.value) {
+          setState(() => _progress = latest);
+        }
+      }
+    } on Object {
+      if (mounted) {
+        setState(() => _opening = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              UiLanguage.text(
+                context,
+                en: 'Progress could not be saved. Try again.',
+                tr: 'İlerleme kaydedilemedi. Yeniden dene.',
+              ),
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ContentFailure? contentFailure = _contentFailure;
+    if (contentFailure != null) {
+      return ContentFailureScreen(
+        failure: contentFailure,
+        onRetry: _load,
+        onExit: Navigator.of(context).canPop()
+            ? () => Navigator.of(context).pop()
+            : null,
+      );
+    }
+    final SoloBoxingCourse? course = _course;
+    final SoloCourseProgress? progress = _progress;
+    return Scaffold(
+      backgroundColor: JColors.ground,
+      appBar: AppBar(
+        backgroundColor: JColors.ground,
+        foregroundColor: JColors.ink,
+        title: Text(
+          UiLanguage.text(
+            context,
+            en: 'Solo boxing course',
+            tr: 'Solo boks kursu',
+          ),
+        ),
+      ),
+      body: _loading
+          ? const Center(child: CircularProgressIndicator(color: JColors.cool))
+          : _failed || course == null || progress == null
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      UiLanguage.text(
+                        context,
+                        en: 'Course or progress could not be read. No progress total is shown.',
+                        tr: 'Kurs veya ilerleme okunamadı. İlerleme toplamı gösterilmiyor.',
+                      ),
+                      textAlign: TextAlign.center,
+                      style: JText.body,
+                    ),
+                    const SizedBox(height: 12),
+                    OutlinedButton(
+                      onPressed: _load,
+                      child: Text(
+                        UiLanguage.text(
+                          context,
+                          en: 'Try again',
+                          tr: 'Yeniden dene',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : _courseBody(context, course, progress),
+    );
+  }
+
+  Widget _courseBody(
+    BuildContext context,
+    SoloBoxingCourse course,
+    SoloCourseProgress progress,
+  ) {
+    final int done = progress.completedCount(course);
+    final SoloLesson? next = progress.nextLesson(course);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
+      children: <Widget>[
+        Text(
+          _copy(context, course.title),
+          style: JText.pageTitle.copyWith(fontSize: 30),
+        ),
+        const SizedBox(height: 12),
+        Text(_copy(context, course.goal), style: JText.bodyMuted),
+        const SizedBox(height: 18),
+        GlassPanel(
+          tier: GlassTier.observation,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                UiLanguage.text(
+                  context,
+                  en: '$done / 39 self-reported complete',
+                  tr: '$done / 39 öz beyanla tamamlandı',
+                ),
+                key: const Key('solo-course-progress'),
+                style: JText.body.copyWith(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 9),
+              LinearProgressIndicator(
+                value: done / course.lessons.length,
+                backgroundColor: JColors.border,
+                color: JColors.cool,
+              ),
+              const SizedBox(height: 9),
+              Text(
+                UiLanguage.text(
+                  context,
+                  en: 'Reading, practice and self-report are recorded separately. No camera score or skill certification.',
+                  tr: 'Okuma, çalışma ve öz beyan ayrı kaydedilir. Kamera puanı veya beceri belgesi yok.',
+                ),
+                style: JText.bodyMuted,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 14),
+        if (next != null)
+          GlassPanel(
+            padding: const EdgeInsets.all(16),
+            child: InkWell(
+              key: const Key('solo-next-lesson'),
+              onTap: _opening ? null : () => _openLesson(next),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    UiLanguage.text(context, en: 'UP NEXT', tr: 'SIRADAKİ'),
+                    style: JText.body.copyWith(color: JColors.cool),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    _copy(context, next.title),
+                    style: JText.body.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(_copy(context, next.objective), style: JText.bodyMuted),
+                ],
+              ),
+            ),
+          ),
+        const SizedBox(height: 14),
+        GlassPanel(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            _copy(context, course.healthNotice),
+            style: JText.bodyMuted,
+          ),
+        ),
+        const SizedBox(height: 20),
+        for (final SoloModule module in course.modules)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: _moduleTile(context, course, module, progress),
+          ),
+      ],
+    );
+  }
+
+  Widget _moduleTile(
+    BuildContext context,
+    SoloBoxingCourse course,
+    SoloModule module,
+    SoloCourseProgress progress,
+  ) {
+    final int completed = module.lessons
+        .where(
+          (SoloLesson lesson) =>
+              progress.forLesson(lesson, course.version)?.state ==
+              SoloLessonState.selfReportedComplete,
+        )
+        .length;
+    return GlassPanel(
+      padding: EdgeInsets.zero,
+      child: Material(
+        type: MaterialType.transparency,
+        child: ExpansionTile(
+          key: PageStorageKey<String>(module.id),
+          initiallyExpanded: module == course.modules.first,
+          iconColor: JColors.cool,
+          collapsedIconColor: JColors.cool,
+          title: Text(
+            _copy(context, module.title),
+            style: JText.body.copyWith(fontWeight: FontWeight.w700),
+          ),
+          subtitle: Text(
+            UiLanguage.text(
+              context,
+              en: '$completed / ${module.lessons.length} self-reported complete',
+              tr: '$completed / ${module.lessons.length} öz beyan tamamlandı',
+            ),
+            style: JText.bodyMuted,
+          ),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+              child: Text(_copy(context, module.intro), style: JText.bodyMuted),
+            ),
+            for (int i = 0; i < module.lessons.length; i++)
+              ListTile(
+                key: Key('solo-lesson-${module.lessons[i].id}'),
+                onTap: _opening ? null : () => _openLesson(module.lessons[i]),
+                leading: Icon(
+                  progress
+                              .forLesson(module.lessons[i], course.version)
+                              ?.state ==
+                          SoloLessonState.selfReportedComplete
+                      ? Icons.check_circle_outline
+                      : Icons.radio_button_unchecked,
+                  color: JColors.cool,
+                ),
+                title: Text(
+                  _copy(context, module.lessons[i].title),
+                  style: JText.body.copyWith(fontSize: 15),
+                ),
+                subtitle: Text(
+                  _copy(context, module.lessons[i].objective),
+                  style: JText.bodyMuted,
+                ),
+                trailing: const Icon(Icons.chevron_right, color: JColors.cool),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SoloBoxingLessonPage extends StatefulWidget {
+  const SoloBoxingLessonPage({
+    super.key,
+    required this.course,
+    required this.lesson,
+    required this.store,
+    required this.initialProgress,
+    required this.accountAtOpen,
+    this.accountUserId,
+    this.preparationClock,
+  });
+
+  final SoloBoxingCourse course;
+  final SoloLesson lesson;
+  final SoloCourseProgressStore store;
+  final SoloLessonProgress? initialProgress;
+  final ValueListenable<String?>? accountUserId;
+  final String? accountAtOpen;
+
+  /// Optional clock for deterministic date-boundary tests; never persisted.
+  final DateTime Function()? preparationClock;
+
+  @override
+  State<SoloBoxingLessonPage> createState() => _SoloBoxingLessonPageState();
+}
+
+class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
+    with WidgetsBindingObserver {
+  late SoloLessonProgress? _progress;
+  late List<bool> _checks;
+  bool _saving = false;
+  DateTime? _preparedAt;
+  Timer? _preparationExpiry;
+  bool _foreground = true;
+  bool _practisedThisSession = false;
+  int _sessionEpoch = 0;
+  DateTime get _now =>
+      (widget.preparationClock?.call() ?? DateTime.now()).toLocal();
+  bool get _sessionPrepared {
+    final prepared = _preparedAt;
+    final now = _now;
+    return _foreground &&
+        prepared != null &&
+        prepared.year == now.year &&
+        prepared.month == now.month &&
+        prepared.day == now.day;
+  }
+
+  bool get _preparationBlocked => _needsSessionPreparation && !_sessionPrepared;
+  bool get _needsSessionPreparation =>
+      widget.lesson.id != 'boxing.start.space' &&
+      widget.lesson.id != 'boxing.start.breath';
+
+  String _specificPreparation(BuildContext context) {
+    final module = widget.lesson.id.split('.')[1];
+    return switch (module) {
+      'footwork' => UiLanguage.text(
+        context,
+        en: 'Rehearse your stance and small steps at walking pace before changing direction.',
+        tr: 'Yön değiştirmeden önce duruşunu ve küçük adımları yürüyüş hızında prova et.',
+      ),
+      'straights' => UiLanguage.text(
+        context,
+        en: 'Recall stance and guard, then extend and return a few easy straight punches into open air.',
+        tr: 'Duruş ve gardı hatırla; ardından açık havaya birkaç rahat düz yumruk uzatıp geri çek.',
+      ),
+      'defence' => UiLanguage.text(
+        context,
+        en: 'Rehearse small supported weight shifts and your known guard before the defence task.',
+        tr: 'Savunma görevinden önce küçük destekli ağırlık geçişlerini ve bildiğin gardı prova et.',
+      ),
+      'curves' => UiLanguage.text(
+        context,
+        en: 'Move shoulders and elbows gently; rehearse a small, slow arc into open air without impact.',
+        tr: 'Omuz ve dirsekleri rahatça hareket ettir; temas olmadan küçük, yavaş bir kavis prova et.',
+      ),
+      _ => UiLanguage.text(
+        context,
+        en: 'Rehearse familiar stance, a small step and known punches slowly before the new sequence.',
+        tr: 'Yeni diziden önce bildiğin duruşu, küçük adımı ve tanıdık yumrukları yavaşça prova et.',
+      ),
+    };
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _progress = widget.initialProgress;
+    _checks = List<bool>.filled(widget.lesson.selfChecks.length, false);
+    widget.accountUserId?.addListener(_accountChanged);
+    WidgetsBinding.instance.addObserver(this);
+    _foreground =
+        WidgetsBinding.instance.lifecycleState == null ||
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
+  }
+
+  @override
+  void dispose() {
+    _preparationExpiry?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    widget.accountUserId?.removeListener(_accountChanged);
+    super.dispose();
+  }
+
+  void _accountChanged() {
+    if (widget.accountUserId?.value != widget.accountAtOpen && mounted) {
+      _resetPreparation();
+      Navigator.of(context).maybePop();
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _foreground = state == AppLifecycleState.resumed;
+    if (!_foreground) {
+      _resetPreparation();
+    } else if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _resetPreparation() {
+    _preparationExpiry?.cancel();
+    _preparationExpiry = null;
+    _sessionEpoch++;
+    if (!mounted) return;
+    setState(() {
+      _preparedAt = null;
+      _practisedThisSession = false;
+      _checks = List<bool>.filled(widget.lesson.selfChecks.length, false);
+    });
+  }
+
+  void _acknowledgePreparation(bool value) {
+    _resetPreparation();
+    if (!value || !_foreground) return;
+    final now = _now;
+    setState(() => _preparedAt = now);
+    // Calendar invalidation is not a physiological warm-up duration claim.
+    _preparationExpiry = Timer(
+      DateTime(now.year, now.month, now.day + 1).difference(now),
+      _resetPreparation,
+    );
+  }
+
+  Future<void> _save({required bool complete}) async {
+    if (_saving ||
+        widget.accountUserId?.value != widget.accountAtOpen ||
+        _preparationBlocked ||
+        (complete && _needsSessionPreparation && !_practisedThisSession)) {
+      return;
+    }
+    setState(() => _saving = true);
+    final sessionEpoch = _sessionEpoch;
+    try {
+      final SoloCourseProgress updated = complete
+          ? await widget.store.markCompleted(
+              widget.course,
+              widget.lesson,
+              selfChecksConfirmed: _checks.every((bool value) => value),
+            )
+          : await widget.store.markPractised(widget.course, widget.lesson);
+      if (!mounted || widget.accountUserId?.value != widget.accountAtOpen) {
+        return;
+      }
+      setState(() {
+        _progress = updated.forLesson(widget.lesson, widget.course.version);
+        if (!complete && sessionEpoch == _sessionEpoch && _sessionPrepared) {
+          _practisedThisSession = true;
+        }
+        _saving = false;
+      });
+    } on Object {
+      if (!mounted) return;
+      setState(() => _saving = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            UiLanguage.text(
+              context,
+              en: 'Progress could not be saved. Try again.',
+              tr: 'İlerleme kaydedilemedi. Yeniden dene.',
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SoloLesson lesson = widget.lesson;
+    final bool practised =
+        _progress != null &&
+        _progress!.state.index >= SoloLessonState.practised.index;
+    final bool completed =
+        _progress?.state == SoloLessonState.selfReportedComplete;
+    final List<SoloLesson> prerequisites = widget.course.lessons
+        .where((SoloLesson item) => lesson.prerequisites.contains(item.id))
+        .toList(growable: false);
+    return Scaffold(
+      backgroundColor: JColors.ground,
+      appBar: AppBar(
+        backgroundColor: JColors.ground,
+        foregroundColor: JColors.ink,
+        title: Text(_copy(context, lesson.title)),
+      ),
+      body: ListView(
+        key: const Key('solo-lesson-list'),
+        padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
+        children: <Widget>[
+          Text(
+            _copy(context, lesson.title),
+            style: JText.pageTitle.copyWith(fontSize: 30),
+          ),
+          const SizedBox(height: 10),
+          Text(_copy(context, lesson.objective), style: JText.bodyMuted),
+          const SizedBox(height: 10),
+          Text(
+            UiLanguage.text(
+              context,
+              en: '${lesson.minutes} min suggested · self-report only',
+              tr: '${lesson.minutes} dk öneri · yalnız öz beyan',
+            ),
+            style: JText.body.copyWith(color: JColors.cool),
+          ),
+          LessonMediaSlot.empty(
+            course: widget.course,
+            lesson: lesson,
+            locale: UiLanguage.isTurkish(context) ? 'tr' : 'en',
+            accountUserId: widget.accountUserId,
+          ),
+          if (prerequisites.isNotEmpty) ...<Widget>[
+            const SizedBox(height: 12),
+            Text(
+              UiLanguage.text(
+                context,
+                en: 'Builds on: ${prerequisites.map((SoloLesson item) => _copy(context, item.title)).join(", ")}',
+                tr: 'Ön çalışma: ${prerequisites.map((SoloLesson item) => _copy(context, item.title)).join(", ")}',
+              ),
+              style: JText.bodyMuted,
+            ),
+          ],
+          if (_needsSessionPreparation) ...<Widget>[
+            const SizedBox(height: 12),
+            _section(
+              context,
+              UiLanguage.text(
+                context,
+                en: 'PREPARE THIS SESSION',
+                tr: 'BU OTURUMA HAZIRLAN',
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    UiLanguage.text(
+                      context,
+                      en: 'Clear your space. Begin with comfortable walking in place and gentle joint movement, then gradually rehearse familiar boxing movements at low effort without tiring yourself. Take the preparation time you need; a short lesson or reading this card does not establish readiness. You may read without performing the movement.',
+                      tr: 'Alanı boşalt. Yerinde rahat yürüyüş ve nazik eklem hareketleriyle başla; ardından tanıdık boks hareketlerini yorulmadan düşük eforla kademeli prova et. Hazırlığa gereken zamanı ayır; kısa bir ders veya bu kartı okumak hazır oluşunu göstermez. Hareketi yapmadan okuyabilirsin.',
+                    ),
+                    style: JText.body,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(_specificPreparation(context), style: JText.body),
+                  const SizedBox(height: 8),
+                  Text(
+                    UiLanguage.text(
+                      context,
+                      en: 'After practice, step and breathe more slowly; stop for pain, dizziness or feeling unwell.',
+                      tr: 'Çalışma sonunda adımı ve nefesi yavaşlat; ağrı, baş dönmesi veya kötü hissetmede dur.',
+                    ),
+                    style: JText.bodyMuted,
+                  ),
+                  CheckboxListTile(
+                    key: const Key('solo-session-prepared'),
+                    contentPadding: EdgeInsets.zero,
+                    value: _sessionPrepared,
+                    onChanged: _saving || !_foreground
+                        ? null
+                        : (value) => _acknowledgePreparation(value ?? false),
+                    title: Text(
+                      UiLanguage.text(
+                        context,
+                        en: 'I prepared for this session · self-report, not a readiness check',
+                        tr: 'Bu oturuma hazırlandım · öz beyan, hazır oluş kontrolü değil',
+                      ),
+                      style: JText.bodyMuted,
+                    ),
+                  ),
+                  if (_sessionPrepared)
+                    TextButton(
+                      key: const Key('solo-session-break'),
+                      onPressed: _resetPreparation,
+                      child: Text(
+                        UiLanguage.text(
+                          context,
+                          en: 'After a break · prepare again',
+                          tr: 'Moladan sonra · yeniden hazırlan',
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 18),
+          _section(
+            context,
+            UiLanguage.text(context, en: 'LEARN', tr: 'ÖĞREN'),
+            Column(
+              children: <Widget>[
+                for (int i = 0; i < lesson.steps.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${i + 1}. ',
+                          style: JText.body.copyWith(color: JColors.cool),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _copy(context, lesson.steps[i]),
+                            style: JText.body,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          _section(
+            context,
+            UiLanguage.text(context, en: 'PRACTISE', tr: 'ÇALIŞ'),
+            _preparationBlocked
+                ? Text(
+                    UiLanguage.text(
+                      context,
+                      en: 'Prepare above before physical practice. You can read the lesson without trying the movements; this does not record physical practice.',
+                      tr: 'Fiziksel çalışmadan önce yukarıdaki hazırlığı yap. Hareketleri denemeden dersi okuyabilirsin; bu, fiziksel pratik olarak kaydedilmez.',
+                    ),
+                    key: const Key('solo-preparation-required'),
+                    style: JText.body,
+                  )
+                : Text(_copy(context, lesson.practice), style: JText.body),
+          ),
+          const SizedBox(height: 12),
+          _section(
+            context,
+            UiLanguage.text(context, en: 'SELF-CHECK', tr: 'ÖZ DENETİM'),
+            Column(
+              children: <Widget>[
+                for (int i = 0; i < lesson.selfChecks.length; i++)
+                  CheckboxListTile(
+                    key: Key('solo-check-${lesson.id}-$i'),
+                    contentPadding: EdgeInsets.zero,
+                    value: _checks[i],
+                    activeColor: JColors.cool,
+                    checkColor: JColors.ground,
+                    title: Text(
+                      _copy(context, lesson.selfChecks[i]),
+                      style: JText.body.copyWith(fontSize: 15),
+                    ),
+                    onChanged: _saving || _preparationBlocked
+                        ? null
+                        : (bool? value) =>
+                              setState(() => _checks[i] = value ?? false),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          _section(
+            context,
+            UiLanguage.text(context, en: 'ADAPT', tr: 'UYARLA'),
+            Text(_copy(context, lesson.adaptation), style: JText.body),
+          ),
+          const SizedBox(height: 12),
+          _section(
+            context,
+            UiLanguage.text(context, en: 'STOP SIGNAL', tr: 'DURMA İŞARETİ'),
+            Text(_copy(context, lesson.stopSignal), style: JText.body),
+          ),
+          const SizedBox(height: 12),
+          _section(
+            context,
+            UiLanguage.text(context, en: 'SOURCES', tr: 'KAYNAKLAR'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final String sourceId in lesson.sourceIds)
+                  _sourceRow(
+                    context,
+                    widget.course.sources.singleWhere(
+                      (CourseSource source) => source.id == sourceId,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 18),
+          FilledButton(
+            key: const Key('solo-mark-practised'),
+            onPressed: _saving || _preparationBlocked
+                ? null
+                : () => _save(complete: false),
+            child: Text(
+              UiLanguage.text(
+                context,
+                en: practised
+                    ? 'Practise again · ${_progress!.practiceCount} recorded'
+                    : 'I practised this',
+                tr: practised
+                    ? 'Yeniden çalış · ${_progress!.practiceCount} kayıt'
+                    : 'Bunu çalıştım',
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton(
+            key: const Key('solo-mark-complete'),
+            onPressed:
+                _saving ||
+                    _preparationBlocked ||
+                    (_needsSessionPreparation && !_practisedThisSession) ||
+                    !practised ||
+                    !_checks.every((bool value) => value)
+                ? null
+                : () => _save(complete: true),
+            child: Text(
+              UiLanguage.text(
+                context,
+                en: completed
+                    ? 'Self-reported complete · review again'
+                    : 'Complete by self-report',
+                tr: completed
+                    ? 'Öz beyanla tamamlandı · yeniden gözden geçir'
+                    : 'Öz beyanla tamamla',
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            UiLanguage.text(
+              context,
+              en: 'These buttons record your report. They do not verify technique or medical safety.',
+              tr: 'Bu düğmeler beyanını kaydeder. Tekniği veya tıbbi güvenliği doğrulamaz.',
+            ),
+            style: JText.bodyMuted,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _section(BuildContext context, String label, Widget child) =>
+      GlassPanel(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: JText.body.copyWith(
+                color: JColors.cool,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 9),
+            Material(type: MaterialType.transparency, child: child),
+          ],
+        ),
+      );
+
+  Widget _sourceRow(BuildContext context, CourseSource source) => Padding(
+    padding: const EdgeInsets.only(bottom: 8),
+    child: Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${source.publisher}: ${source.title}',
+                style: JText.body.copyWith(fontSize: 14),
+              ),
+              SelectableText(
+                source.url.toString(),
+                style: JText.bodyMuted.copyWith(fontSize: 12),
+              ),
+              if (source.supports case final support?)
+                Text(
+                  '${UiLanguage.text(context, en: 'Supports only:', tr: 'Yalnız destekler:')} ${_copy(context, support)}',
+                  key: Key('boxing.sourceScope.${source.id}'),
+                  style: JText.bodyMuted.copyWith(fontSize: 12),
+                ),
+              if (source.doesNotSupport case final limit?)
+                Text(
+                  '${UiLanguage.text(context, en: 'Does not establish:', tr: 'Kanıtlamaz:')} ${_copy(context, limit)}',
+                  key: Key('boxing.sourceLimit.${source.id}'),
+                  style: JText.bodyMuted.copyWith(fontSize: 12),
+                ),
+            ],
+          ),
+        ),
+        IconButton(
+          tooltip: UiLanguage.text(
+            context,
+            en: 'Copy source link',
+            tr: 'Kaynak bağlantısını kopyala',
+          ),
+          onPressed: () =>
+              Clipboard.setData(ClipboardData(text: source.url.toString())),
+          icon: const Icon(Icons.copy, color: JColors.cool),
+        ),
+      ],
+    ),
+  );
+}

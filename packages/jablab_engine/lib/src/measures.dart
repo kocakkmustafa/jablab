@@ -50,6 +50,7 @@ final class MeasureSet {
   static const Set<String> _sided = <String>{
     'extensionRatio',
     'extensionRatioDelta',
+    'wristDropRatio',
     'guardHeightDelta',
     'elbowFlareAngle',
   };
@@ -105,6 +106,12 @@ final class MeasureCalculator {
       final double armLength = _dist(pSh, pEl) + _dist(pEl, pWr);
       v['${side.name}.extensionRatio'] =
           armLength > 1e-6 ? _dist(pWr, pSh) / armLength : 0;
+
+      // Bileğin omza göre aşağı yönlü görüntü düzlemi bileşeni. Kol düzlüğü
+      // tek başına aşağı sarkan düz kolu, düz yumruktan ayıramaz. Bu 2B oran
+      // derinlik, yumruk hedefi, eklem açısı veya kuvvet ölçümü değildir.
+      v['${side.name}.wristDropRatio'] =
+          armLength > 1e-6 ? (pWr.y - pSh.y) / armLength : 0;
 
       // Gard yüksekliği: bilek burnun NE KADAR ALTINDA (görüntüde y aşağı
       // büyür). Pozitif = gard düşmüş. Gövde boyuna oranlanır.

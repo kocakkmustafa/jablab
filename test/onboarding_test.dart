@@ -96,6 +96,23 @@ void main() {
     await t.pump(const Duration(milliseconds: 400));
   }
 
+  for (final language in ['en', 'tr']) {
+    testWidgets('current course and closed camera intro in $language', (tester) async {
+      tester.platformDispatcher.localeTestValue = Locale(language);
+      addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+      await pumpOnboarding(tester);
+      expect(find.textContaining(language == 'tr' ? 'veya kamera gerekmez' : 'No bag, gloves, account or camera is needed'), findsOneWidget);
+      expect(find.textContaining(language == 'tr' ? 'canlı kamera seansları ve abonelik satışı kapalıdır' : 'Live camera sessions and subscription sales are closed'), findsOneWidget);
+      expect(find.textContaining('Video is read as you move'), findsNothing);
+      await advance(tester);
+      expect(find.textContaining(language == 'tr' ? 'ustalığı otomatik puanlamaz' : 'automatically grade punch technique'), findsOneWidget);
+      await advance(tester);
+      expect(find.textContaining(language == 'tr' ? 'kamera izni olmadan çalışır' : 'works without camera permission'), findsOneWidget);
+      expect(find.textContaining('form feedback needs'), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   group('sıra ve kapı', () {
     testWidgets('İLK AÇILIŞ: karşılama kabuktan ÖNCE gelir',
         (WidgetTester t) async {
@@ -178,7 +195,7 @@ void main() {
       final String note = t
           .widget<Text>(find.byKey(const Key('onboarding-permission-note')))
           .data!;
-      expect(note.toLowerCase(), contains('still run'),
+      expect(note.toLowerCase(), contains('works without camera permission'),
           reason: 'izni reddeden kullanıcıya elinde ne KALDIĞI '
               'söylenmiyor — ekran çıkmaz sokak');
     });

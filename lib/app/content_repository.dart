@@ -1,12 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/services.dart' show ByteData, rootBundle;
+import 'package:flutter/services.dart' show AssetBundle, ByteData, rootBundle;
+import 'package:motion_content/motion_content.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'content_failure.dart';
+import 'flutter_bundle_content_asset_reader.dart';
+import 'account_bridge.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
+import 'solo_boxing_course.dart';
+import 'solo_boxing_progress.dart';
 import 'pose_model.dart';
 import 'rehearse_material.dart';
 import 'teach_material.dart';
@@ -21,7 +26,19 @@ import '../shell_candidate/shell_models.dart';
 /// `motion_shell`'e terfi ettiğinde boks kural motorunu da beraberinde
 /// taşırdı. Alan → kabuk dönüşümü **yalnız burada** olur.
 final class ContentRepository {
-  const ContentRepository({this.storeOverride, this.loadStringOverride});
+  const ContentRepository({
+    this.storeOverride,
+    this.loadStringOverride,
+    this.historyDirectoryOverride,
+    this.contentBundleOverride,
+  });
+
+  /// Filesystem seam for account journal tests; production uses app support.
+  final Directory? historyDirectoryOverride;
+
+  /// Binary bundle seam for the course integrity gate. Production reads the
+  /// real Flutter bundle; tests can replace only the manifest/course bytes.
+  final AssetBundle? contentBundleOverride;
 
   /// Asset okuma dikişi — YALNIZ test için, `storeOverride` ile aynı gerekçe.
   ///
@@ -45,6 +62,10 @@ final class ContentRepository {
   final SessionStore? storeOverride;
 
   static const String libraryAsset = 'assets/content/library.json';
+  static const String soloBoxingCourseAsset =
+      'assets/content/solo_boxing_course.v1.json';
+  static const String soloBoxingIntegrityManifestAsset =
+      'assets/motion_content/manifest.json';
   static const String boxingRuleSetAsset = 'assets/rulesets/boxing@1.0.0.json';
 
   static const String cuesAsset = 'assets/content/cues.en.json';
@@ -123,11 +144,59 @@ final class ContentRepository {
   /// `path_provider` yalnız uygulama-özel dizini bulmak için; depolama
   /// biçiminin kendisi uygulamada (append-only JSONL). Üçüncü-taraf DB
   /// bilerek yok — sorgu ihtiyacı ÖLÇÜLDÜĞÜNDE gelir.
-  Future<SessionStore> openStore() async {
+  Future<SessionStore> openStore({String? accountUserId}) async {
     final SessionStore? injected = storeOverride;
     if (injected != null) return injected;
-    final Directory dir = await getApplicationSupportDirectory();
-    return JsonlSessionStore(File('${dir.path}/sessions.jsonl'));
+    final Directory dir =
+        historyDirectoryOverride ?? await getApplicationSupportDirectory();
+    return JsonlSessionStore(sessionFileFor(dir, accountUserId));
+  }
+
+  Future<SoloBoxingCourse> loadSoloBoxingCourse() async {
+    final ContentLoadResult result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: soloBoxingIntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
+    }
+    final bytes = await result.assets.read(soloBoxingCourseAsset);
+    try {
+      return SoloBoxingCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      // The Core gate has already authenticated these exact bundled bytes.
+      // An invalid course schema is therefore a deterministic shipped-content
+      // defect, not a damaged-install read that a retry could repair.
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'solo-boxing-course-json',
+        ),
+      );
+    } on TypeError {
+      // Required JSON fields with the wrong type are the same schema failure.
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'solo-boxing-course-json',
+        ),
+      );
+    }
+  }
+
+  Future<SoloCourseProgressStore> openSoloProgressStore({
+    String? accountUserId,
+  }) async {
+    final Directory directory =
+        historyDirectoryOverride ?? await getApplicationSupportDirectory();
+    return soloProgressStoreFor(directory, accountUserId);
   }
 
   /// Bir dersin tur planını alan kütüphanesinden arar (J-063).
@@ -271,6 +340,9 @@ final class ContentRepository {
       // ve sınıfı hata METNİNDEN çıkarmak sessizce kırılacak bir bağ olurdu.
       throw ContentIntegrityException(errs);
     }
+    // The standalone 39-lesson course has its own page, but the home screen
+    // advertises it. Verify exact bundled bytes before exposing that entry.
+    await loadSoloBoxingCourse();
     return (library: lib, boxing: boxing);
   }
 

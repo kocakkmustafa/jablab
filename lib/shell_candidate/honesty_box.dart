@@ -11,11 +11,17 @@ class HonestyBox extends StatelessWidget {
     super.key,
     required this.measured,
     required this.notMeasured,
-  }) : assert(notMeasured.length > 0,
-            'Dürüstlük kutusu "ölçülmez" listesi olmadan gösterilemez');
+    this.measuredHeading = 'What this measures',
+    this.notMeasuredHeading = "What it doesn't",
+  }) : assert(
+         notMeasured.length > 0,
+         'Dürüstlük kutusu "ölçülmez" listesi olmadan gösterilemez',
+       );
 
   final List<String> measured;
   final List<String> notMeasured;
+  final String measuredHeading;
+  final String notMeasuredHeading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +33,7 @@ class HonestyBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('What this measures', style: theme.textTheme.titleSmall),
+            Text(measuredHeading, style: theme.textTheme.titleSmall),
             const SizedBox(height: 6),
             ...measured.map((String m) => _Line(icon: Icons.check, text: m)),
             if (measured.isEmpty)
@@ -43,10 +49,12 @@ class HonestyBox extends StatelessWidget {
               // dilini kaldırarak küçültüyor. Ayrıca freeze bir ÇALIŞMA
               // DİSİPLİNİ, M-F-186 bir ÜRÜN SINIRI — süreç kuralı,
               // kullanıcıya görünen bir dürüstlük ihlalinin önüne geçmez.
-              Text('This section is not open.',
-                  style: theme.textTheme.bodySmall),
+              Text(
+                'This section is not open.',
+                style: theme.textTheme.bodySmall,
+              ),
             const SizedBox(height: 14),
-            Text("What it doesn't", style: theme.textTheme.titleSmall),
+            Text(notMeasuredHeading, style: theme.textTheme.titleSmall),
             const SizedBox(height: 6),
             ...notMeasured.map((String m) => _Line(icon: Icons.close, text: m)),
           ],
@@ -64,15 +72,16 @@ class _Line extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Icon(icon, size: 16),
-            const SizedBox(width: 8),
-            Expanded(
-                child: Text(text, style: Theme.of(context).textTheme.bodySmall)),
-          ],
+    padding: const EdgeInsets.only(bottom: 6),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Icon(icon, size: 16),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(text, style: Theme.of(context).textTheme.bodySmall),
         ),
-      );
+      ],
+    ),
+  );
 }

@@ -4,6 +4,16 @@
   "claim": "Boxing model gate gecti",
   "state": "EXTERNAL_GATE",
   "measuredAt": "2026-08-19",
+  "historicalSnapshot": true,
+  "latestReviewAt": "2026-09-26",
+  "latestReview": {
+    "evidence": "docs/evidence/production-line/2026-09-26-solo-boxing.md",
+    "syntheticDirectionGate": "7 named controls: 0 false-positive events, 0 missed or extra positive events; 250/300 ms downward swings no longer emit jab",
+    "eventLogicRevision": "wrist-drop-2d@1",
+    "realPersonHoldout": "ABSENT — no training or camera validation claimed",
+    "automaticCourseMastery": "DISABLED — course completion is user self-report",
+    "historicalThresholds": "The August numbers below are historical roadmap requirements, not acceptance evidence or a newly selected sample-size rule. No real-world model gate is closed by the synthetic test."
+  },
   "step1_negativeFixtures": {
     "$doc": "packages/jablab_engine/test/negative_motion_rejection_test.dart, 8/8 PASS. Sentetik fixture'lar bu oturumda StrikingEngine'e karsi EMPIRIK KALIBRE edildi (guardPose/midPose gibi mevcut isimlerin extensionRatio degerleri TAHMIN edilmedi, olculdu — midPose 'yari yol' adiyla 0,84-0,89 cikti, PEAK esigine (0,85) bitisik, ilk varsayimin YANLIS oldugunu kanitladi).",
     "results": [

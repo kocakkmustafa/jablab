@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'content_failure.dart';
+import 'ui_language.dart';
 
 /// DÜRÜST HATA EKRANI (J-079) — UI-BRIEF §4/3.
 ///
@@ -33,6 +34,7 @@ class ContentFailureScreen extends StatelessWidget {
     super.key,
     required this.failure,
     this.onRetry,
+    this.onExit,
   });
 
   final ContentFailure failure;
@@ -41,12 +43,25 @@ class ContentFailureScreen extends StatelessWidget {
   /// ekran kendi başına bir retry uydurmaz.
   final Future<void> Function()? onRetry;
 
+  /// A pushed course route may return to its parent without exposing the
+  /// rejected course. Root startup failures leave this null and stay blocked.
+  final VoidCallback? onExit;
+
   bool get _retryable => failure.kind == ContentFailureKind.unreadable;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final bool tr = UiLanguage.isTurkish(context);
     return Scaffold(
+      appBar: onExit == null
+          ? null
+          : AppBar(
+              leading: BackButton(
+                key: const Key('failure-exit-course'),
+                onPressed: onExit,
+              ),
+            ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(24),
@@ -56,13 +71,13 @@ class ContentFailureScreen extends StatelessWidget {
                 size: 48, color: theme.colorScheme.error),
             const SizedBox(height: 16),
             Text(
-              _headline,
+              tr ? _headlineTr : _headline,
               key: const Key('failure-headline'),
               style: theme.textTheme.headlineSmall,
             ),
             const SizedBox(height: 12),
             Text(
-              _body,
+              tr ? _bodyTr : _body,
               key: const Key('failure-body'),
               style: theme.textTheme.bodyLarge,
             ),
@@ -71,7 +86,7 @@ class ContentFailureScreen extends StatelessWidget {
               FilledButton(
                 key: const Key('failure-retry'),
                 onPressed: () => onRetry!(),
-                child: const Text('Try again'),
+                child: Text(tr ? 'Tekrar dene' : 'Try again'),
               ),
             const SizedBox(height: 24),
             // Ayrıntı KATLANMIŞ: birincil mesaj insan cümlesi, ikincil
@@ -79,14 +94,16 @@ class ContentFailureScreen extends StatelessWidget {
             Card(
               child: ExpansionTile(
                 key: const Key('failure-detail-tile'),
-                title: const Text('Technical detail'),
-                subtitle: const Text('What to send us if you report this'),
+                title: Text(tr ? 'Teknik ayrıntı' : 'Technical detail'),
+                subtitle: Text(tr
+                    ? 'Sorunu bildirirken paylaşabileceğiniz bilgi'
+                    : 'What to send us if you report this'),
                 childrenPadding:
                     const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 children: <Widget>[
                   SelectableText(
                     failure.detail.isEmpty
-                        ? '(no detail reported)'
+                        ? (tr ? '(ayrıntı bildirilmedi)' : '(no detail reported)')
                         : failure.detail,
                     key: const Key('failure-detail'),
                     style: theme.textTheme.bodySmall
@@ -108,18 +125,27 @@ class ContentFailureScreen extends StatelessWidget {
         ContentFailureKind.unreadable => 'We could not read our own content',
       };
 
+  String get _headlineTr => switch (failure.kind) {
+        ContentFailureKind.integrity => 'İçeriği durdurduk',
+        ContentFailureKind.unreadable => 'Uygulama içeriği okunamadı',
+      };
+
+  String get _bodyTr => switch (failure.kind) {
+        ContentFailureKind.integrity =>
+          'Bu sürümün paketlenmiş eğitim içeriği eksik veya bütünlük kontrollerimizden geçmedi. Güvenle sunamadığımız için içeriği göstermiyoruz. Sorun cihazınızda değil; bu bizim sürüm hatamız. Aynı dosyayı yeniden okumak sonucu değiştirmez. Düzeltme için yeni bir uygulama sürümü gerekiyor.',
+        ContentFailureKind.unreadable =>
+          'Eğitim içeriğini bu denemede okuyamadık. Geçici bir okuma hatası olabilir. Bir kez yeniden deneyin; sorun sürerse destek ekibine bildirin.',
+      };
+
   String get _body => switch (failure.kind) {
         ContentFailureKind.integrity =>
-          'The training library that shipped with this build does not pass our '
-              'own honesty checks — something in it claims more than the app '
-              'can actually measure. Rather than show you a library we cannot '
-              'vouch for, we show you nothing. This one is on us, not on your '
-              'device, and trying again will not change it: the next build '
-              'will.',
+          'The training content bundled with this build is missing or failed '
+              'our integrity checks. We cannot vouch for it, so we do not '
+              'show it. This is on us; trying again cannot change the files '
+              'in this build. We need to fix it in an app update.',
         ContentFailureKind.unreadable =>
-          'The app could not read the training content that ships inside it. '
-              'That usually means the installation is damaged rather than the '
-              'content being wrong. Trying again is worth one attempt; if it '
-              'keeps failing, reinstalling should fix it.',
+          'We could not read the training content on this attempt. It may be '
+              'a temporary read error. Trying again is worth one attempt; '
+              'if it continues, please contact support.',
       };
 }

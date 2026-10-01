@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- KAMERA KÖPRÜSÜ (J-072). Plugin izni KENDİ İSTEMEZ: isimli hata
          (camera-permission-denied) döndürür ve izin UX'ini app'e bırakır
          (sözleşme §1 katman sınırı). Beyan olmadan köprü hiç başlamaz. -->
@@ -33,6 +34,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.yulalab.jablab"
+                      android:host="auth"
+                      android:path="/callback" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

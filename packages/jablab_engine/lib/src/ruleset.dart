@@ -372,6 +372,7 @@ final class RuleSet {
     required this.jabCoachedOnlyJoints,
     required this.jabScoredJoints,
     required this.trackedComponents,
+    this.eventLogicRevision = 'unspecified',
   });
 
   factory RuleSet.fromJson(Map<String, dynamic> j) {
@@ -422,6 +423,7 @@ final class RuleSet {
       trackedComponents: tracked,
       rulesetId: j['rulesetId'] as String,
       version: j['version'] as String,
+      eventLogicRevision: j['eventLogicRevision'] as String? ?? 'unspecified',
       techniques: ((j['techniques'] as List?) ?? const <dynamic>[])
           .map((dynamic t) =>
               TechniqueConfig.fromJson((t as Map).cast<String, dynamic>()))
@@ -460,6 +462,9 @@ final class RuleSet {
 
   final String rulesetId;
   final String version;
+  /// Distinguishes provisional event policies within the legacy ruleset asset.
+  /// It is provenance, never an assertion of camera or model validation.
+  final String eventLogicRevision;
   final List<TechniqueConfig> techniques;
   final List<ErrorConfig> errors;
   final List<CombinationConfig> combinations;

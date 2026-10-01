@@ -2,12 +2,12 @@ name: checks
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
   pull_request:
 
 jobs:
   gates:
-    name: analyze + app/engine tests (JAB-P0-004)
+    name: analyze + portable app/engine tests; external reference NO_CALL
     # Bu iş 2026-08-19'a kadar hiç yoktu — repo hiçbir CI koşturmuyordu
     # (roadmap baseline'ında adıyla kayıtlı). Yapı Gravita/Lissom'un
     # `.github/workflows/checks.yml`sinden ADAPTE edildi, icat edilmedi —
@@ -41,6 +41,17 @@ jobs:
 
       - run: flutter pub get
 
+      - name: Solo boks kurs manifesti kaynakla aynı mı
+        run: dart run tool/build_solo_boxing_integrity_manifest.dart --check
+
+      - name: JabLab app-owned source projection
+        run: |
+          python3 -m unittest tool.test_media_source_projection_secure_read
+          python3 tool/check_media_source_projection.py --check
+
+      - name: jablab_engine test bağımlılıkları
+        run: (cd packages/jablab_engine && dart pub get)
+
       - name: flutter analyze
         run: flutter analyze
 
@@ -49,6 +60,11 @@ jobs:
 
       - name: jablab_engine test süiti
         run: (cd packages/jablab_engine && flutter test)
+
+      - name: Harici referans doğrulaması kapsamı
+        run: |
+          echo '### JabLab external reference gate: NO_CALL' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Original jab/stance/synthetic reference artifacts are not bundled in this repository. Portable tests passed here; artifact comparison, source identity, model calibration, and release acceptance remain open.' >> "$GITHUB_STEP_SUMMARY"
 
   android-release-build:
     name: Android release build — kod yolu kanıtı, İMZALI YAYIN DEĞİL (JAB-P0-004)

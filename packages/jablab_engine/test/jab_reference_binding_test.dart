@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:jablab_engine/jablab_engine.dart';
 import 'package:test/test.dart';
 
+import 'external_reference_gate.dart';
+
 /// `jab` referansının ürüne bağlanması — değişmezler (J-061).
 ///
 /// **Kanonik sözleşme:** motion-core `docs/50-REFERANS-TUKETIM-SOZLESMESI.md`
@@ -26,10 +28,10 @@ void main() {
   double disp(Object? entry) =>
       ((entry as Map)['measuredDispersionDeg'] as num).toDouble();
 
-  test('M-C-04: referans ≥3 BAĞIMSIZ eğitmenden üretildi', () {
+  test('M-C-04 metadata: ≥3 ayrı kaynak etiketi; kişi kimliği NO_CALL', () {
     expect(ref['contributingTakes'], greaterThanOrEqualTo(3));
     expect((ref['sources'] as List).toSet().length, greaterThanOrEqualTo(3),
-        reason: "aynı eğitmenin iki take'i TEK kaynak sayılır");
+        reason: 'etiket tekilliği kişi bağımsızlığını kanıtlamaz');
   });
 
   test('küme eşiği VARSAYILANDA (14°) — genişletme yapılmadı', () {
@@ -152,12 +154,12 @@ void main() {
   });
 
   group('GERÇEK artefakt ↔ config tablosu (bağlandığına göre okunabilir)', () {
-    final File artifactFile = File('/Users/mustafakaankocak/Documents/'
-        'YULAlab-AI/ventures/motion-core/workspace/artifacts/'
-        'reference-boxing-jab.json');
+    final File? artifactFile = externalReferenceSkipReason == null
+        ? externalReferenceArtifact('reference-boxing-jab.json')
+        : null;
 
     test('artefakt diskte VAR ve config onu gösteriyor', () {
-      expect(artifactFile.existsSync(), isTrue,
+      expect(artifactFile!.existsSync(), isTrue,
           reason: 'boundTo bir dosyayı gösteriyor ama dosya yok');
     });
 
@@ -166,7 +168,7 @@ void main() {
       // "beyan ≠ canlı"nın artefakt karşılığı, kaynağı bendim. Bu test o
       // driftin sessizce geri gelmesini engelliyor.
       final Map<String, dynamic> art =
-          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+          (jsonDecode(artifactFile!.readAsStringSync()) as Map)
               .cast<String, dynamic>();
       final Map<String, dynamic> r =
           (art['result'] as Map).cast<String, dynamic>();
@@ -184,7 +186,7 @@ void main() {
 
     test('her take ATTESTED — tek bir unattested bile kalmadı', () {
       final Map<String, dynamic> art =
-          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+          (jsonDecode(artifactFile!.readAsStringSync()) as Map)
               .cast<String, dynamic>();
       final Set<String> elig = <String>{
         for (final dynamic t in art['takes'] as List)
@@ -195,12 +197,12 @@ void main() {
 
     test('eşik VARSAYILANDA kaldı — attestation onu değiştirmedi', () {
       final Map<String, dynamic> art =
-          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+          (jsonDecode(artifactFile!.readAsStringSync()) as Map)
               .cast<String, dynamic>();
       expect(
           ((art['gates'] as Map)['clusterToleranceDeg'] as num).toDouble(), 14.0);
     });
-  });
+  }, skip: externalReferenceSkipReason);
 
   test('[J-034] taraf SOYUT adla yazılır — mutlak left_/right_ yasak', () {
     expect(ref['jointNaming'], 'lead_rear');

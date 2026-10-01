@@ -202,6 +202,10 @@ void _reachabilityGate() {
     await t.pumpAndSettle();
 
     final Finder note = find.byKey(const Key('gate-note'));
+    // The new course card can put the disclosure below the first viewport.
+    // Follow the user's scroll path through the lazily built list.
+    await t.scrollUntilVisible(note, 250);
+    await t.pumpAndSettle();
     expect(note, findsOneWidget,
         reason: 'kapı beyanı çizilmiyor — değerlendirici ÖLÜ MEKANİZMA '
             'olur (tüketicisi olmayan bir üretici yazmamak için kurulan '

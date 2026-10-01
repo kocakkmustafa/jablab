@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "researchDigests": {
+    "v8": "ea9ceaae3c29ce25a2d84444255db35172cdc1910864a39285e7b95f7b4c07d2",
+    "v10": "85227a37d47c2bab330c86c1ed847f479dd4ffbdd461e70b4c8952086ea0d52b",
+    "v10bRepair": "771fa3175a3b1ded850261010c4c3a10b08fee98b0148762081e415567f5889a",
+    "v10bIndependentPeer": "fc47f1d6cff73fece24f322e5e5f009f5f1f05a73779dfdf5e13a94a0bc4798a"
+  },
+  "sourceResearch": {
+    "killa_125_sequence": ["v8"],
+    "toronto_small_angle_exit": ["v8"],
+    "rarebreed_beginner_round_structure": ["v10bRepair", "v10bIndependentPeer"],
+    "marksman_independent_focus_reflection": ["v10", "v10bRepair", "v10bIndependentPeer"]
+  },
+  "parentCourseSha256": "5dc65d034569922ba5c85eeedff5ca9a361e5b61c6c7f8c3b23eebb6415f67c3",
+  "scope": "Four exact lesson teaching attributions; no whole-lesson, impact, speed, camera, model or personal safety validation.",
+  "generatedMediaCount": 0,
+  "acceptedExpertLabelCount": 0,
+  "qualifiedModelCount": 0,
+  "sources": [
+    {
+      "id": "killa_125_sequence",
+      "publisher": "Killa Boxing",
+      "title": "Boxing Combinations: 15 Combos Every Boxer Should Know",
+      "url": "https://killaboxing.com.au/blogs/boxing-tips-guides/boxing-combinations-15-combos-every-boxer-should-know",
+      "supports": {
+        "en": "A slow jab-cross-lead-uppercut (1-2-5) sequence, short upward final path and returning the hand to guard.",
+        "tr": "Yavaş jab-cross-ön aparkat (1-2-5) sırasını, kısa yukarı son yumruk yolunu ve elin garda dönüşünü."
+      },
+      "doesNotSupport": {
+        "en": "Contact, impact, punch speed or power, a knee-angle rule, no-dive camera threshold or the full lesson.",
+        "tr": "Teması, darbeyi, yumruk hızını veya gücünü, diz açısı kuralını, kameranın öne düşme eşiğini veya bütün dersi."
+      }
+    },
+    {
+      "id": "toronto_small_angle_exit",
+      "publisher": "Toronto Boxing Academy",
+      "title": "Boxing Angles: Punch, Move, Reset",
+      "url": "https://torontoboxingacademy.ca/2026/09/27/boxing-angles/",
+      "supports": {
+        "en": "A jab-cross followed by a small pivot and stance reset, or a small side step after a jab.",
+        "tr": "Jab-cross sonrası küçük pivot ve duruşa dönüşü veya jab sonrası küçük yan adımı."
+      },
+      "doesNotSupport": {
+        "en": "A rule that both hands must fully return before the feet move, one universal angle, defense against an opponent or camera correctness.",
+        "tr": "Ayaklar hareket etmeden iki elin de bütünüyle dönmesi kuralını, tek evrensel açıyı, rakibe karşı savunma başarısını veya kamera doğruluğunu."
+      }
+    },
+    {
+      "id": "rarebreed_beginner_round_structure",
+      "publisher": "Rare Breed boxing gym / RareBreed Team",
+      "title": "Shadow Boxing Workout Tips, Beginner Round Structure",
+      "url": "https://rarebreed.net.au/shadow-boxing-workout-tips-how-to-shadow-box/",
+      "supports": {
+        "en": "In boxing.integration.two_round_rehearsal steps[1], separate a light first solo round from a second punch-focus round with rest between them; round structure only.",
+        "tr": "boxing.integration.two_round_rehearsal steps[1] içinde hafif ilk solo raundu ikinci yumruk odaklı raunttan dinlenmeyle ayırmayı; yalnız raunt yapısını."
+      },
+      "doesNotSupport": {
+        "en": "The lesson's one-minute ceiling, early finish, optional second round, self-paced rest, exact punches or exit, stop signals, or safe personal dose. The article's two-minute rounds and 60-second rest are not transferred.",
+        "tr": "Dersin bir dakikalık tavanını, erken bitirmeyi, isteğe bağlı ikinci raundu, kişinin temposunda dinlenmeyi, kesin yumruk veya çıkış dizisini, durma belirtilerini ya da kişiye güvenli dozu. Yazının iki dakikalık rauntları ve 60 saniye arası derse taşınmadı."
+      }
+    },
+    {
+      "id": "marksman_independent_focus_reflection",
+      "publisher": "Aarron Morgan / Marksman Boxing Coaching",
+      "title": "The Best Beginner Boxing Routine You Can Do Without a Trainer",
+      "url": "https://www.marksmanboxingcoaching.com/post/the-best-beginner-boxing-routine-you-can-do-without-a-trainer",
+      "supports": {
+        "en": "In boxing.integration.independent_round steps[2], choose one purposeful solo-round focus and note one observation for a later practice.",
+        "tr": "boxing.integration.independent_round steps[2] içinde tek amaçlı solo raunt odağı seçmeyi ve sonraki çalışma için bir gözlem not etmeyi."
+      },
+      "doesNotSupport": {
+        "en": "The full non-contact lesson order, bag or sparring practice, safe workload or stop options, boxing-skill certification, or camera error labels.",
+        "tr": "Temassız dersin bütün sırasını, torba veya eşli dövüş çalışmasını, güvenli yük veya durma seçeneklerini, boks becerisi belgesini ya da kamera hata etiketlerini."
+      }
+    }
+  ],
+  "bindings": {
+    "boxing.combinations.one_two_uppercut": ["killa_125_sequence"],
+    "boxing.combinations.angle_exit": ["toronto_small_angle_exit"],
+    "boxing.integration.two_round_rehearsal": ["rarebreed_beginner_round_structure"],
+    "boxing.integration.independent_round": ["marksman_independent_focus_reflection"]
+  },
+  "excludedLessonIds": ["boxing.combinations.defend_return"]
+}

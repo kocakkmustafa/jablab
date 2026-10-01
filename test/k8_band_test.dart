@@ -9,9 +9,9 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// `_HonestBands` kullanıcıya şunu söylüyor:
 ///
-/// > *"Scores are shown as bands until the thresholds are calibrated on real
-/// > recordings. **A precise-looking number we cannot back up would be worse
-/// > than no number.**"*
+/// > *"Scores are unavailable because the thresholds have not been calibrated
+/// > on real recordings. **A precise-looking number we cannot back up would be
+/// > worse than no number.**"*
 ///
 /// Ölçüldü: bugün doğru — iki çağrı yerinin ikisinde de değerler `—`.
 /// Ama widget `Map<String, String>` alıyor ve **hiçbir şey oraya bir sayı
@@ -39,25 +39,33 @@ import 'package:flutter_test/flutter_test.dart';
 /// * **Sayının başka yollardan** yüzeye gelmesini (özet metni, replik).
 void main() {
   test('K8 — kalibrasyon açılmadan bant değerinde SAYI yok', () {
-    final Map<String, dynamic> rules = (jsonDecode(
-                File('assets/rulesets/boxing@1.0.0.json').readAsStringSync())
-            as Map)
+    final Map<String, dynamic> rules =
+        (jsonDecode(
+                  File('assets/rulesets/boxing@1.0.0.json').readAsStringSync(),
+                )
+                as Map)
+            .cast<String, dynamic>();
+    final Map<String, dynamic> display = (rules['display'] as Map)
         .cast<String, dynamic>();
-    final Map<String, dynamic> display =
-        (rules['display'] as Map).cast<String, dynamic>();
     final bool unlocked = display['numericScoresUnlocked'] as bool? ?? false;
 
     // Kuralın ÖNCÜLÜ: kalibrasyon kapalı. Açıldığı gün bu test kendi
     // gerekçesini kaybeder ve bunu SÖYLEMELİ — sessizce geçmemeli.
-    expect(unlocked, isFalse,
-        reason: 'numericScoresUnlocked artık TRUE. Bu kapının öncülü '
-            'düştü: sayı meşrulaştı. Kapıyı silmeden ÖNCE ekrandaki '
-            '"bands until the thresholds are calibrated" cümlesinin de '
-            'güncellendiğini doğrula — cümle kalırsa o zaman yalan olur');
+    expect(
+      unlocked,
+      isFalse,
+      reason:
+          'numericScoresUnlocked artık TRUE. Bu kapının öncülü '
+          'düştü: sayı meşrulaştı. Kapıyı silmeden ÖNCE ekrandaki '
+          '"Scores are unavailable" cümlesinin de '
+          'güncellendiğini doğrula — cümle kalırsa o zaman yalan olur',
+    );
 
     final List<String> offenders = <String>[];
     int literals = 0;
-    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       final String src = f.readAsStringSync();
       int i = src.indexOf('bands:');
@@ -76,8 +84,9 @@ void main() {
         // bir değer taşımaz ve burada ölçülemez (bilinçli sınır).
         if (body.contains(':')) {
           literals++;
-          for (final RegExpMatch m
-              in RegExp(r"'([^']*)'\s*:\s*'([^']*)'").allMatches(body)) {
+          for (final RegExpMatch m in RegExp(
+            r"'([^']*)'\s*:\s*'([^']*)'",
+          ).allMatches(body)) {
             final String value = m.group(2)!;
             if (RegExp(r'\d').hasMatch(value)) {
               offenders.add('${f.path}: "${m.group(1)}" → "$value"');
@@ -91,14 +100,22 @@ void main() {
     // VAKUM KAPISI: hiç literal bulunmazsa kural boşa döner ve kapı yeşil
     // öter (aile dersi #4). İki çağrı yeri ölçüldü — biri kaybolursa da
     // haber vermeli.
-    expect(literals, greaterThanOrEqualTo(2),
-        reason: 'bant haritası literali bulunamadı ($literals) — tarama '
-            'kendi girdisini kaybetmiş olabilir ve kapı hiçbir şeye '
-            'bakmadan geçiyor');
+    expect(
+      literals,
+      greaterThanOrEqualTo(2),
+      reason:
+          'bant haritası literali bulunamadı ($literals) — tarama '
+          'kendi girdisini kaybetmiş olabilir ve kapı hiçbir şeye '
+          'bakmadan geçiyor',
+    );
 
-    expect(offenders, isEmpty,
-        reason: 'BANT DEĞERİNDE SAYI var, ama ekran tam yanında '
-            '"a precise-looking number we cannot back up would be worse '
-            'than no number" diyor (J-134): ${offenders.join(" · ")}');
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'BANT DEĞERİNDE SAYI var, ama ekran tam yanında '
+          '"a precise-looking number we cannot back up would be worse '
+          'than no number" diyor (J-134): ${offenders.join(" · ")}',
+    );
   });
 }

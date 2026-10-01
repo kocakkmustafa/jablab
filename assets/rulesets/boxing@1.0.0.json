@@ -11,6 +11,8 @@
   "schemaVersion": 1,
   "rulesetId": "boxing",
   "version": "1.0.0",
+  "eventLogicRevision": "wrist-drop-2d@1",
+  "$eventLogicRevisionDoc": "2026-09-26 sentetik olay yon kapisi. Deneme provenansina ayri damgalanir; onceki olay mantigi ile ayni sayilmaz. Gercek kisi/cihaz holdout'u yok, otomatik ustalik puani acilmaz.",
   "calibrationPending": true,
   "thresholdStatus": "raw-signal-pending-revision",
   "$thresholdStatusDoc": "Koordinator direktifi 2026-07-26: tum faz/aci esikleri HAM landmark uzerinde olculdu. Cekirdegin smoothing modulu koordinator oturumdan cikinca (M-F-03) filtrelenmis sinyal uzerinde YENIDEN OLCULECEK (J-016). O gune dek bu etiket kalir ve band A yayinlanmaz.",
@@ -37,6 +39,11 @@
     "guardHeightDelta": {
       "$doc": "Bilek yuksekligi ile cene yuksekligi farki, govde boyuna normalize.",
       "normalizeBy": "trunkLength"
+    },
+    "wristDropRatio": {
+      "$doc": "(bilek.y - omuz.y) / ayni karedeki 2B kol uzunlugu. Pozitif asagi yondur; 2B olay ayrimi disinda form, hedef veya klinik aci olcumu degildir.",
+      "normalizeBy": "sameFrameArmLength",
+      "status": "synthetic-negative-control-only; camera holdout pending"
     },
     "elbowFlareAngle": {
       "$doc": "Ust kol ile govde duzlemi arasindaki aci (derece)."
@@ -138,9 +145,13 @@
             "extensionRatio": {
               "gt": 0.85,
               "localMax": true
+            },
+            "wristDropRatio": {
+              "lt": 0.5
             }
           },
-          "timeoutMs": 150
+          "timeoutMs": 150,
+          "$directionGate": "Sentetik 250/300ms asagi kol sallamasi negatif kontrolu: dogrulanmis kamera/form esigi degil."
         },
         {
           "id": "RETRACTION",
@@ -228,9 +239,13 @@
             "extensionRatio": {
               "gt": 0.85,
               "localMax": true
+            },
+            "wristDropRatio": {
+              "lt": 0.5
             }
           },
-          "timeoutMs": 150
+          "timeoutMs": 150,
+          "$directionGate": "Sentetik asagi kol sallamasini duz yumruktan ayiran gecici 2B kosul; gercek kisi/cihaz holdout'u bekler."
         },
         {
           "id": "RETRACTION",

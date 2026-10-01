@@ -60,6 +60,24 @@ void main() {
       expect(broad, closeTo(tall, 0.02));
     });
 
+    test('bilek düşüş oranı düz kolun yönünü ayırır, düzlüğünü değil', () {
+      final MeasureCalculator calculator = const MeasureCalculator();
+      final MeasureSet straight = calculator.compute(
+          builder().build(extendedPose, tUs: 0), Stance.orthodox);
+      final MeasureSet hanging = calculator.compute(
+          builder().build(SyntheticPose.neutral, tUs: 0),
+          Stance.orthodox);
+
+      // Her iki kol da düz; yalnız görüntü düzlemindeki yönleri farklı.
+      expect(straight.read('extensionRatio', limb: Side.lead),
+          greaterThan(0.85));
+      expect(hanging.read('extensionRatio', limb: Side.lead),
+          greaterThan(0.85));
+      expect(straight.read('wristDropRatio', limb: Side.lead),
+          closeTo(0, 1e-6));
+      expect(hanging.read('wristDropRatio', limb: Side.lead), greaterThan(0.9));
+    });
+
     test('gövde eğimi dikeyden sapmayı derece olarak verir', () {
       final MeasureSet upright = const MeasureCalculator()
           .compute(builder().build(guardPose, tUs: 0), Stance.orthodox);

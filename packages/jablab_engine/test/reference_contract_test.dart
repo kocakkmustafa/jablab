@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
+import 'external_reference_gate.dart';
+
 /// Referans-tüketim sözleşmesi denetimi (M-F-63).
 ///
 /// İki tarafı birden sınar:
@@ -22,9 +24,9 @@ import 'package:test/test.dart';
 ///   9     → `shell_test.dart` (özet coached-not-scored başlığı + sebebi)
 ///   10    → `cues_test.dart` (power/force/kph replikte geçemez)
 void main() {
-  final File artifactFile = File('/Users/mustafakaankocak/Documents/'
-      'YULAlab-AI/ventures/motion-core/workspace/artifacts/'
-      'reference-sample-synthetic.json');
+  final File? artifactFile = externalReferenceSkipReason == null
+      ? externalReferenceArtifact('reference-sample-synthetic.json')
+      : null;
 
   final Map<String, dynamic> cfg = (jsonDecode(
               File('../../assets/rulesets/boxing@1.0.0.json').readAsStringSync())
@@ -99,7 +101,7 @@ void main() {
 
   group('artefakt sözleşmesi (motion-core/reference@1)', () {
     test('artefakt okunabiliyor ve şema sürümü BEKLENEN', () {
-      expect(artifactFile.existsSync(), isTrue,
+      expect(artifactFile!.existsSync(), isTrue,
           reason: 'artefakt yok: ${artifactFile.path}');
       final Map<String, dynamic> a =
           (jsonDecode(artifactFile.readAsStringSync()) as Map)
@@ -109,7 +111,7 @@ void main() {
 
     test('[mirrorGapMeasured=false] TARAF-BAĞIMLI hüküm YOK', () {
       final Map<String, dynamic> a =
-          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+          (jsonDecode(artifactFile!.readAsStringSync()) as Map)
               .cast<String, dynamic>();
       final Map<String, dynamic> result =
           (a['result'] as Map).cast<String, dynamic>();
@@ -127,7 +129,7 @@ void main() {
 
     test('[ATTESTED] beyan edilmemiş take DIŞLANMIŞ olarak raporlanır', () {
       final Map<String, dynamic> a =
-          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+          (jsonDecode(artifactFile!.readAsStringSync()) as Map)
               .cast<String, dynamic>();
       expect(a['measurementProvenance'], isNotNull);
       final Map<String, dynamic> result =
@@ -154,7 +156,7 @@ void main() {
 
     test('[floor|variance] artefakt perJointSource TAŞIYOR', () {
       final Map<String, dynamic> a =
-          (jsonDecode(artifactFile.readAsStringSync()) as Map)
+          (jsonDecode(artifactFile!.readAsStringSync()) as Map)
               .cast<String, dynamic>();
       final Map<String, dynamic> tol =
           (a['tolerance'] as Map).cast<String, dynamic>();
@@ -179,7 +181,7 @@ void main() {
           reason: 'sentetik örnek beklenenden farklı — denetim varsayımı '
               'güncellenmeli');
     });
-  });
+  }, skip: externalReferenceSkipReason);
 
   group('tüketici tarafı — ürettiğim bayrağı kim okuyor', () {
     /// Config'in yaprak anahtarları (belge notları hariç).
@@ -304,11 +306,12 @@ void main() {
   });
 
   group('gerçek stance artefaktı — sözleşme kuralları', () {
-    final File real = File('/Users/mustafakaankocak/Documents/YULAlab-AI/'
-        'ventures/motion-core/workspace/artifacts/reference-boxing-stance.json');
+    final File? real = externalReferenceSkipReason == null
+        ? externalReferenceArtifact('reference-boxing-stance.json')
+        : null;
 
     Map<String, dynamic> load() =>
-        (jsonDecode(real.readAsStringSync()) as Map).cast<String, dynamic>();
+        (jsonDecode(real!.readAsStringSync()) as Map).cast<String, dynamic>();
 
     test('[kural 7] mirrorConfident=false → TARAF-BAĞIMLI hüküm YASAK', () {
       final Map<String, dynamic> result =
@@ -376,5 +379,5 @@ void main() {
             reason: '$j artefaktta güvenilmez ama üründe skorlanıyor olabilir');
       }
     });
-  });
+  }, skip: externalReferenceSkipReason);
 }
