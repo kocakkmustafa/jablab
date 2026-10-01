@@ -68,6 +68,9 @@ dependencies:
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
       ref: f2ea161c7e974d57b114ba7773836c72be17a381
   permission_handler: ^12.0.3
+  # Only an explicitly accepted, bundled lesson asset may create a controller.
+  # The shipping media catalogue is empty; lessons still work without video.
+  video_player: 2.11.1
   # Design turu (2026-08-06): JabLab.dc.html spec board iki tipografi ailesi
   # zorunlu kılıyor — Familjen Grotesk (insan sesi) + IBM Plex Mono (yalnız
   # ÖLÇÜLEN şeyler: saat, sayaç, teknik sebep). İkisi de sistem fontu değil.
@@ -98,6 +101,8 @@ flutter:
   assets:
     - assets/content/
     - assets/motion_content/manifest.json
+    - assets/motion_content/jablab.source-slice.v1.json
+    - assets/motion_content/jablab.source-projection.v1.json
     # PİNLİ poz modeli (§6 / M-L-01). Dosyanın KENDİSİ git'te DEĞİL — aile
     # kuralı `.task` ikililerini izlemiyor; `tool/fetch_pose_model.sh`
     # indirir/kopyalar ve SHA-256 doğrular. `model_pin_test` dosya varsa

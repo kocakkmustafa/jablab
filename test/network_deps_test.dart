@@ -116,6 +116,21 @@ void main() {
     'url_launcher_windows':
         'Windows harici URL açıcı; Motion hesabı '
         'transitifi, mobil sürümde etkin değil.',
+    'video_player':
+        'Eklenti ağ URL kaynaklarını da açabilir; JabLab medya yüzeyi yalnız '
+        'SHA denetimli paketli asset yolunu kullanır, uzak medya URLsi vermez.',
+    'video_player_android':
+        'Android oynatıcı ağ medyasını destekler; mevcut uygulama yolu yalnız '
+        'paketli asset açar ve görüntü yüklemesi yapmaz.',
+    'video_player_avfoundation':
+        'Apple AVFoundation oynatıcı ağ medyasını destekler; mevcut uygulama '
+        'yolu yalnız paketli asset açar.',
+    'video_player_platform_interface':
+        'Ağ kaynağı kabul edebilen video_player ailesinin ortak arayüzü; '
+        'JabLab kodu bu seçeneği kullanmaz.',
+    'video_player_web':
+        'Web video oynatıcı ağ kaynağı açabilir; mobil kurs yolu yalnız '
+        'paketli asset kullanır.',
     'sync_http':
         'flutter_driver/webdriver zincirinin transitif bağımlılığı — yalnız '
         'test/sürücü yolunda, sevk edilen uygulamaya girmiyor.',
@@ -134,8 +149,8 @@ void main() {
   /// Ağ yapmayan her şey. Bölmenin öteki yarısı.
   const Set<String> noNetwork = <String>{
     'app_links', 'app_links_linux', 'app_links_platform_interface',
-    'app_links_web', 'convert', 'dart_jsonwebtoken',
-    'flutter_localizations', 'gtk', 'http_parser', 'intl',
+    'app_links_web', 'convert', 'csslib', 'dart_jsonwebtoken',
+    'flutter_localizations', 'gtk', 'html', 'http_parser', 'intl',
     'json_annotation', 'mime', 'passkeys_platform_interface',
     'pointycastle', 'shared_preferences', 'shared_preferences_android',
     'shared_preferences_foundation', 'shared_preferences_linux',
@@ -147,7 +162,10 @@ void main() {
     'hooks', 'integration_test', 'jablab_engine', 'jni',
     'jni_flutter', 'jni_util', 'leak_tracker', 'leak_tracker_flutter_testing',
     'leak_tracker_testing', 'lints', 'logging', 'matcher',
-    'material_color_utilities', 'meta', 'motion_camera', 'motion_core',
+    'material_color_utilities', 'meta', 'motion_camera',
+    // The pinned package only validates bundled course bytes using crypto.
+    'motion_content',
+    'motion_core',
     'objective_c', 'package_config', 'path', 'path_provider',
     'path_provider_android', 'path_provider_foundation', 'path_provider_linux',
     'path_provider_platform_interface', 'path_provider_windows', 'platform',
@@ -290,6 +308,11 @@ void main() {
       'url_launcher_platform_interface',
       'url_launcher_web',
       'url_launcher_windows',
+      'video_player',
+      'video_player_android',
+      'video_player_avfoundation',
+      'video_player_platform_interface',
+      'video_player_web',
     });
   });
 

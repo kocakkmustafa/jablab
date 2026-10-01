@@ -10,9 +10,9 @@ import 'package:motion_content/motion_content.dart';
 const String _manifestPath = 'assets/motion_content/manifest.json';
 const String _coursePath = ContentRepository.soloBoxingCourseAsset;
 // Pin for the existing JabLab course asset at this bridge test's review.
-const int _courseByteLength = 196906;
+const int _courseByteLength = 201068;
 const String _courseSha256 =
-    '5dc65d034569922ba5c85eeedff5ca9a361e5b61c6c7f8c3b23eebb6415f67c3';
+    '0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f';
 
 final class _ManifestOverlayBundle extends CachingAssetBundle {
   _ManifestOverlayBundle(this.manifestBytes);
@@ -125,6 +125,22 @@ void main() {
   test('a wrong pinned hash blocks the course before it is exposed', () async {
     final _ManifestOverlayBundle bundle = _ManifestOverlayBundle(
       _manifestBytes(assetSha256: List<String>.filled(64, '0').join()),
+    );
+    final ContentLoadResult result = await _loader(bundle).load();
+
+    expect(result, isA<ContentBlocked>());
+    expect(
+      (result as ContentBlocked).error.code,
+      ContentErrorCode.hashMismatch,
+    );
+  });
+
+  test('previous course SHA cannot expose the new course bytes', () async {
+    final _ManifestOverlayBundle bundle = _ManifestOverlayBundle(
+      _manifestBytes(
+        assetSha256:
+            '09b060840beeaa6e527a1768241850a57eb0363a29839c517cafb3bfc0bd5335',
+      ),
     );
     final ContentLoadResult result = await _loader(bundle).load();
 

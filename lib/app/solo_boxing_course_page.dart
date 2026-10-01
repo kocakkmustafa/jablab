@@ -9,6 +9,7 @@ import 'content_failure.dart';
 import 'content_failure_screen.dart';
 import 'content_repository.dart';
 import 'design_tokens.dart';
+import 'lesson_media_slot.dart';
 import 'solo_boxing_course.dart';
 import 'solo_boxing_progress.dart';
 import 'ui_language.dart';
@@ -664,6 +665,12 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
             ),
             style: JText.body.copyWith(color: JColors.cool),
           ),
+          LessonMediaSlot.empty(
+            course: widget.course,
+            lesson: lesson,
+            locale: UiLanguage.isTurkish(context) ? 'tr' : 'en',
+            accountUserId: widget.accountUserId,
+          ),
           if (prerequisites.isNotEmpty) ...<Widget>[
             const SizedBox(height: 12),
             Text(
@@ -926,6 +933,18 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                 source.url.toString(),
                 style: JText.bodyMuted.copyWith(fontSize: 12),
               ),
+              if (source.supports case final support?)
+                Text(
+                  '${UiLanguage.text(context, en: 'Supports only:', tr: 'Yalnız destekler:')} ${_copy(context, support)}',
+                  key: Key('boxing.sourceScope.${source.id}'),
+                  style: JText.bodyMuted.copyWith(fontSize: 12),
+                ),
+              if (source.doesNotSupport case final limit?)
+                Text(
+                  '${UiLanguage.text(context, en: 'Does not establish:', tr: 'Kanıtlamaz:')} ${_copy(context, limit)}',
+                  key: Key('boxing.sourceLimit.${source.id}'),
+                  style: JText.bodyMuted.copyWith(fontSize: 12),
+                ),
             ],
           ),
         ),

@@ -9,8 +9,10 @@ Run with --check to verify the committed JSON matches this source.
 from __future__ import annotations
 
 import json
+import hashlib
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 def L(en: str, tr: str) -> dict[str, str]:
@@ -3948,6 +3950,71 @@ for session_lesson_id in (
 for course_module in course["modules"]:
     for course_lesson in course_module["lessons"]:
         course_lesson.update(lesson_enrichments[course_lesson["id"]])
+
+
+EXPECTED_ATTRIBUTION_BINDINGS = {
+    "boxing.combinations.one_two_uppercut": ["killa_125_sequence"],
+    "boxing.combinations.angle_exit": ["toronto_small_angle_exit"],
+    "boxing.integration.two_round_rehearsal": ["rarebreed_beginner_round_structure"],
+    "boxing.integration.independent_round": ["marksman_independent_focus_reflection"],
+}
+EXPECTED_RESEARCH_DIGESTS = {
+    "v8": "ea9ceaae3c29ce25a2d84444255db35172cdc1910864a39285e7b95f7b4c07d2",
+    "v10": "85227a37d47c2bab330c86c1ed847f479dd4ffbdd461e70b4c8952086ea0d52b",
+    "v10bRepair": "771fa3175a3b1ded850261010c4c3a10b08fee98b0148762081e415567f5889a",
+    "v10bIndependentPeer": "fc47f1d6cff73fece24f322e5e5f009f5f1f05a73779dfdf5e13a94a0bc4798a",
+}
+EXPECTED_SOURCE_RESEARCH = {
+    "killa_125_sequence": ["v8"],
+    "toronto_small_angle_exit": ["v8"],
+    "rarebreed_beginner_round_structure": ["v10bRepair", "v10bIndependentPeer"],
+    "marksman_independent_focus_reflection": ["v10", "v10bRepair", "v10bIndependentPeer"],
+}
+
+
+def validate_attribution_contract(contract: dict) -> None:
+    if (contract.get("schemaVersion") != 1 or
+            contract.get("bindings") != EXPECTED_ATTRIBUTION_BINDINGS):
+        raise ValueError("Unexpected boxing attribution contract or bindings")
+    if (contract.get("researchDigests") != EXPECTED_RESEARCH_DIGESTS or
+            contract.get("sourceResearch") != EXPECTED_SOURCE_RESEARCH):
+        raise ValueError("Boxing attribution research provenance drifted")
+    source_ids = [source["id"] for source in contract["sources"]]
+    if (source_ids != list(EXPECTED_SOURCE_RESEARCH) or
+            {sid for ids in EXPECTED_ATTRIBUTION_BINDINGS.values() for sid in ids} != set(source_ids)):
+        raise ValueError("Boxing attribution source roster or binding coverage drifted")
+
+
+def bind_narrow_sources() -> None:
+    """Add only the four independently reviewed teaching attributions."""
+    contract_path = Path(__file__).with_name("boxing_source_attribution.v1.json")
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    validate_attribution_contract(contract)
+    base_bytes = (json.dumps(course, ensure_ascii=False, indent=2) + "\n").encode()
+    base_sha = hashlib.sha256(base_bytes).hexdigest()
+    if base_sha != contract["parentCourseSha256"]:
+        raise ValueError(f"Original boxing lesson body/source baseline drifted: {base_sha}")
+    added = contract["sources"]
+    ids = [source["id"] for source in added]
+    if len(ids) != len(set(ids)) or set(ids) & {s["id"] for s in course["sources"]}:
+        raise ValueError("Duplicate boxing attribution source")
+    for source in added:
+        parsed = urlparse(source["url"])
+        if parsed.scheme != "https" or not parsed.netloc:
+            raise ValueError("Attribution source must be HTTPS")
+        for scope in ("supports", "doesNotSupport"):
+            if any(not source[scope][lang].strip() for lang in ("en", "tr")):
+                raise ValueError("Attribution scope must be bilingual and nonempty")
+    lessons_by_id = {l["id"]: l for m in course["modules"] for l in m["lessons"]}
+    for lesson_id, new_ids in EXPECTED_ATTRIBUTION_BINDINGS.items():
+        lessons_by_id[lesson_id]["sourceIds"].extend(new_ids)
+    for lesson_id in contract["excludedLessonIds"]:
+        if set(ids) & set(lessons_by_id[lesson_id]["sourceIds"]):
+            raise ValueError(f"Excluded lesson gained attribution: {lesson_id}")
+    course["sources"].extend(added)
+
+
+bind_narrow_sources()
 
 
 def main() -> None:

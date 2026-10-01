@@ -50,6 +50,62 @@
       "publisher": "Journal of Physical Therapy Science / J-STAGE",
       "title": "Effectiveness of motor sequential learning according to practice schedules in healthy adults; distributed practice versus massed practice",
       "url": "https://www.jstage.jst.go.jp/article/jpts/27/3/27_jpts-2014-619/_article"
+    },
+    {
+      "id": "killa_125_sequence",
+      "publisher": "Killa Boxing",
+      "title": "Boxing Combinations: 15 Combos Every Boxer Should Know",
+      "url": "https://killaboxing.com.au/blogs/boxing-tips-guides/boxing-combinations-15-combos-every-boxer-should-know",
+      "supports": {
+        "en": "A slow jab-cross-lead-uppercut (1-2-5) sequence, short upward final path and returning the hand to guard.",
+        "tr": "Yavaş jab-cross-ön aparkat (1-2-5) sırasını, kısa yukarı son yumruk yolunu ve elin garda dönüşünü."
+      },
+      "doesNotSupport": {
+        "en": "Contact, impact, punch speed or power, a knee-angle rule, no-dive camera threshold or the full lesson.",
+        "tr": "Teması, darbeyi, yumruk hızını veya gücünü, diz açısı kuralını, kameranın öne düşme eşiğini veya bütün dersi."
+      }
+    },
+    {
+      "id": "toronto_small_angle_exit",
+      "publisher": "Toronto Boxing Academy",
+      "title": "Boxing Angles: Punch, Move, Reset",
+      "url": "https://torontoboxingacademy.ca/2026/09/27/boxing-angles/",
+      "supports": {
+        "en": "A jab-cross followed by a small pivot and stance reset, or a small side step after a jab.",
+        "tr": "Jab-cross sonrası küçük pivot ve duruşa dönüşü veya jab sonrası küçük yan adımı."
+      },
+      "doesNotSupport": {
+        "en": "A rule that both hands must fully return before the feet move, one universal angle, defense against an opponent or camera correctness.",
+        "tr": "Ayaklar hareket etmeden iki elin de bütünüyle dönmesi kuralını, tek evrensel açıyı, rakibe karşı savunma başarısını veya kamera doğruluğunu."
+      }
+    },
+    {
+      "id": "rarebreed_beginner_round_structure",
+      "publisher": "Rare Breed boxing gym / RareBreed Team",
+      "title": "Shadow Boxing Workout Tips, Beginner Round Structure",
+      "url": "https://rarebreed.net.au/shadow-boxing-workout-tips-how-to-shadow-box/",
+      "supports": {
+        "en": "In boxing.integration.two_round_rehearsal steps[1], separate a light first solo round from a second punch-focus round with rest between them; round structure only.",
+        "tr": "boxing.integration.two_round_rehearsal steps[1] içinde hafif ilk solo raundu ikinci yumruk odaklı raunttan dinlenmeyle ayırmayı; yalnız raunt yapısını."
+      },
+      "doesNotSupport": {
+        "en": "The lesson's one-minute ceiling, early finish, optional second round, self-paced rest, exact punches or exit, stop signals, or safe personal dose. The article's two-minute rounds and 60-second rest are not transferred.",
+        "tr": "Dersin bir dakikalık tavanını, erken bitirmeyi, isteğe bağlı ikinci raundu, kişinin temposunda dinlenmeyi, kesin yumruk veya çıkış dizisini, durma belirtilerini ya da kişiye güvenli dozu. Yazının iki dakikalık rauntları ve 60 saniye arası derse taşınmadı."
+      }
+    },
+    {
+      "id": "marksman_independent_focus_reflection",
+      "publisher": "Aarron Morgan / Marksman Boxing Coaching",
+      "title": "The Best Beginner Boxing Routine You Can Do Without a Trainer",
+      "url": "https://www.marksmanboxingcoaching.com/post/the-best-beginner-boxing-routine-you-can-do-without-a-trainer",
+      "supports": {
+        "en": "In boxing.integration.independent_round steps[2], choose one purposeful solo-round focus and note one observation for a later practice.",
+        "tr": "boxing.integration.independent_round steps[2] içinde tek amaçlı solo raunt odağı seçmeyi ve sonraki çalışma için bir gözlem not etmeyi."
+      },
+      "doesNotSupport": {
+        "en": "The full non-contact lesson order, bag or sparring practice, safe workload or stop options, boxing-skill certification, or camera error labels.",
+        "tr": "Temassız dersin bütün sırasını, torba veya eşli dövüş çalışmasını, güvenli yük veya durma seçeneklerini, boks becerisi belgesini ya da kamera hata etiketlerini."
+      }
     }
   ],
   "modules": [
@@ -2034,7 +2090,8 @@
             "boxing_canada_competition",
             "england_boxing_level1",
             "boxing_canada_beginner",
-            "motor_spacing_primary"
+            "motor_spacing_primary",
+            "killa_125_sequence"
           ],
           "minutes": 10,
           "evidenceMode": "self_report"
@@ -2166,7 +2223,8 @@
             "boxing_canada_competition",
             "england_boxing_level1",
             "boxing_canada_beginner",
-            "motor_spacing_primary"
+            "motor_spacing_primary",
+            "toronto_small_angle_exit"
           ],
           "minutes": 10,
           "evidenceMode": "self_report"
@@ -2708,7 +2766,8 @@
             "england_boxing_level1",
             "cdc_activity",
             "boxing_canada_beginner",
-            "motor_spacing_primary"
+            "motor_spacing_primary",
+            "rarebreed_beginner_round_structure"
           ],
           "minutes": 14,
           "evidenceMode": "self_report"
@@ -2784,7 +2843,8 @@
             "england_boxing_level1",
             "cdc_activity",
             "acog_pregnancy",
-            "motor_spacing_primary"
+            "motor_spacing_primary",
+            "marksman_independent_focus_reflection"
           ],
           "minutes": 18,
           "evidenceMode": "self_report"

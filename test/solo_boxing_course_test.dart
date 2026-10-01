@@ -92,4 +92,39 @@ void main() {
       throwsFormatException,
     );
   });
+
+  test('narrow boxing citations stay on four exact solo lessons', () {
+    final course = SoloBoxingCourse.fromJsonString(asset);
+    const added = <String>{
+      'killa_125_sequence',
+      'toronto_small_angle_exit',
+      'rarebreed_beginner_round_structure',
+      'marksman_independent_focus_reflection',
+    };
+    final bindings = <String, Set<String>>{
+      for (final lesson in course.lessons)
+        if (lesson.sourceIds.toSet().intersection(added).isNotEmpty)
+          lesson.id: lesson.sourceIds.toSet().intersection(added),
+    };
+    expect(bindings, <String, Set<String>>{
+      'boxing.combinations.one_two_uppercut': <String>{'killa_125_sequence'},
+      'boxing.combinations.angle_exit': <String>{'toronto_small_angle_exit'},
+      'boxing.integration.two_round_rehearsal':
+          <String>{'rarebreed_beginner_round_structure'},
+      'boxing.integration.independent_round':
+          <String>{'marksman_independent_focus_reflection'},
+    });
+    for (final source in course.sources.where((s) => added.contains(s.id))) {
+      expect(source.supports!.en, isNotEmpty);
+      expect(source.supports!.tr, isNotEmpty);
+      expect(source.doesNotSupport!.en, isNotEmpty);
+      expect(source.doesNotSupport!.tr, isNotEmpty);
+    }
+    final broken = (jsonDecode(asset) as Map).cast<String, dynamic>();
+    ((broken['sources'] as List).last as Map).remove('doesNotSupport');
+    expect(
+      () => SoloBoxingCourse.fromJsonString(jsonEncode(broken)),
+      throwsFormatException,
+    );
+  });
 }

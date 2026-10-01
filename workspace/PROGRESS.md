@@ -1,5 +1,23 @@
 # JabLab — İlerleme Kaydı
 
+## 2026-10-01 — QA oynatıcı eşzamanlı kapanış çiti
+
+Bağımsız beş-app medya incelemesi, `play()` hesap iptalini kendi çağrısı
+içinde bildirdiğinde bekleyen native Future kaydedilmeden portun emekliye
+ayrılabildiğini buldu. Ayrı port fabrikası callback'i de native yuvayı
+sızdırabiliyordu. Her iki yol eski kodda deterministik kırmızı testle
+yeniden üretildi. Native işlem bekleme işareti init/play/pause çağrısından
+önce ayrıldı; fabrika dönüşünde hesap/epoch tekrar okunup yeni port gerekirse
+emekliye alınıyor. Fabrika/init/play/pause eşzamanlı iptal testleri **4/4**,
+ilgili medya ve 292 satır kaynak projeksiyonu **26/26**; hedefli analiz ve
+diff kontrolü temiz. Kanıt:
+`scratch/2026-10-01-jablab-reentrant-media-retirement-v1/REPORT.md`.
+Bağımsız son yama incelemesi dar PASS; yeni P1/P2 yok
+(`scratch/2026-10-01-jablab-reentrant-retire-postfix-peer-v1/REPORT.md`).
+Gerçek native cihaz kabulü açık; üretim kataloğu boş, gerçek medya/model
+kabulü yok.
+
+
 ## 2026-09-28 — Solo Boks paket ve şema kapısı
 
 Mevcut 39 derslik kurs JSON'u (196.906 bayt; SHA

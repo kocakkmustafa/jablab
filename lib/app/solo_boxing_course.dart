@@ -62,8 +62,15 @@ final class SoloBoxingCourse {
       if (!sourceIds.add(source.id) ||
           source.title.trim().isEmpty ||
           source.publisher.trim().isEmpty ||
-          source.url.scheme != 'https') {
+          source.url.scheme != 'https' ||
+          (source.supports == null) != (source.doesNotSupport == null)) {
         throw FormatException('Invalid or duplicate source ${source.id}');
+      }
+      if (source.supports case final support?) {
+        _requireCopy(support, '${source.id}.supports');
+      }
+      if (source.doesNotSupport case final limit?) {
+        _requireCopy(limit, '${source.id}.doesNotSupport');
       }
     }
     final Set<String> moduleIds = <String>{};
@@ -139,7 +146,14 @@ final class CourseCopy {
 }
 
 final class CourseSource {
-  const CourseSource(this.id, this.publisher, this.title, this.url);
+  const CourseSource(
+    this.id,
+    this.publisher,
+    this.title,
+    this.url,
+    this.supports,
+    this.doesNotSupport,
+  );
 
   factory CourseSource.fromJson(dynamic value) {
     final Map<String, dynamic> json = (value as Map).cast<String, dynamic>();
@@ -148,6 +162,10 @@ final class CourseSource {
       json['publisher'] as String,
       json['title'] as String,
       Uri.parse(json['url'] as String),
+      json['supports'] == null ? null : CourseCopy.fromJson(json['supports']),
+      json['doesNotSupport'] == null
+          ? null
+          : CourseCopy.fromJson(json['doesNotSupport']),
     );
   }
 
@@ -155,6 +173,7 @@ final class CourseSource {
   final String publisher;
   final String title;
   final Uri url;
+  final CourseCopy? supports, doesNotSupport;
 }
 
 final class SoloModule {

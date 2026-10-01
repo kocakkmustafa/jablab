@@ -4,6 +4,7 @@ import 'package:motion_account/motion_account.dart';
 
 import 'app/account_bridge.dart';
 import 'app/jablab_app.dart';
+import 'app/ui_language.dart';
 
 /// PORTRE KİLİDİ (J-109, koordinatör hükmü 2026-08-07).
 ///
@@ -33,32 +34,85 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
   ]);
-  final MotionAccountRuntime runtime = await MotionAccountRuntime.initialize(
-    url: const String.fromEnvironment('MOTION_SUPABASE_URL'),
-    publishableKey: const String.fromEnvironment(
-      'MOTION_SUPABASE_PUBLISHABLE_KEY',
-    ),
-    app: MotionApp.jablab,
-    emailRedirectTo: 'com.yulalab.jablab://auth/callback',
-    onDeletedAccount: clearLocalHistoryFor,
-    localAccountIds: localHistoryAccountIds,
-  );
-  Widget accountPage(BuildContext _) => MotionAccountPage(
-    account: runtime.account,
-    onRetryIdentity: runtime.refreshIdentity,
-    initialPasswordRecovery: runtime.isPasswordRecovery,
-    clearLocalData: clearLocalHistoryFor,
-  );
-  runApp(
-    MotionIdentityGate(
-      runtime: runtime,
-      child: JabLabApp(
-        accountUserId: runtime.userId,
-        accountPageBuilder: accountPage,
-        beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
-          lessonContext,
-          account: runtime.account,
+  await launchJabLab();
+}
+
+/// A missing or invalid account build cannot silently enter the guest shell.
+Future<void> launchJabLab({
+  String url = const String.fromEnvironment('MOTION_SUPABASE_URL'),
+  String publishableKey = const String.fromEnvironment(
+    'MOTION_SUPABASE_PUBLISHABLE_KEY',
+  ),
+}) async {
+  try {
+    final MotionAccountRuntime runtime = await MotionAccountRuntime.initialize(
+      url: url,
+      publishableKey: publishableKey,
+      app: MotionApp.jablab,
+      emailRedirectTo: 'com.yulalab.jablab://auth/callback',
+      onDeletedAccount: clearLocalHistoryFor,
+      localAccountIds: localHistoryAccountIds,
+    );
+    Widget accountPage(BuildContext _) => MotionAccountPage(
+      account: runtime.account,
+      onRetryIdentity: runtime.refreshIdentity,
+      initialPasswordRecovery: runtime.isPasswordRecovery,
+      clearLocalData: clearLocalHistoryFor,
+    );
+    runApp(
+      MotionIdentityGate(
+        runtime: runtime,
+        child: JabLabApp(
+          accountUserId: runtime.userId,
           accountPageBuilder: accountPage,
+          beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
+            lessonContext,
+            account: runtime.account,
+            accountPageBuilder: accountPage,
+          ),
+        ),
+      ),
+    );
+  } on Object {
+    runApp(const JabLabAccountStartupFailure());
+  }
+}
+
+class JabLabAccountStartupFailure extends StatelessWidget {
+  const JabLabAccountStartupFailure({super.key});
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'JabLab',
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xFFB3261E),
+        brightness: Brightness.dark,
+      ),
+      useMaterial3: true,
+    ),
+    home: Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Builder(
+            builder: (context) => Text(
+              UiLanguage.text(
+                context,
+                en:
+                    'JabLab account service could not start in this build. '
+                    'Try reopening the app; if the problem continues, '
+                    'install an updated version.',
+                tr:
+                    'JabLab hesap hizmeti bu sürümde başlatılamadı. '
+                    'Uygulamayı yeniden açmayı dene; sorun sürerse '
+                    'güncel sürümü yükle.',
+              ),
+              key: const Key('jablab.accountStartupFailure'),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
       ),
     ),

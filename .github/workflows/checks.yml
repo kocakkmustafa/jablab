@@ -44,6 +44,11 @@ jobs:
       - name: Solo boks kurs manifesti kaynakla aynı mı
         run: dart run tool/build_solo_boxing_integrity_manifest.dart --check
 
+      - name: JabLab app-owned source projection
+        run: |
+          python3 -m unittest tool.test_media_source_projection_secure_read
+          python3 tool/check_media_source_projection.py --check
+
       - name: jablab_engine test bağımlılıkları
         run: (cd packages/jablab_engine && dart pub get)
 
