@@ -1,5 +1,29 @@
 # JabLab — İlerleme Kaydı
 
+## 2026-10-01 — Taşınabilir CI ve harici referans NO_CALL
+
+PR #1'in üç Actions işinden Android imzasız ve iOS no-codesign derlemeleri
+geçti; motor işindeki 12 kırmızı test, temiz checkout'ta bulunmayan üç
+`motion-core/workspace/artifacts/reference-boxing-{jab,stance}.json` ve
+`reference-sample-synthetic.json` dosyasını kişisel mutlak yoldan okuyordu.
+Jab dosyası 2026-09-21'de 23.739 baytlık iCloud dataless yer tutucusu olarak
+silinmişti; silme makbuzu `holding/migration-evidence/cleanup-2026-09-21/
+authorized-delete-current-dataless-from-134099-20260921.jsonl:77908`.
+Kaynağın içeriği geri kazanılmadı; sentetik veya başka kliple doldurulmadı.
+
+Artefakt karşılaştırmaları şimdi yalnız `JABLAB_REFERENCE_ARTIFACT_DIR`
+açıkça verildiğinde çalışıyor. Değişken yoksa 12 test isimli **NO_CALL**;
+değişken yanlış/eksik bir dizini gösterirse kırmızı. Yerel tam motor süitinde
+**127 geçti + 12 NO_CALL**, uygulama testinde **515 geçti**, kasıtlı eksik
+dizin negatif kontrolü kırmızı, `flutter analyze` temiz. CI işi de
+`external reference NO_CALL` adı ve
+GitHub iş özetiyle sınırını görünür tutuyor. Üç farklı `sources` etiketi testi
+artık yalnız metadata tekilliği diyor; J-278'deki ekran kişisi kimliği ve
+tek kaynak çoğunluğu ölçümü hâlâ **açık**. `numericScoresUnlocked=false`,
+`calibrationPending=true`, `thresholdStatus=raw-signal-pending-revision`
+korundu. Özgün artefakt geri kazanımı, bağımsız kişi doğrulaması, kamera
+modeli ve kurucu fiziksel kabulü yeşil CI'dan çıkarılamaz.
+
 ## 2026-10-01 — QA oynatıcı eşzamanlı kapanış çiti
 
 Bağımsız beş-app medya incelemesi, `play()` hesap iptalini kendi çağrısı

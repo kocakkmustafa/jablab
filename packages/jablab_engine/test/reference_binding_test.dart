@@ -25,10 +25,10 @@ void main() {
   final Map<String, dynamic> coached =
       (ref['coachedOnlyJoints'] as Map).cast<String, dynamic>();
 
-  test('M-C-04: referans ≥3 bağımsız eğitmenden üretildi', () {
+  test('M-C-04 metadata: ≥3 ayrı kaynak etiketi; kişi kimliği NO_CALL', () {
     expect(ref['contributingTakes'], greaterThanOrEqualTo(3));
     expect((ref['sources'] as List).toSet().length, greaterThanOrEqualTo(3),
-        reason: 'aynı eğitmenin iki take\'i TEK kaynak sayılır');
+        reason: 'etiket tekilliği kişi bağımsızlığını kanıtlamaz');
   });
 
   test('[kural 6] tolerans provisional işaretli (n=3 yetersiz örneklem)', () {
