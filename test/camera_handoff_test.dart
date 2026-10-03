@@ -7,6 +7,8 @@ import 'package:jablab/app/session_narrator.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 import 'package:motion_camera/motion_camera.dart';
 
+import 'support/owned_native_fixture.dart';
+
 /// DERSTEN DERSE KAMERA DEVRİ — kapanış bitmeden açılış (J-195 / aile C-195).
 ///
 /// ## Kusur, ve neden N=1'de GÖRÜNMEZ
@@ -149,24 +151,27 @@ void main() {
 
 /// Gerçek eklentinin sözleşmesini taklit eder: `stop` bitene kadar `start`
 /// **reddeder** (`already-running`).
-class _SlowCamera implements MotionCameraController {
-  final StreamController<CameraFrameEnvelope> _c =
-      StreamController<CameraFrameEnvelope>.broadcast();
-  Completer<void>? _stopping;
-  int startCalls = 0;
-  int? startedAt;
-  int? stopFinishedAt;
-  bool awaitedClosingBeforeStart = false;
-  static int _tick = 0;
+class _SlowCamera extends OwnedTestCamera {
+  _SlowCamera()
+    : super(
+        closeDelay: const Duration(milliseconds: 20),
+        libraryTag: 'slow-handoff-fixture',
+      );
 
-  bool get closing => _stopping != null;
+  bool _legacyClosing = false;
+  bool get closing => _legacyClosing || native.state.phase == 'closing';
+  int? get startedAt => native.startedAt;
+  int? get stopFinishedAt => native.stopFinishedAt;
+  bool get awaitedClosingBeforeStart => native.awaitedClosingBeforeStart;
 
   Future<void> settle() async {
-    while (_stopping != null) {
+    while (closing) {
       await Future<void>.delayed(Duration.zero);
     }
   }
 
+  // Only the explicit legacy negative control calls these methods. App starts
+  // and closure use the inherited production owned protocol and private lease.
   @override
   Future<CameraSessionInfo> start({
     required String modelPath,
@@ -174,37 +179,25 @@ class _SlowCamera implements MotionCameraController {
     CameraLens lens = CameraLens.front,
     PassPlan initialPlan = PassPlan.uprightOnly,
   }) async {
-    if (_stopping != null) {
-      awaitedClosingBeforeStart = true;
+    if (closing) {
+      native.awaitedClosingBeforeStart = true;
       throw StateError('already-running: camera still closing');
     }
-    startCalls++;
-    startedAt = ++_tick;
-    return const CameraSessionInfo(
-      width: 480,
-      height: 640,
-      clockDomain: ClockDomain.monotonic,
-      libraryTag: 'slow-fake',
+    return super.start(
+      modelPath: modelPath,
+      modelId: modelId,
+      lens: lens,
+      initialPlan: initialPlan,
     );
   }
 
   @override
-  Stream<CameraFrameEnvelope> frames() => _c.stream;
-
-  @override
   Future<void> stop() async {
-    final Completer<void> done = Completer<void>();
-    _stopping = done;
-    // Platform kanalı gidiş-dönüşü: birkaç olay döngüsü sürer.
-    await Future<void>.delayed(const Duration(milliseconds: 20));
-    stopFinishedAt = ++_tick;
-    _stopping = null;
-    done.complete();
+    _legacyClosing = true;
+    try {
+      await super.stop();
+    } finally {
+      _legacyClosing = false;
+    }
   }
-
-  @override
-  Future<void> setPassPlan(PassPlan plan) async {}
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

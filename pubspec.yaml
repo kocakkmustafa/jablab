@@ -7,6 +7,7 @@ environment:
   sdk: ^3.9.0
 
 dependencies:
+  supabase_flutter: 2.17.2
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -16,7 +17,7 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_account
-      ref: f2ea161c7e974d57b114ba7773836c72be17a381
+      ref: 0fed3a05466946bf2710750f4feca8dbd75be123
   jablab_engine:
     path: packages/jablab_engine
   # F-3/J-064: seans geçmişi Fitness vaadinin ("çalıştığını kaydet") VERİ
@@ -44,14 +45,14 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_core
-      ref: f2ea161c7e974d57b114ba7773836c72be17a381
+      ref: 0fed3a05466946bf2710750f4feca8dbd75be123
   # Bundled course bytes use the same immutable Core revision. The app-local
   # manifest proves byte integrity only; it is not a media/model catalogue.
   motion_content:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_content
-      ref: f2ea161c7e974d57b114ba7773836c72be17a381
+      ref: 0fed3a05466946bf2710750f4feca8dbd75be123
   motion_camera:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
@@ -66,7 +67,7 @@ dependencies:
       #   f2ea161c7e974d57b114ba7773836c72be17a381 == kabul edilen ortak Core/Camera pini
       # (v0.1.0'in iOS Swift katmani 0.10.21'e karsi DERLENMIYORDU — J-071;
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
-      ref: f2ea161c7e974d57b114ba7773836c72be17a381
+      ref: 0fed3a05466946bf2710750f4feca8dbd75be123
   permission_handler: ^12.0.3
   # Only an explicitly accepted, bundled lesson asset may create a controller.
   # The shipping media catalogue is empty; lessons still work without video.
@@ -81,7 +82,9 @@ dependencies:
   # isteği YOK. Bkz. `test/network_deps_test.dart` (regresyon kapısı).
 
 dev_dependencies:
-  supabase_flutter: 2.17.2
+  matcher: 0.12.20
+  yaml: 3.1.3
+  http: 1.6.0
   flutter_test:
     sdk: flutter
   # CİHAZDA koşan smoke için (J-072): köprünün gerçek native katmanı yalnız

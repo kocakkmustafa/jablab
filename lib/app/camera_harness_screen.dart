@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'pose_model.dart';
+import 'camera_capture_coordinator.dart';
 
 /// KAMERA KÖPRÜSÜ **DEV HARNESS** — kullanıcı ekranı DEĞİL (J-072).
 ///
@@ -29,10 +30,17 @@ import 'pose_model.dart';
 /// yayına giden bir derlemede bir dev-harness'ın erişilebilir kalması,
 /// "kamera var" izlenimini kullanıcıya sızdırmanın en kolay yolu olurdu.
 class CameraHarnessScreen extends StatefulWidget {
-  const CameraHarnessScreen({super.key, this.controller});
+  const CameraHarnessScreen({
+    super.key,
+    this.controller,
+    this.requestPermission,
+    this.modelPath,
+  });
 
   /// Testte enjekte edilir; üretimde gerçek plugin kanalı kullanılır.
   final MotionCameraController? controller;
+  final Future<PermissionStatus> Function()? requestPermission;
+  final Future<String> Function()? modelPath;
 
   /// Yalnız debug derlemede. Release'de ekran YOK.
   static bool get isAvailable => kDebugMode;
@@ -51,14 +59,39 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
   CameraFrameEnvelope? _last;
   Object? _error;
   bool _starting = false;
+  int _generation = 0;
+  CameraCaptureLease? _capture;
   int _envelopes = 0;
   int _emptyPasses = 0;
   DateTime? _startedAt;
 
   @override
+  void initState() {
+    super.initState();
+    _error = CameraCaptureCoordinator.failure;
+    CameraCaptureCoordinator.uncertainty.addListener(_onUncertainty);
+  }
+
+  void _onUncertainty() {
+    if (mounted) setState(() => _error = CameraCaptureCoordinator.failure);
+  }
+
+  @override
   void dispose() {
-    unawaited(_sub?.cancel());
-    if (_session != null) unawaited(_camera.stop().catchError((_) {}));
+    _generation++;
+    CameraCaptureCoordinator.uncertainty.removeListener(_onUncertainty);
+    final capture = _capture;
+    _capture = null;
+    final closing = capture == null
+        ? Future<void>.value()
+        : CameraCaptureCoordinator.close(capture);
+    final subscription = _sub;
+    _sub = null;
+    unawaited(
+      _closeCapture(closing, subscription).catchError((Object error) {
+        CameraCaptureCoordinator.recordUncertainty(error);
+      }),
+    );
     super.dispose();
   }
 
@@ -68,7 +101,9 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
   /// her açılışta ikiye katlardı.
   Future<String> _materializeModel() async {
     final Directory dir = await getApplicationSupportDirectory();
-    final File out = File('${dir.path}/${PoseModelPin.assetPath.split('/').last}');
+    final File out = File(
+      '${dir.path}/${PoseModelPin.assetPath.split('/').last}',
+    );
     if (!out.existsSync()) {
       final data = await rootBundle.load(PoseModelPin.assetPath);
       await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
@@ -77,37 +112,54 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
   }
 
   Future<void> _start() async {
+    if (_starting || _session != null || CameraCaptureCoordinator.isBlocked) {
+      return;
+    }
+    final int generation = ++_generation;
+    final capture = _camera.createCaptureLease();
+    _capture = capture;
+    var started = false;
+    bool current() => mounted && generation == _generation;
     setState(() {
       _starting = true;
       _error = null;
     });
     try {
+      await CameraCaptureCoordinator.waitForClosure();
+      if (!current() || capture.isRetired) return;
       // İZNİ APP İSTER, PLUGIN İSTEMEZ (sözleşme §1 katman sınırı): plugin
       // `camera-permission-denied` diye isimli bir retle döner ve UX'i
       // buraya bırakır. Bu adım YOKKEN emülatör smoke'u tam bu retle
       // düştü — yani boşluk gerçekti ve cihaz gününde de aynı yerde
       // patlayacaktı.
-      final PermissionStatus perm = await Permission.camera.request();
+      final PermissionStatus perm =
+          await (widget.requestPermission?.call() ??
+              Permission.camera.request());
+      if (!current()) return;
       if (!perm.isGranted) {
         setState(() {
-          _error = 'camera permission not granted ($perm) — the bridge '
+          _error =
+              'camera permission not granted ($perm) — the bridge '
               'refuses by design; grant it in system settings and retry';
           _starting = false;
         });
         return;
       }
-      final String path = await _materializeModel();
-      final CameraSessionInfo info = await _camera.start(
+      final String path =
+          await (widget.modelPath?.call() ?? _materializeModel());
+      if (!current()) return;
+      final CameraSessionInfo info = await capture.start(
         modelPath: path,
         // §6: kimlik REFERANSLARI ÜRETEN modelin kimliği; zarfa damgalanır.
         modelId: PoseModelPin.modelId,
         lens: CameraLens.front,
         initialPlan: PassPlan.uprightOnly,
       );
-      _sub = _camera.frames().listen(
+      if (!current()) return;
+      _sub = capture.frames().listen(
         (CameraFrameEnvelope e) {
+          if (!current()) return;
           _monitor.record(e);
-          if (!mounted) return;
           setState(() {
             _last = e;
             _envelopes += 1;
@@ -118,34 +170,68 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
           });
         },
         onError: (Object err) {
-          if (mounted) setState(() => _error = err);
+          if (!current()) return;
+          setState(() => _error = err);
+          unawaited(_stop());
         },
       );
-      if (!mounted) return;
+      if (!current()) return;
       setState(() {
         _session = info;
         _startedAt = DateTime.now();
         _starting = false;
       });
+      started = true;
     } on Object catch (e) {
-      if (!mounted) return;
+      if (!current()) return;
       setState(() {
         _error = e;
+        _starting = false;
+      });
+    } finally {
+      if (!started) {
+        if (identical(_capture, capture)) _capture = null;
+        try {
+          await CameraCaptureCoordinator.close(capture);
+        } catch (error) {
+          final failure = CameraCaptureCoordinator.recordUncertainty(error);
+          if (current()) setState(() => _error = failure);
+        }
+        if (current()) setState(() => _starting = false);
+      }
+    }
+  }
+
+  Future<void> _stop() async {
+    _generation++;
+    final capture = _capture;
+    _capture = null;
+    final closing = capture == null
+        ? Future<void>.value()
+        : CameraCaptureCoordinator.close(capture);
+    final subscription = _sub;
+    _sub = null;
+    try {
+      await _closeCapture(closing, subscription);
+    } catch (error) {
+      final failure = CameraCaptureCoordinator.recordUncertainty(error);
+      if (mounted) setState(() => _error = failure);
+    }
+    if (mounted) {
+      setState(() {
+        _session = null;
         _starting = false;
       });
     }
   }
 
-  Future<void> _stop() async {
-    await _sub?.cancel();
-    _sub = null;
-    try {
-      await _camera.stop();
-    } on Object catch (_) {
-      // stop hatası ölçümü geçersiz kılmaz; ekran ölçümü korur.
-    }
-    if (mounted) setState(() => _session = null);
-  }
+  Future<void> _closeCapture(
+    Future<void> closing,
+    StreamSubscription<CameraFrameEnvelope>? subscription,
+  ) => Future.wait<void>([
+    closing,
+    if (subscription != null) subscription.cancel(),
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +265,10 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
             children: <Widget>[
               FilledButton(
                 key: const Key('harness-start'),
-                onPressed: running || _starting ? null : _start,
+                onPressed:
+                    running || _starting || CameraCaptureCoordinator.isBlocked
+                    ? null
+                    : _start,
                 child: Text(_starting ? 'Starting…' : 'Start'),
               ),
               const SizedBox(width: 12),
@@ -195,33 +284,37 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(12),
-                child: Text('$_error',
-                    key: const Key('harness-error'),
-                    style: theme.textTheme.bodyMedium),
+                child: Text(
+                  '$_error',
+                  key: const Key('harness-error'),
+                  style: theme.textTheme.bodyMedium,
+                ),
               ),
             ),
-          _MetricRows(rows: <String, String>{
-            // §7.3 — zarf akışı ve süresi
-            'session': running ? 'running' : 'stopped',
-            'elapsed': '${elapsed.inSeconds} s',
-            'envelopes': '$_envelopes',
-            // §7.3 — ölçülen oranlar (uydurma yok: null ise "—")
-            'judgedRatio': _fmt(_monitor.judgedRatio, digits: 3),
-            'judged/s': _fmt(_monitor.judgedPerSecond, digits: 1),
-            'captured/s': _fmt(_monitor.capturedPerSecond, digits: 1),
-            'meanInferenceUs': _fmt(_monitor.meanInferenceUs, digits: 0),
-            // §7.5 — buffer açlığı bu sayının patlaması olarak görünür
-            'dropped (session)': '${_monitor.sessionDroppedCount}',
-            'dropped (last)': _last == null ? '—' : '${_last!.dropped}',
-            // §7.6 — clock domain; "unknown" AYRI bir gözlem
-            'clockDomain': _session?.clockDomain.name ?? '—',
-            'frame': _last == null
-                ? '—'
-                : '${_last!.size.width}×${_last!.size.height}',
-            'modelVersion (envelope)': _last?.modelVersion ?? '—',
-            'library': _session?.libraryTag ?? '—',
-            'no-person passes': '$_emptyPasses',
-          }),
+          _MetricRows(
+            rows: <String, String>{
+              // §7.3 — zarf akışı ve süresi
+              'session': running ? 'running' : 'stopped',
+              'elapsed': '${elapsed.inSeconds} s',
+              'envelopes': '$_envelopes',
+              // §7.3 — ölçülen oranlar (uydurma yok: null ise "—")
+              'judgedRatio': _fmt(_monitor.judgedRatio, digits: 3),
+              'judged/s': _fmt(_monitor.judgedPerSecond, digits: 1),
+              'captured/s': _fmt(_monitor.capturedPerSecond, digits: 1),
+              'meanInferenceUs': _fmt(_monitor.meanInferenceUs, digits: 0),
+              // §7.5 — buffer açlığı bu sayının patlaması olarak görünür
+              'dropped (session)': '${_monitor.sessionDroppedCount}',
+              'dropped (last)': _last == null ? '—' : '${_last!.dropped}',
+              // §7.6 — clock domain; "unknown" AYRI bir gözlem
+              'clockDomain': _session?.clockDomain.name ?? '—',
+              'frame': _last == null
+                  ? '—'
+                  : '${_last!.size.width}×${_last!.size.height}',
+              'modelVersion (envelope)': _last?.modelVersion ?? '—',
+              'library': _session?.libraryTag ?? '—',
+              'no-person passes': '$_emptyPasses',
+            },
+          ),
           const SizedBox(height: 16),
           Card(
             child: Padding(
@@ -235,8 +328,9 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
                 'ever differs from the id above, a model swap has silently '
                 'changed what the joint tables mean — stop and re-measure.',
                 key: const Key('harness-model-pin'),
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontFamily: 'monospace'),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                ),
               ),
             ),
           ),
@@ -258,9 +352,7 @@ class _MetricRows extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle? mono = Theme.of(context)
-        .textTheme
-        .bodyLarge
+    final TextStyle? mono = Theme.of(context).textTheme.bodyLarge
         ?.copyWith(fontFamily: 'monospace');
     return Column(
       children: <Widget>[

@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:jablab_engine/jablab_engine.dart' show IntervalPlan, RoundPlan;
+import 'package:motion_camera/motion_camera.dart' show CameraFailure;
 
 import '../shell_candidate/live_surface.dart';
 import '../shell_candidate/session_flow.dart';
@@ -50,6 +52,8 @@ class SessionScreen extends StatefulWidget {
     this.liveJab,
     this.liveJabSetupFailure,
     this.milestoneEvery,
+    this.accountUserId,
+    this.resourceAdmission,
   });
 
   final ShellLesson lesson;
@@ -71,6 +75,10 @@ class SessionScreen extends StatefulWidget {
   /// Seans geçmişi (J-064). `null` iken akış aynen çalışır, yalnız KAYIT
   /// tutulmaz — testlerde ve plansız (öğretme) derslerinde böyle.
   final SessionStore? store;
+
+  /// Current identity from the host; a session belongs to its opening scope.
+  final ValueListenable<String?>? accountUserId;
+  final ValueListenable<bool>? resourceAdmission;
 
   /// Replik kitabı app'ten enjekte edilir; kabuk sözlüğü GÖRMEZ.
   final CueBook cues;
@@ -141,6 +149,70 @@ class SessionScreen extends StatefulWidget {
 
 class _SessionScreenState extends State<SessionScreen> {
   SessionStage _stage = SessionStage.teach;
+  late final String? _openingOwner;
+  bool _ownerRetired = false;
+  ModalRoute<void>? _ownerRoute;
+  NavigatorState? _ownerNavigator;
+
+  @override
+  void initState() {
+    super.initState();
+    _openingOwner = widget.accountUserId?.value;
+    widget.accountUserId?.addListener(_onOwnerChanged);
+    widget.resourceAdmission?.addListener(_onAdmissionChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _ownerRoute = ModalRoute.of<void>(context);
+    _ownerNavigator = Navigator.of(context);
+    _onAdmissionChanged();
+    _onOwnerChanged();
+  }
+
+  void _onAdmissionChanged() {
+    if (widget.resourceAdmission?.value == false) _retireOwner();
+  }
+
+  void _onOwnerChanged() {
+    if (widget.accountUserId?.value != _openingOwner) _retireOwner();
+  }
+
+  @override
+  void didUpdateWidget(covariant SessionScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.resourceAdmission, widget.resourceAdmission)) {
+      oldWidget.resourceAdmission?.removeListener(_onAdmissionChanged);
+      widget.resourceAdmission?.addListener(_onAdmissionChanged);
+      _retireOwner();
+    }
+    if (identical(oldWidget.accountUserId, widget.accountUserId)) return;
+    oldWidget.accountUserId?.removeListener(_onOwnerChanged);
+    widget.accountUserId?.addListener(_onOwnerChanged);
+    _retireOwner();
+  }
+
+  void _retireOwner() {
+    if (_ownerRetired) return;
+    _ownerRetired = true;
+    unawaited(widget.liveJab?.stop());
+    final ModalRoute<void>? route = _ownerRoute;
+    final NavigatorState? navigator = _ownerNavigator;
+    // Remove this route even when another route covers it. A blind pop would
+    // remove the user's unrelated foreground screen and retain the old owner.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted ||
+          navigator == null ||
+          !navigator.mounted ||
+          route == null ||
+          !route.isActive) {
+        return;
+      }
+      if (!route.isFirst) navigator.removeRoute(route);
+    });
+    WidgetsBinding.instance.ensureVisualUpdate();
+  }
 
   /// Canlı aşamada sayılan olay — `null` = **analiz hiç koşmadı** (J-156).
   ///
@@ -166,6 +238,7 @@ class _SessionScreenState extends State<SessionScreen> {
   }
 
   void _advance() {
+    if (_ownerRetired || widget.resourceAdmission?.value == false) return;
     final bool leavingLive = _stage == SessionStage.live;
     final int i = SessionStage.values.indexOf(_stage);
     if (i + 1 < SessionStage.values.length) {
@@ -200,6 +273,8 @@ class _SessionScreenState extends State<SessionScreen> {
   /// `session_exit_test`in pozitif ikiziyle ölçülüyor.
   @override
   void dispose() {
+    widget.accountUserId?.removeListener(_onOwnerChanged);
+    widget.resourceAdmission?.removeListener(_onAdmissionChanged);
     if (_stage == SessionStage.live) unawaited(_record());
     super.dispose();
   }
@@ -209,41 +284,50 @@ class _SessionScreenState extends State<SessionScreen> {
     final RoundPlan? plan = widget.plan;
     // Plansız (öğretme) derste çalışma süresi diye bir şey YOK — sıfır
     // saniyelik kayıt yazmak, geçmişi anlamsız satırlarla doldurmak olurdu.
-    if (store == null ||
+    if (_ownerRetired ||
+        widget.resourceAdmission?.value == false ||
+        widget.accountUserId?.value != _openingOwner ||
+        store == null ||
         (plan == null && widget.intervalPlan == null) ||
         _workedSeconds <= 0) {
       return;
     }
-    await store.append(
-      SessionRecord(
-        lessonId: widget.lesson.id,
-        completedAt: DateTime.now(),
-        workedSeconds: _workedSeconds,
-        unitsCompleted: _roundsCompleted,
-        plannedUnits: plan?.rounds ?? widget.intervalPlan!.bursts,
-        // Birim KAYIT BAŞINA (çekirdek sözleşmesi): aynı ilerleme ekranında
-        // tur-birimli ve aralık-birimli ders yan yana durabilir.
-        unitLabel: plan != null ? 'round' : 'interval',
-        // SINIF, YAZMA ANINDA (J-095). Bugün JabLab'ta hiçbir ders
-        // puanlanmıyor: kalibrasyon kapısı (K8) geçilmedi ve kamera bağlı
-        // değil. `'unscored'` bunu yazma anında mühürlüyor — ders yarın terfi
-        // ederse YENİ kayıtlar farklı sınıf taşır ve bugünküler doğru şekilde
-        // puansız kalır. Sınıfı sonradan HESAPLAMAK geçmişi sessizce yeniden
-        // yorumlamak olurdu (çekirdeğin kendi uyarısı).
-        //
-        // Ayrıca en-az-yetki: yalnız `'scored'` puanlı okunur, bu değer değil.
-        lessonClass: 'unscored',
-        // `unmeasuredUnits` SIFIR ve bu bir varsayım değil: o alan "motorun
-        // GÖRDÜĞÜ ama yargılayamadığı" birimler için (kadraj/ışık/takip).
-        // JabLab'ta kamera HİÇ yok — tur sayısı saatten gelen bir olgu, kamera
-        // ölçümü değil. Yargılanmamışlığı taşıyan alan `lessonClass`; buraya
-        // yazmak iki farklı olguyu karıştırırdı.
-      ),
-    );
+    try {
+      await store.append(
+        SessionRecord(
+          lessonId: widget.lesson.id,
+          completedAt: DateTime.now(),
+          workedSeconds: _workedSeconds,
+          unitsCompleted: _roundsCompleted,
+          plannedUnits: plan?.rounds ?? widget.intervalPlan!.bursts,
+          // Birim KAYIT BAŞINA (çekirdek sözleşmesi): aynı ilerleme ekranında
+          // tur-birimli ve aralık-birimli ders yan yana durabilir.
+          unitLabel: plan != null ? 'round' : 'interval',
+          // SINIF, YAZMA ANINDA (J-095). Bugün JabLab'ta hiçbir ders
+          // puanlanmıyor: kalibrasyon kapısı (K8) geçilmedi ve kamera bağlı
+          // değil. `'unscored'` bunu yazma anında mühürlüyor — ders yarın terfi
+          // ederse YENİ kayıtlar farklı sınıf taşır ve bugünküler doğru şekilde
+          // puansız kalır. Sınıfı sonradan HESAPLAMAK geçmişi sessizce yeniden
+          // yorumlamak olurdu (çekirdeğin kendi uyarısı).
+          //
+          // Ayrıca en-az-yetki: yalnız `'scored'` puanlı okunur, bu değer değil.
+          lessonClass: 'unscored',
+          // `unmeasuredUnits` SIFIR ve bu bir varsayım değil: o alan "motorun
+          // GÖRDÜĞÜ ama yargılayamadığı" birimler için (kadraj/ışık/takip).
+          // JabLab'ta kamera HİÇ yok — tur sayısı saatten gelen bir olgu, kamera
+          // ölçümü değil. Yargılanmamışlığı taşıyan alan `lessonClass`; buraya
+          // yazmak iki farklı olguyu karıştırırdı.
+        ),
+      );
+    } on SessionStoreRetiredException {
+      // An admitted append can settle after retirement. The owner barrier
+      // drains it before erase; the retired route must not report a new record.
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_ownerRetired) return const SizedBox.shrink();
     // Theme(sarma): kabuk parçaları (SessionFlowScaffold + içindekiler)
     // frozen — `JColors`/`JText`i doğrudan okuyamaz, yalnız
     // `Theme.of(context)` üzerinden beslenir (bkz. sınıf dokümanı +
@@ -501,7 +585,13 @@ class _Live extends StatefulWidget {
   State<_Live> createState() => _LiveState();
 }
 
-class _LiveState extends State<_Live> {
+class _LiveState extends State<_Live> with WidgetsBindingObserver {
+  bool _foreground =
+      WidgetsBinding.instance.lifecycleState == null ||
+      WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
+  bool _cameraRetired = false;
+  Completer<void>? _foregroundGate;
+
   /// Kip PLANA göre seçilir — `interval()` yalnız `SessionMode.interval`de
   /// olay üretir, `steady`de sessizce boş döner. Sabit `steady` bırakmak,
   /// aralık repliklerini hiç duyulmaz kılardı (kodu var, kullanıcı duymuyor).
@@ -588,6 +678,7 @@ class _LiveState extends State<_Live> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     unawaited(_startCamera());
     if (_plan == null && _ivl == null) return;
     _tick();
@@ -601,7 +692,7 @@ class _LiveState extends State<_Live> {
     final LiveJabController? live = widget.liveJab;
     if (live == null) return;
     _jabSub = live.states.listen((LiveJabState st) {
-      if (!mounted) return;
+      if (!mounted || _cameraRetired) return;
       setState(() {
         _jab = st;
         if (st is LiveJabFailed) _jabFailure = st.failure;
@@ -626,8 +717,50 @@ class _LiveState extends State<_Live> {
       // üretici vardı ama yolu yoktu.
       _reportCount();
     });
-    final LiveSessionFailure? f = await live.start();
-    if (f != null && mounted) setState(() => _jabFailure = f);
+    final LiveSessionFailure? f = await live.start(
+      beforeCameraStart: _waitForForeground,
+    );
+    if (f != null && mounted && !_cameraRetired) {
+      setState(() => _jabFailure = f);
+    }
+  }
+
+  Future<void> _waitForForeground() {
+    if (_foreground || _cameraRetired) return Future<void>.value();
+    return (_foregroundGate ??= Completer<void>()).future;
+  }
+
+  void _releaseForegroundGate() {
+    final Completer<void>? gate = _foregroundGate;
+    _foregroundGate = null;
+    if (gate != null && !gate.isCompleted) gate.complete();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _foreground = state == AppLifecycleState.resumed;
+    if (_foreground) {
+      _releaseForegroundGate();
+      return;
+    }
+    // Permission prompts can be inactive before native startup. Backgrounding
+    // retires all setup; an already-started camera also retires on inactive.
+    if (state == AppLifecycleState.inactive &&
+        _jab == null &&
+        !(widget.liveJab?.hasNativeSession ?? false)) {
+      return;
+    }
+    if (_cameraRetired || widget.liveJab == null) return;
+    _cameraRetired = true;
+    unawaited(widget.liveJab?.stop());
+    _releaseForegroundGate();
+    unawaited(_jabSub?.cancel());
+    setState(() {
+      _jab = null;
+      _jabFailure = const LiveCameraUnavailable(
+        failure: CameraFailure.sessionInterrupted,
+      );
+    });
   }
 
   void _tick() {
@@ -781,6 +914,9 @@ class _LiveState extends State<_Live> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _cameraRetired = true;
+    _releaseForegroundGate();
     _ticker?.cancel();
     unawaited(_jabSub?.cancel());
     // Kamerayı KAPAT: açık bırakmak modeli ve kamerayı ekran kapandıktan
@@ -987,10 +1123,8 @@ extension on _LiveState {
       permanent
           ? 'JabLab için kamera erişimi kapalı ve sistem yeniden izin istemeyecek. Ayarlar bölümünden açabilirsiniz. Kamera olmadan da tur saati çalışır.'
           : 'Jab hareketinizi izlemek için kameraya ihtiyacımız var. Kamera olmadan analiz yapılmaz; tur saati çalışmaya devam eder.',
-    LiveCameraUnavailable() =>
-      'Bu cihazda kamera açılamadı, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.',
-    LiveSetupFailed() =>
-      'Kamera hazırlanırken bir sorun oluştu, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.',
+    LiveCameraUnavailable() => 'Bu cihazda kamera açılamadı, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.',
+    LiveSetupFailed() => 'Kamera hazırlanırken bir sorun oluştu, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.',
   };
 
   String _failureSentenceEn(LiveSessionFailure f) => switch (f) {

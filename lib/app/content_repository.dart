@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'content_failure.dart';
 import 'flutter_bundle_content_asset_reader.dart';
 import 'account_bridge.dart';
+import 'owner_resource_lifetime.dart';
 import 'session_narrator.dart';
 import 'session_store.dart';
 import 'solo_boxing_course.dart';
@@ -31,7 +32,20 @@ final class ContentRepository {
     this.loadStringOverride,
     this.historyDirectoryOverride,
     this.contentBundleOverride,
+    this.ownerRegistry,
+    this.historyDirectoryProvider,
+    this.sessionFileOverride,
+    this.courseFileOverride,
   });
+
+  final OwnerResourceRegistry? ownerRegistry;
+  OwnerResourceRegistry get ownerLifetimes =>
+      ownerRegistry ?? defaultOwnerResourceRegistry;
+
+  /// Deterministic filesystem seams; production uses path_provider and File.
+  final Future<Directory> Function()? historyDirectoryProvider;
+  final File Function(Directory, String?)? sessionFileOverride;
+  final File Function(Directory, String?)? courseFileOverride;
 
   /// Filesystem seam for account journal tests; production uses app support.
   final Directory? historyDirectoryOverride;
@@ -126,18 +140,22 @@ final class ContentRepository {
   ///
   /// Değer `—`: K8 kalibrasyon kapısı geçilmeden sayı yok.
   Map<String, String> gradedBands(RuleSet boxing) => <String, String>{
-        for (final TrackedComponent c in boxing.gradedComponents)
-          c.displayName: '—',
-      };
+    for (final TrackedComponent c in boxing.gradedComponents)
+      c.displayName: '—',
+  };
 
-  List<String> _labelsFor(List<String> keys) => keys.map((String key) {
+  List<String> _labelsFor(List<String> keys) => keys
+      .map((String key) {
         final String? label = _jointLabels[key];
         if (label == null) {
-          throw StateError('coachedOnlyJoints eklemi "$key" için etiket yok — '
-              'ContentRepository._jointLabels güncellenmeli');
+          throw StateError(
+            'coachedOnlyJoints eklemi "$key" için etiket yok — '
+            'ContentRepository._jointLabels güncellenmeli',
+          );
         }
         return label;
-      }).toList(growable: false);
+      })
+      .toList(growable: false);
 
   /// Seans geçmişi deposunu açar (J-064).
   ///
@@ -147,9 +165,17 @@ final class ContentRepository {
   Future<SessionStore> openStore({String? accountUserId}) async {
     final SessionStore? injected = storeOverride;
     if (injected != null) return injected;
+    final OwnerResourceLifetime lifetime = ownerLifetimes.capture(
+      accountUserId,
+    );
     final Directory dir =
-        historyDirectoryOverride ?? await getApplicationSupportDirectory();
-    return JsonlSessionStore(sessionFileFor(dir, accountUserId));
+        historyDirectoryOverride ??
+        await (historyDirectoryProvider ?? getApplicationSupportDirectory)();
+    lifetime.checkActive();
+    return JsonlSessionStore(
+      (sessionFileOverride ?? sessionFileFor)(dir, lifetime.accountUserId),
+      writeLease: lifetime.journalWrites,
+    );
   }
 
   Future<SoloBoxingCourse> loadSoloBoxingCourse() async {
@@ -194,9 +220,17 @@ final class ContentRepository {
   Future<SoloCourseProgressStore> openSoloProgressStore({
     String? accountUserId,
   }) async {
+    final OwnerResourceLifetime lifetime = ownerLifetimes.capture(
+      accountUserId,
+    );
     final Directory directory =
-        historyDirectoryOverride ?? await getApplicationSupportDirectory();
-    return soloProgressStoreFor(directory, accountUserId);
+        historyDirectoryOverride ??
+        await (historyDirectoryProvider ?? getApplicationSupportDirectory)();
+    lifetime.checkActive();
+    return SoloCourseProgressStore(
+      (courseFileOverride ?? courseFileFor)(directory, lifetime.accountUserId),
+      ownerLifetime: lifetime,
+    );
   }
 
   /// Bir dersin tur planını alan kütüphanesinden arar (J-063).
@@ -225,8 +259,9 @@ final class ContentRepository {
   /// katlardı.
   Future<String> materializePoseModel() async {
     final Directory dir = await getApplicationSupportDirectory();
-    final File out =
-        File('${dir.path}/${PoseModelPin.assetPath.split('/').last}');
+    final File out = File(
+      '${dir.path}/${PoseModelPin.assetPath.split('/').last}',
+    );
     if (!out.existsSync()) {
       final ByteData data = await rootBundle.load(PoseModelPin.assetPath);
       await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
@@ -250,8 +285,10 @@ final class ContentRepository {
     // farklı durum ("materyal yok" / "ders yok") aynı cümleye düşerdi.
     if (_lessonFor(lib, lessonId) == null) {
       return const TeachMaterialNone(
-          reason: 'We could not find this lesson in the library, so there is '
-              'nothing to show here.');
+        reason:
+            'We could not find this lesson in the library, so there is '
+            'nothing to show here.',
+      );
     }
     // İÇERİKTEN TÜRETİLİR (J-118). `TeachMaterialText` varyantı J-094'ten
     // beri VARDI ve render ediliyordu — ama hiçbir yer ONU ÜRETMİYORDU,
@@ -262,9 +299,11 @@ final class ContentRepository {
       return TeachMaterialText(body: teach);
     }
     return const TeachMaterialNone(
-        reason: 'There is no lesson material to watch or read here — we '
-            'have not made it. The session still works: the next step is you '
-            'moving, and nothing is scored while you learn the shape.');
+      reason:
+          'There is no lesson material to watch or read here — we '
+          'have not made it. The session still works: the next step is you '
+          'moving, and nothing is scored while you learn the shape.',
+    );
   }
 
   /// Prova aşamasının materyali (J-247) — `teachMaterialFor`un kardeşi.
@@ -276,16 +315,20 @@ final class ContentRepository {
     final Lesson? l = _lessonFor(lib, lessonId);
     if (l == null) {
       return const RehearseMaterialNone(
-          reason: 'We could not find this lesson in the library, so there is '
-              'nothing to name here.');
+        reason:
+            'We could not find this lesson in the library, so there is '
+            'nothing to name here.',
+      );
     }
     // İÇERİKTEN TÜRETİLİR — hiçbir dizge burada UYDURULMUYOR; `techniques`
     // ve `combinations` `library.json`da yazılı ve aynı ders kartının alt
     // başlığında zaten gösteriliyor.
     if (l.techniques.isEmpty) {
       return const RehearseMaterialNone(
-          reason: 'This lesson does not drill a named technique — the shape '
-              'itself is the work. Move through it slowly and stay in frame.');
+        reason:
+            'This lesson does not drill a named technique — the shape '
+            'itself is the work. Move through it slowly and stay in frame.',
+      );
     }
     return RehearseMaterialDrill(
       techniques: l.techniques,
@@ -307,8 +350,8 @@ final class ContentRepository {
   /// Replik kitabı. Yükleme sırasında eşleme doğrulanır: bir olayın repliği
   /// yoksa [CueBook.fromJson] FIRLATIR. Sessizce boş geçmek, o anı sonsuza
   /// kadar sessiz bırakırdı ve kullanıcı sessizliği "sorun yok" diye okur.
-  Future<CueBook> loadCues() async => CueBook.fromJson(
-      await _loadString(cuesAsset), jabLabCueMapping);
+  Future<CueBook> loadCues() async =>
+      CueBook.fromJson(await _loadString(cuesAsset), jabLabCueMapping);
 
   /// İlerleme kapıları (J-208) — ham harita olarak.
   ///
@@ -323,11 +366,13 @@ final class ContentRepository {
 
   Future<({Library library, RuleSet boxing})> load() async {
     final Library lib = Library.fromJson(
-        (jsonDecode(await _loadString(libraryAsset)) as Map)
-            .cast<String, dynamic>());
+      (jsonDecode(await _loadString(libraryAsset)) as Map)
+          .cast<String, dynamic>(),
+    );
     final RuleSet boxing = RuleSet.fromJson(
-        (jsonDecode(await _loadString(boxingRuleSetAsset)) as Map)
-            .cast<String, dynamic>());
+      (jsonDecode(await _loadString(boxingRuleSetAsset)) as Map)
+          .cast<String, dynamic>(),
+    );
 
     // Dürüstlük değişmezleri çalışma zamanında da denetlenir: bozuk bir
     // içerik güncellemesi testleri atlayıp cihaza ulaşırsa, uygulama sessizce
@@ -347,43 +392,47 @@ final class ContentRepository {
   }
 
   ShellLibrary toShell(Library lib) => ShellLibrary(
-        title: lib.productName,
-        whyNotIntro: lib.whyNotIntro,
-        items: lib.disciplines.map(_item).toList(growable: false),
-        exclusions: lib.excluded
-            .map((ExcludedItem e) => ShellExclusion(e.displayName, e.reason))
-            .toList(growable: false),
-      );
+    title: lib.productName,
+    whyNotIntro: lib.whyNotIntro,
+    items: lib.disciplines.map(_item).toList(growable: false),
+    exclusions: lib.excluded
+        .map((ExcludedItem e) => ShellExclusion(e.displayName, e.reason))
+        .toList(growable: false),
+  );
 
   ShellItem _item(Discipline d) => ShellItem(
-        id: d.id,
-        title: d.displayName,
-        status: d.status == DisciplineStatus.live
-            ? ItemStatus.live
-            : ItemStatus.comingSoon,
-        waveLabel: d.wave,
-        blurb: d.blurb,
-        measured: d.measured,
-        notMeasured: d.notMeasured,
-        courses: d.courses
-            .map((Course c) => ShellCourse(
-                  id: c.id,
-                  title: c.displayName,
-                  goal: c.goal,
-                  level: c.level,
-                  minutes: c.estimatedMinutes,
-                  lessons: c.lessons
-                      .map((Lesson l) => ShellLesson(
-                            id: l.id,
-                            title: l.displayName,
-                            minutes: l.minutes,
-                            subtitle: l.techniques.isEmpty
-                                ? ''
-                                : l.techniques.join(' · '),
-                            lockedReason: l.lockedReason,
-                          ))
-                      .toList(growable: false),
-                ))
-            .toList(growable: false),
-      );
+    id: d.id,
+    title: d.displayName,
+    status: d.status == DisciplineStatus.live
+        ? ItemStatus.live
+        : ItemStatus.comingSoon,
+    waveLabel: d.wave,
+    blurb: d.blurb,
+    measured: d.measured,
+    notMeasured: d.notMeasured,
+    courses: d.courses
+        .map(
+          (Course c) => ShellCourse(
+            id: c.id,
+            title: c.displayName,
+            goal: c.goal,
+            level: c.level,
+            minutes: c.estimatedMinutes,
+            lessons: c.lessons
+                .map(
+                  (Lesson l) => ShellLesson(
+                    id: l.id,
+                    title: l.displayName,
+                    minutes: l.minutes,
+                    subtitle: l.techniques.isEmpty
+                        ? ''
+                        : l.techniques.join(' · '),
+                    lockedReason: l.lockedReason,
+                  ),
+                )
+                .toList(growable: false),
+          ),
+        )
+        .toList(growable: false),
+  );
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/account_bridge.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/solo_boxing_course.dart';
 import 'package:jablab/app/solo_boxing_progress.dart';
 
@@ -10,9 +11,13 @@ void main() {
   const String bob = '22222222-2222-4222-8222-222222222222';
   late Directory directory;
   late SoloBoxingCourse course;
+  late OwnerResourceRegistry owners;
 
   setUp(() {
     directory = Directory.systemTemp.createTempSync('jablab-solo-progress-');
+    owners = OwnerResourceRegistry();
+    owners.activate(alice);
+    owners.activate(bob);
     course = SoloBoxingCourse.fromJsonString(
       File('assets/content/solo_boxing_course.v1.json').readAsStringSync(),
     );
@@ -25,6 +30,7 @@ void main() {
       final SoloCourseProgressStore store = soloProgressStoreFor(
         directory,
         alice,
+        ownerRegistry: owners,
       );
       final SoloLesson first = course.lessons.first;
       expect((await store.load()).completedCount(course), 0);
@@ -60,23 +66,52 @@ void main() {
     'guest and accounts are isolated, account deletion includes course',
     () async {
       final SoloLesson first = course.lessons.first;
-      await soloProgressStoreFor(directory, null).markViewed(course, first);
-      await soloProgressStoreFor(directory, alice).markViewed(course, first);
+      await soloProgressStoreFor(
+        directory,
+        null,
+        ownerRegistry: owners,
+      ).markViewed(course, first);
+      await soloProgressStoreFor(
+        directory,
+        alice,
+        ownerRegistry: owners,
+      ).markViewed(course, first);
       expect(
-        (await soloProgressStoreFor(directory, bob).load()).records,
+        (await soloProgressStoreFor(
+          directory,
+          bob,
+          ownerRegistry: owners,
+        ).load()).records,
         isEmpty,
       );
       expect(
         await localHistoryAccountIds(supportDirectory: directory),
         <String>[alice],
       );
-      await clearLocalHistoryFor(alice, supportDirectory: directory);
+      await clearLocalHistoryFor(
+        alice,
+        supportDirectory: directory,
+        ownerRegistry: owners,
+      );
       expect(
-        (await soloProgressStoreFor(directory, alice).load()).records,
+        () => soloProgressStoreFor(directory, alice, ownerRegistry: owners),
+        throwsStateError,
+      );
+      owners.activate(alice);
+      expect(
+        (await soloProgressStoreFor(
+          directory,
+          alice,
+          ownerRegistry: owners,
+        ).load()).records,
         isEmpty,
       );
       expect(
-        (await soloProgressStoreFor(directory, null).load()).records,
+        (await soloProgressStoreFor(
+          directory,
+          null,
+          ownerRegistry: owners,
+        ).load()).records,
         contains(first.id),
       );
       expect(() => courseFileNameFor('../guest'), throwsArgumentError);
@@ -87,7 +122,7 @@ void main() {
     final File file = courseFileFor(directory, alice);
     await file.writeAsString('{bad json');
     expect(
-      soloProgressStoreFor(directory, alice).load(),
+      soloProgressStoreFor(directory, alice, ownerRegistry: owners).load(),
       throwsFormatException,
     );
   });
@@ -98,10 +133,12 @@ void main() {
       final SoloCourseProgressStore first = soloProgressStoreFor(
         directory,
         alice,
+        ownerRegistry: owners,
       );
       final SoloCourseProgressStore second = soloProgressStoreFor(
         directory,
         alice,
+        ownerRegistry: owners,
       );
       final SoloLesson lesson = course.lessons.first;
       await Future.wait(<Future<SoloCourseProgress>>[
@@ -121,7 +158,11 @@ void main() {
               expect(error, isA<StateError>());
             },
           );
-      await clearLocalHistoryFor(alice, supportDirectory: directory);
+      await clearLocalHistoryFor(
+        alice,
+        supportDirectory: directory,
+        ownerRegistry: owners,
+      );
       await pending;
       expect(await courseFileFor(directory, alice).exists(), isFalse);
       expect(
@@ -129,8 +170,13 @@ void main() {
         isFalse,
       );
       expect(first.markPractised(course, lesson), throwsStateError);
+      owners.activate(alice);
       expect(
-        (await soloProgressStoreFor(directory, alice).load()).records,
+        (await soloProgressStoreFor(
+          directory,
+          alice,
+          ownerRegistry: owners,
+        ).load()).records,
         isEmpty,
       );
     },

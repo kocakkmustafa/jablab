@@ -60,11 +60,10 @@ class _NoNetworkOverrides extends HttpOverrides {
   HttpClient createHttpClient(SecurityContext? context) {
     throw StateError(
       'D1 REGRESYONU: bir test GERÇEK bir HttpClient kurmaya çalıştı. '
-      'JabLab çalışma-anında ağa çıkmaz (google_fonts kaldırıldı, D1) — '
-      'bu ya bir bağımlılığın sessizce ağ-yapabilir hâle döndüğünü ya da '
-      'yeni bir ağ bağımlılığının test/network_deps_test.dart\'a hiç '
-      'sorulmadan eklendiğini gösterir. Stack trace HANGİ testin '
-      'tetiklediğini gösterir.',
+      'Bu widget testinde gerçek ağ yerine kontrollü istemci kullanılmalı. '
+      'Canlı analiz yolu yerel kalır; gerçek hesap/üyelik ağ yeteneği '
+      'test/network_deps_test.dart içinde ayrıca sınıflandırılır. '
+      'Stack trace HANGİ testin tetiklediğini gösterir.',
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/course_page.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 import 'package:jablab/app/session_screen.dart';
@@ -31,7 +32,11 @@ import 'app_pump.dart';
 /// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
 const OnboardingStore _seen = OnboardingStore(seenOverride: true);
 
+// Each test owns a storage namespace; replacements inside it share this registry.
+late OwnerResourceRegistry _owners;
+
 void main() {
+  setUp(() => _owners = OwnerResourceRegistry());
   setUp(() {
     // Varsayılan test yüzeyi (800×600) 8 disiplini ve uzun ders listelerini
     // kadraja sığdırmıyor; kaydırma jimnastiği yerine yüzeyi büyütüyoruz.
@@ -62,7 +67,7 @@ void main() {
     await tester.runAsync(() async {
       await tester.pumpWidget(
         JabLabApp(
-          repository: repo ?? const ContentRepository(),
+          repository: repo ?? ContentRepository(ownerRegistry: _owners),
           onboarding: _seen,
           beforeLessonStart: beforeLessonStart,
         ),
@@ -332,7 +337,10 @@ void main() {
         lessonClass: 'unscored',
       ),
     ]);
-    await pumpApp(t, repo: ContentRepository(storeOverride: store));
+    await pumpApp(
+      t,
+      repo: ContentRepository(storeOverride: store, ownerRegistry: _owners),
+    );
   }
 
   testWidgets('K8: kurs sayfası SAYI göstermez, bant gösterir', (

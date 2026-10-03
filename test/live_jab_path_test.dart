@@ -12,6 +12,8 @@ import 'package:jablab_engine/jablab_engine.dart';
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart';
 
+import 'support/owned_native_fixture.dart';
+
 /// CANLI JAB HATTI — uçtan uca, SAHTE kamerayla (J-096).
 ///
 /// ## ⚠️ NE KANITLIYOR, NE KANITLAMIYOR
@@ -39,58 +41,78 @@ void main() {
     cues = await const ContentRepository().loadCues();
   });
 
-  LiveJabController build(_FakeCamera cam,
-          {Future<bool> Function()? permission,
-          Future<bool> Function()? permanent}) =>
-      LiveJabController(
-        ruleSet: ruleSet,
-        cues: cues,
-        modelPath: () async => '/dev/null/model.task',
-        modelId: 'test-model',
-        camera: cam,
-        requestPermission: permission,
-        permissionPermanentlyDenied: permanent,
-      );
+  LiveJabController build(
+    _FakeCamera cam, {
+    Future<bool> Function()? permission,
+    Future<bool> Function()? permanent,
+  }) => LiveJabController(
+    ruleSet: ruleSet,
+    cues: cues,
+    modelPath: () async => '/dev/null/model.task',
+    modelId: 'test-model',
+    camera: cam,
+    requestPermission: permission,
+    permissionPermanentlyDenied: permanent,
+  );
 
   group('kurulum hâlleri TİPLİ', () {
     test('izin REDDİ — kamera hiç açılmıyor', () async {
       final _FakeCamera cam = _FakeCamera();
-      final LiveSessionFailure? f = await build(cam,
-              permission: () async => false, permanent: () async => false)
-          .start();
+      final LiveSessionFailure? f = await build(
+        cam,
+        permission: () async => false,
+        permanent: () async => false,
+      ).start();
       expect(f, isA<LivePermissionDenied>());
       expect((f! as LivePermissionDenied).permanentlyDenied, isFalse);
-      expect(cam.startCalls, 0,
-          reason: 'izin yokken kamerayı açmaya çalışmak, kullanıcıya '
-              '"kamera açılamadı" dedirtirdi — oysa sorun izin');
+      expect(
+        cam.startCalls,
+        0,
+        reason:
+            'izin yokken kamerayı açmaya çalışmak, kullanıcıya '
+            '"kamera açılamadı" dedirtirdi — oysa sorun izin',
+      );
     });
 
     test('KALICI ret ayrı işaretleniyor', () async {
       // Sunulan EYLEM değişiyor: geçici rette tekrar sormak çalışır,
       // kalıcıda çalışmaz ve "tekrar dene" düğmesi hiçbir yere götürmez.
-      final LiveSessionFailure? f = await build(_FakeCamera(),
-              permission: () async => false, permanent: () async => true)
-          .start();
+      final LiveSessionFailure? f = await build(
+        _FakeCamera(),
+        permission: () async => false,
+        permanent: () async => true,
+      ).start();
       expect((f! as LivePermissionDenied).permanentlyDenied, isTrue);
     });
 
     test('kamera reddi TİPLİ döner, fırlatmaz', () async {
       final _FakeCamera cam = _FakeCamera(
-          startError: const CameraException(
-              CameraFailure.noSuchCamera, 'no front lens'));
-      final LiveSessionFailure? f =
-          await build(cam, permission: () async => true).start();
+        startError: const CameraException(
+          CameraFailure.noSuchCamera,
+          'no front lens',
+        ),
+      );
+      final LiveSessionFailure? f = await build(
+        cam,
+        permission: () async => true,
+      ).start();
       expect(f, isA<LiveCameraUnavailable>());
       expect((f! as LiveCameraUnavailable).failure, CameraFailure.noSuchCamera);
     });
 
     test('TANINMAYAN hata isimli plugin reddi gibi SUNULMUYOR', () async {
       final _FakeCamera cam = _FakeCamera(startError: StateError('disk full'));
-      final LiveSessionFailure? f =
-          await build(cam, permission: () async => true).start();
-      expect(f, isA<LiveSetupFailed>(),
-          reason: 'bilinmeyen hatayı isimli bir kamera reddi gibi sunmak, '
-              'kullanıcıya bizim adımıza teşhis koymaktır');
+      final LiveSessionFailure? f = await build(
+        cam,
+        permission: () async => true,
+      ).start();
+      expect(
+        f,
+        isA<LiveSetupFailed>(),
+        reason:
+            'bilinmeyen hatayı isimli bir kamera reddi gibi sunmak, '
+            'kullanıcıya bizim adımıza teşhis koymaktır',
+      );
     });
 
     test('POZİTİF İKİZ: izin VARKEN ve kamera açılırken hata YOK', () async {
@@ -106,10 +128,12 @@ void main() {
     // Kamera/motor kurmadan doğrudan sınanır — bkz. dosya sonundaki
     // "D18 — tamamlanan denemenin tempo bandı SAYILIYOR" testi (TELİ
     // kanıtlar), bu grup ALGORİTMAYI kanıtlar (boş/tekil/kazanan/eşitlik).
-    test('BOŞ harita → null (hiç tamamlanmış deneme yok, "controlled" DEĞİL)',
-        () {
-      expect(modeOfCounts(<String, int>{}), isNull);
-    });
+    test(
+      'BOŞ harita → null (hiç tamamlanmış deneme yok, "controlled" DEĞİL)',
+      () {
+        expect(modeOfCounts(<String, int>{}), isNull);
+      },
+    );
 
     test('TEK bant → o bant', () {
       expect(modeOfCounts(<String, int>{'brisk': 3}), 'brisk');
@@ -117,21 +141,22 @@ void main() {
 
     test('AÇIK KAZANAN → en çok görülen', () {
       expect(
-          modeOfCounts(<String, int>{
-            'controlled': 2,
-            'brisk': 5,
-            'fast': 1,
-          }),
-          'brisk');
+        modeOfCounts(<String, int>{'controlled': 2, 'brisk': 5, 'fast': 1}),
+        'brisk',
+      );
     });
 
     test('EŞİTLİK → İLK EKLENEN kazanır (rastgele DEĞİL, deterministik)', () {
       final Map<String, int> tie = <String, int>{};
       tie['fast'] = 4;
       tie['controlled'] = 4;
-      expect(modeOfCounts(tie), 'fast',
-          reason: 'eşitlikte eklenme sırası korunmalı — her koşumda AYNI '
-              'sonucu vermeyen bir kapı, kararsız bir özet üretir');
+      expect(
+        modeOfCounts(tie),
+        'fast',
+        reason:
+            'eşitlikte eklenme sırası korunmalı — her koşumda AYNI '
+            'sonucu vermeyen bir kapı, kararsız bir özet üretir',
+      );
     });
   });
 
@@ -149,41 +174,62 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
-      final List<LiveJabRunning> runs = seen.whereType<LiveJabRunning>().toList();
+      final List<LiveJabRunning> runs = seen
+          .whereType<LiveJabRunning>()
+          .toList();
       expect(runs, isNotEmpty);
-      expect(runs.last.completedCount, greaterThan(0),
-          reason: 'sentetik jab hiç sayılmadı — zincir kopuk');
-      expect(runs.any((LiveJabRunning r) => r.phase != null), isTrue,
-          reason: 'faz geri bildirimi hiç gelmedi');
+      expect(
+        runs.last.completedCount,
+        greaterThan(0),
+        reason: 'sentetik jab hiç sayılmadı — zincir kopuk',
+      );
+      expect(
+        runs.any((LiveJabRunning r) => r.phase != null),
+        isTrue,
+        reason: 'faz geri bildirimi hiç gelmedi',
+      );
       await c.dispose();
     });
 
-    test('D18 — tamamlanan denemenin tempo bandı SAYILIYOR (J-096 sınıfı)',
-        () async {
-      // `_completed`in aynı sınıf kusuru: bileşen (`modeOfCounts`, ayrı
-      // test edildi) kusursuz olup CONTROLLER onu hiç BESLEMİYOR olabilir.
-      // Bu test yalnız TELİ kanıtlıyor — engine'in ürettiği tempoBand'ın
-      // gerçekten controller'ın sayacına ULAŞTIĞINI.
-      final _FakeCamera cam = _FakeCamera();
-      final LiveJabController c = build(cam, permission: () async => true);
+    test(
+      'D18 — tamamlanan denemenin tempo bandı SAYILIYOR (J-096 sınıfı)',
+      () async {
+        // `_completed`in aynı sınıf kusuru: bileşen (`modeOfCounts`, ayrı
+        // test edildi) kusursuz olup CONTROLLER onu hiç BESLEMİYOR olabilir.
+        // Bu test yalnız TELİ kanıtlıyor — engine'in ürettiği tempoBand'ın
+        // gerçekten controller'ın sayacına ULAŞTIĞINI.
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
 
-      expect(c.dominantTempoBand, isNull,
-          reason: 'seans başlamadan bant iddiası olmamalı');
+        expect(
+          c.dominantTempoBand,
+          isNull,
+          reason: 'seans başlamadan bant iddiası olmamalı',
+        );
 
-      expect(await c.start(), isNull);
-      expect(c.dominantTempoBand, isNull,
-          reason: 'YENİ seansta ÖNCEKİ testin kalıntısı sızmamalı — '
-              '_startFor sıfırlamalı');
-      for (final PoseFrame f in _jabSequence()) {
-        cam.emit(_envelope(f));
-      }
-      await Future<void>.delayed(Duration.zero);
+        expect(await c.start(), isNull);
+        expect(
+          c.dominantTempoBand,
+          isNull,
+          reason:
+              'YENİ seansta ÖNCEKİ testin kalıntısı sızmamalı — '
+              '_startFor sıfırlamalı',
+        );
+        for (final PoseFrame f in _jabSequence()) {
+          cam.emit(_envelope(f));
+        }
+        await Future<void>.delayed(Duration.zero);
 
-      expect(c.dominantTempoBand, isNotNull,
-          reason: 'motor tempoBand üretti ama controller sayamadı — '
-              'D18 teli kopuk');
-      await c.dispose();
-    });
+        expect(
+          c.dominantTempoBand,
+          isNotNull,
+          reason:
+              'motor tempoBand üretti ama controller sayamadı — '
+              'D18 teli kopuk',
+        );
+        await c.dispose();
+      },
+    );
 
     test('KİMSE YOK → noVerdict, ama seans KOŞMAYA DEVAM ediyor', () async {
       // Hüküm verilememesi bir HATA değil: canlı hâl, kendi kendine düzelir.
@@ -199,13 +245,23 @@ void main() {
 
       final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
       expect(r.surface, LiveState.noVerdict);
-      expect(r.noVerdictReason, isNotNull,
-          reason: 'sessiz kalmak "her şey yolunda" diye okunur');
-      expect(r.noVerdictReason, contains('step back'),
-          reason: 'J-103: KİMSE YOK dalında "geri çekil" DOĞRU tavsiye — '
-              'kullanıcı kadrajda değil ve eylem onun elinde');
-      expect(seen.whereType<LiveJabFailed>(), isEmpty,
-          reason: 'görünmemek bir kurulum hatası DEĞİL');
+      expect(
+        r.noVerdictReason,
+        isNotNull,
+        reason: 'sessiz kalmak "her şey yolunda" diye okunur',
+      );
+      expect(
+        r.noVerdictReason,
+        contains('step back'),
+        reason:
+            'J-103: KİMSE YOK dalında "geri çekil" DOĞRU tavsiye — '
+            'kullanıcı kadrajda değil ve eylem onun elinde',
+      );
+      expect(
+        seen.whereType<LiveJabFailed>(),
+        isEmpty,
+        reason: 'görünmemek bir kurulum hatası DEĞİL',
+      );
       await c.dispose();
     });
 
@@ -228,68 +284,89 @@ void main() {
 
       final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
       expect(r.surface, LiveState.noVerdict);
-      expect(r.noVerdictReason, isNot(contains('step back')),
-          reason: 'J-103 kusuru geri geldi: kadrajdaki kullanıcıya '
-              '"geri çekil" deniyor');
-      expect(_structuralPhrases.contains(r.noVerdictReason), isTrue,
-          reason: '`cue.structural`in bilinen 3 varyantından biri değil: '
-              '"${r.noVerdictReason}"');
-      expect(r.skeleton, isNull,
-          reason: 'güvenmediğimiz iskeleti çizmek, "okumam bozuk" '
-              'cümlesiyle çelişirdi — üstelik koordinatlar zaten yok');
-      expect(seen.whereType<LiveJabFailed>(), isEmpty,
-          reason: 'bozuk okuma bir kurulum hatası DEĞİL, canlı bir hâl');
+      expect(
+        r.noVerdictReason,
+        isNot(contains('step back')),
+        reason:
+            'J-103 kusuru geri geldi: kadrajdaki kullanıcıya '
+            '"geri çekil" deniyor',
+      );
+      expect(
+        _structuralPhrases.contains(r.noVerdictReason),
+        isTrue,
+        reason:
+            '`cue.structural`in bilinen 3 varyantından biri değil: '
+            '"${r.noVerdictReason}"',
+      );
+      expect(
+        r.skeleton,
+        isNull,
+        reason:
+            'güvenmediğimiz iskeleti çizmek, "okumam bozuk" '
+            'cümlesiyle çelişirdi — üstelik koordinatlar zaten yok',
+      );
+      expect(
+        seen.whereType<LiveJabFailed>(),
+        isEmpty,
+        reason: 'bozuk okuma bir kurulum hatası DEĞİL, canlı bir hâl',
+      );
       await c.dispose();
     });
 
-    test('SAYAÇ BİRİKİYOR — anlatıcının sayım girdisi gerçek (J-104)',
-        () async {
-      // ## Neden bu test var
-      //
-      // `_LiveState._completedJabs` bu sayacı okuyup
-      // `SessionNarrator.tick(eventCount:)`e geçiyor. O çağrı J-104'e kadar
-      // YOKTU: `eventCount` her zaman 0'a düşüyor ve `cue.milestone`
-      // hiçbir koşulda ateşlenemiyordu — oysa anahtar `jabLabCueMapping`de
-      // duruyordu, yani grep taraması ve ölü-replik kapısı ikisi de onu
-      // "canlı" sayıyordu (aile dersi #6).
-      //
-      // Burada sayacın GERÇEKTEN biriktiği ölçülüyor: sabit 0 olmadığı,
-      // yani anlatıcıya beslenen şeyin bir olgu olduğu.
-      //
-      // ## ⛔ NE ÖLÇÜLMEDİ — beyan ediyorum
-      //
-      // Kilometre taşı repliğinin (eşik 25) EKRANDA göründüğü. O yüzey
-      // testi yazıldı ve KOŞTURULAMADI: `session_rounds_test` süiti içinde
-      // 10 dakikalık zaman aşımına düşüyor, TEK BAŞINA 20 tekrarda 2
-      // saniyede bitiyor — yani maliyet süit etkileşiminde, hacimde değil.
-      // Sebebin ÜRÜNDE olmadığı ayrıca ölçüldü: motor profili DOĞRUSAL
-      // (100→800 kare toplam 23 ms, kare başına maliyet DÜŞÜYOR), yani
-      // uzun seansta biriken bir yavaşlama YOK. Kalan dikiş —
-      // `_completedJabs` → `tick(eventCount:)` — teftişle doğrulanıyor ve
-      // cihaz/simülatör turunda göz-doğrulaması bekliyor (J-104 açık borç).
-      final _FakeCamera cam = _FakeCamera();
-      final LiveJabController c = build(cam, permission: () async => true);
-      final List<LiveJabState> seen = <LiveJabState>[];
-      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
-      await c.start();
-      // Aynı diziyi 6 kez, zaman ekseninde ÖTELEYEREK. Öteleme şart:
-      // damgaları tekrar göndermek faz makinesini geriye sarardı ve
-      // tekrarlar ayrı jab sayılmazdı.
-      for (int rep = 0; rep < 6; rep++) {
-        for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
-          cam.emit(_envelope(f));
+    test(
+      'SAYAÇ BİRİKİYOR — anlatıcının sayım girdisi gerçek (J-104)',
+      () async {
+        // ## Neden bu test var
+        //
+        // `_LiveState._completedJabs` bu sayacı okuyup
+        // `SessionNarrator.tick(eventCount:)`e geçiyor. O çağrı J-104'e kadar
+        // YOKTU: `eventCount` her zaman 0'a düşüyor ve `cue.milestone`
+        // hiçbir koşulda ateşlenemiyordu — oysa anahtar `jabLabCueMapping`de
+        // duruyordu, yani grep taraması ve ölü-replik kapısı ikisi de onu
+        // "canlı" sayıyordu (aile dersi #6).
+        //
+        // Burada sayacın GERÇEKTEN biriktiği ölçülüyor: sabit 0 olmadığı,
+        // yani anlatıcıya beslenen şeyin bir olgu olduğu.
+        //
+        // ## ⛔ NE ÖLÇÜLMEDİ — beyan ediyorum
+        //
+        // Kilometre taşı repliğinin (eşik 25) EKRANDA göründüğü. O yüzey
+        // testi yazıldı ve KOŞTURULAMADI: `session_rounds_test` süiti içinde
+        // 10 dakikalık zaman aşımına düşüyor, TEK BAŞINA 20 tekrarda 2
+        // saniyede bitiyor — yani maliyet süit etkileşiminde, hacimde değil.
+        // Sebebin ÜRÜNDE olmadığı ayrıca ölçüldü: motor profili DOĞRUSAL
+        // (100→800 kare toplam 23 ms, kare başına maliyet DÜŞÜYOR), yani
+        // uzun seansta biriken bir yavaşlama YOK. Kalan dikiş —
+        // `_completedJabs` → `tick(eventCount:)` — teftişle doğrulanıyor ve
+        // cihaz/simülatör turunda göz-doğrulaması bekliyor (J-104 açık borç).
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        // Aynı diziyi 6 kez, zaman ekseninde ÖTELEYEREK. Öteleme şart:
+        // damgaları tekrar göndermek faz makinesini geriye sarardı ve
+        // tekrarlar ayrı jab sayılmazdı.
+        for (int rep = 0; rep < 6; rep++) {
+          for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
+            cam.emit(_envelope(f));
+          }
         }
-      }
-      await Future<void>.delayed(Duration.zero);
-      await sub.cancel();
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
 
-      final LiveJabRunning last = seen.whereType<LiveJabRunning>().last;
-      expect(last.completedCount, 6,
-          reason: 'altı sentetik jab gönderildi, sayaç ${last.completedCount} '
+        final LiveJabRunning last = seen.whereType<LiveJabRunning>().last;
+        expect(
+          last.completedCount,
+          6,
+          reason:
+              'altı sentetik jab gönderildi, sayaç ${last.completedCount} '
               '— sayaç birikmiyorsa anlatıcıya geçen şey de sabit kalır ve '
-              'kilometre taşı asla ateşlenemez');
-      await c.dispose();
-    });
+              'kilometre taşı asla ateşlenemez',
+        );
+        await c.dispose();
+      },
+    );
 
     test('İLK ÇÖZÜLEN KAREDE "seni görüyorum" — bir kez (J-120)', () async {
       // `cue.setup_ok` J-105'te muafiyet listesinde bırakılmıştı: *"gerçekten
@@ -313,14 +390,22 @@ void main() {
           .whereType<String>()
           .toList();
       expect(lines, isNotEmpty, reason: '"seni görüyorum" hiç söylenmedi');
-      expect(_readyPhrases.contains(lines.first), isTrue,
-          reason: '`cue.setup_ok`in bilinen 3 varyantından biri değil: '
-              '"${lines.first}"');
+      expect(
+        _readyPhrases.contains(lines.first),
+        isTrue,
+        reason:
+            '`cue.setup_ok`in bilinen 3 varyantından biri değil: '
+            '"${lines.first}"',
+      );
       // TEK KEZ: her karede tekrarlamak canlı koçu gürültüye çevirir ve
       // gürültü susmakla aynı sonucu verir — kullanıcı dinlemeyi bırakır.
-      expect(lines.where(_readyPhrases.contains).length, 1,
-          reason: '"seni görüyorum" ${lines.where(_readyPhrases.contains).length} '
-              'kez söylendi — her karede tekrarlanıyor');
+      expect(
+        lines.where(_readyPhrases.contains).length,
+        1,
+        reason:
+            '"seni görüyorum" ${lines.where(_readyPhrases.contains).length} '
+            'kez söylendi — her karede tekrarlanıyor',
+      );
       await c.dispose();
     });
 
@@ -338,8 +423,11 @@ void main() {
       await sub.cancel();
 
       for (final LiveJabRunning r in seen.whereType<LiveJabRunning>()) {
-        expect(_readyPhrases.contains(r.narration), isFalse,
-            reason: 'kimse görünmezken "seni görüyorum" denildi');
+        expect(
+          _readyPhrases.contains(r.narration),
+          isFalse,
+          reason: 'kimse görünmezken "seni görüyorum" denildi',
+        );
       }
       await c.dispose();
     });
@@ -350,38 +438,46 @@ void main() {
       // `session_narrator_test`in `engineDriven` MUAFİYET listesi onu
       // testten de saklıyordu. Artık motor-sürücülü ve burada ölçülüyor.
 
-      test('TEMİZ dizide düzeltme repliği ÇIKMIYOR — övülecek bir şey yok',
-          () async {
-        // NEGATİF İKİZ ÖNCE: kaybolan bir işaret yoksa cümle de yok.
-        // Bu olmadan pozitif test, her denemede konuşan bir koçla da geçerdi.
-        final _FakeCamera cam = _FakeCamera();
-        final LiveJabController c = build(cam, permission: () async => true);
-        final List<LiveJabState> seen = <LiveJabState>[];
-        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
-        await c.start();
-        for (int rep = 0; rep < 3; rep++) {
-          for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
-            cam.emit(_envelope(f));
+      test(
+        'TEMİZ dizide düzeltme repliği ÇIKMIYOR — övülecek bir şey yok',
+        () async {
+          // NEGATİF İKİZ ÖNCE: kaybolan bir işaret yoksa cümle de yok.
+          // Bu olmadan pozitif test, her denemede konuşan bir koçla da geçerdi.
+          final _FakeCamera cam = _FakeCamera();
+          final LiveJabController c = build(cam, permission: () async => true);
+          final List<LiveJabState> seen = <LiveJabState>[];
+          final StreamSubscription<LiveJabState> sub = c.states.listen(
+            seen.add,
+          );
+          await c.start();
+          for (int rep = 0; rep < 3; rep++) {
+            for (final PoseFrame f in _jabSequence(repOffsetUs: rep * 800000)) {
+              cam.emit(_envelope(f));
+            }
           }
-        }
-        await Future<void>.delayed(Duration.zero);
-        await sub.cancel();
+          await Future<void>.delayed(Duration.zero);
+          await sub.cancel();
 
-        // ⚠️ "HİÇ anlatı yok" DİYE ölçmüyor — o fazla geniş bir iddia
-        // olurdu ve nitekim öyleydi: J-120'de `cue.setup_ok` aynı yuvaya
-        // bağlanınca bu test kırıldı, oysa ölçtüğü şey bozulmamıştı.
-        // Ölçülen şey DÜZELTME repliğinin çıkmaması; anlatı yuvasının başka
-        // doğru şeyler söylemesi bu testi ilgilendirmez.
-        final Iterable<String> corrected = seen
-            .whereType<LiveJabRunning>()
-            .map((LiveJabRunning r) => r.narration)
-            .whereType<String>()
-            .where(_correctedPhrases.contains);
-        expect(corrected, isEmpty,
-            reason: 'hiçbir işaret kaybolmadan "düzeltildi" denildi: '
-                '${corrected.toList()}');
-        await c.dispose();
-      });
+          // ⚠️ "HİÇ anlatı yok" DİYE ölçmüyor — o fazla geniş bir iddia
+          // olurdu ve nitekim öyleydi: J-120'de `cue.setup_ok` aynı yuvaya
+          // bağlanınca bu test kırıldı, oysa ölçtüğü şey bozulmamıştı.
+          // Ölçülen şey DÜZELTME repliğinin çıkmaması; anlatı yuvasının başka
+          // doğru şeyler söylemesi bu testi ilgilendirmez.
+          final Iterable<String> corrected = seen
+              .whereType<LiveJabRunning>()
+              .map((LiveJabRunning r) => r.narration)
+              .whereType<String>()
+              .where(_correctedPhrases.contains);
+          expect(
+            corrected,
+            isEmpty,
+            reason:
+                'hiçbir işaret kaybolmadan "düzeltildi" denildi: '
+                '${corrected.toList()}',
+          );
+          await c.dispose();
+        },
+      );
 
       test('replik ÖLÇÜM DİLİ — tezahürat DEĞİL', () async {
         // Koordinatör hükmü (2026-08-07): "That correction is gone." evet,
@@ -390,14 +486,18 @@ void main() {
         // iddia — kalibrasyonsuz "daha iyi" diyemeyiz.
         final CueBook book = await const ContentRepository().loadCues();
         final RegExp cheer = RegExp(
-            r"\b(nice|great|awesome|well done|good job|perfect|"
-            r"better|best|improv)",
-            caseSensitive: false);
+          r"\b(nice|great|awesome|well done|good job|perfect|"
+          r"better|best|improv)",
+          caseSensitive: false,
+        );
         for (int i = 0; i < 8; i++) {
           final String? line = book.sayKey('cue.corrected');
           expect(line, isNotNull);
-          expect(cheer.hasMatch(line!), isFalse,
-              reason: 'tezahürat/karşılaştırma dili: "$line"');
+          expect(
+            cheer.hasMatch(line!),
+            isFalse,
+            reason: 'tezahürat/karşılaştırma dili: "$line"',
+          );
         }
       });
 
@@ -406,14 +506,19 @@ void main() {
         // bir şey düzeltmedi, koşullar değişti. Onu övmek yapmadığı bir işi
         // ona mal etmek olurdu.
         expect(
-            jabLabVisibilityIssueCodes
-                .every(jabLabIssueCueMapping.containsKey),
-            isTrue,
-            reason: 'görünürlük kodları eşlemeden düşmüş — hariç tutma '
-                'kuralı sessizce boşa döner');
-        expect(jabLabVisibilityIssueCodes, isNotEmpty,
-            reason: 'küme boşalırsa kontrolcüdeki hariç tutma HİÇBİR ŞEYİ '
-                'dışarıda bırakmaz ve kural vakum-doğru olur (ders #4)');
+          jabLabVisibilityIssueCodes.every(jabLabIssueCueMapping.containsKey),
+          isTrue,
+          reason:
+              'görünürlük kodları eşlemeden düşmüş — hariç tutma '
+              'kuralı sessizce boşa döner',
+        );
+        expect(
+          jabLabVisibilityIssueCodes,
+          isNotEmpty,
+          reason:
+              'küme boşalırsa kontrolcüdeki hariç tutma HİÇBİR ŞEYİ '
+              'dışarıda bırakmaz ve kural vakum-doğru olur (ders #4)',
+        );
       });
     });
 
@@ -443,20 +548,27 @@ void main() {
         final List<LiveJabState> seen = <LiveJabState>[];
         final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
         await c.start();
-        for (final PoseFrame f
-            in SyntheticNoise.jitter(_jabSequence(), seed: 7)) {
+        for (final PoseFrame f in SyntheticNoise.jitter(
+          _jabSequence(),
+          seed: 7,
+        )) {
           cam.emit(_envelope(f));
         }
         await Future<void>.delayed(Duration.zero);
         await sub.cancel();
 
-        final List<LiveJabRunning> runs =
-            seen.whereType<LiveJabRunning>().toList();
+        final List<LiveJabRunning> runs = seen
+            .whereType<LiveJabRunning>()
+            .toList();
         expect(runs, isNotEmpty);
-        expect(runs.last.completedCount, greaterThan(0),
-            reason: 'titreme altında jab hiç sayılmadı — zincir yalnız '
-                'kusursuz girdiyle çalışıyor demektir ve gerçek kamera '
-                'kusursuz değildir');
+        expect(
+          runs.last.completedCount,
+          greaterThan(0),
+          reason:
+              'titreme altında jab hiç sayılmadı — zincir yalnız '
+              'kusursuz girdiyle çalışıyor demektir ve gerçek kamera '
+              'kusursuz değildir',
+        );
         await c.dispose();
       });
 
@@ -476,12 +588,17 @@ void main() {
         await Future<void>.delayed(Duration.zero);
         await sub.cancel();
 
-        final List<LiveJabRunning> runs =
-            seen.whereType<LiveJabRunning>().toList();
+        final List<LiveJabRunning> runs = seen
+            .whereType<LiveJabRunning>()
+            .toList();
         expect(runs, isNotEmpty);
-        expect(runs.last.completedCount, greaterThan(0),
-            reason: 'kare düşünce jab sayılmıyor — motor kare SAYISINA '
-                'bağımlı demektir, oysa faz süreleri ZAMANA bağlı olmalı');
+        expect(
+          runs.last.completedCount,
+          greaterThan(0),
+          reason:
+              'kare düşünce jab sayılmıyor — motor kare SAYISINA '
+              'bağımlı demektir, oysa faz süreleri ZAMANA bağlı olmalı',
+        );
         await c.dispose();
       });
 
@@ -496,7 +613,9 @@ void main() {
         final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
         await c.start();
         for (final PoseFrame f in SyntheticNoise.decimate(
-            SyntheticNoise.jitter(_jabSequence(), seed: 11), 2)) {
+          SyntheticNoise.jitter(_jabSequence(), seed: 11),
+          2,
+        )) {
           cam.emit(_envelope(f));
         }
         await Future<void>.delayed(Duration.zero);
@@ -506,13 +625,20 @@ void main() {
         for (final LiveJabRunning r in seen.whereType<LiveJabRunning>()) {
           for (final String? s in <String?>[r.cue, r.noVerdictReason]) {
             if (s == null) continue;
-            expect(codeLike.hasMatch(s), isFalse,
-                reason: 'gürültülü yolda teşhis dizesi sızdı: "$s"');
+            expect(
+              codeLike.hasMatch(s),
+              isFalse,
+              reason: 'gürültülü yolda teşhis dizesi sızdı: "$s"',
+            );
           }
         }
-        expect(seen.whereType<LiveJabFailed>(), isEmpty,
-            reason: 'gürültü seansı ÖLDÜRDÜ — titreme bir kurulum hatası '
-                'değil, canlı bir hâl');
+        expect(
+          seen.whereType<LiveJabFailed>(),
+          isEmpty,
+          reason:
+              'gürültü seansı ÖLDÜRDÜ — titreme bir kurulum hatası '
+              'değil, canlı bir hâl',
+        );
         await c.dispose();
       });
     });
@@ -543,7 +669,39 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
       expect(seen.last, isA<LiveJabFailed>());
-      await c.dispose();
+      await expectLater(
+        c.dispose(),
+        throwsA(
+          isA<CameraException>().having(
+            (error) => error.failure,
+            'failure',
+            CameraFailure.closeUncertain,
+          ),
+        ),
+      );
+      expect(cam.activeListeners, 0);
+      expect(cam.stopCalls, 1);
+      final nextCamera = _FakeCamera();
+      final next = build(nextCamera, permission: () async => true);
+      try {
+        expect(
+          await next.start(),
+          isA<LiveCameraUnavailable>().having(
+            (failure) => failure.failure,
+            'failure',
+            CameraFailure.closeUncertain,
+          ),
+        );
+        expect(
+          nextCamera.startCalls,
+          0,
+          reason: 'closing a failed stream cannot reopen sticky admission',
+        );
+      } finally {
+        await next.dispose();
+        await nextCamera.close();
+        await cam.close();
+      }
     });
 
     test('HAM KOD yüzeye SIZMIYOR — hiçbir hâlde', () async {
@@ -562,8 +720,11 @@ void main() {
       for (final LiveJabRunning r in seen.whereType<LiveJabRunning>()) {
         for (final String? s in <String?>[r.cue, r.noVerdictReason]) {
           if (s == null) continue;
-          expect(codeLike.hasMatch(s), isFalse,
-              reason: 'teşhis dizesi kullanıcıya gösterildi: "$s"');
+          expect(
+            codeLike.hasMatch(s),
+            isFalse,
+            reason: 'teşhis dizesi kullanıcıya gösterildi: "$s"',
+          );
         }
       }
       await c.dispose();
@@ -581,12 +742,18 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
-      final List<LiveJabRunning> runs = seen.whereType<LiveJabRunning>().toList();
+      final List<LiveJabRunning> runs = seen
+          .whereType<LiveJabRunning>()
+          .toList();
       expect(runs, isNotEmpty);
       for (final LiveJabRunning r in runs) {
-        expect(r.skeleton, isNotNull,
-            reason: 'çözülmüş bir kare varken iskelet YOK olamaz — '
-                '`skeleton_overlay.dart` çizecek bir şey bulamaz');
+        expect(
+          r.skeleton,
+          isNotNull,
+          reason:
+              'çözülmüş bir kare varken iskelet YOK olamaz — '
+              '`skeleton_overlay.dart` çizecek bir şey bulamaz',
+        );
         // Lm.count == 33 (MediaPipe Pose Landmarker topolojisi) — motorun
         // içindeki bir sabiti burada TEKRAR yazmak yerine ham uzunluk
         // doğrudan kontrol ediliyor, bu paketin kendi kontratı zaten
@@ -596,22 +763,24 @@ void main() {
       await c.dispose();
     });
 
-    test('KİMSE YOK iken İSKELET de YOK — çizecek koordinat icat edilmez',
-        () async {
-      final _FakeCamera cam = _FakeCamera();
-      final LiveJabController c = build(cam, permission: () async => true);
-      final List<LiveJabState> seen = <LiveJabState>[];
-      final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
-      await c.start();
-      cam.emit(_envelope(null));
-      await Future<void>.delayed(Duration.zero);
-      await sub.cancel();
+    test(
+      'KİMSE YOK iken İSKELET de YOK — çizecek koordinat icat edilmez',
+      () async {
+        final _FakeCamera cam = _FakeCamera();
+        final LiveJabController c = build(cam, permission: () async => true);
+        final List<LiveJabState> seen = <LiveJabState>[];
+        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
+        await c.start();
+        cam.emit(_envelope(null));
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
 
-      final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
-      expect(r.surface, LiveState.noVerdict);
-      expect(r.skeleton, isNull);
-      await c.dispose();
-    });
+        final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+        expect(r.surface, LiveState.noVerdict);
+        expect(r.skeleton, isNull);
+        await c.dispose();
+      },
+    );
 
     group('BASTIRMA yolu — suppressionReason ÇEVRİLİYOR (J-099)', () {
       // Bu grup `_jabSequence()`in hiç dokunmadığı dalı hedefler: motorun
@@ -621,59 +790,85 @@ void main() {
       // dalı hiç ÇALIŞTIRMADIĞI için kusuru YAKALAYAMAZDI — burada gerçek
       // motor, gerçek eşiklerle, bu dalı BİLEREK tetikliyoruz.
 
-      test('gövde landmarkı DÜŞÜK GÜVEN → torsoUnreliable, AYRI cümle',
-          () async {
-        final _FakeCamera cam = _FakeCamera();
-        final LiveJabController c = build(cam, permission: () async => true);
-        final List<LiveJabState> seen = <LiveJabState>[];
-        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
-        await c.start();
-        // ConfidenceGate.torsoThreshold=0.6 — gövde bunun ALTINA düşünce
-        // her şeyden ÖNCE (kol/bacak güveninden bile önce) kontrol ediliyor.
-        for (final PoseFrame f in SyntheticNoise.occlude(
-            _steadyFrames(), <int>[Lm.leftShoulder], visibility: 0.3)) {
-          cam.emit(_envelope(f));
-        }
-        await Future<void>.delayed(Duration.zero);
-        await sub.cancel();
+      test(
+        'gövde landmarkı DÜŞÜK GÜVEN → torsoUnreliable, AYRI cümle',
+        () async {
+          final _FakeCamera cam = _FakeCamera();
+          final LiveJabController c = build(cam, permission: () async => true);
+          final List<LiveJabState> seen = <LiveJabState>[];
+          final StreamSubscription<LiveJabState> sub = c.states.listen(
+            seen.add,
+          );
+          await c.start();
+          // ConfidenceGate.torsoThreshold=0.6 — gövde bunun ALTINA düşünce
+          // her şeyden ÖNCE (kol/bacak güveninden bile önce) kontrol ediliyor.
+          for (final PoseFrame f in SyntheticNoise.occlude(
+            _steadyFrames(),
+            <int>[Lm.leftShoulder],
+            visibility: 0.3,
+          )) {
+            cam.emit(_envelope(f));
+          }
+          await Future<void>.delayed(Duration.zero);
+          await sub.cancel();
 
-        final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
-        expect(r.surface, LiveState.noVerdict);
-        expect(r.noVerdictReason, isNot(contains('torsoUnreliable')),
-            reason: 'ham motor kodu sızdı');
-        expect(r.noVerdictReason, isNot(contains(':')),
-            reason: 'ham teşhis dizesi biçimi ("kategori:detay") sızdı');
-        expect(r.noVerdictReason,
+          final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+          expect(r.surface, LiveState.noVerdict);
+          expect(
+            r.noVerdictReason,
+            isNot(contains('torsoUnreliable')),
+            reason: 'ham motor kodu sızdı',
+          );
+          expect(
+            r.noVerdictReason,
+            isNot(contains(':')),
+            reason: 'ham teşhis dizesi biçimi ("kategori:detay") sızdı',
+          );
+          expect(
+            r.noVerdictReason,
             "I can't get a steady read on your torso — square up so your "
-            'shoulders and hips are both visible.');
-        await c.dispose();
-      });
+            'shoulders and hips are both visible.',
+          );
+          await c.dispose();
+        },
+      );
 
-      test('bilek DÜŞÜK GÜVEN (gövde temiz) → cue.low_confidence GERÇEK metni',
-          () async {
-        final _FakeCamera cam = _FakeCamera();
-        final LiveJabController c = build(cam, permission: () async => true);
-        final List<LiveJabState> seen = <LiveJabState>[];
-        final StreamSubscription<LiveJabState> sub = c.states.listen(seen.add);
-        await c.start();
-        // Gövde (torso) tam güvende kalıyor — yalnız bilek düşük, böylece
-        // ConfidenceGate `lowTrackingConfidence`e düşüyor, `torsoUnreliable`e
-        // değil (sıra: gövde → kadraj-dışı → düşük-güven, evaluate() içinde).
-        for (final PoseFrame f in SyntheticNoise.occlude(
-            _steadyFrames(), <int>[Lm.leftWrist], visibility: 0.2)) {
-          cam.emit(_envelope(f));
-        }
-        await Future<void>.delayed(Duration.zero);
-        await sub.cancel();
+      test(
+        'bilek DÜŞÜK GÜVEN (gövde temiz) → cue.low_confidence GERÇEK metni',
+        () async {
+          final _FakeCamera cam = _FakeCamera();
+          final LiveJabController c = build(cam, permission: () async => true);
+          final List<LiveJabState> seen = <LiveJabState>[];
+          final StreamSubscription<LiveJabState> sub = c.states.listen(
+            seen.add,
+          );
+          await c.start();
+          // Gövde (torso) tam güvende kalıyor — yalnız bilek düşük, böylece
+          // ConfidenceGate `lowTrackingConfidence`e düşüyor, `torsoUnreliable`e
+          // değil (sıra: gövde → kadraj-dışı → düşük-güven, evaluate() içinde).
+          for (final PoseFrame f in SyntheticNoise.occlude(
+            _steadyFrames(),
+            <int>[Lm.leftWrist],
+            visibility: 0.2,
+          )) {
+            cam.emit(_envelope(f));
+          }
+          await Future<void>.delayed(Duration.zero);
+          await sub.cancel();
 
-        final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
-        expect(r.surface, LiveState.noVerdict);
-        expect(_lowConfidencePhrases.contains(r.noVerdictReason), isTrue,
-            reason: '`cue.low_confidence`in bilinen 4 varyantından biri '
+          final LiveJabRunning r = seen.whereType<LiveJabRunning>().last;
+          expect(r.surface, LiveState.noVerdict);
+          expect(
+            _lowConfidencePhrases.contains(r.noVerdictReason),
+            isTrue,
+            reason:
+                '`cue.low_confidence`in bilinen 4 varyantından biri '
                 'değil — ham teşhis dizesi sızmış olabilir: '
-                '"${r.noVerdictReason}"');
-        await c.dispose();
-      });
+                '"${r.noVerdictReason}"',
+          );
+          await c.dispose();
+        },
+      );
 
       // ⚠️ `StrikingEngine`in `structural:` BASTIRMASI (bu dosyadaki
       // `_suppressionSentence` dalı) canlı-hat üzerinden GERÇEK bir sentetik
@@ -774,8 +969,9 @@ List<PoseFrame> _steadyFrames({
   const int stepUs = 33333; // ~30 fps
   return <PoseFrame>[
     for (int i = 0; i < count; i++)
-      SyntheticPoseBuilder(body: body).build(SyntheticPose.neutral,
-          tUs: i * stepUs, visibility: visibility),
+      SyntheticPoseBuilder(
+        body: body,
+      ).build(SyntheticPose.neutral, tUs: i * stepUs, visibility: visibility),
   ];
 }
 
@@ -786,28 +982,34 @@ List<PoseFrame> _steadyFrames({
 /// tekrarı — ve hiçbir widget testi görmüyordu çünkü hepsi metnin VARLIĞINI
 /// sınıyordu, ANLAMINI değil.
 void _countSlotTests() {
-  testWidgets('analiz başlamamışken SAYI GÖSTERİLMİYOR',
-      (WidgetTester t) async {
-    await t.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: LiveCoachSurface(
-          state: LiveState.noVerdict,
-          eventCount: null,
-          noVerdictReason: 'camera off',
+  testWidgets('analiz başlamamışken SAYI GÖSTERİLMİYOR', (
+    WidgetTester t,
+  ) async {
+    await t.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: LiveCoachSurface(
+            state: LiveState.noVerdict,
+            eventCount: null,
+            noVerdictReason: 'camera off',
+          ),
         ),
       ),
-    ));
+    );
     expect(find.byKey(const Key('event-count')), findsNothing);
   });
 
-  testWidgets('POZİTİF İKİZ: koşan seansta SAYI gösteriliyor (0 dahil)',
-      (WidgetTester t) async {
+  testWidgets('POZİTİF İKİZ: koşan seansta SAYI gösteriliyor (0 dahil)', (
+    WidgetTester t,
+  ) async {
     // Koşan bir seansta 0 DOĞRUDUR: ölçüyoruz ve henüz yumruk yok.
-    await t.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: LiveCoachSurface(state: LiveState.clean, eventCount: 0),
+    await t.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: LiveCoachSurface(state: LiveState.clean, eventCount: 0),
+        ),
       ),
-    ));
+    );
     expect(find.byKey(const Key('event-count')), findsOneWidget);
     expect(find.text('0'), findsOneWidget);
   });
@@ -851,53 +1053,16 @@ List<PoseFrame> _jabSequence({int repOffsetUs = 0}) {
 }
 
 CameraFrameEnvelope _envelope(PoseFrame? frame) => CameraFrameEnvelope(
-      tUs: frame?.tUs ?? 0,
-      size: const FrameSize(480, 640),
-      modelVersion: 'test',
-      clockDomain: ClockDomain.monotonic,
-      inferenceUs: 1000,
-      dropped: 0,
-      passes: <BodyOrientation, PoseFrame?>{BodyOrientation.upright: frame},
-    );
+  tUs: frame?.tUs ?? 0,
+  size: const FrameSize(480, 640),
+  modelVersion: 'test',
+  clockDomain: ClockDomain.monotonic,
+  inferenceUs: 1000,
+  dropped: 0,
+  passes: <BodyOrientation, PoseFrame?>{BodyOrientation.upright: frame},
+);
 
-/// Sahte kamera — gerçek `MotionCameraController` kanal açar, test açamaz.
-class _FakeCamera implements MotionCameraController {
-  _FakeCamera({this.startError});
-
-  final Object? startError;
-  final StreamController<CameraFrameEnvelope> _c =
-      StreamController<CameraFrameEnvelope>.broadcast();
-  int startCalls = 0;
-
-  void emit(CameraFrameEnvelope e) => _c.add(e);
-  void emitError(Object e) => _c.addError(e);
-
-  @override
-  Future<CameraSessionInfo> start({
-    required String modelPath,
-    required String modelId,
-    CameraLens lens = CameraLens.front,
-    PassPlan initialPlan = PassPlan.uprightOnly,
-  }) async {
-    startCalls++;
-    if (startError != null) throw startError!;
-    return const CameraSessionInfo(
-      width: 480,
-      height: 640,
-      clockDomain: ClockDomain.monotonic,
-      libraryTag: 'fake',
-    );
-  }
-
-  @override
-  Stream<CameraFrameEnvelope> frames() => _c.stream;
-
-  @override
-  Future<void> stop() async {}
-
-  @override
-  Future<void> setPassPlan(PassPlan plan) async {}
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+/// Mock native wire plus actual production controller/lease; no real device.
+class _FakeCamera extends OwnedTestCamera {
+  _FakeCamera({super.startError}) : super(libraryTag: 'live-path-fixture');
 }

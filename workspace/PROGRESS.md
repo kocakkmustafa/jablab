@@ -1,5 +1,61 @@
 # JabLab — İlerleme Kaydı
 
+## 2026-10-02 — Yayın haftası source lifetime onarımı ve taze testler
+
+Thread `01a0f939-da4a-7721-9135-0846ac1306a9`, READY source lease.
+Başlangıç main `bc10c21e57c85a468c380a79d9fed288554100ca`; WIP commit edilmedi.
+Canlı post-merge CI run 36864448316 SUCCESS, gerçek adımlar 10/16/10;
+aynı tarihsel run yeni test sayılmadı. RW-SDK-006 mevcut f2ea161c tam Core
+pinle app ve engine offline bootstrap exit 0; descriptor/lock/config hash
+receipt verildi ve lease hemen iade edildi. Flutter 3.47.5 / Dart 3.13.4.
+
+Bu hattın taze tam uygulama koşusu **542 geçti**, exit 0 (33 saniye).
+Motor **127 geçti + 12 isimli NO_CALL**, exit 0. Kasıtlı eksik external
+reference dizini negatif subset 4 missing-file ret/exit 1; özgün JSON
+ve bağımsız kişi/model kabulü üretilmedi. Python secure FD-read 9/9,
+course generator --check ve current FD/Dart byte validator 39/292/292/0 geçti.
+Analiz ilk koşuda dört lint yakaladı; düzeltildi ve temiz geçti; son test
+teardown yardımcı değişimi sonrası final analiz receipt ayrıca yenileniyor.
+
+Gerçek davranışsal RED→onarım: gecikmiş permission/model/dispose start,
+duplicate start, stream-decode sonrası native kaynak bırakma, eski
+controller dispose'un yeni owner'ı durdurması, alreadyRunning ret sonrası
+owner olmayan stop, native pending-start sırasında inactive, hesap değişimi
+ve notifier değişimi, push→ilk build identity yarışı, debug harness üç
+pending-stage retirement, gerçek Navigator.push covered QA oyuncusu.
+Native-submitted durum açık izlenir; OS permission dialog inactive iken
+foreground gate bekler. Son owner/lifecycle **8/8**, launch **3/3**, media
+**19/19**; hepsi tam 542'lik süitte yer aldı. Pin sözleşmesi dört doğrudan
+Motion descriptor ve beş lock paketi ile ayrı motor lock'unu denetler.
+
+Widget cleanup'ta root-zone tamamlanmış stream future'larıyla FakeAsync
+completer kuyruğu ayrıştırıldı. Tek kuyruğu bekleyen iki tanı koşusu bounded
+olarak durduruldu, logları başarısız/TERMINATED; başarı sayılmadı. Son helper
+iki kuyruğu en çok 12 turda boşaltır ve bütün owned stream kapanışlarının
+bitmesini assert eder; native stop/route absence/append beklentileri korunur.
+
+Android autofocus required=false kaynakta; final merged feature/badging açık.
+Aktif STORE-LISTING-TASLAK ve VENTURE gerçek 39 metin ders / öz beyan / kamera
+ve satış kapalı sınırıyla uzlaştırıldı. Tarihsel audit ve 26 Eylül listing
+fişleri korunur. Gerçek accepted media/model/teacher/physical/store 0;
+kalibrasyon/skor/satış ve empty production media catalog kapıları korunur.
+
+Shared açık: Core account delete hedef UUID/token owner/receipt, A cleanup
+sırasında B session'ı koruma, erased journal append lease'i; Core native
+pending alreadyRunning reply gelmeden unscoped stop'un diğer owner'ı
+etkilemesi ayrı P2. Post-rejection regression bu son aralığı kapattı diye
+sayılmaz. Yeni frozen Core adoption/API packet bekleniyor, f2ea pin değişmedi.
+RW-MEDIA-COMPAT-001 izole altı dosyalık current-v2k intake successor hazırlanıyor;
+base importer/v2h/v2k/v2l zincirleri byte eşit, canonical handoff merkez peer
+bekler. Future course cutover ayrı kimlik seçimi gerektirir.
+
+Native build/boot/signature, canlı Auth/mail/delete, provider/store ve son
+Flow/kurucu fiziksel kapıları açık; uygulanabilir kartlar ve rollback
+sınırları `MANUAL-ACCEPTANCE-CARDS.md` içinde. Vault/holding/shared registry
+tek yazarı merkez; milestone delta gönderiliyor. Frozen 19 tekrar yok,
+Motion automation PAUSED ve BF beklemede.
+Kanıt kökü: `scratch/2026-10-01-release-week-dispatch/lanes/jablab/`.
+
 ## 2026-10-01 — Taşınabilir CI ve harici referans NO_CALL
 
 PR #1'in üç Actions işinden Android imzasız ve iOS no-codesign derlemeleri

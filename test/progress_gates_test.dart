@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/progress_gates.dart';
 import 'package:jablab/app/session_store.dart';
 
@@ -22,16 +23,22 @@ import 'app_pump.dart';
 /// değerlendirici de o testi geçerdi (M-F-236 sınıfı: koşulsuz davranan bir
 /// yüzey diğer bütün testleri geçer). Bu yüzden mekanizmanın kanıt VARKEN
 /// gerçek sayı döndürdüğü ayrıca sınanıyor.
+// Each test owns a storage namespace; replacements inside it share this registry.
+late OwnerResourceRegistry _owners;
+
 void main() {
-  final Map<String, dynamic> curriculum =
-      (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
-              as Map)
-          .cast<String, dynamic>();
+  setUp(() => _owners = OwnerResourceRegistry());
+  final Map<String, dynamic> curriculum = (jsonDecode(
+    File('assets/content/curriculum.json').readAsStringSync(),
+  ) as Map).cast<String, dynamic>();
 
   group('POZİTİF İKİZ — kanıt VARSA mekanizma gerçek sayı üretiyor', () {
     test('gereken karşılanınca GEÇTİ', () {
       final GateVerdict? v = evaluateEventGate(
-          curriculum, 'boxing.foundations.jab', _Fake(<String, int?>{'jab': 35}));
+        curriculum,
+        'boxing.foundations.jab',
+        _Fake(<String, int?>{'jab': 35}),
+      );
       expect(v, isA<GatePassed>());
       expect((v! as GatePassed).measured, 35);
       expect((v as GatePassed).required, 30);
@@ -39,7 +46,10 @@ void main() {
 
     test('gereken karşılanmayınca İLERLEME — ve sayı GERÇEK', () {
       final GateVerdict? v = evaluateEventGate(
-          curriculum, 'boxing.foundations.jab', _Fake(<String, int?>{'jab': 12}));
+        curriculum,
+        'boxing.foundations.jab',
+        _Fake(<String, int?>{'jab': 12}),
+      );
       expect(v, isA<GateProgress>());
       expect((v! as GateProgress).measured, 12);
     });
@@ -48,7 +58,10 @@ void main() {
       // İki hâl birbirinin yerine geçemez (doc-75/5): "ölçtük, hiç yoktu"
       // ile "ölçmedik" ayrı cümleler.
       final GateVerdict? v = evaluateEventGate(
-          curriculum, 'boxing.foundations.jab', _Fake(<String, int?>{'jab': 0}));
+        curriculum,
+        'boxing.foundations.jab',
+        _Fake(<String, int?>{'jab': 0}),
+      );
       expect(v, isA<GateProgress>());
       expect(v, isNot(isA<GateNotEvaluable>()));
       expect((v! as GateProgress).measured, 0);
@@ -59,12 +72,18 @@ void main() {
       // geçmez. Tek kanıtla üç farklı sonuç — eşiğin gerçekten okunduğunu
       // gösterir, sabit bir cevabın değil.
       final _Fake e = _Fake(<String, int?>{'jab': 35});
-      expect(evaluateEventGate(curriculum, 'boxing.foundations.jab', e),
-          isA<GatePassed>());
-      expect(evaluateEventGate(curriculum, 'boxing.foundations.guard', e),
-          isA<GateProgress>());
-      expect(evaluateEventGate(curriculum, 'boxing.foundations.range', e),
-          isA<GateProgress>());
+      expect(
+        evaluateEventGate(curriculum, 'boxing.foundations.jab', e),
+        isA<GatePassed>(),
+      );
+      expect(
+        evaluateEventGate(curriculum, 'boxing.foundations.guard', e),
+        isA<GateProgress>(),
+      );
+      expect(
+        evaluateEventGate(curriculum, 'boxing.foundations.range', e),
+        isA<GateProgress>(),
+      );
     });
 
     test('GateProgress, geçmiş bir sayıyla KURULAMAZ (tip düzeyi)', () {
@@ -83,11 +102,18 @@ void main() {
     for (final String id in gateLessons) {
       test('$id — kanıt saklanmıyor, SAYI ÜRETİLMİYOR', () {
         final GateVerdict? v = evaluateEventGate(
-            curriculum, id, const RecordedGateEvidence(<SessionRecord>[]));
-        expect(v, isA<GateNotEvaluable>(),
-            reason: 'İYİ HABER olabilir: kanıt kalıcı katmana geldiyse bu '
-                'kapı artık gerçek sayı üretiyor demektir — J-208 beyanını, '
-                'ADR ve devir notunu güncelle.');
+          curriculum,
+          id,
+          const RecordedGateEvidence(<SessionRecord>[]),
+        );
+        expect(
+          v,
+          isA<GateNotEvaluable>(),
+          reason:
+              'İYİ HABER olabilir: kanıt kalıcı katmana geldiyse bu '
+              'kapı artık gerçek sayı üretiyor demektir — J-208 beyanını, '
+              'ADR ve devir notunu güncelle.',
+        );
         // Sebep ADIYLA taşınıyor: sessiz bir "değerlendirilemez" bir sonraki
         // turu "neden?" diye kaynağa göndermek zorunda bırakırdı.
         expect((v! as GateNotEvaluable).reason, contains('J-208'));
@@ -109,16 +135,17 @@ void main() {
     outOfScope.forEach((String id, String why) {
       test('$id → null ($why)', () {
         expect(
-            evaluateEventGate(
-                curriculum, id, _Fake(<String, int?>{'jab': 999})),
-            isNull);
+          evaluateEventGate(curriculum, id, _Fake(<String, int?>{'jab': 999})),
+          isNull,
+        );
       });
     });
 
     test('tanımsız ders → null, patlamıyor', () {
       expect(
-          evaluateEventGate(curriculum, 'yok.boyle.bir.ders', _Fake(const {})),
-          isNull);
+        evaluateEventGate(curriculum, 'yok.boyle.bir.ders', _Fake(const {})),
+        isNull,
+      );
     });
   });
 
@@ -128,12 +155,13 @@ void main() {
     // (JAB-P1-001, 2026-08-19: boxing.footwork.step_then_punch eklendi —
     // 4→5, range/guard ile AYNI gerekçe: kalibre edilmemiş eşik, kapı
     // KATILIM sayıyor.)
-    final Map<String, dynamic> pr =
-        (curriculum['progression'] as Map).cast<String, dynamic>();
+    final Map<String, dynamic> pr = (curriculum['progression'] as Map)
+        .cast<String, dynamic>();
     final List<String> eventGates = <String>[
       for (final MapEntry<String, dynamic> e in pr.entries)
         for (final Object? g
-            in ((e.value as Map)['gates'] as List<dynamic>? ?? const <dynamic>[]))
+            in ((e.value as Map)['gates'] as List<dynamic>? ??
+                const <dynamic>[]))
           if (g is Map &&
               g['event'] is String &&
               g['minCompletedAttempts'] is int)
@@ -163,12 +191,19 @@ void main() {
             RegExp(r'\b(locked|lockedReason|unlock)\b').hasMatch(line))
           line.trim(),
     ];
-    expect(offenders, isEmpty,
-        reason: 'değerlendirici kilit davranışına dokunuyor — bu turda '
-            'YASAK (koordinatör sınırı, J-208)');
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'değerlendirici kilit davranışına dokunuyor — bu turda '
+          'YASAK (koordinatör sınırı, J-208)',
+    );
     // POZİTİF KONTROL: aynı tarama, gerçekten orada olan bir kavramı bulmalı.
-    expect(src.contains('GateNotEvaluable'), isTrue,
-        reason: 'kaynak okunamadı — yukarıdaki boş sonuç anlamsız olurdu');
+    expect(
+      src.contains('GateNotEvaluable'),
+      isTrue,
+      reason: 'kaynak okunamadı — yukarıdaki boş sonuç anlamsız olurdu',
+    );
   });
 }
 
@@ -180,8 +215,9 @@ void main() {
 /// `_record()` onlar için erken dönüyor. Yani bu yüzeye giden gerçek yol
 /// TEK, ve dar bir yol test edilmeden "çizilir" sayılamaz (M-F-503).
 void _reachabilityGate() {
-  testWidgets('KAPI BEYANI GERÇEKTEN ÇİZİLİYOR — first_round yolundan',
-      (WidgetTester t) async {
+  testWidgets('KAPI BEYANI GERÇEKTEN ÇİZİLİYOR — first_round yolundan', (
+    WidgetTester t,
+  ) async {
     final _FakeStore store = _FakeStore(<SessionRecord>[
       SessionRecord(
         lessonId: 'boxing.foundations.first_round',
@@ -194,9 +230,15 @@ void _reachabilityGate() {
       ),
     ]);
     await t.runAsync(() async {
-      await t.pumpWidget(JabLabApp(
-          repository: ContentRepository(storeOverride: store),
-          onboarding: const OnboardingStore(seenOverride: true)));
+      await t.pumpWidget(
+        JabLabApp(
+          repository: ContentRepository(
+            storeOverride: store,
+            ownerRegistry: _owners,
+          ),
+          onboarding: const OnboardingStore(seenOverride: true),
+        ),
+      );
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
@@ -206,29 +248,42 @@ void _reachabilityGate() {
     // Follow the user's scroll path through the lazily built list.
     await t.scrollUntilVisible(note, 250);
     await t.pumpAndSettle();
-    expect(note, findsOneWidget,
-        reason: 'kapı beyanı çizilmiyor — değerlendirici ÖLÜ MEKANİZMA '
-            'olur (tüketicisi olmayan bir üretici yazmamak için kurulan '
-            'bu turun kendi kusuru)');
+    expect(
+      note,
+      findsOneWidget,
+      reason:
+          'kapı beyanı çizilmiyor — değerlendirici ÖLÜ MEKANİZMA '
+          'olur (tüketicisi olmayan bir üretici yazmamak için kurulan '
+          'bu turun kendi kusuru)',
+    );
 
     final String text = t.widget<Text>(note).data!;
     // Sayı TÜREVİ: dört olay-sayımı kapısı var, cümle onu taşımalı.
-    expect(text, contains('4 lessons'),
-        reason: 'beyandaki sayı türetilmiyor ya da kapı kümesi değişti');
+    expect(
+      text,
+      contains('4 lessons'),
+      reason: 'beyandaki sayı türetilmiyor ya da kapı kümesi değişti',
+    );
     // ⛔ SAYAÇ İDDİASI YOK: "0/30" sınıfı bir sayı sızarsa bu öter.
-    expect(RegExp(r'\d+\s*/\s*\d+').hasMatch(text), isFalse,
-        reason: 'ölçmediğimiz bir sayacı raporluyoruz (doc-75/2)');
+    expect(
+      RegExp(r'\d+\s*/\s*\d+').hasMatch(text),
+      isFalse,
+      reason: 'ölçmediğimiz bir sayacı raporluyoruz (doc-75/2)',
+    );
     // Vaat dili yok (M-F-186) — bu yüzey de kapsamda.
     expect(
-        RegExp(r'\b(yet|soon|for now|currently not|will be able)\b',
-                caseSensitive: false)
-            .hasMatch(text),
-        isFalse,
-        reason: 'kapı beyanı vaat dili taşıyor');
+      RegExp(
+        r'\b(yet|soon|for now|currently not|will be able)\b',
+        caseSensitive: false,
+      ).hasMatch(text),
+      isFalse,
+      reason: 'kapı beyanı vaat dili taşıyor',
+    );
   });
 
-  testWidgets('TEMİZ HÂL SESSİZ — kapısı olmayan kursta beyan ÇİZİLMEZ',
-      (WidgetTester t) async {
+  testWidgets('TEMİZ HÂL SESSİZ — kapısı olmayan kursta beyan ÇİZİLMEZ', (
+    WidgetTester t,
+  ) async {
     // doc-75/6: koşulsuz uyaran bir yüzey diğer bütün testleri geçer.
     // Conditioning kursunun kapıları `sessionMinutes` sınıfı → kapsam dışı →
     // beyan hiç çizilmemeli.
@@ -244,15 +299,25 @@ void _reachabilityGate() {
       ),
     ]);
     await t.runAsync(() async {
-      await t.pumpWidget(JabLabApp(
-          repository: ContentRepository(storeOverride: store),
-          onboarding: const OnboardingStore(seenOverride: true)));
+      await t.pumpWidget(
+        JabLabApp(
+          repository: ContentRepository(
+            storeOverride: store,
+            ownerRegistry: _owners,
+          ),
+          onboarding: const OnboardingStore(seenOverride: true),
+        ),
+      );
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
-    expect(find.byKey(const Key('gate-note')), findsNothing,
-        reason: 'olay-sayımı kapısı OLMAYAN kursta kapı beyanı çiziliyor — '
-            'koşulsuz uyaran yüzey');
+    expect(
+      find.byKey(const Key('gate-note')),
+      findsNothing,
+      reason:
+          'olay-sayımı kapısı OLMAYAN kursta kapı beyanı çiziliyor — '
+          'koşulsuz uyaran yüzey',
+    );
   });
 }
 

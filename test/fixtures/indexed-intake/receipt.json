@@ -1,0 +1,21 @@
+{
+  "repo": "/Users/mustafakaankocak/Developer/YULAlab-AI/ventures/jablab/app",
+  "head": "bc10c21e57c85a468c380a79d9fed288554100ca",
+  "locks": [
+    {
+      "path": "pubspec.lock",
+      "fixture": "pubspec.lock",
+      "sha256": "f41965d789899fe91fa61306d12b6bf8c46a92b414fc45f184ce2ae8734af077"
+    },
+    {
+      "path": "packages/jablab_engine/pubspec.lock",
+      "fixture": "packages__jablab_engine__pubspec.lock",
+      "sha256": "087eeea80042bc0563b41a8810d99d757e51894b0424f5d4bc922ea1c7e767bd"
+    }
+  ],
+  "model": {
+    "path": "assets/models/pose_landmarker_full.v1.task",
+    "ignored": true,
+    "tracked": false
+  }
+}

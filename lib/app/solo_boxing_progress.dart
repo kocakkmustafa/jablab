@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'account_bridge.dart';
 import 'course_progress_io.dart';
+import 'owner_resource_lifetime.dart';
 import 'solo_boxing_course.dart';
 
 enum SoloLessonState { viewed, practised, selfReportedComplete }
@@ -86,16 +87,23 @@ final class SoloCourseProgress {
 /// Local, account-scoped self-report journal. It never imports session counts
 /// or promotes a camera observation into course completion.
 final class SoloCourseProgressStore {
-  SoloCourseProgressStore(this.file) : _lease = CourseProgressIoLease(file);
+  SoloCourseProgressStore(this.file, {OwnerResourceLifetime? ownerLifetime})
+    : _lease = CourseProgressIoLease(file, ownerLifetime: ownerLifetime);
 
   final File file;
   final CourseProgressIoLease _lease;
 
-  Future<SoloCourseProgress> load() async {
+  Future<SoloCourseProgress> load() => _lease.read(_loadUnlocked);
+
+  Future<SoloCourseProgress> _loadUnlocked() async {
     _lease.checkCurrent();
-    if (!await file.exists()) return const SoloCourseProgress({});
-    final Map<String, dynamic> root =
-        (jsonDecode(await file.readAsString()) as Map).cast<String, dynamic>();
+    final bool exists = await file.exists();
+    _lease.checkCurrent();
+    if (!exists) return const SoloCourseProgress({});
+    final String raw = await file.readAsString();
+    _lease.checkCurrent();
+    final Map<String, dynamic> root = (jsonDecode(raw) as Map)
+        .cast<String, dynamic>();
     if (root['schemaVersion'] != 1 ||
         root['courseId'] != 'jablab.solo_boxing') {
       throw const FormatException('Unsupported solo course progress file');
@@ -186,6 +194,7 @@ final class SoloCourseProgressStore {
         Map<String, SoloLessonProgress>.from(current.records);
     records[lesson.id] = next;
     await file.parent.create(recursive: true);
+    _lease.checkCurrent();
     final File temp = File('${file.path}.tmp');
     await temp.writeAsString(
       jsonEncode(<String, Object>{
@@ -199,7 +208,9 @@ final class SoloCourseProgressStore {
       }),
       flush: true,
     );
+    _lease.checkCurrent();
     await temp.rename(file.path);
+    _lease.checkCurrent();
     return SoloCourseProgress(
       Map<String, SoloLessonProgress>.unmodifiable(records),
     );
@@ -208,5 +219,13 @@ final class SoloCourseProgressStore {
 
 SoloCourseProgressStore soloProgressStoreFor(
   Directory support,
-  String? accountUserId,
-) => SoloCourseProgressStore(courseFileFor(support, accountUserId));
+  String? accountUserId, {
+  OwnerResourceRegistry? ownerRegistry,
+}) {
+  final OwnerResourceLifetime lifetime =
+      (ownerRegistry ?? defaultOwnerResourceRegistry).capture(accountUserId);
+  return SoloCourseProgressStore(
+    courseFileFor(support, lifetime.accountUserId),
+    ownerLifetime: lifetime,
+  );
+}

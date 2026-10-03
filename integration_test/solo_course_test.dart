@@ -7,6 +7,7 @@ import 'package:jablab/app/account_bridge.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
@@ -40,12 +41,17 @@ void main() {
       }
     }
 
-    Future<void> waitFor(bool Function() ready) async {
+    Future<void> waitFor(bool Function() ready, {String stage = 'file/UI'}) async {
       for (var i = 0; i < 80 && !ready(); i++) {
         await Future<void>.delayed(const Duration(milliseconds: 50));
         await tester.pump(const Duration(milliseconds: 50));
       }
-      expect(ready(), isTrue, reason: 'Native file/UI action did not complete');
+      expect(ready(), isTrue, reason: 'Native $stage action did not complete');
+    }
+
+    bool ownerAdmitted(String id) {
+      try { return repository.ownerLifetimes.capture(id).isActive; }
+      on OwnerResourceRetiredException { return false; }
     }
 
     Finder pageScroll() {
@@ -80,6 +86,7 @@ void main() {
 
     await tester.pumpWidget(app());
     await tester.pumpAndSettle();
+    await waitFor(() => ownerAdmitted(alice), stage: 'Alice host admission');
     await tap(const Key('open-solo-boxing-course'));
     await waitFor(() => find.textContaining('0 / 39').evaluate().isNotEmpty);
     expect(find.textContaining('0 / 39'), findsOneWidget);
@@ -124,11 +131,17 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pumpWidget(app());
     await tester.pumpAndSettle();
+    await waitFor(() => ownerAdmitted(alice), stage: 'Alice host admission');
     await tap(const Key('open-solo-boxing-course'));
     await waitFor(() => find.textContaining('1 / 39').evaluate().isNotEmpty);
     expect(find.textContaining('1 / 39'), findsOneWidget);
     owner.value = bob;
     await tester.pumpAndSettle();
+    await waitFor(() => ownerAdmitted(bob), stage: 'Bob host admission');
+    // Host account boundaries remove retained Alice course routes. Reopen
+    // through the current owner rather than waiting on that retired page.
+    await waitFor(() => find.byKey(const Key('open-solo-boxing-course')).evaluate().isNotEmpty, stage: 'retired Alice route removal');
+    await tap(const Key('open-solo-boxing-course'));
     await waitFor(() => find.textContaining('0 / 39').evaluate().isNotEmpty);
     expect(find.textContaining('0 / 39'), findsOneWidget);
     await clearLocalHistoryFor(alice, supportDirectory: directory);

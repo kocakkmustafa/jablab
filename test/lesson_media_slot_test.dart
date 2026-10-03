@@ -835,6 +835,85 @@ void main() {
     expect(second.calls.last, 'dispose');
   });
 
+  testWidgets('pushing a route retires its covered player while it stays mounted', (
+    tester,
+  ) async {
+    // Actual Navigator.push retains the covered route. Replacing the whole
+    // widget tree would test dispose instead of route ownership. These are QA
+    // ports and synthetic media bytes, not native video acceptance.
+    final fixture = _Fixture();
+    final first = _FakePort();
+    final second = _FakePort();
+    final navigator = GlobalKey<NavigatorState>();
+    final firstSlot = GlobalKey();
+    final secondSlot = GlobalKey();
+    var firstRetiredBeforeSecondInitialize = false;
+    second.onInitialize = () {
+      firstRetiredBeforeSecondInitialize =
+          first.calls.isNotEmpty && first.calls.last == 'dispose';
+    };
+    addTearDown(() async {
+      // Run retirement even if the covered-route assertion fails, so the
+      // process-wide native slot cannot leak into the following test.
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pumpAndSettle();
+      first.time.dispose();
+      second.time.dispose();
+    });
+
+    Widget route(GlobalKey slot, _FakePort port) => Scaffold(
+      body: LessonMediaSlot(
+        key: slot,
+        catalog: fixture.catalog(),
+        bundle: fixture.bundle,
+        course: fixture.course,
+        lesson: fixture.lesson,
+        sceneId: fixture.pin.sceneId,
+        variantStem: fixture.pin.variantStem,
+        locale: 'tr',
+        portFactory: (_) => port,
+      ),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(navigatorKey: navigator, home: route(firstSlot, first)),
+    );
+    await tester.pumpAndSettle();
+    final firstState = firstSlot.currentState!;
+    await tester.tap(find.byKey(const Key('solo-media-play-pause')));
+    await tester.pumpAndSettle();
+    expect(first.calls, ['initialize-muted', 'play']);
+
+    unawaited(
+      navigator.currentState!.push<void>(
+        MaterialPageRoute<void>(
+          maintainState: true,
+          builder: (_) => route(secondSlot, second),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(firstSlot.currentState, same(firstState));
+    expect(firstState.mounted, isTrue,
+        reason: 'the old player must retire without disposing its route');
+    expect(find.byKey(firstSlot), findsNothing);
+    expect(find.byKey(firstSlot, skipOffstage: false), findsOneWidget);
+
+    final secondPlay = find.descendant(
+      of: find.byKey(secondSlot),
+      matching: find.byKey(const Key('solo-media-play-pause')),
+    );
+    expect(secondPlay, findsOneWidget);
+    await tester.tap(secondPlay);
+    await tester.pumpAndSettle();
+
+    expect(first.calls, ['initialize-muted', 'play', 'pause', 'dispose']);
+    expect(second.calls, ['initialize-muted', 'play']);
+    expect(firstRetiredBeforeSecondInitialize, isTrue,
+        reason: 'the covered route must release the slot before another init');
+    expect(firstState.mounted, isTrue);
+  });
+
   testWidgets('hung native play cannot hold retirement forever', (
     tester,
   ) async {

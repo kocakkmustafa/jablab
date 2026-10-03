@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'owner_resource_lifetime.dart';
+
 final class _CourseFileQueue {
   Future<void> tail = Future<void>.value();
   int generation = 0;
@@ -13,32 +15,59 @@ final class _CourseFileQueue {
 
 final Map<String, _CourseFileQueue> _courseFiles = <String, _CourseFileQueue>{};
 
-_CourseFileQueue _queueFor(File file) =>
-    _courseFiles.putIfAbsent(file.absolute.path, _CourseFileQueue.new);
+_CourseFileQueue _queueFor(File file) => _courseFiles.putIfAbsent(
+  Uri.file(file.absolute.path).normalizePath().toFilePath(),
+  _CourseFileQueue.new,
+);
 
 /// Serializes app-local course writes. Account deletion invalidates leases
 /// before waiting for active writes, so an old page cannot resurrect its file.
 final class CourseProgressIoLease {
-  factory CourseProgressIoLease(File file) {
+  factory CourseProgressIoLease(
+    File file, {
+    OwnerResourceLifetime? ownerLifetime,
+  }) {
     final _CourseFileQueue queue = _queueFor(file);
-    return CourseProgressIoLease._(queue, queue.generation);
+    final OwnerResourceLifetime lifetime =
+        ownerLifetime ?? defaultOwnerResourceRegistry.capture(null);
+    lifetime.checkActive();
+    return CourseProgressIoLease._(queue, queue.generation, lifetime);
   }
 
-  const CourseProgressIoLease._(this._queue, this._generation);
+  const CourseProgressIoLease._(
+    this._queue,
+    this._generation,
+    this._ownerLifetime,
+  );
 
   final _CourseFileQueue _queue;
   final int _generation;
+  final OwnerResourceLifetime _ownerLifetime;
 
   void checkCurrent() {
+    _ownerLifetime.checkActive();
     if (_generation != _queue.generation) {
       throw StateError('Course progress store was invalidated by deletion');
     }
   }
 
-  Future<T> mutate<T>(Future<T> Function() operation) => _queue.enqueue(() {
-    checkCurrent();
-    return operation();
-  });
+  Future<T> read<T>(Future<T> Function() operation) =>
+      _ownerLifetime.runCourseIo(() async {
+        checkCurrent();
+        final T value = await operation();
+        checkCurrent();
+        return value;
+      });
+
+  Future<T> mutate<T>(Future<T> Function() operation) =>
+      _ownerLifetime.runCourseIo(
+        () => _queue.enqueue(() async {
+          checkCurrent();
+          final T value = await operation();
+          checkCurrent();
+          return value;
+        }),
+      );
 }
 
 Future<void> deleteCourseProgressFile(File file) {

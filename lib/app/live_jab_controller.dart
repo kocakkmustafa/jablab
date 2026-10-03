@@ -7,6 +7,7 @@ import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart';
 
 import '../shell_candidate/live_surface.dart' show LiveState;
+import 'camera_capture_coordinator.dart';
 import 'live_honesty.dart';
 import 'live_session_failure.dart';
 import 'session_narrator.dart';
@@ -16,7 +17,7 @@ import 'session_narrator.dart';
 /// ## Zincir
 ///
 /// ```
-/// MotionCameraController.frames()   → CameraFrameEnvelope
+/// CameraCaptureLease.frames()       → CameraFrameEnvelope
 ///   → EnvelopeDriver.load()          (çekirdek dikişi, push→pull)
 ///   → OrientationAwarePoseSource.next()
 ///   → StrikingEngine.process()       → EngineOutput
@@ -52,11 +53,11 @@ final class LiveJabController {
     Future<bool> Function()? permissionPermanentlyDenied,
     OrientationAwarePoseSource Function(PoseSourceDriver)? sourceFactory,
     StrikingEngine Function(FrameSize)? engineFactory,
-  })  : _camera = camera ?? MotionCameraController(),
-        _requestPermission = requestPermission,
-        _permissionPermanentlyDenied = permissionPermanentlyDenied,
-        _sourceFactory = sourceFactory ?? OrientationAwarePoseSource.new,
-        _engineFactory = engineFactory;
+  }) : _camera = camera ?? MotionCameraController(),
+       _requestPermission = requestPermission,
+       _permissionPermanentlyDenied = permissionPermanentlyDenied,
+       _sourceFactory = sourceFactory ?? OrientationAwarePoseSource.new,
+       _engineFactory = engineFactory;
 
   final RuleSet ruleSet;
 
@@ -87,6 +88,13 @@ final class LiveJabController {
   StrikingEngine? _engine;
   StreamSubscription<CameraFrameEnvelope>? _sub;
   bool _running = false;
+  bool _starting = false;
+  bool _disposed = false;
+  int _generation = 0;
+  Future<void>? _disposal;
+  bool _nativeSubmitted = false;
+  CameraCaptureLease? _capture;
+  Future<void>? _retirement;
   int _completed = 0;
 
   /// D18: motor her tamamlanmış denemede bir tempo bandı üretiyordu
@@ -118,83 +126,118 @@ final class LiveJabController {
 
   Stream<LiveJabState> get states => _states.stream;
 
+  /// True once native startup is submitted, including an outstanding reply.
+  bool get hasNativeSession => _nativeSubmitted;
+
   /// Seansı başlatır. Başarısızlıkta **fırlatmaz** — tipli hâl DÖNER.
   ///
   /// Fırlatmak çağıranı `catch` içinde sınıflandırmaya zorlardı ve
   /// sınıflandırmanın tek yerde olması bu tasarımın bütün amacı
   /// (`ContentFailure.from` ile aynı gerekçe).
-  Future<LiveSessionFailure?> start() async {
-    // C-195/J-195 — CİHAZDA TEK KAMERA VAR, ama her ders KENDİ controller'ını
-    // kuruyor. `State.dispose` SENKRON olduğu için önceki dersin `stop()`u
-    // beklenemez (`unawaited`) ve o bir PLATFORM-KANALI gidiş-dönüşü.
-    // Kullanıcı dersten çıkıp hemen bir ders daha açarsa, bu `start` sistem
-    // kamerayı HÂLÂ kapatırken koşar ve eklenti `already-running` der →
-    // İKİNCİ ders, BİRİNCİ dersin sebep olduğu bir arızayla karşılanır.
-    //
-    // N=1'de YAPISAL OLARAK görünmez: henüz durdurulmuş bir şey yok. Bu
-    // yüzden bir seans süiti bunu kaçırır — hepsi "ekran çalışıyor mu" diye
-    // sorar ve cevap İLK SEFERİNDE evettir.
-    //
-    // Bekleme N=1'de SIFIR: `_closing` null ise hiçbir gecikme eklenmez.
-    // Nadir bir kusur, her açılıştaki gecikmeyle TAKAS EDİLMİYOR.
-    // ⚠️ KİLİT BİR OPTİMİZASYON, GARANTİ DEĞİL — ve SONSUZA BEKLEYEMEZ.
-    // Ölçüldü (J-195): `stop()`un future'ı hiç tamamlanmazsa (platform
-    // takılırsa) kilitsiz hâlde `already-running` alırdık; kilitli hâlde
-    // ise açılış SONSUZA KADAR bekler. İkincisi DAHA KÖTÜ: biri tipli bir
-    // hâl gösterir, diğeri ekranı sessizce dondurur. Bu yüzden bekleme
-    // SINIRLI; süre dolarsa yine de deneriz ve eklenti kendi tipli
-    // reddiyle döner — ürün onu zaten dürüstçe gösteriyor.
-    final Future<void>? closing = _closing;
-    if (closing != null) {
-      try {
-        await closing.timeout(const Duration(seconds: 2));
-      } on Object catch (_) {
-        _closing = null;
-      }
-    }
-
-    if (_running) {
+  Future<LiveSessionFailure?> start({
+    Future<void> Function()? beforeCameraStart,
+  }) async {
+    if (_disposed) return _interrupted;
+    if (_starting || _running) {
       return const LiveCameraUnavailable(
-          failure: CameraFailure.alreadyRunning,
-          nativeDetail: 'controller already started');
+        failure: CameraFailure.alreadyRunning,
+        nativeDetail: 'controller already started',
+      );
+    }
+    _starting = true;
+    final int generation = ++_generation;
+    final capture = _camera.createCaptureLease();
+    _capture = capture;
+    bool current() => !_disposed && generation == _generation;
+    LiveSessionFailure? failure;
+    try {
+      failure = await _prepareCapture(capture, current, beforeCameraStart);
+    } on CameraException catch (e) {
+      failure = current()
+          ? LiveCameraUnavailable(failure: e.failure, nativeDetail: e.detail)
+          : _interrupted;
+    } on Object catch (e) {
+      failure = current() ? LiveSetupFailed(e) : _interrupted;
     }
     try {
-      // İZİN ÖNCE, kamera SONRA. Ters sırada plugin kendi isimli reddiyle
-      // dönerdi ve kullanıcıya "kamera açılamadı" derdik — oysa sorun izin
-      // ve çözümü kullanıcının elinde.
-      final Future<bool> Function()? ask = _requestPermission;
-      if (ask != null && !await ask()) {
-        final bool permanent =
-            await (_permissionPermanentlyDenied?.call() ?? Future<bool>.value(false));
-        return LivePermissionDenied(permanentlyDenied: permanent);
+      if (failure != null) {
+        try {
+          if (identical(_capture, capture)) {
+            await stop();
+          } else {
+            await CameraCaptureCoordinator.close(capture);
+          }
+        } on Object catch (e) {
+          final closeFailure = CameraCaptureCoordinator.recordUncertainty(e);
+          failure = LiveCameraUnavailable(
+            failure: closeFailure.failure,
+            nativeDetail: closeFailure.detail,
+          );
+        }
       }
-
-      final CameraSessionInfo info = await _camera.start(
-        modelPath: await modelPath(),
-        modelId: modelId,
-        lens: CameraLens.front,
-        // Jab DİK bir teknik: ters-geçiş planlamak her kare için ikinci bir
-        // çıkarım koşturur (ADR-001 sonucu #2, 2× maliyet) ve boksta ters
-        // gövde beklenen bir hâl değil. Gravita'nın el-standı hattı bunun
-        // tersini ister — plan TEKNİĞE aittir, app'e değil.
-        initialPlan: PassPlan.uprightOnly,
-      );
-      _startFor(info);
-      return null;
-    } on CameraException catch (e) {
-      return LiveCameraUnavailable(failure: e.failure, nativeDetail: e.detail);
-    } on Object catch (e) {
-      // Tanımadığımız hata isimli bir plugin reddi gibi SUNULMAZ.
-      return LiveSetupFailed(e);
+      return failure;
+    } finally {
+      _starting = false;
     }
   }
 
-  void _startFor(CameraSessionInfo info) {
+  Future<LiveSessionFailure?> _prepareCapture(
+    CameraCaptureLease capture,
+    bool Function() current,
+    Future<void> Function()? beforeCameraStart,
+  ) async {
+    await CameraCaptureCoordinator.waitForClosure();
+    if (!current() || capture.isRetired) return _interrupted;
+    // İZİN ÖNCE, kamera SONRA. Ters sırada plugin kendi isimli reddiyle
+    // dönerdi ve kullanıcıya "kamera açılamadı" derdik — oysa sorun izin
+    // ve çözümü kullanıcının elinde.
+    final Future<bool> Function()? ask = _requestPermission;
+    final bool granted = ask == null || await ask();
+    if (!current()) return _interrupted;
+    if (!granted) {
+      final bool permanent =
+          await (_permissionPermanentlyDenied?.call() ??
+              Future<bool>.value(false));
+      if (!current()) return _interrupted;
+      return LivePermissionDenied(permanentlyDenied: permanent);
+    }
+
+    final String path = await modelPath();
+    if (!current()) return _interrupted;
+    // An OS permission dialog may temporarily make the app inactive.
+    // The screen supplies a foreground gate; stop invalidates this work.
+    await beforeCameraStart?.call();
+    if (!current()) return _interrupted;
+    _nativeSubmitted = true;
+    final CameraSessionInfo info = await capture.start(
+      modelPath: path,
+      modelId: modelId,
+      lens: CameraLens.front,
+      // Jab DİK bir teknik: ters-geçiş planlamak her kare için ikinci bir
+      // çıkarım koşturur (ADR-001 sonucu #2, 2× maliyet) ve boksta ters
+      // gövde beklenen bir hâl değil. Gravita'nın el-standı hattı bunun
+      // tersini ister — plan TEKNİĞE aittir, app'e değil.
+      initialPlan: PassPlan.uprightOnly,
+    );
+    if (!current()) return _interrupted;
+    _startFor(info, capture);
+    return null;
+  }
+
+  static const LiveCameraUnavailable _interrupted = LiveCameraUnavailable(
+    failure: CameraFailure.sessionInterrupted,
+    nativeDetail: 'session retired during camera setup',
+  );
+
+  void _startFor(CameraSessionInfo info, CameraCaptureLease capture) {
     _running = true;
     _completed = 0;
     _tempoBandCounts.clear();
+    _engine = null;
+    _lastAttemptIssueCode = null;
+    _announcedReady = false;
     _source = _sourceFactory(_driver);
-    _sub = _camera.frames().listen(_onEnvelope, onError: _onStreamError);
+    _sub = capture.frames().listen(_onEnvelope, onError: _onStreamError);
     _states.add(const LiveJabState.starting());
   }
 
@@ -209,8 +252,10 @@ final class LiveJabController {
     final StrikingEngine engine = _engine ??= _buildEngine(envelope.size);
 
     _driver.load(envelope);
-    final OrientationResolution resolution =
-        source.next(envelope.tUs, const OrientationExpectation.exactly(BodyOrientation.upright));
+    final OrientationResolution resolution = source.next(
+      envelope.tUs,
+      const OrientationExpectation.exactly(BodyOrientation.upright),
+    );
 
     if (!resolution.usable) {
       // ⚠️ `!usable` TEK bir hâl DEĞİL, İKİ ayrı hâl (J-103). Ayrım verisi
@@ -223,26 +268,28 @@ final class LiveJabController {
       // kullanıcı zaten kadrajda, "geri çekil" onu düzeltmez — üstelik
       // uzaklaşmak okumayı kötüleştirir. J-099 ailesinin dördüncü örneği:
       // veri elimizde ama dal ayrılmamış.
-      _states.add(LiveJabState.live(
-        surface: LiveState.noVerdict,
-        completedCount: _completed,
-        noVerdictReason: resolution.structural == null
-            // KİMSE YOK: eylem kullanıcının elinde ve gerçekten kadraja
-            // girmek. İskelet YOK — çizilecek hiçbir koordinat yok, boş bir
-            // figür çizmek görmediğimiz bir şeyi görüyormuş gibi yapardı.
-            ? _nobodyFoundReason
-            // KİŞİ VAR, OKUMA BOZUK: kusur BİZDE. Kullanıcıya yapması
-            // gereken bir şey söylenmiyor çünkü yok — susmak yerine
-            // sorumluluğu üstlenen cümle (`cue.structural`). İskelet burada
-            // da YOK ama başka sebeple: `resolution.frame` bu dalda null,
-            // yani güvenmediğimiz koordinatlara zaten erişimimiz yok.
-            : cues.sayKey('cue.structural') ?? _genericNoVerdict,
-        // KİMSE YOK → eylem SENDE (kadraja gir). OKUMA BOZUK → eylem BİZDE.
-        // J-103 bu ikisini metinde ayırmıştı; kova ayrımı GÖRSELE taşıyor.
-        bucket: resolution.structural == null
-            ? LiveHonestyBucket.yours
-            : LiveHonestyBucket.ours,
-      ));
+      _states.add(
+        LiveJabState.live(
+          surface: LiveState.noVerdict,
+          completedCount: _completed,
+          noVerdictReason: resolution.structural == null
+              // KİMSE YOK: eylem kullanıcının elinde ve gerçekten kadraja
+              // girmek. İskelet YOK — çizilecek hiçbir koordinat yok, boş bir
+              // figür çizmek görmediğimiz bir şeyi görüyormuş gibi yapardı.
+              ? _nobodyFoundReason
+              // KİŞİ VAR, OKUMA BOZUK: kusur BİZDE. Kullanıcıya yapması
+              // gereken bir şey söylenmiyor çünkü yok — susmak yerine
+              // sorumluluğu üstlenen cümle (`cue.structural`). İskelet burada
+              // da YOK ama başka sebeple: `resolution.frame` bu dalda null,
+              // yani güvenmediğimiz koordinatlara zaten erişimimiz yok.
+              : cues.sayKey('cue.structural') ?? _genericNoVerdict,
+          // KİMSE YOK → eylem SENDE (kadraja gir). OKUMA BOZUK → eylem BİZDE.
+          // J-103 bu ikisini metinde ayırmıştı; kova ayrımı GÖRSELE taşıyor.
+          bucket: resolution.structural == null
+              ? LiveHonestyBucket.yours
+              : LiveHonestyBucket.ours,
+        ),
+      );
       return;
     }
 
@@ -295,21 +342,23 @@ final class LiveJabController {
     }
 
     if (!out.judgeable) {
-      _states.add(LiveJabState.live(
-        surface: LiveState.noVerdict,
-        completedCount: _completed,
-        noVerdictReason: _suppressionSentence(out.suppressionReason),
-        // Bastırma sebepleri KULLANICININ düzeltebileceği şeyler
-        // (kadraj-dışı, düşük güven, gövde okunamıyor) — `structural:`
-        // dalı hariç, ama o dal canlı hatta erişilemez (üstteki kapı
-        // önce davranıyor ve zaten `ours` diyor).
-        bucket: LiveHonestyBucket.yours,
-        // Hüküm susarken bile ANLATI konuşabilir (ayrı yuva): deneme
-        // kapandı ve önceki işaret gitti — bunu söylememek için bir sebep
-        // yok, hükmün verilememesi ayrı bir olgu.
-        narration: readyLine ?? correctedLine,
-        skeleton: skeleton,
-      ));
+      _states.add(
+        LiveJabState.live(
+          surface: LiveState.noVerdict,
+          completedCount: _completed,
+          noVerdictReason: _suppressionSentence(out.suppressionReason),
+          // Bastırma sebepleri KULLANICININ düzeltebileceği şeyler
+          // (kadraj-dışı, düşük güven, gövde okunamıyor) — `structural:`
+          // dalı hariç, ama o dal canlı hatta erişilemez (üstteki kapı
+          // önce davranıyor ve zaten `ours` diyor).
+          bucket: LiveHonestyBucket.yours,
+          // Hüküm susarken bile ANLATI konuşabilir (ayrı yuva): deneme
+          // kapandı ve önceki işaret gitti — bunu söylememek için bir sebep
+          // yok, hükmün verilememesi ayrı bir olgu.
+          narration: readyLine ?? correctedLine,
+          skeleton: skeleton,
+        ),
+      );
       return;
     }
 
@@ -321,39 +370,53 @@ final class LiveJabController {
     // biz göremiyoruz. Düzeltme yuvasına koymak, olmayan bir hatayı
     // düzelttirmek olurdu.
     if (issue != null && jabLabVisibilityIssueCodes.contains(issue.code)) {
-      _states.add(LiveJabState.live(
-        surface: LiveState.noVerdict,
-        completedCount: _completed,
-        noVerdictReason: _phrase(issue.code) ?? _genericNoVerdict,
-        // GÖRÜNÜRLÜK kodu: "seni göremiyorum" — eylem sende.
-        bucket: LiveHonestyBucket.yours,
-        narration: readyLine ?? correctedLine,
-        phase: out.activePhase,
-        skeleton: skeleton,
-      ));
+      _states.add(
+        LiveJabState.live(
+          surface: LiveState.noVerdict,
+          completedCount: _completed,
+          noVerdictReason: _phrase(issue.code) ?? _genericNoVerdict,
+          // GÖRÜNÜRLÜK kodu: "seni göremiyorum" — eylem sende.
+          bucket: LiveHonestyBucket.yours,
+          narration: readyLine ?? correctedLine,
+          phase: out.activePhase,
+          skeleton: skeleton,
+        ),
+      );
       return;
     }
 
-    _states.add(LiveJabState.live(
-      surface: issue == null ? LiveState.clean : LiveState.correcting,
-      completedCount: _completed,
-      // HAM KOD ASLA: `REAR_HAND_LOW` bir teşhis dizesidir. İçerik eksikse
-      // kod gösterilmez, genel ama DÜRÜST bir cümle gösterilir.
-      cue: issue == null ? null : (_phrase(issue.code) ?? _genericIssue),
-      narration: readyLine ?? correctedLine,
-      phase: out.activePhase,
-      skeleton: skeleton,
-    ));
+    _states.add(
+      LiveJabState.live(
+        surface: issue == null ? LiveState.clean : LiveState.correcting,
+        completedCount: _completed,
+        // HAM KOD ASLA: `REAR_HAND_LOW` bir teşhis dizesidir. İçerik eksikse
+        // kod gösterilmez, genel ama DÜRÜST bir cümle gösterilir.
+        cue: issue == null ? null : (_phrase(issue.code) ?? _genericIssue),
+        narration: readyLine ?? correctedLine,
+        phase: out.activePhase,
+        skeleton: skeleton,
+      ),
+    );
   }
 
   void _onStreamError(Object error) {
+    if (!_running || _disposed) return;
     // Akış ortasında gelen hata seansı ÖLDÜRÜR ve söyler. Sessizce son
     // durumu ekranda bırakmak, kullanıcıya donmuş bir sayıyı canlıymış gibi
     // göstermek olurdu (J-092'nin bayat-özet dersinin canlı karşılığı).
     _running = false;
-    _states.add(LiveJabState.failed(error is CameraException
-        ? LiveCameraUnavailable(failure: error.failure, nativeDetail: error.detail)
-        : LiveSetupFailed(error)));
+    _states.add(
+      LiveJabState.failed(
+        error is CameraException
+            ? LiveCameraUnavailable(
+                failure: error.failure,
+                nativeDetail: error.detail,
+              )
+            : LiveSetupFailed(error),
+      ),
+    );
+    // A Dart envelope decode error does not prove native capture stopped.
+    unawaited(stop());
   }
 
   /// Kod → cümle. Eşlenmemiş ya da içerikte olmayan kod için `null`.
@@ -435,58 +498,74 @@ final class LiveJabController {
         provenance: <String, String>{'modelId': modelId},
       );
 
-  /// Uçmakta olan kapanış — **süreç geneli**, çünkü **kamera da öyle**.
-  ///
-  /// Her ders kendi controller'ını kuruyor ama cihazda **tek kamera** var;
-  /// bu yüzden kilit örnek düzeyinde OLAMAZ.
-  static Future<void>? _closing;
-
-  /// Süreç-geneli kilidi sıfırlar — **yalnız testler için.**
-  ///
-  /// Ölçüldü (J-195): static durum **testler arasında sızıyor.** Bir test
-  /// controller'ı bırakırken `stop()` çağırıyor; sahte kameranın gerçek
-  /// zamanlı gecikmesi widget testinin sahte saatinde **hiç ilerlemiyor**,
-  /// yani `_closing` **asla temizlenmiyor** ve bir sonraki testin `start()`i
-  /// sonsuza bekliyor. Üretimde bu olmaz (platform yanıtlar ya da uygulama
-  /// zaten kapanır) ama **testte bir zincir kapısını kırdı** ve o kapı
-  /// gerçek bir kusuru koruyordu.
-  ///
-  /// > **Static bir kilit koyan, ona bir sıfırlama da borçludur.**
+  /// Shared camera admission reset, restricted to isolated tests.
   @visibleForTesting
-  static void debugResetCameraLock() => _closing = null;
+  static void debugResetCameraLock() =>
+      // This facade is itself restricted to isolated tests.
+      // ignore: invalid_use_of_visible_for_testing_member
+      CameraCaptureCoordinator.debugResetForTests();
 
-  /// ⚠️ **`async` DEĞİL — bilerek.**
-  ///
-  /// `async` bir gövde, ilk `await`e kadar senkron koşar ama `_closing`
-  /// ataması gövdenin İÇİNDE olurdu; çağıran `unawaited(stop())` dediği an
-  /// atama **bir mikrotask geç** yayınlanırdı — ve tam o mikrotask içinde
-  /// yeni ders `start()` çağırırsa kilidi **göremez.** Kilidin senkron
-  /// yayınlanması bu tasarımın bütün amacı.
+  /// Invalidates this attempt and publishes its owned closure before returning.
+  /// Callers may leave cleanup unawaited; errors are observed and stay sticky.
   Future<void> stop() {
+    _generation++;
     _running = false;
-    final Completer<void> done = Completer<void>();
-    _closing = done.future;
-    _stopInner().whenComplete(() {
-      if (identical(_closing, done.future)) _closing = null;
-      if (!done.isCompleted) done.complete();
-    });
-    return done.future;
-  }
-
-  Future<void> _stopInner() async {
-    await _sub?.cancel();
+    _nativeSubmitted = false;
+    final capture = _capture;
+    _capture = null;
+    final StreamSubscription<CameraFrameEnvelope>? subscription = _sub;
     _sub = null;
-    try {
-      await _camera.stop();
-    } on Object catch (_) {
-      // Kapanışta hata YUTULUR: kullanıcı zaten ayrılıyor ve "kapatılamadı"
-      // demenin yapabileceği hiçbir şey yok.
-    }
+    if (capture == null) return _retirement ?? Future<void>.value();
+    // The lease retires and the shared gate is installed before app cancellation.
+    final closing = CameraCaptureCoordinator.close(capture);
+    final retirement = _stopInner(subscription, closing);
+    _retirement = retirement;
+    unawaited(
+      retirement.then<void>(
+        (_) {},
+        onError: (Object error, StackTrace stack) {
+          final failure = CameraCaptureCoordinator.recordUncertainty(error);
+          if (!_disposed && !_states.isClosed) {
+            _states.add(
+              LiveJabState.failed(
+                LiveCameraUnavailable(
+                  failure: failure.failure,
+                  nativeDetail: failure.detail,
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+    return retirement;
   }
 
-  Future<void> dispose() async {
-    await stop();
-    await _states.close();
+  Future<void> _stopInner(
+    StreamSubscription<CameraFrameEnvelope>? subscription,
+    Future<void> closing,
+  ) async {
+    await Future.wait<void>([
+      closing,
+      if (subscription != null) subscription.cancel(),
+    ]);
+  }
+
+  Future<void> dispose() {
+    _disposed = true;
+    final disposal = _disposal ??= _disposeInner();
+    unawaited(
+      disposal.then<void>((_) {}, onError: (Object _, StackTrace _) {}),
+    );
+    return disposal;
+  }
+
+  Future<void> _disposeInner() async {
+    try {
+      await stop();
+    } finally {
+      await _states.close();
+    }
   }
 }
 
@@ -507,8 +586,7 @@ sealed class LiveJabState {
     LiveHonestyBucket bucket,
   }) = LiveJabRunning;
 
-  const factory LiveJabState.failed(LiveSessionFailure failure) =
-      LiveJabFailed;
+  const factory LiveJabState.failed(LiveSessionFailure failure) = LiveJabFailed;
 }
 
 /// Kamera açıldı, ilk zarf henüz gelmedi.
@@ -548,6 +626,7 @@ final class LiveJabRunning extends LiveJabState {
   final String? cue;
   final String? narration;
   final String? noVerdictReason;
+
   /// Faz makinesinin o andaki fazı — canlı geri bildirim. Bir hüküm DEĞİL,
   /// durum bildirimi; K8 kapısına takılmaz.
   final String? phase;

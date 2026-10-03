@@ -1,54 +1,50 @@
-# Mağaza Liste İçeriği — TASLAK (koordinatör sevki, 2026-08-12)
+# JabLab mağaza liste içeriği — kaynak taslağı
 
-> **Taslak BENİM, onay KURUCUNUN.** Gönderim zaten kurucu kalemi (M-F-77,
-> ASC erişimi + ekran görüntüsü çekimi); bu doküman yalnız **liste
-> içeriğini** yetkilendiriyor — açıklama, anahtar kelime, yaş
-> derecelendirme gerekçesi. Kod tarafı: `docs/store/listing.json` +
-> `test/store_listing_test.dart`.
+## Güncel kapsam — 2026-10-02
 
-## Neden bu ikiye ayrıldı (KURUCU-BRIFI-2026-08-12'nin bulgusu)
+Mağazaya aktarılacak metnin tek kaynağı `docs/store/listing.json` ve
+`docs/store/listing.tr-TR.json` dosyalarının dış alanlarıdır. `$` önekli
+alanlar tarihsel araştırma/denetim fişleridir; mağaza metnine taşınmaz.
+Bu doküman provider güncellemesi, mağaza onayı veya submit makbuzu değildir.
 
-"Store metadata ölçülmemiş" tek cümlesi iki farklı şeyi gizliyordu:
-**liste içeriği** (bu doküman — ASC erişimi gerektirmez, bugün yazılabilir)
-ve **yükleme/gönderim** (ekran görüntüsü + ASC girişi + submit — erişim-kilitli,
-bu session'da app-publish MCP'si yok). Bu ayrım netleşince yarısı hemen
-başlanabilir çıktı.
+Güncel içerik 39 özgün TR/EN metin dersi /8 modüldür: duruş ve gard,
+ayak işi, düz ve kavisli yumruk şekilleri, planlı savunma, kombinasyon ve
+bağımsız temassız rauntlar. İlerleme kullanıcı öz beyanıdır ve guest/hesap
+kapsamında yalnız cihazda saklanır. Motion hesabı isteğe bağlıdır.
+Gerçek gösterim videosu, canlı kamera koçluğu, otomatik yumruk sayımı ve
+abonelik satışı bu sürümde açık değildir. Ustalık, yumruk hızı/gücü veya
+kişisel güvenli teknik sonucu iddia edilmez.
 
-## Sınırlar — mağaza metni ailenin en sıkı dürüstlük yüzeyi
+| Alan | Güncel kaynak / aktarım kuralı |
+|---|---|
+| ASC name/subtitle/promotionalText/keywords | İngilizce `listing.json.appStore`; subtitle: `Build a solo boxing practice` |
+| TR alanları | `listing.tr-TR.json`; kaynaktaki metni dil bazında aktar |
+| Play shortDescription | İlgili locale dosyasının `playStore.shortDescription` alanı |
+| Description | İlgili locale dosyasının `description` alanı; 39 ders, öz beyan, kamera/video/satış kapalı sınırı korunur |
+| Kamera gerekçesi | `ios/Runner/Info.plist` ile kaynak eşliği; gerçek izin/native kabulü ayrı |
+| Yaş/hedef kitle | Ortak güncel Motion18+ hedef kararı merkezde; eski4+/Everyone tahmini tarihsel olup provider sonucunu belirlemez |
 
-Bu, kullanıcının satın almadan ÖNCE gördüğü tek yüzey — düzeltme şansı yok,
-kullanıcı zaten karar vermiş oluyor. Bu yüzden üç kısıt DAHA sıkı uygulandı:
+## Kaynak ve yayın kapıları
 
-1. **Ölçülmemiş hiçbir iddia yok** — `power`/`force` kelimeleri yalnız
-   *"ölçmüyoruz"* cümlesinde geçiyor, iddia olarak değil.
-2. **Vaat dili YOK** (M-F-186) — `promise_language_test.dart`daki AYNI
-   regex bu dosyaya da uygulandı (`test/store_listing_test.dart`).
-3. **"Cihazda kanıtlı" denmiyor** — cihaz turu (§7.3-7.7) henüz yapılmadı.
-   Her cümle **bugünkü kod-gerçeğine** dayanıyor: `MEASURED AND GRADED` /
-   `WATCHED AND COACHED, NOT SCORED` / `WHAT WE DO NOT MEASURE` üçlüsü
-   `library.json`'ın `honesty.measured`/`notMeasured` listelerinden **birebir**
-   türedi — icat yok, uygulamanın kendi `HonestyBox`ının mağaza karşılığı.
+Kurs JSON'u `assets/content/solo_boxing_course.v1.json`: SHA-256
+`0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f`.
+2026-09-26 `$coursePreparation20260926` fişleri kendi tarihi için korunur;
+bugünkü kaynak veya paket kabulü olarak kullanılmaz. `tool/generate_solo_boxing_course.py --check`
+çıkış0 ile kursun üretici eşliği doğrulandı. Güncel bağımsız statik kurs
+incelemesinde39 benzersiz ders/8modül, bağlı önkoşullar ve kaynak ID'leri
+okundu; öğretmen, gerçek medya ve fiziksel form kabulü açık.
 
-## İçerik — `docs/store/listing.json`'dan
+`test/store_listing_test.dart` canlı dış metinlerin öz beyan/kamera kapalı
+sınırını ve provider karakter alanlarını denetler. Eski MEASURED/WATCHED
+başlıkları bugün description aktarım talimatı değildir. Son imzalı aday,
+TR/EN ekran görüntüsü, support/privacy/account-deletion URL'leri,
+reviewer hesabı ve talimatı, birleşik privacy/manifest ve mağaza formları
+ayrı makbuzla kabul edilir. Kaynak testi mağaza kabulü sayılmaz.
 
-| alan | kaynak | not |
-|---|---|---|
-| **Subtitle** (ASC, ≤30 krk) | yeni yazıldı | "Solo boxing form coach" — ürünün tek cümlelik özeti |
-| **Promotional Text** (ASC, ≤170 krk) | yeni yazıldı | Vaat dili taramasından geçti |
-| **Keywords** (ASC, ≤100 krk) | yeni yazıldı | Yalnız gerçek özellik adları — "professional"/"pro" gibi abartı sözcük YOK |
-| **Short description** (Play, ≤80 krk) | yeni yazıldı | |
-| **Description** (her iki mağaza, ~4000 krk) | `library.json` `boxing.honesty` | Ölçülen/koçlanan/ölçülmeyen üçlüsü uygulamanın kendi beyanından **kopyalandı**, uydurulmadı |
-| **Kamera izin gerekçesi** | `ios/Runner/Info.plist` `NSCameraUsageDescription` | **Değiştirilmedi**, yalnız kopyalandı — description'daki "never leaves your device" ile tutarlı |
-| **Yaş derecelendirme gerekçesi** | yeni yazıldı, CLAUDE.md'nin "tıbbi dil yasak" kuralına bağlı | Beklenen tavan: ASC 4+ / Play Everyone — **tahmin**, nihai karar mağazanın kendi süreci |
+## Tarihsel denetim — 2026-08-12
 
-## Kapı — `test/store_listing_test.dart`
-
-`promise_language_test.dart`'ın AYNI `promise` regex'i bu dosyaya da
-uygulanıyor + iki ek kontrol: (1) "cihazda kanıtlı/doğrulandı" türünde bir
-cihaz-kanıtı iddiası yok (2) ölçüm-beyanı üçlüsü (`MEASURED`/`WATCHED`/
-`WHAT WE DO NOT`) `description` içinde gerçekten var. **Mağaza metni de bir
-yüzeydir ve bayatlar** — içerik değişirse (yeni ders, yeni ölçüm) bu dosya
-da güncellenmeli, kapı bunu hatırlatır.
+Aşağıdaki ölçüm eski canlı/ölçüm vaatlerinin düzeltme kökenini korur;
+güncel dış liste ve yayın talimatı üstteki bölümdür.
 
 ## 🔴 DÜZELTME (koordinatör çapraz kontrolü, 2026-08-12)
 
