@@ -12,6 +12,8 @@ analyzer:
     - build/**
     - android/**
     - ios/**
+    # Immutable historical evidence: preserve its original filename and VM output.
+    - test/fixtures/frozen_source/package-uri-probe.dart
 include: package:flutter_lints/flutter.yaml
 
 linter:
