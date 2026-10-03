@@ -6,13 +6,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/solo_boxing_course.dart';
 import 'package:jablab/app/solo_boxing_course_page.dart';
 import 'package:jablab/app/solo_boxing_progress.dart';
 
 import 'app_pump.dart';
 
+// Each test owns a storage namespace; replacements inside it share this registry.
+late OwnerResourceRegistry _owners;
+
 void main() {
+  setUp(() => _owners = OwnerResourceRegistry());
   late Directory directory;
   setUp(
     () => directory = Directory.systemTemp.createTempSync('jablab-solo-ui-'),
@@ -34,7 +39,10 @@ void main() {
     await tester.runAsync(() async {
       await tester.pumpWidget(
         JabLabApp(
-          repository: ContentRepository(historyDirectoryOverride: directory),
+          repository: ContentRepository(
+            historyDirectoryOverride: directory,
+            ownerRegistry: _owners,
+          ),
           onboarding: const OnboardingStore(seenOverride: true),
         ),
       );
@@ -63,6 +71,7 @@ void main() {
         );
         final store = SoloCourseProgressStore(
           File('${directory.path}/one-round-${turkish ? 'tr' : 'en'}.json'),
+          ownerLifetime: _owners.capture(null),
         );
         final checkText = lesson.selfChecks
             .map((check) => turkish ? check.tr : check.en)
@@ -173,7 +182,10 @@ void main() {
     final lesson = course.lessons.singleWhere(
       (item) => item.id == 'boxing.curves.lead_hook',
     );
-    final store = SoloCourseProgressStore(File('${directory.path}/hook.json'));
+    final store = SoloCourseProgressStore(
+      File('${directory.path}/hook.json'),
+      ownerLifetime: _owners.capture(null),
+    );
     await tester.pumpWidget(
       MaterialApp(
         home: SoloBoxingLessonPage(
@@ -243,7 +255,10 @@ void main() {
       lesson = course.lessons.singleWhere(
         (item) => item.id == 'boxing.curves.lead_hook',
       );
-      store = SoloCourseProgressStore(File('${directory.path}/fresh.json'));
+      store = SoloCourseProgressStore(
+        File('${directory.path}/fresh.json'),
+        ownerLifetime: _owners.capture(null),
+      );
       now = DateTime(2026, 9, 28, 12);
     });
 
@@ -484,6 +499,7 @@ void main() {
         );
         addTearDown(tester.binding.platformDispatcher.clearLocaleTestValue);
         final ContentRepository repository = ContentRepository(
+          ownerRegistry: _owners,
           historyDirectoryOverride: directory,
           loadStringOverride: (String path) => File(path).readAsString(),
         );
@@ -620,6 +636,7 @@ void main() {
     tester,
   ) async {
     final repository = ContentRepository(
+      ownerRegistry: _owners,
       historyDirectoryOverride: directory,
       loadStringOverride: (String path) => File(path).readAsString(),
     );
@@ -652,44 +669,98 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('account change clears the previous solo progress', (
-    WidgetTester tester,
-  ) async {
-    const String alice = '11111111-1111-4111-8111-111111111111';
-    const String bob = '22222222-2222-4222-8222-222222222222';
-    final ValueNotifier<String?> account = ValueNotifier<String?>(alice);
-    final ContentRepository repository = ContentRepository(
-      historyDirectoryOverride: directory,
-      loadStringOverride: (String path) => File(path).readAsString(),
-    );
-    await tester.runAsync(() async {
-      final SoloBoxingCourse course = await repository.loadSoloBoxingCourse();
-      final store = await repository.openSoloProgressStore(
-        accountUserId: alice,
+  testWidgets(
+    'account change closes the old lesson and loads persisted Bob progress',
+    (WidgetTester tester) async {
+      const String alice = '11111111-1111-4111-8111-111111111111';
+      const String bob = '22222222-2222-4222-8222-222222222222';
+      _owners.activate(alice);
+      _owners.activate(bob);
+      final ValueNotifier<String?> account = ValueNotifier<String?>(alice);
+      addTearDown(() async {
+        await tester.pumpWidget(const SizedBox.shrink());
+        account.dispose();
+      });
+      final ContentRepository repository = ContentRepository(
+        ownerRegistry: _owners,
+        historyDirectoryOverride: directory,
+        loadStringOverride: (String path) => File(path).readAsString(),
       );
-      await store.markPractised(course, course.lessons.first);
-      await store.markCompleted(
-        course,
-        course.lessons.first,
-        selfChecksConfirmed: true,
-      );
-    });
-    await tester.pumpWidget(
-      MaterialApp(
-        home: SoloBoxingCoursePage(
-          repository: repository,
-          accountUserId: account,
+      late SoloBoxingCourse course;
+      late SoloCourseProgressStore aliceStore;
+      late SoloCourseProgressStore bobStore;
+      await tester.runAsync(() async {
+        course = await repository.loadSoloBoxingCourse();
+        aliceStore = await repository.openSoloProgressStore(
+          accountUserId: alice,
+        );
+        await aliceStore.markPractised(course, course.lessons.first);
+        await aliceStore.markCompleted(
+          course,
+          course.lessons.first,
+          selfChecksConfirmed: true,
+        );
+        bobStore = await repository.openSoloProgressStore(accountUserId: bob);
+        await bobStore.markPractised(course, course.lessons.last);
+      });
+      final bobBytes = bobStore.file.readAsStringSync();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: SoloBoxingCoursePage(
+            repository: repository,
+            accountUserId: account,
+          ),
         ),
-      ),
-    );
-    await settleUntil(tester, find.text('1 / 39 self-reported complete'));
-    expect(find.text('1 / 39 self-reported complete'), findsOneWidget);
-    account.value = bob;
-    await tester.pump();
-    expect(find.text('1 / 39 self-reported complete'), findsNothing);
-    await settleUntil(tester, find.text('0 / 39 self-reported complete'));
-    expect(find.text('0 / 39 self-reported complete'), findsOneWidget);
-    await tester.pumpWidget(const SizedBox.shrink());
-    account.dispose();
-  });
+      );
+      await settleUntil(tester, find.text('1 / 39 self-reported complete'));
+      expect(find.text('1 / 39 self-reported complete'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('solo-next-lesson')));
+      await settleUntil(tester, find.byType(SoloBoxingLessonPage));
+      expect(find.byType(SoloBoxingLessonPage), findsOneWidget);
+      final oldRoute = ModalRoute.of(
+        tester.element(find.byType(SoloBoxingLessonPage)),
+      )!;
+      expect(oldRoute.isFirst, isFalse);
+      final aliceBytes = aliceStore.file.readAsStringSync();
+
+      account.value = bob;
+      await tester.pump();
+      expect(
+        find.text('1 / 39 self-reported complete', skipOffstage: false),
+        findsNothing,
+      );
+      await settleUntil(tester, find.text('0 / 39 self-reported complete'));
+      expect(find.text('0 / 39 self-reported complete'), findsOneWidget);
+      expect(oldRoute.isActive, isFalse);
+      expect(
+        find.byType(SoloBoxingLessonPage, skipOffstage: false),
+        findsNothing,
+      );
+      expect(
+        find.byType(SoloBoxingCoursePage),
+        findsOneWidget,
+        reason:
+            'the standalone course reloads Bob after its Alice lesson retires',
+      );
+      final freshBob = (await tester.runAsync(
+        () => repository.openSoloProgressStore(accountUserId: bob),
+      ))!;
+      final persistedBob = (await tester.runAsync(freshBob.load))!;
+      expect(
+        persistedBob
+            .forLesson(course.lessons.last, course.version)!
+            .practiceCount,
+        1,
+      );
+      expect(
+        persistedBob.forLesson(course.lessons.first, course.version),
+        isNull,
+      );
+      expect(freshBob.file.path, bobStore.file.path);
+      expect(freshBob.file.readAsStringSync(), bobBytes);
+      expect(aliceStore.file.readAsStringSync(), aliceBytes);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 }

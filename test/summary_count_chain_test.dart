@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
@@ -12,6 +10,8 @@ import 'package:jablab/shell_candidate/shell_models.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart';
+
+import 'support/owned_native_fixture.dart';
 
 /// ⭐ POZİTİF ZİNCİR — analiz koştuğunda sayı ÖZETE ULAŞIYOR (J-157).
 ///
@@ -44,8 +44,9 @@ void main() {
     cues = await const ContentRepository().loadCues();
   });
 
-  testWidgets('⭐ KİLOMETRE TAŞI EKRANDA GÖRÜNÜYOR (J-158 — isimli borç)',
-      (WidgetTester t) async {
+  testWidgets('⭐ KİLOMETRE TAŞI EKRANDA GÖRÜNÜYOR (J-158 — isimli borç)', (
+    WidgetTester t,
+  ) async {
     // ## Kapatılan borç
     //
     // J-104 `cue.milestone`un tetiğini bağladı; `session_narrator_test`
@@ -62,27 +63,33 @@ void main() {
     // ürün için değiştirmiyoruz; yalnız sentetik tekrar sayısını makul
     // tutuyoruz.
     final _SeqCamera cam = _SeqCamera();
-    await t.pumpWidget(MaterialApp(
-      home: SessionScreen(
-        lesson: const ShellLesson(id: 'x', title: 'Jab', minutes: 3),
-        cues: cues,
-        coachedNotScored: const <String>[],
-        bands: const <String, String>{'Stance': '—'},
-        plan: null,
-        milestoneEvery: 2,
-        rehearseMaterial: const RehearseMaterialNone(reason: 'fixture: no drill named'),
-        teachMaterial: const TeachMaterialText(body: 'Body.'),
-        liveJab: LiveJabController(
-          ruleSet: ruleSet,
+    final LiveJabController live = LiveJabController(
+      ruleSet: ruleSet,
+      cues: cues,
+      modelPath: () async => '/dev/null/model.task',
+      modelId: 'test-model',
+      camera: cam,
+      requestPermission: () async => true,
+      permissionPermanentlyDenied: () async => false,
+    );
+    addTearDown(() => _closeOwnedSession(t, cam, live));
+    await t.pumpWidget(
+      MaterialApp(
+        home: SessionScreen(
+          lesson: const ShellLesson(id: 'x', title: 'Jab', minutes: 3),
           cues: cues,
-          modelPath: () async => '/dev/null/model.task',
-          modelId: 'test-model',
-          camera: cam,
-          requestPermission: () async => true,
-          permissionPermanentlyDenied: () async => false,
+          coachedNotScored: const <String>[],
+          bands: const <String, String>{'Stance': '—'},
+          plan: null,
+          milestoneEvery: 2,
+          rehearseMaterial: const RehearseMaterialNone(
+            reason: 'fixture: no drill named',
+          ),
+          teachMaterial: const TeachMaterialText(body: 'Body.'),
+          liveJab: live,
         ),
       ),
-    ));
+    );
     await t.pumpAndSettle();
     await t.runAsync(() async {
       for (int i = 0; i < 2; i++) {
@@ -110,41 +117,58 @@ void main() {
         .widgetList<Text>(find.byType(Text))
         .map((Text w) => w.data ?? '')
         .toList();
-    final bool milestone = onScreen.any((String s) =>
-        RegExp(r'^\d+ (in|down)\.$').hasMatch(s) ||
-        RegExp(r'^\d+ so far\.$').hasMatch(s) ||
-        RegExp(r"^That's \d+\.$").hasMatch(s));
-    expect(milestone, isTrue,
-        reason: 'kilometre taşı repliği EKRANDA YOK. Zincirin son halkası '
-            '(narrator → canlı yüzey) kopuk olabilir. Ekrandakiler: '
-            '${onScreen.where((String s) => s.isNotEmpty).take(8).toList()}');
-    expect(onScreen.any((String s) => s.contains('{n}')), isFalse,
-        reason: 'yer tutucu doldurulmamış — sayı gerçek sayaçtan gelmiyor');
+    final bool milestone = onScreen.any(
+      (String s) =>
+          RegExp(r'^\d+ (in|down)\.$').hasMatch(s) ||
+          RegExp(r'^\d+ so far\.$').hasMatch(s) ||
+          RegExp(r"^That's \d+\.$").hasMatch(s),
+    );
+    expect(
+      milestone,
+      isTrue,
+      reason:
+          'kilometre taşı repliği EKRANDA YOK. Zincirin son halkası '
+          '(narrator → canlı yüzey) kopuk olabilir. Ekrandakiler: '
+          '${onScreen.where((String s) => s.isNotEmpty).take(8).toList()}',
+    );
+    expect(
+      onScreen.any((String s) => s.contains('{n}')),
+      isFalse,
+      reason: 'yer tutucu doldurulmamış — sayı gerçek sayaçtan gelmiyor',
+    );
+    await _closeOwnedSession(t, cam, live);
   });
 
-  testWidgets('sentetik jab SAYILIYOR ve özette GÖRÜNÜYOR',
-      (WidgetTester t) async {
+  testWidgets('sentetik jab SAYILIYOR ve özette GÖRÜNÜYOR', (
+    WidgetTester t,
+  ) async {
     final _SeqCamera cam = _SeqCamera();
-    await t.pumpWidget(MaterialApp(
-      home: SessionScreen(
-        lesson: const ShellLesson(id: 'x', title: 'Jab', minutes: 3),
-        cues: cues,
-        coachedNotScored: const <String>[],
-        bands: const <String, String>{'Stance': '—'},
-        plan: null,
-        rehearseMaterial: const RehearseMaterialNone(reason: 'fixture: no drill named'),
-        teachMaterial: const TeachMaterialText(body: 'Body.'),
-        liveJab: LiveJabController(
-          ruleSet: ruleSet,
+    final LiveJabController live = LiveJabController(
+      ruleSet: ruleSet,
+      cues: cues,
+      modelPath: () async => '/dev/null/model.task',
+      modelId: 'test-model',
+      camera: cam,
+      requestPermission: () async => true,
+      permissionPermanentlyDenied: () async => false,
+    );
+    addTearDown(() => _closeOwnedSession(t, cam, live));
+    await t.pumpWidget(
+      MaterialApp(
+        home: SessionScreen(
+          lesson: const ShellLesson(id: 'x', title: 'Jab', minutes: 3),
           cues: cues,
-          modelPath: () async => '/dev/null/model.task',
-          modelId: 'test-model',
-          camera: cam,
-          requestPermission: () async => true,
-          permissionPermanentlyDenied: () async => false,
+          coachedNotScored: const <String>[],
+          bands: const <String, String>{'Stance': '—'},
+          plan: null,
+          rehearseMaterial: const RehearseMaterialNone(
+            reason: 'fixture: no drill named',
+          ),
+          teachMaterial: const TeachMaterialText(body: 'Body.'),
+          liveJab: live,
         ),
       ),
-    ));
+    );
     await t.pumpAndSettle();
 
     // öğret → prova → canlı
@@ -177,61 +201,52 @@ void main() {
     await t.pumpAndSettle();
 
     // VAKUM KAPISI: gerçekten özet aşamasında mıyız?
-    expect(find.byKey(const Key('summary-band-Stance')), findsOneWidget,
-        reason: 'özet aşamasına gelinmedi — kapı boşluğa bakıyor');
+    expect(
+      find.byKey(const Key('summary-band-Stance')),
+      findsOneWidget,
+      reason: 'özet aşamasına gelinmedi — kapı boşluğa bakıyor',
+    );
 
     final Finder count = find.byKey(const Key('summary-count'));
-    expect(count, findsOneWidget,
-        reason: 'ANALİZ KOŞTU ama özette sayı YOK — zincir kopuk. '
-            'J-156 sabit 0 gösteriyordu; bu testin varlık sebebi, '
-            'düzeltmenin ters yönde (hep null) kopmadığını kanıtlamak');
+    expect(
+      count,
+      findsOneWidget,
+      reason:
+          'ANALİZ KOŞTU ama özette sayı YOK — zincir kopuk. '
+          'J-156 sabit 0 gösteriyordu; bu testin varlık sebebi, '
+          'düzeltmenin ters yönde (hep null) kopmadığını kanıtlamak',
+    );
     final String shown = (t.widget<Text>(count)).data ?? '';
-    expect(int.tryParse(shown), isNotNull,
-        reason: 'özetteki sayı bir sayı değil: "$shown"');
-    expect(int.parse(shown), greaterThan(0),
-        reason: 'sentetik jab beslendi ama özet 0 diyor — sayım yolda '
-            'kayboluyor');
+    expect(
+      int.tryParse(shown),
+      isNotNull,
+      reason: 'özetteki sayı bir sayı değil: "$shown"',
+    );
+    expect(
+      int.parse(shown),
+      greaterThan(0),
+      reason:
+          'sentetik jab beslendi ama özet 0 diyor — sayım yolda '
+          'kayboluyor',
+    );
+    await _closeOwnedSession(t, cam, live);
   });
 }
 
-/// Sahte kamera — dışarıdan kare besleyebilen.
-class _SeqCamera implements MotionCameraController {
-  final StreamController<CameraFrameEnvelope> _c =
-      StreamController<CameraFrameEnvelope>.broadcast();
-  void emit(CameraFrameEnvelope e) => _c.add(e);
-
-  @override
-  Future<CameraSessionInfo> start({
-    required String modelPath,
-    required String modelId,
-    CameraLens lens = CameraLens.front,
-    PassPlan initialPlan = PassPlan.uprightOnly,
-  }) async =>
-      const CameraSessionInfo(
-          width: 480,
-          height: 640,
-          clockDomain: ClockDomain.monotonic,
-          libraryTag: 'seq');
-
-  @override
-  Stream<CameraFrameEnvelope> frames() => _c.stream;
-  @override
-  Future<void> stop() async {}
-  @override
-  Future<void> setPassPlan(PassPlan plan) async {}
-  @override
-  dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);
+/// Mock native protocol plus the actual controller/lease; synthetic frames only.
+class _SeqCamera extends OwnedTestCamera {
+  _SeqCamera() : super(libraryTag: 'summary-sequence-fixture');
 }
 
 CameraFrameEnvelope _envelope(PoseFrame? frame) => CameraFrameEnvelope(
-      tUs: frame?.tUs ?? 0,
-      size: const FrameSize(480, 640),
-      modelVersion: 'test',
-      clockDomain: ClockDomain.monotonic,
-      inferenceUs: 1000,
-      dropped: 0,
-      passes: <BodyOrientation, PoseFrame?>{BodyOrientation.upright: frame},
-    );
+  tUs: frame?.tUs ?? 0,
+  size: const FrameSize(480, 640),
+  modelVersion: 'test',
+  clockDomain: ClockDomain.monotonic,
+  inferenceUs: 1000,
+  dropped: 0,
+  passes: <BodyOrientation, PoseFrame?>{BodyOrientation.upright: frame},
+);
 
 /// `live_jab_path_test`in sentetik jab dizisi — ara kareler DAHİL.
 ///
@@ -265,4 +280,51 @@ List<PoseFrame> _jabSequence({int repOffsetUs = 0}) {
     out.add(b.build(seq.poseAt(t), tUs: repOffsetUs + t));
   }
   return out;
+}
+
+/// Unmount while this test owns its FakeAsync zone. Advance both widget work
+/// and mock-channel Futures, then remove handlers only after owned close settles.
+Future<void> _closeOwnedSession(
+  WidgetTester tester,
+  OwnedTestCamera camera,
+  LiveJabController live,
+) async {
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pump();
+  bool settled = false;
+  Object? failure;
+  StackTrace? failureStack;
+  live
+      .dispose()
+      .then<void>(
+        (_) => settled = true,
+        onError: (Object error, StackTrace stack) {
+          failure = error;
+          failureStack = stack;
+          settled = true;
+        },
+      )
+      .ignore();
+  for (int i = 0; i < 80 && !settled; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 25)),
+    );
+    await tester.pump();
+  }
+  expect(
+    settled,
+    isTrue,
+    reason: 'owned close must settle before native fixture teardown',
+  );
+  if (failure != null) {
+    Error.throwWithStackTrace(failure!, failureStack!);
+  }
+  if (camera.startCalls > 0) {
+    expect(camera.native.nativeCloseAcknowledged.isCompleted, isTrue);
+    expect(camera.native.state.phase, 'closed');
+    expect(camera.activeListeners, 0);
+    expect(camera.cancelCalls, 1);
+    expect(camera.native.globalStopCalls, 0);
+  }
+  await camera.close();
 }

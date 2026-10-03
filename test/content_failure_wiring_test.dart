@@ -8,6 +8,7 @@ import 'package:jablab/app/content_failure_screen.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
@@ -32,7 +33,11 @@ import 'app_pump.dart';
 /// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
 const OnboardingStore _seen = OnboardingStore(seenOverride: true);
 
+// Each test owns a storage namespace; replacements inside it share this registry.
+late OwnerResourceRegistry _owners;
+
 void main() {
+  setUp(() => _owners = OwnerResourceRegistry());
   TestWidgetsFlutterBinding.ensureInitialized();
 
   /// Kütüphaneyi DÜRÜSTLÜK DENETİMİNİ bozacak şekilde değiştirir: bir derse
@@ -42,8 +47,8 @@ void main() {
   Future<String> brokenLibraryLoader(String key) async {
     final String raw = await rootBundle.loadString(key);
     if (key != ContentRepository.libraryAsset) return raw;
-    final Map<String, dynamic> j =
-        (jsonDecode(raw) as Map).cast<String, dynamic>();
+    final Map<String, dynamic> j = (jsonDecode(raw) as Map)
+        .cast<String, dynamic>();
     final Map<String, dynamic> discipline =
         ((j['disciplines'] as List).first as Map).cast<String, dynamic>();
     final Map<String, dynamic> course =
@@ -83,25 +88,32 @@ void main() {
     await t.pumpAndSettle();
   }
 
-  testWidgets('bozuk kütüphane → DÜRÜST HATA EKRANI (kütüphane DEĞİL)',
-      (WidgetTester t) async {
+  testWidgets('bozuk kütüphane → DÜRÜST HATA EKRANI (kütüphane DEĞİL)', (
+    WidgetTester t,
+  ) async {
     await pumpApp(
-        t, ContentRepository(loadStringOverride: brokenLibraryLoader));
+      t,
+      ContentRepository(
+        loadStringOverride: brokenLibraryLoader,
+        ownerRegistry: _owners,
+      ),
+    );
 
     // 1. Dürüst hata ekranı açıldı.
     expect(find.byType(ContentFailureScreen), findsOneWidget);
 
     // 2. BÜTÜNLÜK sınıfı: "Try again" YOK (aynı asset aynı sonucu verir).
-    expect(find.byKey(const Key('failure-retry')), findsNothing,
-        reason: 'bütünlük hatasında retry sunmak kullanıcıyı boşa uğraştırır');
+    expect(
+      find.byKey(const Key('failure-retry')),
+      findsNothing,
+      reason: 'bütünlük hatasında retry sunmak kullanıcıyı boşa uğraştırır',
+    );
 
     // 3. Suç bizde ve metin bunu söylüyor.
     expect(
-        t
-            .widget<Text>(find.byKey(const Key('failure-body')))
-            .data!
-            .toLowerCase(),
-        contains('on us'));
+      t.widget<Text>(find.byKey(const Key('failure-body'))).data!.toLowerCase(),
+      contains('on us'),
+    );
 
     // 4. EN ÖNEMLİSİ: kısmi kütüphane RENDER EDİLMEDİ. Doğrulamanın bloklama
     //    sebebi tam bu; kabuk arkada dursaydı kullanıcı bozuk içerikte
@@ -118,22 +130,25 @@ void main() {
     await t.tap(find.byKey(const Key('failure-detail-tile')));
     await t.pumpAndSettle();
     expect(
-        t.widget<SelectableText>(find.byKey(const Key('failure-detail'))).data,
-        contains('spinning_backfist_that_does_not_exist'),
-        reason: 'ihlal metni kaybolursa saha teşhisi imkânsız');
+      t.widget<SelectableText>(find.byKey(const Key('failure-detail'))).data,
+      contains('spinning_backfist_that_does_not_exist'),
+      reason: 'ihlal metni kaybolursa saha teşhisi imkânsız',
+    );
   });
 
-  testWidgets('SAĞLAM içerikle hata ekranı HİÇ açılmaz (yanlış-pozitif kapısı)',
-      (WidgetTester t) async {
-    // Yukarıdaki test, ekranı HER koşulda açan bir kusuru da "geçti"
-    // sayabilirdi.
-    await pumpApp(t, const ContentRepository());
-    expect(find.byType(ContentFailureScreen), findsNothing);
-    // Kabuğun açıldığına POZİTİF kanıt: "hâlâ yükleniyor" hâli bu testi
-    // sessizce geçemesin (test 1'in tam simetriği).
-    expect(find.byType(SelectPage), findsOneWidget);
-    expect(find.byKey(const Key('item-boxing')), findsOneWidget);
-  });
+  testWidgets(
+    'SAĞLAM içerikle hata ekranı HİÇ açılmaz (yanlış-pozitif kapısı)',
+    (WidgetTester t) async {
+      // Yukarıdaki test, ekranı HER koşulda açan bir kusuru da "geçti"
+      // sayabilirdi.
+      await pumpApp(t, ContentRepository(ownerRegistry: _owners));
+      expect(find.byType(ContentFailureScreen), findsNothing);
+      // Kabuğun açıldığına POZİTİF kanıt: "hâlâ yükleniyor" hâli bu testi
+      // sessizce geçemesin (test 1'in tam simetriği).
+      expect(find.byType(SelectPage), findsOneWidget);
+      expect(find.byKey(const Key('item-boxing')), findsOneWidget);
+    },
+  );
 
   /// ⭐ J-092 ZİNCİRİ — geçmiş okunamıyor, ama İÇERİK sağlam.
   ///
@@ -151,22 +166,33 @@ void main() {
     Future<void> openProgress(WidgetTester t, ContentRepository repo) =>
         pumpApp(t, repo);
 
-    testWidgets('depo okuması FIRLATIRSA Sayfa A BEYAN ediyor',
-        (WidgetTester t) async {
+    testWidgets('depo okuması FIRLATIRSA Sayfa A BEYAN ediyor', (
+      WidgetTester t,
+    ) async {
       await openProgress(
-          t, ContentRepository(storeOverride: _ThrowingStore()));
+        t,
+        ContentRepository(
+          storeOverride: _ThrowingStore(),
+          ownerRegistry: _owners,
+        ),
+      );
 
       // İçerik sağlam → bloklanmadı: kabuk ayakta, dersler açılabilir.
       expect(find.byType(SelectPage), findsOneWidget);
       // ...ama sessiz de değil.
       expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
-      expect(find.byType(ContentFailureScreen), findsNothing,
-          reason: 'depolama hatası yüzünden antrenmanı engellemek, çözümü '
-              'sorundan kötü yapardı — bu sınıf BLOKLAMAZ');
+      expect(
+        find.byType(ContentFailureScreen),
+        findsNothing,
+        reason:
+            'depolama hatası yüzünden antrenmanı engellemek, çözümü '
+            'sorundan kötü yapardı — bu sınıf BLOKLAMAZ',
+      );
     });
 
-    testWidgets('POZİTİF İKİZ: depo SAĞLAMKEN beyan hiç çizilmiyor',
-        (WidgetTester t) async {
+    testWidgets('POZİTİF İKİZ: depo SAĞLAMKEN beyan hiç çizilmiyor', (
+      WidgetTester t,
+    ) async {
       // Yukarıdaki test, beyanı HER koşulda çizen bir kusuru da "geçti"
       // sayardı.
       //
@@ -176,14 +202,23 @@ void main() {
       // depo test ortamında GERÇEKTEN açılamıyor ve beyan HAKLI olarak
       // çıkıyor. İlk yazdığımda ikizi varsayılanla kurmuştum ve test düştü;
       // düşme sebebi kusur değil, hattın çalıştığının kanıtıydı.
-      await openProgress(t, ContentRepository(storeOverride: _WorkingStore()));
+      await openProgress(
+        t,
+        ContentRepository(
+          storeOverride: _WorkingStore(),
+          ownerRegistry: _owners,
+        ),
+      );
       expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
       // `_WorkingStore` BOŞ (kayıt yok) → güncel kurs çözülmez → giriş
       // Sayfa A'dır (Hüküm 3) ve K8 bant bloğu burada değil, bir kursta
       // gösterilir — bu yüzden pozitif kanıt artık `bands-only-note` değil,
       // Sayfa A'nın gerçekten açıldığının kendisi.
-      expect(find.byType(SelectPage), findsOneWidget,
-          reason: 'seçim ekranının gerçekten açıldığına pozitif kanıt');
+      expect(
+        find.byType(SelectPage),
+        findsOneWidget,
+        reason: 'seçim ekranının gerçekten açıldığına pozitif kanıt',
+      );
       expect(find.byKey(const Key('item-boxing')), findsOneWidget);
     });
   });

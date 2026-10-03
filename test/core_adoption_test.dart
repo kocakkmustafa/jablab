@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/session_store.dart';
 
 import 'app_pump.dart';
@@ -37,15 +38,25 @@ import 'app_pump.dart';
 /// ulaştırmazdı. `seenOverride` üretimde `null` — bu yalnız bir test dikişi.
 const OnboardingStore _seen = OnboardingStore(seenOverride: true);
 
+// Each test owns a storage namespace; replacements inside it share this registry.
+late OwnerResourceRegistry _owners;
+
 void main() {
+  setUp(() => _owners = OwnerResourceRegistry());
   TestWidgetsFlutterBinding.ensureInitialized();
 
   Future<void> pumpApp(WidgetTester t, SessionStore store) async {
     await t.runAsync(() async {
-      await t.pumpWidget(JabLabApp(
+      await t.pumpWidget(
+        JabLabApp(
           key: ValueKey<Object>(store),
           onboarding: _seen,
-          repository: ContentRepository(storeOverride: store)));
+          repository: ContentRepository(
+            storeOverride: store,
+            ownerRegistry: _owners,
+          ),
+        ),
+      );
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
@@ -53,19 +64,25 @@ void main() {
 
   String textOf(WidgetTester t, Key k) => t.widget<Text>(find.byKey(k)).data!;
 
-  testWidgets('① ÜRÜN unreadableRecords()i GERÇEKTEN ÇAĞIRIYOR',
-      (WidgetTester t) async {
+  testWidgets('① ÜRÜN unreadableRecords()i GERÇEKTEN ÇAĞIRIYOR', (
+    WidgetTester t,
+  ) async {
     // Değişmez 7'nin can alıcı yarısı. Bu test olmadan, çekirdeğin zorunlu
     // üyesi sessizce cevapsız kalabilir.
     final _SpyStore spy = _SpyStore(unreadable: 0, records: 1);
     await pumpApp(t, spy);
-    expect(spy.unreadableAsked, greaterThan(0),
-        reason: 'yüzey kayıp sayısını hiç sormadı — pin bump adopsiyon '
-            'sanıldı (doc-75/7)');
+    expect(
+      spy.unreadableAsked,
+      greaterThan(0),
+      reason:
+          'yüzey kayıp sayısını hiç sormadı — pin bump adopsiyon '
+          'sanıldı (doc-75/7)',
+    );
   });
 
-  testWidgets('② KISMİ: metin görünür, SAYIYI taşır ve "at least" der',
-      (WidgetTester t) async {
+  testWidgets('② KISMİ: metin görünür, SAYIYI taşır ve "at least" der', (
+    WidgetTester t,
+  ) async {
     // "Sayıyı taşır" ayrıca sınanıyor: sabit bir cümle ("bazıları
     // okunamadı") kullanıcıya eksiğin BÜYÜKLÜĞÜNÜ vermez ve bir
     // interpolasyon kaçağı (metinde `$` unutmak) hiçbir anahtar testinde
@@ -73,22 +90,33 @@ void main() {
     await pumpApp(t, _SpyStore(unreadable: 3, records: 2));
     final String s = textOf(t, const Key('recorded-incomplete'));
     expect(s, contains('3'), reason: 'kayıp SAYISI metne girmemiş');
-    expect(s.toLowerCase(), contains('at least'),
-        reason: 'kısmi hâlde toplamlar TABANDIR ve taban dili şart (doc-75/3)');
-    expect(find.byKey(const Key('recorded-Time worked')), findsOneWidget,
-        reason: 'kısmi hâlde sayılar GÖSTERİLİR (yalnız nitelenir)');
+    expect(
+      s.toLowerCase(),
+      contains('at least'),
+      reason: 'kısmi hâlde toplamlar TABANDIR ve taban dili şart (doc-75/3)',
+    );
+    expect(
+      find.byKey(const Key('recorded-Time worked')),
+      findsOneWidget,
+      reason: 'kısmi hâlde sayılar GÖSTERİLİR (yalnız nitelenir)',
+    );
   });
 
-  testWidgets('③ SIFIR UCU: ayrı metin ve "at least" İÇERMEZ',
-      (WidgetTester t) async {
+  testWidgets('③ SIFIR UCU: ayrı metin ve "at least" İÇERMEZ', (
+    WidgetTester t,
+  ) async {
     // doc-75/4: okunabilir kayıt 0 iken "en az bu kadar" demek doğru ve
     // İŞE YARAMAZ — taban sıfırdır. O uç AYRI cümledir.
     await pumpApp(t, _SpyStore(unreadable: 4, records: 0));
     final String s = textOf(t, const Key('recorded-unavailable'));
     expect(s.toLowerCase(), isNot(contains('at least')));
-    expect(find.byKey(const Key('recorded-incomplete')), findsNothing,
-        reason: 'sıfır ucunda kısmi-dal da çizilirse ekran hem "sayı yok" '
-            'hem "sayılar eksik" der');
+    expect(
+      find.byKey(const Key('recorded-incomplete')),
+      findsNothing,
+      reason:
+          'sıfır ucunda kısmi-dal da çizilirse ekran hem "sayı yok" '
+          'hem "sayılar eksik" der',
+    );
     expect(find.byKey(const Key('recorded-Time worked')), findsNothing);
   });
 
@@ -100,8 +128,11 @@ void main() {
     await pumpApp(t, _ThrowingStore());
     expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
     expect(find.byKey(const Key('recorded-Time worked')), findsNothing);
-    expect(find.byKey(const Key('item-boxing')), findsOneWidget,
-        reason: 'geçmiş hatası BLOKLAMAZ — içerik sağlam, seçim ekranı ayakta');
+    expect(
+      find.byKey(const Key('item-boxing')),
+      findsOneWidget,
+      reason: 'geçmiş hatası BLOKLAMAZ — içerik sağlam, seçim ekranı ayakta',
+    );
   });
 
   testWidgets('⑤ TEMİZ HÂL İKİZİ: hiçbir beyan YOK', (WidgetTester t) async {
@@ -110,8 +141,11 @@ void main() {
     await pumpApp(t, _SpyStore(unreadable: 0, records: 2));
     expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
     expect(find.byKey(const Key('recorded-incomplete')), findsNothing);
-    expect(find.byKey(const Key('recorded-Time worked')), findsOneWidget,
-        reason: 'temiz hâlde sayılar normal gösterilir');
+    expect(
+      find.byKey(const Key('recorded-Time worked')),
+      findsOneWidget,
+      reason: 'temiz hâlde sayılar normal gösterilir',
+    );
   });
 
   testWidgets('⑥ HAM DETAY yüzeye SIZMIYOR', (WidgetTester t) async {
@@ -140,18 +174,18 @@ void main() {
 /// sayfası kalmazdı (2026-08-06 yeniden yapılandırma).
 class _SpyStore implements SessionStore {
   _SpyStore({required this.unreadable, required int records})
-      : _records = List<SessionRecord>.generate(
-          records,
-          (int i) => SessionRecord(
-            lessonId: 'boxing.foundations.jab',
-            completedAt: DateTime.utc(2026, 8, 4).add(Duration(days: i)),
-            workedSeconds: 540,
-            unitsCompleted: 3,
-            plannedUnits: 3,
-            unitLabel: 'round',
-            lessonClass: 'unscored',
-          ),
-        );
+    : _records = List<SessionRecord>.generate(
+        records,
+        (int i) => SessionRecord(
+          lessonId: 'boxing.foundations.jab',
+          completedAt: DateTime.utc(2026, 8, 4).add(Duration(days: i)),
+          workedSeconds: 540,
+          unitsCompleted: 3,
+          plannedUnits: 3,
+          unitLabel: 'round',
+          lessonClass: 'unscored',
+        ),
+      );
 
   final int unreadable;
   final List<SessionRecord> _records;

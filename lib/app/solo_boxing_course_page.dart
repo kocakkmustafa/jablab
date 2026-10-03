@@ -85,10 +85,12 @@ class SoloBoxingCoursePage extends StatefulWidget {
     super.key,
     required this.repository,
     this.accountUserId,
+    this.resourceAdmission,
   });
 
   final ContentRepository repository;
   final ValueListenable<String?>? accountUserId;
+  final ValueListenable<bool>? resourceAdmission;
 
   @override
   State<SoloBoxingCoursePage> createState() => _SoloBoxingCoursePageState();
@@ -103,17 +105,33 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   bool _failed = false;
   ContentFailure? _contentFailure;
   int _generation = 0;
+  ModalRoute<void>? _ownerRoute;
+  NavigatorState? _ownerNavigator;
 
   @override
   void initState() {
     super.initState();
     widget.accountUserId?.addListener(_load);
+    widget.resourceAdmission?.addListener(_admissionChanged);
     unawaited(_load());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _ownerRoute = ModalRoute.of<void>(context);
+    _ownerNavigator = Navigator.of(context);
+    if (widget.resourceAdmission?.value == false) _admissionChanged();
   }
 
   @override
   void didUpdateWidget(covariant SoloBoxingCoursePage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (oldWidget.resourceAdmission != widget.resourceAdmission) {
+      oldWidget.resourceAdmission?.removeListener(_admissionChanged);
+      widget.resourceAdmission?.addListener(_admissionChanged);
+      _admissionChanged();
+    }
     if (oldWidget.accountUserId != widget.accountUserId) {
       oldWidget.accountUserId?.removeListener(_load);
       widget.accountUserId?.addListener(_load);
@@ -124,10 +142,19 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   @override
   void dispose() {
     widget.accountUserId?.removeListener(_load);
+    widget.resourceAdmission?.removeListener(_admissionChanged);
     super.dispose();
   }
 
+  void _admissionChanged() {
+    if (widget.resourceAdmission?.value != false) return;
+    _generation++;
+    _store = null;
+    _removeRetiredRoute(_ownerRoute, _ownerNavigator);
+  }
+
   Future<void> _load() async {
+    if (widget.resourceAdmission?.value == false) return;
     final int generation = ++_generation;
     final String? account = widget.accountUserId?.value;
     if (mounted) {
@@ -146,7 +173,11 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
       final SoloCourseProgressStore store = await widget.repository
           .openSoloProgressStore(accountUserId: account);
       final SoloCourseProgress progress = await store.load();
-      if (!mounted || generation != _generation) return;
+      if (!mounted ||
+          generation != _generation ||
+          widget.resourceAdmission?.value == false) {
+        return;
+      }
       setState(() {
         _course = course;
         _store = store;
@@ -154,7 +185,11 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         _loading = false;
       });
     } on Object catch (error) {
-      if (!mounted || generation != _generation) return;
+      if (!mounted ||
+          generation != _generation ||
+          widget.resourceAdmission?.value == false) {
+        return;
+      }
       setState(() {
         _progress = null;
         _loading = false;
@@ -169,25 +204,51 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   Future<void> _openLesson(SoloLesson lesson) async {
     final SoloBoxingCourse? course = _course;
     final SoloCourseProgressStore? store = _store;
-    if (_opening || course == null || store == null) return;
+    if (_opening ||
+        course == null ||
+        store == null ||
+        widget.resourceAdmission?.value == false) {
+      return;
+    }
     final String? account = widget.accountUserId?.value;
+    final ownerNotifier = widget.accountUserId;
+    final admissionNotifier = widget.resourceAdmission;
+    final int generation = _generation;
+    bool current() =>
+        mounted &&
+        generation == _generation &&
+        identical(ownerNotifier, widget.accountUserId) &&
+        identical(admissionNotifier, widget.resourceAdmission) &&
+        account == widget.accountUserId?.value &&
+        widget.resourceAdmission?.value != false;
     setState(() => _opening = true);
     try {
       final SoloCourseProgress viewed = await store.markViewed(course, lesson);
-      if (!mounted || account != widget.accountUserId?.value) return;
+      if (!mounted || !current()) return;
       setState(() => _progress = viewed);
-      await Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(
-          builder: (_) => SoloBoxingLessonPage(
+      final navigator = Navigator.of(context);
+      late final MaterialPageRoute<void> route;
+      route = MaterialPageRoute<void>(
+        builder: (_) {
+          if (!current()) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (route.isActive) navigator.removeRoute(route);
+            });
+            WidgetsBinding.instance.ensureVisualUpdate();
+            return const SizedBox.shrink();
+          }
+          return SoloBoxingLessonPage(
             course: course,
             lesson: lesson,
             store: store,
-            accountUserId: widget.accountUserId,
+            accountUserId: ownerNotifier,
+            resourceAdmission: admissionNotifier,
             accountAtOpen: account,
             initialProgress: viewed.forLesson(lesson, course.version),
-          ),
-        ),
+          );
+        },
       );
+      await navigator.push<void>(route);
       if (mounted && account == widget.accountUserId?.value) {
         setState(() => _opening = false);
         final SoloCourseProgress latest = await store.load();
@@ -448,6 +509,7 @@ class SoloBoxingLessonPage extends StatefulWidget {
     required this.initialProgress,
     required this.accountAtOpen,
     this.accountUserId,
+    this.resourceAdmission,
     this.preparationClock,
   });
 
@@ -456,6 +518,7 @@ class SoloBoxingLessonPage extends StatefulWidget {
   final SoloCourseProgressStore store;
   final SoloLessonProgress? initialProgress;
   final ValueListenable<String?>? accountUserId;
+  final ValueListenable<bool>? resourceAdmission;
   final String? accountAtOpen;
 
   /// Optional clock for deterministic date-boundary tests; never persisted.
@@ -470,6 +533,9 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   late SoloLessonProgress? _progress;
   late List<bool> _checks;
   bool _saving = false;
+  bool _ownerRetired = false;
+  ModalRoute<void>? _ownerRoute;
+  NavigatorState? _ownerNavigator;
   DateTime? _preparedAt;
   Timer? _preparationExpiry;
   bool _foreground = true;
@@ -529,6 +595,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
     _progress = widget.initialProgress;
     _checks = List<bool>.filled(widget.lesson.selfChecks.length, false);
     widget.accountUserId?.addListener(_accountChanged);
+    widget.resourceAdmission?.addListener(_accountChanged);
     WidgetsBinding.instance.addObserver(this);
     _foreground =
         WidgetsBinding.instance.lifecycleState == null ||
@@ -536,17 +603,47 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _ownerRoute = ModalRoute.of<void>(context);
+    _ownerNavigator = Navigator.of(context);
+    _accountChanged();
+  }
+
+  @override
+  void didUpdateWidget(covariant SoloBoxingLessonPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (identical(oldWidget.accountUserId, widget.accountUserId) &&
+        identical(oldWidget.resourceAdmission, widget.resourceAdmission) &&
+        identical(oldWidget.store, widget.store) &&
+        oldWidget.accountAtOpen == widget.accountAtOpen) {
+      return;
+    }
+    oldWidget.accountUserId?.removeListener(_accountChanged);
+    oldWidget.resourceAdmission?.removeListener(_accountChanged);
+    widget.accountUserId?.addListener(_accountChanged);
+    widget.resourceAdmission?.addListener(_accountChanged);
+    _ownerRetired = true;
+    _resetPreparation();
+    _removeRetiredRoute(_ownerRoute, _ownerNavigator);
+  }
+
+  @override
   void dispose() {
     _preparationExpiry?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     widget.accountUserId?.removeListener(_accountChanged);
+    widget.resourceAdmission?.removeListener(_accountChanged);
     super.dispose();
   }
 
   void _accountChanged() {
-    if (widget.accountUserId?.value != widget.accountAtOpen && mounted) {
+    if ((widget.accountUserId?.value != widget.accountAtOpen ||
+            widget.resourceAdmission?.value == false) &&
+        mounted) {
+      _ownerRetired = true;
       _resetPreparation();
-      Navigator.of(context).maybePop();
+      _removeRetiredRoute(_ownerRoute, _ownerNavigator);
     }
   }
 
@@ -585,8 +682,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   }
 
   Future<void> _save({required bool complete}) async {
-    if (_saving ||
+    if (_ownerRetired ||
+        _saving ||
         widget.accountUserId?.value != widget.accountAtOpen ||
+        widget.resourceAdmission?.value == false ||
         _preparationBlocked ||
         (complete && _needsSessionPreparation && !_practisedThisSession)) {
       return;
@@ -601,7 +700,9 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
               selfChecksConfirmed: _checks.every((bool value) => value),
             )
           : await widget.store.markPractised(widget.course, widget.lesson);
-      if (!mounted || widget.accountUserId?.value != widget.accountAtOpen) {
+      if (!mounted ||
+          widget.accountUserId?.value != widget.accountAtOpen ||
+          widget.resourceAdmission?.value == false) {
         return;
       }
       setState(() {
@@ -630,6 +731,9 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
 
   @override
   Widget build(BuildContext context) {
+    if (_ownerRetired || widget.resourceAdmission?.value == false) {
+      return const SizedBox.shrink();
+    }
     final SoloLesson lesson = widget.lesson;
     final bool practised =
         _progress != null &&
@@ -961,4 +1065,18 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
       ],
     ),
   );
+}
+
+/// Remove only the retired training route, even when another route covers it.
+void _removeRetiredRoute(ModalRoute<void>? route, NavigatorState? navigator) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (navigator != null &&
+        navigator.mounted &&
+        route != null &&
+        route.isActive &&
+        !route.isFirst) {
+      navigator.removeRoute(route);
+    }
+  });
+  WidgetsBinding.instance.ensureVisualUpdate();
 }

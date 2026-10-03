@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'support/local_core_intake.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,9 +15,9 @@ void main() {
   test('app kökü ve jablab_engine paketi AYNI motion_core sürümünü çözüyor',
       () {
     final String? appRef =
-        _resolvedRef(File('pubspec.lock').readAsStringSync());
+        _resolvedRef(lockForAudit('pubspec.lock'));
     final String? engineRef = _resolvedRef(
-        File('packages/jablab_engine/pubspec.lock').readAsStringSync());
+        lockForAudit('packages/jablab_engine/pubspec.lock'));
 
     expect(appRef, isNotNull,
         reason: 'pubspec.lock içinde motion_core.resolved-ref bulunamadı');

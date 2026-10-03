@@ -7,6 +7,7 @@ import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/course_page.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 import 'package:jablab/app/settings_page.dart';
@@ -17,8 +18,14 @@ void main() {
   const String alice = '11111111-1111-4111-8111-111111111111';
   const String bob = '22222222-2222-4222-8222-222222222222';
   late Directory tmp;
+  late OwnerResourceRegistry owners;
 
-  setUp(() => tmp = Directory.systemTemp.createTempSync('jablab-account-'));
+  setUp(() {
+    tmp = Directory.systemTemp.createTempSync('jablab-account-');
+    owners = OwnerResourceRegistry();
+    owners.activate(alice);
+    owners.activate(bob);
+  });
   tearDown(() => tmp.deleteSync(recursive: true));
 
   test('app id and filenames separate guest and account journals', () {
@@ -75,8 +82,16 @@ void main() {
       expect(await localHistoryAccountIds(supportDirectory: tmp), <String>[
         bob,
       ]);
-      await clearLocalHistoryFor(bob, supportDirectory: tmp);
-      await clearLocalHistoryFor(alice, supportDirectory: tmp);
+      await clearLocalHistoryFor(
+        bob,
+        supportDirectory: tmp,
+        ownerRegistry: owners,
+      );
+      await clearLocalHistoryFor(
+        alice,
+        supportDirectory: tmp,
+        ownerRegistry: owners,
+      );
       expect(await bobTmp.exists(), isFalse);
       expect(await guestTmp.readAsString(), 'guest');
       expect(await otherAppTmp.readAsString(), 'other');
@@ -91,6 +106,7 @@ void main() {
     () async {
       final ContentRepository repository = ContentRepository(
         historyDirectoryOverride: tmp,
+        ownerRegistry: owners,
       );
       final SessionStore guest = await repository.openStore();
       await guest.append(
@@ -131,9 +147,24 @@ void main() {
 
       final File accountTmp = File('${sessionFileFor(tmp, alice).path}.tmp');
       await accountTmp.writeAsString('interrupted write');
-      await clearLocalHistoryFor(alice, supportDirectory: tmp);
-      await clearLocalHistoryFor(alice, supportDirectory: tmp);
+      await clearLocalHistoryFor(
+        alice,
+        supportDirectory: tmp,
+        ownerRegistry: owners,
+      );
+      await clearLocalHistoryFor(
+        alice,
+        supportDirectory: tmp,
+        ownerRegistry: owners,
+      );
       expect(await accountTmp.exists(), isFalse);
+      await expectLater(
+        repository.openStore(accountUserId: alice),
+        throwsStateError,
+      );
+      // This simulates a new explicit verified admission; open itself cannot
+      // silently recreate the erased owner's retired epoch.
+      owners.activate(alice);
       expect(
         await (await repository.openStore(accountUserId: alice)).recent(),
         isEmpty,
@@ -171,6 +202,7 @@ void main() {
     addTearDown(account.dispose);
     final ContentRepository repository = ContentRepository(
       historyDirectoryOverride: tmp,
+      ownerRegistry: owners,
     );
     await tester.runAsync(() async {
       await (await repository.openStore()).append(

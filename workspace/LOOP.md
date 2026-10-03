@@ -1,5 +1,26 @@
 # JabLab — LOOP
 
+## 2026-10-02 — aktif yayın haftası kuyruğu
+
+1. Mevcut source WIP'nin tam app süiti, analiz ve bağımsız peer paketini bitir.
+   Kamera gecikmiş start/stop, hesap sahibi, lifecycle, push→ilk build,
+   debug harness ve QA covered-route onarımları gerçek RED ile ölçüldü.
+2. Motion Core frozen tam SHA + API + consumer/regresyon + provider planı
+   gelince ayrı app/engine descriptor ve lock ile benimse. UUID deletion,
+   yeni hesabı koruyan cleanup, erased journal lease ve global kamera owner
+   sınırları shared sahibinde; current f2ea pin tek başına kabul değildir.
+3. RW-MEDIA-COMPAT-001 yeni altı dosyalık izole successor/addendum taslağını
+   merkez peer'e sun. Base importer ve v2h/v2k/v2l byte kimliği değişmez.
+   Future content cutover ayrı; current v2k pin kabulü otomatik genişlemez.
+4. Kaynak/Core freeze sonrası merkez serial native SDK/device lease'iyle
+   build/boot/signature/16KB/privacy/merged-feature receipt hazırla.
+5. İzinli Auth/mail/delete/provider ve store kartlarını merkezin tek kurucu
+   paketinde tamamla; MANUAL-ACCEPTANCE-CARDS.md yollar/readback/rollback verir.
+6. Flow gerçek medya ve kurucu toplu fiziksel/fullcourse kabulü en son.
+   Frozen 19 tekrar yok; 12 NO_CALL/skor/kalibrasyon/satış kapıları korunur.
+
+Aşağıdaki eski kuyruklar tarihseldir; güncel durum bu bölüm ve lane STATUS'tur.
+
 ## 2026-09-28 güncel kuyruk
 1. PR #1'e taşınan 39 derslik Solo Boks kaynağında Actions bütçe engeli kalkınca son başta yararlı CI al.
 2. 39 derslik mevcut JSON'un üretim paket manifesti ve şema kapısı yerel testte geçti; gerçek eğitmen gösterimi/altyazı ve uygulama oynatması için ayrı cihaz kabulü yap. Gösterim fiziksel pratik kaydı değildir.

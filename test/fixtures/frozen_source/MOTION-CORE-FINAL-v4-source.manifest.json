@@ -1,0 +1,1995 @@
+{
+  "generatedAtUtc": "2026-10-02T01:27:13.833208+00:00",
+  "baseSha": "c8dd6a6d6eab5bc2b468f2acfeab01db2ef5424b",
+  "sourcePatchSha256": "ccdddad09a66e3be4d3dd11796add90f9c1f4c86977fa5cc2579de3e09472e0b",
+  "releaseSha": null,
+  "sourceDirectory": "/Users/mustafakaankocak/Developer/YULAlab-AI/scratch/2026-10-01-release-week-dispatch/lanes/motion_core/frozen-source/ccdddad09a66e3be",
+  "archive": {
+    "path": "/Users/mustafakaankocak/Developer/YULAlab-AI/scratch/2026-10-01-release-week-dispatch/lanes/motion_core/MOTION-CORE-FINAL-v4-source.tar.gz",
+    "sha256": "ff314571318d7e6026455b310c45ef10ccc3df3ae828434505f5043e8dcb02b5",
+    "bytes": 805638
+  },
+  "sourceFileCount": 329,
+  "sourceBytes": 2729905,
+  "allFiles": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "5e5d6ec9336d99209c2d6c90dd4a6696514dceec85c219975c3c56d9b7e8520e",
+      "bytes": 3710,
+      "executable": false
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "988a9ebb4211cda56f2f249f93d0110888a3577cdd50b10100863e20ec4477d3",
+      "bytes": 683,
+      "executable": false
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "7f70c26947b3653edf4792e2efc10ffdbfa5e423bfdc227d9302751195eefcd8",
+      "bytes": 960,
+      "executable": false
+    },
+    {
+      "path": "README.md",
+      "sha256": "f5aa8baa236c33f8191dc6bac1a582710b43d58cff6e6d35c2e2c1fe791a595b",
+      "bytes": 1036,
+      "executable": false
+    },
+    {
+      "path": "docs/00-AILE-MIMARISI.md",
+      "sha256": "755a5e78878faa7e75c4abb44e8f5aeff8e8403ee4959278939b354a47fc8fe7",
+      "bytes": 7553,
+      "executable": false
+    },
+    {
+      "path": "docs/10-ARAC-KATALOGU.md",
+      "sha256": "bb9e53278d0ddc08e07829ba70c665b0a9b752d133ca08e2d311fdd24a2969a7",
+      "bytes": 28787,
+      "executable": false
+    },
+    {
+      "path": "docs/20-URETIM-SURECI.md",
+      "sha256": "ff4aef2f9aceae650642903db2fb65ec42a55170f4742a49669f847a036ad776",
+      "bytes": 10921,
+      "executable": false
+    },
+    {
+      "path": "docs/30-URUN-BLUEPRINT-STANDARDI.md",
+      "sha256": "096d89432509063edf4b8e97e0cf2fe9504f34d058f4e833c17687ea727dfb92",
+      "bytes": 7028,
+      "executable": false
+    },
+    {
+      "path": "docs/40-FAZ-CONFIG-SEMASI-TASLAK.md",
+      "sha256": "6d3a45a677c9c2786729186ec943736a788d78c4b2722ae51cdae1eaef4d026e",
+      "bytes": 10369,
+      "executable": false
+    },
+    {
+      "path": "docs/50-REFERANS-TUKETIM-SOZLESMESI.md",
+      "sha256": "a45849b2de61908c690ca5bfc4d13ea9be16681c48735cf2c23164fd55252d3f",
+      "bytes": 3424,
+      "executable": false
+    },
+    {
+      "path": "docs/60-DSP-SOZLESMESI.md",
+      "sha256": "1a31b0598162b1ecfdd6c9977ff1a76d4c747a185c65173e6924ca850f50eb1a",
+      "bytes": 5316,
+      "executable": false
+    },
+    {
+      "path": "docs/70-KAMERA-KOPRUSU-SOZLESMESI.md",
+      "sha256": "cdd15ea5c9ef395bf73012499c4c0a19a7d214150b60b7236c871066482da432",
+      "bytes": 6482,
+      "executable": false
+    },
+    {
+      "path": "docs/75-SESSION-SURFACE-HONESTY.md",
+      "sha256": "69d017231dc54f1d0a8e91102cbd5981b3931cb41d41d9d8da841a10dea89f97",
+      "bytes": 4728,
+      "executable": false
+    },
+    {
+      "path": "docs/compliance/ART50-UYUM-PAKETI.md",
+      "sha256": "d7500bc9ab17a1123fe4b7f657112f5ce53e1af26f2cc6740c4073a9882bf58b",
+      "bytes": 4981,
+      "executable": false
+    },
+    {
+      "path": "docs/research/2026-07-26-derin-arastirma-ozeti.md",
+      "sha256": "10ea0d18464d3ddb9ba6975ae17e6a05a2573d2af8e7eee7fd40db30ae8fead5",
+      "bytes": 250657,
+      "executable": false
+    },
+    {
+      "path": "docs/research/2026-07-26-kurucusuz-veri-ai-egitmen-arastirmasi.md",
+      "sha256": "0de0ac1a60edb777d81f6000882251ffc0175f25abd29525bbcef65d9002ca7c",
+      "bytes": 136899,
+      "executable": false
+    },
+    {
+      "path": "docs/research/2026-07-28-TAM-KAPSAM-ONAY-RAPORU.md",
+      "sha256": "c4c61f01ba832680e5ee66e4a448589110a2483750668706d2da599047a83042",
+      "bytes": 12695,
+      "executable": false
+    },
+    {
+      "path": "docs/research/2026-07-28-kapsam-genisletme-korpusu.md",
+      "sha256": "403b28fd8a8c6d4a05f7650b1d6051650e5247d613e6948872ae7120eb7ad5c8",
+      "bytes": 96845,
+      "executable": false
+    },
+    {
+      "path": "docs/research/2026-07-28-tam-kapsam-arastirma-korpusu.md",
+      "sha256": "678d3e24a5a6e2ef6a726dc764b419b6c56f9dcd789cf0837d647f3399d7b41c",
+      "bytes": 130218,
+      "executable": false
+    },
+    {
+      "path": "docs/talepler/LISSOM-v3-ONAY.md",
+      "sha256": "7f5f9d86ea2b12a8c7f5e303c9b994b69b7498688788e226f8b35a2f5fe78e04",
+      "bytes": 5375,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/README.md",
+      "sha256": "86e0c942ef58a05ef603a44b5f49856ad7d9ec3165a28e08020f4c5b6dede7ed",
+      "bytes": 6564,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/motion_account.dart",
+      "sha256": "c9bb876b6d799a7adb131f405ad3bd404058cf52370a5dec3ca8e3ab7ff32ebe",
+      "bytes": 293,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_account_client.dart",
+      "sha256": "5d91afa066abdf54c524c1a2b3a44b63d6cc4240eebb6581be50582eee88a47b",
+      "bytes": 6559,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_account_page.dart",
+      "sha256": "7881ef9601ccd934b3ebd2bbd15b1666b0a3afd12cbb60d8accfeef91a7d44bf",
+      "bytes": 16930,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_account_runtime.dart",
+      "sha256": "c325d67cb308561c72c01fdb641790c0b8253b48594e1b91321157c1cbf5613b",
+      "bytes": 12491,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_identity_gate.dart",
+      "sha256": "cb632df4a4769c5d2ac0fc7e8764211d56c99691504eddc1f0d3af8bbb94bcd1",
+      "bytes": 3618,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_membership_page.dart",
+      "sha256": "31ea13fa38b59b4c7181a6fead67a5e7e634942e512c3df3da92a582de1d8b08",
+      "bytes": 15752,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_paid_access.dart",
+      "sha256": "9d2d4da8d39ad30c981df43e101f944560c088bf54eb9242552ad477bf278e32",
+      "bytes": 2497,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/lib/src/motion_release_policy.dart",
+      "sha256": "0e27c31bf54f7d0da3523606e6c97162410f1ce9b93bbac972edcd440053d538",
+      "bytes": 203,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/pubspec.yaml",
+      "sha256": "5498aa3052464982f9265a4150e64dc5e3fc0bd59b0a5e15f066fbc2e176410f",
+      "bytes": 431,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/account_lifecycle_race_test.dart",
+      "sha256": "b56f3a5e9f51576fd8b276d2c7d2695d494523cdbba63bfcabc5390aebd682c8",
+      "bytes": 25744,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/account_page_test.dart",
+      "sha256": "caa439aefb919d331c198ce6f18deb25869ed095e5bd59e0ae71b6e6571f5c5a",
+      "bytes": 16922,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/local_account_integration_test.dart",
+      "sha256": "609aa4d465af0cf399954af156ee3c5d8bc4b292a31bc4f2bb4283f0f2c4be99",
+      "bytes": 4150,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/motion_membership_page_test.dart",
+      "sha256": "fb3c344a22957f65e00582bc9903d58a5acb8936763503eedf7a14c6dcb20cc0",
+      "bytes": 16029,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/motion_paid_access_test.dart",
+      "sha256": "5a8d0d8e91dc803834c75a66f491ade897972dd74ddd986d464cb2755ac4da73",
+      "bytes": 6058,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/runtime_configuration_test.dart",
+      "sha256": "af7b2885bcaea337a3183425db53a45672a6250d23eda83ca46af9226491abc5",
+      "bytes": 1038,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_account/test/runtime_identity_test.dart",
+      "sha256": "fd613b07a8da13e0d3c16f623f85365aeae67b74e1602eb64bc62bd6a4ec61a6",
+      "bytes": 10932,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/CHANGELOG.md",
+      "sha256": "7179c26e4c4766d54678214aa5b6cfc935becd7cb6aa9a2aa1ae08f8878f1796",
+      "bytes": 347,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/README.md",
+      "sha256": "6a647482ed4fa4bc356328bc3ac65ca3a92027685cc0801d194802f40610ef43",
+      "bytes": 552,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/analysis_options.yaml",
+      "sha256": "b5d168ba0e9dc0e07bd0ceb763bcc2ead67df342606510f20a961da3d463f4c2",
+      "bytes": 171,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/lib/motion_audio.dart",
+      "sha256": "e5509e8cd491109a676d0e377a41ec320ae87ca545115e057815b9512f1bd2dc",
+      "bytes": 365,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/lib/src/chord_estimate.dart",
+      "sha256": "cfdb5a483cab32dc1a7b17c8c4cbfad434c7e704e827e5afe7f66824394a4524",
+      "bytes": 774,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/lib/src/latency_calibration.dart",
+      "sha256": "67e8b9454b19a5d14cdb4290715c4c64f541d9247972eed475a5c47e2ff2a5c7",
+      "bytes": 1186,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/lib/src/onset_event.dart",
+      "sha256": "e646e1e8d890f02da378d069aeeb260e01717bf32542b9cc15ce7f80a88d27c2",
+      "bytes": 420,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/lib/src/pitch_estimate.dart",
+      "sha256": "1714a5c1c75d7bdab5bfd66f3793149f1475a3394692aa1fb6f8de4f2d8faf47",
+      "bytes": 1025,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/lib/src/transient_buffer.dart",
+      "sha256": "2cf500f271b2a2e84646e078475ef5eb5d532257bafd3564d6f82128ed36ca60",
+      "bytes": 680,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/pubspec.yaml",
+      "sha256": "ca60afe383824eedd9e38e60273044e46295573a990ca8d0bd98a9f734f2686d",
+      "bytes": 502,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/test/latency_calibration_test.dart",
+      "sha256": "9c8daa0dc9f7259775e931489b72d857712cc855b31cd4235c0abe8df01de318",
+      "bytes": 2031,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/test/pitch_estimate_test.dart",
+      "sha256": "6e745e513d628d574b16f09f6fca2b8eadb07f7dac42246b38fe1898e1e7274c",
+      "bytes": 2854,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_audio/test/transient_buffer_test.dart",
+      "sha256": "28a9b26a6b4be3310621a95fcf8e17b246eefe375c9070a62cfa4c74cc1ba058",
+      "bytes": 1280,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/.gitignore",
+      "sha256": "ae768b0bfed9e44a618f24e4356f3ed3353422f5e810604601bdc2cefbd10fe6",
+      "bytes": 591,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/.metadata",
+      "sha256": "6f761e92053d2c8eefb72a0e4591e65e7be296a8cf84e0fe095a9da903b39671",
+      "bytes": 1117,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/CHANGELOG.md",
+      "sha256": "338abdf4da9f0d41b658fa1470e4eae9512f6ed8f228321146d0746b273f50ec",
+      "bytes": 2818,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/LICENSE",
+      "sha256": "422e0de8e3275febf5c41a5ccf891f68f16bc40e1b5dca26e50913b307ef794e",
+      "bytes": 29,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/README.md",
+      "sha256": "01a5f71f55360b3f1615abb3e11a1bf869274e3a839efba86885a5d8a1e1cbab",
+      "bytes": 4960,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/analysis_options.yaml",
+      "sha256": "df692318073ecc5f3b8a759a1f9338eb21995900d3c2bc1fbcd2c7780a1c7c6e",
+      "bytes": 154,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/.gitignore",
+      "sha256": "419c1e3c95573dbbc3676451a01808dcd07953c55aff02fff27e201703af725c",
+      "bytes": 102,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/build.gradle.kts",
+      "sha256": "b0d353b14b99306ae611b0f9f47e2eec725890cdf8e68f102ccf489bb17e60d2",
+      "bytes": 1829,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/settings.gradle",
+      "sha256": "795a8591e0722250a763932ece7a7f5de42c13d00ef8151396593deb6f477424",
+      "bytes": 35,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/settings.gradle.kts",
+      "sha256": "795a8591e0722250a763932ece7a7f5de42c13d00ef8151396593deb6f477424",
+      "bytes": 35,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/src/main/AndroidManifest.xml",
+      "sha256": "94eb1e33c2e8e8a183ec75c8c7483c9613637c9918c50b9257fbd4cabd5d1a45",
+      "bytes": 406,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/src/main/kotlin/com/yulalab/motion_camera/CaptureLifecycle.kt",
+      "sha256": "13bdb7babdd5959230772433ab52dbdc3502a5309d02dd283b7f300d01fbab0d",
+      "bytes": 3514,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/src/main/kotlin/com/yulalab/motion_camera/MotionCameraPlugin.kt",
+      "sha256": "37d57bd707091cbc7e8a9c62f6f82430c31671f587023261edeb4e9ae273f741",
+      "bytes": 29573,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/android/src/test/kotlin/com/yulalab/motion_camera/CaptureLifecycleHarness.kt",
+      "sha256": "d7ec6d84aecb189b61493161b8ea94781378d0238fb92196785c74c43c7f0488",
+      "bytes": 5053,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/.gitignore",
+      "sha256": "e9cfa4dfcb9bab821da4048c87dd0d0622383a6d2d76bb0edd8c7013030924a1",
+      "bytes": 419,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/Assets/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/Classes/CaptureLifecycle.swift",
+      "sha256": "f3070cb714e7493003936305858f8e055530b1447f18fa3194c7bc7d057d8504",
+      "bytes": 3648,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/Classes/MotionCameraPlugin.swift",
+      "sha256": "d40392e8f327ae670f159e0fde724fdf5fb90a4fb4012c7ea411e3c01d0d6c0e",
+      "bytes": 25122,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/Resources/PrivacyInfo.xcprivacy",
+      "sha256": "6d2da0d8d930227d428c1d9363b0ad6e3a12e2c9b68c5ce297158a7412fc8c31",
+      "bytes": 373,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/Tests/CaptureLifecycleHarness.swift",
+      "sha256": "c68f76dd037e41fd4395f88fdf7fa4349159aa59b3e4a07c3b6940ddd9dc56b8",
+      "bytes": 5702,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/ios/motion_camera.podspec",
+      "sha256": "a9db91c85c21d45e1f65407a3e2bb716ce2281509039d2317163557814fb3162",
+      "bytes": 1042,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/motion_camera.dart",
+      "sha256": "b8b3d30aeab96f198753310b0848addde3fc497e1e66ace27a59e32e4a199af0",
+      "bytes": 663,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/src/capture_lease.dart",
+      "sha256": "4290eab96fefb8348ef6f0b12ca877f4d4e692d65f15343f957776cc85db1da9",
+      "bytes": 10970,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/src/controller.dart",
+      "sha256": "5d2ec4e8c233f6cd1c2aa2d8ea88718bdcd29b426d51cf87bcb27f4085e983ff",
+      "bytes": 13756,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/src/envelope_driver.dart",
+      "sha256": "a6933d29c3aa3f02a76f02daeb927901138a206ff4210c99cbbf00931f3df644",
+      "bytes": 1489,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/src/frame_envelope.dart",
+      "sha256": "44b4876c5c08697fdc6c2c1c521884003d026311e3b54770c83deb1a1f525054",
+      "bytes": 6229,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/src/pass_plan.dart",
+      "sha256": "e66c34dd04ff8eb39f437d20cd257034a17bcd6fb23c64d0ef2dbf9ae3e0c3da",
+      "bytes": 1676,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/lib/src/rate_meter.dart",
+      "sha256": "f8ac51f15377351b0fc00011deceb24ae36ec9a770f2d0c008ea97cd99146bb7",
+      "bytes": 4201,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/pubspec.yaml",
+      "sha256": "92488241dc813ff6faac99986edce2e4004f19f19e013ff77d7addc3a3519c3e",
+      "bytes": 741,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/controller_test.dart",
+      "sha256": "7c9f6ca21e728e973c31f08608b2f963f590ec50ee945a24f48182d42328ec73",
+      "bytes": 3842,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/envelope_driver_test.dart",
+      "sha256": "4c2c216c3b51d582a658899b239b20950d7e385fd41a3d1278ea850bab583e69",
+      "bytes": 1982,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/frame_envelope_test.dart",
+      "sha256": "82d935a17ccfe1d28ef38c660d7777382fcc856e6ec46526dd0d5f069fa7b3f2",
+      "bytes": 3915,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/native_lifecycle_contract_test.dart",
+      "sha256": "57b05ceed13e943308813feb8aa64c2c673f1730db63adfb77158c1cd7e60325",
+      "bytes": 3249,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/owned_capture_lease_test.dart",
+      "sha256": "1063a21dd6c88a36f749dbd36fe52f1b32d1ddd5d7ccf5a3e4a37fdc42db34ec",
+      "bytes": 33861,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/pass_plan_test.dart",
+      "sha256": "3d8775008811590259a2bfd8271cedbee71d115bee67fc36f9501fe2968198dd",
+      "bytes": 1206,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_camera/test/rate_meter_test.dart",
+      "sha256": "38e3a62ed74ef54d7f5b3987d89bb4d40e8d72a56267d7208f717520f529e893",
+      "bytes": 3107,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/analysis_options.yaml",
+      "sha256": "a57fb562603643c102e68c0e8439487a0a4c38be92da9f36c6263054a840cee4",
+      "bytes": 279,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/bin/motion_content_manifest.dart",
+      "sha256": "5458fc24eda0c835d5b1a33ea84b5bd3841bf2ffd5816b0ecfc541797c3f0459",
+      "bytes": 186,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/motion_content.dart",
+      "sha256": "99ef7bf810b36add1f6eb2bbcda8c2c2745abae44c1252717e105849bf66e864",
+      "bytes": 474,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/asset_reader.dart",
+      "sha256": "8385e4b88fea19180eec29e6ce36de661defa080b9e3f73a5fba7d0a56caee69",
+      "bytes": 919,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/canonical_json.dart",
+      "sha256": "da93603ef0788388afc968c4f7e22bf8879d11a46c110f6b0b71e35ade2c4dbf",
+      "bytes": 1328,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/content_bundle_loader.dart",
+      "sha256": "6fe3b6b94da977ec03efc0847b211a8d46227a32608b4475516e3616feca0ebd",
+      "bytes": 5736,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/content_catalog.dart",
+      "sha256": "33d6f9759604ecf18dc4e0f16cfbd4e05ffe962f1e9b1d1266e5a55fdf28e5d9",
+      "bytes": 970,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/content_error.dart",
+      "sha256": "625b46a221e60950742967e5ab62d781294bbf84123d64627f8d6b8ee46207b5",
+      "bytes": 1424,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/manifest.dart",
+      "sha256": "871a77998506957014405013a589debd04db4bc49617843c6542b6ddb18e0f82",
+      "bytes": 19914,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/manifest_builder.dart",
+      "sha256": "4004f79934ce8fc94a1709439df6171a3a76a5c88c23241362fb12422da2573f",
+      "bytes": 9669,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/manifest_cli.dart",
+      "sha256": "c2c602ee6ea2eaccdda1494f05d25a6fa381afae0c8e30c5bbebb35d23230b74",
+      "bytes": 3523,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/manifest_validator.dart",
+      "sha256": "bdbb7972afd98de7359825ef05e78256ea0732da9c716232845bd47ee5cfa673",
+      "bytes": 6700,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/path_policy.dart",
+      "sha256": "570a970caac10099adc7a8f7c1a9441ce5934c2bf38f17b4175ea537b3c74d02",
+      "bytes": 847,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/secure_asset_file.dart",
+      "sha256": "b8d0c5599238f5b664cdc4106758d6a76bae2fb9bf13c1da0b263664a6964239",
+      "bytes": 9621,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/semantic_version.dart",
+      "sha256": "7daadf3b99e6dd1d290d9366a392a040f3b3ab08e5499af6980ff3249dc493c2",
+      "bytes": 1497,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/strict_json.dart",
+      "sha256": "400a72835f9eaeb86db9047ce0fcffd421bda01467edf8902f6165071cbe2005",
+      "bytes": 8372,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/lib/src/validated_asset_reader.dart",
+      "sha256": "c9bfaacf76291d972df57b8e1881d59ea6fd56711095eff2dad66b010da3b3a2",
+      "bytes": 1289,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/pubspec.yaml",
+      "sha256": "3961f35b91dc5b5beecb96a1d66fd616d85a3bbb0ec8844bf3b955589e20d9fb",
+      "bytes": 326,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/canonical_digest_test.dart",
+      "sha256": "13f9f1529e32d083b4b0683d1301cfc69ce81acfb51f926ea9e483beeca49c90",
+      "bytes": 2047,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/cli_test.dart",
+      "sha256": "c65699cb9e19e83c0f5fa8bd796440853034bb4fe74f6a1ca239da1f11d8ffd8",
+      "bytes": 4307,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/content_bundle_loader_test.dart",
+      "sha256": "7261e9009c15d40724f58291e17840c55c11b5f8208692575ead7fbc0ab15879",
+      "bytes": 10552,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/fixtures/invalid/duplicate-key.json",
+      "sha256": "fe0df26fd73ec914bbeda13bb9c5571e1f335d50ba4fcfa8a0ae3655e0c96d33",
+      "bytes": 38,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/fixtures/valid/manifest.source.json",
+      "sha256": "824ad8e000f00372a5a74256775b189be39a807bb79f6f52b5e13c2c68754cbf",
+      "bytes": 214,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/manifest_builder_test.dart",
+      "sha256": "3a52c7f3860efc0db71238d239fdb1947e23aeffcc150c6bf3adf9bc27f748fb",
+      "bytes": 15190,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/manifest_parser_test.dart",
+      "sha256": "ae32325d512a81e058271859edef20c298a8670c7e7c4d9febd83ac61284dae5",
+      "bytes": 13164,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/manifest_validator_test.dart",
+      "sha256": "b6ea2a10b69fe67074293f261ef564736ae3c8c12310aec29628d01b19af99be",
+      "bytes": 9280,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/path_policy_test.dart",
+      "sha256": "cd6de19bfe89f846049b292f39146c684124008441076b405cd56749f88dba43",
+      "bytes": 831,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/semantic_version_test.dart",
+      "sha256": "097c9ea3131399a4f70dda183d42517d04b3118c6ba6c6da0cca5392df73a3fe",
+      "bytes": 1436,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/strict_json_test.dart",
+      "sha256": "8d898a443ee619fdd2df10cde716d49a2fd3c3340ca788a1f289981ae80df771",
+      "bytes": 2671,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/test_manifest.dart",
+      "sha256": "577d288923066786ab47626b33cb54b88d121867c52fed2f2d9291b6217ffe66",
+      "bytes": 3372,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_content/test/validated_asset_reader_test.dart",
+      "sha256": "90f1765e3bcb669bfef1adfbfff767e70237eb348a36fc087e686ea27b48a53c",
+      "bytes": 4892,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/CHANGELOG.md",
+      "sha256": "4da52b6486e82c08fcd765f32b0731df7c4d49e859c7aac83103cf0d56f7e6a6",
+      "bytes": 26815,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/analysis_options.yaml",
+      "sha256": "a57fb562603643c102e68c0e8439487a0a4c38be92da9f36c6263054a840cee4",
+      "bytes": 279,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/motion_core.dart",
+      "sha256": "d5cebf18ac3252054802d6af7bc3cb0ca99f9188f29f92ef5486ae62e6f71e69",
+      "bytes": 2147,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/engine/ai_disclosure.dart",
+      "sha256": "0e933ed2f3410a5716caece2a0dd7953e6b8c3331d840a614aa3f5a1f1da58a4",
+      "bytes": 2709,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/engine/feedback_prioritizer.dart",
+      "sha256": "2fe0c54a90f6b6e2122723aacf4a45cbc26543de2aa39097f4d105400d512e4d",
+      "bytes": 6319,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/engine/motion_clock.dart",
+      "sha256": "7a0b3ad9a503de36e29792d51fdb9a6a95ba90d6ccce6a4df5bf918a1d3e1db4",
+      "bytes": 1707,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/engine/phase_config.dart",
+      "sha256": "d20132dc539cbe2ccef71a7af048476da6dbd34de7a82ceefbf72907fd0eca4d",
+      "bytes": 35379,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/engine/phase_state_machine.dart",
+      "sha256": "2c8852c8297962f8a301fe4fd0ee919448168643decd45d8e81054b9e39c4a4c",
+      "bytes": 9564,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/engine/provenance.dart",
+      "sha256": "2f45b514ca82446870cf904f4b84dbf7eadedd1914321ffed949cc30aa019614",
+      "bytes": 5095,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/fixture/fixture.dart",
+      "sha256": "f327742964d24bc84891e0e0e63a9ade5a66a90f183f030e39d8fff1e7f0b302",
+      "bytes": 13307,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/fixture/replay.dart",
+      "sha256": "d45cf518e31c4658d24ec6571de4144c502074c005cd41ab088f38312fde306a",
+      "bytes": 5029,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/fixture/synthetic.dart",
+      "sha256": "e6a020d2b9cd66d90bb9b398dd38f998e47cb55b7a134140d5756d9996fc20f4",
+      "bytes": 14566,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/geometry/joint_angles.dart",
+      "sha256": "c7e6ee4f46a075b15194d3531b4102a1df784b9f082b9fc4e0c4e594e6f79fa9",
+      "bytes": 9720,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/geometry/normalization.dart",
+      "sha256": "c14f25102ea8c5422f453d6d65643f37617dedf491b0e70d767af9a0ca44e110",
+      "bytes": 7703,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/geometry/vec3.dart",
+      "sha256": "8b2b6f5db43c106f2ac97b47ec2c96cf2203b64df83ca7c7534f7b8672f999c0",
+      "bytes": 4183,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/confidence_gate.dart",
+      "sha256": "bb64a8c5d075bcc7a255a424bf34c8b7c229143d828972b19440ab2dc9b378c0",
+      "bytes": 6775,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/landmark_index.dart",
+      "sha256": "f1720003436e6457c0a6998ca8c32412132dd757174390386b6773354cf3035c",
+      "bytes": 5799,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/orientation.dart",
+      "sha256": "3e30acbf145e89ac3f2da13678b3a393d06790187d26a5a9453ccef2545d893a",
+      "bytes": 2625,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/orientation_aware_source.dart",
+      "sha256": "829c47d73c3fb5ef1337bdfb7bd38dbb0e62ba6ea7a37e746a7fd8cdba17de41",
+      "bytes": 10104,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/pose_frame.dart",
+      "sha256": "e892a6ab8846fede067f62b5d380c82ec0815e13a64fbe949254c3b368ff208a",
+      "bytes": 7147,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/smoothing.dart",
+      "sha256": "17b7324a99daddf921088f6db334156639e90511947083c3af57d4468bcce64c",
+      "bytes": 4039,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/pose/structural_validator.dart",
+      "sha256": "13ac13d99ff3b584ba4ac3d47f67b3704aa0c406dce3ae9a889cc995b4929cdf",
+      "bytes": 8997,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/rhythm/audio_timeline.dart",
+      "sha256": "5cb04ce69be8ccee47340c3a805890850a0f3726f9d6d03de56421d15eeb9eba",
+      "bytes": 4178,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/rhythm/beat_grid.dart",
+      "sha256": "b58ea256deee6c3976479759097b07b970450653ea2361e2193a22cc912f5eea",
+      "bytes": 5720,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/rhythm/cue_gate.dart",
+      "sha256": "dbe46532f602378d3622cdb563ac61144e642f4c318ec7ca83bda39917f60383",
+      "bytes": 2762,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/rhythm/latency_calibration.dart",
+      "sha256": "ee23cb861c9aeb89f51f28dd6823768e6551b659378b7ffb88c55e6d9ba1ea2b",
+      "bytes": 7106,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/rhythm/timing.dart",
+      "sha256": "414a8dd443ae85245efe7b9ab7dece168055712c7e4d529f6420e9c446291929",
+      "bytes": 8709,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/scoring/cycle_aligner.dart",
+      "sha256": "e015b4e95cf51a0e968a8241007ef3aa60b8e68c42fb8c695d0bf3d2d9bf811e",
+      "bytes": 9045,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/scoring/cycle_segmentation.dart",
+      "sha256": "f9ca631a6a75056db0d459c4d9933079c63b958ddeefc69015f734f4e08007b5",
+      "bytes": 7168,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/scoring/dtw.dart",
+      "sha256": "be842f74648bc8168f29682ea2fcd74f421cdc7cba71b77c8ff36c78eae972a9",
+      "bytes": 15522,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/scoring/reference_builder.dart",
+      "sha256": "919bd401ea766e2947d4ee980f5d57a83599d9c40d46e4398af6bb8e1612d7e5",
+      "bytes": 43171,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/scoring/sequence_comparator.dart",
+      "sha256": "fd696ac19a9133edb1f0052f80328061cd9e977284adcf0d1481705ff9cee203",
+      "bytes": 12963,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/scoring/similarity.dart",
+      "sha256": "a8a4358fe70bd29e92b41c1b87c974c1f7b9b75ea2f3c531521d365c4b143e84",
+      "bytes": 6599,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/session/history_read_status.dart",
+      "sha256": "1ac867db083c5839a05ce3eef23139d812f8e39b8697efe83bebc363e67779ab",
+      "bytes": 2743,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/session/session_store.dart",
+      "sha256": "d7f3118204cfd7d118868febd41f160bae40ea4cb62a5fbb04bdd919bdf65fdf",
+      "bytes": 15040,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/lib/src/tooling/reference_cli.dart",
+      "sha256": "33ac66b3b12c9292d3bee61edd68c84c4baa94aaf812f71073f0f32d1865d7a7",
+      "bytes": 23320,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/pubspec.lock",
+      "sha256": "85f784327eaa6101fbbcbcf7a23a4d4e90d43425d2242be8d3820ed064e51e8c",
+      "bytes": 11185,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/pubspec.yaml",
+      "sha256": "d791d1f8b5ce8f969cd4894524be351ef36c966b7584986cb885ee9e2b9578be",
+      "bytes": 440,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/ai_disclosure_test.dart",
+      "sha256": "7d9b04d2f8071da3f1cffce938b5e73e42909bf470030156504a7e06de3b2193",
+      "bytes": 1363,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/attempt_evaluation_test.dart",
+      "sha256": "aa9ce6e3973827c7bed39066095400622051c410f32feb9b02c7934e91b06027",
+      "bytes": 9043,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/coordinate_space_test.dart",
+      "sha256": "98548c77735ab9caea92bbbe31542ae6a914589d44fe5ccbd7a94d611e67539c",
+      "bytes": 4659,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/cycle_aligner_test.dart",
+      "sha256": "64be0ebe7dfd79b9b2df9c32d2cb0d6bc8efde48953f5ad827fbb6e7e0ac32b8",
+      "bytes": 5673,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/cycle_segmentation_test.dart",
+      "sha256": "061cd7d17167b5e2b106ccc818b660b982b285f251a08c379abe15c62843eb61",
+      "bytes": 13463,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/engine_test.dart",
+      "sha256": "2667114746cb71d4af2ac81d52ab04c703e1493abd136bf3dd722cc035efb857",
+      "bytes": 9167,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/fixture_v2_test.dart",
+      "sha256": "e6b8019532f085126b443044573c5e1a47b5f70a70740380a4950bcca5720574",
+      "bytes": 5088,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/geometry_test.dart",
+      "sha256": "575ec436bb69113aee6e38d6f14ccba4ffa59ee85902e817fe1a419876f23c25",
+      "bytes": 6144,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/helpers.dart",
+      "sha256": "43f9d073bc9e4c8515697850d948daaaea98bc7c4427f9b227209cdeb5c70740",
+      "bytes": 5973,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/history_read_status_test.dart",
+      "sha256": "f4fd69bb0587bfc536126a89f9f9f68da51e7e6d302ec88bfb6dce04985d7a24",
+      "bytes": 1690,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/orientation_test.dart",
+      "sha256": "c540b99e41db3fefe9a479a4cabb4226c88e8bf69467a8c6165fba334029415e",
+      "bytes": 11157,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/phase_config_test.dart",
+      "sha256": "de56e9a2c005fd1c0e308b5d0cc278adb8dc9174f3fc6e872e91819eec64485a",
+      "bytes": 11962,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/pipeline_test.dart",
+      "sha256": "d30dba1ffd4a12745daa57aecc92cad07183861920c402546bd1e18aff3f69ef",
+      "bytes": 7599,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/provenance_clock_test.dart",
+      "sha256": "8d67273323ed81c72006ce0156d748c866e3a8176e175046cad15e97ed6f5939",
+      "bytes": 7210,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/reference_builder_test.dart",
+      "sha256": "73e5eaa33592d5ef33545a25dfd9a330d5d1d94512128e0d4ccfadb91cc12eff",
+      "bytes": 29298,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/reference_cli_test.dart",
+      "sha256": "bbe9f102ebbd2b605a68ca2b04a133abc9db3d2f2a313dff64aae6373f52b922",
+      "bytes": 13563,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/rhythm_test.dart",
+      "sha256": "825a006bd59a417f11b0e6f69493919cc1af185fae54e8f807d29909e7023f06",
+      "bytes": 7215,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/scoring_test.dart",
+      "sha256": "0600ea61e0ae9476484d7031fb2b51df756149a1cb2eca2acf633588d88d54fe",
+      "bytes": 20285,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/session_store_concurrency_test.dart",
+      "sha256": "00296e7f90d982a2aad4f3ca68c98baf3f554af34bebc67ab3a075f61a16d1f5",
+      "bytes": 1542,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/session_store_lifetime_test.dart",
+      "sha256": "bef5210168db9bd9101edea30695a824c4e1db79c85a6f4bed88a103ae4487ba",
+      "bytes": 5302,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/session_store_test.dart",
+      "sha256": "2a15c3100b5061a0ed7180c5f34580a6922b4e50761b7421b249273480100594",
+      "bytes": 8459,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/structural_test.dart",
+      "sha256": "3e7a237247505a41c6a3f68eee9451a1406ed69d9e61ecda4c2f137c7102f228",
+      "bytes": 5460,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/test/tool_smoke_test.dart",
+      "sha256": "7584586779c66d294e5bcf20692171252766dbb3fd309d7ecd69f6b518689b65",
+      "bytes": 2404,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_core/tool/build_reference.dart",
+      "sha256": "f0f043d5210e4213c57f53aa56d8035d3d41364d522a8cf0362f8383a6c5edb4",
+      "bytes": 7829,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/analysis_options.yaml",
+      "sha256": "486df25a7cf717e8bc05d823860d61962d125c2f3aa986d25f27da82c0baf118",
+      "bytes": 197,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/motion_entitlements.dart",
+      "sha256": "ad4db83b2912123fd311b3f0b3c734d11af5b3464c2ca97932691db5f90f13d4",
+      "bytes": 547,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/entitlement_cache.dart",
+      "sha256": "fcff8b8f2e82b7d00afd3ef06599f13850788111cf478cdca61b6d6e31ba29a0",
+      "bytes": 951,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/entitlement_status.dart",
+      "sha256": "dea430579181e62c6dc53384a6cf89b4d250e560c3089d5e5286cba1fbca41bc",
+      "bytes": 1578,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/flutter_purchase_adapter.dart",
+      "sha256": "e6a303169a009437b67b2cba0c5d59afc3df20611f8bad53a114242256a79d06",
+      "bytes": 5836,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/purchase_adapter.dart",
+      "sha256": "e1bf0deedd585625f328312335b48804f2a67286bc90612766791a6907ea9320",
+      "bytes": 1785,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/purchase_coordinator.dart",
+      "sha256": "f880a245eb2d3b670fc9d74920f99e0a930e9006312089f484edbf82e85500bd",
+      "bytes": 4611,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/purchase_state.dart",
+      "sha256": "c85821a776266fe12b28847f1448d2bde1aa386af24ec8f307cced53050beadd",
+      "bytes": 443,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/server_adapter.dart",
+      "sha256": "8493845b2fa6e86653efb482a429205fc6dd7d07e7da2f6ed8cc09264796b392",
+      "bytes": 471,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/store_product_ref.dart",
+      "sha256": "8a88b4743654dfeba63b71e2743adfd77a5326a13334b9cb710eb84397c54987",
+      "bytes": 592,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/lib/src/supabase_server_adapter.dart",
+      "sha256": "3f9e2dc30015e313610cec917e3797c99746a05ffd8339f5454b21db3c0d0551",
+      "bytes": 2778,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/pubspec.yaml",
+      "sha256": "6302d1041336a12c06b4ee0be7754608144dd41c9a5c59e7f121f95103b84923",
+      "bytes": 749,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/test/entitlement_cache_test.dart",
+      "sha256": "efd2a9542b1e6df0809aa1f2e03cbcb1d0830b63f839bd4573f9d5432b069f82",
+      "bytes": 2290,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/test/entitlement_status_test.dart",
+      "sha256": "36959bfa80151758fb26bf7f9a69b2bc7e2e1a4bc9b4e564079aa8c5fcbde03b",
+      "bytes": 3563,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/test/flutter_purchase_adapter_test.dart",
+      "sha256": "dfc1d1c582f8ec6129a000093db16dd6f37d833a28f17d5c3cd5e7afe26629f8",
+      "bytes": 7335,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/test/purchase_coordinator_test.dart",
+      "sha256": "961640ea2e506dd82dce87bdead7ebc241fb8d887d6c692ba2a603a596c2afe9",
+      "bytes": 8656,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/test/purchase_ordering_test.dart",
+      "sha256": "f224474fbe9edcebaeaa0fca8585f24791adefdc249a92ca4a890403e34898c1",
+      "bytes": 11593,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_entitlements/test/supabase_server_adapter_test.dart",
+      "sha256": "53487575f76b5d9a08eed8f28b57eb8966f67836f1d4e35c0a464823bc4cf783",
+      "bytes": 8127,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/analysis_options.yaml",
+      "sha256": "b5d168ba0e9dc0e07bd0ceb763bcc2ead67df342606510f20a961da3d463f4c2",
+      "bytes": 171,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/lib/motion_feedback.dart",
+      "sha256": "3e728ef165b119793fababc648728a74a839e118123aefa9d9f4e64ae4b59462",
+      "bytes": 348,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/lib/src/clock.dart",
+      "sha256": "ce9d06bf2f38dc847bf4bc8b17ee0e3a77d49724e137c006298297308686ca5e",
+      "bytes": 287,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/lib/src/cue.dart",
+      "sha256": "f3c2834e020d766dc4d80fb9a2001fa2f4a4b1ddd92687305b7f2fb583efde9e",
+      "bytes": 1398,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/lib/src/cue_arbitrator.dart",
+      "sha256": "62be68431a3bd1c5d33042a96e111152ef7b3a0e25a212997ba3ed1e25909145",
+      "bytes": 1140,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/lib/src/ducking_controller.dart",
+      "sha256": "85de325405679907947cd505e6998ba145f7425036a42658aa2038d7fbb8f436",
+      "bytes": 977,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/pubspec.yaml",
+      "sha256": "2e1ec9b24f1a3a65c7a18db203c53f90f716042337e84d2dffa5dc5974152b3f",
+      "bytes": 588,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/test/cue_arbitrator_test.dart",
+      "sha256": "b5763bd8f3e26f041924d0f5a3cd0bd10b68de2ccb5e574e7f0e196952dd44d3",
+      "bytes": 4924,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_feedback/test/ducking_controller_test.dart",
+      "sha256": "3c45c8a51982d81ded49410b6b846056374aa93b16082e93b7cb4ae923716b91",
+      "bytes": 1641,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/README.md",
+      "sha256": "153753ec7e1957c51c0e785badeb5f80a9ba0ede6021cc44925ebf2c57e2b199",
+      "bytes": 1003,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/analysis_options.yaml",
+      "sha256": "4f81df7733df22a4734e70a7af950dea7547c134fad68d5b7cdafa435d337d00",
+      "bytes": 140,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/motion_media.dart",
+      "sha256": "517c3d31bf69e03a5fa8c61e3ac2322a3a0623e725b915592a04abbd053b483e",
+      "bytes": 603,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/bounded_webvtt.dart",
+      "sha256": "f30ae2b38983f3e35af59cd5fa27c6185ddb6626a52d0d0a8c181350da58c0bd",
+      "bytes": 3469,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/canonical_release_json.dart",
+      "sha256": "6338a048811783d832fb4cdd49fa538c45156d20d4e8501b23491664839d2b8d",
+      "bytes": 8106,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/exact_https_media_source.dart",
+      "sha256": "23973ff274f006f84d7ae2b0f65d0c371d86088831374d675b633010071a0be9",
+      "bytes": 10034,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/release_manifest.dart",
+      "sha256": "7df434917388c84f2339ef56236c9b555fc42e1bf3645bfcab1d2c9095f55ce4",
+      "bytes": 24103,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/release_production_gate.dart",
+      "sha256": "2180ff2e2d744106cf010d09f4767e5d939d23b544947229dcd659a6980fdce8",
+      "bytes": 1776,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/source_projection.dart",
+      "sha256": "e769a14ec5db13f643c4932f2eb693e1549edfc366c0d8e85fb3c7c65ae21930",
+      "bytes": 7590,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/verified_media_cache.dart",
+      "sha256": "6a3ba81e16d59f0851c0568b46c27c91de54aea9ed2e83f93d5674199825dd51",
+      "bytes": 24463,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/lib/src/verified_media_triplet.dart",
+      "sha256": "092dabc7872cd629879d6380f3bcdb099700fd130e7c4cef45657e0afaebc140",
+      "bytes": 6415,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/pubspec.yaml",
+      "sha256": "103f61e4068ff51adab6f8e77ab37ec070e90389ef5f9777b4cc332b4bccda16",
+      "bytes": 342,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/fixtures/v2l_synthetic_coverage.json",
+      "sha256": "e8afb02d418f82ce11092c60a88e60c03b2032550e5fef5210e99e4877af27d8",
+      "bytes": 323,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/fixtures/v2l_synthetic_release.json",
+      "sha256": "ff187fab19f4718aaced3c09962f0d726dc5082c4a71e23020c6286162afe412",
+      "bytes": 2528,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/fixtures/v2l_synthetic_release.sig",
+      "sha256": "7c603431d550d2a5e9c211fa3885c6456a71f80039f46bbdc97bee5fd6bb1b67",
+      "bytes": 64,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/fixtures/v2l_synthetic_source_catalog.json",
+      "sha256": "87854b777591afc1b5c20b2a27db44bcd9a5e502453ec161f601ad5d94e9f906",
+      "bytes": 1467,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/public_source_projection_api_test.dart",
+      "sha256": "110c412bd547d461cd6699b454cf94f35684354daa575b03ae4b964a391f04de",
+      "bytes": 2967,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/release_manifest_test.dart",
+      "sha256": "59e393da8b1124f3098ab7ff0c4b11d165b461089f3c233db4b8b34b2acd2c13",
+      "bytes": 13628,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/source_projection_test.dart",
+      "sha256": "15c04e7a0a6f406b0ce85acce98d2d121aa580620e434eacff7a10614aa6e66e",
+      "bytes": 15495,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/transport_triplet_test.dart",
+      "sha256": "412b22f12d9e681326efafb0e90f8adfee4d6a61dd2ecbc755d74be51677dc2c",
+      "bytes": 16865,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_media/test/verified_media_cache_test.dart",
+      "sha256": "25f73c77476a481320dfcfefcb33e8913461f69154f2b0ec51cccf00492f42d4",
+      "bytes": 23244,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/analysis_options.yaml",
+      "sha256": "b5d168ba0e9dc0e07bd0ceb763bcc2ead67df342606510f20a961da3d463f4c2",
+      "bytes": 171,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/motion_store.dart",
+      "sha256": "f726826e37436cfcf87ff9a940ece6d87b962b87e31526d18f4e3f86d905ea0a",
+      "bytes": 471,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/atomic_eraser.dart",
+      "sha256": "27bee2b18dcca1a5980e78c9da9e3ea5b5ff0f5f3ac4bf37a4d5239ad9599430",
+      "bytes": 1389,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/export_bundle.dart",
+      "sha256": "cc34662ca052aa3e8835c67bcc606d6115fa785e568914cf17a419828038269a",
+      "bytes": 8897,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/journal.dart",
+      "sha256": "50ffe665585189ad50b2ef944b14891e2e22b2c80703a45367398f92926fc108",
+      "bytes": 2026,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/journal_entry.dart",
+      "sha256": "d03ff438e18e96260e83ee57279409a238f052b5bf2d3235c4cdcb6199379498",
+      "bytes": 564,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/journal_export_policy.dart",
+      "sha256": "ed0706809d9f1984243d9cf66b0a40f18cc1f7ca2bae55242b9e9a872566c98c",
+      "bytes": 4832,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/migration.dart",
+      "sha256": "de6be43e5d2b7e0ca59cd61a5216ed4979553669bc2a6c75d30adfe1c1ca3301",
+      "bytes": 650,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/projection_store.dart",
+      "sha256": "06e1903505fc32b0a8196ff0571f25e001706f9ab96b5d3488751f20f6fc6b65",
+      "bytes": 1073,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/lib/src/secure_key_adapter.dart",
+      "sha256": "f64f3ea46e9db993b9356a258fa8ff835e017bfbd8f11efc43ec793e126ef042",
+      "bytes": 921,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/pubspec.yaml",
+      "sha256": "1edb82789594fe5c87e0cc11ee869f322f816d7ecd043b22408b286fdfba5b15",
+      "bytes": 525,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/atomic_eraser_test.dart",
+      "sha256": "60c260ed347e499b5310307206073f98102171d671df49908217b49da2eb4ba2",
+      "bytes": 1638,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/bounded_export_test.dart",
+      "sha256": "dfed65f5763bd79e08818ffb286a8c82f8b3e83e45d98c52ceb9fa353ea7ab78",
+      "bytes": 7656,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/export_bundle_test.dart",
+      "sha256": "c6af70cd67434101b8217755a2fb2732f6329199185089afbf4bd2d6dbb96ee1",
+      "bytes": 1682,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/export_snapshot_test.dart",
+      "sha256": "c6e89ee65ccadc85bbd9441d08072ca44ef30ce4f898d5f2f833e86676f29065",
+      "bytes": 3202,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/journal_test.dart",
+      "sha256": "bcdc68a439f6765804837768c5fa733863e86344ce3888f196d972457c447669",
+      "bytes": 1707,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/migration_test.dart",
+      "sha256": "883ae4541c0ebeab0749a590b3b29410e95c69921446a2e85293f154b69e5df2",
+      "bytes": 1098,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/projection_store_test.dart",
+      "sha256": "ec959119bcecaa19a5dba8faf089af875f1d182967ea634bb82afed51f558fb9",
+      "bytes": 1509,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/safe_export_contract_test.dart",
+      "sha256": "80883b91c951b837c8bff8ddc216e9d36773748b314be5f6cf33cd87493bf965",
+      "bytes": 15902,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_store/test/secure_key_adapter_test.dart",
+      "sha256": "0848e7aadfc2e5eb599dd52150bbdc9a2bfd7e44d5447a4d96c4151a7b334aa0",
+      "bytes": 1111,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/README.md",
+      "sha256": "30b74eeac38c5c2e9d3208f454a04aa842862cd2743f482acce64ce36a06ffb4",
+      "bytes": 1366,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/analysis_options.yaml",
+      "sha256": "b5d168ba0e9dc0e07bd0ceb763bcc2ead67df342606510f20a961da3d463f4c2",
+      "bytes": 171,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/motion_telemetry.dart",
+      "sha256": "e283c7e5d9570df30a60ec43834120a891ec595c4d0e5aa0bc3ed390a8b47a15",
+      "bytes": 490,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/consent_gate.dart",
+      "sha256": "e2b6e41a672ccae7c99fabc877691ab6be3fa4766ef092323efba232186e6d4a",
+      "bytes": 583,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/diagnostic_exporter.dart",
+      "sha256": "31da47c9c69d2493525e7a111b3d5ab437f875aed4c4e3a8483b4d7b87194bc6",
+      "bytes": 6155,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/event_allowlist.dart",
+      "sha256": "0c75eb7472aec80ba0dcb77544482b99232e2e26aaaea1f8f4d009f2c2d3c39d",
+      "bytes": 3507,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/redactor.dart",
+      "sha256": "64126b812809e776e06b3108570fcb6d2d882b00d1aca5a8d3fd6e9e577babf4",
+      "bytes": 2050,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/telemetry_attribute_policy.dart",
+      "sha256": "9e5623bc572537a70fb67c9163c6e24ca67f653ae2d55310c537c5e8049b6be9",
+      "bytes": 2242,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/telemetry_emitter.dart",
+      "sha256": "823257f4331b966454cb9b09fb079d11afbaba44a8acde0a702eb059b67bebc8",
+      "bytes": 9856,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/telemetry_event.dart",
+      "sha256": "7e9f4473e63d798b834c8de44649ebcc0132b6b6790a14e03c02ea2794c69d29",
+      "bytes": 199,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/lib/src/telemetry_value.dart",
+      "sha256": "12397010439c715921caeb5b7c60906dc58412c7c0528fb66f483ae07090ac03",
+      "bytes": 1005,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/pubspec.yaml",
+      "sha256": "0f3cc6f712e49d950528ff69edb3f9c07a6d10f49679a883b2ceb3dd475560af",
+      "bytes": 561,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/closed_boundary_regression_test.dart",
+      "sha256": "8434dd6aaf74dae581a4cc77e83f67a9db162413ae1b653073b53078d66e35d7",
+      "bytes": 9619,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/diagnostic_exporter_test.dart",
+      "sha256": "121763416f066e8c8a68950ed6fe6bf63e816a9f8c7a4d661ba7da9898754a87",
+      "bytes": 1849,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/diagnostic_policy_contract_test.dart",
+      "sha256": "c55c777a2da348442968dd8f19ae558a24ae50dc2caf1a568008ec72ebb3b5f6",
+      "bytes": 7851,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/diagnostic_snapshot_test.dart",
+      "sha256": "c1a8e8e6a9543f536e8273ed538bade55cbc8b4f90797595c45ea1b95c39e145",
+      "bytes": 2084,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/event_allowlist_test.dart",
+      "sha256": "b6b1376be71309df10faef221ecc881a27fbf86a9aac56c0039eb69f2796a4f0",
+      "bytes": 3941,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/redactor_test.dart",
+      "sha256": "2768b9023be15b80f0034ea8d9a2bcd00c1860aa0511fb4fb54c3feac98d0a09",
+      "bytes": 2743,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/telemetry_emitter_test.dart",
+      "sha256": "17c0e159b2162021323f277a3612cefa2df32ec4edaba18b522975db6b193986",
+      "bytes": 17049,
+      "executable": false
+    },
+    {
+      "path": "packages/motion_telemetry/test/telemetry_policy_contract_test.dart",
+      "sha256": "0eeeecbb2c1f13e53c044868a5539fc44df755d99225a1b1889087004487bf89",
+      "bytes": 10402,
+      "executable": false
+    },
+    {
+      "path": "supabase/.gitignore",
+      "sha256": "507699eb91144818edf61d3a079212cacf31d8db520eae428e3b48fcf0d6919c",
+      "bytes": 72,
+      "executable": false
+    },
+    {
+      "path": "supabase/config.toml",
+      "sha256": "9a3084cf7c86e90cde619e6d1df8b1a39b677e1d7e0e35207ab36b9cda500b5c",
+      "bytes": 15866,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/_shared/motion_purchase_claim.ts",
+      "sha256": "57bb8b003c4cb4cc792e4f116a81af4777ae4f953c60c598cec9148dd48c54ff",
+      "bytes": 4817,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/_shared/motion_purchase_claim_test.ts",
+      "sha256": "5b1556a543c990bfd3c6afcaf6fad71e59592135ac229d818e0aa3fecdc5c0cb",
+      "bytes": 4120,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/_shared/motion_review_access.ts",
+      "sha256": "7532d2f9736f380b65adc5ecc238c429ee0f2a632cd9d67089fcd1c83ca3370b",
+      "bytes": 557,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/_shared/motion_review_access_test.ts",
+      "sha256": "251d1bf3d0155311c1d28edec467dff64e6d78dfb781e13db890971b22183e26",
+      "bytes": 1304,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/_shared/motion_store_provider.ts",
+      "sha256": "da35eb9b128febede89a5d44751d7ec644a27d26da85df8d43ab50c796a9661b",
+      "bytes": 11357,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/_shared/motion_store_provider_test.ts",
+      "sha256": "050fdd76ff2d372d97d5ab8423ee62054e954f9e666a946d620bbb14ba5b5e9b",
+      "bytes": 5798,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/motion-check-membership/index.ts",
+      "sha256": "e5a4ec4742c10834fa8654d189f7fc7fb043fe5613313e30ca4e3c0bc6c3b03b",
+      "bytes": 6159,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/motion-delete-account/index.ts",
+      "sha256": "6653012556c98ddf64074438050f8140c320ccd5ac636db99caef201ad245e7f",
+      "bytes": 2248,
+      "executable": false
+    },
+    {
+      "path": "supabase/functions/motion-verify-purchase/index.ts",
+      "sha256": "fe4581cf0f0b4feb6deed2d6c681b0f6236563089034659a970dcf231eac09ba",
+      "bytes": 4757,
+      "executable": false
+    },
+    {
+      "path": "supabase/migrations/20260924230933_motion_foundation.sql",
+      "sha256": "75f473485207962bc22030efc9e55fa89f6e5dc5e22577dc1f44f59e304a5703",
+      "bytes": 2145,
+      "executable": false
+    },
+    {
+      "path": "supabase/migrations/20260924230952_motion_deleted_account_receipts.sql",
+      "sha256": "f341e7b274f97d69c78f7f9e17e62dad028927bdae0769d56da87247f8ef831e",
+      "bytes": 1553,
+      "executable": false
+    },
+    {
+      "path": "supabase/migrations/20260924230953_motion_membership_server_time.sql",
+      "sha256": "20b2a3cdbd757f662ddfb270f7fa49c6c2f487d0fda21c8b03c2cc6f860a78f9",
+      "bytes": 662,
+      "executable": false
+    },
+    {
+      "path": "supabase/migrations/20260924230957_motion_plus_scope.sql",
+      "sha256": "e04734c34307aa8ed3fa7fd77c0df976b2cf741e97be49ecf1a73e146da6b651",
+      "bytes": 1163,
+      "executable": false
+    },
+    {
+      "path": "supabase/migrations/20260924230959_motion_entitlement_reference_privacy.sql",
+      "sha256": "665728d20795afe90597f3f985b1e1f034d3fa1631291dc14a66c739e3bcf6ee",
+      "bytes": 419,
+      "executable": false
+    },
+    {
+      "path": "supabase/migrations/20260925072659_motion_store_review_access.sql",
+      "sha256": "31cebf9c01d31e2dff166eb06e52ba99dc7829d5f275f5fbfc3525a4458ab8d9",
+      "bytes": 844,
+      "executable": false
+    },
+    {
+      "path": "supabase/tests/motion_rls.sql",
+      "sha256": "7dec88cea6309547fdcd600249cac279f513bb8f4bd700b69888168c7b3b99a2",
+      "bytes": 7019,
+      "executable": false
+    },
+    {
+      "path": "tools/art50/mark_asset.py",
+      "sha256": "e1a9c40ccfae810a7987dc73621eddde0ec058aacc3270ce513b7f97c3cbd54e",
+      "bytes": 7005,
+      "executable": false
+    },
+    {
+      "path": "tools/build_consumer_matrix_json.py",
+      "sha256": "669d628ba380de3704e6cfdf9ede3c7a936d1f091fcf04a6b294dfb21fd76363",
+      "bytes": 5058,
+      "executable": false
+    },
+    {
+      "path": "tools/consumer_matrix.sh",
+      "sha256": "c105b7d8721594c8b86785c4e15fc048c1379b81171dffb13c6c7ea991d82469",
+      "bytes": 3262,
+      "executable": true
+    },
+    {
+      "path": "tools/consumer_matrix_known_issues.json",
+      "sha256": "6778ef1ddd3812201c9d6ae04659012293a1b0421756565ecc0bae39aa589ada",
+      "bytes": 3166,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/analyze_d2.py",
+      "sha256": "b420268773bf09e4b581edbb982168911be88f6e176056ae5a8f40f21014f611",
+      "bytes": 27347,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/extract_landmarks.py",
+      "sha256": "ebb6f3f622c07d6386a325f676207274fed4762068991958accad29157c97130",
+      "bytes": 11904,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/fetch_models.sh",
+      "sha256": "243fbded8a749dcad57900969f1f5ea8a8e015632ba54306f949071416d9966e",
+      "bytes": 1645,
+      "executable": true
+    },
+    {
+      "path": "tools/fixture_pipeline/gate_g1a.py",
+      "sha256": "e257b9789a7d49f59680567f20049bb530543ffe92dd234772c2834925cb053b",
+      "bytes": 26287,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/__init__.py",
+      "sha256": "43f0fc4b65cfaf52a755604b64270728222733dcf4676c0c347f6a4dcf9d2b1d",
+      "bytes": 322,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/fixture.py",
+      "sha256": "a141cf393591cdc511aa5c5a995a98350dfdd74e1e406f8db5a8c002ac3db091",
+      "bytes": 8216,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/geometry.py",
+      "sha256": "d01b0b2aedb89c6e4bba5a380cace4af7a7307582bd7562c11f70a90c265371a",
+      "bytes": 14649,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/landmarks.py",
+      "sha256": "bcff0810383f6a62843d554774ecb4bd8b9e77f7682d0a6c975679f0bd6f7b46",
+      "bytes": 4264,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/measures.py",
+      "sha256": "22355c342729aed62b63a860e76ca96f107da4b36c023ce77beeabf878c9e675",
+      "bytes": 16197,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/phases.py",
+      "sha256": "d8b578e4e56b8823b17099534ca2f0d0e59482ceb136581a00379b9fe33cc50b",
+      "bytes": 7351,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/mocore/synth.py",
+      "sha256": "92d663ef34c5d7262a7f08fadb6cfbf2219ee987edb9cf12bb4cd8a675bbb13f",
+      "bytes": 8866,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/models/MODELS.md",
+      "sha256": "9e62a357d4cc67467548c8591f6d49ab8f71838361b6015a40735b29261874a2",
+      "bytes": 1854,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/tests/test_analyze_d2.py",
+      "sha256": "5acd5e7e1e8cacdcab1e2e6fc8e134d738c90d63684231642c08a0dd408eb82c",
+      "bytes": 11311,
+      "executable": false
+    },
+    {
+      "path": "tools/fixture_pipeline/tests/test_measures_frames.py",
+      "sha256": "4e11df72b97257fde6ee80047ae6ac273fda69e5f2d303933ce68306071cf468",
+      "bytes": 8355,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/README.md",
+      "sha256": "7324130306316b196c4568acca6a1fd5f7ab8bc3b95e88d762cd014c31a1c5a0",
+      "bytes": 7654,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/artifact_keyset_gate.py",
+      "sha256": "85e467aaf10da802c02cd976898af2d219de116695a9ace6838511c77a029ff1",
+      "bytes": 21288,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/context_tags.py",
+      "sha256": "89353a9e48566df3051e1e4f1b5ac3b9eed0201e9ac3cd57359b0d8e3aceace4",
+      "bytes": 4045,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/d1_gate.py",
+      "sha256": "2c09893dbf9f24e430bef87e48d3b16d65b167cefbb816427caa6cf0f51c11f1",
+      "bytes": 17195,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/eligibility.py",
+      "sha256": "9ae54041b52bc91979ef7e81bab05670485a15ebbad0128671a2326976303242",
+      "bytes": 5586,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/harvest.py",
+      "sha256": "9eb29869995734e1915290b267a7eeef3856dbea6291ca8a9670ac1f50cf5a53",
+      "bytes": 31099,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/hold_isolator.py",
+      "sha256": "ca7e552b963c600acb61fd3da38da7e1ab48e3dacd27b6962060be9ddc046a64",
+      "bytes": 17801,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/manifest.py",
+      "sha256": "fcaaa51ac5bdd9ed549d4dc121a9ab59301c4b335190fc81a230b49ee95d5b72",
+      "bytes": 14676,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/movement_isolator.py",
+      "sha256": "b8daecf445add59b35fcaf6ff2b15a4122debcd1f162d9c52d7a3bfd798604c5",
+      "bytes": 19639,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/presence_isolator.py",
+      "sha256": "0697f1907380b18a70dc24b778c2c9bdce667b0e6c05bd0f18126b7677e1d3a6",
+      "bytes": 22351,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/rom_mode.py",
+      "sha256": "070f34e91e4332aee0ca20cb689665a913bae4b58abbeca8ecbaf0fdb6ef6c93",
+      "bytes": 24376,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/second_person.py",
+      "sha256": "0a666d4b6a4b0eae37ac9fe750124abff2b2efbf4e162aa82efd47710de24816",
+      "bytes": 19264,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/rom_mode_corpus_sweep.py",
+      "sha256": "3a15c1196fb356b8446be20ce040af8212eeea91537221f16ff5b9a34102ece9",
+      "bytes": 5661,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_d1_gate.py",
+      "sha256": "a6d346b10b77442b8bc02559eb01382695bd73932173378fe7a352a68390869f",
+      "bytes": 6965,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_eligibility.py",
+      "sha256": "84fa161acb4d9e197050890e104573c1f52ce5d7faa4c5b996503bbce19b5dd5",
+      "bytes": 5460,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_first_person_plural.py",
+      "sha256": "ee607e73ad6ecbbe733f52b81e46415be8f5f8bac98181e1fc51f9365247d06a",
+      "bytes": 4555,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_harvest_path_safety.py",
+      "sha256": "00727d17426b24619ddd4c85621734643d37b1d714de98dadf86ade4ced63c6f",
+      "bytes": 4936,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_rig.py",
+      "sha256": "b24906ee16c76805f5d11011ba092aee87b7f9bf2fa39585c7f764ea7424ee63",
+      "bytes": 43232,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_rig_provenance.py",
+      "sha256": "40f9924a435e0abe4a4abd34119f7d412cbcf3817bac64bc703fdc9e83c2cc82",
+      "bytes": 5829,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_weak_active_tier.py",
+      "sha256": "39429819d5952db4ec36f51133aba417ca14e6a07ed5827dca72e4441d044806",
+      "bytes": 3738,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/tests/test_yt_dlp_safety.py",
+      "sha256": "e5d7348cc423151cc8c4f98a12f8aebb9c818ee56149f99573ed1da4e4bc366d",
+      "bytes": 16668,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/triage.py",
+      "sha256": "3f839f3f6d709e9233e6f660a4fa47d566564a9f7ba77553968a91ad4435c6d4",
+      "bytes": 19577,
+      "executable": false
+    },
+    {
+      "path": "tools/harvest_rig/yt_dlp_safety.py",
+      "sha256": "7d95d42e68112361c6e1fe8ddc62080d4c08175d4defc17c149c8b51ebb31e53",
+      "bytes": 4877,
+      "executable": false
+    },
+    {
+      "path": "tools/scan_app_specific_words.py",
+      "sha256": "3bede9da3474fffa5c8536f387993d1e82463c337c828883b3f3334fe098acb8",
+      "bytes": 5972,
+      "executable": false
+    },
+    {
+      "path": "tools/scan_app_specific_words_allowlist.txt",
+      "sha256": "7c8ca1ea66bdadd27d03910abcb4139aeb9ba222c49fa857faa5bae7ac118a6c",
+      "bytes": 1981,
+      "executable": false
+    },
+    {
+      "path": "tools/tests/test_scan_app_specific_words.py",
+      "sha256": "149c884b911b546355ae29cbc78e279eda0495c72827b441d866370d49ba54a5",
+      "bytes": 5844,
+      "executable": false
+    }
+  ],
+  "checks": {
+    "reconstructedAllFilesEqualLive": true,
+    "indexUnchanged": true,
+    "mutationsToCanonicalRepo": 0
+  }
+}

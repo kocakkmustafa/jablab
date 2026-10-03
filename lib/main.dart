@@ -4,6 +4,8 @@ import 'package:motion_account/motion_account.dart';
 
 import 'app/account_bridge.dart';
 import 'app/jablab_app.dart';
+import 'app/owner_resource_lifetime.dart';
+import 'app/owner_bound_account_page.dart';
 import 'app/ui_language.dart';
 
 /// PORTRE KİLİDİ (J-109, koordinatör hükmü 2026-08-07).
@@ -53,17 +55,36 @@ Future<void> launchJabLab({
       onDeletedAccount: clearLocalHistoryFor,
       localAccountIds: localHistoryAccountIds,
     );
-    Widget accountPage(BuildContext _) => MotionAccountPage(
-      account: runtime.account,
-      onRetryIdentity: runtime.refreshIdentity,
-      initialPasswordRecovery: runtime.isPasswordRecovery,
-      clearLocalData: clearLocalHistoryFor,
-    );
+    Widget accountPage(BuildContext _) {
+      OwnerResourceLifetime? deletionLifetime;
+      try {
+        deletionLifetime = defaultOwnerResourceRegistry.capture(
+          runtime.userId.value,
+        );
+      } on OwnerResourceRetiredException {
+        // Recovery/unverified identity has no admitted local deletion epoch.
+      }
+      final OwnerResourceLifetime? captured = deletionLifetime;
+      return OwnerBoundAccountPage(
+        account: runtime.account,
+        canInitiate: () => runtime.isCurrentSessionVerified && !runtime.isPasswordRecovery,
+        lifetime: captured,
+        onRetryIdentity: runtime.refreshIdentity,
+        initialPasswordRecovery: runtime.isPasswordRecovery,
+        clearLocalData: captured?.accountUserId == null
+            ? null
+            // Core validates the initiating UUID before this callback. Its
+            // account-wide deletion fence also drains later data epochs.
+            : clearLocalHistoryFor,
+      );
+    }
+
     runApp(
       MotionIdentityGate(
         runtime: runtime,
         child: JabLabApp(
           accountUserId: runtime.userId,
+          accountRecovery: runtime.passwordRecovery,
           accountPageBuilder: accountPage,
           beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
             lessonContext,

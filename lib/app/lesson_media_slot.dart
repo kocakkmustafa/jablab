@@ -152,6 +152,8 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
   bool _closed = false;
   bool _accountRevoked = false;
   bool _backgrounded = false;
+  bool _routeCovered = false;
+  Animation<double>? _routeCoverage;
   bool _starting = false;
   bool _pausing = false;
   bool _playing = false;
@@ -165,6 +167,30 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
     WidgetsBinding.instance.addObserver(this);
     widget.accountUserId?.addListener(_onAccount);
     unawaited(_inspect());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final coverage = ModalRoute.of(context)?.secondaryAnimation;
+    if (identical(coverage, _routeCoverage)) return;
+    _routeCoverage?.removeStatusListener(_onRouteCoverage);
+    _routeCoverage = coverage;
+    coverage?.addStatusListener(_onRouteCoverage);
+    if (coverage != null) _onRouteCoverage(coverage.status);
+  }
+
+  void _onRouteCoverage(AnimationStatus status) {
+    _routeCovered = status != AnimationStatus.dismissed;
+    if (_routeCovered) {
+      _close();
+    } else if (_closed &&
+        !_accountRevoked &&
+        !_backgrounded &&
+        !_nativePlaybackUnconfirmed) {
+      _closed = false;
+      unawaited(_inspect());
+    }
   }
 
   @override
@@ -184,7 +210,10 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
         oldWidget.sceneId != widget.sceneId ||
         oldWidget.variantStem != widget.variantStem) {
       _close();
-      if (!_accountRevoked && !_backgrounded && !_nativePlaybackUnconfirmed) {
+      if (!_accountRevoked &&
+          !_backgrounded &&
+          !_routeCovered &&
+          !_nativePlaybackUnconfirmed) {
         _closed = false;
         unawaited(_inspect());
       }
@@ -196,7 +225,10 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
     _backgrounded = state != AppLifecycleState.resumed;
     if (_backgrounded) {
       _close();
-    } else if (_closed && !_accountRevoked && !_nativePlaybackUnconfirmed) {
+    } else if (_closed &&
+        !_accountRevoked &&
+        !_routeCovered &&
+        !_nativePlaybackUnconfirmed) {
       _closed = false;
       unawaited(_inspect());
     }
@@ -210,6 +242,7 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
   Future<void> _inspect() async {
     if (_closed ||
         _backgrounded ||
+        _routeCovered ||
         _accountRevoked ||
         _nativePlaybackUnconfirmed ||
         widget.catalog.isEmpty ||
@@ -222,6 +255,7 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
     if (!mounted ||
         _closed ||
         _backgrounded ||
+        _routeCovered ||
         _accountRevoked ||
         _nativePlaybackUnconfirmed ||
         epoch != _epoch) {
@@ -410,6 +444,7 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
 
   @override
   void dispose() {
+    _routeCoverage?.removeStatusListener(_onRouteCoverage);
     widget.accountUserId?.removeListener(_onAccount);
     WidgetsBinding.instance.removeObserver(this);
     _epoch++;

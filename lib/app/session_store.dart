@@ -30,6 +30,8 @@ export 'package:motion_core/motion_core.dart'
         HistoryReadStatus,
         HistoryUnavailable,
         JsonlSessionStore,
+        SessionStoreWriteLease,
+        SessionStoreRetiredException,
         SessionRecord,
         SessionStore;
 

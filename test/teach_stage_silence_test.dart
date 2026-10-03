@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
@@ -10,7 +8,8 @@ import 'package:jablab/app/session_screen.dart';
 import 'package:jablab/app/teach_material.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
 import 'package:jablab_engine/jablab_engine.dart';
-import 'package:motion_camera/motion_camera.dart';
+
+import 'support/owned_native_fixture.dart';
 
 /// ÖĞRETME AŞAMASINDA KAMERA SUSUYOR — sevk edilmiş bir cümlenin kapısı
 /// (J-133).
@@ -61,56 +60,76 @@ void main() {
     cues = await const ContentRepository().loadCues();
   });
 
-  Future<_SpyCamera> pumpSession(WidgetTester t) async {
+  Future<({_SpyCamera camera, Future<void> Function() close})> pumpSession(
+    WidgetTester t,
+  ) async {
     final _SpyCamera cam = _SpyCamera();
-    await t.pumpWidget(MaterialApp(
-      home: SessionScreen(
-        lesson: const ShellLesson(id: 'x', title: 'Test lesson', minutes: 3),
-        cues: cues,
-        coachedNotScored: const <String>[],
-        bands: const <String, String>{'Stance': '—'},
-        plan: null,
-        rehearseMaterial: const RehearseMaterialNone(reason: 'fixture: no drill named'),
-        teachMaterial: const TeachMaterialText(body: 'Body of the lesson.'),
-        liveJab: LiveJabController(
-          ruleSet: ruleSet,
+    final LiveJabController live = LiveJabController(
+      ruleSet: ruleSet,
+      cues: cues,
+      // Model diske hiç çıkarılmıyor: `start()` içinde geç çözülüyor ve
+      // bu testin ölçtüğü şey zaten "oraya HİÇ gelinmiyor mu".
+      modelPath: () async => '/dev/null/model.task',
+      modelId: 'test-model',
+      camera: cam,
+      requestPermission: () async => true,
+      permissionPermanentlyDenied: () async => false,
+    );
+    addTearDown(() => _closeOwnedSession(t, cam, live));
+    await t.pumpWidget(
+      MaterialApp(
+        home: SessionScreen(
+          lesson: const ShellLesson(id: 'x', title: 'Test lesson', minutes: 3),
           cues: cues,
-          // Model diske hiç çıkarılmıyor: `start()` içinde geç çözülüyor ve
-          // bu testin ölçtüğü şey zaten "oraya HİÇ gelinmiyor mu".
-          modelPath: () async => '/dev/null/model.task',
-          modelId: 'test-model',
-          camera: cam,
-          requestPermission: () async => true,
-          permissionPermanentlyDenied: () async => false,
+          coachedNotScored: const <String>[],
+          bands: const <String, String>{'Stance': '—'},
+          plan: null,
+          rehearseMaterial: const RehearseMaterialNone(
+            reason: 'fixture: no drill named',
+          ),
+          teachMaterial: const TeachMaterialText(body: 'Body of the lesson.'),
+          liveJab: live,
         ),
       ),
-    ));
+    );
     await t.pumpAndSettle();
-    return cam;
+    return (camera: cam, close: () => _closeOwnedSession(t, cam, live));
   }
 
-  testWidgets('öğretme aşamasında kamera AÇILMIYOR — cümle doğru kalıyor',
-      (WidgetTester t) async {
-    final _SpyCamera cam = await pumpSession(t);
+  testWidgets('öğretme aşamasında kamera AÇILMIYOR — cümle doğru kalıyor', (
+    WidgetTester t,
+  ) async {
+    final fixture = await pumpSession(t);
+    final _SpyCamera cam = fixture.camera;
 
     // VAKUM KAPISI: cümle gerçekten ekranda mı? Değilse bu test, hiç
     // söylenmemiş bir iddiayı koruyor olurdu (aile dersi #4).
-    expect(find.byKey(const Key('teach-no-analysis')), findsOneWidget,
-        reason: 'korunacak cümle ekranda değil — kapı boşluğu bekliyor');
+    expect(
+      find.byKey(const Key('teach-no-analysis')),
+      findsOneWidget,
+      reason: 'korunacak cümle ekranda değil — kapı boşluğu bekliyor',
+    );
 
-    expect(cam.startCalls, 0,
-        reason: 'ÖĞRETME aşamasında kamera açıldı. Ekran tam bu anda '
-            '"Nothing is being analysed during this part" diyor; kamerayı '
-            'burada ısıtmak o cümleyi SESSİZCE yalana çevirir');
+    expect(
+      cam.startCalls,
+      0,
+      reason:
+          'ÖĞRETME aşamasında kamera açıldı. Ekran tam bu anda '
+          '"Nothing is being analysed during this part" diyor; kamerayı '
+          'burada ısıtmak o cümleyi SESSİZCE yalana çevirir',
+    );
+    await fixture.close();
   });
 
-  testWidgets('POZİTİF İKİZ — canlı aşamada kamera GERÇEKTEN açılıyor',
-      (WidgetTester t) async {
+  testWidgets('POZİTİF İKİZ — canlı aşamada kamera GERÇEKTEN açılıyor', (
+    WidgetTester t,
+  ) async {
     // Bu ikiz olmadan yukarıdaki kapı vakum-doğru olurdu: denetleyici hiç
     // bağlanmasa da `startCalls` 0 kalırdı ve kapı yeşil öterdi. Sıfırın
     // "bağlı ama susuyor" mu yoksa "hiç bağlı değil" mi olduğunu ancak
     // bu ikiz ayırıyor.
-    final _SpyCamera cam = await pumpSession(t);
+    final fixture = await pumpSession(t);
+    final _SpyCamera cam = fixture.camera;
     expect(cam.startCalls, 0);
 
     // öğret → prova → canlı
@@ -123,45 +142,66 @@ void main() {
     });
     await t.pump(const Duration(milliseconds: 200));
 
-    expect(cam.startCalls, 1,
-        reason: 'canlı aşamaya gelindi ama kamera hiç açılmadı — o zaman '
-            'öğretme aşamasındaki sıfır bir KANIT değil, sadece hiç '
-            'bağlanmamış bir denetleyicinin gölgesi olurdu');
+    expect(
+      cam.startCalls,
+      1,
+      reason:
+          'canlı aşamaya gelindi ama kamera hiç açılmadı — o zaman '
+          'öğretme aşamasındaki sıfır bir KANIT değil, sadece hiç '
+          'bağlanmamış bir denetleyicinin gölgesi olurdu',
+    );
+    await fixture.close();
   });
 }
 
-/// Sahte kamera — yalnız `start()` sayısını sayıyor. Gerçek denetleyici
-/// platform kanalı açar, test açamaz.
-class _SpyCamera implements MotionCameraController {
-  final StreamController<CameraFrameEnvelope> _c =
-      StreamController<CameraFrameEnvelope>.broadcast();
-  int startCalls = 0;
+/// Mock native protocol plus the actual controller/lease; no real device.
+class _SpyCamera extends OwnedTestCamera {
+  _SpyCamera() : super(libraryTag: 'teach-stage-fixture');
+}
 
-  @override
-  Future<CameraSessionInfo> start({
-    required String modelPath,
-    required String modelId,
-    CameraLens lens = CameraLens.front,
-    PassPlan initialPlan = PassPlan.uprightOnly,
-  }) async {
-    startCalls++;
-    return const CameraSessionInfo(
-      width: 480,
-      height: 640,
-      clockDomain: ClockDomain.monotonic,
-      libraryTag: 'spy',
+/// Unmount while this test owns its FakeAsync zone. Advance both widget work
+/// and mock-channel Futures, then remove handlers only after owned close settles.
+Future<void> _closeOwnedSession(
+  WidgetTester tester,
+  OwnedTestCamera camera,
+  LiveJabController live,
+) async {
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pump();
+  bool settled = false;
+  Object? failure;
+  StackTrace? failureStack;
+  live
+      .dispose()
+      .then<void>(
+        (_) => settled = true,
+        onError: (Object error, StackTrace stack) {
+          failure = error;
+          failureStack = stack;
+          settled = true;
+        },
+      )
+      .ignore();
+  for (int i = 0; i < 80 && !settled; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 25)),
     );
+    await tester.pump();
   }
-
-  @override
-  Stream<CameraFrameEnvelope> frames() => _c.stream;
-
-  @override
-  Future<void> stop() async {}
-
-  @override
-  Future<void> setPassPlan(PassPlan plan) async {}
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+  expect(
+    settled,
+    isTrue,
+    reason: 'owned close must settle before native fixture teardown',
+  );
+  if (failure != null) {
+    Error.throwWithStackTrace(failure!, failureStack!);
+  }
+  if (camera.startCalls > 0) {
+    expect(camera.native.nativeCloseAcknowledged.isCompleted, isTrue);
+    expect(camera.native.state.phase, 'closed');
+    expect(camera.activeListeners, 0);
+    expect(camera.cancelCalls, 1);
+    expect(camera.native.globalStopCalls, 0);
+  }
+  await camera.close();
 }

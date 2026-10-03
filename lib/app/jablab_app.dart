@@ -15,6 +15,7 @@ import 'package:jablab_engine/jablab_engine.dart';
 // line/baseline.json).
 import '../shell_candidate/library_pages.dart' show WhyNotPage;
 import '../shell_candidate/shell_models.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 import 'content_failure.dart';
@@ -25,6 +26,7 @@ import 'live_jab_controller.dart';
 import 'live_session_failure.dart';
 import 'onboarding_page.dart';
 import 'onboarding_store.dart';
+import 'owner_resource_lifetime.dart';
 import 'progress_gates.dart';
 import 'pose_model.dart';
 import 'select_page.dart';
@@ -44,6 +46,7 @@ class JabLabApp extends StatelessWidget {
     this.onboarding = const OnboardingStore(),
     this.navigatorObservers = const <NavigatorObserver>[],
     this.accountUserId,
+    this.accountRecovery,
     this.accountPageBuilder,
     this.beforeLessonStart,
   });
@@ -53,6 +56,7 @@ class JabLabApp extends StatelessWidget {
   /// Filled by a host adapter after the shared Motion account package is
   /// pinned. `null` means the existing guest journal.
   final ValueListenable<String?>? accountUserId;
+  final ValueListenable<bool>? accountRecovery;
 
   /// Real account page route, supplied by the host after Core is pinned.
   final WidgetBuilder? accountPageBuilder;
@@ -102,6 +106,7 @@ class JabLabApp extends StatelessWidget {
         repository: repository,
         onboarding: onboarding,
         accountUserId: accountUserId,
+        accountRecovery: accountRecovery,
         accountPageBuilder: accountPageBuilder,
         beforeLessonStart: beforeLessonStart,
       ),
@@ -114,6 +119,7 @@ class _Root extends StatefulWidget {
     required this.repository,
     required this.onboarding,
     required this.accountUserId,
+    required this.accountRecovery,
     required this.accountPageBuilder,
     required this.beforeLessonStart,
   });
@@ -121,6 +127,7 @@ class _Root extends StatefulWidget {
   final ContentRepository repository;
   final OnboardingStore onboarding;
   final ValueListenable<String?>? accountUserId;
+  final ValueListenable<bool>? accountRecovery;
   final WidgetBuilder? accountPageBuilder;
   final Future<bool> Function(BuildContext)? beforeLessonStart;
 
@@ -142,6 +149,9 @@ class _RootState extends State<_Root> {
   /// gelmemişken seans açılırsa akış çalışır, yalnız o seans KAYDEDİLMEZ —
   /// açılışı bloklamak, kayıt için kullanıcıyı bekletmek olurdu.
   SessionStore? _store;
+  OwnerResourceLifetime? _ownerLifetime;
+  Future<void> _ownerDrain = Future<void>.value();
+  final ValueNotifier<bool> _resourceAdmission = ValueNotifier<bool>(false);
   int _historyGeneration = 0;
 
   /// KAYDEDİLEN olgu özeti (F-4). Boşken ilerleme sayfası yalnız bantları
@@ -190,6 +200,7 @@ class _RootState extends State<_Root> {
   void initState() {
     super.initState();
     widget.accountUserId?.addListener(_onAccountChanged);
+    widget.accountRecovery?.addListener(_onRecoveryChanged);
     _loadContent();
     unawaited(
       widget.repository
@@ -208,10 +219,11 @@ class _RootState extends State<_Root> {
         if (mounted) setState(() => _showOnboarding = !seen);
       }),
     );
-    _openHistoryForCurrentAccount();
+    unawaited(_activateCurrentOwner());
   }
 
   void _openHistoryForCurrentAccount() {
+    if (!_resourceAdmission.value) return;
     final int generation = ++_historyGeneration;
     final String? accountUserId = widget.accountUserId?.value;
     unawaited(
@@ -240,6 +252,86 @@ class _RootState extends State<_Root> {
     );
   }
 
+  Future<void> _retireOwnedResources({bool notifyAdmission = true}) {
+    final OwnerResourceLifetime? lifetime = _ownerLifetime;
+    _ownerLifetime = null;
+    lifetime?.active.removeListener(_onLifetimeRetired);
+    if (notifyAdmission) _resourceAdmission.value = false;
+    final Future<void> previous = _ownerDrain;
+    final Future<void> current =
+        lifetime?.retireAndDrain() ?? Future<void>.value();
+    _ownerDrain = Future.wait<void>(<Future<void>>[previous, current])
+        .then((_) {});
+    unawaited(_ownerDrain.catchError((Object _) {}));
+    return _ownerDrain;
+  }
+
+  void _onLifetimeRetired() {
+    if (_ownerLifetime?.isActive != false) return;
+    _resourceAdmission.value = false;
+    _historyGeneration++;
+    if (mounted) {
+      setState(() {
+        _store = null;
+        _recorded = null;
+        _lastLessonId = null;
+      });
+    }
+  }
+
+  Future<void> _activateCurrentOwner() async {
+    final int generation = ++_historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final OwnerResourceRegistry registry = widget.repository.ownerLifetimes;
+    final Future<void> ownDrain = _retireOwnedResources();
+    // An identity gate may replace the entire Root while the previous Root's
+    // admitted filesystem operations are still pending in this namespace.
+    final Future<void> drain = Future.wait<void>(<Future<void>>[
+      ownDrain,
+      registry.retire(owner),
+    ]).then((_) {});
+    _ownerDrain = drain;
+    unawaited(drain.catchError((Object _) {}));
+    try {
+      await drain;
+      if (!mounted ||
+          generation != _historyGeneration ||
+          owner != widget.accountUserId?.value ||
+          widget.accountRecovery?.value == true) {
+        return;
+      }
+      final OwnerResourceLifetime lifetime = widget.repository.ownerLifetimes
+          .activate(owner);
+      _ownerLifetime = lifetime;
+      lifetime.active.addListener(_onLifetimeRetired);
+      _resourceAdmission.value = true;
+      _openHistoryForCurrentAccount();
+      setState(() {});
+    } on Object catch (error) {
+      if (mounted && generation == _historyGeneration) {
+        setState(
+          () => _historyUnavailable = HistoryUnavailable(error.toString()),
+        );
+      }
+    }
+  }
+
+  void _onRecoveryChanged() {
+    if (widget.accountRecovery?.value != true) {
+      _onAccountChanged();
+      return;
+    }
+    _historyGeneration++;
+    unawaited(_retireOwnedResources());
+    if (mounted) {
+      setState(() {
+        _store = null;
+        _recorded = null;
+        _lastLessonId = null;
+      });
+    }
+  }
+
   void _onAccountChanged() {
     if (!mounted) return;
     setState(() {
@@ -248,21 +340,34 @@ class _RootState extends State<_Root> {
       _lastLessonId = null;
       _historyUnavailable = null;
     });
-    _openHistoryForCurrentAccount();
+    unawaited(_activateCurrentOwner());
   }
 
   @override
   void didUpdateWidget(covariant _Root oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.accountUserId == widget.accountUserId) return;
+    final bool identityChanged =
+        oldWidget.accountUserId != widget.accountUserId ||
+        oldWidget.repository.ownerLifetimes != widget.repository.ownerLifetimes;
+    final bool recoveryChanged =
+        oldWidget.accountRecovery != widget.accountRecovery;
+    if (!identityChanged && !recoveryChanged) return;
     oldWidget.accountUserId?.removeListener(_onAccountChanged);
+    oldWidget.accountRecovery?.removeListener(_onRecoveryChanged);
     widget.accountUserId?.addListener(_onAccountChanged);
+    widget.accountRecovery?.addListener(_onRecoveryChanged);
     _onAccountChanged();
   }
 
   @override
   void dispose() {
+    _historyGeneration++;
     widget.accountUserId?.removeListener(_onAccountChanged);
+    widget.accountRecovery?.removeListener(_onRecoveryChanged);
+    // The whole navigator is unmounting; children may already be deactivated.
+    // Retire IO synchronously without requesting route lookups from them.
+    unawaited(_retireOwnedResources(notifyAdmission: false));
+    _resourceAdmission.dispose();
     super.dispose();
   }
 
@@ -384,6 +489,15 @@ class _RootState extends State<_Root> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.accountRecovery?.value == true) {
+      return widget.accountPageBuilder?.call(context) ??
+          const Scaffold(
+            body: Center(child: Text('Account recovery is required.')),
+          );
+    }
+    if (!_resourceAdmission.value && _historyUnavailable == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     final ContentFailure? failure = _failure;
     if (failure != null) {
       return ContentFailureScreen(failure: failure, onRetry: _loadContent);
@@ -570,14 +684,33 @@ class _RootState extends State<_Root> {
   }
 
   void _openSoloCourse(BuildContext context) {
-    Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (_) => SoloBoxingCoursePage(
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive) navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return SoloBoxingCoursePage(
           repository: widget.repository,
           accountUserId: widget.accountUserId,
-        ),
-      ),
+          resourceAdmission: _resourceAdmission,
+        );
+      },
     );
+    unawaited(navigator.push<void>(route));
   }
 
   /// Kaydedilen sürenin ders açmadığını söyleyen not — yalnız kayıt varken.
@@ -763,17 +896,40 @@ class _RootState extends State<_Root> {
   }
 
   Future<void> _openSession(ShellLesson l) async {
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final ValueListenable<String?>? owner = widget.accountUserId;
+    final String? openingOwner = owner?.value;
+    bool currentOwner() =>
+        mounted &&
+        _resourceAdmission.value &&
+        widget.accountRecovery?.value != true &&
+        generation == _historyGeneration &&
+        identical(owner, widget.accountUserId) &&
+        openingOwner == widget.accountUserId?.value;
     final guard = widget.beforeLessonStart;
     if (guard != null && !await guard(context)) return;
-    if (!mounted) return;
+    if (!mounted || !currentOwner()) return;
+    final SessionStore? openingStore = _store;
     // Hat SENKRON kurulur ve model yolu GEÇ çözülür: ders açılışını 9 MB'lık
     // bir asset çıkarmasına bağlamak, kullanıcının derse dokunup hiçbir şey
     // olmamasını izlemesi demekti (testler yakaladı).
     final ({LiveJabController? controller, LiveSessionFailure? failure}) live =
         _liveJabFor(l.id);
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (_) => SessionScreen(
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!currentOwner()) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive) navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return SessionScreen(
           lesson: l,
           cues: _cues!,
           coachedNotScored: widget.repository.coachedNotScoredLabels(_boxing!),
@@ -789,19 +945,26 @@ class _RootState extends State<_Root> {
             _domain!,
             l.id,
           ),
-          store: _store,
+          store: openingStore,
+          accountUserId: owner,
+          resourceAdmission: _resourceAdmission,
           liveJab: live.controller,
           liveJabSetupFailure: live.failure,
-        ),
-      ),
+        );
+      },
     );
+    await navigator.push<void>(route);
+    // Retire this camera before a possibly delayed journal refresh. A newer
+    // route must not receive an unscoped stop from this route's late cleanup.
+    try {
+      await live.controller?.dispose();
+    } on Object {
+      // The shared camera coordinator retains uncertain closure and blocks
+      // replacement. Route cleanup must still finish without an unhandled error.
+    }
     // Seanstan dönünce özet TAZELENİR; yoksa kullanıcı biraz önce yaptığı
     // işi ilerleme sayfasında göremez ve kaydın çalışmadığını sanar
     // (çalışıyor ama görünmüyor, en kötü kombinasyon).
     await _refreshRecorded();
-    // Kamera hattı EKRANLA BİRLİKTE ölür; burada ayrıca kapatmak, açık
-    // kalan bir oturumun sonraki dersi `already-running` ile kırmasını
-    // önler (plugin tek oturuma izin veriyor).
-    await live.controller?.dispose();
   }
 }

@@ -8,6 +8,7 @@ import 'package:jablab/app/content_failure_screen.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/solo_boxing_course_page.dart';
 import 'package:motion_content/motion_content.dart';
@@ -58,9 +59,9 @@ Future<_CourseAssetOverlayBundle> _schemaInvalidButHashMatchedBundle({
   bool wrongFieldType = false,
 }) async {
   final ByteData courseData = await rootBundle.load(_coursePath);
-  final Map<String, dynamic> invalid =
-      (jsonDecode(utf8.decode(Uint8List.sublistView(courseData))) as Map)
-          .cast<String, dynamic>();
+  final Map<String, dynamic> invalid = (jsonDecode(
+    utf8.decode(Uint8List.sublistView(courseData)),
+  ) as Map).cast<String, dynamic>();
   if (wrongFieldType) {
     final Map<String, dynamic> firstModule =
         ((invalid['modules'] as List).first as Map).cast<String, dynamic>();
@@ -77,9 +78,9 @@ Future<_CourseAssetOverlayBundle> _schemaInvalidButHashMatchedBundle({
   );
 
   final ByteData manifestData = await rootBundle.load(_manifestPath);
-  final Map<String, dynamic> manifest =
-      (jsonDecode(utf8.decode(Uint8List.sublistView(manifestData))) as Map)
-          .cast<String, dynamic>();
+  final Map<String, dynamic> manifest = (jsonDecode(
+    utf8.decode(Uint8List.sublistView(manifestData)),
+  ) as Map).cast<String, dynamic>();
   final Map<String, dynamic> asset =
       ((manifest['assets'] as List).single as Map).cast<String, dynamic>();
   asset['byteLength'] = invalidBytes.length;
@@ -93,16 +94,19 @@ Future<_CourseAssetOverlayBundle> _schemaInvalidButHashMatchedBundle({
 
 Future<ContentException> _rejection(_CourseAssetOverlayBundle bundle) async {
   try {
-    await ContentRepository(
-      contentBundleOverride: bundle,
-    ).loadSoloBoxingCourse();
+    await ContentRepository(contentBundleOverride: bundle)
+        .loadSoloBoxingCourse();
   } on ContentException catch (error) {
     return error;
   }
   throw StateError('Expected the course integrity gate to reject the bundle');
 }
 
+// Each test owns a storage namespace; replacements inside it share this registry.
+late OwnerResourceRegistry _owners;
+
 void main() {
+  setUp(() => _owners = OwnerResourceRegistry());
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('packaged manifest verifies the exact 39-lesson course', () async {
@@ -120,9 +124,9 @@ void main() {
     );
 
     final ByteData data = await rootBundle.load(_manifestPath);
-    final Map<String, dynamic> manifest =
-        (jsonDecode(utf8.decode(Uint8List.sublistView(data))) as Map)
-            .cast<String, dynamic>();
+    final Map<String, dynamic> manifest = (jsonDecode(
+      utf8.decode(Uint8List.sublistView(data)),
+    ) as Map).cast<String, dynamic>();
     expect(manifest['courses'], isEmpty);
     expect(manifest['lessons'], isEmpty);
     expect(manifest['models'], isEmpty);
@@ -222,7 +226,10 @@ void main() {
     await tester.runAsync(() async {
       await tester.pumpWidget(
         JabLabApp(
-          repository: ContentRepository(contentBundleOverride: bundle),
+          repository: ContentRepository(
+            contentBundleOverride: bundle,
+            ownerRegistry: _owners,
+          ),
           onboarding: const OnboardingStore(seenOverride: true),
         ),
       );
@@ -245,7 +252,10 @@ void main() {
     await tester.runAsync(() async {
       await tester.pumpWidget(
         JabLabApp(
-          repository: ContentRepository(contentBundleOverride: bundle),
+          repository: ContentRepository(
+            contentBundleOverride: bundle,
+            ownerRegistry: _owners,
+          ),
           onboarding: const OnboardingStore(seenOverride: true),
         ),
       );
@@ -269,7 +279,10 @@ void main() {
         await tester.runAsync(() async {
           await tester.pumpWidget(
             JabLabApp(
-              repository: ContentRepository(contentBundleOverride: bundle),
+              repository: ContentRepository(
+                contentBundleOverride: bundle,
+                ownerRegistry: _owners,
+              ),
               onboarding: const OnboardingStore(seenOverride: true),
             ),
           );
@@ -301,7 +314,10 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: SoloBoxingCoursePage(
-            repository: ContentRepository(contentBundleOverride: bundle),
+            repository: ContentRepository(
+              contentBundleOverride: bundle,
+              ownerRegistry: _owners,
+            ),
           ),
         ),
       );
@@ -328,7 +344,10 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: SoloBoxingCoursePage(
-            repository: ContentRepository(contentBundleOverride: bundle),
+            repository: ContentRepository(
+              contentBundleOverride: bundle,
+              ownerRegistry: _owners,
+            ),
           ),
         ),
       );
@@ -370,6 +389,7 @@ void main() {
                     MaterialPageRoute<void>(
                       builder: (_) => SoloBoxingCoursePage(
                         repository: ContentRepository(
+                          ownerRegistry: _owners,
                           contentBundleOverride: bundle,
                         ),
                       ),

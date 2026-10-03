@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'support/local_core_intake.dart';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -77,6 +78,15 @@ void main() {
   });
 
   test('model ikilisi git\'te İZLENMİYOR (aile kuralıyla hizalı)', () {
+    if (File('pubspec_overrides.yaml').existsSync()) {
+      final receipt = verifyIntake();
+      final model = receipt['model'] as Map<String, dynamic>;
+      expect(model['path'], PoseModelPin.assetPath);
+      expect(model['ignored'], isTrue);
+      expect(model['tracked'], isFalse);
+      expect(File('.gitignore').readAsStringSync(), contains('assets/models/*.task'));
+      return;
+    }
     final ProcessResult r = Process.runSync(
         'git', <String>['check-ignore', PoseModelPin.assetPath]);
     expect(r.exitCode, 0,

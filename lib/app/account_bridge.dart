@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 import 'course_progress_io.dart';
+import 'owner_resource_lifetime.dart';
 
 /// Must match `MotionApp.jablab.name` when the shared account package is pinned.
 const String motionAppId = 'jablab';
@@ -88,12 +89,20 @@ Future<void> _deleteRegularFileIfPresent(File file) async {
 Future<void> clearLocalHistoryFor(
   String accountUserId, {
   Directory? supportDirectory,
-}) async {
-  final Directory support =
-      supportDirectory ?? await getApplicationSupportDirectory();
-  final File file = sessionFileFor(support, accountUserId);
-  await _deleteRegularFileIfPresent(file);
-  await _deleteRegularFileIfPresent(File('${file.path}.tmp'));
-  final File course = courseFileFor(support, accountUserId);
-  await deleteCourseProgressFile(course);
+  OwnerResourceRegistry? ownerRegistry,
+  OwnerResourceLifetime? expectedLifetime,
+  Future<Directory> Function()? supportDirectoryProvider,
+}) {
+  final String confirmedId = canonicalOwnerId(accountUserId)!;
+  final OwnerResourceRegistry registry =
+      ownerRegistry ?? defaultOwnerResourceRegistry;
+  return registry.eraseConfirmed(confirmedId, () async {
+    final Directory support =
+        supportDirectory ??
+        await (supportDirectoryProvider ?? getApplicationSupportDirectory)();
+    final File file = sessionFileFor(support, confirmedId);
+    await _deleteRegularFileIfPresent(file);
+    await _deleteRegularFileIfPresent(File('${file.path}.tmp'));
+    await deleteCourseProgressFile(courseFileFor(support, confirmedId));
+  }, expectedLifetime: expectedLifetime);
 }
