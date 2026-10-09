@@ -1,3 +1,10 @@
+import 'muay_thai_course_page.dart';
+import 'karate_course_page.dart';
+import 'taikyoku_shodan_course_page.dart';
+import 'yang16_written_course_page.dart';
+import 'kickboxing_course_page.dart';
+import 'tai_chi_course_page.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -260,8 +267,10 @@ class _RootState extends State<_Root> {
     final Future<void> previous = _ownerDrain;
     final Future<void> current =
         lifetime?.retireAndDrain() ?? Future<void>.value();
-    _ownerDrain = Future.wait<void>(<Future<void>>[previous, current])
-        .then((_) {});
+    _ownerDrain = Future.wait<void>(<Future<void>>[
+      previous,
+      current,
+    ]).then((_) {});
     unawaited(_ownerDrain.catchError((Object _) {}));
     return _ownerDrain;
   }
@@ -537,6 +546,10 @@ class _RootState extends State<_Root> {
         onStart: _openSession,
         onOpenSettings: () => _openSettings(context, lib),
         onOpenSoloCourse: () => _openSoloCourse(context),
+        onOpenTaiChiCourse: () => _openTaiChiCourse(context),
+        onOpenKickboxingCourse: () => _openKickboxingCourse(context),
+        onOpenKarateCourse: () => _openKarateCourse(context),
+        onOpenMuayThaiCourse: () => _openMuayThaiCourse(context),
         onOpenSelect: () => _openSelect(context, lib),
         isCurrent: true,
         resumeLesson: _resumeLesson,
@@ -567,6 +580,10 @@ class _RootState extends State<_Root> {
       onOpenWhyNot: () => _openWhyNot(context, lib),
       onOpenSettings: () => _openSettings(context, lib),
       onOpenSoloCourse: () => _openSoloCourse(context),
+      onOpenTaiChiCourse: () => _openTaiChiCourse(context),
+      onOpenKickboxingCourse: () => _openKickboxingCourse(context),
+      onOpenKarateCourse: () => _openKarateCourse(context),
+      onOpenMuayThaiCourse: () => _openMuayThaiCourse(context),
       // current==null buraya iki farklı sebepten düşebilir: hiç kayıt yok
       // (sağlıklı, banner YOK) ya da kayıt okunamadı (banner VAR) —
       // `_historyUnavailableText()` zaten bu ayrımı yapıyor.
@@ -663,6 +680,10 @@ class _RootState extends State<_Root> {
           onOpenWhyNot: () => _openWhyNot(context, lib),
           onOpenSettings: () => _openSettings(context, lib),
           onOpenSoloCourse: () => _openSoloCourse(context),
+          onOpenTaiChiCourse: () => _openTaiChiCourse(context),
+          onOpenKickboxingCourse: () => _openKickboxingCourse(context),
+          onOpenKarateCourse: () => _openKarateCourse(context),
+          onOpenMuayThaiCourse: () => _openMuayThaiCourse(context),
           historyUnavailable: _historyUnavailableText(),
           onRetryHistory: _refreshRecorded,
         ),
@@ -678,6 +699,10 @@ class _RootState extends State<_Root> {
           onStart: _openSession,
           onOpenSettings: () => _openSettings(context, lib),
           onOpenSoloCourse: () => _openSoloCourse(context),
+          onOpenTaiChiCourse: () => _openTaiChiCourse(context),
+          onOpenKickboxingCourse: () => _openKickboxingCourse(context),
+          onOpenKarateCourse: () => _openKarateCourse(context),
+          onOpenMuayThaiCourse: () => _openMuayThaiCourse(context),
         ),
       ),
     );
@@ -705,6 +730,196 @@ class _RootState extends State<_Root> {
         }
         return SoloBoxingCoursePage(
           repository: widget.repository,
+          accountUserId: widget.accountUserId,
+          resourceAdmission: _resourceAdmission,
+        );
+      },
+    );
+    unawaited(navigator.push<void>(route));
+  }
+
+  void _openTaiChiCourse(BuildContext context) {
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive) navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return TaiChiCoursePage(
+          loader: widget.repository.loadTaiChiCourse,
+          accountUserId: widget.accountUserId,
+          resourceAdmission: _resourceAdmission,
+          onOpenYang16WrittenCourse: () {
+            final lifecycle = WidgetsBinding.instance.lifecycleState;
+            if (mounted && route.isCurrent && _resourceAdmission.value &&
+                generation == _historyGeneration && owner == widget.accountUserId?.value &&
+                (lifecycle == null || lifecycle == AppLifecycleState.resumed)) {
+              _openYang16WrittenCourse(context);
+            }
+          },
+        );
+      },
+    );
+    unawaited(navigator.push<void>(route));
+  }
+
+  void _openKickboxingCourse(BuildContext context) {
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive) navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return KickboxingCoursePage(
+          loader: widget.repository.loadKickboxingCourse,
+          accountUserId: widget.accountUserId,
+          resourceAdmission: _resourceAdmission,
+        );
+      },
+    );
+    unawaited(navigator.push<void>(route));
+  }
+
+  void _openKarateCourse(BuildContext context) {
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive) navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return KarateCoursePage(
+          loader: widget.repository.loadKarateCourse,
+          accountUserId: widget.accountUserId,
+          resourceAdmission: _resourceAdmission,
+          onOpenTaikyokuCourse: () {
+            if (mounted && route.isCurrent && _resourceAdmission.value &&
+                generation == _historyGeneration && owner == widget.accountUserId?.value) {
+              _openTaikyokuCourse(context);
+            }
+          },
+        );
+      },
+    );
+    unawaited(navigator.push<void>(route));
+  }
+
+  void _openTaikyokuCourse(BuildContext context) {
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true ||
+        (lifecycle != null && lifecycle != AppLifecycleState.resumed)) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(builder: (_) {
+      if (!mounted || !_resourceAdmission.value || generation != _historyGeneration ||
+          owner != widget.accountUserId?.value) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (route.isActive && navigator.mounted) navigator.removeRoute(route);
+        });
+        WidgetsBinding.instance.ensureVisualUpdate();
+        return const SizedBox.shrink();
+      }
+      return TaikyokuCoursePage(
+        loader: widget.repository.loadTaikyokuCourse,
+        accountUserId: widget.accountUserId,
+        resourceAdmission: _resourceAdmission,
+      );
+    });
+    unawaited(navigator.push<void>(route));
+  }
+
+  void _openYang16WrittenCourse(BuildContext context) {
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true ||
+        (lifecycle != null && lifecycle != AppLifecycleState.resumed)) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(builder: (_) {
+      if (!mounted || !_resourceAdmission.value || generation != _historyGeneration ||
+          owner != widget.accountUserId?.value) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (route.isActive && navigator.mounted) navigator.removeRoute(route);
+        });
+        WidgetsBinding.instance.ensureVisualUpdate();
+        return const SizedBox.shrink();
+      }
+      return Yang16WrittenCoursePage(
+        loader: widget.repository.loadYang16WrittenCourse,
+        accountUserId: widget.accountUserId,
+        resourceAdmission: _resourceAdmission,
+      );
+    });
+    unawaited(navigator.push<void>(route));
+  }
+
+  void _openMuayThaiCourse(BuildContext context) {
+    if (!_resourceAdmission.value || widget.accountRecovery?.value == true) {
+      return;
+    }
+    final int generation = _historyGeneration;
+    final String? owner = widget.accountUserId?.value;
+    final NavigatorState navigator = Navigator.of(context);
+    late final MaterialPageRoute<void> route;
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive) navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return MuayThaiCoursePage(
+          loader: widget.repository.loadMuayThaiCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
         );

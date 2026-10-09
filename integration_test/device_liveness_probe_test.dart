@@ -73,8 +73,10 @@ import 'liveness_metrics.dart';
 /// gevşetme YOK. Kendi deponda kalır (kapsam: `com.yulalab.jablab`).
 /// Ölçüm penceresi — varsayılan JAB-P0-002 Step 3'ün istediği 20 dakika,
 /// `--dart-define=LIVENESS_WINDOW_SECONDS=N` ile dev-check için kısaltılır.
-const int _windowSeconds =
-    int.fromEnvironment('LIVENESS_WINDOW_SECONDS', defaultValue: 20 * 60);
+const int _windowSeconds = int.fromEnvironment(
+  'LIVENESS_WINDOW_SECONDS',
+  defaultValue: 20 * 60,
+);
 
 /// FPS örnekleme aralığı — p10/p50/p95'in anlamlı olması için pencere
 /// başına en az birkaç yüz örnek hedefler (20 dk'da ~1200).
@@ -87,245 +89,288 @@ const Duration _thermalSampleInterval = Duration(seconds: 5);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('cihaz günü canlılık probu — artefakt yazar',
-      (WidgetTester tester) async {
-    final Map<String, dynamic> artifact = <String, dynamic>{
-      'schemaVersion': 2, // 1→2: p10/p50/p95 fps + termal eklendi (JAB-P0-002)
-      'probe': 'device_liveness_probe',
-      'app': 'com.yulalab.jablab',
-      'generatedAtUtc': DateTime.now().toUtc().toIso8601String(),
-      'platform': Platform.operatingSystem,
-      'platformVersion': Platform.operatingSystemVersion,
-      'windowSeconds': _windowSeconds,
-    };
-    String? failureMode;
-    String? failureDetail;
+  testWidgets(
+    'cihaz günü canlılık probu — artefakt yazar',
+    (WidgetTester tester) async {
+      final Map<String, dynamic> artifact = <String, dynamic>{
+        'schemaVersion': 3, // Explicit cleanup failure and evidence boundaries.
+        'probe': 'device_liveness_probe',
+        'app': 'com.yulalab.jablab',
+        'generatedAtUtc': DateTime.now().toUtc().toIso8601String(),
+        'platform': Platform.operatingSystem,
+        'platformVersion': Platform.operatingSystemVersion,
+        'windowSeconds': _windowSeconds,
+        'sourceTree': const String.fromEnvironment('JABLAB_SOURCE_TREE'),
+        'sustainedPerformanceAccepted': false,
+        'interruptionResumptionTested': false,
+        'physicalTechniqueAccepted': false,
+      };
+      String? failureMode;
+      String? failureDetail;
 
-    Future<void> writeArtifact() async {
-      artifact['failureMode'] = failureMode; // null == temiz koşum
-      artifact['failureDetail'] = failureDetail;
-      final Directory dir = await getApplicationDocumentsDirectory();
-      final String path = '${dir.path}/device_liveness_probe_'
-          '${DateTime.now().millisecondsSinceEpoch}.json';
-      const JsonEncoder enc = JsonEncoder.withIndent('  ');
-      final String body = enc.convert(artifact);
-      await File(path).writeAsString(body, flush: true);
-      // ignore: avoid_print
-      print('=== CİHAZ GÜNÜ CANLILIK PROBU ===');
-      // ignore: avoid_print
-      print(body);
-      // ignore: avoid_print
-      print('ARTEFAKT: $path');
-    }
-
-    // 0) FİZİKSEL CİHAZ ZORUNLU (JAB-P0-002 Step 2) — "simülatör kanıt
-    //    değildir" roadmap kuralının kod karşılığı. İzinden bile ÖNCE:
-    //    simülatörde kamera izni genelde otomatik reddedilir, o zaman bu
-    //    kapı hiç ötmeden `permission_denied`e düşer ve gerçek sebep
-    //    (yanlış hedef) gizlenir.
-    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    bool isPhysicalDevice;
-    if (Platform.isIOS) {
-      isPhysicalDevice = (await deviceInfo.iosInfo).isPhysicalDevice;
-    } else if (Platform.isAndroid) {
-      isPhysicalDevice = (await deviceInfo.androidInfo).isPhysicalDevice;
-    } else {
-      failureMode = 'unsupported_platform';
-      failureDetail = 'canlılık probu yalnız iOS/Android hedefler, '
-          'platform: ${Platform.operatingSystem}';
-      await writeArtifact();
-      fail(failureDetail);
-    }
-    if (!isPhysicalDevice) {
-      failureMode = 'not_physical_device';
-      failureDetail = 'simülatör/emülatörde koşuldu — bu ölçüm SAYILMAZ '
-          '(roadmap §2: "simülatör kanıt değildir"); gerçek cihaz gerekir';
-      await writeArtifact();
-      fail(failureDetail);
-    }
-
-    // 1) İZİN — reddi KENDİ BAŞINA bir düşme modudur; ölçüm burada durur
-    //    ama artefakt yine de yazılır (yokluk sessizce atlanmaz, H-68).
-    final PermissionStatus perm = await Permission.camera.request();
-    if (!perm.isGranted) {
-      failureMode = 'permission_denied';
-      failureDetail = '$perm';
-      await writeArtifact();
-      fail('kamera izni verilmedi ($perm) — artefakt yine de yazıldı, '
-          'düşme modu adıyla kaydedildi');
-    }
-
-    // 2) MODEL — asset'ten diske çıkar (camera_harness_screen ile AYNI
-    //    mekanizma; kopyalandı, icat edilmedi — H-71).
-    late final String modelPath;
-    try {
-      final Directory dir = await getApplicationSupportDirectory();
-      final File out =
-          File('${dir.path}/${PoseModelPin.assetPath.split('/').last}');
-      if (!out.existsSync()) {
-        final ByteData data = await rootBundle.load(PoseModelPin.assetPath);
-        await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
+      Future<void> writeArtifact() async {
+        artifact['failureMode'] = failureMode; // null == temiz koşum
+        artifact['failureDetail'] = failureDetail;
+        final Directory dir = await getApplicationDocumentsDirectory();
+        final String path =
+            '${dir.path}/device_liveness_probe_'
+            '${DateTime.now().millisecondsSinceEpoch}.json';
+        const JsonEncoder enc = JsonEncoder.withIndent('  ');
+        final String body = enc.convert(artifact);
+        await File(path).writeAsString(body, flush: true);
+        // ignore: avoid_print
+        print('=== CİHAZ GÜNÜ CANLILIK PROBU ===');
+        // ignore: avoid_print
+        print(body);
+        // ignore: avoid_print
+        print('ARTEFAKT: $path');
       }
-      modelPath = out.path;
-    } on Object catch (e) {
-      failureMode = 'model_materialize_failed';
-      failureDetail = '$e';
-      await writeArtifact();
-      fail('model diske çıkarılamadı: $e');
-    }
 
-    // 3) KAMERA BAŞLAT — burdan sonraki süre "ilk-poz gecikmesi"nin sıfır
-    //    noktası (izin diyaloğunda kurucunun ne kadar oyalandığı bu
-    //    ölçümün parçası DEĞİL — o kullanıcı davranışı, köprü performansı
-    //    değil).
-    final MotionCameraController camera = MotionCameraController();
-    final ThroughputMonitor monitor = ThroughputMonitor();
-    late final CameraSessionInfo session;
-    try {
-      session = await camera.start(
-        modelPath: modelPath,
-        modelId: PoseModelPin.modelId,
-        lens: CameraLens.front,
-        initialPlan: PassPlan.uprightOnly,
-      );
-    } on Object catch (e) {
-      failureMode = 'camera_start_failed';
-      failureDetail = '$e';
-      await writeArtifact();
-      fail('kamera başlatılamadı: $e');
-    }
-    final Stopwatch sessionClock = Stopwatch()..start();
-    artifact['clockDomain'] = session.clockDomain.name;
-    artifact['libraryTag'] = session.libraryTag;
-    artifact['modelId'] = PoseModelPin.modelId;
+      // Bind each future device artifact to the actual reviewed source.
+      if (!RegExp(r'^[0-9a-f]{40}$')
+          .hasMatch(artifact['sourceTree'] as String)) {
+        failureMode = 'unbound_source_identity';
+        failureDetail = 'Pass the exact reviewed tree via JABLAB_SOURCE_TREE';
+        await writeArtifact();
+        fail(failureDetail);
+      }
 
-    // 4) ÖLÇÜM PENCERESİ — varsayılan 20 dk (JAB-P0-002 Step 3), dev-check
-    //    için `--dart-define`la kısaltılabilir (bkz. dosya başlığı).
-    //    `camera_smoke_test.dart`ın 32 sn'lik sabit tesisat-smoke'u AYRI
-    //    bir kapı — o "akıyor mu" sorar, bu "ne kadar İYİ akıyor, 20 dk
-    //    boyunca" sorar.
-    final Duration window = Duration(seconds: _windowSeconds);
-    int envelopeCount = 0;
-    int judgedWithPerson = 0;
-    int judgedEmpty = 0;
-    Duration? firstPoseLatency;
-    Object? streamError;
+      // 0) FİZİKSEL CİHAZ ZORUNLU (JAB-P0-002 Step 2) — "simülatör kanıt
+      //    değildir" roadmap kuralının kod karşılığı. İzinden bile ÖNCE:
+      //    simülatörde kamera izni genelde otomatik reddedilir, o zaman bu
+      //    kapı hiç ötmeden `permission_denied`e düşer ve gerçek sebep
+      //    (yanlış hedef) gizlenir.
+      final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      bool isPhysicalDevice;
+      if (Platform.isIOS) {
+        final info = await deviceInfo.iosInfo;
+        isPhysicalDevice = info.isPhysicalDevice;
+        artifact['deviceModel'] = info.utsname.machine;
+      } else if (Platform.isAndroid) {
+        final info = await deviceInfo.androidInfo;
+        isPhysicalDevice = info.isPhysicalDevice;
+        artifact['deviceModel'] = info.model;
+      } else {
+        failureMode = 'unsupported_platform';
+        failureDetail =
+            'canlılık probu yalnız iOS/Android hedefler, '
+            'platform: ${Platform.operatingSystem}';
+        await writeArtifact();
+        fail(failureDetail);
+      }
+      artifact['isPhysicalDevice'] = isPhysicalDevice;
+      if (!isPhysicalDevice) {
+        failureMode = 'not_physical_device';
+        failureDetail =
+            'simülatör/emülatörde koşuldu — bu ölçüm SAYILMAZ '
+            '(roadmap §2: "simülatör kanıt değildir"); gerçek cihaz gerekir';
+        await writeArtifact();
+        fail(failureDetail);
+      }
 
-    // JAB-P0-002 — FPS p10/p50/p95 için periyodik örnekleyici. Kaynak
-    // `monitor.judgedPerSecond` ZATEN var olan bir kayan-pencere anlık
-    // değer (bkz. rate_meter.dart) — bu örnekleyici onu ZAMANA YAYARAK
-    // bir SERİYE çevirir, yüzdelik BURADAN türer.
-    final PeriodicSampler<double> fpsSampler = PeriodicSampler<double>(
-      interval: _fpsSampleInterval,
-      read: () async => monitor.judgedPerSecond,
-    );
-    // Termal daha yavaş değişir; ayrı kanal (motion_core'dan bağımsız).
-    final PeriodicSampler<ThermalReading> thermalSampler =
-        PeriodicSampler<ThermalReading>(
-      interval: _thermalSampleInterval,
-      read: const ThermalChannel().read,
-    );
+      // 1) İZİN — reddi KENDİ BAŞINA bir düşme modudur; ölçüm burada durur
+      //    ama artefakt yine de yazılır (yokluk sessizce atlanmaz, H-68).
+      final PermissionStatus perm = await Permission.camera.request();
+      if (!perm.isGranted) {
+        failureMode = 'permission_denied';
+        failureDetail = '$perm';
+        await writeArtifact();
+        fail(
+          'kamera izni verilmedi ($perm) — artefakt yine de yazıldı, '
+          'düşme modu adıyla kaydedildi',
+        );
+      }
 
-    final StreamSubscription<CameraFrameEnvelope> sub =
-        camera.frames().listen(
-      (CameraFrameEnvelope e) {
-        monitor.record(e);
-        envelopeCount += 1;
-        if (e.pass(BodyOrientation.upright) != null) {
-          judgedWithPerson += 1;
-          firstPoseLatency ??= sessionClock.elapsed;
-        } else {
-          judgedEmpty += 1;
+      // 2) MODEL — asset'ten diske çıkar (camera_harness_screen ile AYNI
+      //    mekanizma; kopyalandı, icat edilmedi — H-71).
+      late final String modelPath;
+      try {
+        final Directory dir = await getApplicationSupportDirectory();
+        final File out = File(
+          '${dir.path}/${PoseModelPin.assetPath.split('/').last}',
+        );
+        if (!out.existsSync()) {
+          final ByteData data = await rootBundle.load(PoseModelPin.assetPath);
+          await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
         }
-      },
-      onError: (Object err) => streamError = err,
-    );
-    fpsSampler.start();
-    thermalSampler.start();
-    await Future<void>.delayed(window);
-    fpsSampler.stop();
-    thermalSampler.stop();
-    await sub.cancel();
-    try {
-      await camera.stop();
-    } on Object catch (_) {
-      // stop hatası ölçümü geçersiz kılmaz (camera_harness_screen dersi).
-    }
+        modelPath = out.path;
+      } on Object catch (e) {
+        failureMode = 'model_materialize_failed';
+        failureDetail = '$e';
+        await writeArtifact();
+        fail('model diske çıkarılamadı: $e');
+      }
 
-    // 5) DÜŞME MODU SINIFLANDIRMASI — "çalışmıyor" un görünümü İSİMLİ.
-    if (streamError != null) {
-      failureMode = 'stream_error';
-      failureDetail = '$streamError';
-    } else if (envelopeCount == 0) {
-      failureMode = 'no_envelope_flow';
-      failureDetail = '$_windowSeconds sn içinde tek bir zarf gelmedi — '
-          'kanal/çıkarım tesisatı canlı değil (emülatörde kanıtlanmıştı, '
-          'cihazda değil)';
-    } else if (judgedWithPerson == 0) {
-      failureMode = 'no_person_detected';
-      failureDetail = '$envelopeCount zarf geldi ama hiçbirinde insan '
-          'ölçülmedi — kamera yanlış yöne bakıyor/karanlık/çerçeve dışı '
-          'olabilir; kanal canlı, MODEL kimseyi görmüyor';
-    }
-    // failureMode == null ⇒ zincir uçtan uca ölçüldü, kişi görüldü.
+      // 3) KAMERA BAŞLAT — burdan sonraki süre "ilk-poz gecikmesi"nin sıfır
+      //    noktası (izin diyaloğunda kurucunun ne kadar oyalandığı bu
+      //    ölçümün parçası DEĞİL — o kullanıcı davranışı, köprü performansı
+      //    değil).
+      final MotionCameraController camera = MotionCameraController();
+      final ThroughputMonitor monitor = ThroughputMonitor();
+      late final CameraSessionInfo session;
+      try {
+        session = await camera.start(
+          modelPath: modelPath,
+          modelId: PoseModelPin.modelId,
+          lens: CameraLens.front,
+          initialPlan: PassPlan.uprightOnly,
+        );
+      } on Object catch (e) {
+        failureMode = 'camera_start_failed';
+        failureDetail = '$e';
+        await writeArtifact();
+        fail('kamera başlatılamadı: $e');
+      }
+      final Stopwatch sessionClock = Stopwatch()..start();
+      artifact['clockDomain'] = session.clockDomain.name;
+      artifact['libraryTag'] = session.libraryTag;
+      artifact['modelId'] = PoseModelPin.modelId;
 
-    artifact['fps'] = <String, dynamic>{
-      'judgedPerSecond': monitor.judgedPerSecond,
-      'capturedPerSecond': monitor.capturedPerSecond,
-      'judgedRatio': monitor.judgedRatio,
-      'meanInferenceUs': monitor.meanInferenceUs,
-      'sessionDroppedCount': monitor.sessionDroppedCount,
-      // YENİ (JAB-P0-002 Step 1) — zaman içine yayılmış örneklemden
-      // türetilen yüzdelikler; `reliablePercentile`in kendi küçük-örneklem
-      // koruması `Unmeasured` olarak taşınır, sessizce basılmaz.
-      'judgedPerSecondSampleCount': fpsSampler.samples.length,
-      'judgedPerSecondP10': percentileToJson(fpsSampler.percentile(0.10)),
-      'judgedPerSecondP50': percentileToJson(fpsSampler.percentile(0.50)),
-      'judgedPerSecondP95': percentileToJson(fpsSampler.percentile(0.95)),
-    };
-    artifact['firstPoseLatencyMs'] = firstPoseLatency?.inMilliseconds;
-    artifact['envelopeCount'] = envelopeCount;
-    artifact['landmarkValidity'] = <String, dynamic>{
-      'judgedWithPerson': judgedWithPerson,
-      'judgedEmpty': judgedEmpty,
-      // Ölçülemeyen "—" (null) olarak taşınır, 0 olarak DEĞİL (kapı
-      // sözleşmesi genel — camera_harness_screen._fmt'in aynı kuralı).
-      'ratio': envelopeCount == 0 ? null : judgedWithPerson / envelopeCount,
-    };
-    // YENİ (JAB-P0-002) — termal zaman-serisi + en kötü kademe. Kanal
-    // desteklenmiyorsa (`read()` hep null dönerse) `samples` boş kalır ve
-    // bu SESSİZCE "nominal" sayılmaz — `worstTierMeasured:false` adıyla.
-    final ThermalTier? worst = worstTier(thermalSampler.samples);
-    artifact['thermal'] = <String, dynamic>{
-      'sampleCount': thermalSampler.samples.length,
-      'worstTier': worst?.name,
-      // API<29 Android'de `measured:false` olabilir (bkz. thermal_channel.
-      // dart) — worstTier yine de güvenlik tarafına (critical) yuvarlanmış
-      // olabilir, bu alan o farkı taşır.
-      'worstTierAllMeasured': thermalSampler.samples.isEmpty
-          ? null
-          : thermalSampler.samples.every((ThermalReading r) => r.measured),
-      'series': thermalSampler.samples
-          .map((ThermalReading r) => <String, dynamic>{
+      // 4) ÖLÇÜM PENCERESİ — varsayılan 20 dk (JAB-P0-002 Step 3), dev-check
+      //    için `--dart-define`la kısaltılabilir (bkz. dosya başlığı).
+      //    `camera_smoke_test.dart`ın 32 sn'lik sabit tesisat-smoke'u AYRI
+      //    bir kapı — o "akıyor mu" sorar, bu "ne kadar İYİ akıyor, 20 dk
+      //    boyunca" sorar.
+      final Duration window = Duration(seconds: _windowSeconds);
+      int envelopeCount = 0;
+      int judgedWithPerson = 0;
+      int judgedEmpty = 0;
+      Duration? firstPoseLatency;
+      Object? streamError;
+
+      // JAB-P0-002 — FPS p10/p50/p95 için periyodik örnekleyici. Kaynak
+      // `monitor.judgedPerSecond` ZATEN var olan bir kayan-pencere anlık
+      // değer (bkz. rate_meter.dart) — bu örnekleyici onu ZAMANA YAYARAK
+      // bir SERİYE çevirir, yüzdelik BURADAN türer.
+      final PeriodicSampler<double> fpsSampler = PeriodicSampler<double>(
+        interval: _fpsSampleInterval,
+        read: () async => monitor.judgedPerSecond,
+      );
+      // Termal daha yavaş değişir; ayrı kanal (motion_core'dan bağımsız).
+      final PeriodicSampler<ThermalReading> thermalSampler =
+          PeriodicSampler<ThermalReading>(
+            interval: _thermalSampleInterval,
+            read: const ThermalChannel().read,
+          );
+
+      final StreamSubscription<CameraFrameEnvelope> sub = camera
+          .frames()
+          .listen((CameraFrameEnvelope e) {
+            monitor.record(e);
+            envelopeCount += 1;
+            if (e.pass(BodyOrientation.upright) != null) {
+              judgedWithPerson += 1;
+              firstPoseLatency ??= sessionClock.elapsed;
+            } else {
+              judgedEmpty += 1;
+            }
+          }, onError: (Object err) => streamError = err);
+      fpsSampler.start();
+      thermalSampler.start();
+      await Future<void>.delayed(window);
+      fpsSampler.stop();
+      thermalSampler.stop();
+      final cleanup = await cleanupProbeCapture(
+        cancelFrames: sub.cancel,
+        stopCamera: camera.stop,
+      );
+      artifact['cleanup'] = cleanup.toJson();
+
+      // 5) DÜŞME MODU SINIFLANDIRMASI — "çalışmıyor" un görünümü İSİMLİ.
+      if (!cleanup.succeeded) {
+        failureMode = 'camera_cleanup_failed';
+        failureDetail =
+            'cancel: ${cleanup.cancelError}; stop: ${cleanup.stopError}';
+      } else if (streamError != null) {
+        failureMode = 'stream_error';
+        failureDetail = '$streamError';
+      } else if (envelopeCount == 0) {
+        failureMode = 'no_envelope_flow';
+        failureDetail =
+            '$_windowSeconds sn içinde tek bir zarf gelmedi — '
+            'kanal/çıkarım tesisatı canlı değil (emülatörde kanıtlanmıştı, '
+            'cihazda değil)';
+      } else if (judgedWithPerson == 0) {
+        failureMode = 'no_person_detected';
+        failureDetail =
+            '$envelopeCount zarf geldi ama hiçbirinde insan '
+            'ölçülmedi — kamera yanlış yöne bakıyor/karanlık/çerçeve dışı '
+            'olabilir; kanal canlı, MODEL kimseyi görmüyor';
+      }
+      // Null is only a liveness outcome, never J-011 or interruption acceptance.
+      artifact['livenessResult'] = failureMode == null ? 'PASS' : 'FAIL';
+      artifact['streamError'] = streamError?.toString();
+      artifact['sustainedPerformanceReview'] = _windowSeconds < 20 * 60
+          ? 'UNRUN_SHORT_WINDOW'
+          : 'PENDING_EXACT_DEVICE_FPS_THERMAL_REVIEW';
+
+      artifact['fps'] = <String, dynamic>{
+        'judgedPerSecond': monitor.judgedPerSecond,
+        'capturedPerSecond': monitor.capturedPerSecond,
+        'judgedRatio': monitor.judgedRatio,
+        'meanInferenceUs': monitor.meanInferenceUs,
+        'sessionDroppedCount': monitor.sessionDroppedCount,
+        // YENİ (JAB-P0-002 Step 1) — zaman içine yayılmış örneklemden
+        // türetilen yüzdelikler; `reliablePercentile`in kendi küçük-örneklem
+        // koruması `Unmeasured` olarak taşınır, sessizce basılmaz.
+        'judgedPerSecondSampleCount': fpsSampler.samples.length,
+        'judgedPerSecondP10': percentileToJson(fpsSampler.percentile(0.10)),
+        'judgedPerSecondP50': percentileToJson(fpsSampler.percentile(0.50)),
+        'judgedPerSecondP95': percentileToJson(fpsSampler.percentile(0.95)),
+      };
+      artifact['firstPoseLatencyMs'] = firstPoseLatency?.inMilliseconds;
+      artifact['envelopeCount'] = envelopeCount;
+      artifact['landmarkValidity'] = <String, dynamic>{
+        'judgedWithPerson': judgedWithPerson,
+        'judgedEmpty': judgedEmpty,
+        // Ölçülemeyen "—" (null) olarak taşınır, 0 olarak DEĞİL (kapı
+        // sözleşmesi genel — camera_harness_screen._fmt'in aynı kuralı).
+        'ratio': envelopeCount == 0 ? null : judgedWithPerson / envelopeCount,
+      };
+      // YENİ (JAB-P0-002) — termal zaman-serisi + en kötü kademe. Kanal
+      // desteklenmiyorsa (`read()` hep null dönerse) `samples` boş kalır ve
+      // bu SESSİZCE "nominal" sayılmaz — `worstTierMeasured:false` adıyla.
+      final ThermalTier? worst = worstTier(thermalSampler.samples);
+      artifact['thermal'] = <String, dynamic>{
+        'sampleCount': thermalSampler.samples.length,
+        'worstTier': worst?.name,
+        // API<29 Android'de `measured:false` olabilir (bkz. thermal_channel.
+        // dart) — worstTier yine de güvenlik tarafına (critical) yuvarlanmış
+        // olabilir, bu alan o farkı taşır.
+        'worstTierAllMeasured': thermalSampler.samples.isEmpty
+            ? null
+            : thermalSampler.samples.every((ThermalReading r) => r.measured),
+        'series': thermalSampler.samples
+            .map(
+              (ThermalReading r) => <String, dynamic>{
                 'tier': r.tier.name,
                 'platform': r.platform,
                 'raw': r.raw,
                 'measured': r.measured,
-              })
-          .toList(),
-    };
+              },
+            )
+            .toList(),
+      };
 
-    await writeArtifact();
+      await writeArtifact();
 
-    // KAPI: bir düşme modu bulunduysa test KIRILIR — sayı raporlamak
-    // yerine adıyla söylenir (H-31: yarım kanıt tam kapalı yazılmaz).
-    // Artefakt her durumda yazıldı; bu satır yalnız CI/terminal sinyalini
-    // belirler.
-    expect(failureMode, isNull,
-        reason: 'canlılık probu bir düşme modu buldu: '
+      // KAPI: bir düşme modu bulunduysa test KIRILIR — sayı raporlamak
+      // yerine adıyla söylenir (H-31: yarım kanıt tam kapalı yazılmaz).
+      // Artefakt her durumda yazıldı; bu satır yalnız CI/terminal sinyalini
+      // belirler.
+      expect(
+        failureMode,
+        isNull,
+        reason:
+            'canlılık probu bir düşme modu buldu: '
             '$failureMode — $failureDetail (artefakt yine de yazıldı, '
-            'yol yukarıda)');
-    // Pencere + izin/model/kamera kurulumu + 3 dk tampon (varsayılan 20 dk
-    // pencerede eski sabit 2 dk yetmezdi — JAB-P0-002).
-  }, timeout: Timeout(Duration(seconds: _windowSeconds) + const Duration(minutes: 3)));
+            'yol yukarıda)',
+      );
+      // Pencere + izin/model/kamera kurulumu + 3 dk tampon (varsayılan 20 dk
+      // pencerede eski sabit 2 dk yetmezdi — JAB-P0-002).
+    },
+    timeout: Timeout(
+      Duration(seconds: _windowSeconds) + const Duration(minutes: 3),
+    ),
+  );
 }

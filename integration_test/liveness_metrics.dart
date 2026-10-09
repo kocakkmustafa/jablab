@@ -67,8 +67,12 @@ extension PeriodicSamplerFpsX on PeriodicSampler<double> {
   /// [p] yüzdeliği ([0,1]) — `reliablePercentile`in aynı küçük-örneklem
   /// korumasıyla ([minSources]'tan az örnek varsa [Unmeasured]).
   PercentileResult percentile(double p, {int minSources = 5}) =>
-      reliablePercentile(samples, p,
-          contributingSources: samples.length, minSources: minSources);
+      reliablePercentile(
+        samples,
+        p,
+        contributingSources: samples.length,
+        minSources: minSources,
+      );
 }
 
 /// [readings] içindeki en KÖTÜ (en yüksek şiddetli) termal kademe, ya da
@@ -87,11 +91,47 @@ ThermalTier? worstTier(List<ThermalReading> readings) {
 /// ilkesiyle tutarlı (K8/doc-75 ailesi) — `Unmeasured`i sessizce `0`/`null`a
 /// düşürmek, "ölçmedim" ile "ölçtüm, sıfır çıktı"yı aynı sayı gibi gösterirdi.
 Map<String, dynamic> percentileToJson(PercentileResult r) => switch (r) {
-      Measured m => <String, dynamic>{'measured': m.value},
-      Unmeasured u => <String, dynamic>{
-          'measured': null,
-          'reason': u.reason,
-          'n': u.n,
-          'minSources': u.minSources,
-        },
-    };
+  Measured m => <String, dynamic>{'measured': m.value},
+  Unmeasured u => <String, dynamic>{
+    'measured': null,
+    'reason': u.reason,
+    'n': u.n,
+    'minSources': u.minSources,
+  },
+};
+
+/// Records both cleanup attempts; a failed cancel must not skip camera stop.
+/// Method completion is not an owned-capture idle readback attestation.
+final class ProbeCleanupResult {
+  const ProbeCleanupResult({this.cancelError, this.stopError});
+
+  final String? cancelError;
+  final String? stopError;
+  bool get succeeded => cancelError == null && stopError == null;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'methodCallsSucceeded': succeeded,
+    'cancelError': cancelError,
+    'stopError': stopError,
+    'nativeIdleReadbackVerified': false,
+  };
+}
+
+Future<ProbeCleanupResult> cleanupProbeCapture({
+  required Future<void> Function() cancelFrames,
+  required Future<void> Function() stopCamera,
+}) async {
+  String? cancelError;
+  String? stopError;
+  try {
+    await cancelFrames();
+  } on Object catch (error) {
+    cancelError = error.toString();
+  }
+  try {
+    await stopCamera();
+  } on Object catch (error) {
+    stopError = error.toString();
+  }
+  return ProbeCleanupResult(cancelError: cancelError, stopError: stopError);
+}

@@ -36,6 +36,19 @@ const OnboardingStore _seen = OnboardingStore(seenOverride: true);
 // Each test owns a storage namespace; replacements inside it share this registry.
 late OwnerResourceRegistry _owners;
 
+Future<void> showBoxingControl(WidgetTester t, Key key) async {
+  final Finder control = find.byKey(key);
+  await t.scrollUntilVisible(
+    control,
+    250,
+    scrollable: find.byType(Scrollable).first,
+    maxScrolls: 40,
+  );
+  await Scrollable.ensureVisible(t.element(control), alignment: 0.5);
+  await t.pumpAndSettle();
+  expect(control.hitTestable(), findsOneWidget);
+}
+
 void main() {
   setUp(() => _owners = OwnerResourceRegistry());
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -146,6 +159,7 @@ void main() {
       // Kabuğun açıldığına POZİTİF kanıt: "hâlâ yükleniyor" hâli bu testi
       // sessizce geçemesin (test 1'in tam simetriği).
       expect(find.byType(SelectPage), findsOneWidget);
+      await showBoxingControl(t, const Key('item-boxing'));
       expect(find.byKey(const Key('item-boxing')), findsOneWidget);
     },
   );
@@ -219,6 +233,7 @@ void main() {
         findsOneWidget,
         reason: 'seçim ekranının gerçekten açıldığına pozitif kanıt',
       );
+      await showBoxingControl(t, const Key('item-boxing'));
       expect(find.byKey(const Key('item-boxing')), findsOneWidget);
     });
   });

@@ -1,0 +1,2291 @@
+{
+  "schemaVersion": 1,
+  "id": "jablab.taikyoku_shodan_jl",
+  "practiceKind": "written_kata_instruction_and_recall",
+  "manuscriptSha256": "f748648bffca221f6752a4ceedea8418df389e06a0e488d039d8177e64e27d3a",
+  "curriculumSha256": "6c6a0608c2bd5b63d6d00157b5a0d6be17e8d29b0fc3fa154441119750dbee9c",
+  "sourceMapSha256": "942e3c3804bf64a81470bda1fa256c9389dd0eae42f71b40cb2973e9d7b6d4c6",
+  "sourceBindings": {
+    "opening": "A",
+    "movementEndpoints": "B",
+    "observedTransitions": "B",
+    "closing": "A",
+    "BClosingInwardFootOrder": null,
+    "referenceReportSha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff"
+  },
+  "content": {
+    "version": "taikyoku-shodan-jason-leung-manuscript-v1",
+    "status": "ORIGINAL_FULL_WRITTEN_DRAFT_FOR_INDEPENDENT_REVIEW; NOT_INTEGRATED",
+    "id": "taikyoku-shodan-jason-leung-a",
+    "working_reference_label": "TS20-JL-working-20261006",
+    "title": {
+      "tr": "Taikyoku Shodan: 20 hareketli yazılı başlangıç katası",
+      "en": "Taikyoku Shodan: complete 20-count written beginner kata"
+    },
+    "authorship": "Original JabLab TR/EN teaching authored from the approved observation report; no third-party scripts/media copied",
+    "approved_reference_report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+    "reference_approval_scope": "Parent pedagogy reviewer approved this exact report for full written drafting; new manuscript acceptance pending",
+    "releaseReadiness": {
+      "instructorReview": false,
+      "demonstrations": false,
+      "individualFeedback": false
+    },
+    "physicalRequirements": [
+      {
+        "id": "TS-P0",
+        "title": {
+          "tr": "Tam yol için uygun alan",
+          "en": "Space for the complete path"
+        },
+        "detail": {
+          "tr": "Ayaklarını ve ellerini hiçbir kişiye veya eşyaya çarpmadan taşıyabileceğin alanı kişisel hareket aralığında doğrula. Videodan sabit metre veya adım boyu çıkarılmadı.",
+          "en": "Check space for your own foot and hand travel without contacting people or objects. No fixed distance or step length was derived from the video."
+        },
+        "accepted": false
+      },
+      {
+        "id": "TS-P1",
+        "title": {
+          "tr": "İki tarafta kişisel ön duruş",
+          "en": "Personal front stance on both sides"
+        },
+        "detail": {
+          "tr": "Sol ve sağ ayağın önde olduğu duruşlarda rahat yerleşme ve çıkma, kişisel olarak değerlendirilmelidir. Yazılı bir hazırlığı bitirmek bunun fiziksel geçişi değildir.",
+          "en": "Comfortably entering and leaving left-front and right-front positions needs individual assessment. Completing a written preparation does not pass this physical requirement."
+        },
+        "accepted": false
+      },
+      {
+        "id": "TS-P2",
+        "title": {
+          "tr": "Çeyrek ve yarım dönüş",
+          "en": "Quarter and half turns"
+        },
+        "detail": {
+          "tr": "Sola çeyrek ve sağa yarım dönüşte ayakların yeniden yönlenebilmesi, dizin zorlanmaması ve denge kişisel olarak gözlenmelidir; referansın temas haritası verilmiş değildir.",
+          "en": "Foot reorientation, comfortable knee movement and balance in a left quarter-turn and right half-turn need individual observation; the reference does not supply a contact map."
+        },
+        "accepted": false
+      },
+      {
+        "id": "TS-P3",
+        "title": {
+          "tr": "Uzun sola dönüş",
+          "en": "Long left turn"
+        },
+        "detail": {
+          "tr": "8→9 ve 16→17 için üç çeyrek sola dönüşü kişisel olarak sürdürebilmek ayrıca değerlendirilir. Daha kısa sağ dönüş aynı fiziksel kata değildir.",
+          "en": "The ability to continue through the three-quarter left turns at 8→9 and 16→17 needs individual assessment. A shorter right turn is a different physical path."
+        },
+        "accepted": false
+      },
+      {
+        "id": "TS-P4",
+        "title": {
+          "tr": "El yolu ve birlikte hareket",
+          "en": "Hand paths and coordinated travel"
+        },
+        "detail": {
+          "tr": "Kapalı el, kişisel bilek rahatlığı, çapraz hazırlık, geri gelen kol ve adım sırasında birlikte hareket gözlenir. Gizlenen bilek/rehber el ayrıntıları için yakın görüntü ve geri bildirim gerekir.",
+          "en": "Closed-hand comfort, wrist suitability, crossed preparation, the returning arm and coordination during travel need observation. Hidden wrist/guide-hand details need close views and feedback."
+        },
+        "accepted": false
+      },
+      {
+        "id": "TS-P5",
+        "title": {
+          "tr": "Durma, düzeltme ve tekrar",
+          "en": "Stopping, correction and retry"
+        },
+        "detail": {
+          "tr": "Kişiye uygun durma yolu, seçenekler ve gözlem–düzeltme–aynı koşulda tekrar değerlendirmesi olmadan fiziksel yeterlilik kabul edilmez.",
+          "en": "Physical suitability remains open without personal stop paths, alternatives and observation–correction–same-condition retest."
+        },
+        "accepted": false
+      }
+    ],
+    "common_limits": {
+      "tr": "Bu dersler, gözlenmiş tekniğin sırasını ve görülebilen el/ayak yollarını öğretir. Çeyrek, yarım ve üç çeyrek dönüş, görünen yön değişiminin geometrik etiketidir; ölçülmüş eklem açısı veya pusula yönü değildir. Bir ayağın yaklaşık aynı zemin yerinde kalması, topuk üzerinde pivot yaptığı veya ağırlığın belirli yüzdesini taşıdığı anlamına gelmez. Ayağı zemine kilitleme talimatı verilmez. Ayak tabanı teması, yük, diz kuvveti ve ağrısız kişisel aralık ölçülmemiştir. 9’da ayak kırpılması, 12’de ayak örtüşmesi ve 16’da kol/ayak örtüşmesi ayrıca işaretlenir. Gizlenen yumruğun yüksekliğini veya bilek dönüşünü tahmin ederek doldurma. Rahat hareket edemiyorsan fiziksel denemeyi durdur; yazılı sırayı çalışmaya devam edebilirsin. Durmak, o denemeyi keser; tamamlanmış fiziksel kata sayılmaz. Referans sessiz izlenmiştir: kiai, nefes ritmi veya sesli komut öğretildiği iddia edilmez.",
+      "en": "These lessons teach the observed order and visible hand/foot paths. Quarter, half and three-quarter turns label the geometry of the visible heading changes; they are not measured joint angles or compass bearings. A foot staying near the same floor location does not establish a heel pivot or a load percentage. There is no instruction to lock a foot to the floor. Sole contact, loading, knee forces and a suitable pain-free personal range were not measured. Cropping at 9, foot occlusion at 12 and arm/foot overlap at 16 are flagged separately. Do not fill hidden fist height or wrist rotation by guessing. Stop a physical attempt if you cannot move comfortably; you can continue written recall. Stopping interrupts that attempt and does not complete a physical kata. The reference was viewed muted: this course does not claim to teach heard kiai, breathing rhythm or spoken commands."
+    },
+    "opening": {
+      "tr": "N, başlangıçta baktığın yöndür; E ilk sağın, W ilk solun, S arkandır. Bunlar ekrandaki sağ ve sol değildir. A kaydında 0:03.2 selamında topuklar yakın, ayak uçları dışa dönük, açık eller uylukların yanındadır; 0:04.3 yeniden dik durur. Hazıra geçişte önce sol ayak dışarı gider (0:05.3), ardından sağ ayak dışarı giderken önkollar önde çaprazlanır (0:06.4). 0:07.5–0:12.0 arasında ayaklar ayrı, uçları dışa dönük ve kapalı yumruklar uylukların önünde alçaktadır. Bu açılışın sırasını öğren: selam–dik duruş–sol dışarı–sağ dışarı ve kolların çaprazlanması–hazır. Sonra doğrudan 1. harekete geçilir; araya boks gardı eklenmez. Ayak genişliği, basınç ve kişisel duruş derinliği bu gözlemden ölçülmüş değildir. B kaydı zaten hazır başlar; ona bir açılış selamı atfetme.",
+      "en": "N is your initial ready heading; E is your initial right, W your initial left, and S behind. These are not screen sides. In recording A, the bow at 0:03.2 has close heels, outward-pointing toes and open hands beside the thighs; the instructor is upright at 0:04.3. To open into ready, the left foot moves outward first at 0:05.3, then the right moves outward while the forearms cross in front at 0:06.4. At 0:07.5–0:12.0 the feet are apart, toes outward and closed fists low in front of the thighs. Learn this order: bow–upright–left outward–right outward with crossed arms–ready. Continue directly into count 1; add no boxing guard. Foot width, pressure and a suitable personal stance depth were not measured from this observation. B starts already ready; do not attribute an opening bow to it."
+    },
+    "closing": {
+      "tr": "A’nın 0:41.6 sol yumruk/sol ön duruş bitişini başlangıç al. 0:43.2’de sol ayak içeri doğru hareket ederken sol kol yukarı katlanır; gövde başlangıç yönüne döner. 0:44.3’te önkollar çapraz ve yön başlangıç yönüdür; 0:45.3’te hazır düzenine gelinir. Sonra 0:46.3–0:46.8 kareleri sol ayağın önce içeri kapandığını, ardından sağın ona katıldığını gösterir; eller açılıp uylukların yanına gelir. 0:49.6’da selam, 0:50.1’de yeniden dik duruş görülür. Öğrenilecek kapanış: sol ayakla geri topla ve yönünü başlangıca getir–kolları çaprazla–hazır–sol içeri–sağ katılır–açık eller–selam–dik duruş. A’daki bu ayak sırası B’nin görünmeyen aralığına atfedilmez. Adım mesafesi, taban teması ve ilk zemin noktasına tam dönüş ölçülmüş değildir. 21. yumruk veya ara boks gardı eklenmez.",
+      "en": "Begin from A’s left-punch/left-front finish at 0:41.6. At 0:43.2 the left foot moves inward and the left arm folds high while the torso returns toward the initial heading. At 0:44.3 the forearms are crossed and the original heading restored; ready follows at 0:45.3. Frame stepping at 0:46.3–0:46.8 shows the left foot closing inward first, then the right joining it as the hands open beside the thighs. The bow is at 0:49.6 and upright at 0:50.1. Learn this closing order: recover with the left foot and restore the initial heading–cross arms–ready–left inward–right joins–open hands–bow–upright. This A-specific foot order is not assigned to B’s unseen interval. Travel distance, sole contact and exact return to an original floor point were not measured. Add no 21st punch or intervening boxing guard."
+    },
+    "movements": [
+      {
+        "id": "ts-m01",
+        "count": 1,
+        "title": {
+          "tr": "1. sol gedan-barai (aşağı kol yolu)",
+          "en": "1. left gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "A’nın hazır düzeninden başla: N’ye bak, yumruklar alçakta ve ayaklar ayrıdır. B’nin hazır→1 girişini kullan.",
+          "en": "Start from the A-based ready configuration: face N, fists low and feet apart. Use B’s observed ready→1 entry."
+        },
+        "feet": {
+          "tr": "Sol ayağı başlangıçtaki soluna doğru kaldırıp taşı; gövdeyi sola çeyrek döndür. Sağ ayağın görünen yeri yaklaşık yer referansı olarak kalır ve ayak yeniden yönlenir. Son durumda sol ayak yeni yönde öndedir.",
+          "en": "Lift and carry the left foot toward your initial left while turning the torso a quarter-turn left. The right foot stays near its visible floor location and reorients. Finish with the left foot forward in the new heading."
+        },
+        "hands": {
+          "tr": "Sol yumruğu karşı sağ omuza doğru çapraz kaldır. Sağ kol önde daha alçak uzanır. Sol kol aşağı yola süpürürken sağ kol kendi yanına geri gelir; bitişte sağ yumruk bel yanında görünür.",
+          "en": "Raise the left fist across toward the opposite right shoulder. The right arm extends lower in front. Sweep the left arm down while the right returns to its own side; the right fist is visible at the waist in the finish."
+        },
+        "finish": {
+          "tr": "W (başlangıçtaki sol tarafın) yönüne bak. Sol ayak önde ve sol gedan-barai (aşağı kol yolu) bitiştedir. Sağ yumruk bel yanında görünür.",
+          "en": "Face W (your initial left). The left foot is forward and the left gedan-barai (low block path) finishes. The right fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 2. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön W. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 2. The next active side is right; its heading is W. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:09.4",
+          "source_mapping_pointer": "/counts/0",
+          "turn_entry_pointer": "/requested_turn_entries/0",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m02",
+        "count": 2,
+        "title": {
+          "tr": "2. sağ oi-zuki (adımlı yumruk)",
+          "en": "2. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "1. hareketin bitişinden devam et: W yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 1: heading W, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bu ayak yeni ön ayak olur. Yakından incelenen adımlarda hareketli ayak, duran/ön ayağın yakınından geçer. Sonuç sağ ayak önde ön duruştur. Diğer adımların ara kareleri aynı ayrıntıda incelenmedi; kesin temas veya santimetre yolu ekleme.",
+          "en": "Advance the rear right foot so it becomes the new front foot. In closely inspected steps, the moving foot passes near the standing/front foot. Finish in the reported right-front configuration. Other step intervals were not inspected at equal detail; add no exact contact or centimetre path."
+        },
+        "hands": {
+          "tr": "Önceki uzanan/aşağı yoldaki kolu hareketin başlangıcında hemen ayrı bir garda çekme. Eller gövdenin önüne yakın bölgede yer değiştirirken sağ yumruk öne uzar ve sol kol kendi yanına geri gelir. Ayak ve el aynı hareket aralığında ilerler; tam kare eşzamanlılığı veya kasılma anı doğrulanmış değildir.",
+          "en": "Do not immediately pull the prior extended/low-block arm into a separate guard at the start. As the hands exchange near the front of the torso, extend the right fist and return the left arm to its own side. Foot and hand progress through the same movement interval; exact frame simultaneity or muscle-contraction timing was not verified."
+        },
+        "finish": {
+          "tr": "W (başlangıçtaki sol tarafın) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face W (your initial left). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 3. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön E. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 3. The next active side is right; its heading is E. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Sol dirsek geri gelir; bitişte sol yumruk gövde arkasında gizlidir. Onun kesin yüksekliğini veya avuç yönünü bu kareden doğrulama.",
+          "en": "The left elbow returns, but the left fist is hidden by the torso at the finish. Do not verify its exact height or palm orientation from this frame."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:14.4",
+          "source_mapping_pointer": "/counts/1",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/0",
+          "fine_stepping_entry_sampled": true
+        }
+      },
+      {
+        "id": "ts-m03",
+        "count": 3,
+        "title": {
+          "tr": "3. sağ gedan-barai (aşağı kol yolu)",
+          "en": "3. right gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "2. hareketin bitişinden devam et: W yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 2: heading W, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Öndeki sağ ayağı kaldırıp soldaki arka ayağın yaklaşık zemin yeri çevresinde yeniden yerleştir. Gövdeyi kendi sağına yarım döndür ve önceki yönün tersine bak. Sağ ayak yeni yönde yine önde kalır. Soldaki yer referansı, ayağı sabitleme veya bir temas kenarını seçme talimatı değildir.",
+          "en": "Lift and reposition the front right foot around the approximate floor location of the rear left foot. Turn the torso a half-turn to your own right to face the opposite heading. The right foot remains the front foot in the new heading. The left location reference is not an instruction to fix the foot or choose a pivot edge."
+        },
+        "hands": {
+          "tr": "Önceki sağ yumruğu sol omuza doğru yukarı ve çapraz katla; sol önkol önde daha alçak bir hazırlığa geçer. Sağ kol aşağı yola süpürürken sol kol kendi yanına geri gelir. Gizlenen önkol/bilek bölümlerine kesin dönüş ekleme.",
+          "en": "Fold the previously punching right fist up and across toward the left shoulder while the left forearm prepares lower in front. Sweep the right arm down as the left returns to its own side. Add no exact rotation to hidden forearm/wrist sections."
+        },
+        "finish": {
+          "tr": "E (başlangıçtaki sağ tarafın) yönüne bak. Sağ ayak önde ve sağ gedan-barai (aşağı kol yolu) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face E (your initial right). The right foot is forward and the right gedan-barai (low block path) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 4. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön E. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 4. The next active side is left; its heading is E. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:19.4",
+          "source_mapping_pointer": "/counts/2",
+          "turn_entry_pointer": "/requested_turn_entries/1",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m04",
+        "count": 4,
+        "title": {
+          "tr": "4. sol oi-zuki (adımlı yumruk)",
+          "en": "4. left oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "3. hareketin bitişinden devam et: E yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 3: heading E, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sol ayağı ileri taşı; bu ayak yeni ön ayak olur. Yakından incelenen adımlarda hareketli ayak, duran/ön ayağın yakınından geçer. Sonuç sol ayak önde ön duruştur. Diğer adımların ara kareleri aynı ayrıntıda incelenmedi; kesin temas veya santimetre yolu ekleme.",
+          "en": "Advance the rear left foot so it becomes the new front foot. In closely inspected steps, the moving foot passes near the standing/front foot. Finish in the reported left-front configuration. Other step intervals were not inspected at equal detail; add no exact contact or centimetre path."
+        },
+        "hands": {
+          "tr": "Önceki uzanan/aşağı yoldaki kolu hareketin başlangıcında hemen ayrı bir garda çekme. Eller gövdenin önüne yakın bölgede yer değiştirirken sol yumruk öne uzar ve sağ kol kendi yanına geri gelir. Ayak ve el aynı hareket aralığında ilerler; tam kare eşzamanlılığı veya kasılma anı doğrulanmış değildir.",
+          "en": "Do not immediately pull the prior extended/low-block arm into a separate guard at the start. As the hands exchange near the front of the torso, extend the left fist and return the right arm to its own side. Foot and hand progress through the same movement interval; exact frame simultaneity or muscle-contraction timing was not verified."
+        },
+        "finish": {
+          "tr": "E (başlangıçtaki sağ tarafın) yönüne bak. Sol ayak önde ve sol oi-zuki (adımlı yumruk) bitiştedir. Sağ dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face E (your initial right). The left foot is forward and the left oi-zuki (stepping punch) finishes. The right elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 5. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön N. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 5. The next active side is left; its heading is N. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Sağ dirsek geri gelir; sağ yumruk kısmen gizlidir. Gizlenen bilek dönüşü açık kalır.",
+          "en": "The right elbow returns; the right fist is partly hidden. The hidden wrist rotation remains open."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:22.0",
+          "source_mapping_pointer": "/counts/3",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/1",
+          "fine_stepping_entry_sampled": true
+        }
+      },
+      {
+        "id": "ts-m05",
+        "count": 5,
+        "title": {
+          "tr": "5. sol gedan-barai (aşağı kol yolu)",
+          "en": "5. left gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "4. hareketin bitişinden devam et: E yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 4: heading E, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Öndeki sol ayağı kaldırıp yeni yönde yeniden yerleştirirken gövdeyi sola çeyrek döndür. Sağ arka ayağın görünen yeri yaklaşık yer referansı olarak kalır. Sol ayak yeni yönde öndedir; dönüş için topuk veya ayak önü yükü çıkarımı yapma.",
+          "en": "Lift and relocate the front left foot into the new heading while turning the torso a quarter-turn left. The rear right foot stays near its visible floor location. Finish left-foot forward; infer no heel or forefoot loading for the turn."
+        },
+        "hands": {
+          "tr": "Önceki sol yumruğu sağ omuza doğru yukarı ve çapraz katla; sağ kol önde daha alçak hazırlığa geçer. Sol kol aşağı yola süpürürken sağ kol kendi yanına geri gelir.",
+          "en": "Fold the previously punching left fist up and across toward the right shoulder while the right arm prepares lower in front. Sweep the left arm down as the right returns to its own side."
+        },
+        "finish": {
+          "tr": "N (başlangıçta baktığın yön) yönüne bak. Sol ayak önde ve sol gedan-barai (aşağı kol yolu) bitiştedir. Sağ yumruk bel yanında görünür.",
+          "en": "Face N (your initial ready heading). The left foot is forward and the left gedan-barai (low block path) finishes. The right fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 6. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön N. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 6. The next active side is right; its heading is N. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:25.9",
+          "source_mapping_pointer": "/counts/4",
+          "turn_entry_pointer": "/requested_turn_entries/2",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m06",
+        "count": 6,
+        "title": {
+          "tr": "6. sağ oi-zuki (adımlı yumruk)",
+          "en": "6. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "5. hareketin bitişinden devam et: N yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 5: heading N, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bu ayak yeni ön ayak olur. Yakından incelenen adımlarda hareketli ayak, duran/ön ayağın yakınından geçer. Sonuç sağ ayak önde ön duruştur. Diğer adımların ara kareleri aynı ayrıntıda incelenmedi; kesin temas veya santimetre yolu ekleme.",
+          "en": "Advance the rear right foot so it becomes the new front foot. In closely inspected steps, the moving foot passes near the standing/front foot. Finish in the reported right-front configuration. Other step intervals were not inspected at equal detail; add no exact contact or centimetre path."
+        },
+        "hands": {
+          "tr": "Önceki uzanan/aşağı yoldaki kolu hareketin başlangıcında hemen ayrı bir garda çekme. Eller gövdenin önüne yakın bölgede yer değiştirirken sağ yumruk öne uzar ve sol kol kendi yanına geri gelir. Ayak ve el aynı hareket aralığında ilerler; tam kare eşzamanlılığı veya kasılma anı doğrulanmış değildir.",
+          "en": "Do not immediately pull the prior extended/low-block arm into a separate guard at the start. As the hands exchange near the front of the torso, extend the right fist and return the left arm to its own side. Foot and hand progress through the same movement interval; exact frame simultaneity or muscle-contraction timing was not verified."
+        },
+        "finish": {
+          "tr": "N (başlangıçta baktığın yön) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face N (your initial ready heading). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 7. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön N. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 7. The next active side is left; its heading is N. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:28.9",
+          "source_mapping_pointer": "/counts/5",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/2",
+          "fine_stepping_entry_sampled": true
+        }
+      },
+      {
+        "id": "ts-m07",
+        "count": 7,
+        "title": {
+          "tr": "7. sol oi-zuki (adımlı yumruk)",
+          "en": "7. left oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "6. hareketin bitişinden devam et: N yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 6: heading N, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sol ayağı ileri taşı; bu ayak yeni ön ayak olur. Yakından incelenen adımlarda hareketli ayak, duran/ön ayağın yakınından geçer. Sonuç sol ayak önde ön duruştur. Diğer adımların ara kareleri aynı ayrıntıda incelenmedi; kesin temas veya santimetre yolu ekleme.",
+          "en": "Advance the rear left foot so it becomes the new front foot. In closely inspected steps, the moving foot passes near the standing/front foot. Finish in the reported left-front configuration. Other step intervals were not inspected at equal detail; add no exact contact or centimetre path."
+        },
+        "hands": {
+          "tr": "Önceki uzanan/aşağı yoldaki kolu hareketin başlangıcında hemen ayrı bir garda çekme. Eller gövdenin önüne yakın bölgede yer değiştirirken sol yumruk öne uzar ve sağ kol kendi yanına geri gelir. Ayak ve el aynı hareket aralığında ilerler; tam kare eşzamanlılığı veya kasılma anı doğrulanmış değildir.",
+          "en": "Do not immediately pull the prior extended/low-block arm into a separate guard at the start. As the hands exchange near the front of the torso, extend the left fist and return the right arm to its own side. Foot and hand progress through the same movement interval; exact frame simultaneity or muscle-contraction timing was not verified."
+        },
+        "finish": {
+          "tr": "N (başlangıçta baktığın yön) yönüne bak. Sol ayak önde ve sol oi-zuki (adımlı yumruk) bitiştedir. Sağ yumruk bel yanında görünür.",
+          "en": "Face N (your initial ready heading). The left foot is forward and the left oi-zuki (stepping punch) finishes. The right fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 8. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön N. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 8. The next active side is right; its heading is N. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:32.5",
+          "source_mapping_pointer": "/counts/6",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/3",
+          "fine_stepping_entry_sampled": true
+        }
+      },
+      {
+        "id": "ts-m08",
+        "count": 8,
+        "title": {
+          "tr": "8. sağ oi-zuki (adımlı yumruk)",
+          "en": "8. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "7. hareketin bitişinden devam et: N yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 7: heading N, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bu ayak yeni ön ayak olur. Yakından incelenen adımlarda hareketli ayak, duran/ön ayağın yakınından geçer. Sonuç sağ ayak önde ön duruştur. Diğer adımların ara kareleri aynı ayrıntıda incelenmedi; kesin temas veya santimetre yolu ekleme.",
+          "en": "Advance the rear right foot so it becomes the new front foot. In closely inspected steps, the moving foot passes near the standing/front foot. Finish in the reported right-front configuration. Other step intervals were not inspected at equal detail; add no exact contact or centimetre path."
+        },
+        "hands": {
+          "tr": "Önceki uzanan/aşağı yoldaki kolu hareketin başlangıcında hemen ayrı bir garda çekme. Eller gövdenin önüne yakın bölgede yer değiştirirken sağ yumruk öne uzar ve sol kol kendi yanına geri gelir. Ayak ve el aynı hareket aralığında ilerler; tam kare eşzamanlılığı veya kasılma anı doğrulanmış değildir.",
+          "en": "Do not immediately pull the prior extended/low-block arm into a separate guard at the start. As the hands exchange near the front of the torso, extend the right fist and return the left arm to its own side. Foot and hand progress through the same movement interval; exact frame simultaneity or muscle-contraction timing was not verified."
+        },
+        "finish": {
+          "tr": "N (başlangıçta baktığın yön) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face N (your initial ready heading). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 9. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön E. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 9. The next active side is left; its heading is E. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:35.9",
+          "source_mapping_pointer": "/counts/7",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/4",
+          "fine_stepping_entry_sampled": true
+        }
+      },
+      {
+        "id": "ts-m09",
+        "count": 9,
+        "title": {
+          "tr": "9. sol gedan-barai (aşağı kol yolu)",
+          "en": "9. left gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "8. hareketin bitişinden devam et: N yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 8: heading N, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Sağ ön ayağın yaklaşık zemin yerini referans alırken sol arka ayağı kaldırıp çevreden/arkadan taşı. Gövde sola dönmeye devam eder ve birbirini izleyen yönlerden geçerek üç çeyrek dönüşü tamamlar. Sol ayak yeni yönde öne gelir. Son yönü daha kısa sağ dönüşle bulmak bu gözlenen yolun yerine geçmez; temas kenarı veya yük dağılımı gözlenmiş değildir.",
+          "en": "With the right front foot as the approximate floor-location reference, lift and carry the rear left foot around/behind. Continue turning the torso left through successive headings to complete the three-quarter turn. The left foot becomes front in the new heading. Reaching the heading through a shorter right turn does not reproduce this observed path; contact edge and loading were not established."
+        },
+        "hands": {
+          "tr": "Sol kolu bel yanından karşı sağ omuza doğru çapraz kaldır. Önceki sağ yumruk bükülüp önde daha alçak rehber kol olur. Sol kol aşağı yola giderken sağ kol kendi yanına geri gelir. Sol kol yükselişinin bir kısmı arka görünüşte gizlidir.",
+          "en": "Raise the left arm from the waist across toward the opposite right shoulder. The previously punching right arm bends into the lower guide in front. Sweep the left arm down as the right returns to its own side. Part of the left-arm ascent is hidden in the rear view."
+        },
+        "finish": {
+          "tr": "E (başlangıçtaki sağ tarafın) yönüne bak. Sol ayak önde ve sol gedan-barai (aşağı kol yolu) bitiştedir. Sağ dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face E (your initial right). The left foot is forward and the left gedan-barai (low block path) finishes. The right elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 10. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön E. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 10. The next active side is right; its heading is E. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "En yakın/ön ayağın bir kısmı alt kadraj dışındadır; sağ yumruk gizlidir ve sol kol yükselişinin bir kısmı arka görünüşte kapanır. Kesin ayak yerleşimini, taban temasını veya görünmeyen el bölümünü doldurma.",
+          "en": "Part of the nearest/front foot is outside the lower frame; the right fist and part of the left-arm ascent are hidden. Do not fill exact foot placement, sole contact or the unseen hand section."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:39.3",
+          "source_mapping_pointer": "/counts/8",
+          "turn_entry_pointer": "/requested_turn_entries/3",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m10",
+        "count": 10,
+        "title": {
+          "tr": "10. sağ oi-zuki (adımlı yumruk)",
+          "en": "10. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "9. hareketin bitişinden devam et: E yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 9: heading E, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear right foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sağ yumruğu öne uzat; önceki aktif sol kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the right fist while the previously active left arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "E (başlangıçtaki sağ tarafın) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face E (your initial right). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 11. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön W. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 11. The next active side is right; its heading is W. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:42.9",
+          "source_mapping_pointer": "/counts/9",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/5",
+          "fine_stepping_entry_sampled": false
+        }
+      },
+      {
+        "id": "ts-m11",
+        "count": 11,
+        "title": {
+          "tr": "11. sağ gedan-barai (aşağı kol yolu)",
+          "en": "11. right gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "10. hareketin bitişinden devam et: E yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 10: heading E, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Öndeki sağ ayağı kaldırıp soldaki arka ayağın yaklaşık zemin yeri çevresinde yeniden yerleştir. Gövdeyi kendi sağına yarım döndür ve önceki yönün tersine bak. Sağ ayak yeni yönde yine önde kalır. Soldaki yer referansı, ayağı sabitleme veya bir temas kenarını seçme talimatı değildir.",
+          "en": "Lift and reposition the front right foot around the approximate floor location of the rear left foot. Turn the torso a half-turn to your own right to face the opposite heading. The right foot remains the front foot in the new heading. The left location reference is not an instruction to fix the foot or choose a pivot edge."
+        },
+        "hands": {
+          "tr": "Önceki sağ yumruğu sol omuza doğru yukarı ve çapraz katla; sol önkol önde daha alçak bir hazırlığa geçer. Sağ kol aşağı yola süpürürken sol kol kendi yanına geri gelir. Gizlenen önkol/bilek bölümlerine kesin dönüş ekleme.",
+          "en": "Fold the previously punching right fist up and across toward the left shoulder while the left forearm prepares lower in front. Sweep the right arm down as the left returns to its own side. Add no exact rotation to hidden forearm/wrist sections."
+        },
+        "finish": {
+          "tr": "W (başlangıçtaki sol tarafın) yönüne bak. Sağ ayak önde ve sağ gedan-barai (aşağı kol yolu) bitiştedir. Sol dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face W (your initial left). The right foot is forward and the right gedan-barai (low block path) finishes. The left elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 12. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön W. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 12. The next active side is left; its heading is W. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Sol yumruk gizlidir; arka görünüş bazı önkol/bilek ayrıntılarını kapatır. Görünen dirsek geri dönüşünü tam yumruk/avuç doğrulaması sayma.",
+          "en": "The left fist is hidden and the rear view hides some forearm/wrist detail. A visible returning elbow does not verify the complete fist/palm position."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:47.4",
+          "source_mapping_pointer": "/counts/10",
+          "turn_entry_pointer": "/requested_turn_entries/4",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m12",
+        "count": 12,
+        "title": {
+          "tr": "12. sol oi-zuki (adımlı yumruk)",
+          "en": "12. left oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "11. hareketin bitişinden devam et: W yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 11: heading W, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sol ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear left foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sol yumruğu öne uzat; önceki aktif sağ kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the left fist while the previously active right arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "W (başlangıçtaki sol tarafın) yönüne bak. Sol ayak önde ve sol oi-zuki (adımlı yumruk) bitiştedir. Sağ yumruk bel yanında görünür.",
+          "en": "Face W (your initial left). The left foot is forward and the left oi-zuki (stepping punch) finishes. The right fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 13. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön S. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 13. The next active side is left; its heading is S. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Öndeki/uzak ayağın bir kısmı yakın bacakla örtülür. Ön duruş düzeni görülür; ayağın tamamı veya taban teması doğrulanmış değildir.",
+          "en": "Part of the far/front foot is obscured by the near leg. The front-stance configuration is reported; the complete foot or sole contact was not verified."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:50.8",
+          "source_mapping_pointer": "/counts/11",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/6",
+          "fine_stepping_entry_sampled": false
+        }
+      },
+      {
+        "id": "ts-m13",
+        "count": 13,
+        "title": {
+          "tr": "13. sol gedan-barai (aşağı kol yolu)",
+          "en": "13. left gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "12. hareketin bitişinden devam et: W yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 12: heading W, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Öndeki sol ayağı yeni yönde yeniden yerleştirirken gövdeyi sola çeyrek döndür. Sağ arka ayağın görünen yeri yaklaşık yer referansı olarak kalır. Sol ayak yeni yönde öndedir; dönüş için topuk veya ayak önü yükü çıkarımı yapma.",
+          "en": "Relocate the front left foot into the new heading while turning the torso a quarter-turn left. The rear right foot stays near its visible floor location. Finish left-foot forward; infer no heel or forefoot loading for the turn."
+        },
+        "hands": {
+          "tr": "Önceki sol yumruğu sağ omuza doğru yukarı ve çapraz katla; sağ kol önde daha alçak hazırlığa geçer. Sol kol aşağı yola süpürürken sağ kol kendi yanına geri gelir. Rehber kolun tam geri dönüş yolu ve bilek dönüşü kısmen gizlidir; görüneni kullan, gizlenen yolu tam gözlenmiş sayma.",
+          "en": "Fold the previously punching left fist up and across toward the right shoulder while the right arm prepares lower in front. Sweep the left arm down as the right returns to its own side. The complete guide-arm return and wrist rotation are partly hidden; use the visible path without claiming the hidden path was fully observed."
+        },
+        "finish": {
+          "tr": "S (başlangıç yönünün arkası) yönüne bak. Sol ayak önde ve sol gedan-barai (aşağı kol yolu) bitiştedir. Sağ dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face S (behind your initial heading). The left foot is forward and the left gedan-barai (low block path) finishes. The right elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 14. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön S. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 14. The next active side is right; its heading is S. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Sağ dirsek geri gelir, fakat sağ yumruk ve rehber kolun tam yolu gizlidir; tam bilek dönüşü çözülmemiştir.",
+          "en": "The right elbow returns, but the right fist and complete guide-arm path are hidden; full wrist rotation remains unresolved."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:55.8",
+          "source_mapping_pointer": "/counts/12",
+          "turn_entry_pointer": "/requested_turn_entries/5",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m14",
+        "count": 14,
+        "title": {
+          "tr": "14. sağ oi-zuki (adımlı yumruk)",
+          "en": "14. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "13. hareketin bitişinden devam et: S yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 13: heading S, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear right foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sağ yumruğu öne uzat; önceki aktif sol kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the right fist while the previously active left arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "S (başlangıç yönünün arkası) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face S (behind your initial heading). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 15. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön S. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 15. The next active side is left; its heading is S. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Uzak kol kısmen gizlidir. Hareket adımlı yumruk olarak izlenir; her gizli el/avuç ayrıntısı doğrulanmış değildir.",
+          "en": "The far arm is partly hidden. The action is observed as a stepping punch; every hidden hand/palm detail was not verified."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "0:58.4",
+          "source_mapping_pointer": "/counts/13",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/7",
+          "fine_stepping_entry_sampled": false
+        }
+      },
+      {
+        "id": "ts-m15",
+        "count": 15,
+        "title": {
+          "tr": "15. sol oi-zuki (adımlı yumruk)",
+          "en": "15. left oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "14. hareketin bitişinden devam et: S yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 14: heading S, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sol ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear left foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sol yumruğu öne uzat; önceki aktif sağ kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the left fist while the previously active right arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "S (başlangıç yönünün arkası) yönüne bak. Sol ayak önde ve sol oi-zuki (adımlı yumruk) bitiştedir. Sağ dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face S (behind your initial heading). The left foot is forward and the left oi-zuki (stepping punch) finishes. The right elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 16. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön S. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 16. The next active side is right; its heading is S. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Sağ dirsek geri gelir; sağ yumruk gizlidir. Onun görünmeyen yolunu bir başka hareketten bu kareye taşıma.",
+          "en": "The right elbow returns, but the right fist is hidden. Do not transfer an unseen path from another count into this frame."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "1:01.8",
+          "source_mapping_pointer": "/counts/14",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/8",
+          "fine_stepping_entry_sampled": false
+        }
+      },
+      {
+        "id": "ts-m16",
+        "count": 16,
+        "title": {
+          "tr": "16. sağ oi-zuki (adımlı yumruk)",
+          "en": "16. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "15. hareketin bitişinden devam et: S yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 15: heading S, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear right foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sağ yumruğu öne uzat; önceki aktif sol kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the right fist while the previously active left arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "S (başlangıç yönünün arkası) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face S (behind your initial heading). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 17. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön W. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 17. The next active side is left; its heading is W. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Uzak kol ve ayaklar kısmen örtüşür. Sonraki uzun dönüşün giriş düzeni izlenir; örtülen ayak temasını veya el ayrıntısını kesinleştirme.",
+          "en": "The far arm and feet overlap partly. The entry configuration for the next long turn is reported; do not certify obscured foot contact or hand detail."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "1:05.8",
+          "source_mapping_pointer": "/counts/15",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/9",
+          "fine_stepping_entry_sampled": false
+        }
+      },
+      {
+        "id": "ts-m17",
+        "count": 17,
+        "title": {
+          "tr": "17. sol gedan-barai (aşağı kol yolu)",
+          "en": "17. left gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "16. hareketin bitişinden devam et: S yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 16: heading S, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Sağ ön ayağın yaklaşık zemin yerini referans alırken sol arka ayağı kaldırıp çevreden taşı. Gövde sola dönmeye devam eder ve birbirini izleyen yönlerden geçerek üç çeyrek dönüşü tamamlar. Sol ayak yeni yönde öne gelir. Son yönü daha kısa sağ dönüşle bulmak bu gözlenen yolun yerine geçmez; temas kenarı veya yük dağılımı gözlenmiş değildir.",
+          "en": "With the right front foot as the approximate floor-location reference, lift and carry the rear left foot around. Continue turning the torso left through successive headings to complete the three-quarter turn. The left foot becomes front in the new heading. Reaching the heading through a shorter right turn does not reproduce this observed path; contact edge and loading were not established."
+        },
+        "hands": {
+          "tr": "Sol kolu bel yanından karşı sağ omuza doğru çapraz kaldır. Önceki sağ yumruk bükülüp önde daha alçak rehber kol olur. Sol kol aşağı yola giderken sağ kol kendi yanına geri gelir. 1:08.9 ön çapraz karesi hazırlığı daha açık gösterir.",
+          "en": "Raise the left arm from the waist across toward the opposite right shoulder. The previously punching right arm bends into the lower guide in front. Sweep the left arm down as the right returns to its own side. The front-oblique frame at 1:08.9 shows the preparation more clearly."
+        },
+        "finish": {
+          "tr": "W (başlangıçtaki sol tarafın) yönüne bak. Sol ayak önde ve sol gedan-barai (aşağı kol yolu) bitiştedir. Sağ yumruk bel yanında görünür.",
+          "en": "Face W (your initial left). The left foot is forward and the left gedan-barai (low block path) finishes. The right fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 18. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön W. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 18. The next active side is right; its heading is W. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "1:09.9",
+          "source_mapping_pointer": "/counts/16",
+          "turn_entry_pointer": "/requested_turn_entries/6",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m18",
+        "count": 18,
+        "title": {
+          "tr": "18. sağ oi-zuki (adımlı yumruk)",
+          "en": "18. right oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "17. hareketin bitişinden devam et: W yönü, sol ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 17: heading W, left foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sağ ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear right foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sağ yumruğu öne uzat; önceki aktif sol kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the right fist while the previously active left arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "W (başlangıçtaki sol tarafın) yönüne bak. Sağ ayak önde ve sağ oi-zuki (adımlı yumruk) bitiştedir. Sol dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face W (your initial left). The right foot is forward and the right oi-zuki (stepping punch) finishes. The left elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "Bu durumu 19. hareketin girişi olarak koru. Sonraki aktif taraf sağ; sonraki yön E. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 19. The next active side is right; its heading is E. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Sol dirsek geri gelir; sol yumruk gövde arkasında gizlidir. Gizlenen kısmın tam biçimi açık kalır.",
+          "en": "The left elbow returns, but the left fist is hidden by the torso. Its complete unseen form remains open."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "1:13.8",
+          "source_mapping_pointer": "/counts/17",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/10",
+          "fine_stepping_entry_sampled": false
+        }
+      },
+      {
+        "id": "ts-m19",
+        "count": 19,
+        "title": {
+          "tr": "19. sağ gedan-barai (aşağı kol yolu)",
+          "en": "19. right gedan-barai (low block path)"
+        },
+        "start": {
+          "tr": "18. hareketin bitişinden devam et: W yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 18: heading W, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Öndeki sağ ayağı kaldırıp soldaki arka ayağın yaklaşık zemin yeri çevresinde yeniden yerleştir. Gövdeyi kendi sağına yarım döndür ve önceki yönün tersine bak. Sağ ayak yeni yönde yine önde kalır. Soldaki yer referansı, ayağı sabitleme veya bir temas kenarını seçme talimatı değildir.",
+          "en": "Lift and reposition the front right foot around the approximate floor location of the rear left foot. Turn the torso a half-turn to your own right to face the opposite heading. The right foot remains the front foot in the new heading. The left location reference is not an instruction to fix the foot or choose a pivot edge."
+        },
+        "hands": {
+          "tr": "Önceki sağ yumruğu sol omuza doğru yukarı ve çapraz katla; sol önkol önde daha alçak bir hazırlığa geçer. Sağ kol aşağı yola süpürürken sol kol kendi yanına geri gelir. Gizlenen önkol/bilek bölümlerine kesin dönüş ekleme.",
+          "en": "Fold the previously punching right fist up and across toward the left shoulder while the left forearm prepares lower in front. Sweep the right arm down as the left returns to its own side. Add no exact rotation to hidden forearm/wrist sections."
+        },
+        "finish": {
+          "tr": "E (başlangıçtaki sağ tarafın) yönüne bak. Sağ ayak önde ve sağ gedan-barai (aşağı kol yolu) bitiştedir. Sol yumruk bel yanında görünür.",
+          "en": "Face E (your initial right). The right foot is forward and the right gedan-barai (low block path) finishes. The left fist is visible at the waist."
+        },
+        "next": {
+          "tr": "Bu durumu 20. hareketin girişi olarak koru. Sonraki aktif taraf sol; sonraki yön E. Araya başka bir gard, yumruk veya hazır duruş koyma.",
+          "en": "Retain this state as the entry to count 20. The next active side is left; its heading is E. Insert no extra guard, punch or ready stance."
+        },
+        "limit": {
+          "tr": "Bu görünür bitiş, her bilek dönüşünü, ayak temasını veya kişisel yükü ölçmez. Genel sınırlar geçerlidir.",
+          "en": "This visible finish does not measure every wrist rotation, foot contact or personal load. The shared limits apply."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "1:18.8",
+          "source_mapping_pointer": "/counts/18",
+          "turn_entry_pointer": "/requested_turn_entries/7",
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": null,
+          "fine_stepping_entry_sampled": null
+        }
+      },
+      {
+        "id": "ts-m20",
+        "count": 20,
+        "title": {
+          "tr": "20. sol oi-zuki (adımlı yumruk)",
+          "en": "20. left oi-zuki (stepping punch)"
+        },
+        "start": {
+          "tr": "19. hareketin bitişinden devam et: E yönü, sağ ayak önde ve önceki aktif kol kendi bitiş yolundadır. Hazıra veya garda geri sıfırlama.",
+          "en": "Continue from count 19: heading E, right foot forward and the prior active arm in its terminal path. Do not reset to ready or guard."
+        },
+        "feet": {
+          "tr": "Arkadaki sol ayağı ileri taşı; bitişte bu ayak yeni ön ayaktır. Bu sınırın bitiş düzeni izlenmiştir, fakat ara ayak yolu diğer seçilmiş adımlar kadar yakından incelenmemiştir. Kesin kaldırma, geçiş çizgisi veya taban teması tarif etme.",
+          "en": "Advance the rear left foot so it is the new front foot at the finish. This boundary has an observed endpoint configuration, but its intermediate foot path was not inspected as closely as the selected steps. Prescribe no exact lift, passing line or sole contact."
+        },
+        "hands": {
+          "tr": "Sol yumruğu öne uzat; önceki aktif sağ kol kendi yanına geri gelir. Son durumun görünen ve gizlenen parçaları aşağıda ayrıdır. Bu sınırdaki tam ara el yolu yakından örneklenmemiştir; başlangıçtaki kol tutuşunu, değiş tokuş çizgisini veya bilek dönüşünü tam doğrulanmış sayma. Önceki bitişten devam ederken fazladan gard ekleme.",
+          "en": "Extend the left fist while the previously active right arm returns to its own side. Visible and hidden parts of the finish are distinguished below. This boundary’s complete intermediate hand path was not closely sampled; do not treat initial arm retention, the exchange line or wrist rotation as fully verified here. Continue from the preceding finish without adding a guard."
+        },
+        "finish": {
+          "tr": "E (başlangıçtaki sağ tarafın) yönüne bak. Sol ayak önde ve sol oi-zuki (adımlı yumruk) bitiştedir. Sağ dirsek kendi yanına geri gelmiş görünür; yumruğun kesin bitişi gizli/kısmen gizlidir.",
+          "en": "Face E (your initial right). The left foot is forward and the left oi-zuki (stepping punch) finishes. The right elbow is visibly drawn back; the exact fist finish is hidden/partly hidden."
+        },
+        "next": {
+          "tr": "20 sayılan hareket burada biter. Sol yumruk/sol ön duruş bitişinden A’nın geri toplama–hazır–selam kapanışına geç; kapanış yeni bir sayılan teknik değildir.",
+          "en": "The 20 counted actions end here. Continue from the left-punch/left-front finish into A’s recovery–ready–bow closing; closing is not another counted technique."
+        },
+        "limit": {
+          "tr": "Sağ dirsek geri gelir; sağ yumruk kısmen gizlidir. Bu bitişten sonra sayılan yeni bir teknik veya boks gardı eklenmez; A’nın kapanışına geçilir.",
+          "en": "The right elbow returns; the right fist is partly hidden. Add no new counted technique or boxing guard after this finish; proceed to the A-based closing."
+        },
+        "evidence": {
+          "recording": "B",
+          "endpoint_sample": "1:22.8",
+          "source_mapping_pointer": "/counts/19",
+          "turn_entry_pointer": null,
+          "report_sha256": "13f7bdaa3dd4f33682595128f00a12884aa9563e61206c84fc4158cf3f4e6aff",
+          "stepping_entry_pointer": "/stepping_boundaries/11",
+          "fine_stepping_entry_sampled": false
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "ts-01",
+        "title": {
+          "tr": "Referans, alan ve gerçek açılış",
+          "en": "Reference, space and the actual opening"
+        },
+        "objective": {
+          "tr": "Jason Leung referansını ve A açılışını öğren; yazılı çalışma ile kişisel fiziksel koşulları ayır.",
+          "en": "Learn the Jason Leung reference and A opening; distinguish written study from personal physical conditions."
+        },
+        "teaching": [
+          {
+            "tr": "Bu, 20 hareketli tam kata için özgün JabLab yazılı öğretim taslağıdır. Referans Jason Leung / ULTIMATE KARATE’nin iki tutarlı kaydıdır. A açılış ve kapanışı, B ilk yavaş geçişteki hareketleri verir. Huckle veya Tourny’ye doğrulanmış görsel sonuç atfedilmez; JKA onayı veya eğitmen desteği iddia edilmez. Önceki KA-P 1 altı duraklı özgün hazırlık olarak kalır; bu kata onun yeniden adlandırılması değildir.",
+            "en": "This is original JabLab written teaching for the complete 20-count kata. Its reference is two coherent Jason Leung / ULTIMATE KARATE recordings. A supplies opening/closing; B supplies the first slow-pass movements. It does not visually validate Huckle or Tourny, or claim JKA authentication or instructor endorsement. Earlier KA-P 1 remains an original six-pause preparation; this kata is not its renaming."
+          },
+          {
+            "tr": "N, başlangıçta baktığın yöndür; E ilk sağın, W ilk solun, S arkandır. Bunlar ekrandaki sağ ve sol değildir. A kaydında 0:03.2 selamında topuklar yakın, ayak uçları dışa dönük, açık eller uylukların yanındadır; 0:04.3 yeniden dik durur. Hazıra geçişte önce sol ayak dışarı gider (0:05.3), ardından sağ ayak dışarı giderken önkollar önde çaprazlanır (0:06.4). 0:07.5–0:12.0 arasında ayaklar ayrı, uçları dışa dönük ve kapalı yumruklar uylukların önünde alçaktadır. Bu açılışın sırasını öğren: selam–dik duruş–sol dışarı–sağ dışarı ve kolların çaprazlanması–hazır. Sonra doğrudan 1. harekete geçilir; araya boks gardı eklenmez. Ayak genişliği, basınç ve kişisel duruş derinliği bu gözlemden ölçülmüş değildir. B kaydı zaten hazır başlar; ona bir açılış selamı atfetme.",
+            "en": "N is your initial ready heading; E is your initial right, W your initial left, and S behind. These are not screen sides. In recording A, the bow at 0:03.2 has close heels, outward-pointing toes and open hands beside the thighs; the instructor is upright at 0:04.3. To open into ready, the left foot moves outward first at 0:05.3, then the right moves outward while the forearms cross in front at 0:06.4. At 0:07.5–0:12.0 the feet are apart, toes outward and closed fists low in front of the thighs. Learn this order: bow–upright–left outward–right outward with crossed arms–ready. Continue directly into count 1; add no boxing guard. Foot width, pressure and a suitable personal stance depth were not measured from this observation. B starts already ready; do not attribute an opening bow to it."
+          },
+          {
+            "tr": "Bu dersler, gözlenmiş tekniğin sırasını ve görülebilen el/ayak yollarını öğretir. Çeyrek, yarım ve üç çeyrek dönüş, görünen yön değişiminin geometrik etiketidir; ölçülmüş eklem açısı veya pusula yönü değildir. Bir ayağın yaklaşık aynı zemin yerinde kalması, topuk üzerinde pivot yaptığı veya ağırlığın belirli yüzdesini taşıdığı anlamına gelmez. Ayağı zemine kilitleme talimatı verilmez. Ayak tabanı teması, yük, diz kuvveti ve ağrısız kişisel aralık ölçülmemiştir. 9’da ayak kırpılması, 12’de ayak örtüşmesi ve 16’da kol/ayak örtüşmesi ayrıca işaretlenir. Gizlenen yumruğun yüksekliğini veya bilek dönüşünü tahmin ederek doldurma. Rahat hareket edemiyorsan fiziksel denemeyi durdur; yazılı sırayı çalışmaya devam edebilirsin. Durmak, o denemeyi keser; tamamlanmış fiziksel kata sayılmaz. Referans sessiz izlenmiştir: kiai, nefes ritmi veya sesli komut öğretildiği iddia edilmez.",
+            "en": "These lessons teach the observed order and visible hand/foot paths. Quarter, half and three-quarter turns label the geometry of the visible heading changes; they are not measured joint angles or compass bearings. A foot staying near the same floor location does not establish a heel pivot or a load percentage. There is no instruction to lock a foot to the floor. Sole contact, loading, knee forces and a suitable pain-free personal range were not measured. Cropping at 9, foot occlusion at 12 and arm/foot overlap at 16 are flagged separately. Do not fill hidden fist height or wrist rotation by guessing. Stop a physical attempt if you cannot move comfortably; you can continue written recall. Stopping interrupts that attempt and does not complete a physical kata. The reference was viewed muted: this course does not claim to teach heard kiai, breathing rhythm or spoken commands."
+          },
+          {
+            "tr": "Fiziksel denemeden önce TS-P 0–TS-P 5 kişisel koşulları değerlendirilir; hepsi bu taslakta açık ve karşılanmış sayılmaz. Rahat olmayan bir dönüşü iterek tamamlama. Koşul belirsizse yön sırasını yazılı olarak söyle veya bir zemin planında işaretle; bunu fiziksel kata diye kaydetme. Önceki paralel hazırlığı bu referansın dışa dönük uçlu hazır pozunun yerine koyma.",
+            "en": "Before a physical attempt, assess the personal TS-P 0–TS-P 5 conditions; all remain open in this draft. Do not force an uncomfortable turn to completion. If suitability is uncertain, recall the headings in writing or point them out on a floor plan and record that as written study. Keep earlier parallel preparation distinct from this reference’s toes-out ready position."
+          }
+        ],
+        "movement_ids": [],
+        "recall": [
+          {
+            "id": "ts-q01",
+            "prompt": {
+              "tr": "A’da hazır pozuna açılırken hangi ayak önce dışarı gider?",
+              "en": "Which foot opens outward first into ready in A?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Sol, ardından sağ",
+                  "en": "Left, then right"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Sağ, ardından sol",
+                  "en": "Right, then left"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "B’deki açılış selamından çıkarırız",
+                  "en": "Infer it from B’s opening bow"
+                }
+              }
+            ],
+            "correct_choice_id": "a",
+            "explanation": {
+              "tr": "A 0:05.3 sol, 0:06.4 sağ açılmayı gösterir. B incelenen geçişte zaten hazır başlar.",
+              "en": "A shows left opening at 0:05.3 and right at 0:06.4. B starts already ready in the inspected pass."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q02",
+            "prompt": {
+              "tr": "Bir ayağın yeri yaklaşık korununca ne doğrulanır?",
+              "en": "What does a foot staying near its floor location establish?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Kesin topuk pivotu",
+                  "en": "An exact heel pivot"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Belirli yük yüzdesi",
+                  "en": "A load percentage"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Yalnız görülen yer ilişkisi",
+                  "en": "Only the visible location relationship"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Konum gözlemi temas kenarı veya yük ölçümü değildir.",
+              "en": "Location observation does not measure contact edge or loading."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-02",
+        "title": {
+          "tr": "1–4: ilk çizgi ve sağ yarım dönüş",
+          "en": "1–4: first line and right half-turn"
+        },
+        "objective": {
+          "tr": "Sola giriş, sağ adımlı yumruk, sağ yarım dönüşte aynı kolun blok hazırlığı ve sol adımlı yumruğu birbirine bağla.",
+          "en": "Link left entry, right stepping punch, same-arm preparation for the right half-turn, and left stepping punch."
+        },
+        "teaching": [
+          {
+            "tr": "Bu bölüm önceki bölümün bitişinden devam eder. Her hareketin başlangıç, ayak, el, bitiş, sonraki giriş ve görünürlük sınırını aşağıdan izle. Öğrenirken bir sınırı durdurup inceleyebilirsin; bu, kesintisiz fiziksel kata yerine geçmez. Bölümleri birleştirdiğinde fazladan hazır, gard veya tekrar yumruk ekleme.",
+            "en": "This section continues from the preceding finish. Follow each count’s start, feet, hands, finish, next entry and visibility limit below. You may stop to examine a boundary while learning; that drill does not replace a continuous physical kata. When linking sections, add no ready stance, guard or repeat punch."
+          },
+          {
+            "tr": "2→3’te yeni blok sağ koldadır: önceki sağ yumruk, karşı sol omuza doğru hazırlığa katlanır. Dönüşte aktif kolu yanlışlıkla sola değiştirme.",
+            "en": "At 2→3 the new block uses the right arm: the prior right punch folds into preparation toward the opposite left shoulder. Do not accidentally switch the active arm to left for that turn."
+          }
+        ],
+        "movement_ids": [
+          "ts-m01",
+          "ts-m02",
+          "ts-m03",
+          "ts-m04"
+        ],
+        "recall": [
+          {
+            "id": "ts-q03",
+            "prompt": {
+              "tr": "3. hareketin aktif tarafı ve son yönü hangisidir?",
+              "en": "What are the active side and final heading of count 3?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "sol / E",
+                  "en": "left / E"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "sağ / E",
+                  "en": "right / E"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önce ayrı bir boks gardı",
+                  "en": "First a separate boxing guard"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "Hareket eşlemesi 3. sayıda sağ aktif tarafı ve E yönünü verir; ara gard yoktur.",
+              "en": "The count mapping gives active right and heading E at 3; there is no intervening guard."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q04",
+            "prompt": {
+              "tr": "Bir sonraki bölümün girişi nereden alınır?",
+              "en": "Where does the next section start?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Her defasında başlangıç hazırından",
+                  "en": "From initial ready each time"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Önceki sayının gerçek bitişinden",
+                  "en": "From the preceding count’s actual finish"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Gizli ayak temasını tahmin ederek",
+                  "en": "By guessing hidden foot contact"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "Sınır, önceki bitişi sonraki giriş olarak kullanır. Hazıra dönmek veya görünmeyen teması doldurmak eklenmiş bir davranış olur.",
+              "en": "The boundary uses the preceding finish as the next entry. Returning to ready or filling unseen contact would add behaviour."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-03",
+        "title": {
+          "tr": "5–8: başlangıç yönüne dön ve üç yumruk",
+          "en": "5–8: return to initial heading and three punches"
+        },
+        "objective": {
+          "tr": "Sol çeyrek dönüşle N’ye gel; sağ–sol–sağ adımlı yumruklarla ilerle, ara gard ekleme.",
+          "en": "Turn a left quarter to N, then advance with right–left–right stepping punches without adding a guard."
+        },
+        "teaching": [
+          {
+            "tr": "Bu bölüm önceki bölümün bitişinden devam eder. Her hareketin başlangıç, ayak, el, bitiş, sonraki giriş ve görünürlük sınırını aşağıdan izle. Öğrenirken bir sınırı durdurup inceleyebilirsin; bu, kesintisiz fiziksel kata yerine geçmez. Bölümleri birleştirdiğinde fazladan hazır, gard veya tekrar yumruk ekleme.",
+            "en": "This section continues from the preceding finish. Follow each count’s start, feet, hands, finish, next entry and visibility limit below. You may stop to examine a boundary while learning; that drill does not replace a continuous physical kata. When linking sections, add no ready stance, guard or repeat punch."
+          },
+          {
+            "tr": "Üç yumruğun sırası sağ–sol–sağdır. Sonuncu yumruk için duyulmuş bir kiai veya nefes komutu bu taslakta öğretilmez. Son bitişten bir sonraki dönüşe geçilir.",
+            "en": "The three punches are right–left–right. This draft teaches no heard kiai or breathing command for the last punch. Continue from its finish into the next turn."
+          }
+        ],
+        "movement_ids": [
+          "ts-m05",
+          "ts-m06",
+          "ts-m07",
+          "ts-m08"
+        ],
+        "recall": [
+          {
+            "id": "ts-q05",
+            "prompt": {
+              "tr": "5. hareketin aktif tarafı ve son yönü hangisidir?",
+              "en": "What are the active side and final heading of count 5?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "sol / N",
+                  "en": "left / N"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "sağ / N",
+                  "en": "right / N"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önce ayrı bir boks gardı",
+                  "en": "First a separate boxing guard"
+                }
+              }
+            ],
+            "correct_choice_id": "a",
+            "explanation": {
+              "tr": "Hareket eşlemesi 5. sayıda sol aktif tarafı ve N yönünü verir; ara gard yoktur.",
+              "en": "The count mapping gives active left and heading N at 5; there is no intervening guard."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q06",
+            "prompt": {
+              "tr": "Bir sonraki bölümün girişi nereden alınır?",
+              "en": "Where does the next section start?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Her defasında başlangıç hazırından",
+                  "en": "From initial ready each time"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Gizli ayak temasını tahmin ederek",
+                  "en": "By guessing hidden foot contact"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önceki sayının gerçek bitişinden",
+                  "en": "From the preceding count’s actual finish"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Sınır, önceki bitişi sonraki giriş olarak kullanır. Hazıra dönmek veya görünmeyen teması doldurmak eklenmiş bir davranış olur.",
+              "en": "The boundary uses the preceding finish as the next entry. Returning to ready or filling unseen contact would add behaviour."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-04",
+        "title": {
+          "tr": "9–12: uzun sola dönüş ve üst çizgi",
+          "en": "9–12: long left turn and upper line"
+        },
+        "objective": {
+          "tr": "8’den uzun sola dönüşle E’ye gel; sağ yumruk, sağ yarım dönüş ve sol yumrukla W’ye devam et.",
+          "en": "From 8, continue through the long left turn to E; follow with right punch, right half-turn and left punch toward W."
+        },
+        "teaching": [
+          {
+            "tr": "Bu bölüm önceki bölümün bitişinden devam eder. Her hareketin başlangıç, ayak, el, bitiş, sonraki giriş ve görünürlük sınırını aşağıdan izle. Öğrenirken bir sınırı durdurup inceleyebilirsin; bu, kesintisiz fiziksel kata yerine geçmez. Bölümleri birleştirdiğinde fazladan hazır, gard veya tekrar yumruk ekleme.",
+            "en": "This section continues from the preceding finish. Follow each count’s start, feet, hands, finish, next entry and visibility limit below. You may stop to examine a boundary while learning; that drill does not replace a continuous physical kata. When linking sections, add no ready stance, guard or repeat punch."
+          },
+          {
+            "tr": "Uzun sola dönüşte gövde, birden çok yönden geçerek sola devam eder. Aynı son yöne kısa sağ dönüşle varmayı doğru yol sayma. Sağ ayak yalnız konum referansıdır; bir topuk pivotu çıkarımı ekleme.",
+            "en": "During the long left turn, the torso continues left through successive headings. Reaching the same heading through a short right turn does not reproduce the route. The right foot is a location reference only; add no heel-pivot inference."
+          }
+        ],
+        "movement_ids": [
+          "ts-m09",
+          "ts-m10",
+          "ts-m11",
+          "ts-m12"
+        ],
+        "recall": [
+          {
+            "id": "ts-q07",
+            "prompt": {
+              "tr": "9. hareketin aktif tarafı ve son yönü hangisidir?",
+              "en": "What are the active side and final heading of count 9?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "sağ / E",
+                  "en": "right / E"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Önce ayrı bir boks gardı",
+                  "en": "First a separate boxing guard"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "sol / E",
+                  "en": "left / E"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Hareket eşlemesi 9. sayıda sol aktif tarafı ve E yönünü verir; ara gard yoktur.",
+              "en": "The count mapping gives active left and heading E at 9; there is no intervening guard."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q08",
+            "prompt": {
+              "tr": "Bir sonraki bölümün girişi nereden alınır?",
+              "en": "Where does the next section start?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Önceki sayının gerçek bitişinden",
+                  "en": "From the preceding count’s actual finish"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Her defasında başlangıç hazırından",
+                  "en": "From initial ready each time"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Gizli ayak temasını tahmin ederek",
+                  "en": "By guessing hidden foot contact"
+                }
+              }
+            ],
+            "correct_choice_id": "a",
+            "explanation": {
+              "tr": "Sınır, önceki bitişi sonraki giriş olarak kullanır. Hazıra dönmek veya görünmeyen teması doldurmak eklenmiş bir davranış olur.",
+              "en": "The boundary uses the preceding finish as the next entry. Returning to ready or filling unseen contact would add behaviour."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-05",
+        "title": {
+          "tr": "13–16: geri yönde üç adımlı yumruk",
+          "en": "13–16: three advancing punches in the return heading"
+        },
+        "objective": {
+          "tr": "Sol çeyrek dönüşle S’ye bak; sağ–sol–sağ yumruklarla ilerle ve 16’nın bitişini sonraki uzun dönüşün girişi olarak koru.",
+          "en": "Turn a left quarter to S, advance right–left–right punches and retain 16’s finish as entry to the next long turn."
+        },
+        "teaching": [
+          {
+            "tr": "Bu bölüm önceki bölümün bitişinden devam eder. Her hareketin başlangıç, ayak, el, bitiş, sonraki giriş ve görünürlük sınırını aşağıdan izle. Öğrenirken bir sınırı durdurup inceleyebilirsin; bu, kesintisiz fiziksel kata yerine geçmez. Bölümleri birleştirdiğinde fazladan hazır, gard veya tekrar yumruk ekleme.",
+            "en": "This section continues from the preceding finish. Follow each count’s start, feet, hands, finish, next entry and visibility limit below. You may stop to examine a boundary while learning; that drill does not replace a continuous physical kata. When linking sections, add no ready stance, guard or repeat punch."
+          },
+          {
+            "tr": "Üç yumruğun sırası sağ–sol–sağdır. Sonuncu yumruk için duyulmuş bir kiai veya nefes komutu bu taslakta öğretilmez. Son bitişten bir sonraki dönüşe geçilir.",
+            "en": "The three punches are right–left–right. This draft teaches no heard kiai or breathing command for the last punch. Continue from its finish into the next turn."
+          }
+        ],
+        "movement_ids": [
+          "ts-m13",
+          "ts-m14",
+          "ts-m15",
+          "ts-m16"
+        ],
+        "recall": [
+          {
+            "id": "ts-q09",
+            "prompt": {
+              "tr": "13. hareketin aktif tarafı ve son yönü hangisidir?",
+              "en": "What are the active side and final heading of count 13?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "sağ / S",
+                  "en": "right / S"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "sol / S",
+                  "en": "left / S"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önce ayrı bir boks gardı",
+                  "en": "First a separate boxing guard"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "Hareket eşlemesi 13. sayıda sol aktif tarafı ve S yönünü verir; ara gard yoktur.",
+              "en": "The count mapping gives active left and heading S at 13; there is no intervening guard."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q10",
+            "prompt": {
+              "tr": "Bir sonraki bölümün girişi nereden alınır?",
+              "en": "Where does the next section start?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Her defasında başlangıç hazırından",
+                  "en": "From initial ready each time"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Gizli ayak temasını tahmin ederek",
+                  "en": "By guessing hidden foot contact"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önceki sayının gerçek bitişinden",
+                  "en": "From the preceding count’s actual finish"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Sınır, önceki bitişi sonraki giriş olarak kullanır. Hazıra dönmek veya görünmeyen teması doldurmak eklenmiş bir davranış olur.",
+              "en": "The boundary uses the preceding finish as the next entry. Returning to ready or filling unseen contact would add behaviour."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-06",
+        "title": {
+          "tr": "17–20: son çizgi ve son sayılan teknik",
+          "en": "17–20: final line and final counted action"
+        },
+        "objective": {
+          "tr": "Uzun sola dönüşle W’ye gel; sağ yumruk, sağ yarım dönüş ve E’ye sol yumrukla 20 sayıyı bitir.",
+          "en": "Use the long left turn to W; right punch, right half-turn and left punch toward E finish the 20 counts."
+        },
+        "teaching": [
+          {
+            "tr": "Bu bölüm önceki bölümün bitişinden devam eder. Her hareketin başlangıç, ayak, el, bitiş, sonraki giriş ve görünürlük sınırını aşağıdan izle. Öğrenirken bir sınırı durdurup inceleyebilirsin; bu, kesintisiz fiziksel kata yerine geçmez. Bölümleri birleştirdiğinde fazladan hazır, gard veya tekrar yumruk ekleme.",
+            "en": "This section continues from the preceding finish. Follow each count’s start, feet, hands, finish, next entry and visibility limit below. You may stop to examine a boundary while learning; that drill does not replace a continuous physical kata. When linking sections, add no ready stance, guard or repeat punch."
+          },
+          {
+            "tr": "Uzun sola dönüşte gövde, birden çok yönden geçerek sola devam eder. Aynı son yöne kısa sağ dönüşle varmayı doğru yol sayma. Sağ ayak yalnız konum referansıdır; bir topuk pivotu çıkarımı ekleme.",
+            "en": "During the long left turn, the torso continues left through successive headings. Reaching the same heading through a short right turn does not reproduce the route. The right foot is a location reference only; add no heel-pivot inference."
+          }
+        ],
+        "movement_ids": [
+          "ts-m17",
+          "ts-m18",
+          "ts-m19",
+          "ts-m20"
+        ],
+        "recall": [
+          {
+            "id": "ts-q11",
+            "prompt": {
+              "tr": "17. hareketin aktif tarafı ve son yönü hangisidir?",
+              "en": "What are the active side and final heading of count 17?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "sağ / W",
+                  "en": "right / W"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "sol / W",
+                  "en": "left / W"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önce ayrı bir boks gardı",
+                  "en": "First a separate boxing guard"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "Hareket eşlemesi 17. sayıda sol aktif tarafı ve W yönünü verir; ara gard yoktur.",
+              "en": "The count mapping gives active left and heading W at 17; there is no intervening guard."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q12",
+            "prompt": {
+              "tr": "Bir sonraki bölümün girişi nereden alınır?",
+              "en": "Where does the next section start?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Önceki sayının gerçek bitişinden",
+                  "en": "From the preceding count’s actual finish"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Her defasında başlangıç hazırından",
+                  "en": "From initial ready each time"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Gizli ayak temasını tahmin ederek",
+                  "en": "By guessing hidden foot contact"
+                }
+              }
+            ],
+            "correct_choice_id": "a",
+            "explanation": {
+              "tr": "Sınır, önceki bitişi sonraki giriş olarak kullanır. Hazıra dönmek veya görünmeyen teması doldurmak eklenmiş bir davranış olur.",
+              "en": "The boundary uses the preceding finish as the next entry. Returning to ready or filling unseen contact would add behaviour."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-07",
+        "title": {
+          "tr": "20’den gerçek kapanışa",
+          "en": "From 20 into the actual closing"
+        },
+        "objective": {
+          "tr": "A’nın geri toplama, hazır, sol–sağ kapanma ve selam sırasını uygula; B’nin gizli aralığını doldurma.",
+          "en": "Learn A’s recovery, ready, left–right closing and bow order without filling B’s unseen interval."
+        },
+        "teaching": [
+          {
+            "tr": "A’nın 0:41.6 sol yumruk/sol ön duruş bitişini başlangıç al. 0:43.2’de sol ayak içeri doğru hareket ederken sol kol yukarı katlanır; gövde başlangıç yönüne döner. 0:44.3’te önkollar çapraz ve yön başlangıç yönüdür; 0:45.3’te hazır düzenine gelinir. Sonra 0:46.3–0:46.8 kareleri sol ayağın önce içeri kapandığını, ardından sağın ona katıldığını gösterir; eller açılıp uylukların yanına gelir. 0:49.6’da selam, 0:50.1’de yeniden dik duruş görülür. Öğrenilecek kapanış: sol ayakla geri topla ve yönünü başlangıca getir–kolları çaprazla–hazır–sol içeri–sağ katılır–açık eller–selam–dik duruş. A’daki bu ayak sırası B’nin görünmeyen aralığına atfedilmez. Adım mesafesi, taban teması ve ilk zemin noktasına tam dönüş ölçülmüş değildir. 21. yumruk veya ara boks gardı eklenmez.",
+            "en": "Begin from A’s left-punch/left-front finish at 0:41.6. At 0:43.2 the left foot moves inward and the left arm folds high while the torso returns toward the initial heading. At 0:44.3 the forearms are crossed and the original heading restored; ready follows at 0:45.3. Frame stepping at 0:46.3–0:46.8 shows the left foot closing inward first, then the right joining it as the hands open beside the thighs. The bow is at 0:49.6 and upright at 0:50.1. Learn this closing order: recover with the left foot and restore the initial heading–cross arms–ready–left inward–right joins–open hands–bow–upright. This A-specific foot order is not assigned to B’s unseen interval. Travel distance, sole contact and exact return to an original floor point were not measured. Add no 21st punch or intervening boxing guard."
+          },
+          {
+            "tr": "Açılış ve kapanış teknik sayısı dışında tutulur; ikisi de tam öğrenilecek sıranın parçalarıdır. 20 hareketi hatırlayıp selamı atlamak, bu yazılı tam sıra görevinin kapanışı değildir. Kapanışı anlatabilmek ise fiziksel dengeyi doğrulamaz.",
+            "en": "Opening and closing are outside the technique count but remain parts of the complete sequence to learn. Recalling 20 actions while omitting the closing does not finish this written-order task. Describing the closing does not verify physical balance."
+          }
+        ],
+        "movement_ids": [],
+        "recall": [
+          {
+            "id": "ts-q13",
+            "prompt": {
+              "tr": "A’nın kapanışında ayaklar içeri hangi sırayla kapanır?",
+              "en": "In what order do the feet close inward in A?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Sağ, ardından sol",
+                  "en": "Right, then left"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Sol, ardından sağ",
+                  "en": "Left, then right"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "B aralığında aynı sıra kesin görüldü",
+                  "en": "The same order was fully seen in B"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "A 0:46.3–0:46.8 bunu gösterir; B’nin tam içeri kapanma sırası çözülmemiştir.",
+              "en": "A 0:46.3–0:46.8 supplies that order; B’s exact inward-foot order remains unresolved."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q14",
+            "prompt": {
+              "tr": "20’den sonra ne eklenir?",
+              "en": "What follows 20?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "21. yumruk",
+                  "en": "An additional punch (21)"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Ara boks gardı",
+                  "en": "An intervening boxing guard"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Geri toplama–hazır–selam–dik duruş",
+                  "en": "Recovery–ready–bow–upright"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Kapanış öğrenilen formun parçasıdır; fazladan sayılan teknik değildir.",
+              "en": "Closing belongs to the learned form; it is not another counted technique."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-08",
+        "title": {
+          "tr": "Açılıştan kapanışa yirmi hareket",
+          "en": "All 20 actions from opening through closing"
+        },
+        "objective": {
+          "tr": "Her sınırı ve tüm yön sırasını boşlukta yeniden kur; yalnız son yönü doğru bulmakla yolun doğru olmasını karıştırma.",
+          "en": "Reconstruct every boundary and the whole direction order; distinguish a correct route from merely reaching the final heading."
+        },
+        "teaching": [
+          {
+            "tr": "Tam yazılı akış: A açılışı → 1–2 W → 3–4 E → 5–8 N → 9–10 E → 11–12 W → 13–16 S → 17–18 W → 19–20 E → A kapanışıyla başlangıç yönü. Her sayının aktif el ve ön ayak sırası: L,R,R,L,L,R,L,R,L,R,R,L,L,R,L,R,L,R,R,L. Bu, yirmi hareketin sırasıdır; tekrar eden R veya L hatalı tekrar değildir. 3/11/19’da sağ ön ayak yer değiştirip sağ blokla yine önde kalır; 5/13’te sol ön ayak yer değiştirip sol blokla yine önde kalır. 9/17’de sol arka ayak yeni ön ayak olur.",
+            "en": "Complete written flow: A opening → 1–2 W → 3–4 E → 5–8 N → 9–10 E → 11–12 W → 13–16 S → 17–18 W → 19–20 E → A closing to the initial heading. Active hand/front-foot sides by count are L,R,R,L,L,R,L,R,L,R,R,L,L,R,L,R,L,R,R,L. Repeated R or L is intentional: at 3/11/19 the right front foot relocates and stays front with a right block; at 5/13 the left front foot relocates and stays front with a left block. At 9/17 the rear left foot becomes front."
+          },
+          {
+            "tr": "Yazılı geri çağırma için önce kitaba bakmadan açılışı, 20 sayının aktif taraflarını ve kapanışı yaz. Sonra her dönüşün öncesini ve sonrasını ekle. Yanıtı metinle karşılaştır; eksik veya yanlış sınırı işaretle. Fiziksel bir deneme yapıldıysa onun koşul ve sınırlarını ayrı kaydet; yazılı yanıtı fiziksel doğrulama yerine kullanma.",
+            "en": "For written recall, first write the opening, active sides of all 20 counts and closing without looking. Then add the states before and after each turn. Compare against the text and mark missing/wrong boundaries. If a physical attempt occurred, record its conditions and limits separately; do not use the written answer as physical verification."
+          }
+        ],
+        "movement_ids": [],
+        "recall": [
+          {
+            "id": "ts-q15",
+            "prompt": {
+              "tr": "16 sağ yumruk/S bitişinden doğru devam hangisidir?",
+              "en": "What follows the right-punch/S finish at 16?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Uzun sola dönüş, sol blok/W",
+                  "en": "Long left turn, left block/W"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Kısa sağ dönüş; aynı son yön yeter",
+                  "en": "Short right turn; final heading alone is enough"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Önce hazır pozu",
+                  "en": "First ready stance"
+                }
+              }
+            ],
+            "correct_choice_id": "a",
+            "explanation": {
+              "tr": "16→17 uzun sola gövde dönüşünü ve sol kol hazırlığını kullanır; ara hazır yoktur.",
+              "en": "16→17 uses the long left body rotation and left-arm preparation, with no ready reset."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q16",
+            "prompt": {
+              "tr": "Tam yazılı sıra hangisini içerir?",
+              "en": "What does the complete written sequence include?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Yalnız altı seçilmiş durak",
+                  "en": "Only six selected pauses"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Sadece son yumruk",
+                  "en": "Only the final punch"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Açılış, tüm 20 hareket, tüm sınırlar ve kapanış",
+                  "en": "Opening, all 20 actions, every boundary and closing"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Bu gerçek 20 sayılı kata öğretimi, önceki özgün hazırlığın yeniden adlandırılması değildir.",
+              "en": "This 20-count kata teaching is not a renaming of the earlier original preparation."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-09",
+        "title": {
+          "tr": "Somut düzeltme ve aynı koşulda tekrar",
+          "en": "Concrete correction and same-condition retest"
+        },
+        "objective": {
+          "tr": "Yanlış sınırı adlandır, kaynakla desteklenen bir düzeltme yap ve aynı koşulda yeniden çağır; bilinmeyeni geçiş sonucu yapma.",
+          "en": "Name the mistaken boundary, correct it with supported evidence and recall again under the same conditions; do not pass an unknown detail."
+        },
+        "teaching": [
+          {
+            "tr": "Düzeltme döngüsü somuttur. Örnek 1: 8→9’u kısa sağ dönüş diye yazdın. Düzelt: giriş sağ ayak/sağ yumruk N; sağ ayak konum referansı, sol arka ayak taşınır, gövde uzun sola devam eder; bitiş sol ayak/sol blok E. Örnek 2: 2→3’te sol blok yazdın. Düzelt: sağ yumruk karşı sol omuza katlanır, sağ ayağın yeniden yerleşmesiyle sağ blok E’de biter. Örnek 3: 12→13’ün gizlenen sağ yumruk/avuç yolunu kesin gösterilmiş saydın. Düzelt: görünen sol kol hazırlığı, sağ dirsek geri dönüşü ve sağ yumruğun gizliliğini ayrı kaydet; bilinmeyen yolu çizme. Örnek 4: her sayıdan sonra gard ekledin. Düzelt: önceki bitiş sonraki giriş olur; yeni hazır/gard yoktur.",
+            "en": "The correction loop is concrete. Example 1: you wrote 8→9 as a short right turn. Correct it: right-foot/right-punch entry at N, right location-reference foot, travelling rear left foot, continued long-left torso rotation, left-foot/left-block finish at E. Example 2: you wrote a left block at 2→3. Correct it: the right fist folds toward the opposite left shoulder and the repositioned right foot finishes with a right block at E. Example 3: you treated 12→13’s hidden right fist/palm path as fully shown. Correct it: record visible left-arm preparation, returning right elbow and hidden right fist separately; do not draw the unknown path. Example 4: you added guard after each count. Correct it: the preceding finish is the next entry; there is no new ready/guard."
+          },
+          {
+            "tr": "Aynı koşulda tekrar: yazılı denemede aynı istem, başlangıç sayısı, taraf ve referans yönünü kullan; metni inceleyip kapattıktan sonra yanıtı yeniden kur. Fiziksel tekrar kişiye uygunsa, sürekli form dışında bir öğrenme denemesi olarak önceki sayının bitiş durumunu yeniden kur; aynı taraf, görünüş, alan ve rahat hız koşulunu koru. Gözlenebilir hedefi önceden seç: doğru uzun/kısa yol, doğru aktif kol ve doğru yeni yön gibi. Gizli bilek, taban basıncı veya ağrısızlık için geçti hükmü verme. Koşul değiştiyse bunu değişmiş koşul diye kaydet. Rahatsızlık, denge kaybı veya belirsizlik varsa fiziksel tekrarı durdur; yazılı düzeltmeyle devam et. Başarılı yazılı tekrar, yalnız o yazılı hatanın düzeldiğini gösterir.",
+            "en": "Same-condition retest: for written recall, reuse the same prompt, starting count, side and reference heading; study the text, close it and reconstruct the answer again. If a physical retry is suitable, recreate the preceding count’s finish as a learning drill outside continuous performance, keeping the same side, view, space and comfortable pace conditions. Choose visible criteria first, such as correct long/short route, active arm and new heading. Do not pass hidden wrist details, sole pressure or pain-free suitability. Record any changed condition as changed. Stop the physical retry for discomfort, balance loss or uncertainty and continue written correction. A successful written retry only shows correction of that written error."
+          }
+        ],
+        "movement_ids": [],
+        "recall": [
+          {
+            "id": "ts-q17",
+            "prompt": {
+              "tr": "Gizlenen rehber el yolunu düzeltmenin doğru yolu nedir?",
+              "en": "How should a hidden guide-hand path be corrected?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Görüneni ve bilinmeyeni ayrı kaydetmek",
+                  "en": "Record visible and unknown detail separately"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Başka eğitmenin bilek yolunu doldurmak",
+                  "en": "Fill it from another instructor’s wrist path"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Topuk pivotu eklemek",
+                  "en": "Add a heel pivot"
+                }
+              }
+            ],
+            "correct_choice_id": "a",
+            "explanation": {
+              "tr": "Düzeltme gözlemi genişletmez; eksik görüntü eksik kalır.",
+              "en": "Correction does not expand the observation; missing visual detail remains missing."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q18",
+            "prompt": {
+              "tr": "Aynı koşulda yazılı tekrar için ne korunur?",
+              "en": "What is retained for a same-condition written retest?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Yalnız daha hızlı cevap",
+                  "en": "Only a faster answer"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "İstem, başlangıç sayısı, taraf ve referans yönü",
+                  "en": "Prompt, starting count, side and reference heading"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Son yön aynıysa herhangi bir dönüş",
+                  "en": "Any turn if the final heading matches"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "Tekrar, aynı yazılı sınırdaki düzeltmeyi kontrol eder; hız veya farklı yolun sonucu değildir.",
+              "en": "The retest checks correction of the same written boundary, not speed or a different route."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      },
+      {
+        "id": "ts-10",
+        "title": {
+          "tr": "Yazılı kapanış ve açık fiziksel sonuç",
+          "en": "Written closure and the open physical outcome"
+        },
+        "objective": {
+          "tr": "Tam sıranın yazılı sonucunu doğru kaydet; gerçek insan, ürün demonstrasyonu veya fiziksel ustalık onayı üretme.",
+          "en": "Record the complete written-order result truthfully without issuing human, product-demonstration or physical-mastery acceptance."
+        },
+        "teaching": [
+          {
+            "tr": "Yazılı kapanış kaydı dört parça taşır: A açılış/kapanış sırasını yeniden çağırdım; tüm 20 sayıyı ve geçişleri doğru yeniden kurdum; bir hata varsa düzeltip aynı istem/başlangıçta yeniden yanıtladım; görünmeyen temas, el yolu ve fiziksel koşulları açık bıraktım. Bu kayıt ezber/sıra çalışmasıdır. Bir eğitmenin kişisel gözlemi, düzeltmesi ve yeniden değerlendirmesi yerine geçmez; kemer, savunma, sağlık veya ustalık belgesi değildir.",
+            "en": "A written closure record has four parts: I recalled A’s opening/closing; reconstructed all 20 counts and boundaries; corrected any error and answered again from the same prompt/start; and left unseen contact, hand-path and physical conditions open. This records recall/order study. It does not replace personal instructor observation, correction and retest, or issue a belt, defence, health or mastery certificate."
+          },
+          {
+            "tr": "Bu taslak için bu özgün öğretimin eğitmen incelemesi, JabLab demonstrasyonu ve kişisel geri bildirim kabulü verilmiş değildir. Referans videosunun gerçekten incelenmesi, bütün görünmeyen ayrıntıların veya her öğrencinin uygunluğunun doğrulandığı anlamına gelmez. Sözlü vurguyu öğretmek istenirse ses ayrıca incelenmelidir; burada sessiz gözlemden kiai veya nefes anahtarı çıkarılmadı.",
+            "en": "This draft has no acceptance of instructor review of this original curriculum, JabLab demonstration or individual feedback. Actual inspection of a reference video does not verify every hidden detail or every learner’s suitability. Audio must be inspected separately if audible emphasis is to be taught; no kiai or breathing key was inferred from muted viewing."
+          }
+        ],
+        "movement_ids": [],
+        "recall": [
+          {
+            "id": "ts-q19",
+            "prompt": {
+              "tr": "Doğru yazılı ilerleme kaydı hangisidir?",
+              "en": "Which is a truthful written-progress record?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Her öğrenci bu dönüşleri güvenle yapabilir",
+                  "en": "Every learner can safely perform the turns"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Videonun görünmeyen her teması doğrulandı",
+                  "en": "Every unseen contact in the video was verified"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "20 sayılı sırayı geri çağırdım; fiziksel koşullar açık",
+                  "en": "I recalled the 20-count order; physical conditions remain open"
+                }
+              }
+            ],
+            "correct_choice_id": "c",
+            "explanation": {
+              "tr": "Yazılı sonuç, ölçülmeyen fiziksel koşulu doğrulamaz.",
+              "en": "A written result does not verify unmeasured physical conditions."
+            },
+            "progress_kind": "written_recall_only"
+          },
+          {
+            "id": "ts-q20",
+            "prompt": {
+              "tr": "Sessiz izleme kiai veya nefes komutunu kanıtlar mı?",
+              "en": "Does muted viewing establish a kiai or breathing command?"
+            },
+            "choices": [
+              {
+                "id": "a",
+                "text": {
+                  "tr": "Evet; ağız hareketi yeter",
+                  "en": "Yes; mouth movement is enough"
+                }
+              },
+              {
+                "id": "b",
+                "text": {
+                  "tr": "Hayır; ses ayrıca incelenmedi",
+                  "en": "No; audio was not separately assessed"
+                }
+              },
+              {
+                "id": "c",
+                "text": {
+                  "tr": "Evet; başka kata aynı sesi kullanır",
+                  "en": "Yes; another kata uses that sound"
+                }
+              }
+            ],
+            "correct_choice_id": "b",
+            "explanation": {
+              "tr": "Bu taslak duyulmamış sesli vurgu öğretmez.",
+              "en": "This draft teaches no unheard audible emphasis."
+            },
+            "progress_kind": "written_recall_only"
+          }
+        ],
+        "completion_meaning": {
+          "tr": "Bu ders için yazılı sırayı ve yanıtı geri çağırdım; fiziksel kata veya yeterlilik kabulü bildirmiyorum.",
+          "en": "I recalled this lesson’s written order and answer; I am not reporting acceptance of a physical kata or readiness."
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "A",
+        "url": "https://www.youtube.com/watch?v=jH6bv4GDpp0",
+        "reported_title": "Kata Taikykoku Shodan Full Tutorial",
+        "reported_duration": "9:41",
+        "binding_scope": "Opening, sampled introductory techniques and precise closing order; not all20A counts independently traced in report"
+      },
+      {
+        "id": "B",
+        "url": "https://www.youtube.com/watch?v=kta8JS_pXFs",
+        "reported_title": "Taikyoku Shodan Slow Motion | Shotokan Karate Kata",
+        "reported_duration": "3:07",
+        "binding_scope": "First slow pass20 endpoints, requested turn entries, sampled stepping/recovery/bow; starts already in ready, no opening bow in inspected pass"
+      }
+    ],
+    "source_mapping_input_sha256": "942e3c3804bf64a81470bda1fa256c9389dd0eae42f71b40cb2973e9d7b6d4c6",
+    "protected_base": {
+      "tree": "dcb466024b2da49e068fc33499260c7cddf879cf",
+      "source_files": 445,
+      "existing_lessons": 101,
+      "unchanged": true
+    },
+    "scope_limits": [
+      "No JKA authentication or instructor endorsement",
+      "No heel/forefoot pressure map",
+      "No exact hidden wrist/palm or cropped placement invention",
+      "No heard kiai/breath cues",
+      "No extra guard/reset between actual counts",
+      "No physical/mastery acceptance",
+      "No third-party media embedding or commercial rights assumption"
+    ]
+  },
+  "orderedMovementContracts": [
+    {
+      "id": "ts-m01",
+      "count": 1,
+      "heading": "W",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "low block",
+      "entry": "left quarter-turn",
+      "sourceRecording": "B",
+      "endpointSample": "0:09.4",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m02",
+      "count": 2,
+      "heading": "W",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:14.4",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m03",
+      "count": 3,
+      "heading": "E",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "low block",
+      "entry": "right half-turn",
+      "sourceRecording": "B",
+      "endpointSample": "0:19.4",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m04",
+      "count": 4,
+      "heading": "E",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:22.0",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m05",
+      "count": 5,
+      "heading": "N",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "low block",
+      "entry": "left quarter-turn",
+      "sourceRecording": "B",
+      "endpointSample": "0:25.9",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m06",
+      "count": 6,
+      "heading": "N",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:28.9",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m07",
+      "count": 7,
+      "heading": "N",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:32.5",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m08",
+      "count": 8,
+      "heading": "N",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:35.9",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m09",
+      "count": 9,
+      "heading": "E",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "low block",
+      "entry": "long left turn",
+      "sourceRecording": "B",
+      "endpointSample": "0:39.3",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m10",
+      "count": 10,
+      "heading": "E",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:42.9",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m11",
+      "count": 11,
+      "heading": "W",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "low block",
+      "entry": "right half-turn",
+      "sourceRecording": "B",
+      "endpointSample": "0:47.4",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m12",
+      "count": 12,
+      "heading": "W",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "middle punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:50.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m13",
+      "count": 13,
+      "heading": "S",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "low block",
+      "entry": "left quarter-turn",
+      "sourceRecording": "B",
+      "endpointSample": "0:55.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m14",
+      "count": 14,
+      "heading": "S",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "0:58.4",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m15",
+      "count": 15,
+      "heading": "S",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "1:01.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m16",
+      "count": 16,
+      "heading": "S",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "1:05.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m17",
+      "count": 17,
+      "heading": "W",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "low block",
+      "entry": "long left turn",
+      "sourceRecording": "B",
+      "endpointSample": "1:09.9",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m18",
+      "count": 18,
+      "heading": "W",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "1:13.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m19",
+      "count": 19,
+      "heading": "E",
+      "frontFoot": "R",
+      "activeHand": "R",
+      "technique": "low block",
+      "entry": "right half-turn",
+      "sourceRecording": "B",
+      "endpointSample": "1:18.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    },
+    {
+      "id": "ts-m20",
+      "count": 20,
+      "heading": "E",
+      "frontFoot": "L",
+      "activeHand": "L",
+      "technique": "punch",
+      "entry": "forward step",
+      "sourceRecording": "B",
+      "endpointSample": "1:22.8",
+      "footContact": null,
+      "wristRotation": null,
+      "loading": null
+    }
+  ]
+}

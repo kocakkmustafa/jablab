@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const currentMotionSha = '0fed3a05466946bf2710750f4feca8dbd75be123';
+const currentMotionSha = 'edeec10a161c76bfa086b1d165d53e46ec88c3d7';
 
 bool hasLocalMotionOverrides([String? source]) {
   final file = File('pubspec_overrides.yaml');

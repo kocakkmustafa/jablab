@@ -1,0 +1,1465 @@
+{
+  "schemaVersion": 1,
+  "id": "jablab.tai_chi_foundations",
+  "practiceKind": "original_foundations",
+  "title": {
+    "tr": "Tai Chi temelleri ve özgün kısa pratik",
+    "en": "Tai Chi foundations and original short practice"
+  },
+  "scope": {
+    "tr": "14 derslik özgün sabit-ayak yazılı başlangıç kursu. Yang veya başka bir geleneksel form değildir. Bütün Tai Chi alanı tamamlanmış değildir.",
+    "en": "14-lesson original fixed-foot written beginner course. Not a Yang or other traditional form. The whole Tai Chi domain remains incomplete."
+  },
+  "endpoint": {
+    "tr": "Kendi yönünü, doğal nefesi ve desteği açıklayarak özgün kısa pratiği planla; bağımsız yazılı kontrolü cevapla; denenen/denenmeyen/belirsiz bileşen ve somut düzeltme/tekrar yaz. Fiziksel teknik veya ustalık kanıtı değil.",
+    "en": "Plan the original short practice by explaining own-side directions, natural breathing and support; answer independent written checks; record attempted/unattempted/uncertain components and a specific correction/retest. Not evidence of physical technique or mastery."
+  },
+  "safety": {
+    "tr": "Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil. Ağrı, baş dönmesi veya güvensiz dengede hemen dur; destek kullan, güvenle mümkünse otur. Süren belirtilerde sağlık uzmanına başvur. Nefesi tutma/zorlama; derin diz bükme/yük altında ayak döndürme yok. Başta/sonda dinlen; omuzları oynatma şartı yok. Sağlık/tedavi/düşme önleme sonucu vaat edilmez. Her ders 3–8 dakika isteğe bağlı; süre/tekrar zorunlu değil. Adı olan form için yetkin eğitmen incelemesi, demonstrasyon/uyarlama ve gözlenmiş geri bildirim gerekir.",
+    "en": "Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required. Stop immediately for pain, dizziness or unsafe balance; use support, sit if safely possible. Seek professional advice for continuing symptoms. Do not hold/force breath; no deep knee bend/loaded foot turn. Rest at start/finish; no shoulder movement required. No health/treatment/fall-prevention outcome promised. Optional 3–8-minute lessons; duration/repetitions not compulsory. A named form needs qualified instructor review, demonstration/adaptation and observed feedback."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Yang Family Tai Chi · Ten Essentials",
+      "url": "https://yangfamilytaichi.com/2019/08/28/the-ten-essentials-of-tai-chi-chuan/"
+    },
+    {
+      "id": "S2",
+      "title": "Tai Chi for Health Institute · Stay Safe",
+      "url": "https://taichiforhealthinstitute.org/safety-first/"
+    },
+    {
+      "id": "S3",
+      "title": "Yang Family Tai Chi · Forms",
+      "url": "https://yangfamilytaichi.com/yang-family-tai-chi-forms/"
+    },
+    {
+      "id": "S4",
+      "title": "NIH NCCIH · Tai Chi: What You Need To Know",
+      "url": "https://www.nccih.nih.gov/health/tai-chi-what-you-need-to-know"
+    }
+  ],
+  "lessons": [
+    {
+      "number": 1,
+      "id": "tai_chi_foundations_01",
+      "title": {
+        "tr": "Gelenek ve kurs sınırı",
+        "en": "Tradition and course boundary"
+      },
+      "objective": {
+        "tr": "S1 ve S3 açıklamasını oku.",
+        "en": "Read the S1/S3 description."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "S1 ve S3 açıklamasını oku. “Yang ailesi” bir gelenek; A ise bu kursun özgün hazırlık alıştırmasıdır. Birer cümleyle ikisini ayır. S'de kendi sol/sağını söyle; hareket şart değil.",
+        "en": "Read the S1/S3 description. Yang Family is a tradition; A is this course's original foundation drill. Distinguish them in one sentence each. In S, name your own left/right; movement is unnecessary."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "Sayı zorunlu değil",
+            "en": "No count required"
+          },
+          "direction": {
+            "tr": "Kendi sol/sağın; hareket şart değil",
+            "en": "Your own left/right; movement not required"
+          },
+          "support": {
+            "tr": "S: güvenle oturarak okuma veya H2: sabit destek",
+            "en": "S: safely seated reading or H2: fixed support"
+          },
+          "instruction": {
+            "tr": "Ders talimatını oku ve bağımsız soruya cevap ver; fiziksel deneme isteğe bağlı.",
+            "en": "Read lesson instructions and answer the independent question; physical attempt optional."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "A, Yang 13 formu mu?",
+        "en": "Is A the Yang 13 form?"
+      },
+      "correction": {
+        "tr": "Başlangıç sınırını tekrar oku; “bu kurs neyi kanıtlamaz?” sorusuna geleneksel form ve fiziksel teknik diye cevap ver.",
+        "en": "Reread the boundary; answer “what does this course not prove?” with traditional form and physical technique."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "A, Yang 13 formu mu?",
+          "en": "Is A the Yang 13 form?"
+        },
+        "answer": {
+          "tr": "Hayır; özgün temel görev.",
+          "en": "No; an original foundation task."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 2,
+      "id": "tai_chi_foundations_02",
+      "title": {
+        "tr": "Yerleş ve dur",
+        "en": "Set up and stop"
+      },
+      "objective": {
+        "tr": "Her pratik kurallarını uygula.",
+        "en": "Apply Every practice."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "Her pratik kurallarını uygula. H2 veya S seç, rahat nefesle kısa dinlen, “dur” de. İki ayrı deneme yapabilirsin; dinlenme süresi serbest.",
+        "en": "Apply Every practice. Choose H2 or S, rest briefly with natural breathing, say “stop.” You may try twice separately; rest duration is free."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "Sayı zorunlu değil",
+            "en": "No count required"
+          },
+          "direction": {
+            "tr": "Kendi sol/sağın; hareket şart değil",
+            "en": "Your own left/right; movement not required"
+          },
+          "support": {
+            "tr": "S: güvenle oturarak okuma veya H2: sabit destek",
+            "en": "S: safely seated reading or H2: fixed support"
+          },
+          "instruction": {
+            "tr": "Ders talimatını oku ve bağımsız soruya cevap ver; fiziksel deneme isteğe bağlı.",
+            "en": "Read lesson instructions and answer the independent question; physical attempt optional."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Ağrı varsa sırayı bitirir misin?",
+        "en": "Finish the sequence if pain occurs?"
+      },
+      "correction": {
+        "tr": "S'de ağrı/baş dönmesi/güvensiz denge üçlüsünü ve durma adımını sesli söyle; fiziksel denemeyi zorunlu görme.",
+        "en": "In S, recall pain/dizziness/unsafe balance and the stop action aloud; no physical retry is required."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Ağrı varsa sırayı bitirir misin?",
+          "en": "Finish the sequence if pain occurs?"
+        },
+        "answer": {
+          "tr": "Hayır, hemen dur.",
+          "en": "No, stop immediately."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 3,
+      "id": "tai_chi_foundations_03",
+      "title": {
+        "tr": "Kendi yönünü bul",
+        "en": "Find your own direction"
+      },
+      "objective": {
+        "tr": "S'de “sol, merkez, sağ, merkez” de.",
+        "en": "In S say “left, centre, right, centre.” If comfortable, indicate the corresponding thigh with a small hand cue; twice."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "S'de “sol, merkez, sağ, merkez” de. Rahatsa sırayla ilgili uyluğa küçük el işareti ver; iki tur. Bir el rahatsızsa yalnız söyle.",
+        "en": "In S say “left, centre, right, centre.” If comfortable, indicate the corresponding thigh with a small hand cue; twice. If an arm is uncomfortable, speak only."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "Sayı zorunlu değil",
+            "en": "No count required"
+          },
+          "direction": {
+            "tr": "Kendi sol/sağın; hareket şart değil",
+            "en": "Your own left/right; movement not required"
+          },
+          "support": {
+            "tr": "S: güvenle oturarak okuma veya H2: sabit destek",
+            "en": "S: safely seated reading or H2: fixed support"
+          },
+          "instruction": {
+            "tr": "Ders talimatını oku ve bağımsız soruya cevap ver; fiziksel deneme isteğe bağlı.",
+            "en": "Read lesson instructions and answer the independent question; physical attempt optional."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Ekranda sağ görünen taraf senin solun olabilir mi?",
+        "en": "Can a presenter's screen-right be your left?"
+      },
+      "correction": {
+        "tr": "Ekrandan bağımsız sol uyluğunu adlandır; ardından sağ-merkez-sol-merkez söyle.",
+        "en": "Name your left thigh independently of a screen; then recall right-centre-left-centre."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Ekranda sağ görünen taraf senin solun olabilir mi?",
+          "en": "Can a presenter's screen-right be your left?"
+        },
+        "answer": {
+          "tr": "Evet; kendi tarafımı kullanırım.",
+          "en": "Yes; use my own sides."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 4,
+      "id": "tai_chi_foundations_04",
+      "title": {
+        "tr": "Küçük yük değişimi",
+        "en": "Small loading change"
+      },
+      "objective": {
+        "tr": "H2'de A'yı bir tur dene; arada durabilirsin.",
+        "en": "In H2 try A once; pauses are allowed."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "H2'de A'yı bir tur dene; arada durabilirsin. S seçeneğinde sırayı söyle; ayakta aktarım denenmedi kalır. Yana bükülme/yer değiştirme ayrımını yukarıdan oku. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "In H2 try A once; pauses are allowed. In S say the sequence; standing transfer remains unattempted. Read the side-bending/displacement distinction above. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Sola küçük aktarım",
+            "en": "Small shift left"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sola taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly left; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "Merkez",
+            "en": "Centre"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        },
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağa küçük aktarım",
+            "en": "Small shift right"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sağa taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly right; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez/dinlen",
+            "en": "Centre/rest"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Sol aktarımda sağ tabanı kaldırır mısın?",
+        "en": "Lift the right sole in a left shift?"
+      },
+      "correction": {
+        "tr": "Aktarımı küçült; yalnız sol-merkez dene veya S'de anlat.",
+        "en": "Reduce range; retry only left-centre or explain in S."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Sol aktarımda sağ tabanı kaldırır mısın?",
+          "en": "Lift the right sole in a left shift?"
+        },
+        "answer": {
+          "tr": "Hayır, ikisi yerde.",
+          "en": "No, both down."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 5,
+      "id": "tai_chi_foundations_05",
+      "title": {
+        "tr": "Yüksek ve rahat duruş",
+        "en": "High comfortable stance"
+      },
+      "objective": {
+        "tr": "H2'de A'nın sağ-merkez yarısını bir kez dene.",
+        "en": "In H2 try A's right-centre half once."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "H2'de A'nın sağ-merkez yarısını bir kez dene. Derinleşme hedefi yok. Diz yönünü rahatsızca eğilerek inceleme; gözlem mümkün değilse bilinmiyor yaz. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "In H2 try A's right-centre half once. Depth is not a goal. Do not bend awkwardly to inspect knees; record unknown if observation is unavailable. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağa küçük aktarım",
+            "en": "Small shift right"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sağa taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly right; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez/dinlen",
+            "en": "Centre/rest"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Diz belirsizliğini tabanı yük altında çevirerek düzeltir misin?",
+        "en": "Correct uncertainty by turning a loaded foot?"
+      },
+      "correction": {
+        "tr": "S'de “yük altında dönme yok” de; sonraki rahat denemede küçük aralık ve H2 kullan.",
+        "en": "Recall “no loaded turn” in S; use smaller range and H2 in a later comfortable attempt."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Diz belirsizliğini tabanı yük altında çevirerek düzeltir misin?",
+          "en": "Correct uncertainty by turning a loaded foot?"
+        },
+        "answer": {
+          "tr": "Hayır; dur, aralığı küçült, gerekirse öğretmene sor.",
+          "en": "No; stop, reduce range, ask an instructor if needed."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 6,
+      "id": "tai_chi_foundations_06",
+      "title": {
+        "tr": "Nefes ve sayı",
+        "en": "Breath and count"
+      },
+      "objective": {
+        "tr": "S'de A sırasını söyle; doğal nefesini sayıya uydurmaya çalışma.",
+        "en": "In S recite A without fitting breathing to counts."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "S'de A sırasını söyle; doğal nefesini sayıya uydurmaya çalışma. Sonra H2'de bir yarım tur isteğe bağlı. Nefes tutma fark edersen dinlen. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "In S recite A without fitting breathing to counts. Optionally try half a cycle in H2. Rest if you notice breath holding. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Sola küçük aktarım",
+            "en": "Small shift left"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sola taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly left; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "Merkez",
+            "en": "Centre"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        },
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağa küçük aktarım",
+            "en": "Small shift right"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sağa taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly right; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez/dinlen",
+            "en": "Centre/rest"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "1–2 tek nefes zorunluluğu mu?",
+        "en": "Do 1–2 require one breath?"
+      },
+      "correction": {
+        "tr": "Saymayı bırak; S'de rahat doğal nefesle dinlen, sonra sırayı nefes eşleştirmeden anlat.",
+        "en": "Stop counting; rest in S with natural breathing, then describe the sequence without breath matching."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "1–2 tek nefes zorunluluğu mu?",
+          "en": "Do 1–2 require one breath?"
+        },
+        "answer": {
+          "tr": "Hayır, yalnız sıra işareti.",
+          "en": "No, sequence cues only."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 7,
+      "id": "tai_chi_foundations_07",
+      "title": {
+        "tr": "Küçük el yolu B",
+        "en": "Small hand path B"
+      },
+      "objective": {
+        "tr": "S'de bir eli uyluk yanında rahat tut.",
+        "en": "In S rest one hand beside the thigh."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "S'de bir eli uyluk yanında rahat tut. 1–2: eli gövde önünde küçük rahat mesafeye getir, en çok alt göğüs yüksekliği; dirsek yumuşak. 3–4: uyluğa geri indir. Diğer elle aynı; birer kez. Omzunu kasıp kulağına doğru kaldırma; omzu zorla aşağı bastırma veya eklemi kilitleme. ağrıda bırak. B referansı: S’de 1–2 tek eli küçük rahat mesafeye öne getir (en çok alt göğüs), 3–4 uyluğa geri indir; diğer elle ayrı tekrarla. H2 elleri bırakma.",
+        "en": "In S rest one hand beside the thigh. 1–2: bring it a small comfortable distance in front, no higher than lower chest; elbow soft. 3–4: return to thigh. Repeat once with the other hand. Avoid tensing or shrugging the shoulder toward the ear; do not force it down or lock the joint. omit for pain. B reference: in S, 1–2 bring one hand a small comfortable distance forward (no higher than lower chest), 3–4 return to thigh; repeat separately with other hand. Do not release H2 hands."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Tek el küçük öne yol",
+            "en": "One hand small forward path"
+          },
+          "support": {
+            "tr": "S; ayaklar yerde",
+            "en": "S; feet down"
+          },
+          "instruction": {
+            "tr": "Eli uyluk yanından rahat küçük mesafeye, en çok alt göğüse getir; dirsek yumuşak. Omzu kulağa kasma; zorla bastırma/kilitleme yok.",
+            "en": "Bring hand from beside thigh a small comfortable distance forward, no higher than lower chest; elbow soft. No tense shrug toward ear or forced depression/locking."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "El uyluğa döner",
+            "en": "Hand returns to thigh"
+          },
+          "support": {
+            "tr": "S",
+            "en": "S"
+          },
+          "instruction": {
+            "tr": "Eli rahatça uyluğa indir; diğer elle ayrı bir kez. Rahatsızsa atla.",
+            "en": "Return hand comfortably to thigh; repeat separately once with other hand. Omit if uncomfortable."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "El göğse kadar çıkmak zorunda mı?",
+        "en": "Must the hand reach chest height?"
+      },
+      "correction": {
+        "tr": "Eli daha alçakta tek kez dene; rahatsızsa yalnız yönleri anlat.",
+        "en": "Retry once lower; if uncomfortable, explain directions only."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "El göğse kadar çıkmak zorunda mı?",
+          "en": "Must the hand reach chest height?"
+        },
+        "answer": {
+          "tr": "Hayır; rahat küçük aralık veya atlama geçerli.",
+          "en": "No; smaller range or omission is valid."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 8,
+      "id": "tai_chi_foundations_08",
+      "title": {
+        "tr": "Parçaları ayır",
+        "en": "Separate components"
+      },
+      "objective": {
+        "tr": "Önce H2'de A bir tur, dinlen; sonra S'de B her elle bir kez.",
+        "en": "First A once in H2, rest; then B once per hand in S."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "Önce H2'de A bir tur, dinlen; sonra S'de B her elle bir kez. Neden iki el destekle kol yolunu birleştirmediğini yaz. B referansı: S’de 1–2 tek eli küçük rahat mesafeye öne getir (en çok alt göğüs), 3–4 uyluğa geri indir; diğer elle ayrı tekrarla. H2 elleri bırakma. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "First A once in H2, rest; then B once per hand in S. Write why an arm path cannot be combined with two-hand support. B reference: in S, 1–2 bring one hand a small comfortable distance forward (no higher than lower chest), 3–4 return to thigh; repeat separately with other hand. Do not release H2 hands. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Sola küçük aktarım",
+            "en": "Small shift left"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sola taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly left; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "Merkez",
+            "en": "Centre"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        },
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağa küçük aktarım",
+            "en": "Small shift right"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sağa taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly right; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez/dinlen",
+            "en": "Centre/rest"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        },
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Tek el küçük öne yol",
+            "en": "One hand small forward path"
+          },
+          "support": {
+            "tr": "S; ayaklar yerde",
+            "en": "S; feet down"
+          },
+          "instruction": {
+            "tr": "Eli uyluk yanından rahat küçük mesafeye, en çok alt göğüse getir; dirsek yumuşak. Omzu kulağa kasma; zorla bastırma/kilitleme yok.",
+            "en": "Bring hand from beside thigh a small comfortable distance forward, no higher than lower chest; elbow soft. No tense shrug toward ear or forced depression/locking."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "El uyluğa döner",
+            "en": "Hand returns to thigh"
+          },
+          "support": {
+            "tr": "S",
+            "en": "S"
+          },
+          "instruction": {
+            "tr": "Eli rahatça uyluğa indir; diğer elle ayrı bir kez. Rahatsızsa atla.",
+            "en": "Return hand comfortably to thigh; repeat separately once with other hand. Omit if uncomfortable."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "H2'de iki eli kol görevi için bırakabilir misin?",
+        "en": "Release both hands for arms in H2?"
+      },
+      "correction": {
+        "tr": "İki parçayı ayrı yaz ve sırayı S'de anlat.",
+        "en": "Write the two parts separately and recite in S."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "H2'de iki eli kol görevi için bırakabilir misin?",
+          "en": "Release both hands for arms in H2?"
+        },
+        "answer": {
+          "tr": "Hayır, H2 eller destekte demektir.",
+          "en": "No, H2 means hands stay supported."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 9,
+      "id": "tai_chi_foundations_09",
+      "title": {
+        "tr": "İsteğe bağlı tek el bağlantısı C",
+        "en": "Optional one-hand link C"
+      },
+      "objective": {
+        "tr": "H1 yalnız zaten güvenli/rahat hissediliyorsa seçilir; güvenlik belirsizse H2 A + S B kullan.",
+        "en": "Choose H1 only if already comfortable and secure; when uncertain use H2 A + S B."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "H1 yalnız zaten güvenli/rahat hissediliyorsa seçilir; güvenlik belirsizse H2 A + S B kullan. H1'de sağ el destekte, sol el boş: 1–2 sola küçük aktarım ve B'nin küçük öne yolu; 3–4 merkez ve boş eli aşağı döndür. Bir kez. Eller değişecekse önce merkezde dur, iki eli desteğe koy; sonra yalnız rahatsa sol el destekte/sağ el boş ile 5–6 sağa ve 7–8 merkeze uygula. Desteğe uzanma veya bedeni döndürme. B referansı: S’de 1–2 tek eli küçük rahat mesafeye öne getir (en çok alt göğüs), 3–4 uyluğa geri indir; diğer elle ayrı tekrarla. H2 elleri bırakma. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "Choose H1 only if already comfortable and secure; when uncertain use H2 A + S B. With right hand supported and left free: 1–2 small shift left with B's small forward hand path; 3–4 centre and lower the free hand. Once. To change hands, first stop in centre with both hands supported; only if comfortable continue with left supported/right free for 5–6 right and 7–8 centre. Do not reach for support or turn the body. B reference: in S, 1–2 bring one hand a small comfortable distance forward (no higher than lower chest), 3–4 return to thigh; repeat separately with other hand. Do not release H2 hands. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Sol yük değişimi + sol el küçük öne",
+            "en": "Left loading change + small left hand path"
+          },
+          "support": {
+            "tr": "H1 sağ el destek; yalnız güvenliyse",
+            "en": "H1 right hand supported; only if secure"
+          },
+          "instruction": {
+            "tr": "İki taban yerde; küçük bütün-beden hareketi, sağ bacak tamamen yüksüz değil. Sol boş el B aralığında.",
+            "en": "Both soles down; small whole-body movement, right leg not fully unloaded. Free left hand within B range."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "Merkez; sol el aşağı",
+            "en": "Centre; left hand down"
+          },
+          "support": {
+            "tr": "H1 sağ el destek",
+            "en": "H1 right hand supported"
+          },
+          "instruction": {
+            "tr": "Küçük hareketle başlangıç merkezine dön, dur; iki eli desteğe koy. Yalnız rahatsa el değiştir.",
+            "en": "Return through small movement to starting centre, stop; put both hands on support. Switch only if secure."
+          }
+        },
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağ yük değişimi + sağ el küçük öne",
+            "en": "Right loading change + small right hand path"
+          },
+          "support": {
+            "tr": "H1 sol el destek; yalnız güvenliyse",
+            "en": "H1 left hand supported; only if secure"
+          },
+          "instruction": {
+            "tr": "İki taban yerde; küçük bütün-beden hareketi, sol bacak tamamen yüksüz değil. Sağ boş el B aralığında.",
+            "en": "Both soles down; small whole-body movement, left leg not fully unloaded. Free right hand within B range."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez; sağ el aşağı",
+            "en": "Centre; right hand down"
+          },
+          "support": {
+            "tr": "H1 sol el destek",
+            "en": "H1 left hand supported"
+          },
+          "instruction": {
+            "tr": "Başlangıç merkezine dön, dur/dinlen; iki el tekrar desteğe. Güvensizse H2 A + S B kullan.",
+            "en": "Return to starting centre, stop/rest; both hands back on support. If uncertain use H2 A + S B."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "H1 zorunlu mu, el değişimi hareket ortasında mı?",
+        "en": "Is H1 required; change hands mid-movement?"
+      },
+      "correction": {
+        "tr": "H2 A + S B'ye dön; geçişi sözlü anlat.",
+        "en": "Return to H2 A + S B; describe the transition aloud."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "H1 zorunlu mu, el değişimi hareket ortasında mı?",
+          "en": "Is H1 required; change hands mid-movement?"
+        },
+        "answer": {
+          "tr": "Hayır; H2 geçerli, değişim merkezde durmuşken.",
+          "en": "No; H2 is valid, change only stopped in centre."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 10,
+      "id": "tai_chi_foundations_10",
+      "title": {
+        "tr": "Akıcılık ve mola",
+        "en": "Smoothness and rest"
+      },
+      "objective": {
+        "tr": "Seçtiğin A veya C'yi bir tur dene.",
+        "en": "Try one A or C cycle."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "Seçtiğin A veya C'yi bir tur dene. Başlangıç/bitişte ani itiş yapma; aralık küçülsün. “Akıcı” olmak mola yasağı değildir. Gerekirse her merkezde dur. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "Try one A or C cycle. Avoid sudden pushes at starts/finishes; reduce range. Smoothness never prohibits rest. Stop at each centre if needed. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Sola küçük aktarım",
+            "en": "Small shift left"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sola taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly left; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "Merkez",
+            "en": "Centre"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        },
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağa küçük aktarım",
+            "en": "Small shift right"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sağa taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly right; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez/dinlen",
+            "en": "Centre/rest"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Akıcılık için rahatsızlığı sürdürür müsün?",
+        "en": "Continue discomfort to preserve flow?"
+      },
+      "correction": {
+        "tr": "Tek yarım tur ve merkez molası seç; acele ettiğin parçayı yaz.",
+        "en": "Select one half-cycle with a centre rest; write which part felt rushed."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Akıcılık için rahatsızlığı sürdürür müsün?",
+          "en": "Continue discomfort to preserve flow?"
+        },
+        "answer": {
+          "tr": "Hayır; durma öncelikli.",
+          "en": "No; stopping takes priority."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 11,
+      "id": "tai_chi_foundations_11",
+      "title": {
+        "tr": "Kesinti ve yeniden başlama",
+        "en": "Interrupt and resume"
+      },
+      "objective": {
+        "tr": "S'de senaryo prova et: uygulama kapanır/telefon çalar.",
+        "en": "Rehearse in S: app closes/phone rings."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "S'de senaryo prova et: uygulama kapanır/telefon çalar. Hareketi durdur, destek/dinlenme al. Ekrandaki kaldığın sayıdan fiziksel hareketi otomatik sürdürme. Ortam ve hazır olmayı yeniden kontrol et; istersen merkezden yeni yarım tur başlat veya bitir.",
+        "en": "Rehearse in S: app closes/phone rings. Stop movement and use support/rest. Do not automatically resume physical movement at the screen's last count. Recheck space and readiness; optionally start a new half-cycle from centre or finish."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "Sayı zorunlu değil",
+            "en": "No count required"
+          },
+          "direction": {
+            "tr": "Kendi sol/sağın; hareket şart değil",
+            "en": "Your own left/right; movement not required"
+          },
+          "support": {
+            "tr": "S: güvenle oturarak okuma veya H2: sabit destek",
+            "en": "S: safely seated reading or H2: fixed support"
+          },
+          "instruction": {
+            "tr": "Ders talimatını oku ve bağımsız soruya cevap ver; fiziksel deneme isteğe bağlı.",
+            "en": "Read lesson instructions and answer the independent question; physical attempt optional."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Kesintide hızlanıp yetişir misin?",
+        "en": "Speed up to catch up after interruption?"
+      },
+      "correction": {
+        "tr": "“4'te telefon çaldı” için dur-dinlen-kontrol-seç adımlarını yaz.",
+        "en": "For “phone rang at 4,” write stop-rest-check-choose."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Kesintide hızlanıp yetişir misin?",
+          "en": "Speed up to catch up after interruption?"
+        },
+        "answer": {
+          "tr": "Hayır; dur, yeniden kontrol et.",
+          "en": "No; stop and recheck."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 12,
+      "id": "tai_chi_foundations_12",
+      "title": {
+        "tr": "Kendi planını kur",
+        "en": "Build your plan"
+      },
+      "objective": {
+        "tr": "Karta destek (H2 veya isteğe bağlı H1), sıra (A veya C), kol alternatifi (S B/atla), yarım/tam tur ve durma nedenlerini yaz.",
+        "en": "Write support (H2 or optional H1), sequence (A or C), arm alternative (S B/omit), half/full cycle and stop reasons."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "Karta destek (H2 veya isteğe bağlı H1), sıra (A veya C), kol alternatifi (S B/atla), yarım/tam tur ve durma nedenlerini yaz. Örnek: H2 A tek tur; dinlen; S B yalnız sol el; ağrı/baş dönmesi/güvensiz dengede bitir. Örneği kopyalamak yerine ihtiyacına göre seç. B referansı: S’de 1–2 tek eli küçük rahat mesafeye öne getir (en çok alt göğüs), 3–4 uyluğa geri indir; diğer elle ayrı tekrarla. H2 elleri bırakma. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "Write support (H2 or optional H1), sequence (A or C), arm alternative (S B/omit), half/full cycle and stop reasons. Example: H2 A once; rest; S B left hand only; finish for pain/dizziness/unsafe balance. Choose for your needs rather than copying the example. B reference: in S, 1–2 bring one hand a small comfortable distance forward (no higher than lower chest), 3–4 return to thigh; repeat separately with other hand. Do not release H2 hands. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "1–2",
+            "en": "1–2"
+          },
+          "direction": {
+            "tr": "Sola küçük aktarım",
+            "en": "Small shift left"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sola taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly left; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "3–4",
+            "en": "3–4"
+          },
+          "direction": {
+            "tr": "Merkez",
+            "en": "Centre"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        },
+        {
+          "count": {
+            "tr": "5–6",
+            "en": "5–6"
+          },
+          "direction": {
+            "tr": "Sağa küçük aktarım",
+            "en": "Small shift right"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki el destek ve iki taban temasıyla bütün bedeni çok küçük sağa taşı; karşı bacağı tamamen yüksüz bırakma. Yana bel bükülmesiyle taklit etme.",
+            "en": "With both hands supported and both soles contacting, move the whole body very slightly right; do not fully unload the opposite leg. Do not imitate by sideways waist bending."
+          }
+        },
+        {
+          "count": {
+            "tr": "7–8",
+            "en": "7–8"
+          },
+          "direction": {
+            "tr": "Merkez/dinlen",
+            "en": "Centre/rest"
+          },
+          "support": {
+            "tr": "H2; iki el destekte",
+            "en": "H2; both hands supported"
+          },
+          "instruction": {
+            "tr": "İki taban yerde ve iki el destekte; küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Gerekirse dur/dinlen.",
+            "en": "Both soles down and both hands supported; return to comfortable starting centre through a small whole-body movement. Stop/rest if needed."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "S B kaydı ayakta aktarımı kanıtlar mı?",
+        "en": "Does an S B record prove standing transfer?"
+      },
+      "correction": {
+        "tr": "Planında denenmeyen bileşeni açık yaz.",
+        "en": "Explicitly mark the unattempted component in your plan."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "S B kaydı ayakta aktarımı kanıtlar mı?",
+          "en": "Does an S B record prove standing transfer?"
+        },
+        "answer": {
+          "tr": "Hayır, aktarım denenmedi olabilir.",
+          "en": "No, transfer may be unattempted."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 13,
+      "id": "tai_chi_foundations_13",
+      "title": {
+        "tr": "Hatayı düzelt ve yeniden sınama",
+        "en": "Correct and retest"
+      },
+      "objective": {
+        "tr": "Önce bilerek fiziksel hata yapmadan şu yazılı senaryoyu çöz: “Yön karıştı, destek bırakıldı, nefes sayılarına zorlandı.” Üç ayrı düzeltme yaz.",
+        "en": "Solve without deliberately making a physical error: “Directions confused, support released, breathing forced to counts.” Write three separate corrections."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "Önce bilerek fiziksel hata yapmadan şu yazılı senaryoyu çöz: “Yön karıştı, destek bırakıldı, nefes sayılarına zorlandı.” Üç ayrı düzeltme yaz. Sonra yalnız bir belirsizliği seç; daha kolay görevi planla. Ağrı/baş dönmesi olayında aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "Solve without deliberately making a physical error: “Directions confused, support released, breathing forced to counts.” Write three separate corrections. Select one uncertainty and plan an easier task. After pain/dizziness, no same-session physical retry is required."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "Sayı zorunlu değil",
+            "en": "No count required"
+          },
+          "direction": {
+            "tr": "Kendi sol/sağın; hareket şart değil",
+            "en": "Your own left/right; movement not required"
+          },
+          "support": {
+            "tr": "S: güvenle oturarak okuma veya H2: sabit destek",
+            "en": "S: safely seated reading or H2: fixed support"
+          },
+          "instruction": {
+            "tr": "Ders talimatını oku ve bağımsız soruya cevap ver; fiziksel deneme isteğe bağlı.",
+            "en": "Read lesson instructions and answer the independent question; physical attempt optional."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Senaryodaki üç hata için ayrı düzeltmeler nedir?",
+        "en": "What are separate corrections for the three scenario errors?"
+      },
+      "correction": {
+        "tr": "Eksik cevapta ilgili 3/8/6 dersini oku, senaryoyu anahtarsız yeniden cevapla.",
+        "en": "For omissions reread lesson 3/8/6 and answer the scenario again without the key."
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Senaryodaki üç hata için ayrı düzeltmeler nedir?",
+          "en": "What are separate corrections for the three scenario errors?"
+        },
+        "answer": {
+          "tr": "S'de kendi yönlerini söyle; H2'yi koru ve kolları S'de ayır; sayıyı nefese bağlamadan dinlen.",
+          "en": "Name your own directions in S; retain H2 and separate arms in S; rest without matching breath to counts."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "number": 14,
+      "id": "tai_chi_foundations_14",
+      "title": {
+        "tr": "Özgün kısa pratik ve devir",
+        "en": "Original short practice and handoff"
+      },
+      "objective": {
+        "tr": "Anahtara bakmadan planını, A'nın sol-merkez-sağ-merkez sırasını ve üç durma nedenini yaz; cevaplarını yukarıyla karşılaştır.",
+        "en": "Without the key write your plan, A's left-centre-right-centre order and three stop reasons; compare above."
+      },
+      "preparation": {
+        "tr": "Engelleri kaldır; düz kaymayan zemin ve önünde uzanmadan erişilen tekerleksiz/kaymayan sağlam destek seç. Güvenli destek yoksa ayakta deneme. Ayaklar rahat kalça genişliğinde yaklaşık öne; zorla paralel değil. Baş rahat dik, bakış önde; dizler kilitli veya derin bükülü değil. Küçük diz yumuşamasında diz yönü ayak yönünü izlesin; rahatsızca eğilip bakma, gözlenemiyorsa bilinmiyor yaz. Merkez rahat başlangıç yük dağılımına dönüş; ölçülmüş yüzde yok. Sabit güvenli destek erişimde; iki taban yerde, adım veya ayak döndürme yok. Kendi sol/sağını kullan. Sayı saniye/nefes değil; doğal nefes al. H2: iki el destek; H1: yalnız güvenliyse bir el destek; S: sabit sandalyede ayaklar yerde, kol/yön provası; ayakta aktarım eşdeğeri değil. Desteği azaltmak zorunlu değil.",
+        "en": "Clear obstacles; use a level nonslip floor and fixed nonrolling/nonsliding support in front without reaching. Without secure support, do not try standing work. Feet comfortably hip-width, roughly forward, not forced parallel. Head comfortably upright, gaze ahead; knees neither locked nor deeply bent. During slight softening knees follow foot direction; do not bend awkwardly to inspect, record unknown if unobservable. Centre means return to comfortable initial loading; no measured percentage. Fixed secure support within reach; both soles down, no step or foot pivot. Use your own left/right. Counts are not seconds/breaths; breathe naturally. H2: two hands supported; H1: only if secure, one hand supported; S: fixed chair, feet down, arm/direction rehearsal, not equivalent to standing transfer. Reducing support is not required."
+      },
+      "instructions": {
+        "tr": "Anahtara bakmadan planını, A'nın sol-merkez-sağ-merkez sırasını ve üç durma nedenini yaz; cevaplarını yukarıyla karşılaştır. İstersen aşağıdaki kısa pratiği dene; zorunlu fiziksel bitirme yok. Sonra ne denendi/denenmedi/belirsiz ve bir sonraki kolay tekrarını yaz. “Tamamladım” yalnız yazılı görevi/öz beyanı gösterir. B referansı: S’de 1–2 tek eli küçük rahat mesafeye öne getir (en çok alt göğüs), 3–4 uyluğa geri indir; diğer elle ayrı tekrarla. H2 elleri bırakma. Kısa pratik: ortam/dinlenme → H2 A bir veya yarım tur → dur/dinlen → S B her elle bir kez veya yalnız güvenliyse C → dinlen/kayıt. A: 1–2 çok küçük sola yük değişimi, 3–4 merkez, 5–6 çok küçük sağa yük değişimi, 7–8 merkez/dinlen. H2; tabanlar yerde. Belden yana bükülerek/omzu uzatarak taklit etme; küçük bütün-beden yer değiştirmesi olabilir. Yük yüzdesi veya tam tek-bacak yükleme yok. C referansı: H1 sağ el destekte/sol boş; 1–2 sol aktarım ve küçük öne el yolu, 3–4 merkez/el aşağı. Merkezde dur, iki el desteğe koy; yalnız rahatsa el değiştirip 5–6 sağ aktarım, 7–8 merkez/el aşağı. İki el destekte, iki taban yerdeyken bütün bedenini çok küçük bir mesafe sola taşıyarak başla; soldaki yükün biraz artmasına izin ver, sağ bacağı tamamen yüksüz bırakma. Sonra aynı küçük bütün-beden hareketiyle rahat başlangıç merkezine dön. Sağ taraf için yönleri tersine uygula. Yana bel bükülmesiyle taklit etme; yük yüzdesi veya tam hizalanma hedefi yok.",
+        "en": "Without the key write your plan, A's left-centre-right-centre order and three stop reasons; compare above. Optionally attempt the short practice below; physical completion is not compulsory. Record attempted/unattempted/uncertain and a specific easier next retry. “Completed” records the written task/self-report only. B reference: in S, 1–2 bring one hand a small comfortable distance forward (no higher than lower chest), 3–4 return to thigh; repeat separately with other hand. Do not release H2 hands. Short practice: setup/rest → H2 A one or half-cycle → stop/rest → S B once per hand or C only if secure → rest/record. A: 1–2 very small loading change left, 3–4 centre, 5–6 very small loading change right, 7–8 centre/rest. H2; soles down. Do not imitate by side bending/reaching a shoulder; small whole-body displacement may occur. No loading percentage/full single-leg target. C reference: H1 right hand supported/left free; 1–2 shift left with small forward hand path, 3–4 centre/hand down. Stop in centre, put both hands on support; only if secure switch hands for 5–6 right, 7–8 centre/hand down. With both hands supported and both soles in contact, begin by moving your body as a whole a very small distance left; allow slightly more loading on the left without fully unloading the right leg. Return to the comfortable starting centre through the same small whole-body movement. Reverse the directions for the right side. Do not imitate by sideways waist bending; there is no loading-percentage or exact-alignment target."
+      },
+      "practiceRows": [
+        {
+          "count": {
+            "tr": "Başlangıç",
+            "en": "Start"
+          },
+          "direction": {
+            "tr": "Ortam/dinlenme",
+            "en": "Setup/rest"
+          },
+          "support": {
+            "tr": "H2 veya S",
+            "en": "H2 or S"
+          },
+          "instruction": {
+            "tr": "Ortamı ve hazır olmayı kontrol et.",
+            "en": "Check space and readiness."
+          }
+        },
+        {
+          "count": {
+            "tr": "İlk: 1–8",
+            "en": "First: 1–8"
+          },
+          "direction": {
+            "tr": "A: sol-merkez-sağ-merkez",
+            "en": "A: left-centre-right-centre"
+          },
+          "support": {
+            "tr": "H2",
+            "en": "H2"
+          },
+          "instruction": {
+            "tr": "A bir tur: 1–2 sol,3–4 merkez,5–6 sağ,7–8 merkez; yarım tur geçerli. İki taban yerde; küçük bütün-beden aktarımı, karşı bacak tam yüksüz değil.",
+            "en": "A once:1–2 left,3–4 centre,5–6 right,7–8 centre; half-cycle valid. Both soles down; small whole-body transfer, opposite leg not fully unloaded."
+          }
+        },
+        {
+          "count": {
+            "tr": "Mola",
+            "en": "Rest"
+          },
+          "direction": {
+            "tr": "Dur ve hazır olmayı kontrol et",
+            "en": "Stop and check readiness"
+          },
+          "support": {
+            "tr": "H2 veya S",
+            "en": "H2 or S"
+          },
+          "instruction": {
+            "tr": "Dinlen; devam etmek zorunlu değil.",
+            "en": "Rest; continuing is optional."
+          }
+        },
+        {
+          "count": {
+            "tr": "İkinci",
+            "en": "Second"
+          },
+          "direction": {
+            "tr": "B veya yalnız güvenliyse C",
+            "en": "B or C only if secure"
+          },
+          "support": {
+            "tr": "S B; isteğe bağlı H1 C",
+            "en": "S B; optional H1 C"
+          },
+          "instruction": {
+            "tr": "S B her elle bir kez:1–2 küçük öne,3–4 uyluğa. Alternatif C: sağ el destek/sol boş 1–2 sol+el,3–4 merkez/el aşağı; merkezde dur,iki el destek,rahat ise değiştir;5–6 sağ+el,7–8 merkez/el aşağı. H2 elleri kol için bırakma.",
+            "en": "S B once per hand:1–2 small forward,3–4 thigh. Alternative C:right supported/left free 1–2 left+hand,3–4 centre/hand down;stop in centre,both hands supported,switch only if secure;5–6 right+hand,7–8 centre/hand down. Do not release H2 hands for arms."
+          }
+        },
+        {
+          "count": {
+            "tr": "Bitiş",
+            "en": "Finish"
+          },
+          "direction": {
+            "tr": "Dinlen/kayıt",
+            "en": "Rest/record"
+          },
+          "support": {
+            "tr": "H2 veya S",
+            "en": "H2 or S"
+          },
+          "instruction": {
+            "tr": "Denenen/denenmeyen/belirsiz ve bir somut düzeltme/tekrar yaz.",
+            "en": "Record attempted/unattempted/uncertain and one specific correction/retest."
+          }
+        }
+      ],
+      "selfCheck": {
+        "tr": "Kendi yön sıran ve üç durma nedenin nedir?",
+        "en": "What are your own-side sequence and three stop reasons?"
+      },
+      "correction": {
+        "tr": "Yön yanlışsa 3; destek karıştıysa 8; nefes zorlandıysa 6; aktarım belirsizse 4. Tek kolay görevi seç ve anahtarsız cevabı tekrar yaz; fiziksel sonucu “doğrulandı” diye yazma.",
+        "en": "Wrong directions: 3; support confusion: 8; forced breathing: 6; uncertain transfer: 4. Choose one easier task and repeat the answer without the key; do not label physical results “verified.”"
+      },
+      "retest": {
+        "tr": "Anahtara bakmadan kontrol sorusunu yeniden cevapla; yukarıdaki kolay görevi seç. Fiziksel sonuç öz beyandır; ağrı/baş dönmesi sonrası aynı oturumda tekrar zorunlu değil.",
+        "en": "Answer the check again without the key; select the easier task above. Physical results are self-report; no same-session retry is required after pain/dizziness."
+      },
+      "knowledgeCheck": {
+        "question": {
+          "tr": "Kendi yön sıran ve üç durma nedenin nedir?",
+          "en": "What are your own-side sequence and three stop reasons?"
+        },
+        "answer": {
+          "tr": "Kendi sol-merkez-sağ-merkez; doğal nefes, tabanlar yerde, H2 geçerli; ağrı/baş dönmesi/güvensiz denge durdurur.",
+          "en": "Own left-centre-right-centre; natural breathing, soles down, H2 valid; pain/dizziness/unsafe balance stop the task."
+        }
+      },
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    }
+  ]
+}

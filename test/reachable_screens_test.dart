@@ -1,3 +1,10 @@
+import 'package:jablab/app/yang16_written_course_page.dart';
+import 'package:jablab/app/muay_thai_course_page.dart';
+import 'package:jablab/app/karate_course_page.dart';
+import 'package:jablab/app/kickboxing_course_page.dart';
+import 'package:jablab/app/tai_chi_course_page.dart';
+import 'package:jablab/app/taikyoku_shodan_course_page.dart';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -65,7 +72,12 @@ import 'app_pump.dart';
 /// Katı okuma: `pumpAndSettle` ile ulaşılan AYRI rota sayısı. Aşağıdaki
 /// "rota 2-6/6" testinin beklediği küme bu sayıyı zaten kilitliyor.
 // 2026-09-26: the visible solo-course path adds two witnessed push routes.
-const int kStrictRoutes = 8;
+// 2026-10-04: original Tai Chi written course adds two witnessed push routes.
+// Proposed kickboxing route walk below adds two routes; not yet executed.
+// Proposed Karate control traversal; no runtime result for this source revision.
+// Muay Thai source expectation only; this candidate has never run.
+// Taikyoku source-only same-root traversal below; execution pending.
+const int kStrictRoutes = 20;
 
 /// Karşılama perdesi sayısı — "perde yürüyüşü" testi bunu YÜRÜYEREK doğrular.
 const int kOnboardingPanels = 3;
@@ -316,6 +328,143 @@ void main() {
     // > GELMEZ.*** Çıkışın İNDİĞİ yer artık ölçülüyor.
     visit(SelectPage, 'select');
 
+    // Proposed kickboxing first-run control traversal; qualification pending.
+    final kbEntry = find.byKey(const Key('open-kickboxing-course'));
+    await Scrollable.ensureVisible(t.element(kbEntry));
+    await t.pumpAndSettle();
+    await t.tap(kbEntry.hitTestable());
+    await settleUntil(t, find.byKey(const Key('kickboxing-course-list')));
+    await t.pumpAndSettle();
+    visit(KickboxingCoursePage, 'kickboxingCourse');
+    final kbLesson = find.byKey(const Key('kickboxing-lesson-1'));
+    await t.scrollUntilVisible(kbLesson, 500);
+    await t.pumpAndSettle();
+    await t.tap(kbLesson.hitTestable());
+    await t.pumpAndSettle();
+    visit(KickboxingLessonPage, 'kickboxingLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
+
+    // Proposed karate first-run control traversal; qualification pending.
+    final kaEntry = find.byKey(const Key('open-karate-course'));
+    await t.scrollUntilVisible(kaEntry, 500);
+    await Scrollable.ensureVisible(t.element(kaEntry));
+    await t.pumpAndSettle();
+    await t.tap(kaEntry.hitTestable());
+    await settleUntil(t, find.byKey(const Key('karate-course-list')));
+    await t.pumpAndSettle();
+    visit(KarateCoursePage, 'karateCourse');
+
+    // Reach the kata from this Karate overview, then return through both
+    // actual back controls before continuing the original Karate lesson walk.
+    // This is source preparation; no route observation is claimed yet.
+    final kataPopsBefore = witness.pops;
+    final kataEntry = find.byKey(const Key('open-taikyoku-course'));
+    await t.scrollUntilVisible(kataEntry, 500);
+    await Scrollable.ensureVisible(t.element(kataEntry));
+    await t.pumpAndSettle();
+    await t.tap(kataEntry.hitTestable());
+    await settleUntil(t, find.byKey(const Key('taikyoku-course-list')));
+    await t.pumpAndSettle();
+    visit(TaikyokuCoursePage, 'taikyokuCourse');
+    final kataLesson = find.byKey(const Key('taikyoku-lesson-1'));
+    await t.scrollUntilVisible(kataLesson, 500);
+    await Scrollable.ensureVisible(t.element(kataLesson));
+    await t.pumpAndSettle();
+    await t.tap(kataLesson.hitTestable());
+    await settleUntil(t, find.byKey(const Key('taikyoku-lesson-body')));
+    await t.pumpAndSettle();
+    visit(TaikyokuLessonPage, 'taikyokuLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('taikyoku-course-list')), findsOneWidget);
+    expect(find.byType(TaikyokuLessonPage), findsNothing);
+    await t.pageBack();
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('karate-course-list')), findsOneWidget);
+    expect(find.byType(TaikyokuCoursePage), findsNothing);
+    expect(witness.pops, kataPopsBefore + 2);
+
+    final kaLesson = find.byKey(const Key('karate-lesson-1'));
+    await t.scrollUntilVisible(kaLesson, 500);
+    await t.pumpAndSettle();
+    await t.tap(kaLesson.hitTestable());
+    await t.pumpAndSettle();
+    visit(KarateLessonPage, 'karateLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
+
+    // Proposed muayThai first-run control traversal; qualification pending.
+    final mtEntry = find.byKey(const Key('open-muay-thai-course'));
+    await t.scrollUntilVisible(mtEntry, 500);
+    await Scrollable.ensureVisible(t.element(mtEntry));
+    await t.pumpAndSettle();
+    await t.tap(mtEntry.hitTestable());
+    await settleUntil(t, find.byKey(const Key('muay-thai-course-list')));
+    await t.pumpAndSettle();
+    visit(MuayThaiCoursePage, 'muayThaiCourse');
+    final mtLesson = find.byKey(const Key('muay-thai-lesson-1'));
+    await t.scrollUntilVisible(mtLesson, 500);
+    await t.pumpAndSettle();
+    await t.tap(mtLesson.hitTestable());
+    await t.pumpAndSettle();
+    visit(MuayThaiLessonPage, 'muayThaiLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
+
+    // Tai Chi must be reached by controls from this same fresh-root walk.
+    t.state<ScrollableState>(find.byType(Scrollable).first).position.jumpTo(0);
+    await t.pump();
+    final taiEntry = find.byKey(const Key('open-tai-chi-course'));
+    await Scrollable.ensureVisible(t.element(taiEntry));
+    await t.pumpAndSettle();
+    await t.tap(taiEntry.hitTestable());
+    await settleUntil(t, find.byKey(const Key('tai-chi-course-list')));
+    await t.pumpAndSettle();
+    visit(TaiChiCoursePage, 'taiChiCourse');
+    // Same-root Yang16 written-order walk through actual Tai Chi controls.
+    final yangPopsBefore = witness.pops;
+    final yangEntry = find.byKey(const Key('open-yang16-written-course'));
+    await t.scrollUntilVisible(yangEntry, 500);
+    await Scrollable.ensureVisible(t.element(yangEntry));
+    await t.pumpAndSettle();
+    await t.tap(yangEntry.hitTestable());
+    await settleUntil(t, find.byKey(const Key('yang16-course-list')));
+    await t.pumpAndSettle();
+    visit(Yang16WrittenCoursePage, 'yang16WrittenCourse');
+    final yangTarget = find.byKey(const Key('yang16-target-prepare'));
+    await t.scrollUntilVisible(yangTarget, 500);
+    await Scrollable.ensureVisible(t.element(yangTarget));
+    await t.pumpAndSettle();
+    await t.tap(yangTarget.hitTestable());
+    await settleUntil(t, find.byKey(const Key('yang16-target-body')));
+    await t.pumpAndSettle();
+    visit(Yang16WrittenTargetPage, 'yang16WrittenTarget');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('yang16-course-list')), findsOneWidget);
+    await t.pageBack();
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('tai-chi-course-list')), findsOneWidget);
+    expect(witness.pops, yangPopsBefore + 2);
+
+    final taiLesson = find.byKey(const Key('tai-chi-lesson-1'));
+    await t.scrollUntilVisible(taiLesson, 500);
+    await t.pumpAndSettle();
+    await t.tap(taiLesson.hitTestable());
+    await t.pumpAndSettle();
+    visit(TaiChiLessonPage, 'taiChiLesson');
+    await t.pageBack();
+    await t.pumpAndSettle();
+    await t.pageBack();
+    await t.pumpAndSettle();
+
     // The first product path must be reachable through the visible catalogue.
     await t.tap(find.byKey(const Key('open-solo-boxing-course')));
     await settleUntil(t, find.byKey(const Key('solo-course-progress')));
@@ -430,6 +579,18 @@ void main() {
       <String, Arrival>{
         'onboarding': Arrival.root,
         'select': Arrival.root,
+        'kickboxingCourse': Arrival.push,
+        'kickboxingLesson': Arrival.push,
+        'karateCourse': Arrival.push,
+        'taikyokuCourse': Arrival.push,
+        'taikyokuLesson': Arrival.push,
+        'karateLesson': Arrival.push,
+        'muayThaiCourse': Arrival.push,
+        'muayThaiLesson': Arrival.push,
+        'taiChiCourse': Arrival.push,
+        'taiChiLesson': Arrival.push,
+        'yang16WrittenCourse': Arrival.push,
+        'yang16WrittenTarget': Arrival.push,
         'soloCourse': Arrival.push,
         'soloLesson': Arrival.push,
         'settings': Arrival.push,
@@ -679,6 +840,18 @@ void main() {
       'WhyNotPage',
       'CoursePage',
       'SessionScreen',
+      'KickboxingCoursePage',
+      'KickboxingLessonPage',
+      'KarateCoursePage',
+      'TaikyokuCoursePage',
+      'TaikyokuLessonPage',
+      'KarateLessonPage',
+      'MuayThaiCoursePage',
+      'MuayThaiLessonPage',
+      'TaiChiCoursePage',
+      'TaiChiLessonPage',
+      'Yang16WrittenCoursePage',
+      'Yang16WrittenTargetPage',
       'SoloBoxingCoursePage',
       'SoloBoxingLessonPage',
     };
@@ -1060,7 +1233,7 @@ void main() {
     // gevşek sayı bir yorumda yaşıyordu, kimse ona çarpmıyordu.
     expect(
       kLooseScreens,
-      13,
+      25,
       reason:
           'gevşek ekran sayısı değişti: devir notu, 📊 pano ve aile '
           'karşılaştırması bu sayıyı taşıyor — üçü de güncellenmeli',

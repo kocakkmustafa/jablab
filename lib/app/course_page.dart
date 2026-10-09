@@ -1,3 +1,8 @@
+import 'muay_thai_course_page.dart';
+import 'karate_course_page.dart';
+import 'kickboxing_course_page.dart';
+import 'tai_chi_course_page.dart';
+
 import 'package:flutter/material.dart';
 
 import '../shell_candidate/shell_models.dart';
@@ -36,6 +41,10 @@ class CoursePage extends StatelessWidget {
     required this.onStart,
     required this.onOpenSettings,
     this.onOpenSoloCourse,
+    this.onOpenTaiChiCourse,
+    this.onOpenKickboxingCourse,
+    this.onOpenKarateCourse,
+    this.onOpenMuayThaiCourse,
     this.onOpenSelect,
     this.isCurrent = false,
     this.resumeLesson,
@@ -52,6 +61,10 @@ class CoursePage extends StatelessWidget {
   final void Function(ShellLesson) onStart;
   final VoidCallback onOpenSettings;
   final VoidCallback? onOpenSoloCourse;
+  final VoidCallback? onOpenTaiChiCourse;
+  final VoidCallback? onOpenKickboxingCourse;
+  final VoidCallback? onOpenKarateCourse;
+  final VoidCallback? onOpenMuayThaiCourse;
 
   /// Yalnız bu sayfa KÖK/giriş (landing) iken doldurulur — pushla açılan bir
   /// kursta geri gitmek zaten Navigator'ın kendi geri okuna aittir.
@@ -146,6 +159,22 @@ class CoursePage extends StatelessWidget {
                 courseGoal(context, course.id, course.goal),
                 style: JText.body.copyWith(color: JColors.ink2, fontSize: 15),
               ),
+            ],
+            if (onOpenKickboxingCourse != null) ...<Widget>[
+              KickboxingCourseEntryCard(onOpen: onOpenKickboxingCourse!),
+              const SizedBox(height: 12),
+            ],
+            if (onOpenTaiChiCourse != null) ...<Widget>[
+              TaiChiCourseEntryCard(onOpen: onOpenTaiChiCourse!),
+              const SizedBox(height: 12),
+            ],
+            if (onOpenKarateCourse != null) ...<Widget>[
+              KarateCourseEntryCard(onOpen: onOpenKarateCourse!),
+              const SizedBox(height: 12),
+            ],
+            if (onOpenMuayThaiCourse != null) ...<Widget>[
+              MuayThaiCourseEntryCard(onOpen: onOpenMuayThaiCourse!),
+              const SizedBox(height: 12),
             ],
             if (onOpenSoloCourse != null) ...<Widget>[
               const SizedBox(height: 16),
