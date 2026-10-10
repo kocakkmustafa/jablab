@@ -41,6 +41,32 @@ const OnboardingStore _seen = OnboardingStore(seenOverride: true);
 // Each test owns a storage namespace; replacements inside it share this registry.
 late OwnerResourceRegistry _owners;
 
+Future<void> showBoxingControl(WidgetTester t, Key key) async {
+  final Finder control = find.byKey(key);
+  await t.scrollUntilVisible(
+    control,
+    250,
+    scrollable: find.byType(Scrollable).first,
+    maxScrolls: 40,
+  );
+  await Scrollable.ensureVisible(t.element(control), alignment: 0.5);
+  await t.pumpAndSettle();
+  expect(control.hitTestable(), findsOneWidget);
+}
+
+// Recorded statistics are a display Row, not a pointer control.
+Future<void> showRecordedSummary(WidgetTester t) async {
+  final summary = find.byKey(const Key('recorded-Time worked'));
+  final scrollable = find.byType(Scrollable).first;
+  await t.scrollUntilVisible(summary, 250,
+    scrollable: scrollable, maxScrolls: 40);
+  await Scrollable.ensureVisible(t.element(summary), alignment: 0.5);
+  await t.pumpAndSettle();
+  expect(summary, findsOneWidget);
+  expect(t.getRect(scrollable).contains(t.getRect(summary).center), isTrue,
+    reason: 'Recorded summary row must be inside the actual viewport');
+}
+
 void main() {
   setUp(() => _owners = OwnerResourceRegistry());
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -88,6 +114,8 @@ void main() {
     // interpolasyon kaçağı (metinde `$` unutmak) hiçbir anahtar testinde
     // görünmezdi.
     await pumpApp(t, _SpyStore(unreadable: 3, records: 2));
+    // Reach the actual lazy-list summary; keep every original assertion.
+    await showRecordedSummary(t);
     final String s = textOf(t, const Key('recorded-incomplete'));
     expect(s, contains('3'), reason: 'kayıp SAYISI metne girmemiş');
     expect(
@@ -128,6 +156,7 @@ void main() {
     await pumpApp(t, _ThrowingStore());
     expect(find.byKey(const Key('recorded-unavailable')), findsOneWidget);
     expect(find.byKey(const Key('recorded-Time worked')), findsNothing);
+    await showBoxingControl(t, const Key('item-boxing'));
     expect(
       find.byKey(const Key('item-boxing')),
       findsOneWidget,
@@ -139,6 +168,8 @@ void main() {
     // doc-75/6: koşulsuz uyaran bir yüzey yukarıdaki bütün testleri geçer.
     // Bu ikiz olmadan "her zaman uyar" kusuru görünmez.
     await pumpApp(t, _SpyStore(unreadable: 0, records: 2));
+    // Reach the actual lazy-list summary; keep every original assertion.
+    await showRecordedSummary(t);
     expect(find.byKey(const Key('recorded-unavailable')), findsNothing);
     expect(find.byKey(const Key('recorded-incomplete')), findsNothing);
     expect(

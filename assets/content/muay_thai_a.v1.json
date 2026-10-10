@@ -1,0 +1,997 @@
+{
+  "schemaVersion": 1,
+  "id": "jablab.muay_thai_a",
+  "practiceKind": "written_muay_thai_preparation",
+  "manuscriptSha256": "64d15e5054ae06e8b2be80506bcd17f1d0b53e8958252e064a1183b354b2b229",
+  "title": {
+    "tr": "Muay Thai A: seçili temeller ve özgün duraklı hazırlık",
+    "en": "Muay Thai A: selected fundamentals and original paused preparation"
+  },
+  "shared": {
+    "status": {
+      "tr": "Özgün Muay Thai yazılı önerisi v2. V1’in sınırlı yazılı kapsamı bağımsız incelemede kabul edildi; bu ayrı teknik açıklama düzeltmesi odaklı inceleme bekliyor. Uygulamaya entegre edilmedi; fiziksel öğretim, gösterim ve bireysel geri bildirim kabulü yoktur.",
+      "en": "Original Muay Thai written proposal v2. Independent review accepted v1 at its bounded written scope; this separate technical clarification awaits focused review. It is not integrated into the app; physical teaching, demonstrations and individual feedback have not been accepted."
+    },
+    "style": {
+      "tr": "Çağdaş Muay Thai temellerinden seçilmiş hazırlık sözlüğü. Gard, taban ve topuk kullanımı kaynaklarda değişir. Aşağıdaki kısa, yavaş ve duraklı düzen özgün bir hazırlık uyarlamasıdır; bütün kampların ortak tekniği veya resmî Khan müfredatı değildir.",
+      "en": "Selected preparation vocabulary from contemporary Muay Thai fundamentals. Guard, base and heel use vary between sources. The short, slow, paused arrangement below is an original preparation adaptation; it is not universal camp technique or an official Khan syllabus."
+    },
+    "audience": {
+      "tr": "Muay Thai deneyimi varsayılmayan yetişkin başlangıç okuyucusu. Bu metin çocuk programı, rehabilitasyon, tıbbi uygunluk kararı veya müsabaka hazırlığı değildir. Boks, kickboxing veya karate yazılı dersleri bu alanın fiziksel önkoşullarını karşılamaz.",
+      "en": "An adult beginner reader with no assumed Muay Thai experience. This is not a children’s program, rehabilitation, a medical suitability decision or competition preparation. Boxing, kickboxing or karate written lessons do not satisfy this domain’s physical prerequisites."
+    },
+    "endpoint": {
+      "tr": "A düzeyinin sonlu sonucu: kapsamı ve durmayı açıklamak; seçili duruş/gard girişini, dört yönde ayak sırasını, jab ve arka düz hazırlığının toparlanmasını, ön teep ve arka diz hazırlığının farklı dönüşlerini, kısa yatay dirsek hazırlığını ve özgün MT-P1 Dokuz durak dizisini yazılı hatırlamak; bir hatayı düzeltip uygun yazılı tekrar planlamak. Fiziksel bileşenler denenmedi ve doğrulanmadı.",
+      "en": "The finite A-level outcome is written recall of scope and stopping, entry to a selected stance/guard, foot order in four directions, recovery from jab and rear straight preparation, the different returns of lead teep and rear knee preparation, short horizontal elbow preparation, and original MT-P1 Nine pauses; identify one correction and plan a suitable written retest. Physical components are unattempted and unverified."
+    },
+    "limits": {
+      "tr": "Yazılı hatırlama teknik, denge veya savunma kabulü değildir. MT-P1 özgün JabLab düzenidir; geleneksel form, Wai Kru/Ram Muay veya resmî sınav değildir. Round kick, gerçek check zamanlaması, klinç, yakalama/süpürme, temas, torba/pad, sparring, müsabaka ve kendini savunma bu sonuçta yoktur. Daha geniş tam başlangıç Muay Thai hedefi açık kalır.",
+      "en": "Written recall does not accept technique, balance or defense. MT-P1 is an original JabLab arrangement, not a traditional form, Wai Kru/Ram Muay or official examination. Round kicks, actual check timing, clinch, catches/sweeps, contact, bag/pad work, sparring, competition and self-defense are outside this outcome. The wider complete beginner Muay Thai goal remains open."
+    },
+    "physical_gate": {
+      "tr": "Bütün fiziksel görevler kullanılamaz. P0–P7 kayıtlarının tamamı karşılanmamıştır: kişiye uygun alan/durma, duruş/gard, adımlar, düz yumruk toparlanması, ön teep, arka diz, yatay dirsek ve bütün dizi için ilgili gerçek öğretim, kabul edilmiş gösterim ve bireysel gözlem gerekir. Yazılı ilerleme veya kutucuk bu kayıtları oluşturmaz. Belirli ücretli kurs, araç, model, unvan ya da sertifika satın alma şartı yoktur.",
+      "en": "All physical tasks are unavailable. Every P0–P7 record is unmet: the relevant real instruction, accepted demonstrations and individual observation are required for personal space/stopping, stance/guard, steps, straight-punch recovery, lead teep, rear knee, horizontal elbow and the whole sequence. Written progress or a checkbox cannot create these records. No particular paid course, tool, model, title or certificate purchase is required."
+    },
+    "equipment": {
+      "tr": "Şimdi yalnız metin ve isteğe bağlı kâğıt/kalem kullanılır. Zemine eşya koyarak hareket yapma. F0/R0 ve F1/R1 kâğıttaki ayak yerleridir; fiziksel görev için alan, yüzey, kişiye uygun hazırlık ve bütün hareket/dönüş yolları ayrıca incelenir. Duvar, torba, pad veya başka insanı hedef seçme.",
+      "en": "Use text and optional paper/pencil only now. Do not place objects on the floor and move around them. F0/R0 and F1/R1 are paper foot locations; physical tasks need separate review of space, surface, personal preparation and every movement/recovery path. Do not select a wall, bag, pad or another person as a target."
+    },
+    "stop": {
+      "tr": "Yazılı çalışmada belirsizlik varsa anahtarı açmadan belirsiz kısmı yaz, dur veya ara ver; ilerleme uydurma. İleride incelenmiş fiziksel çalışmada rahatsızlık, dengesizlik, takılma veya anlaşılmayan yön varsa yeni hareket eklemeden dur; incelenmiş destek/dönüş planıyla dinlenme konumuna geç ve eğitmenden açıklama iste. Havada bacak veya dönüş içindeyken ani donma, atlama ya da zorla pivot önerilmez.",
+      "en": "For written work, record the uncertain part before opening the key, stop or take a break, and do not invent progress. In future reviewed physical work, discomfort, instability, catching a foot or an unclear direction means stop adding movement; use the reviewed support/recovery plan to reach rest and ask the instructor to clarify. Abrupt freezing with a raised leg or during a turn, hopping and forced pivots are not prescribed."
+    },
+    "dose": {
+      "tr": "Sabit süre, tekrar, yük, yükseklik veya hız hedefi yoktur. Yazılı çalışmada bir görev ve bir düzeltme yeterli olabilir; ihtiyaç varsa ara ver. Fiziksel doz, hazırlık ve hareket aralığı ileride kişiye göre incelenir. Yorgunluğu aşmak, acıya katlanmak veya teknik hatayı hızla gizlemek hedef değildir.",
+      "en": "There is no fixed duration, repetition, load, height or speed target. One written task and one correction may be enough; take a break when needed. Physical dose, preparation and range require later personal review. Pushing through fatigue or discomfort and concealing a technique error with speed are not goals."
+    },
+    "learning_loop": {
+      "tr": "Metni oku; sonra okumayı ve anahtarı gizle. Kendi yanıtını ve belirsizliğini yaz. Anahtarla karşılaştır; eşleşmeyen bir parçayı kendi sözlerinle düzelt. Belirsizlik sürüyorsa tamamlandı deme. Sonraki uygun yazılı oturumda düzeltilen parçayı yardımsız hatırla, yeniden karşılaştır ve kalan belirsizliği kaydet.",
+      "en": "Read the text, then hide both reading and key. Write your own answer and uncertainty. Compare with the key and correct one mismatch in your own words. Do not report completion while uncertainty remains. At the next suitable written session, recall the corrected part unaided, compare again and record remaining uncertainty."
+    },
+    "progress": {
+      "tr": "Yazılı önkoşul yalnız önceki yazılı görevde kendi yanıtı, karşılaştırma ve düzeltme kaydıdır; fiziksel önkoşul ayrıdır. İleride uygulamadaki ziyaretlik öz beyan kaydedilmemiş yazılı inceleme olabilir; gerçek gözlem, teknik sertifikası, form skoru veya ustalık değildir. Şimdi uygulama ilerlemesi ve fiziksel kabul sıfırdır.",
+      "en": "A written prerequisite is only the prior written task’s own answer, comparison and correction record; physical prerequisites are separate. A future app’s per-visit self-report may represent unsaved written review; it is not actual observation, a technique certificate, form score or mastery. App progress and physical acceptance are zero now."
+    },
+    "directions": {
+      "tr": "Kâğıt örneği sol önde, sağ arkada ve aynı ileri yönü kullanır: F=sol ön ayak/sol el, R=sağ arka ayak/sağ el. Her ayak kendi yan rayında kalır. F0/R0 başlangıç, F1/R1 aynı küçük mesafe ilerlemiş tabandır. Sağ önde ayna örneğinde F=sağ, R=sol olur; sağ/sol yanal yönde hareket tarafındaki ayak önce gider. Fiziksel duruş seçimi baskın elden otomatik çıkarılmaz; geçiş/switch öğretilmez.",
+      "en": "The paper example is left foot forward, right foot back, facing the same forward direction: F=left lead foot/hand, R=right rear foot/hand. Each foot stays on its own side rail. F0/R0 is home; F1/R1 is the base moved forward by the same small distance. In a right-leading mirrored example F=right and R=left; lateral movement starts with the foot on the movement side. Physical stance choice is not automatically inferred from handedness; stance switching is not taught."
+    }
+  },
+  "releaseReadiness": {
+    "instructorReview": false,
+    "demonstrations": false,
+    "individualFeedback": false
+  },
+  "physicalRequirements": {
+    "P0": false,
+    "P1": false,
+    "P2": false,
+    "P3": false,
+    "P4": false,
+    "P5": false,
+    "P6": false,
+    "P7": false
+  },
+  "sequenceRows": [
+    {
+      "tr": "1 · N→F0/R0 · Sol yerinde, sağ kendi rayında kısa arkaya; mt-04’teki açık el→dört parmağı kıvır→başparmağı dışa yatır sırasıyla iki el kendi garda. Aynı ileri yön; iki ayaklı tabanda dur.",
+      "en": "1 · N→F0/R0 · Left stays, right steps briefly back on its own rail; both hands to own guard through mt-04 open hand→curl four fingers→lay thumb outside. Same forward facing; pause in two-foot base."
+    },
+    {
+      "tr": "2 · F0/R0→F1/R1 · Sol önce F1, sağ sonra R1; aynı küçük mesafe, gard ve raylar korunur. Dur.",
+      "en": "2 · F0/R0→F1/R1 · Left first to F1, right second to R1; same small distance, guard and rails retained. Pause."
+    },
+    {
+      "tr": "3 · F1/R1 · Sol kısa jab→aynı yoldan sol gard; sağ gard kalır, ayaklar yerinde. Dur.",
+      "en": "3 · F1/R1 · Short left jab→same-path left guard; right guard retained, feet stay. Pause."
+    },
+    {
+      "tr": "4 · F1/R1 · Sağ arka düz→sağ gard ve küçük topuk/kalça/omuz çözülmesi; sol gard kalır, iki ayak ilk yönde. Dur.",
+      "en": "4 · F1/R1 · Right rear straight→right guard and small heel/hip/shoulder unwind; left guard retained, both feet at initial directions. Pause."
+    },
+    {
+      "tr": "5 · F1/R1 · Yük iki ayaktan sağ R1’e, sol hafifler; sol düşük bükülü diz, tarak yastığı ileri/parmaklar geriye-yukarı→kısa uzan→yeniden bük→kendi F1’e indir→yük tekrar iki ayağa. Sağ R1 ve iki gard kalır. Dur.",
+      "en": "5 · F1/R1 · Load transfers from two feet to right R1, left unloads; low bent left knee, ball forward/toes back-up→brief extend→re-bend→ground own F1→reload both feet. Retain right R1 and both guards. Pause."
+    },
+    {
+      "tr": "6 · F1/R1 · Yük iki ayaktan sol F1’e, sağ hafifler; sağ kısa bükülü diz/katlı alt bacak→geri-aşağı kendi R1’e yerleş→yük tekrar iki ayağa. Sol F1 ve iki gard kalır. Dur.",
+      "en": "6 · F1/R1 · Load transfers from two feet to left F1, right unloads; short bent right knee/folded lower leg→back-down to ground own R1→reload both feet. Retain left F1 and both guards. Pause."
+    },
+    {
+      "tr": "7 · F1/R1 · Sağ kısa yatay dirsek→aynı yayı kendi sağına geri izle, sağ gard ve topuk çözülmesi; sol gard kalır. Dur.",
+      "en": "7 · F1/R1 · Short right horizontal elbow→retrace the same arc to own right side, right guard and heel unwind; left guard retained. Pause."
+    },
+    {
+      "tr": "8 · F1/R1→F0/R0 · Geri önce sağ R0, sonra sol F0; gard ve yan raylar korunur. Dur.",
+      "en": "8 · F1/R1→F0/R0 · Backward right to R0 first, left to F0 second; guard and side rails retained. Pause."
+    },
+    {
+      "tr": "9 · F0/R0→N · Eller kendi yan yollarından dinlenmeye; başparmak dıştan ayrılır, dört parmak açılır. Sol F0 kalır; sağ kendi rayında ileri yalnız sol hizasına gelir. Paralel N’de dur; dizi biter.",
+      "en": "9 · F0/R0→N · Hands return to rest on own side paths; release the external thumb, then open four fingers. Left F0 stays; right advances on its own rail only to left level. Stop at parallel N; sequence ends."
+    }
+  ],
+  "sources": [
+    {
+      "id": "M1",
+      "title": "IFMA: Muaythai Disciplines",
+      "url": "https://muaythai.sport/about-muaythai/muaythai-disciplines/",
+      "role": "IFMA; federation context",
+      "support": "Separates combat and cultural disciplines and identifies fist, elbow, shin and knee families.",
+      "limit": "No endorsement of MT-P1, individualized technique, beginner completion or solo defensive competence."
+    },
+    {
+      "id": "M2",
+      "title": "IFMA: History of Muaythai",
+      "url": "https://muaythai.sport/about-muaythai/history-of-muaythai/",
+      "role": "IFMA; federation context",
+      "support": "Identifies Muaythai cultural continuity and Wai Kru context.",
+      "limit": "Historical claims are not used to authenticate choreography, dates, medical benefit or Wai Kru performance."
+    },
+    {
+      "id": "M3",
+      "title": "ONE: Mastering The Muay Thai Stance For Beginners",
+      "url": "https://www.onefc.com/lifestyle/muay-thai-stance/",
+      "role": "ONE Championship; event publisher teaching context",
+      "support": "Describes lead/rear stance, a palms-in guard example, variable stance width and directional first-foot order.",
+      "limit": "Its personal widths and hand positions are not universal; no percentage, competition tactics or defensive effectiveness is adopted."
+    },
+    {
+      "id": "M4",
+      "title": "Evolve: 4 Muay Thai Footwork Drills For Beginners",
+      "url": "https://evolve-mma.com/blog/4-muay-thai-footwork-drills-for-beginners/",
+      "role": "Evolve; primary instructor/publisher teaching",
+      "support": "Straight movement uses lead first forward, rear first backward and movement-side foot first laterally; partner reaction differs from solo patterns.",
+      "limit": "Chaowalit is the page’s stated instructor author; credentials are publisher claims. Ring angles, circling, bag work and sparring advice are not adopted."
+    },
+    {
+      "id": "M5",
+      "title": "Evolve: The 4 Muay Thai Punches You Need To Know",
+      "url": "https://evolve-mma.com/blog/the-4-muay-thai-punches-you-need-to-know/",
+      "role": "Evolve; primary school teaching",
+      "support": "Identifies jab and rear cross as distinct basic punch families and a jab-to-cross relation.",
+      "limit": "Power, target, hook/uppercut and tactical variations are excluded. The paused order here is original, not an accepted combat combination."
+    },
+    {
+      "id": "M6",
+      "title": "Evolve: The Complete Muay Thai Beginner’s Guide",
+      "url": "https://evolve-mma.com/blog/the-complete-muay-thai-beginners-guide/",
+      "role": "Evolve; primary school teaching",
+      "support": "Includes coordinated rear-straight recovery, straight-knee and check/clinch vocabulary.",
+      "limit": "Only narrow component vocabulary is used. Force, fixed angles, full extensions, backward lean, head pulling and blanket stance recipes are excluded."
+    },
+    {
+      "id": "M7",
+      "title": "Evolve University: The Complete Guide To The Muay Thai Push Kick",
+      "url": "https://evolve-university.com/blog/the-complete-guide-to-the-muay-thai-push-kick/",
+      "role": "Evolve; primary school teaching",
+      "support": "Identifies teep as a forward foot technique with a chamber/extension and stance recovery.",
+      "limit": "High knee, straight support-leg cue, hip thrust, arm swing, targets, catches and fighting claims are not adopted. Our low two-hand-guard preparation is an original variant."
+    },
+    {
+      "id": "M8",
+      "title": "Evolve: 10 Muay Thai Elbow Techniques To Add To Your Arsenal",
+      "url": "https://evolve-mma.com/blog/10-muay-thai-elbow-techniques-to-add-to-your-arsenal/",
+      "role": "Evolve; primary school teaching",
+      "support": "Horizontal elbow instruction retains the other hand by the face and recovers the working arm, with coordinated foot/hip motion.",
+      "limit": "Impact, cutting, spinning, jumping and clinch applications are excluded. Our shortened arc, hand placement and stop points need separate physical review."
+    },
+    {
+      "id": "M9",
+      "title": "Sean Fagan: The Muay Thai Stance: Breakdown and Analysis",
+      "url": "https://www.muay-thai-guy.com/blog/muay-thai-stance",
+      "role": "Muay Thai Guy / Sean Fagan; primary instructor teaching",
+      "support": "The named author explicitly distinguishes his preferred guard from traditional examples and describes small noncrossing steps.",
+      "limit": "It is a stated personal style, not a universal standard. Heel rules, dominance prescription and promises of attack/defense are not adopted."
+    },
+    {
+      "id": "M10",
+      "title": "Sean Fagan: How to Develop Technique in Your Muay Thai Skills",
+      "url": "https://www.muay-thai-guy.com/blog/muay-thai-skill-training",
+      "role": "Muay Thai Guy / Sean Fagan; primary instructor teaching",
+      "support": "The author distinguishes extension, end position and return and emphasizes deliberate component practice over exhaustion.",
+      "limit": "The written recall/correction/retest process here is original pedagogy. Mirror self-check, training duration and perfection/fighting claims are excluded."
+    },
+    {
+      "id": "M11",
+      "title": "Linden Huckle: Forming the karate fist (seiken)",
+      "url": "https://www.shotokankarateonline.com/blog/the-karate-fist-seiken-fore-fist-video/",
+      "role": "Shotokan Karate Online / Linden Huckle; primary instructor teaching; cross-style hand-closure context",
+      "support": "Finger roll precedes the external thumb across index/middle fingers; wrist alignment. Only these shared hand-closure components inform mt-04.",
+      "limit": "Karate-specific evidence, not proof of a Muay Thai standard. Pinky-first prescription, maximum clamping, impacts, bone/medical claims, guarantees and belt/course promises are not adopted."
+    },
+    {
+      "id": "M12",
+      "title": "Evolve: Here’s How To Perfect Your Cross In Boxing",
+      "url": "https://evolve-mma.com/blog/heres-how-to-perfect-your-cross-in-boxing/",
+      "role": "Evolve; primary school teaching; boxing external-thumb context",
+      "support": "Its own published boxing instruction keeps the thumb outside the fist while punching.",
+      "limit": "This narrow hand cue does not import boxing footwork, rotation recipe, targets, power or safety claims into Muay Thai."
+    },
+    {
+      "id": "M13",
+      "title": "Coach Victor / Thai Boxing Institute: Muay Thai 101: Knees and Push Kicks",
+      "url": "https://thaiboxinginstitute.net/2021/01/12/muay-thai-101-knees-and-push-kicks/",
+      "role": "Thai Boxing Institute; primary instructor teaching",
+      "support": "Explicit rear-leg loading unloads the lead foot without a step; chamber, retract and settle into stance. Its rear knee uses a planted lead-foot step and stance return.",
+      "limit": "Our stationary rear-knee loading is an original reduced adaptation, not this stepped recipe. Hip thrust, arm swing, high chamber, forced toe/ankle lock, heel-to-butt, impacts and claimed mastery are excluded."
+    },
+    {
+      "id": "M14",
+      "title": "Warrior Collective / Damien Trainor: How to Teep in Muay Thai: 5 Common Mistakes & 6 Ways to Use It",
+      "url": "https://warriorcollective.co.uk/blogs/wcarticles/muay-thai-teep",
+      "role": "Warrior Collective / Damien Trainor; primary publisher/instructor teaching",
+      "support": "The published conventional lead/body example exposes the ball of the foot by drawing toes upward; it explicitly distinguishes ball and flat-foot variants and stance recovery.",
+      "limit": "Public article text only; embedded video unobserved. Named-instructor credentials are publisher claims. Source targets, force, snap, arm swing, tactical effectiveness, paid products and other teep variants are excluded."
+    }
+  ],
+  "lessons": [
+    {
+      "number": 1,
+      "id": "mt-01",
+      "prerequisiteIds": [],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "M1",
+        "M2"
+      ],
+      "title": {
+        "tr": "Muay Thai’nin kapsamı",
+        "en": "Scope of Muay Thai"
+      },
+      "teaching": {
+        "tr": "Muay Thai, yumruk yanında dirsek, diz ve tekme aileleri içeren ayrı bir alandır. Kültürel bağlam ve öğretmene saygı da önemlidir. Wai Kru/Ram Muay adını bilmek onu icra etmeyi öğrenmek değildir. Bu öneri seçili hazırlıkların yazılı incelemesidir; önceki kickboxing dersini bitirmek bütün Muay Thai alanını açmaz. Başlangıçta bilmediğini açıkça kaydet.",
+        "en": "Muay Thai is a distinct domain with elbow, knee and kick families alongside punches. Cultural context and respect for teachers matter. Recognizing the name Wai Kru/Ram Muay does not teach its performance. This proposal reviews selected preparations in writing; finishing prior kickboxing lessons does not open the whole Muay Thai domain. Start by recording what you do not know."
+      },
+      "physical_task": {
+        "tr": "Fiziksel görev yoktur. Geleneksel selam, form veya vuruşu metinden taklit etme.",
+        "en": "No physical task is assigned. Do not imitate a traditional greeting, form or strike from the text."
+      },
+      "written_task": {
+        "tr": "İki sütun yaz: bu öneride yazılı incelenenler ve öğrenilmemiş fiziksel/kültürel parçalar.",
+        "en": "Write two columns: items reviewed in writing here and physical/cultural components not learned."
+      },
+      "question": {
+        "tr": "Yazılı dizi tamamlanınca gerçek check, klinç ve Wai Kru kabul edilmiş olur mu?",
+        "en": "Does completing the written sequence accept actual checks, clinch and Wai Kru?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Seçili sözlük ve özgün düzen yazılı incelenir; check zamanlaması, klinç, Wai Kru icrası ve fiziksel teknikler gözlenmemiştir. Daha geniş Muay Thai hedefi açık kalır.",
+        "en": "No. Selected vocabulary and an original arrangement are reviewed in writing; check timing, clinch, Wai Kru performance and physical techniques are unobserved. The wider Muay Thai goal remains open."
+      },
+      "correction": {
+        "tr": "“Muay Thai öğrendim” yerine hangi bileşeni yazılı hatırladığını ve hangi parçaların eksik olduğunu adlandır.",
+        "en": "Replace “I learned Muay Thai” with the component recalled in writing and the components still missing."
+      },
+      "retest": {
+        "tr": "Sonraki uygun yazılı oturumda sınırları anahtarsız yeniden yaz; bir belirsizlik kalıyorsa onu koru.",
+        "en": "At the next suitable written session, rewrite the limits without the key and retain any remaining uncertainty."
+      }
+    },
+    {
+      "number": 2,
+      "id": "mt-02",
+      "prerequisiteIds": [
+        "mt-01"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0"
+      ],
+      "sourceIds": [
+        "M10"
+      ],
+      "title": {
+        "tr": "Durma ve dürüst kayıt",
+        "en": "Stopping and an honest record"
+      },
+      "teaching": {
+        "tr": "Yazılı görev, fiziksel yapmaya çağrı değildir. Hata fark edilince daha çok hareket yerine durma ve açıklama seçilir. İleri fiziksel değerlendirme için alan, giriş, normal çıkış ve destekli durma planı incelenmelidir. Bacak havadayken “hemen don” demek dönüşü açıklamaz. Bugün bu plan da gerçek gösterim de kabul edilmedi; yalnız kayıt ayrımını öğren.",
+        "en": "A written task is not a call to perform movement. An error prompts stopping and clarification rather than more movement. Future physical review needs personal space, entry, normal exit and a supported stopping plan. “Freeze immediately” with a raised leg does not explain recovery. Neither that plan nor real demonstrations are accepted today; learn the record distinction only."
+      },
+      "physical_task": {
+        "tr": "P0 karşılanmamıştır; fiziksel durma denemesi yoktur.",
+        "en": "P0 is unmet; no physical stopping trial is assigned."
+      },
+      "written_task": {
+        "tr": "“Yazılı hatırladım / gerçekten gözlendi / bilinmiyor” başlıklarında birer satır yaz. Fiziksel gözlem olmadığını açıkça ekle.",
+        "en": "Write one row under “recalled in writing / actually observed / not known.” State explicitly that there has been no physical observation."
+      },
+      "question": {
+        "tr": "Okuyucu teep dönüşünü açıklayamıyorsa daha hızlı tekrar mı yapmalı, ne kaydetmeli?",
+        "en": "If the reader cannot explain teep recovery, should they repeat faster, and what should they record?"
+      },
+      "answer_key": {
+        "tr": "Dönüş belirsizliği kaydedilir, görev durdurulur ve açıklama istenir. Hız, doğru dönüşün veya gerçek gözlemin yerine geçmez. Fiziksel çalışma açılmaz.",
+        "en": "Record the recovery uncertainty, stop the task and seek clarification. Speed does not replace correct recovery or actual observation. Physical practice stays unavailable."
+      },
+      "correction": {
+        "tr": "Belirsizlik satırını doğru yanıtla silme; neyin incelenmesi gerektiğini ayrı yaz.",
+        "en": "Do not erase the uncertainty row with the correct answer; separately name what needs review."
+      },
+      "retest": {
+        "tr": "Bir sonraki yazılı oturumda aynı senaryoyu yardımsız yanıtla; fiziksel görev ekleme.",
+        "en": "Answer the same scenario unaided in a later written session; add no physical task."
+      }
+    },
+    {
+      "number": 3,
+      "id": "mt-03",
+      "prerequisiteIds": [
+        "mt-02"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1"
+      ],
+      "sourceIds": [
+        "M3",
+        "M9"
+      ],
+      "title": {
+        "tr": "Duruşa giriş ve nötr çıkış",
+        "en": "Entering stance and exiting to neutral"
+      },
+      "teaching": {
+        "tr": "Kâğıtta rahat paralel ayaklarla N dinlenme konumundan başla. Sol ayak yerinde kalır; sağ ayak kendi sağ rayında küçük bir adımla R0 arka yerine konur, sol yer F0 olur; yüz aynı ileri yöndedir. Dizler kilitlenmez; genişlik, ayak yönü, topuk ve ağırlık kişiye göre incelenir, yüzde veya sabit açı verilmez. Çıkışta iki el dinlenmeye iner; F0 sabit kalır, R0 ayağı kendi rayında ileri taşınarak sol ayak hizasına gelir ve paralel N’de durur. Bu kaldır-yerleştir yolu, kaynakların tüm duruşları için standart değildir.",
+        "en": "On paper start at N, a comfortable parallel-foot rest position. The left foot stays; the right is placed a short step back on its own right rail at R0, leaving the left at F0, facing the same forward direction. Knees are not locked; width, foot direction, heels and loading need personal review, with no prescribed percentage or angle. To exit, rest both hands; F0 stays and the R0 foot advances on its own rail to level with the left, then stops at parallel N. This lift-and-place path is not a standard for every source stance."
+      },
+      "physical_task": {
+        "tr": "P0 ve P1 karşılanmamıştır. Duruş ve N’ye dönüş yalnız kâğıtta izlenir.",
+        "en": "P0 and P1 are unmet. Trace stance and the return to N on paper only."
+      },
+      "written_task": {
+        "tr": "N→F0/R0→N çiz; hangi ayağın hareket ettiğini ve hangi ayağın sabit kaldığını her okta adlandır.",
+        "en": "Draw N→F0/R0→N and name the moving and stationary foot on each arrow."
+      },
+      "question": {
+        "tr": "Sol öndeki örnekte çıkış, sol ayağı geriye çekmek veya sağ ayağı solun önüne geçirmek midir?",
+        "en": "In the left-leading example, does exit pull the left foot back or pass the right foot ahead of it?"
+      },
+      "answer_key": {
+        "tr": "İkisi de değildir. Eller dinlenir; sol F0 yerinde kalır, sağ R0 kendi sağ rayında yalnız sol hizasına ilerler; iki ayak paralel N’de durur. Sağ önde ayna örneğinde ön sağ kalır, arka sol kendi rayında hizaya gelir.",
+        "en": "Neither. Hands rest; left F0 stays and right R0 advances on its own right rail only to level with it; both stop at parallel N. In the right-leading mirror, the right lead stays and the left rear comes level on its own rail."
+      },
+      "correction": {
+        "tr": "Çizimde yan genişliği koru; ayakları bir çizgide çaprazlama veya dönüşle hizalama ekleme.",
+        "en": "Keep lateral width in the drawing; add no crossing onto one line or pivot to achieve alignment."
+      },
+      "retest": {
+        "tr": "Giriş ve çıkışı okumayı gizleyerek yeniden çiz; ayağın başlangıç ve bitişini ayrı kontrol et.",
+        "en": "Redraw entry and exit with reading hidden; check the foot’s start and end separately."
+      }
+    },
+    {
+      "number": 4,
+      "id": "mt-04",
+      "prerequisiteIds": [
+        "mt-03"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1"
+      ],
+      "sourceIds": [
+        "M3",
+        "M9",
+        "M11",
+        "M12"
+      ],
+      "title": {
+        "tr": "Gard, el ve görüş",
+        "en": "Guard, hands and vision"
+      },
+      "teaching": {
+        "tr": "F0/R0 tabanını kâğıtta kur. El dinlenmede rahat açıktır. Yumruk oluşturmak için başparmağı dışarıda tutarak diğer dört parmağın orta ve uç eklemlerini avuca doğru kıvır; parmak uçları avuca yerleşsin. Sonra başparmağı kıvrılmış işaret ve orta parmağın dış yüzü üzerine yatır; içlerine saklama veya yana çıkıntı bırakma. Bilek bükülmeden önkol çizgisini sürdürür; bu temassız hazırlıkta zorla sıkma yoktur. Eller kendi kısa yan yollarından yüzün iki yanındaki gard yerlerine çıkar; bu örnekte avuçlar birbirine bakar. Dirsekleri zorla açma veya gövdeye sıkıştırma; görüş ve rahat baş konumu korunur. Çıkışta eller aynı kendi yan yollarından dinlenmeye iner; başparmak dış yüzlerden ayrılır, ardından dört parmak açılır. Kaynaklardaki avuç yönü/yüksekliği farkı tek gardı evrensel veya darbe geçirmez yapmaz.",
+        "en": "Establish F0/R0 on paper. The resting hand is comfortably open. To form the fist, keep the thumb outside while curling the middle and end joints of the other four fingers toward the palm until the fingertips rest in it. Then lay the thumb across the outside of the curled index and middle fingers; do not trap it inside or leave it sticking sideways. Keep the wrist in the forearm line without bending; this noncontact preparation adds no forceful squeezing. Raise each hand along its own short side path to guard beside the face; palms face each other in this example. Do not force elbows outward or clamp them to the trunk; retain vision and a comfortable head position. To exit, lower each hand on the same own-side path to rest, release the thumb from the outer fingers, then open the four fingers. Source differences in palm direction/height make no guard universal or impact-proof."
+      },
+      "physical_task": {
+        "tr": "P0/P1 karşılanmamıştır; el ve gard konumunu fiziksel olarak deneme.",
+        "en": "P0/P1 are unmet; do not physically try the hand or guard position."
+      },
+      "written_task": {
+        "tr": "Açık el→dört parmağı kıvırma→dış başparmak ve düz bilek→kendi gard yolunu dört karede çiz. Dinlenmeye dönüş ve yeniden açılma sırasını yaz; görüş ve avuç yönü belirsizliğini ayrı kaydet.",
+        "en": "Draw four frames: open hand→curl four fingers→external thumb and straight wrist→own guard path. Write the return to rest and opening order; separately record uncertainty about vision and palm direction."
+      },
+      "question": {
+        "tr": "Başparmak önce avuca saklanıp diğer parmaklar üzerine kapanırsa bu yumruk örneği midir? Doğru kapanma/açılma sırasını yaz. Farklı avuç yönündeki bir gardı yalnız kaynak çoğunluğuyla kabul edebilir misin?",
+        "en": "Does tucking the thumb into the palm first and closing the other fingers over it match this fist example? Write the closure/opening order. Can source majority alone accept a guard with a different palm direction?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Önce dışarıda tutulan başparmak hariç dört parmak avuca kıvrılır; sonra başparmak işaret/orta parmağın dışına yatırılır. Bilek önkol çizgisindedir. Eller kendi garda ve aynı yoldan dinlenmeye gider; açarken başparmak dış yüzlerden ayrılır, sonra dört parmak açılır. Gard örnekleri bağlama göre değişir; kaynak çoğunluğu görüşü, el biçimini veya fiziksel kabulü kanıtlamaz.",
+        "en": "No. Curl the four fingers into the palm while keeping the thumb outside, then lay the thumb across the outside of index/middle fingers. The wrist continues the forearm line. Hands travel to their own guard and back along the same path to rest; release the thumb before opening the four fingers. Guard examples vary by context; source majority proves neither vision, hand formation nor physical acceptance."
+      },
+      "correction": {
+        "tr": "İçe saklanan başparmağı önce dışarıda tutulan, sonra kıvrılmış parmakların dışına yatırılan başparmakla düzelt. Eksik dört-parmak kıvırma veya açılma sırasını ekle; evrensel gard iddiasını çıkar.",
+        "en": "Correct the trapped thumb to one held outside first and then laid across the curled fingers. Add any missing four-finger curl or opening order; remove a universal-guard claim."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda açık elden kapanmaya, kendi garda ve dinlenmede yeniden açılmaya kadar sırayı anahtarsız anlat; başparmak, bilek ve görüş belirsizliğini kaydet. Biçim doğrulaması ekleme.",
+        "en": "In a later written session describe open hand, closure, own guard and reopening at rest without the key; record uncertainty about thumb, wrist and vision. Add no form-validation claim."
+      }
+    },
+    {
+      "number": 5,
+      "id": "mt-05",
+      "prerequisiteIds": [
+        "mt-04"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "sourceIds": [
+        "M4"
+      ],
+      "title": {
+        "tr": "Öne ve geriye ayak sırası",
+        "en": "Foot order forward and backward"
+      },
+      "teaching": {
+        "tr": "Sol önde F0/R0 ve garddan kâğıtta başla. Öne: F0 sol ayağı kendi rayında küçük mesafeyle F1’e yerleştir; sonra R0 sağ ayağı aynı mesafeyle R1’e getir ve dur. Geriye: R1 sağ ayağı önce R0’a yerleştir; sonra F1 sol ayağı F0’a getir ve dur. Ön ayak ön kalır, raylar kesişmez; iki ayak aynı anda kaymaz veya sıçramaz. Bu duraklı kaldır-yerleştir örneği dinamik ring ayak oyunu değildir. Yetersiz alanı adımı büyüterek veya geri takılarak çözme.",
+        "en": "Start on paper with left-leading F0/R0 and guard. Forward: place left F0 a small distance along its own rail at F1, then move right R0 the same distance to R1 and pause. Backward: place right R1 at R0 first, then bring left F1 to F0 and pause. The lead remains lead and rails do not cross; feet do not slide or jump together. This paused lift-and-place example is not dynamic ring footwork. Do not solve insufficient space with a bigger step or a stumbling retreat."
+      },
+      "physical_task": {
+        "tr": "P0–P2 karşılanmamıştır; öne/geri adımlar fiziksel yapılmaz.",
+        "en": "P0–P2 are unmet; forward/backward steps are not performed physically."
+      },
+      "written_task": {
+        "tr": "Dört ayak yerleştirmesini sıra numarasıyla çiz; her çiftten sonraki tabanı yaz.",
+        "en": "Draw the four foot placements in numbered order and write the base after each pair."
+      },
+      "question": {
+        "tr": "Sol önde örnek ileri gidip aynı tabana geri gelirken ayak sırası nedir?",
+        "en": "What is the foot order when the left-leading example advances and returns to the same base?"
+      },
+      "answer_key": {
+        "tr": "Sol F0→F1, sağ R0→R1; dur. Sağ R1→R0, sol F1→F0; dur. Ön sol kalır, yan genişlik korunur ve fiziksel denge doğrulanmaz.",
+        "en": "Left F0→F1, right R0→R1; pause. Right R1→R0, left F1→F0; pause. Left remains lead, lateral width is retained, and physical balance is not verified."
+      },
+      "correction": {
+        "tr": "Arka ayağın ileri ilk gitmesi veya ön ayağın geri ilk gitmesi çizilmişse sırasını düzelt; ara tabanı atlama.",
+        "en": "Correct a drawing with rear-first forward movement or lead-first backward movement; retain the intermediate base."
+      },
+      "retest": {
+        "tr": "Yalnız hatalı yönün iki yerleştirmesini yazılı tekrar et; sonra tam dört yerleştirmeyi kontrol et.",
+        "en": "Retest only the erroneous direction’s two placements in writing, then check the full four placements."
+      }
+    },
+    {
+      "number": 6,
+      "id": "mt-06",
+      "prerequisiteIds": [
+        "mt-05"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "sourceIds": [
+        "M3",
+        "M9"
+      ],
+      "title": {
+        "tr": "Yana gitme ve aynı yere dönme",
+        "en": "Moving sideways and returning to the same place"
+      },
+      "teaching": {
+        "tr": "F0/R0 sol önde örneğinde yüz ileri kalır. Sağa giderken sağ ayak kendi sağ rayından aynı küçük mesafe sağa; sol ayak onu aynı mesafe izler ve durulur. Eve sola dönerken sol ayak önce eski F0’a, sağ ayak sonra eski R0’a gelir. Sola ilk gidişte ise sol önce, sağ sonra; eve sağa dönüşte sağ önce, sol sonra. Her ara yerleştirmede ayaklar birbirini geçmez. Sağa gitme ile yönünü sağa döndürme farklıdır; pivot veya switch eklenmez.",
+        "en": "In the left-leading F0/R0 example keep facing forward. To move right, place the right foot the same small distance right on its own side, then let the left follow that distance and pause. To return left, place the left at old F0 first and the right at old R0 second. For an initial move left, left goes first and right follows; return right is right first, left second. Feet do not pass each other at any intermediate placement. Moving right differs from turning to face right; add no pivot or stance switch."
+      },
+      "physical_task": {
+        "tr": "P0–P2 karşılanmamıştır; yanal yol yalnız kâğıttadır.",
+        "en": "P0–P2 are unmet; the lateral path exists on paper only."
+      },
+      "written_task": {
+        "tr": "Sağa-gel ve sola-gel için ayrı dört ayaklık liste yaz; hareket yönü ile bakış yönünü ayrı etiketle.",
+        "en": "Write separate four-placement lists for right-and-back and left-and-back; label movement and facing directions separately."
+      },
+      "question": {
+        "tr": "Sol önde duruşta sağa hareketi her zaman ön sol ayak mı başlatır?",
+        "en": "In a left-leading stance does the left lead always start a move right?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Sağa ilk sağ, sonra sol; eve sola ilk sol, sonra sağ. Sola ilk sol, sonra sağ; eve sağa ilk sağ, sonra sol. “Önce ön ayak” yalnız ileri yön için geçerlidir; yüz ileri kalır.",
+        "en": "No. Rightward is right then left; return left is left then right. Leftward is left then right; return right is right then left. “Lead first” applies to forward movement, not every direction; facing stays forward."
+      },
+      "correction": {
+        "tr": "Ön/arka etiketi yerine yanal yöndeki sağ/sol ayağı seç; karşı ayağı geçiren oku sil.",
+        "en": "Choose the right/left foot on the lateral movement side rather than lead/rear; remove an arrow that passes the other foot."
+      },
+      "retest": {
+        "tr": "Sağ önde kâğıt örneğinde de sağa ilk sağ ve sola ilk sol kuralını yardımsız açıkla.",
+        "en": "Explain unaided that in a right-leading paper example rightward still starts right and leftward starts left."
+      }
+    },
+    {
+      "number": 7,
+      "id": "mt-07",
+      "prerequisiteIds": [
+        "mt-06"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3"
+      ],
+      "sourceIds": [
+        "M5",
+        "M10"
+      ],
+      "title": {
+        "tr": "Jab: uzanma ve kendi garda dönüş",
+        "en": "Jab: extension and return to own guard"
+      },
+      "teaching": {
+        "tr": "F0/R0 sol önde, iki el garda. Sol ön yumruk geriye yükleme olmadan kendi ön hattında kısa ve yavaş uzanır; sağ el kendi gard yerinde kalır. Bilek önkol çizgisini sürdürür; dirsek kilitlenmez. Gösterimi kabul edilirse önkolun rahat avuç dönüşü yalnız incelenmiş miktardadır. Sol dirsek yeniden bükülürken yumruk aynı kısa hattı geri izleyip sol gard yerine gelir; avuç başlangıç yönüne döner. İki ayak yerinde ve aynı ileri yöndedir. Bu örnek adım, snap veya bir hedefe temas içermez.",
+        "en": "With left-leading F0/R0 and both hands in guard, extend the left lead fist briefly and slowly along its own forward lane without drawing it back to load. The right stays at its own guard location. The wrist continues the forearm line and the elbow does not lock. Any comfortable forearm/palm rotation is only the amount in an accepted demonstration. Bend the left elbow again as the fist retraces the short lane to left guard and the palm returns to its starting direction. Both feet stay, facing forward. This example adds no step, snap or target contact."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3 karşılanmamıştır; jab hareketi yapılmaz.",
+        "en": "P0/P1/P3 are unmet; no jab movement is performed."
+      },
+      "written_task": {
+        "tr": "Sol el için başlangıç→kısa uzanma→aynı yoldan gard sırasını ve sağ el/ayakların durumunu yaz.",
+        "en": "Write left hand start→short extension→same-path guard return, plus the right hand and feet’s state."
+      },
+      "question": {
+        "tr": "Jabdan sonra sol yumruğu aşağıdan daire çizerek getirmek veya sağ eli indirmek bu örneğin dönüşü müdür?",
+        "en": "Does returning the left fist in a low circle or dropping the right hand match this example’s jab recovery?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Sol dirsek bükülür, sol yumruk kendi kısa düz yoluyla sol garda ve avuç başlangıç yönüne döner. Sağ el kendi garda kalır; ayaklar yer değiştirmez. Bu yazılı sıra teknik veya savunma kabulü değildir.",
+        "en": "No. Bend the left elbow; return the left fist along its own short straight path to left guard and the palm to its starting direction. The right stays at guard and feet do not relocate. This written sequence does not accept technique or defense."
+      },
+      "correction": {
+        "tr": "Anahtarı kopyalamadan dönüş yolunu kendi sözlerinle düzelt; çalışmayan sağ elin yerini ekle.",
+        "en": "Correct the return path in your own words without copying the key; include the inactive right hand’s location."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda sol dönüş ve sağ gardı anahtarsız hatırla; yanlış kalan parça tamamlanmış sayılmaz.",
+        "en": "In a later written session recall left recovery and right guard without the key; do not count a remaining error as complete."
+      }
+    },
+    {
+      "number": 8,
+      "id": "mt-08",
+      "prerequisiteIds": [
+        "mt-07"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3"
+      ],
+      "sourceIds": [
+        "M5",
+        "M6"
+      ],
+      "title": {
+        "tr": "Arka düz: eşgüdümlü dönüş ve çözülme",
+        "en": "Rear straight: coordinated turn and unwind"
+      },
+      "teaching": {
+        "tr": "F0/R0 sol önde, eller garda. Sağ arka yumruk kendi kısa düz hattında uzanırken sağ omuz ve kalça birlikte hafif öne gelir; sağ topuk, kabul edilmiş kişisel gösterimde önayak üzerinde rahatça serbestleşip sağ dış yana döner. Sağ diz ayağın rahat yönünü izler; ayağı yapıştırıp dizi zorla döndürme. Sol el kendi garda kalır; sol ayak yer değiştirmez. Sağ dirsek bükülüp yumruk sağ garda geri giderken omuz/kalça aynı küçük hareketi çözerek başlangıca döner; sağ topuk ve ayak yönü de R0’daki başlangıç konumuna birlikte gelir. Avuç rahat başlangıç yönüne döner. Adım, öne düşüş ve sabit açı yoktur.",
+        "en": "At left-leading F0/R0 with guard, extend the right rear fist along its short straight lane while right shoulder and hip move slightly forward together; in an accepted personal demonstration the right heel releases comfortably over the forefoot and turns outward to the right. The right knee follows the comfortable foot direction; do not pin the foot and force the knee around. Left hand stays at guard and left foot does not relocate. As the right elbow bends and fist returns to right guard, shoulder/hip unwind the same small motion to the start; right heel and foot direction return together to their initial R0 position. The palm returns to its comfortable starting direction. Add no step, forward fall or fixed angle."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3 karşılanmamıştır. Topuk/diz eşgüdümü ve dönüş fiziksel gösterilmeden denenmez.",
+        "en": "P0/P1/P3 are unmet. Do not attempt heel/knee coordination and recovery without physical demonstration."
+      },
+      "written_task": {
+        "tr": "Sağ el, sağ topuk, kalça/omuz ve sol gard için başlangıç–uzanma–dönüş tablosu yaz.",
+        "en": "Write a start–extension–return table for right hand, right heel, hip/shoulder and left guard."
+      },
+      "question": {
+        "tr": "Sağ el döner ama topuk/kalça uzanma konumunda kalırsa toparlanma tamamlanmış mıdır?",
+        "en": "If the right hand returns but heel/hip remain in the extended position, is recovery complete?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Sağ yumruk sağ garda dönerken küçük omuz/kalça hareketi çözülür; sağ topuk ve ayak başlangıç R0 yönüne birlikte gelir, sol el garda ve sol ayak yerinde kalır. Zorlanmış sabit pivot veya yalnız el dönüşü bu örneğin tam toparlanması değildir.",
+        "en": "No. As the right fist returns to right guard, unwind the small shoulder/hip movement and restore right heel/foot to their initial R0 direction together; left hand stays at guard and left foot stays. A forced planted pivot or hand-only return is not this example’s full recovery."
+      },
+      "correction": {
+        "tr": "Dönüş satırına eksik alt/üst beden parçasını ekle; açı veya güç sayısı uydurma.",
+        "en": "Add the missing lower/upper body component to the return row; invent no angle or power number."
+      },
+      "retest": {
+        "tr": "Dört parçanın başlangıç ve dönüşünü sonraki yazılı oturumda tekrar karşılaştır; fiziksel kabul kaydı ekleme.",
+        "en": "Compare all four components’ starts and returns in a later written session; add no physical acceptance record."
+      }
+    },
+    {
+      "number": 9,
+      "id": "mt-09",
+      "prerequisiteIds": [
+        "mt-08"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3"
+      ],
+      "sourceIds": [
+        "M5",
+        "M10"
+      ],
+      "title": {
+        "tr": "İki düz hazırlık arasındaki durak",
+        "en": "Pause between two straight preparations"
+      },
+      "teaching": {
+        "tr": "Sol önde F0/R0 ve garddan, önce yalnız mt-07 jab yolunu yazılı izle: sol kısa uzanır, sağ gard kalır, sol kendi garda döner. İki el ve taban başlangıca dönünce durak vardır. Sonra mt-08 arka düzün el/topuk/kalça/omuz eşgüdümünü ve tam çözülmesini izle; iki el yeniden garda, F0/R0 ilk ayak yönündedir. İkinci elin çıkması için ilk eli dışarıda tutma. Bu ayrılmış iki hazırlık yarışma bir-iki temposu, tepki veya hedefe ulaşma değildir.",
+        "en": "From left-leading F0/R0 and guard, trace only the mt-07 jab first: brief left extension, right guard retained, left returned to its own guard. Pause after both hands and base are restored. Then trace mt-08 rear-straight hand/heel/hip/shoulder coordination and full unwind; both hands are back at guard and F0/R0 regain their initial foot directions. Do not leave the first hand extended to start the second. These separate preparations do not establish competition one-two timing, reaction or reaching a target."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3 karşılanmamıştır; iki hazırlık fiziksel birleştirilmez.",
+        "en": "P0/P1/P3 are unmet; the two preparations are not physically combined."
+      },
+      "written_task": {
+        "tr": "Jab dönüşü ve arka düz dönüşü arasına bir gard/taban kontrol satırı ekle.",
+        "en": "Insert a guard/base check row between jab recovery and rear-straight recovery."
+      },
+      "question": {
+        "tr": "Sol el dışarıdayken sağ el çıkarsa bu düzenin aradaki durağı korunur mu?",
+        "en": "If the right hand starts while the left remains extended, does this arrangement retain its intermediate pause?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Önce sol kendi garda döner ve F0/R0 korunur; durak. Sonra sağ arka düz ve eşgüdümlü çözülme; sağ kendi garda ve topuk/kalça başlangıca döner. Akıcı kombo veya gerçek zamanlama kabulü yoktur.",
+        "en": "No. First restore left guard and retain F0/R0; pause. Then use the right rear straight and coordinated unwind, returning right guard and heel/hip to the start. Fluent combinations and actual timing are not accepted."
+      },
+      "correction": {
+        "tr": "Atlanan kontrol durağını ekle; “iki yumruk atıldı” sayısını teknik sonucu yerine koyma.",
+        "en": "Add the omitted check pause; do not substitute a count of two punches for a technique outcome."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda iki ayrı dönüşü ve aradaki tabanı yardımsız sıralandır.",
+        "en": "At the next written session, order the two separate returns and intermediate base unaided."
+      }
+    },
+    {
+      "number": 10,
+      "id": "mt-10",
+      "prerequisiteIds": [
+        "mt-09"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P4"
+      ],
+      "sourceIds": [
+        "M7",
+        "M3",
+        "M13"
+      ],
+      "title": {
+        "tr": "Ön bacağın kaldırılması ve geri konması",
+        "en": "Lifting and replacing the lead leg"
+      },
+      "teaching": {
+        "tr": "Teep tam vuruşundan önce yük aktarımı, kaldırma ve dönüş ayrı açıklanır. Başlangıç sol önde F0/R0, iki ayak yerde ve iki el garda; ağırlık iki ayağa paylaştırılmıştır. Ayakların yerini değiştirmeden, gövdeyi dik tutarak kalça ve gövdenin ağırlık taşıyan hizasını sağ arka ayağın üstüne taşı: sağ bacak ağırlığı devralırken sol ayağın yükü azalır. Bu, yalnız sağ dize “destek” adı vermek değildir. Sağ destek dizi kilitlenmez; gövde geriye yatmaz. Sol ayak yükten kurtulduktan sonra sol diz düşük rahat aralıkta bükülü yükselir, ayak diz altında serbesttir; tekme uzanması eklenmez. Sol diz aşağı döner, sol ayak kendi sol rayında eski F0’a yerleşir. Ayak yerleştikten sonra ağırlığı yeniden iki ayağa paylaştır; gard ve iki ayaklı tabanda dur. Sağ R0’da kalır; sıçrama, ray değişimi veya bir yere tutunarak kabul uydurma yoktur. Bu başlangıç–eylem–dönüş yazılı tarifidir; bireysel destek gösterimi ve gözlemi ayrı gereklidir.",
+        "en": "Before a full teep strike, describe load transfer, lifting and recovery separately. Start left-leading at F0/R0 with both feet grounded, both hands at guard and weight shared by the two feet. Without relocating either foot, keep the trunk upright and move the weight-bearing alignment of hips and trunk over the right rear foot: the right leg takes the load as the left foot unloads. This is an actual transfer, rather than merely naming the right knee “support.” Keep the support knee unlocked and avoid leaning the trunk backward. After the left foot unloads, raise the bent left knee through a comfortable low range; the foot remains free beneath it, with no kick extension. Lower that knee and place the left foot on its own left rail at old F0. Once it is grounded, share the load across both feet again and pause in guard and two-foot base. Right stays at R0; add no hopping, rail change or invented acceptance by holding something. This is a written start–action–return description; personal support demonstration and observation are separate requirements."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P4 karşılanmamıştır; tek ayak desteği ve kaldırma denenmez.",
+        "en": "P0/P1/P4 are unmet; single-leg support and lifting are not tried."
+      },
+      "written_task": {
+        "tr": "İki ayaklı F0/R0→ağırlığın sağ R0’a aktarılması ve solun hafiflemesi→sol bükülü dizin kaldırılması→sol F0 yere yerleşip yükün iki ayağa dönmesi için dört kare çiz. İki gardı ve uzanma olmadığını belirt.",
+        "en": "Draw four frames: two-foot F0/R0→load transfers to right R0 and left unloads→bent left knee lifts→left F0 grounds and load returns to both feet. State both guards and the absence of extension."
+      },
+      "question": {
+        "tr": "Ağırlık sol ön ayakta kalırken “sağ destek” yazmak sol kaldırmanın başlangıcını açıklıyor mu? Sol ayak ileri yere konabilir mi? Başlangıç yükünü, kaldırmadan önceki aktarımı ve dönüş yükünü yaz.",
+        "en": "Does writing “right support” while leaving weight on the left lead foot explain the start of its lift? May the left foot land farther forward? Write the initial load, transfer before lifting and recovery load."
+      },
+      "answer_key": {
+        "tr": "Hayır. Başlangıç yükü iki ayaktadır. Önce ayaklar yerinde kalırken dik gövde/kalçanın ağırlık taşıyan hizası sağ R0 üzerine gelir; sağ yükü devralır ve sol hafifler. Sonra sol bükülü diz kaldırılır, uzanma yoktur. Sol ayak kendi F0 yerine döner ve yere yerleştikten sonra yük tekrar iki ayağa paylaştırılır; iki el garda kalır. Kaldırma tekme, check veya denge kabulü değildir.",
+        "en": "No. Initial load is shared by two feet. First, with feet retained, the upright trunk/hip weight-bearing alignment moves over right R0; right takes the load and left unloads. Then the bent left knee lifts without extension. The left foot returns to its own F0 and grounds before load is shared across both feet again; both hands stay at guard. A lift accepts no kick, check or balance skill."
+      },
+      "correction": {
+        "tr": "Yalnız “sağ destek” yerine yükün iki ayaktan sağa aktarılıp solu hafiflettiği evreyi yaz. İleri inişi F0’a dönüşle değiştir; yükü ancak sol ayak yerleşince iki ayağa döndür.",
+        "en": "Replace a bare “right support” label with the phase that transfers load from two feet to right and unloads left. Correct forward landing to F0 return; restore two-foot loading only once left is grounded."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda yük başlangıcını, sağa aktarımı, solun kaldırılmasını ve F0’da yükün iki ayağa dönüşünü anahtarsız sırala. Destek ve geri konan ayağı ayrı adlandır; fiziksel deneme ekleme.",
+        "en": "In a later written session recall initial load, transfer to right, left lift and two-foot reloading at F0 without the key. Name support and replacement feet separately; add no physical trial."
+      }
+    },
+    {
+      "number": 11,
+      "id": "mt-11",
+      "prerequisiteIds": [
+        "mt-10"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P4"
+      ],
+      "sourceIds": [
+        "M7",
+        "M3",
+        "M13",
+        "M14"
+      ],
+      "title": {
+        "tr": "Kısa ön teep hazırlığı: bük–uzan–bük–indir",
+        "en": "Short lead teep preparation: bend–extend–bend–lower"
+      },
+      "teaching": {
+        "tr": "Sol önde F0/R0, iki ayak yerde, yük iki ayağa paylaştırılmış ve iki el garda başla. Mt-10 gibi ayaklar yerindeyken dik gövde/kalçanın ağırlık taşıyan hizasını sağ R0 üstüne taşı; sol ayağın yükü kalkınca sol dizi düşük bükülü konuma kaldır. Sol ayak bileğini, parmak diplerinin altındaki etli taban bölümünü ileri sunacak biçimde düzenle; buna ayak tarak yastığı (ball of the foot) denir. Parmakları kaval kemiğine doğru geriye/yukarı çek; uçlarını ileriye veya aşağıya sivriltme. Yön tanımı açı ölçüsü değildir; parmakları zorla bükme. Sol diz rahatça açılırken ayak bu düzenle kısa ileri yol alır; diz kilitlenmez, kalça fırlatılmaz, sağ destek R0’dan ayrılmaz. Temas hedefi yoktur. Dönüşte sol diz önce yeniden bükülür, ayak diz altına çekilir; ardından aşağı indirilirken ayak/parmaklar rahat yere basma düzenine bırakılır ve sol ayak eski F0’a yerleşir. Ayak yerdeyken yük yeniden iki ayağa paylaştırılır; iki el garda ve ilk tabanda durulur. Bu özgün düşük hazırlık iki gardı korur; kaynaklardaki kol salınımı, yüksek kaldırma ve güç/temas öğretimini devralmaz.",
+        "en": "Start left-leading at F0/R0, both feet grounded, load shared across them and both hands at guard. As in mt-10, retain the feet and move the upright trunk/hip weight-bearing alignment over right R0; once left unloads, lift its knee into a low bent chamber. Set the left ankle to present the padded sole area beneath the toe bases forward: the ball of the foot. Draw the toes backward/upward toward the shin rather than pointing their tips forward or downward. This defines direction, not a measured angle; do not force the toes. As the knee opens comfortably, the foot travels briefly forward in this arrangement; no knee lock, hip thrust or right-support relocation. There is no contact target. To return, re-bend the left knee first and withdraw the foot beneath it; then, while lowering, release foot/toes into a comfortable landing arrangement and ground the left foot at old F0. Once grounded, share load across both feet again and pause in the initial base with both guards. This original low preparation keeps both hands up; it does not adopt source arm swing, high chamber or power/contact teaching."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P4 karşılanmamıştır; teep çalışması kapalıdır. Kaldırma, ayak düzeni ve dönüşün kabul edilmiş gösterimleri yoktur.",
+        "en": "P0/P1/P4 are unmet; teep practice is unavailable. Accepted demonstrations of lifting, foot arrangement and recovery are absent."
+      },
+      "written_task": {
+        "tr": "Başlangıç yükünü ve sağa aktarımı yaz. Sol düşük bükülü diz→tarak yastığı ileri/parmaklar geriye-yukarı→kısa uzanma→yeniden bükme→rahat sol F0 inişi ve iki ayağa yük dönüşünü çiz; sağ R0 ve iki gardı belirt.",
+        "en": "Write initial load and transfer to right. Draw low bent left knee→ball forward/toes back-up→brief extension→re-bend→comfortable left F0 landing and two-foot reloading; state right R0 and both guards."
+      },
+      "question": {
+        "tr": "Parmak uçlarını ileri-aşağı sivriltip uzanmış sol bacağı doğrudan yere bırakmak bu örneğe uyar mı? Sağ desteğe geçişi, tarak yastığı/parmak yönünü ve yere dönüş sırasını yaz.",
+        "en": "Do toes pointed forward-down and dropping the extended left leg straight to the floor match this example? Write transfer to right support, ball/toe direction and return-to-ground order."
+      },
+      "answer_key": {
+        "tr": "Hayır. Önce iki ayaklı yük sağ R0’a aktarılır ve sol hafifler, sonra düşük bükülü diz kaldırılır. Tarak yastığı ileri sunulur, parmaklar kaval kemiğine doğru geriye/yukarı çekilir; ileri-aşağı uçlar sunulmaz. Kısa uzanma sonrası önce yeniden büküp ayağı diz altına çek; sonra ayak/parmakları rahat inişe bırakıp solu eski F0’a yerleştir. Yere yerleştikten sonra yük tekrar iki ayağa paylaştırılır. Sağ R0 ve iki gard korunur; ileri basma, snap veya temas eklenmez.",
+        "en": "No. Transfer two-foot load to right R0 and unload left before raising its low bent knee. Present the ball forward with toes drawn back/up toward the shin, rather than presenting forward-down toe tips. After brief extension, re-bend first and withdraw the foot beneath the knee; then release foot/toes for a comfortable landing at old left F0. Ground it before sharing load across both feet again. Retain right R0 and both guards; add no forward step, snap or contact."
+      },
+      "correction": {
+        "tr": "Belirsiz “taban ileri”yi tarak yastığı ileri/parmaklar geriye-yukarı ile değiştir. Eksik sağa yük aktarımını ekle; doğrudan uzanmış inişi yeniden bükme→kendi F0’a yerleşme→iki ayağa yük dönüşüyle düzelt.",
+        "en": "Replace vague “sole forward” with ball forward/toes back-up. Add missing transfer to right support; correct a straight extended-leg landing to re-bend→own F0 grounding→two-foot reloading."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda başlangıç, sağa yük aktarımı, tarak yastığı/parmak yönü, kısa uzanma ve tam dönüşü anahtarsız anlat. Her belirsizliği kaydet; doğru yazı fiziksel teep kabulü değildir.",
+        "en": "In a later written session explain start, transfer to right, ball/toe direction, brief extension and complete return without the key. Record each uncertainty; correct writing does not accept a physical teep."
+      }
+    },
+    {
+      "number": 12,
+      "id": "mt-12",
+      "prerequisiteIds": [
+        "mt-11"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P5"
+      ],
+      "sourceIds": [
+        "M6",
+        "M3",
+        "M13"
+      ],
+      "title": {
+        "tr": "Arka düz diz hazırlığı: tekmeden farklı dönüş",
+        "en": "Rear straight-knee preparation: recovery differs from a kick"
+      },
+      "teaching": {
+        "tr": "Sol önde F0/R0’da iki ayak yerde, ağırlık ikisine paylaştırılmış ve iki el garda başla. Bu özgün kısa hazırlık ileri adım eklemez: ayaklar yerindeyken dik gövde/kalçanın ağırlık taşıyan hizasını sol ön F0 üstüne taşı. Sol bacak yükü devralır, sağ arka ayak hafifler; destek dizi kilitlenmez. Sağın yükü kalktıktan sonra sağ diz bükülerek düşük kısa ileri-yukarı yol alır; alt bacak diz altında geriye katlıdır, tekmedeki gibi açılmaz. Ayak/parmaklar rahat konumdadır; zorla sivriltme, geriye yatma veya kalça fırlatma yoktur. Sağ diz aynı kısa yolu geri-aşağı izler; sağ ayak kendi sağ rayında eski arka R0’a yerleşir, sol F0’da kalır. Sağ ayak yere yerleştikten sonra yük iki ayağa yeniden paylaştırılır; iki gardla ilk tabanda durulur. Ön kaldırma/teepte yük sağa, bu arka diz hazırlığında sola aktarılır; dönüşte kendi ayağı yerleşmeden sonraki harekete geçilmez. Bu, temaslı tam diz veya klinçte çekme öğretimi değildir.",
+        "en": "Start left-leading at F0/R0 with both feet grounded, weight shared across them and both hands at guard. This original short preparation adds no forward step: retain foot locations and move the upright trunk/hip weight-bearing alignment over left lead F0. The left leg takes the load and right rear foot unloads; keep the support knee unlocked. After right unloads, bend the right knee through a low, brief forward-up path; the lower leg stays folded back beneath it rather than extending like a kick. Foot/toes stay comfortable; add no forced pointing, backward lean or hip thrust. Retrace that short back-down knee path and ground the right foot on its own right rail at old rear R0, while left stays at F0. After right grounds, share load across both feet again and pause in the initial base with both guards. Lead lift/teep transfers load to right; this rear-knee preparation transfers it to left. Ground the returning foot before starting the next movement. This teaches neither a full contact knee nor clinch pulling."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P5 karşılanmamıştır; diz hazırlığı fiziksel denenmez.",
+        "en": "P0/P1/P5 are unmet; no physical knee preparation is tried."
+      },
+      "written_task": {
+        "tr": "Ön kaldırma/teepte iki ayaktan sağa yük aktarımı ve sol F0 dönüşünü; arka dizde iki ayaktan sola yük aktarımı ve sağ R0 dönüşünü ayrı çiz. Her birinde hangi ayak hafifler, alt bacak nasıl durur ve yük iki ayağa ne zaman döner, yaz.",
+        "en": "Draw separate two-foot→right loading/left F0 return for lead lift/teep and two-foot→left loading/right R0 return for rear knee. State which foot unloads, the lower-leg condition and when load returns to both feet."
+      },
+      "question": {
+        "tr": "Ağırlık sağda kalırken sağ arka diz kaldırılıp alt bacak tekme gibi açılır ve sağ ayak solun önüne inerse bu hazırlığın başlangıcı/dönüşü açıklanmış mı? Doğru aktarımı ve arka dönüşü yaz.",
+        "en": "If weight remains on right while the right rear knee lifts, the lower leg extends like a kick and right lands ahead of left, does that describe this preparation’s start/return? Write the correct transfer and rear return."
+      },
+      "answer_key": {
+        "tr": "Hayır. Başlangıç yükü iki ayaktadır; ayaklar yerindeyken dik gövde/kalçanın ağırlık taşıyan hizası sol F0 üstüne gelir, sol yükü devralır ve sağ hafifler. Sonra sağ diz bükülerek kısa yükselir; alt bacak katlı kalır. Sağ diz geri-aşağı gider, sağ ayak kendi eski arka R0 yerine yerleşir. Ancak yere yerleştikten sonra yük tekrar iki ayağa paylaştırılır; sol F0 ve iki gard korunur. Ön teepte sağ destek ve sol F0 dönüşü farklıdır.",
+        "en": "No. Start with two-foot loading; retain feet while moving the upright trunk/hip weight-bearing alignment over left F0 so left takes the load and right unloads. Then the right knee rises briefly while bent, with its lower leg folded. Bring the knee back-down and ground right at its own old rear R0. Only after grounding share load across both feet again; retain left F0 and both guards. Lead teep differs: right supports and left returns to F0."
+      },
+      "correction": {
+        "tr": "Sağ arka kaldırmadan önce sola gerçek yük aktarımını ekle; uzanmış alt bacağı katlı diz hazırlığıyla düzelt. Sağ için belirsiz “indir” yerine eski arka R0’a yerleşme ve ardından iki ayağa yük dönüşünü yaz.",
+        "en": "Add actual transfer to left before the right rear lift; correct an extended lower leg to folded knee preparation. Replace vague “lower” for right with grounding at old rear R0, followed by two-foot reloading."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda ön teep/arka dizin karşıt destek aktarımını, ayrı alt-bacak evrelerini, kendi dönüş yerlerini ve iki ayağa yük dönüşünü yardımsız hatırla; fiziksel kabul işaretleme.",
+        "en": "In a later written session recall unaided the opposite support transfers, distinct lower-leg phases, own return locations and two-foot reloading for lead teep/rear knee; mark no physical acceptance."
+      }
+    },
+    {
+      "number": 13,
+      "id": "mt-13",
+      "prerequisiteIds": [
+        "mt-12"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3",
+        "P6"
+      ],
+      "sourceIds": [
+        "M8"
+      ],
+      "title": {
+        "tr": "Kısa yatay arka dirsek ve kendi garda dönüş",
+        "en": "Short horizontal rear elbow and return to own guard"
+      },
+      "teaching": {
+        "tr": "Sol önde F0/R0 ve garddan başla. Sağ dirsek bükülü kalırken sağ yumruk yüzü geçmeden kendi sağ omzuna yakın rahat hazırlık yerine gelir; sol el kendi sol gardını korur. Mt-08’in kişiye göre gösterilecek küçük topuk/kalça/omuz eşgüdümüyle sağ dirsek sağ yandan öndeki boş alana kısa yatay yay çizer; gövde ortasını aşan savurma, hedef, adım veya temas yoktur. Sağ dirsek aynı yayı kendi sağ yanına geri izlerken küçük dönüş çözülür, topuk R0 başlangıç yönüne gelir; sağ el yalnız gard konumuna ulaşacak kadar açılıp sağ garda döner. Sol el/ayak yerinde, iki el ilk garda; dur. Elin kendi yüzüne veya öteki eline çarpması ayrıca gösterim/gözlem gerektiren bir hatadır.",
+        "en": "Start left-leading at F0/R0 and guard. Keep the right elbow bent while bringing the right fist near its own right shoulder at a comfortable preparation location without crossing the face; left hand retains its own left guard. With the personally demonstrated small heel/hip/shoulder coordination from mt-08, trace a short horizontal arc with the right elbow from the right side into empty space ahead; add no swing beyond the trunk’s center, target, step or contact. As the right elbow retraces that arc to its own right side, unwind the small turn and restore heel to its initial R0 direction; open the arm only enough to return the hand to right guard. Left hand/foot stay, both hands regain initial guard; pause. Contact with own face or opposite hand is a separate error needing demonstration/observation."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3/P6 karşılanmamıştır; dirsek hazırlığı yapılmaz. İnsan, duvar veya torbaya yöneltme yoktur.",
+        "en": "P0/P1/P3/P6 are unmet; no elbow preparation is performed. Do not direct it toward a person, wall or bag."
+      },
+      "written_task": {
+        "tr": "Sağ el/dirsek yayı, sol gard ve sağ topuk dönüşünü üç satırda yaz; temassız boş alan sınırını ekle.",
+        "en": "Write three rows for right hand/elbow arc, left guard and right heel recovery; include the empty-space, no-contact limit."
+      },
+      "question": {
+        "tr": "Sağ dirsek geri gelir ama sağ yumruk omuzda kalır ve sol el düşerse örneğin gardı geri geldi mi?",
+        "en": "If the right elbow returns but the right fist stays at the shoulder and the left drops, has the example’s guard been restored?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Sağ dirsek yayı kendi yanına döner, dönüş/topuk çözülür ve sağ yumruk kendi sağ garda gelir; sol el kendi sol garda kalır. Yalnız dirsek yayının bitmesi el/gard dönüşünü veya fiziksel kabulü tamamlamaz.",
+        "en": "No. Return the right elbow arc to its own side, unwind turn/heel and restore right fist to its own right guard; left stays at its own left guard. Finishing the elbow arc alone does not complete hand/guard recovery or physical acceptance."
+      },
+      "correction": {
+        "tr": "Çalışan sağ yumruğun son yerini ve çalışmayan sol elin yerini ekle; yüzü kesen yay çizme.",
+        "en": "Add the working right fist’s end location and inactive left hand’s location; draw no arc through the face."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda başlangıç–yay–el/topuk toparlanması–durak sırasını anahtarsız anlat.",
+        "en": "In a later written session explain start–arc–hand/heel recovery–pause without the key."
+      }
+    },
+    {
+      "number": 14,
+      "id": "mt-14",
+      "prerequisiteIds": [
+        "mt-13"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "M1",
+        "M4",
+        "M6"
+      ],
+      "title": {
+        "tr": "Check ve klinç: bilmek ile yapmak ayrımı",
+        "en": "Check and clinch: distinction between knowing and performing"
+      },
+      "teaching": {
+        "tr": "Check gelen tekmeye uygun zaman/yerde karşılık ister; metindeki bacak kaldırma bu zamanlamayı göstermez. Klinç, başka kişinin tutuşu, dengesi ve temasıyla ilgilidir; havada hayalî kavrama klinç kontrolünü doğrulamaz. Bu ders ikisi için fiziksel hareket seçmez; mt-10/11/12’yi “check” veya “klincin diz tekniği” diye yeniden etiketleme. Kaynaklardaki partner, darbe ve taktik örnekleri bu metnin kabulüne taşınmaz. Bir sonraki seçili yazılı diziye geçmek savunma ya da klinç kapısını açmaz.",
+        "en": "A check needs a response at the appropriate time/place to an incoming kick; lifting a leg in the text does not demonstrate that timing. Clinch concerns another person’s grip, balance and contact; imaginary gripping in the air does not validate clinch control. This lesson selects no physical movement for either; do not relabel mt-10/11/12 as a check or clinch knee technique. Source partner, impact and tactical examples do not transfer to this text’s acceptance. Moving to the next selected written sequence does not open defense or clinch."
+      },
+      "physical_task": {
+        "tr": "Fiziksel görev yoktur. Check, klinç tutuşu, boyun çekme, süpürme veya partner denemesi seçilmedi.",
+        "en": "No physical task is assigned. Checks, clinch grips, neck pulling, sweeps and partner trials are not selected."
+      },
+      "written_task": {
+        "tr": "“Bacak yolu yazılı hatırlandı” ile “gelen tekme zamanlaması gözlendi” ve “gerçek tutuş geri bildirimi” için ayrı kayıt yaz.",
+        "en": "Write separate records for leg-path written recall, observed incoming-kick timing and actual grip feedback."
+      },
+      "question": {
+        "tr": "MT-P1 anahtarını doğru yanıtlamak savunma/check veya klinç becerisini kanıtlar mı?",
+        "en": "Does correctly answering the MT-P1 key prove defense/check or clinch skill?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Yazılı anahtar eşleşmesi gerçek tepki, temas, partner dengesi ve öğretmen geri bildirimi değildir. Check ve klinç bu kursta fiziksel olarak denenmedi ve doğrulanmadı.",
+        "en": "No. A written key match is not actual reaction, contact, partner balance or instructor feedback. Checks and clinch are physically unattempted and unverified in this course."
+      },
+      "correction": {
+        "tr": "Tek kişinin bacak kaldırmasını gelen tekme gözlemi gibi yazma; eksik tepki ve temas kayıtlarını açık tut.",
+        "en": "Do not write a solo leg lift as observation of an incoming kick; keep the missing reaction and contact records explicit."
+      },
+      "retest": {
+        "tr": "Sonraki yazılı oturumda iki becerinin eksik gerçek gözlemini birer cümleyle yardımsız yaz.",
+        "en": "In a later written session write each skill’s missing actual observation unaided in one sentence."
+      }
+    },
+    {
+      "number": 15,
+      "id": "mt-15",
+      "prerequisiteIds": [
+        "mt-14"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7"
+      ],
+      "sourceIds": [
+        "M4",
+        "M5",
+        "M7",
+        "M8",
+        "M10",
+        "M3",
+        "M11",
+        "M12",
+        "M13",
+        "M14"
+      ],
+      "title": {
+        "tr": "MT-P1 Dokuz durak: özgün yazılı düzen",
+        "en": "MT-P1 Nine pauses: original written arrangement"
+      },
+      "teaching": {
+        "tr": "MT-P1 kâğıt üzerinde aynı ileri yönde kalır. 1 N’den mt-03 F0/R0 ve mt-04 parmak kapanmasıyla garda giriş. 2 Mt-05 ileri sol F0→F1, sağ R0→R1; dur. 3 Mt-07 sol jab ve sol garda dönüş; dur. 4 Mt-08 sağ arka düz, sağ gard ve topuk/kalça çözülmesi; dur. 5 Mt-11 sol düşük teep: yük iki ayaktan sağ R1’e aktarılır, sol hafifler; düşük bükülü diz, tarak yastığı ileri/parmaklar geriye-yukarı, kısa uzanma, yeniden bükme ve sol F1’e rahat iniş; ardından yük iki ayağa döner, iki gardla dur. 6 Mt-12 sağ kısa diz: önce yük iki ayaktan sol F1’e, sağ hafifler; bükülü diz/katlı alt bacak, geri-aşağı sağ R1’e yerleşme, ardından yük iki ayağa; iki gardla dur. 7 Mt-13 kısa sağ yatay dirsek, sağ gard ve topuk çözülmesi; sol gard kalır; dur. 8 Mt-05 geri sağ R1→R0, sol F1→F0; dur. 9 Mt-04 gibi eller kendi yan yollarından dinlenir, dış başparmak ayrılıp dört parmak açılır; ön sol F0 kalır, sağ R0 kendi rayında sol hizasına gelir; paralel N’de bitir. Her harekete yalnız önceki iki ayaklı taban, yük ve gard geri geldikten sonra geçilir. Dizi evrensel kombo veya geleneksel form değildir.",
+        "en": "MT-P1 stays facing the same forward direction on paper. 1 Enter mt-03 F0/R0 and guard with mt-04 finger closure from N. 2 Mt-05 forward left F0→F1, right R0→R1; pause. 3 Mt-07 left jab and left guard return; pause. 4 Mt-08 right rear straight, right guard and heel/hip unwind; pause. 5 Mt-11 low left teep: transfer two-foot load to right R1, unload left; low bent knee, ball forward/toes back-up, brief extension, re-bend and comfortable left F1 landing; then reload both feet and pause with both guards. 6 Mt-12 short right knee: first transfer two-foot load to left F1 and unload right; bent knee/folded lower leg, back-down grounding at right R1, then reload both feet; pause with both guards. 7 Mt-13 short right horizontal elbow, right guard and heel unwind; retain left guard; pause. 8 Mt-05 backward right R1→R0, left F1→F0; pause. 9 As in mt-04, return hands to rest on own side paths, release the external thumb and open four fingers; keep left lead F0, advance right R0 on its own rail to left level; finish at parallel N. Start each movement only after restoring the prior two-foot base, loading and guard. This is neither a universal combination nor a traditional form."
+      },
+      "physical_task": {
+        "tr": "P0–P7 tamamı karşılanmamıştır; bütün dizi fiziksel yapılmaz. Bileşen kabulü tek başına bütün geçişleri kabul etmez.",
+        "en": "All P0–P7 are unmet; the full sequence is not performed physically. Component acceptance alone does not accept every transition."
+      },
+      "written_task": {
+        "tr": "Okuma ve sıra tablosunu gizle; dokuz birimi kendi sözlerinle yaz. El kapanması/açılması, 5 ve 6’dan önce yükün hangi ayağa geçtiği, teep tarak yastığı/parmak yönü, her el/ayak dönüşü, iki ayağa yük dönüşü ve son N’yi belirt.",
+        "en": "Hide reading and the order table; write all nine units in your own words. Include hand closure/opening, which foot takes load before 5 and 6, teep ball/toe direction, every hand/foot return, two-foot reloading and final N."
+      },
+      "question": {
+        "tr": "5’te yük solda kalır ve parmaklar ileri sivrilir; sol ileri iner. 6’da yük sağda kalır ve sağ ön olur; geri adımı sol başlatır. Aynı düzen midir? Doğru destek, ayak/parmak düzeni, dönüş tabanı ve el kapanma/açılma sırasını yaz.",
+        "en": "In 5 load stays on left, toes point forward and left lands farther forward. In 6 load stays on right and right becomes lead; left starts backward. Is this the same arrangement? Write correct support, ball/toe arrangement, recovery base and hand closure/opening order."
+      },
+      "answer_key": {
+        "tr": "Hayır. 1’de dört parmak kıvrılır, başparmak dışa yatırılır ve eller kendi garda gider. 5’ten önce yük sağ R1’e aktarılır; sol hafifler, tarak yastığı ileri/parmaklar geriye-yukarı ile kısa uzanır, yeniden bükülür ve sol F1’e yerleşir; ardından iki ayağa yük döner. 6’dan önce yük sol F1’e aktarılır; sağ hafifler, katlı alt bacakla kısa dizden sağ arka R1’e döner; ardından iki ayağa yük döner. İki gard korunur. 7 aynı tabana/garda toparlanır. 8 geri sağ R1→R0 sonra sol F1→F0’dır. 9 eller kendi yollarından dinlenir, dış başparmak ayrılıp dört parmak açılır; sol F0 kalır, sağ kendi rayında sol hizasına gelir; N’de bitiş. Anahtar eşleşmesi bütün fiziksel diziyi kabul etmez.",
+        "en": "No. In 1 curl four fingers, lay the thumb outside and bring hands to own guard. Before 5 transfer load to right R1; left unloads, briefly extends with ball forward/toes back-up, re-bends and grounds at left F1, then reload both feet. Before 6 transfer load to left F1; right unloads, performs the short knee with folded lower leg and returns to rear right R1, then reload both feet. Retain both guards. Unit 7 restores that base/guard. Unit 8 is backward right R1→R0 then left F1→F0. In 9 hands return to rest on own paths; release the external thumb and open four fingers; left F0 stays, right comes level on its own rail; finish N. A key match does not accept the whole physical sequence."
+      },
+      "correction": {
+        "tr": "Yanlış el kapanmasını, 5/6 destek aktarımını veya teep parmak yönünü kendi doğru evreleriyle değiştir. Eksik yere yerleşme ve iki ayağa yük dönüşünü ekle; sırayı akıcı vuruşlara dönüştürme. Bir hatayı seçip kendi düzeltmeni yaz.",
+        "en": "Replace incorrect hand closure, support transfer in 5/6 or teep toe direction with the correct phases. Add missing grounding and two-foot reloading; keep the order paused. Choose one error and write your own correction."
+      },
+      "retest": {
+        "tr": "Sonraki uygun yazılı oturumda dokuz birimi yardımsız hatırla; seçilen hatayı, el kapanma/açılmasını, karşıt destek aktarımını, teep ayak/parmak düzenini ve komşu dönüşleri yeniden karşılaştır.",
+        "en": "At the next suitable written session recall all nine units unaided; compare the chosen error, hand closure/opening, opposite support transfers, teep ball/toe arrangement and adjacent recoveries again."
+      }
+    },
+    {
+      "number": 16,
+      "id": "mt-16",
+      "prerequisiteIds": [
+        "mt-15"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "M1",
+        "M10"
+      ],
+      "title": {
+        "tr": "Son kayıt: yazılı sonuç ve açık fiziksel parçalar",
+        "en": "Final record: written outcome and open physical components"
+      },
+      "teaching": {
+        "tr": "Okuma, sıra tablosu ve anahtar kapalıyken önce kendi hatırlamanı yaz. Kapsam/durma, gard/duruş girişi ve çıkışı, dört yönde ayak sırası, düz yumruk dönüşleri, teep/diz farklı inişleri, dirsek gardı ve MT-P1’in dokuz durağını bileşenler halinde değerlendir. Sonra anahtarla karşılaştır, bir hataya kendi düzeltmeni ve sonraki yazılı tekrarını ekle. Her fiziksel bileşen için “denenmedi/doğrulanmadı” kaydı korunur. Tüm yanıtlar eşleşse de ustalık, gerçek denge, savunma veya kültürel icra kabulü yazma.",
+        "en": "With reading, order table and key closed, write your own recall first. Evaluate scope/stopping, guard/stance entry and exit, foot order in four directions, straight-punch returns, different teep/knee landings, elbow guard and all nine MT-P1 pauses by component. Then compare with the key and add your own correction for one error plus a later written retest. Retain “unattempted/unverified” for every physical component. Even if all answers match, record no mastery, actual balance, defense or cultural performance acceptance."
+      },
+      "physical_task": {
+        "tr": "Fiziksel sınav veya bitirme gösterimi yoktur; P0–P7 karşılanmamış kalır.",
+        "en": "There is no physical examination or completion demonstration; P0–P7 remain unmet."
+      },
+      "written_task": {
+        "tr": "Bir bitirme ifadesi, bir kendi düzeltmen, bir sonraki yazılı tekrar ve en az üç fiziksel eksik kaydı yaz.",
+        "en": "Write one completion statement, one own correction, one later written retest and at least three physical gap records."
+      },
+      "question": {
+        "tr": "“Muay Thai, check ve klinçi öğrendim; artık güvenle sparring yaparım” doğru sonuç mudur?",
+        "en": "Is “I learned Muay Thai, checks and clinch; I can now spar safely” a correct outcome?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Doğru sonuç yalnız seçili özgün hazırlıkların ve MT-P1’in yazılı incelemesi/öz beyanıdır. Duruş, adımlar, yumruklar, teep, diz ve dirsek fiziksel denenmedi/doğrulanmadı; check, klinç, round kick, Wai Kru, sparring ve tam Muay Thai kabulü yoktur.",
+        "en": "No. The correct outcome is only written review/self-report of selected original preparations and MT-P1. Stance, steps, punches, teep, knee and elbow are physically unattempted/unverified; checks, clinch, round kicks, Wai Kru, sparring and complete Muay Thai are not accepted."
+      },
+      "correction": {
+        "tr": "Bitirme ifadesini bileşenlere ayır ve eksikleri koru; doğru anahtarı gözlem yerine koyma.",
+        "en": "Separate the completion statement by component and retain the gaps; do not substitute a correct key for observation."
+      },
+      "retest": {
+        "tr": "Sonraki uygun yazılı oturumda seçili parçayı yardımsız hatırla→karşılaştır→bir düzeltme döngüsüyle incele. Fiziksel veya daha geniş beceri ilerlemesi ayrı gerçek öğretim ve kabul gerektirir.",
+        "en": "At the next suitable written session review the selected component through unaided recall→comparison→one correction. Physical or wider skill progression requires separate real instruction and acceptance."
+      }
+    }
+  ]
+}

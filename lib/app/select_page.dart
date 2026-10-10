@@ -1,3 +1,8 @@
+import 'muay_thai_course_page.dart';
+import 'karate_course_page.dart';
+import 'kickboxing_course_page.dart';
+import 'tai_chi_course_page.dart';
+
 import 'package:flutter/material.dart';
 
 import '../shell_candidate/honesty_box.dart';
@@ -35,6 +40,10 @@ class SelectPage extends StatefulWidget {
     required this.onOpenWhyNot,
     required this.onOpenSettings,
     this.onOpenSoloCourse,
+    this.onOpenTaiChiCourse,
+    this.onOpenKickboxingCourse,
+    this.onOpenKarateCourse,
+    this.onOpenMuayThaiCourse,
     this.historyUnavailable,
     this.onRetryHistory,
   });
@@ -44,6 +53,10 @@ class SelectPage extends StatefulWidget {
   final VoidCallback onOpenWhyNot;
   final VoidCallback onOpenSettings;
   final VoidCallback? onOpenSoloCourse;
+  final VoidCallback? onOpenTaiChiCourse;
+  final VoidCallback? onOpenKickboxingCourse;
+  final VoidCallback? onOpenKarateCourse;
+  final VoidCallback? onOpenMuayThaiCourse;
 
   /// Geçmiş TAMAMEN okunamadıysa (hangi dersin/kursun "güncel" olduğu bile
   /// bilinemiyor — bu yüzden Sayfa B'ye değil buraya düşülüyor) gösterilecek
@@ -158,6 +171,22 @@ class _SelectPageState extends State<SelectPage> {
                 ),
               ),
               const SizedBox(height: 16),
+            ],
+            if (widget.onOpenKickboxingCourse != null) ...<Widget>[
+              KickboxingCourseEntryCard(onOpen: widget.onOpenKickboxingCourse!),
+              const SizedBox(height: 12),
+            ],
+            if (widget.onOpenTaiChiCourse != null) ...<Widget>[
+              TaiChiCourseEntryCard(onOpen: widget.onOpenTaiChiCourse!),
+              const SizedBox(height: 12),
+            ],
+            if (widget.onOpenKarateCourse != null) ...<Widget>[
+              KarateCourseEntryCard(onOpen: widget.onOpenKarateCourse!),
+              const SizedBox(height: 12),
+            ],
+            if (widget.onOpenMuayThaiCourse != null) ...<Widget>[
+              MuayThaiCourseEntryCard(onOpen: widget.onOpenMuayThaiCourse!),
+              const SizedBox(height: 12),
             ],
             if (widget.onOpenSoloCourse != null) ...<Widget>[
               SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),

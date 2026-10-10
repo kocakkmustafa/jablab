@@ -1,3 +1,10 @@
+import 'muay_thai_course.dart';
+import 'karate_course.dart';
+import 'taikyoku_shodan_course.dart';
+import 'yang16_written_course.dart';
+import 'kickboxing_course.dart';
+import 'tai_chi_course.dart';
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -16,6 +23,7 @@ import 'solo_boxing_progress.dart';
 import 'pose_model.dart';
 import 'rehearse_material.dart';
 import 'teach_material.dart';
+
 import 'package:jablab_engine/jablab_engine.dart';
 
 import '../shell_candidate/shell_models.dart';
@@ -176,6 +184,264 @@ final class ContentRepository {
       (sessionFileOverride ?? sessionFileFor)(dir, lifetime.accountUserId),
       writeLease: lifetime.journalWrites,
     );
+  }
+
+  static const String taiChiIntegrityManifestAsset =
+      'assets/motion_content/tai_chi.manifest.json';
+  static const String taiChiCourseAsset =
+      'assets/content/tai_chi_course.v1.json';
+
+  Future<TaiChiCourse> loadTaiChiCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: taiChiIntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
+    }
+    final bytes = await result.assets.read(taiChiCourseAsset);
+    try {
+      return TaiChiCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'tai-chi-course-json',
+        ),
+      );
+    } on TypeError {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'tai-chi-course-json',
+        ),
+      );
+    }
+  }
+
+  static const String kickboxingIntegrityManifestAsset =
+      'assets/motion_content/kickboxing.manifest.json';
+  static const String kickboxingCourseAsset =
+      'assets/content/kickboxing_a.v1.json';
+
+  Future<KickboxingCourse> loadKickboxingCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: kickboxingIntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
+    }
+    final bytes = await result.assets.read(kickboxingCourseAsset);
+    if (computeSha256Hex(bytes) != KickboxingCourse.reviewedAssetSha256) {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.hashMismatch,
+          contentId: 'kickboxing-course-json',
+        ),
+      );
+    }
+    try {
+      return KickboxingCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'kickboxing-course-json',
+        ),
+      );
+    } on TypeError {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'kickboxing-course-json',
+        ),
+      );
+    }
+  }
+
+  static const String karateIntegrityManifestAsset =
+      'assets/motion_content/karate.manifest.json';
+  static const String karateCourseAsset = 'assets/content/karate_a.v1.json';
+
+  Future<KarateCourse> loadKarateCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: karateIntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
+    }
+    final bytes = await result.assets.read(karateCourseAsset);
+    if (computeSha256Hex(bytes) != KarateCourse.reviewedAssetSha256) {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.hashMismatch,
+          contentId: 'karate-course-json',
+        ),
+      );
+    }
+    try {
+      return KarateCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'karate-course-json',
+        ),
+      );
+    } on TypeError {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'karate-course-json',
+        ),
+      );
+    }
+  }
+
+  static const String yang16IntegrityManifestAsset =
+      'assets/motion_content/yang16_written.manifest.json';
+  static const String yang16CourseAsset =
+      'assets/content/yang16_angela_written.v2.json';
+  static const String yang16MappingAsset =
+      'assets/motion_content/yang16_written.mapping.v1.json';
+
+  Future<Yang16WrittenCourse> loadYang16WrittenCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: yang16IntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(ContentError(code: ContentErrorCode.capability));
+    }
+    final content = await result.assets.read(yang16CourseAsset);
+    final mapping = await result.assets.read(yang16MappingAsset);
+    if (computeSha256Hex(content) != Yang16WrittenCourse.reviewedAssetSha256 ||
+        computeSha256Hex(mapping) != Yang16WrittenCourse.reviewedMappingSha256) {
+      throw const ContentException(ContentError(
+        code: ContentErrorCode.hashMismatch, contentId: 'yang16-written-course-json',
+      ));
+    }
+    try {
+      return Yang16WrittenCourse.fromVerifiedStrings(
+        utf8.decode(content), utf8.decode(mapping),
+      );
+    } on FormatException {
+      throw const ContentException(ContentError(
+        code: ContentErrorCode.schema, contentId: 'yang16-written-course-json',
+      ));
+    }
+  }
+
+  static const String taikyokuIntegrityManifestAsset =
+      'assets/motion_content/taikyoku_shodan_jl.manifest.json';
+  static const String taikyokuCourseAsset =
+      'assets/content/taikyoku_shodan_jl.v1.json';
+
+  Future<TaikyokuCourse> loadTaikyokuCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: taikyokuIntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(ContentError(code: ContentErrorCode.capability));
+    }
+    final bytes = await result.assets.read(taikyokuCourseAsset);
+    if (computeSha256Hex(bytes) != TaikyokuCourse.reviewedAssetSha256) {
+      throw const ContentException(ContentError(
+        code: ContentErrorCode.hashMismatch, contentId: 'taikyoku-shodan-jl-course-json',
+      ));
+    }
+    try {
+      return TaikyokuCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      throw const ContentException(ContentError(
+        code: ContentErrorCode.schema, contentId: 'taikyoku-shodan-jl-course-json',
+      ));
+    } on TypeError {
+      throw const ContentException(ContentError(
+        code: ContentErrorCode.schema, contentId: 'taikyoku-shodan-jl-course-json',
+      ));
+    }
+  }
+
+  static const String muayThaiIntegrityManifestAsset =
+      'assets/motion_content/muay_thai.manifest.json';
+  static const String muayThaiCourseAsset = 'assets/content/muay_thai_a.v1.json';
+
+  Future<MuayThaiCourse> loadMuayThaiCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: muayThaiIntegrityManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
+    }
+    final bytes = await result.assets.read(muayThaiCourseAsset);
+    if (computeSha256Hex(bytes) != MuayThaiCourse.reviewedAssetSha256) {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.hashMismatch,
+          contentId: 'muay-thai-course-json',
+        ),
+      );
+    }
+    try {
+      return MuayThaiCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'muay-thai-course-json',
+        ),
+      );
+    } on TypeError {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'muay-thai-course-json',
+        ),
+      );
+    }
   }
 
   Future<SoloBoxingCourse> loadSoloBoxingCourse() async {

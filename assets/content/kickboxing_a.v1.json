@@ -1,0 +1,728 @@
+{
+  "schemaVersion": 1,
+  "id": "jablab.kickboxing_a",
+  "practiceKind": "written_solo_foundations",
+  "title": {
+    "tr": "Kickboxing A: kontrollü solo temeller",
+    "en": "Kickboxing A: controlled solo foundations"
+  },
+  "common": {
+    "tr": "Hiç deneyimi olmayan yetişkin için 16 derslik başlangıç yolu. Bitiş, güvenli alanı hazırlamak, seçilen duruşta ön/arka tarafı açıklamak, küçük adımları ve jab/cross dönüşlerini planlamak, öne tekmenin hazırlık–uzatma–geri toplama–yerleşme sırasını açıklamak ve iki kısa temassız çalışma bölümünü kendi planıyla yönetmektir. Fiziksel tekme bölümü ancak nitelikli kickboxing eğitmeninin gösterimi ve bireysel geri bildirimi sonrası denenir. Yazılı bitiş, denenmeyen görevleri açıkça kaydederek de tamamlanabilir; fiziksel bitiş bu durumda açık kalır. Bu seviye bütün kickboxing alanı, kuşak, müsabaka yeterliği veya kendini savunma kabulü değildir.\n\nKickboxing yumruk ve tekmeyi birleştirir. WAKO farklı ring ve tatami disiplinleri tanımlar [S1]; burada onların müsabaka programı uygulanmaz. “A” JabLab'ın özgün solo başlangıç kapsamıdır. Temassız olmak tek başına hareketin uygun olduğunu göstermez. Sağlık, tedavi, düşmeyi önleme veya performans sonucu vaat edilmez.\n\nBoks veya Tai Chi kursunu bitirmek gerekmez. Kendi sol/sağını ayırt edebilmek, metni anlamak ve durma kararını uygulamak gerekir. Hareket kısıtlamalarını koru; uygunluğun belirsizse bireysel uzman rehberliği al. Çocuklara veya gözetim gerektiren kişilere bu yetişkin solo yol otomatik uygulanmaz.\n\nDüz, kuru, kaymayan zemin; rahat hareket kıyafeti; yakında su ve dinlenme yeri yeterlidir. Kaygan çorap, gevşek halı, takı ve dolaşan kablo kullanma. Uygun tutuş sağlayan ayakkabı veya çıplak ayak seçimi zemine ve eğitmen rehberliğine bağlıdır; zemine yapışan ayakla dönme. Yumruk/tekme erişiminde insan, hayvan, mobilya ve cam olmasın. Gerçek hedef, kum torbası, eldiven, bandaj veya ağırlık gerekmez; bunları eklemek darbe çalışmasına izin vermez. Sağlam sabit tezgâh yalnız destek seçeneği içindir; uzanma veya ona vurma. Telefon okuma içindir, kamera/puanlama gerekmez.\n\nHer fiziksel derste önce alanı kontrol et. Rahat ise 30–60 saniye yavaş yürü veya oturarak küçük omuz/el hareketleri yap; sonra kolay duruş görevine geç. Bu süreler üst sınır önerisidir, zorunluluk değildir. İlk denemede küçük aralık ve yavaş hız seç. Nefesi tutma, zorlama veya sayılara bağlama; rahat nefes sürsün. Her birkaç denemeden sonra durup dinlen. Bitirirken rahat yürüyüş veya oturarak dinlenme seç. Ağrı, baş dönmesi, güvensiz denge veya olağandışı rahatsızlıkta hemen dur; güvenli destek/dinlenme kullan ve aynı oturumda zor görevi yeniden deneme. Süren belirtiler için sağlık uzmanına başvur; ciddi/ani belirtilerde acil yardım iste. Bu metin kişisel tanı veya geri dönüş izni vermez. Başa darbe/sarsılma şüphesinde çalışma bırakılır ve kişisel sağlık rehberliği alınır [S8].",
+    "en": "A 16-lesson pathway for an adult with no experience. The endpoint is preparing a suitable space, explaining lead/rear in a chosen stance, planning small steps and jab/cross returns, explaining the front kick's preparation–extension–retraction–landing order, and directing two short non-contact practice blocks from an original plan. Physical kicking is attempted only after a qualified kickboxing instructor's demonstration and individual feedback. Written completion may explicitly record unattempted tasks; physical completion then remains open. This level does not complete the entire kickboxing domain, confer a belt, establish competition readiness or certify self-defense.\n\nKickboxing combines punching and kicking. WAKO defines distinct ring and tatami disciplines [S1]; this course does not deliver their competitive programs. “A” denotes JabLab's original solo beginner scope. Absence of contact does not establish that a movement suits an individual. No health, treatment, fall-prevention or performance outcome is promised.\n\nNeither boxing nor Tai Chi completion is required. The learner must distinguish their own left/right, understand the instructions and act on a stop decision. Respect movement restrictions; obtain individual professional guidance if suitability is uncertain. This adult solo route does not automatically apply to children or people needing supervision.\n\nUse a level, dry, nonslip floor, comfortable movement clothing, water nearby and a place to rest. Avoid slippery socks, loose rugs, jewelry and trailing cables. Suitable footwear or bare feet depend on the surface and instructor guidance; do not turn against a foot stuck to the floor. Keep people, animals, furniture and glass outside punching/kicking reach. No target, bag, gloves, wraps or weights are required; adding them does not authorize impact work. A stable fixed counter serves only as support; do not reach for or strike it. The phone is for reading; no camera or scoring is required.\n\nCheck the space before every physical lesson. If comfortable, walk slowly for 30–60 seconds or make small seated shoulder/hand movements, then use the easy stance task. These durations are suggested caps, not requirements. Begin with small range and slow speed. Do not hold or force the breath or attach it to counts; keep breathing comfortably. Pause and rest after a few attempts. Finish with comfortable walking or seated rest. Stop immediately for pain, dizziness, unsafe balance or unusual discomfort; use safe support/rest and do not retry the harder task that session. Seek professional advice for continuing symptoms and urgent help for severe/sudden symptoms. This text gives no diagnosis or return-to-activity clearance. Stop after suspected head injury and seek individual health guidance [S8]."
+  },
+  "conventions": {
+    "tr": "Bir duruş seç ve bu kurs boyunca onu koru; duruşu değiştirmek istersen durarak yeniden kur. Sağ/solu çevirmek tek başına tekniği doğrulamaz. Dersleri acele etmeden sırayla çalış; günlük ders sayısı hedefi yoktur. Bir görevin önkoşulu belirsizse sonraki fiziksel göreve geçme; yazılı seçeneği kullan. “Denedim / denemedim / belirsiz” kendi kaydındır, değerlendirme puanı değildir.",
+    "en": "Choose one stance and retain it through the course; stop and reset before changing it. Mirroring the sides does not verify technique. Work through lessons in order without a daily lesson target. If a prerequisite is uncertain, defer the next physical task and use its written option. “Attempted / unattempted / uncertain” is the learner's account, not a rating."
+  },
+  "review": {
+    "tr": "Yayın öncesi nitelikli kickboxing eğitmeni duruş, küçük adımlar, jab/cross, alçak öne tekme ve destekli seçenekleri iki dilde incelemeli. Duruş/ayak değişimi ön ve yan açıdan; tekme A–D sırası yavaş, kesintisiz tam vücut görünümünde gösterilmeli. Gösterim öğrenci solu/sağını açıkça belirtmeli; iki duruşu karıştırmamalı. Özgün kayıt için hak/izin ve erişilebilir açıklama gerekir. Mevcut teklif medya içermez, eğitmen onayı yoktur. Destek/oturma seçeneği ve durma örneği gösterilmeden yalnız ideal hareket gösterimi yeterli değildir.\n\nİncelemeci her ders için doğru yön/önkoşul, destek, uygulanabilir düzeltme ve yeniden deneme kararını yazsın; belirsiz ipucunu belirli cümleyle düzeltsin. Özellikle S5'teki adlandırma tutarsızlığını, ayak konumunu, geri toplamayı ve darbesiz kısa aralığı çözsün. Öğrenci geri bildiriminde “ne gözlendi / hangi ipucu değişti / aynı kolay görevde tekrar ne oldu” ayrı kaydedilsin. Geri bildirim sağlık tanısı veya genel uygunluk belgesi değildir.",
+    "en": "Before publication, a qualified kickboxing instructor must review stance, small steps, jab/cross, low front kick and supported alternatives in both languages. Show stance/foot changes from front and side, and A–D kicking slowly in an uninterrupted full-body view. Demonstrations must state the learner's left/right and distinguish both stances. Original recordings require rights/consent and accessible descriptions. This proposal includes no media and has no instructor sign-off. An ideal movement demonstration alone is insufficient without support/seated alternatives and a stop example.\n\nThe reviewer should record each lesson's direction/prerequisite correctness, support, actionable correction and retry decision, rewriting an ambiguous cue as a specific sentence. Resolve S5's naming inconsistency, foot position, retraction and short non-impact range in particular. Learner feedback should separately record “what was observed / which cue changed / what happened when the same easy task was retried.” Feedback is neither a medical diagnosis nor general suitability certification."
+  },
+  "releaseReadiness": {
+    "instructorReview": false,
+    "demonstrations": false,
+    "individualFeedback": false
+  },
+  "manuscriptSha256": "477ea5401b315028a8d92459cacb803ce35ef1d93b72c0d298bd5969949b75a7",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "WAKO: Kickboxing Today",
+      "url": "https://www.wako.sport/kickboxing-today",
+      "support": "Institution names separate ring and tatami disciplines.",
+      "limit": "Classification only. Do not borrow marketing health claims or competitive round rules for this adult solo course. JabLab A is not a WAKO qualification."
+    },
+    {
+      "id": "S2",
+      "title": "Aaron Swenson, FightCamp: Kickboxing Stance",
+      "url": "https://blog.joinfightcamp.com/training/how-to-do-the-perfect-kickboxing-stance/",
+      "support": "Instructor-authored staggered stance, lead/rear distinction, separated foot tracks, guard and gaze.",
+      "limit": "Exact angles, rear foot position and loading are not universal prescriptions. The proposal uses a comfortable setup pending instructor assessment. Source's low-kick, power and 25-repetition tasks are excluded."
+    },
+    {
+      "id": "S3",
+      "title": "Aaron Swenson, FightCamp: Beginner Footwork",
+      "url": "https://blog.joinfightcamp.com/training/beginner-footwork-basics-tutorial-for-boxing-kickboxing/",
+      "support": "Forward starts lead foot, backward starts rear foot; lateral direction starts the nearer foot; follower restores spacing; avoid crossing.",
+      "limit": "No bouncing, timed 30-second drill, simultaneous striking or copied source exercise sequence. Our small pairs, pauses and written alternatives are original."
+    },
+    {
+      "id": "S4",
+      "title": "Aaron Swenson, FightCamp: Punch Number System",
+      "url": "https://blog.joinfightcamp.com/training/the-punch-number-system-1-6-explained/",
+      "support": "Lead jab/rear cross; returning hand to guard; cross coordinates rear-foot and shoulder movement.",
+      "limit": "Full-power, snapping, loading percentages, hooks/uppercuts and impact cues are not adopted. Small-range teaching and pivot deferral require instructor review. “1–6” is not an app score."
+    },
+    {
+      "id": "S5",
+      "title": "Aaron Swenson, FightCamp: Five Kicks",
+      "url": "https://blog.joinfightcamp.com/training/five-5-best-kicks-in-kickboxing/",
+      "support": "Identifies front, roundhouse and side families; front-kick section describes central preparation and forward release.",
+      "limit": "The heading says “Front Kick (Turning Kick),” an inconsistent label. The proposal does not repeat it. It uses explicit direction rather than inferred style equivalence. Source does not validate our low-range supported adaptation, retraction/landing teaching or individual suitability. These are mandatory instructor review topics before physical kicking. No advanced/neck/head targeting, lean-back or knockout claims adopted."
+    },
+    {
+      "id": "S6",
+      "title": "Aaron Swenson, FightCamp: Roundhouse Guide",
+      "url": "https://blog.joinfightcamp.com/training/roundhouse-kick-step-by-step-guide-beginner-kickboxing/",
+      "support": "Roundhouse involves supporting-foot pivot and hip coordination, distinct from straight forward extension.",
+      "limit": "Supports only conceptual distinction in lesson 14. No physical roundhouse, hop/switch kick, impact or source drill copied."
+    },
+    {
+      "id": "S7",
+      "title": "Kickboxing GB: Coaching",
+      "url": "https://kickboxinggb.com/coaching/",
+      "support": "National federation describes coaching development, safeguarding and first-aid preparation.",
+      "limit": "Supports need for a qualified instructional setting, not endorsement of this curriculum or a claimed instructor relationship."
+    },
+    {
+      "id": "S8",
+      "title": "Kickboxing GB: Concussion Guidelines",
+      "url": "https://kickboxinggb.com/concussion-guidelines/",
+      "support": "Suspected concussion requires removal from sport and appropriate return guidance.",
+      "limit": "No self-diagnosis, personal return timetable or clearance supplied. Course excludes contact; incidental head injuries still mean stopping and seeking appropriate guidance."
+    },
+    {
+      "id": "S10",
+      "title": "Tommy Duquette, FightCamp: Six Jab Tips",
+      "url": "https://blog.joinfightcamp.com/training/6-tips-to-throw-the-perfect-jab/",
+      "support": "Instructor-authored lead-hand path, rear-hand guard, arm/palm rotation and return; differentiates jab arm rotation from whole-body turning.",
+      "limit": "Only those concepts support lesson 6. Speed, forced shoulder shrug, sharp exhalation and power claims are excluded. Thumb placement and straight wrist cues below are original explicit teaching additions requiring qualified review, not evidence claimed from this page."
+    },
+    {
+      "id": "S9",
+      "title": "FightCamp: Learning Boxing and Kickboxing Basics",
+      "url": "https://blog.joinfightcamp.com/for-members/learn-the-basics-of-boxing-kickboxing/",
+      "support": "Institution places stance/kicks/basic defense before more advanced kicking work.",
+      "limit": "Program ordering context only; no lesson sequence, duration, media, brand certification or claimed mastery copied. JabLab's scope is smaller and its exercises original."
+    }
+  ],
+  "lessons": [
+    {
+      "number": 1,
+      "id": "kb-01",
+      "title": {
+        "tr": "Sınırı kur",
+        "en": "Establish the boundary"
+      },
+      "instructions": {
+        "tr": "Ortak hazırlığı oku; alandaki iki engeli belirle ve kaldırabiliyorsan kaldır. Oturarak “temassız” ve “dur” sözlerini kendi cümlelerinle açıkla. Bir fiziksel deneme yapmadan önce neden başlayabileceğini veya ertelediğini yaz.",
+        "en": "Read the common setup; identify two obstacles and remove them if possible. Seated, explain “non-contact” and “stop” in your own words. Before any physical attempt write why you can begin or why you defer it."
+      },
+      "question": {
+        "tr": "Eldiven takmak torbaya vurma izni verir mi?",
+        "en": "Do gloves authorize bag strikes?"
+      },
+      "correction": {
+        "tr": "Eksik sınırı yazıp bir başka ekipman örneğine uygula.",
+        "en": "Write the missing boundary and apply it to another equipment example."
+      },
+      "answer": {
+        "tr": "Hayır; ekipman kapsamı genişletmez.",
+        "en": "No; equipment does not expand scope."
+      },
+      "rows": [],
+      "prerequisiteIds": [],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 2,
+      "id": "kb-02",
+      "title": {
+        "tr": "Ön/arkayı kendi yönüne bağla",
+        "en": "Map lead/rear to your own sides"
+      },
+      "instructions": {
+        "tr": "Sol ön veya sağ ön seç. Oturarak ön elini göster, ön ayak ve arka elini adlandır. İki tur sonra tabloyu kapatıp yeniden söyle. Ayakta geçişi ekleme.",
+        "en": "Choose left-lead or right-lead. Seated, indicate the lead hand and name the lead foot and rear hand. After two cycles hide the table and recall them. Add no standing transitions."
+      },
+      "question": {
+        "tr": "“Ön” hangi taraftır ve duruş değişince ne olur?",
+        "en": "Which side is lead and what happens if stance changes?"
+      },
+      "correction": {
+        "tr": "Bir karışıklık varsa kendi sol/sağını etiketle, yalnız ön el–arka el çiftini tekrar adlandır.",
+        "en": "If confused, label your own left/right and retry only lead-hand/rear-hand naming."
+      },
+      "answer": {
+        "tr": "Ön taraf seçilen duruşa bağlıdır.",
+        "en": "Lead side depends on chosen stance."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-01"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 3,
+      "id": "kb-03",
+      "title": {
+        "tr": "Duruş ve gard",
+        "en": "Stance and guard"
+      },
+      "instructions": {
+        "tr": "Rahat omuz genişliğine yakın iki ayrı ayak izi düşün; ön ayağı biraz ileri, arkayı biraz geriye yerleştir. Dar bir çizgi üstünde durma. Dizleri rahat bırak, gövdeyi yüksek tut; eller yüz yakınında rahat gardda, bakış önde olsun. Ayak açılarını zorlamadan eğitmenin gösterimiyle netleştir. Üç doğal nefes sonra dur; iki deneme yeterlidir.",
+        "en": "Imagine two separate tracks near comfortable shoulder width; place the lead foot a little forward and rear foot back. Avoid a tightrope stance. Keep knees easy and torso tall, hands in a comfortable guard near the face, gaze ahead. Clarify foot angles through instructor demonstration without forcing them. Stop after three natural breaths; two attempts suffice."
+      },
+      "question": {
+        "tr": "Ayaklar tek çizgide mi? Omuzları kastım mı?",
+        "en": "Are the feet on one line? Did I tense my shoulders?"
+      },
+      "correction": {
+        "tr": "Elleri indir, duruşu rahatça yeniden kur; bir nefeslik gard dene veya oturarak planla.",
+        "en": "Lower the hands, reset comfortably; retry a one-breath guard or plan it seated."
+      },
+      "answer": {
+        "tr": "Ayrı ayak izleri ve rahat gard; kendiliğinden teknik kabulü yok.",
+        "en": "Separate tracks and comfortable guard; no automatic technique acceptance."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-02"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S2"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 4,
+      "id": "kb-04",
+      "title": {
+        "tr": "İleri ve geri küçük adım",
+        "en": "Small forward and backward steps"
+      },
+      "instructions": {
+        "tr": "Rahat duruş sonrası aşağıdaki tabloda ilk iki satırı birer kez yap. Her iki ayak yerleşince dur. Geri alanı önce kontrol et; geriye körlemesine yürüme. Zıplama veya aynı anda yumruk yok.",
+        "en": "After a comfortable stance, attempt the first two table rows once each. Stop after both feet settle. Check the space behind first; do not walk backward into unseen space. No bouncing or simultaneous punches."
+      },
+      "question": {
+        "tr": "Geri giderken önce hangi ayak hareket etti?",
+        "en": "Which foot moved first backward?"
+      },
+      "correction": {
+        "tr": "Yanlış sırada dur, yalnız bir geri-adım çiftini küçülterek dene; denge belirsizse tabloyu oturarak anlat.",
+        "en": "Stop after wrong order; retry one smaller backward step pair, or explain it seated if balance is uncertain."
+      },
+      "answer": {
+        "tr": "Geriye arka ayak başlar.",
+        "en": "Rear foot starts backward."
+      },
+      "rows": [
+        {
+          "tr": "Yön: İleri\nSol ön: Sol, sonra sağ\nSağ ön: Sağ, sonra sol\nYerleşme: İkinci ayak benzer küçük mesafeyi izler; rahat aralık kur",
+          "en": "Direction: Forward\nOrthodox: left then right\nSouthpaw: right then left\nRecovery: following foot moves a similar small distance; restore comfortable spacing"
+        },
+        {
+          "tr": "Yön: Geri\nSol ön: Sağ, sonra sol\nSağ ön: Sol, sonra sağ\nYerleşme: Adımdan sonra dur",
+          "en": "Direction: Back\nOrthodox: right then left\nSouthpaw: left then right\nRecovery: stop after the step"
+        },
+        {
+          "tr": "Yön: Kendi solun\nSol ön: Sol, sonra sağ\nSağ ön: Sol, sonra sağ\nYerleşme: Çaprazlama yok",
+          "en": "Direction: Own left\nOrthodox: left then right\nSouthpaw: left then right\nRecovery: no crossing"
+        },
+        {
+          "tr": "Yön: Kendi sağın\nSol ön: Sağ, sonra sol\nSağ ön: Sağ, sonra sol\nYerleşme: Çaprazlama yok",
+          "en": "Direction: Own right\nOrthodox: right then left\nSouthpaw: right then left\nRecovery: no crossing"
+        }
+      ],
+      "prerequisiteIds": [
+        "kb-03"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S3"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 5,
+      "id": "kb-05",
+      "title": {
+        "tr": "Yana adım ve dur",
+        "en": "Side step and stop"
+      },
+      "instructions": {
+        "tr": "Tabloya göre bir sola ve bir sağa küçük adım çifti yap, arada duruşu kur. Ayaklar birbirinin önünden geçmesin. Hızla yön değiştirme. İkinci tur ancak rahat ise; destek gerekiyorsa yana yürümek yerine sabit duruş/yazılı sıra seç.",
+        "en": "Use the table for one small left and one small right step pair, resetting between. Do not pass one foot across the other. Avoid rapid direction changes. A second cycle is optional if comfortable; if support is needed, use fixed stance/written sequencing instead of side travel."
+      },
+      "question": {
+        "tr": "Sağ ön duruşta sola giderken önce hangi ayak?",
+        "en": "Which foot starts leftward in right-lead stance?"
+      },
+      "correction": {
+        "tr": "Yumruk eklemeden yalnız sola sırayı tekrar anlat; uygunsa tek küçük çift yap.",
+        "en": "Re-explain only the leftward order without punches; if suitable retry one small pair."
+      },
+      "answer": {
+        "tr": "Sola sol ayak başlar, duruş fark etmez.",
+        "en": "Left foot starts leftward in either stance."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-04"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S3"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 6,
+      "id": "kb-06",
+      "title": {
+        "tr": "Ön düz yumruk ve geri dönüş",
+        "en": "Lead straight punch and return"
+      },
+      "instructions": {
+        "tr": "Önce oturarak elini hazırla: parmaklarını avuca kıvır, başparmağı yumruğun içine sıkıştırmadan dışarıda kıvrılmış parmakların üzerinde tut. Bileği önkolla düz bir hat üzerinde tut; yukarı/aşağı veya yana kırma. Sıkıp kasma; rahat kapalı yumruk yeterlidir. Yumruğu veya bileği rahat kuramıyorsan yumruk görevi yerine açık elle küçük kol izi/yazılı seçenek kullan. Bu kol izi jab öğrendiğini göstermez.\n\nFiziksel ön düz yumruk önkoşulları: Ders 3 duruş/gard ve rahat el/bilek kurulumu; kişisel hareket kısıtlamalarına uygunluk; görev yolu anlaşılıyor olmalı. Seçilen duruşta ön yumruk yüz yakınından hayali öne çizgide ilerler; dirsek yana savrulmaz. Kol ilerlerken avuç rahatça aşağı yöne dönebilir; hareket önkolun çevrilmesidir, bileğin bükülmesi değil. Dirseği kilitlemeden kısa aralıkta dur, aynı yoldan gardına dön; arka el yüz yakınında kalır. Öne yetişmek için eğilme veya omuzu zorla yükseltme. İki ayrı yavaş deneme yap. Bu, kısa aralıklı temassız jab pratiğidir; güç, hedefe darbe veya doğrulanmış jab ustalığı değildir.",
+        "en": "First prepare the hand seated: curl the fingers into the palm and keep the thumb outside across the curled fingers, never trapped inside the fist. Keep the wrist in line with the forearm rather than bent up/down or sideways. Avoid clenching with tension; a comfortably closed fist is enough. If fist/wrist setup is uncomfortable, use a small open-hand arm trace or written option instead of the punch task. That trace does not establish a learned jab.\n\nPhysical lead-straight prerequisites: lesson 3 stance/guard, comfortable fist/wrist setup, consistency with individual movement restrictions and understanding of the task path. From the chosen stance, the lead fist travels from near the face along an imaginary forward line; the elbow does not swing sideways. The palm may turn comfortably toward down as the arm advances; this is forearm rotation, not wrist bending. Stop short of elbow lock and return along the same path to guard; the rear hand stays near the face. Do not lean to reach or force the shoulder upward. Use two separate slow attempts. This is short-range non-contact jab practice, not power work, target impact or verified jab mastery."
+      },
+      "question": {
+        "tr": "Başparmak dışarıda mı; bilek önkolla aynı hatta mı; arka el gardda mı? Bunlardan hangisini gerçekten gözledim?",
+        "en": "Is the thumb outside, wrist in line with forearm and rear hand in guard? Which did I actually observe?"
+      },
+      "correction": {
+        "tr": "Yanlış/belirsiz el kurulumu varsa yumruğu açıp oturarak kurulumu tekrar anlat; rahat ve doğru anlaşılmış kuruluma dönmeden jab deneme. Yalnız yol hatası varsa önkoşulları koruyarak menzili küçült ve bir gidiş–dönüş dene.",
+        "en": "For wrong/uncertain hand setup, open the hand and re-explain setup seated; do not retry a jab until setup is comfortable and understood. For a path error alone, retain the prerequisites, shorten reach and retry one out-and-back."
+      },
+      "answer": {
+        "tr": "Başparmak dışarıda, bilek önkolla aynı hatta; gözlenmeyen belirsizdir.",
+        "en": "Thumb outside, wrist in line with forearm; an unobserved item is uncertain."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-05"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S4",
+        "S10"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 7,
+      "id": "kb-07",
+      "title": {
+        "tr": "Arka düz yumruk için dönmeyi ayır",
+        "en": "Separate turning for the rear straight"
+      },
+      "instructions": {
+        "tr": "Yumruksuz küçük dönüşün önkoşulları: Ders 3 duruşu, Ders 4–5 küçük adım/durma görevi rahat ve belirsizlik olmadan yapılmış; zemin ayağın rahatça dönmesine izin veriyor; hareket kısıtlamaların buna uygun; eğitmen bu ayak–diz–kalça hareketi için kişisel geri bildirim vermiş olmalı. Bu geri bildirim henüz sağlanmış sayılmaz. Önkoşullar karşılanmadıysa yalnız aşağıdaki sırayı oturarak anlat; sabit ayak üzerinde gövde döndürerek kolaylaştırma yapma.\n\nGardda küçük dönüş: arka topuğun rahatça hafiflemesine izin ver; arka ayağın ön kısmı üzerinde ayak ve diz birlikte öne doğru küçük bir yön değiştirirken arka kalça/omuz da biraz öne gelir. Diz, ayak yönüyle birlikte hareket eder; ayak sabitken dizi içeri çevirme. Ön ayak yerinde kalır, iki ayak arasındaki aralık korunur; gövde öne yığılmaz. Topuğu zorla yükseltme veya yüzde yük hedefleme. Küçük dönüşü geri al, arka topuğu rahatça indir ve dur. Ayağın dönmesi engelleniyorsa veya ilişki belirsizse fiziksel görevi bırak. Bir yumruksuz deneme, sonra dinlen.\n\nCross ekleme önkoşulu: yukarıdaki ayrı dönüş için eğitmenin uygun geri bildirimi ve Ders 6 rahat el/bilek kurulumu. Arka yumruğu yüz yakınından öne kısa düz hatta götürürken aynı küçük ayak–diz–kalça dönüşünü kullan; ön el gardda kalır. Avuç rahatça aşağı döner, bilek düz, dirsek kilitlenmez. Yumruğu geri getir ve gövde/ayağı başlangıca döndür; dur. Bir ayrı cross dene. Oturarak yalnız kol izi bu koordinasyonun veya cross öğreniminin eşdeğeri değildir.",
+        "en": "Prerequisites for the small turn without punching: lesson 3 stance and lessons 4–5 small-step/stop tasks were comfortable and without unresolved uncertainty; the surface permits easy foot turning, movement restrictions allow it, and an instructor has provided individual feedback on this foot–knee–hip task. That feedback is not presumed supplied. If prerequisites are unmet, explain the following sequence seated; do not substitute torso rotation over a planted foot as an easier physical task.\n\nA small turn in guard: allow the rear heel to become light comfortably; on the forefoot, let the rear foot and knee change direction a little toward the front together as the rear hip/shoulder also move slightly forward. The knee follows the foot's direction; do not turn the knee inward over a fixed foot. Keep the lead foot in place and maintain spacing without pitching the torso forward. Do not force heel elevation or target a loading percentage. Reverse the small turn, settle the rear heel comfortably and stop. Defer physical work if the foot is blocked or the relationship is uncertain. Make one turn-only attempt, then rest.\n\nPrerequisites for adding cross: suitable instructor feedback on the separate turn and lesson 6 comfortable fist/wrist setup. As the rear fist travels from near the face a short straight distance forward, use that same small foot–knee–hip turn; keep the lead hand in guard. Let the palm turn comfortably toward down, with wrist straight and elbow unlocked. Return the fist and torso/foot to the start, then stop. Attempt one separate cross. A seated arm trace is not equivalent to this coordination or learning cross."
+      },
+      "question": {
+        "tr": "Arka ayak dönmeden diz/gövde döndü mü; ön el gardda kaldı mı?",
+        "en": "Did the knee/torso turn without the rear foot, and did the lead hand remain in guard?"
+      },
+      "correction": {
+        "tr": "Sıkışan ayak/belirsiz hizalamada fiziksel tekrarı bırak, sırayı çiz ve eğitmene sor. Yalnız gard dönüşü atlandıysa, bütün dönüş önkoşulları hâlâ karşılanıyorsa bir daha küçük cross–gard denemesi yap.",
+        "en": "For a blocked foot/uncertain alignment, defer physical retry, draw the sequence and ask the instructor. If only guard return was omitted, retry one smaller cross–guard only while all turn prerequisites remain satisfied."
+      },
+      "answer": {
+        "tr": "Diz/gövde arka ayak hareket etmeden döndüyse fiziksel tekrarı ertele; ilişkiyi çiz ve eğitmene sor. Yalnız ön el gardı unutulduysa ve Ders 7 bütün dönüş önkoşulları hâlâ karşılanıyorsa bir daha küçük cross–gard düzeltmesi yap. Gözlenmeyen bileşen belirsizdir.",
+        "en": "If the knee/torso turned without rear-foot movement, defer physical retry, draw the relationship and ask the instructor. If only the lead-hand guard was forgotten and all lesson 7 turn prerequisites remain satisfied, make one smaller cross–guard correction. An unobserved component is uncertain."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-06"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-turn-feedback"
+      ],
+      "sourceIds": [
+        "S4"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 8,
+      "id": "kb-08",
+      "title": {
+        "tr": "İki yumruk arasında gard",
+        "en": "Guard between two punches"
+      },
+      "instructions": {
+        "tr": "Ön düz yumruk → gard → arka düz yumruk → gard sırasını dört sözlü işaretle anlat. Ders 6–7 uygun ve rahat ise bir kez yavaş dene; sonra dinlen. Fiziksel cross önkoşulları karşılanmadıysa yalnız ön düz yumruk–gard veya yazılı sıra kullan; tamamlandı sayma.",
+        "en": "Explain lead straight → guard → rear straight → guard with four spoken cues. If lessons 6–7 are suitable and comfortable, attempt it slowly once, then rest. If physical cross prerequisites are not met, use lead-straight/guard alone or written sequencing; do not mark the full task complete."
+      },
+      "question": {
+        "tr": "Geri dönüşü atladım mı?",
+        "en": "Did I omit a return?"
+      },
+      "correction": {
+        "tr": "Tek yumruğa dön, gardı yeniden kur, yalnız Ders 7 bireysel dönüş önkoşulları hâlâ karşılanıyor ve rahatsa ikinciyi ekle.",
+        "en": "Return to one punch, restore guard, add the second only if lesson 7 individual turn prerequisites remain satisfied and it is comfortable."
+      },
+      "answer": {
+        "tr": "Her yumruk sonrası gard; eksik bileşen açık kalır.",
+        "en": "Guard after each punch; an omitted component stays open."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-07"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-turn-feedback"
+      ],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 9,
+      "id": "kb-09",
+      "title": {
+        "tr": "Savunma kararını prova et",
+        "en": "Rehearse a defensive decision"
+      },
+      "instructions": {
+        "tr": "Burada partner saldırısı, darbe engelleme veya gerçek tepki ölçümü yok. Kartta “dur–gard–alanı kontrol et–küçük geri adım–dur” yaz. Önce oturarak sırayı anlat; sonra Ders 4 rahatsa bir kez uygula. Güvenli geri alan yoksa son adımı çıkarıp duruşta kal.",
+        "en": "This task contains no partner attack, impact block or real reaction assessment. Write “stop–guard–check space–small backward step–stop” on a card. Explain it seated first; attempt once only if lesson 4 is comfortable. If space behind is unsafe, omit the step and stay in stance."
+      },
+      "question": {
+        "tr": "Planlı geri adım rakipten kaçabildiğimi kanıtlar mı?",
+        "en": "Does a planned backward step prove I can evade an opponent?"
+      },
+      "correction": {
+        "tr": "Böyle bir iddiayı sil; yalnız planlı adım/duruş gözlemini yaz.",
+        "en": "Remove that claim; record only the planned step/stance observation."
+      },
+      "answer": {
+        "tr": "Hayır; planlı hareket gerçek savunma değildir.",
+        "en": "No; planned movement is not real defense."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-08"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 10,
+      "id": "kb-10",
+      "title": {
+        "tr": "Tekmeye geçmeden destek kararını ver",
+        "en": "Choose support before kicking"
+      },
+      "instructions": {
+        "tr": "Tekme için geçici tek-ayak yüklenmesine uygun kişisel gösterim/geri bildirim gerekir; iki ayaklı aktarım bunu kanıtlamaz. Seçilen destek bacağının yanında sabit, kaymayan tezgâh erişimde olsun; uzanma, gövdeyi ona döndürme veya öne tekme yolunu kapatma. Aynı taraftaki el tezgâhta, diğer el rahat gardda kalabilir. İki el desteği gerekiyorsa bu yolun fiziksel tekmesini yapma; iki ayağı yerde tutarak hazırlığı/yazılı sırayı çalış ve kişisel uyarlama iste. Desteği azaltmak bitiş şartı değildir.\n\nİki ayak yerde küçük yük değişimini eğitmenle değerlendir. Tekme olmayan bu hazırlıkta destek dizini kilitleme; diz yönü ayakla aynı olsun. Destekli/oturarak/ertelendi seçimini yaz. Gösterim ve bireysel geri bildirim henüz yoksa Ders 11–13 fiziksel tekme görevlerinin önkoşulları karşılanmamıştır; yazılı görevleri yapabilirsin.",
+        "en": "Kicking requires individual demonstration/feedback on temporary single-leg loading; two-feet-down transfer does not establish it. Place a fixed nonsliding counter beside the chosen supporting leg, reachable without stretching, turning the torso toward it or blocking the forward kick path. The hand on that side stays on the counter; the other may remain in comfortable guard. If two hands are needed, defer this pathway's physical kick, retain both feet down for preparation/written sequencing and request an individual adaptation. Reducing support is not an endpoint requirement.\n\nDiscuss a small two-feet-down loading change with the instructor. In this non-kicking preparation, avoid locking the supporting knee and keep its direction aligned with the foot. Record supported/seated/deferred. Without demonstration and individual feedback, prerequisites for physical kicking in lessons 11–13 are unmet; written tasks remain available."
+      },
+      "question": {
+        "tr": "Destekliyken yumruk da atmalı mıyım?",
+        "en": "Should I punch while using hand support?"
+      },
+      "correction": {
+        "tr": "İki görevi ayır; yalnız destek planını yeniden yaz.",
+        "en": "Separate the tasks and rewrite only the support plan."
+      },
+      "answer": {
+        "tr": "Hayır; destek elini yumruk için bırakma.",
+        "en": "No; do not release a supporting hand to punch."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-09"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-kick-feedback"
+      ],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 11,
+      "id": "kb-11",
+      "title": {
+        "tr": "Öne tekmenin hazırlığı",
+        "en": "Preparing the front kick"
+      },
+      "instructions": {
+        "tr": "Eğitmen önkoşulu: aşağıdaki destek/ayak/yerleşme seçeneğini senin için gösterip bireysel geri bildirim vermiş olmalı; rahatlık tek başına izin değildir. İki ayak rahat duruşta, gövde yüksek ve öne baksın. Tekme için ön ayak seçildiğinde arka bacak destek, arka ayak seçildiğinde ön bacak destektir. Sabit tezgâh destek bacağının yanında olsun. Ağırlığı yavaşça o bacağa al; destek dizi kilitlenmez ve ayak yönünü izler, destek tabanı rahatça yerde kalır. Bu düz öne görevde dönme/hop yok. Destek topuğunu zorla kaldırma, gövdeyi geriye yatırma.\n\nTekme ayağını az kaldır, dizi düşük rahat aralıkta öne getir; alt bacak aşağı sarkar. Sonra ayağı kendi eski izine, sıçramadan veya ayağı uzağa atarak denge aramadan geri indir. Ayak yerleşirken yükü rahatça iki ayağa dağıt ve dur. Bir ön/arka ayak denemesi ayrı yapılır; her taraf için kişisel önkoşul geçerlidir. Destek dizi/ayağı ilişkisi belirsizse ayağı kaldırma. İki el gerekiyorsa Ders 10 iki-ayaklı seçeneğinde kal.",
+        "en": "Instructor prerequisite: the support/foot/landing option below must have been demonstrated for you with individual feedback; comfort alone is not permission. Begin with both feet in a comfortable stance, torso tall and facing ahead. The rear leg supports a lead-foot kick; the lead leg supports a rear-foot kick. Keep the fixed counter beside the supporting leg. Shift gradually onto that leg; its knee remains unlocked and follows the foot, with the supporting sole comfortably down. This straight-forward task has no pivot or hop. Do not force the supporting heel upward or lean the torso backward.\n\nLift the kicking foot a little, bringing the knee forward within a low comfortable range while the lower leg hangs downward. Replace the foot in its own prior footprint without hopping or throwing it far away to catch balance. As it settles, return comfortably to two-foot loading and stop. Lead/rear attempts are separate, with individual prerequisites applying on each side. Do not lift a foot if the supporting knee/foot relationship is uncertain. If two hands are needed, retain lesson 10's two-feet-down option."
+      },
+      "question": {
+        "tr": "Hangi bacak destekti; eski ayak izine dönebildim mi?",
+        "en": "Which leg supported, and could I return to the prior footprint?"
+      },
+      "correction": {
+        "tr": "Yüksekliği azalt veya iki ayağı yerde bırak. Aynı teknik önkoşulları olmadan tek-ayak tekrarı yapma; iki-ayak seçeneği tekme değildir.",
+        "en": "Reduce height or retain both feet down. Do not retry single-leg work without the same technique prerequisites; the two-foot option is not a kick."
+      },
+      "answer": {
+        "tr": "Ön tekmede arka, arka tekmede ön bacak destek; eski izine dönüş.",
+        "en": "Rear leg supports lead kick, lead leg supports rear kick; return to prior footprint."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-10"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-kick-feedback"
+      ],
+      "sourceIds": [
+        "S5"
+      ],
+      "sourceNote": {
+        "tr": "özgün uyarlama",
+        "en": "original adaptation"
+      }
+    },
+    {
+      "number": 12,
+      "id": "kb-12",
+      "title": {
+        "tr": "Alçak öne tekme ve geri toplama",
+        "en": "Low front kick and retraction"
+      },
+      "instructions": {
+        "tr": "Ders 11'in kendi destek/yerleşme görevi ve bireysel eğitmen geri bildirimi önkoşuldur. Burada seçilen varyant, temas etmeyen alçak düz öne uzatmadır; Muay Thai teep, roundhouse veya kuşak standardı olarak adlandırılmaz. Tekme ayağında ayak parmakları rahatça yukarı/geriye çekilir, ayak bileği küçük rahat aralıkta tabanın ön yastığını öne yöneltir; parmak uçları ileri hedeflenmez. Parmak/ayak bileğini zorlayarak bu şekli kurma; rahatsız/belirsizse uzatmayı bırak. Bu ayak şekli, gerçek darbe yüzeyinin test edildiği anlamına gelmez; hiçbir yere vurulmaz.\n\nA: Ders 11'deki küçük diz hazırlığı ve destek kurulumu. B: Alt bacağı kısa öne uzat; hedef yüksekliği veya tam diz açılması aranmaz, diz kilitlenmez, gövde geriye kaçmaz. C: Ayağı yere düşürmeden dizi tekrar büküp alt bacağı küçük hazırlığa geri getir. D: Tekme ayağını eski izine yumuşakça indir, tabanı rahat yerleştir, ağırlığı iki ayağa geri dağıt ve dur. Destek bacağı boyunca aynı rahat ayak/diz yönünü koru; tezgâhtaki el bırakılmaz. Parmaklarla zemine vurma veya topuğu çarpma yok. Her tarafta bir ayrı deneme; taraflar arasında iki ayakla dinlen.",
+        "en": "Lesson 11's individual support/landing task and instructor feedback are prerequisites. The chosen variant is a non-contact low straight-forward extension, not labeled Muay Thai teep, roundhouse or a belt standard. On the kicking foot, draw the toes comfortably up/back and use a small comfortable ankle position to face the ball of the foot forward rather than aiming the toe tips ahead. Do not force toes/ankle into that shape; defer extension if uncomfortable or uncertain. This foot shape does not establish a tested impact surface; strike nothing.\n\nA: Establish lesson 11's small knee preparation and support. B: Extend the lower leg a short distance forward without seeking height or a fully straight knee; keep the knee unlocked and torso from leaning back. C: Before letting the foot drop, bend the knee again to return the lower leg to the small preparation. D: Lower the kicking foot gently into its prior footprint, settle the sole comfortably, return to two-foot loading and stop. Retain the supporting leg's comfortable foot/knee direction throughout and keep the supporting hand on the counter. Do not strike the floor with toes or stamp the heel. One separate attempt per side, resting on both feet between sides."
+      },
+      "question": {
+        "tr": "B'den ayağı düşürüp C'yi atladım mı; D'de denge yakalamak için ek adım attım mı?",
+        "en": "Did I drop from B and omit C, or need an extra step to catch balance at D?"
+      },
+      "correction": {
+        "tr": "Uzatmayı çıkar, iki ayağı yere koy ve dur. Güvensiz denge varsa o oturumda fiziksel tekrar yok. Yalnız sıra hatası ve tüm kişisel hazırlık önkoşulları hâlâ uygunsa bir küçük A–D dene; A–B–C–D ancak eğitmen düzeltmesi ve bütün uzatma önkoşulları sonrası tekrar edilir.",
+        "en": "Remove extension, place both feet down and stop. No physical retry that session after unsafe balance. For a sequencing error alone, if all individual preparation prerequisites remain satisfied, retry one small A–D. Retry A–B–C–D only after instructor correction and all extension prerequisites are satisfied."
+      },
+      "answer": {
+        "tr": "A hazırlık, B uzatma, C geri toplama, D yerleşme; denge yakalama adımı zorluk göstergesidir.",
+        "en": "A preparation, B extension, C retraction, D landing; a balance-catching step signals difficulty."
+      },
+      "rows": [
+        {
+          "tr": "İşaret: A\nEylem: Küçük diz hazırlığı\nYön ve destek: Diğer bacak destek; tezgâh o yanda",
+          "en": "Cue: A\nAction: small knee preparation\nDirection/support: other leg supports; counter on that side"
+        },
+        {
+          "tr": "İşaret: B\nEylem: Az ileri uzat\nYön ve destek: Öğrencinin önü; parmaklar rahatça geriye",
+          "en": "Cue: B\nAction: short forward extension\nDirection/support: learner's front; toes comfortably drawn back"
+        },
+        {
+          "tr": "İşaret: C\nEylem: Dizi bük, geri topla\nYön ve destek: Ayak havada küçük hazırlığa döner",
+          "en": "Cue: C\nAction: bend knee and retract\nDirection/support: foot returns to small preparation while lifted"
+        },
+        {
+          "tr": "İşaret: D\nEylem: Eski izine indir, iki ayağa dön, dur\nYön ve destek: Destek eli bırakılmaz",
+          "en": "Cue: D\nAction: lower to prior footprint, return to both feet, stop\nDirection/support: supporting hand retained"
+        }
+      ],
+      "prerequisiteIds": [
+        "kb-11"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-kick-feedback"
+      ],
+      "sourceIds": [
+        "S5"
+      ],
+      "sourceNote": {
+        "tr": "özgün uyarlama",
+        "en": "original adaptation"
+      }
+    },
+    {
+      "number": 13,
+      "id": "kb-13",
+      "title": {
+        "tr": "Yumruk ve tekmeyi ayırarak bağla",
+        "en": "Link punch and kick with a reset"
+      },
+      "instructions": {
+        "tr": "Yalnız uygun fiziksel görevleri seç. Ön düz yumruk–gard–iki ayak yerleşme–alçak ön tekme–geri toplama–yerleşme–dur sırasını bir tur dene. Tekmeyle yumruğu aynı anda yapma; destek noktasına geçerken önce tamamen dur. Destek gerekiyorsa bu görev iki ayrı bloktur. Fiziksel tekme önkoşulları karşılanmadıysa yalnız yazılı sıra veya iki ayaklı hazırlık kullan.",
+        "en": "Select only suitable physical tasks. Attempt one cycle of lead straight–guard–both feet settled–low lead front kick–retract–land–stop. Do not punch and kick simultaneously; stop fully before moving to support. If support is needed, perform two separate blocks. If physical kicking prerequisites are not met, use written sequencing or two-feet-down preparation only."
+      },
+      "question": {
+        "tr": "Adım veya gard dönüşünü hız için atladım mı?",
+        "en": "Did I omit settling or guard return for speed?"
+      },
+      "correction": {
+        "tr": "İki ayrı göreve dön ve araya bir durma işareti koy.",
+        "en": "Return to two separate tasks with a stop cue between."
+      },
+      "answer": {
+        "tr": "Önce görevleri ayırıp durmayı geri ekle.",
+        "en": "Separate tasks first and restore the stop."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-12"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-kick-feedback"
+      ],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 14,
+      "id": "kb-14",
+      "title": {
+        "tr": "Tekme ailelerini ve ertelenen kapsamı ayırt et",
+        "en": "Distinguish kick families and deferred scope"
+      },
+      "instructions": {
+        "tr": "Oturarak üç ok çiz: öne düz hat; roundhouse için yana kavisli hat; side kick için yana düz hat. Roundhouse destek ayağı dönüşü ve kalça eşgüdümü, side kick farklı yön/duruş ister. Bu derste fiziksel prova yok; yüksek/dönen/zıplayan tekmeler, low-kick teması, diz/dirsek ve partner işi sonraki ayrı eğitmenli kapsamdır. “Yakında” olan motor tekmeyi ölçüyor sayılmaz.",
+        "en": "Seated, draw three arrows: a straight forward line, a curved line for roundhouse, a straight side line for side kick. Roundhouse needs supporting-foot turning and hip coordination; side kick has a different direction/stance. No physical rehearsal here. High, spinning and jumping kicks, low-kick impact, knees/elbows and partner work belong to a separate instructor-led scope. A planned engine does not establish kick measurement."
+      },
+      "question": {
+        "tr": "Alçak öne tekme çalışmak roundhouse'u tamamlar mı?",
+        "en": "Does low front-kick work complete roundhouse?"
+      },
+      "correction": {
+        "tr": "İki aileyi ayır, her biri için eğitmene bir somut soru yaz.",
+        "en": "Separate the families and write one specific instructor question for each."
+      },
+      "answer": {
+        "tr": "Hayır; farklı aile ve öğretim gereksinimleri var.",
+        "en": "No; distinct families and teaching needs remain."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-13"
+      ],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "S6"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 15,
+      "id": "kb-15",
+      "title": {
+        "tr": "Kendi kısa çalışma planını yaz",
+        "en": "Write your own short practice plan"
+      },
+      "instructions": {
+        "tr": "İki blok yaz: (1) duruş → küçük uygun adım → ön düz yumruk → gard → dur; (2) uygun ise A–B–C–D tekme, değilse yazılı tekme sırası veya iki ayaklı hazırlık → dur. Her blokta en çok iki tekrar öner; bloklar arasında dinlen, tamamlamak zorunlu değil. Cross ancak Ders 7 geri bildirimi uygunsa ilk blokta ayrı görev olarak seçilir. Yeni teknik, hız veya darbe ekleme.",
+        "en": "Write two blocks: (1) stance → a suitable small step → lead straight → guard → stop; (2) A–B–C–D kicking if suitable, otherwise written kick sequencing or two-feet-down preparation → stop. Suggest at most two repetitions in each, rest between blocks and allow an early finish. Cross may be selected separately in block one only if lesson 7 feedback supports it. Add no new technique, speed or impact."
+      },
+      "question": {
+        "tr": "Planım denenmeyen tekmeyi tamamlandı gösteriyor mu?",
+        "en": "Does my plan portray unattempted kicking as complete?"
+      },
+      "correction": {
+        "tr": "Her bloğa kendi gerçek seçeneğini yaz, ertelediğin bileşeni açıkça ekle ve planı yeniden oku.",
+        "en": "State the actual option in each block, name the deferred component and reread the plan."
+      },
+      "answer": {
+        "tr": "Denenmeyen bileşeni açıkça belirt.",
+        "en": "Explicitly name the unattempted component."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-14"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-turn-feedback",
+        "individual-kick-feedback"
+      ],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    },
+    {
+      "number": 16,
+      "id": "kb-16",
+      "title": {
+        "tr": "Bağımsız hatırla, düzelt ve yeniden değerlendir",
+        "en": "Recall independently, correct and reconsider"
+      },
+      "instructions": {
+        "tr": "Önce dersleri kapat. Kendi duruşunu, geri/sola adım sırasını, gard dönüşünü, A–D tekme sırasını, destek seçimini ve üç durma nedenini yaz. Ders 15 planını yalnız önkoşulları uygun görevlerle dene veya yazılı olarak yürüt. Kendi notunu bitirdikten sonra aşağıdaki anahtarı aç. Bir fark seç, ilgili dersin daha kolay düzeltmesini yaz; yalnız ilgili görevin bütün kişisel teknik önkoşulları (dönüş/tekme için gerçek eğitmen geri bildirimi dahil) hâlâ karşılanıyor ve rahatsızlık yoksa o tek kolay görevi yeniden dene; değilse yazılı tekrarı seç. Rahatsızlık/denge sorunu varsa fiziksel tekrar yerine durma ve danışma kararını kaydet.\n\nSon kayıt: her bileşen için “denedim / denemedim / belirsiz”; kendi gözlemim; yapılan tek düzeltme; tekrar sonrası değişiklik veya tekrarın neden yapılmadığı. “Eğitmen gördü” ancak gerçek tarih, belirli görev ve geri bildirim varsa yazılır. Kaynak okumak veya öz beyan fiziksel kaliteyi doğrulamaz.",
+        "en": "Hide the lessons first. Write your stance, backward/leftward step order, guard return, A–D kick order, support choice and three reasons to stop. Attempt lesson 15's plan only with suitable prerequisites or walk through it in writing. Open the key below only after completing your own account. Select one discrepancy and write the relevant lesson's easier correction; retry that single easy task only if every individual technique prerequisite still holds (including actual instructor feedback for turning/kicking) and it is comfortable; otherwise choose written retesting. With discomfort or balance difficulty, record stopping/seeking guidance instead of physical retesting.\n\nFinal record for each component: “attempted / unattempted / uncertain”; own observation; the single correction; change after retry or reason no retry occurred. Record “instructor observed” only with an actual date, specific task and feedback. Reading sources and self-report do not verify physical quality."
+      },
+      "question": {
+        "tr": "Önce dersleri kapat. Kendi duruşunu, geri/sola adım sırasını, gard dönüşünü, A–D tekme sırasını, destek seçimini ve üç durma nedenini yaz. Ders 15 planını yalnız önkoşulları uygun görevlerle dene veya yazılı olarak yürüt. Kendi notunu bitirdikten sonra aşağıdaki anahtarı aç.",
+        "en": "Hide the lessons first. Write your stance, backward/leftward step order, guard return, A–D kick order, support choice and three reasons to stop. Attempt lesson 15's plan only with suitable prerequisites or walk through it in writing. Open the key below only after completing your own account."
+      },
+      "correction": {
+        "tr": "Bir fark seç, ilgili dersin daha kolay düzeltmesini yaz; yalnız ilgili görevin bütün kişisel teknik önkoşulları (dönüş/tekme için gerçek eğitmen geri bildirimi dahil) hâlâ karşılanıyor ve rahatsızlık yoksa o tek kolay görevi yeniden dene; değilse yazılı tekrarı seç. Rahatsızlık/denge sorunu varsa fiziksel tekrar yerine durma ve danışma kararını kaydet.",
+        "en": "Select one discrepancy and write the relevant lesson's easier correction; retry that single easy task only if every individual technique prerequisite still holds (including actual instructor feedback for turning/kicking) and it is comfortable; otherwise choose written retesting. With discomfort or balance difficulty, record stopping/seeking guidance instead of physical retesting."
+      },
+      "answer": {
+        "tr": "Tekrar teknik önkoşulları korur; yalnız rahatlık yeterli değildir.",
+        "en": "Retrying retains technique prerequisites; comfort alone is insufficient."
+      },
+      "rows": [],
+      "prerequisiteIds": [
+        "kb-15"
+      ],
+      "physicalPrerequisiteIds": [
+        "individual-turn-feedback",
+        "individual-kick-feedback"
+      ],
+      "sourceIds": [
+        "S7"
+      ],
+      "sourceNote": null
+    }
+  ],
+  "safety": {
+    "tr": "Her fiziksel derste önce alanı kontrol et. Rahat ise 30–60 saniye yavaş yürü veya oturarak küçük omuz/el hareketleri yap; sonra kolay duruş görevine geç. Bu süreler üst sınır önerisidir, zorunluluk değildir. İlk denemede küçük aralık ve yavaş hız seç. Nefesi tutma, zorlama veya sayılara bağlama; rahat nefes sürsün. Her birkaç denemeden sonra durup dinlen. Bitirirken rahat yürüyüş veya oturarak dinlenme seç. Ağrı, baş dönmesi, güvensiz denge veya olağandışı rahatsızlıkta hemen dur; güvenli destek/dinlenme kullan ve aynı oturumda zor görevi yeniden deneme. Süren belirtiler için sağlık uzmanına başvur; ciddi/ani belirtilerde acil yardım iste. Bu metin kişisel tanı veya geri dönüş izni vermez. Başa darbe/sarsılma şüphesinde çalışma bırakılır ve kişisel sağlık rehberliği alınır [S8].",
+    "en": "Check the space before every physical lesson. If comfortable, walk slowly for 30–60 seconds or make small seated shoulder/hand movements, then use the easy stance task. These durations are suggested caps, not requirements. Begin with small range and slow speed. Do not hold or force the breath or attach it to counts; keep breathing comfortably. Pause and rest after a few attempts. Finish with comfortable walking or seated rest. Stop immediately for pain, dizziness, unsafe balance or unusual discomfort; use safe support/rest and do not retry the harder task that session. Seek professional advice for continuing symptoms and urgent help for severe/sudden symptoms. This text gives no diagnosis or return-to-activity clearance. Stop after suspected head injury and seek individual health guidance [S8]."
+  },
+  "writtenAlternative": {
+    "tr": "Bir duruş seç ve bu kurs boyunca onu koru; duruşu değiştirmek istersen durarak yeniden kur. Sağ/solu çevirmek tek başına tekniği doğrulamaz. Dersleri acele etmeden sırayla çalış; günlük ders sayısı hedefi yoktur. Bir görevin önkoşulu belirsizse sonraki fiziksel göreve geçme; yazılı seçeneği kullan. “Denedim / denemedim / belirsiz” kendi kaydındır, değerlendirme puanı değildir.",
+    "en": "Choose one stance and retain it through the course; stop and reset before changing it. Mirroring the sides does not verify technique. Work through lessons in order without a daily lesson target. If a prerequisite is uncertain, defer the next physical task and use its written option. “Attempted / unattempted / uncertain” is the learner's account, not a rating."
+  },
+  "conventionRows": [
+    {
+      "tr": "Kendi tarafın: Sol/sağ öğrencinindir, ekranın aynası değildir.",
+      "en": "Own side: Left/right refer to the learner, never a mirrored presenter."
+    },
+    {
+      "tr": "Sol ön: Sol ayak/el ön, sağ ayak/el arka.",
+      "en": "Orthodox: Left foot/hand lead, right foot/hand rear."
+    },
+    {
+      "tr": "Sağ ön: Sağ ayak/el ön, sol ayak/el arka.",
+      "en": "Southpaw: Right foot/hand lead, left foot/hand rear."
+    },
+    {
+      "tr": "Ön/arka: Seçilen duruşa bağlı; ileri/geri yürüme yönü değildir.",
+      "en": "Lead/rear: Relative to chosen stance, not walking direction."
+    },
+    {
+      "tr": "Sayı: Sırayı hatırlatan işaret; saniye, nefes veya puan değil.",
+      "en": "Count: Sequence cue, not seconds, breaths or a score."
+    },
+    {
+      "tr": "Yeniden kur: Önce dur; iki ayağı rahat seçilen duruşa yerleştir, gardı kur.",
+      "en": "Reset: Stop first; place both feet in the comfortable chosen stance and restore guard."
+    },
+    {
+      "tr": "Destekli: Sabit yüzeye bir/iki el; bu sırada aynı el yumruk atmaz.",
+      "en": "Supported: One/both hands on fixed support; a supporting hand does not punch."
+    },
+    {
+      "tr": "Oturarak: Sabit sandalyede ayaklar yerde: yön, plan, küçük kol yolu; ayak/tekme eşdeğeri değil.",
+      "en": "Seated: Fixed chair, feet down: direction, planning, small arm path; not equivalent to stepping/kicking."
+    }
+  ]
+}

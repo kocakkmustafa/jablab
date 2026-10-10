@@ -100,3 +100,101 @@ adayın gerekçelerini ayrı sınar. Yeni solo kurs ve solo ders ekranları
 ilk açılış kataloğundaki görünür karttan yürünür; ikisi de `push` varışıdır.
 Katı sekiz ekran iki kök varış ve altı gerçek `push` ekranından oluşur.
 Bu widget ölçümü gerçek cihaz, kamera veya mağaza kabulü değildir.
+
+
+## 2026-10-04 Tai Chi written candidate route measurement
+
+This candidate retains the historical counts above. Its extended single-root
+witnessed walk adds TaiChiCoursePage and TaiChiLessonPage through visible
+catalogue and lesson controls, returning by the actual back controls before
+continuing the boxing/session walk. Current candidate: katı **10** · gevşek **15**, computed as `10 − 2 + 3 + 4`. Two root arrivals remain; both new
+arrivals are witnessed pushes. The unreachable-class set and its checks are
+unchanged. These are software route observations, not physical-course acceptance.
+
+
+## 2026-10-05 Kickboxing written candidate route expectations — execution pending
+
+The historical route measurements above remain unchanged. Kickboxing A adds
+KickboxingCoursePage and KickboxingLessonPage to the existing single-root
+control walk. The current source expectation is katı **12** · gevşek **17**,
+computed as `12 − 2 + 3 + 4` = **17**. Two root arrivals remain; the two
+Kickboxing routes are expected pushes through visible course and lesson
+controls. The witnessed-walk, route membership, unreachable-class and
+document/formula assertions all remain active; the actual loose-count
+expectation is updated from 15 to 17.
+
+These are source expectations for the extended walk. No Kickboxing route
+measurement has been executed yet; the assigned test lane must provide the
+new witness and exit-code receipt. This addition does not revise historical
+10/15 observations or establish physical, device, store or full-domain
+acceptance. The historical replay/aggregate and NO_CALL limits remain open.
+
+
+## 2026-10-05 Karate source proposal over qualified Kickboxing v5
+
+The existing historical contract above is preserved. The proposed current walk adds Karate course and lesson arrival by actual controls from the same fresh root. Its expected strict count is 14 (12 push + 2 root); loose count is 19 (plus 3 onboarding panels and 4 session stages). These are source expectations, not measured Karate results. The route test must witness every existing and new arrival; runtime remains UNRUN until a new lane is explicitly assigned. No historical 422-file or aggregate acceptance transfers to this source candidate.
+
+
+### 2026-10-05 Karate route expectation — exact gate notation
+
+The current Karate source expectation in the notation required by the preserved
+document gate is katı **14** · gevşek **19**, computed as `14 − 2 + 3 + 4` = **19**.
+This append-only notation correction retains every historical paragraph and
+every route/document assertion. It changes no course, runtime logic or test.
+The v1 walk reached 14 strict arrivals and 19 loose screens; its document-format
+failure remains preserved in the separate qualification evidence. This new v2
+source needs its own exact-source qualification before local software closure;
+physical, device, product and historical aggregate acceptance remain open.
+
+
+## 2026-10-05 Muay Thai source-only expectation over qualified Karate v3
+
+All historical text above remains exact. The proposed fresh-root control walk adds Muay Thai course and lesson arrivals. Its source expectation is katı **16** · gevşek **21**; formula **16 − 2 + 3 + 4** (14 proposed push arrivals plus 2 roots; 3 onboarding panels and 4 session stages). Every previous traversal and assertion remains active. These counts are not observed Muay Thai results: tests, analyzer, build, render and download remain UNRUN until a separately assigned heavy lane. Prior Karate qualification applies only to tree339cc944accef6ee79c256c6260d72aad4514506; no result or historical aggregate acceptance transfers.
+
+
+## 2026-10-06 Taikyoku Shodan same-root source expectation — execution pending
+
+Every historical paragraph above is preserved byte for byte. The current source
+walk enters TaikyokuCoursePage through the visible kata entry on KarateCoursePage,
+opens TaikyokuLessonPage through the first lesson control, and uses the actual
+back controls to return to the kata overview and then the Karate overview before
+continuing the original Karate lesson and every later traversal. New membership
+is recorded only by the existing visit/witness logic after those control actions;
+the discovery, vacuity, root-arrival, unreachable-class and document assertions
+remain active.
+
+The source expectation is katı **18** · gevşek **23**, computed as
+`18 − 2 + 3 + 4` = **23**: 16 expected push arrivals and the existing 2 root
+arrivals, with 3 onboarding panels and 4 session stages. These are prepared
+expectations, not observed route results. Independent v1 code review identified
+the missing same-root kata traversal; this narrow v2 source delta awaits focused
+review and its own exact-tree execution receipt.
+
+The existing reachability suite and all 33 new Taikyoku cases remain UNRUN for
+this candidate. Tests, analyzer, build, render and download remain deferred until
+Braavo releases the shared heavy lane and the parent explicitly assigns it.
+The historical qualification receipt applies only to the old 445-file tree
+`dcb466024b2da49e068fc33499260c7cddf879cf`; it does not qualify this new
+453-file candidate or establish physical, device, store, full-domain or historical
+aggregate acceptance.
+
+
+## 2026-10-06 Yang16 written form-order source expectation — execution pending
+
+All prior paragraphs remain exact. The current same-root control walk enters
+Yang16WrittenCoursePage from the visible Yang16 written-order card on the
+existing TaiChiCoursePage, then Yang16WrittenTargetPage through the Preparation
+control. It returns by the actual back controls before continuing the original
+Tai Chi lesson and every prior traversal. These two witnessed route classes
+cover all 18 written sections and six final targets; they are not 24 routes.
+
+Source expectation: katı **20** · gevşek **25**, computed as
+20 − 2 + 3 + 4 = **25**: 18 expected pushes and the existing two roots.
+Every discovery, membership, root/push, unreachable-class and formula assertion
+is retained. No new route measurement has run. Braavo owns the heavy lane.
+
+This candidate extends the accepted 453-file tree
+3d197a8a01bf50108bb56e6cab41123b04290396; its software and historical
+receipts do not qualify this new source. Written form-order learning preserves
+all false physical flags. Physical mechanics, media/device/store acceptance
+and publication remain separate.

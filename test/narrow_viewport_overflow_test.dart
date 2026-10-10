@@ -36,6 +36,19 @@ const OnboardingStore _seen = OnboardingStore(seenOverride: true);
 // Each test owns a storage namespace; replacements inside it share this registry.
 late OwnerResourceRegistry _owners;
 
+Future<void> showBoxingControl(WidgetTester t, Key key) async {
+  final Finder control = find.byKey(key);
+  await t.scrollUntilVisible(
+    control,
+    250,
+    scrollable: find.byType(Scrollable).first,
+    maxScrolls: 40,
+  );
+  await Scrollable.ensureVisible(t.element(control), alignment: 0.5);
+  await t.pumpAndSettle();
+  expect(control.hitTestable(), findsOneWidget);
+}
+
 void main() {
   setUp(() => _owners = OwnerResourceRegistry());
   setUp(() {
@@ -131,6 +144,7 @@ void main() {
     WidgetTester t,
   ) async {
     await pumpApp(t);
+    await showBoxingControl(t, const Key('item-boxing'));
     await t.tap(find.byKey(const Key('item-boxing')));
     await t.pumpAndSettle();
     // intermediate: en uzun kilit-sebebi metinleri burada. `boxing`
@@ -187,6 +201,7 @@ void main() {
         const Offset(0, -400),
       );
       await t.pumpAndSettle();
+      await showBoxingControl(t, const Key('item-boxing'));
       await t.tap(find.byKey(const Key('item-boxing')));
       await t.pumpAndSettle();
       await t.dragUntilVisible(
@@ -197,6 +212,7 @@ void main() {
       await t.pumpAndSettle();
       await t.tap(find.byKey(const Key('course-boxing.foundations')));
       await t.pumpAndSettle();
+      await showBoxingControl(t, const Key('lesson-boxing.foundations.jab'));
       await t.tap(find.byKey(const Key('lesson-boxing.foundations.jab')));
       await t.pumpAndSettle();
       expect(t.takeException(), isNull, reason: 'öğret aşaması');

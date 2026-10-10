@@ -1,0 +1,965 @@
+{
+  "schemaVersion": 1,
+  "id": "jablab.karate_a",
+  "practiceKind": "written_kihon_sequence_preparation",
+  "manuscriptSha256": "93e6eb8f640a5d9e103bda7a3223aceb9dd6ed97a812c6dec8dc7e3bfa4f7bc4",
+  "title": {
+    "tr": "Karate A: kihon hizalaması ve özgün dizi hazırlığı",
+    "en": "Karate A: kihon alignment and original sequence preparation"
+  },
+  "shared": {
+    "status": {
+      "tr": "Özgün yazılı öneri v3; v1’deki el toparlama ve ayak sırası boşlukları açıklanmıştır. Bağımsız pedagoji incelemesi bekliyor. Fiziksel öğretim, gösterim ve kişisel geri bildirim kabulü yoktur.",
+      "en": "Original written proposal v3; the hand-recovery and foot-order gaps in v1 are made explicit. Independent pedagogy review is pending. Physical teaching, demonstration and personal feedback have not been accepted."
+    },
+    "style": {
+      "tr": "Shotokan yönelimli başlangıç hazırlığı. Kısa duruş ve duraklı hareketler burada açıkça hazırlık uyarlamalarıdır; bütün okullar için standart teknik diye sunulmaz.",
+      "en": "Shotokan-oriented beginner preparation. Short positions and paused movements are explicit preparation adaptations here; they are not presented as standard technique for every school."
+    },
+    "audience": {
+      "tr": "Yetişkin başlangıç öğrencisi için inceleme taslağı. Çocuk programı, rehabilitasyon veya kişiye uygunluk kararı değildir. Önceki boks/kickboxing dersi karate önkoşullarının yerine geçmez.",
+      "en": "Review draft for an adult beginner. It is not a children’s program, rehabilitation or an individual suitability decision. Previous boxing/kickboxing study does not replace karate prerequisites."
+    },
+    "endpoint": {
+      "tr": "Bu A düzeyinin sonlu hedefi: kapsamı ve durmayı anlatmak; kişiye göre incelenmiş paralel ve kısa ön duruş; iki yanda seiken/hikite ve yavaş choku-zuki hazırlığı; adım-yerleş-aynı yan oi-zuki hazırlığı; gedan-barai hazırlığı; yürüyerek sağa çeyrek dönüş; özgün KA-P1 İki çizgi dizisinin altı durağını hatırlamak, bir düzeltme ve uygun tekrar planlamak. Şimdiki sonuç yalnız yazılı incelemedir; fiziksel parçalar doğrulanmamıştır.",
+      "en": "The finite A-level endpoint is to explain scope and stopping; individually reviewed parallel and short front positions; seiken/hikite and slow choku-zuki preparation on both sides; step-settle same-side oi-zuki preparation; gedan-barai preparation; a walking right quarter-turn; and recall the six pauses of original KA-P1 Two lines, with one correction and a suitable retest. The present outcome is written review only; physical components are unverified."
+    },
+    "limits": {
+      "tr": "KA-P1 özgün JabLab çalışma dizisidir; Heian Shodan, Taikyoku Shodan veya onların kısaltılmış kabulü değildir. Adlandırılmış geleneksel kata, tam karate müfredatı, kuşak/derece, temas, kumite, darbe gücü ve kendini savunma yeterliği bu sonuçta yoktur. Bu alanlar daha geniş hedefte açık kalır.",
+      "en": "KA-P1 is an original JabLab practice sequence; it is not Heian Shodan, Taikyoku Shodan or an accepted shortened version of either. Named traditional kata, full karate curriculum, belt/rank, contact, kumite, impact power and self-defense competence are outside this result. Those parts of the broader goal remain open."
+    },
+    "physical_gate": {
+      "tr": "Bu öneride bütün fiziksel görevler kapalıdır. Yalnız ileride nitelikli Shotokan eğitmeni tam bu metni ve kişisel uyarlamayı incelemiş, gerekli özgün gösterimleri onaylamış ve ilgili hareketlerde gerçek kişisel gözlem/düzeltme/tekrar sağlamışsa koşullu görev düşünülebilir. P0–P6 gereksinimleri bugün karşılanmamıştır. Kutucuk, rahat hissetme veya doğru yazılı yanıt hiçbirini açmaz; tekrar denemede de aynı önkoşullar sürer.",
+      "en": "All physical tasks are unavailable in this proposal. A conditional task can be considered later only after a qualified Shotokan instructor has reviewed this exact text and personal adaptation, approved the required original demonstrations, and provided actual individual observation/correction/retest for the relevant movements. P0–P6 are unmet today. A checkbox, comfort or correct written answer unlocks none of them; the same prerequisites remain on retesting."
+    },
+    "equipment": {
+      "tr": "Yazılı görev için kâğıt ve kalem yeterlidir. İleride fiziksel görev için temiz, düz, kaymayan, engel ve insan bulunmayan alan gerekir; ayak, el ve dönüş yolları için eğitmenle yeterli boşluk seçilir. Gevşek halı, kaygan çorap, yerden kabaran işaret veya hedef yoktur. Destek gerekirse sabit bir yüzey ve uygun tek el/iki ayak uyarlamasını eğitmen seçer; iki el hareketi yapmak için destek bırakılmaz. Kum torbası, makiwara, partner veya vuruş hedefi kullanılmaz.",
+      "en": "Paper and a pen are sufficient for written work. Future physical tasks need a clear, level, nonslip space without obstacles or other people; choose adequate clearance for feet, hands and turns with the instructor. No loose rug, slippery socks, raised floor marker or target. If support is needed, the instructor selects a stable surface and suitable one-hand/two-feet adaptation; support is not released to perform two-hand movements. No bag, makiwara, partner or striking target is used."
+    },
+    "stop": {
+      "tr": "Ağrı, baş dönmesi, olağandışı nefes zorlanması, dengesizlik, diz/ayak sıkışması veya hareketin güvenli olduğuna ilişkin belirsizlikte hareketi bırak. Ani düzeltme, ek derinlik veya daha hızlı tekrar ile sorunu aşmaya çalışma. Güvenli nötr duruşa yalnız rahatça çıkabiliyorsan geç; yardım/uyarlama gereksinimini uygun kişiye bildir. Belirti varken fiziksel tekrar planlama. Bu metin tanı veya sağlık izni vermez.",
+      "en": "Stop movement for pain, dizziness, unusual breathing difficulty, instability, knee/foot binding or uncertainty about safe movement. Do not try to overcome it with a sudden correction, extra depth or faster repetition. Return to a safe neutral position only if that is comfortable; tell the appropriate person about the help/adaptation needed. Do not plan a physical retest while symptoms remain. This text provides neither diagnosis nor health clearance."
+    },
+    "dose": {
+      "tr": "İleride uygun görülen bir görevde bir yavaş deneme yeterlidir; istersen en fazla iki ek küçük deneme arasında tamamen dur ve dinlen. Sayı hedefi veya başarı eşiği yoktur; daha azı ya da yalnız yazılı görev uygundur. Açıklık, hız ve süre birlikte artırılmaz; nefes tutulmaz veya zorla sayıya bağlanmaz.",
+      "en": "For a future suitable task, one slow attempt is enough; optionally make at most two more small attempts with a complete stop and rest between them. There is no repetition target or passing threshold; fewer attempts or written work alone is appropriate. Do not increase range, speed and duration together; do not hold the breath or force it to a count."
+    },
+    "learning_loop": {
+      "tr": "Her derste önce açıklamayı oku, sonra kapatıp kendi yanıtını yaz. Anahtarı bundan sonra incele. Bir somut düzeltme veya açık bir belirsizlik yaz; uygun bir yazılı tekrar planla. Fiziksel seçenek için önceki yazılı önkoşullar ve gerekli gerçek P kayıtları korunur. Moladan sonra alanı ve önkoşulları yeniden değerlendir; eski yanıt veya rahatlık otomatik devam nedeni değildir.",
+      "en": "In every lesson, read the explanation, then hide it and write your own answer. Consult the key afterward. Write one concrete correction or explicit uncertainty and plan a suitable written retest. A physical option retains prior written prerequisites and the required actual P records. After a break, reassess the space and prerequisites; a previous answer or comfortable feeling does not automatically justify continuation."
+    },
+    "progress": {
+      "tr": "Seçenekleri ayrı tut: denenmedi; emin değilim; yalnız yazılı yanıtımla anahtarı karşılaştırdım; eğitmen gözledi ve kayıt var. Son seçenek bugün yoktur. Yazılı tamamlanma: “Yazılı inceleme tamamlandı; duruş, el tekniği, adım, dönüş ve dizi fiziksel olarak denenmedi veya doğrulanmadı.” Eksikleri tek tek belirt; teknik öğrenildi, kata ustalığı veya kuşak kazanıldı yazma.",
+      "en": "Keep choices separate: unattempted; uncertain; compared my written answer with the key only; instructor observed and a record exists. The last option does not exist today. Written completion reads: “Written review completed; stance, hand technique, stepping, turning and sequence physically unattempted or unverified.” List remaining components individually; do not record technique learned, kata mastery or belt earned."
+    },
+    "directions": {
+      "tr": "Sağ/sol öğrencinin kendi bedenine göredir; gösterim aynalanmış kabul edilmez. N başlangıçta baktığın ön yönü, E onun kendi sağına çeyrek dönüş yönünü gösteren kâğıt etiketidir; coğrafi yön ölçümü değildir. Ön ayak hangi taraftaysa “aynı yan” o eldir. A–D etiketleri bedenin durduğu alanları anlatır; ayaklar aynı çizgi üstüne yığılmaz.",
+      "en": "Right/left refer to the learner’s own body; do not assume a mirrored demonstration. N is a paper label for initial forward, and E its right quarter-turn direction; these are not geographic measurements. “Same side” means the hand on the side of the forward foot. A–D label the areas where the body settles; the feet are not stacked on one line."
+    }
+  },
+  "releaseReadiness": {
+    "instructorReview": false,
+    "demonstrations": false,
+    "individualFeedback": false
+  },
+  "physicalRequirements": {
+    "P0": false,
+    "P1": false,
+    "P2": false,
+    "P3": false,
+    "P4": false,
+    "P5": false,
+    "P6": false
+  },
+  "sequenceRows": [
+    {
+      "tr": "1 · A · N · Paralel hazırlık, eller dinlenir, tam dur.",
+      "en": "1 · A · N · Parallel preparation, hands resting, complete pause."
+    },
+    {
+      "tr": "2 · B · N · Sol ayak kendi izinde küçük öne; sol-ön yerleş ve dur; iki yumruk alt-kaburga yanlarında → sol gedan-barai/sağ hikite → dur → sol el kendi yanında kısa yukarı-geri yolla sol alt-kaburgaya, sağ hikite kalır; iki el yan hazırlıkta dur.",
+      "en": "2 · B · N · Left foot small forward on its own track; settle left-forward and pause; both fists beside lower ribs → left gedan-barai/right hikite → pause → left returns by the short up-and-back path at its own side to left lower ribs, right hikite stays; pause with both in side preparation."
+    },
+    {
+      "tr": "3 · C · N · Sağ arka ayak kendi izinde öne geçer; sağ-ön yerleş ve dur; sağ yan hazırlıktan sağ kısa düz-el, sol hikite kalır → dur → sağ el aynı kısa yoldan sağ alt-kaburgaya döner; iki el yan hazırlıkta dur.",
+      "en": "3 · C · N · Right rear foot passes forward on its own track; settle right-forward and pause; right short straight hand from right-side preparation, left hikite stays → pause → right returns along the same short path to right lower ribs; pause with both in side preparation."
+    },
+    {
+      "tr": "4 · C · E · Eller dinlenir; sağ ön ayak kalır, sol arka ayak kendi izinde öne sağın hizasına; nötr durak → sağ-sol-sağ-sol yürüyüşle N→E ve dur → sağ ayak kendi izinde küçük öne, sağ-ön yerleş ve dur → iki yumruk yan hazırlıkta → sağ gedan-barai/sol hikite → dur → sağ el kendi yanında yukarı-geri sağ alt-kaburgaya, sol hikite kalır; dur.",
+      "en": "4 · C · E · Rest hands; right front stays, left rear advances on its own track level with right; neutral pause → right-left-right-left walking N→E and pause → right foot small forward on its own track, settle right-forward and pause → both fists in side preparation → right gedan-barai/left hikite → pause → right returns up-and-back at its own side to right lower ribs, left hikite stays; pause."
+    },
+    {
+      "tr": "5 · D · E · Sol arka ayak kendi izinde öne geçer; sol-ön yerleş ve dur → sol yan hazırlıktan sol kısa düz-el, sağ hikite kalır → dur → sol el aynı kısa yoldan sol alt-kaburgaya; iki el yan hazırlıkta dur.",
+      "en": "5 · D · E · Left rear foot passes forward on its own track; settle left-forward and pause → left short straight hand from left-side preparation, right hikite stays → pause → left returns along the same short path to left lower ribs; pause with both in side preparation."
+    },
+    {
+      "tr": "6 · D · E · Eller yanlarda dinlenir; sol ön ayak kalır, sağ arka ayak kendi sağ izinde öne solun hizasına; iki ayak paralel yerleşir, tam dur. Dizi bitti. Ayrı çıkış: D’de iki sağ çeyrek E→S→W; sağ-sol-sağ(hizaya) W’de C’ye; C’de sol çeyrek W→S; sağ-sol-sağ(hizaya) S’de A’ya; A’da iki sağ çeyrek S→W→N, nötr durak. Her sağ çeyrek sağ-sol-sağ-sol, sol çeyrek sol-sağ-sol-sağ; ayrıntılı ayak yerleri ders 12/15’te. Çıkış yedinci birim değildir.",
+      "en": "6 · D · E · Rest hands at sides; left front stays, right rear advances on its own right track level with left; settle both feet parallel and stop completely. Sequence finished. Separate exit: two right quarters at D E→S→W; right-left-right(to level) W to C; left quarter at C W→S; right-left-right(to level) S to A; two right quarters at A S→W→N, neutral pause. Every right quarter is right-left-right-left; the left is left-right-left-right; detailed footprints are in lessons 12/15. The exit is not a seventh unit."
+    }
+  ],
+  "sources": [
+    {
+      "id": "K1",
+      "title": "Japan Karate Association: Techniques",
+      "url": "https://www.jka.or.jp/en/about-jka/techniques/",
+      "support": "Distinguishes kihon, kata and kumite and emphasizes posture, balance and technical fundamentals.",
+      "limit": "Supports scope vocabulary, not our choreography, specific joint cues or a claim that this solo proposal teaches the whole art. Competitive effectiveness and power language are excluded."
+    },
+    {
+      "id": "K2",
+      "title": "JKA: Kyu/Dan ranking and guidelines",
+      "url": "https://www.jka.or.jp/en/about-jka/dan-ranking/",
+      "support": "Official grading uses authorized examiners; named Taikyoku Shodan and Heian Shodan appear separately in its progression.",
+      "limit": "Classification/context only. No grade, belt equivalent, eligibility or technical pass criteria is transferred to JabLab. No grading sequence is reproduced."
+    },
+    {
+      "id": "K3",
+      "title": "JKA: Beginners",
+      "url": "https://www.jka.or.jp/en/beginners/",
+      "support": "Describes solo kata and individualized instruction by certified branch instructors.",
+      "limit": "Does not validate this learner's readiness, adapted positions, a particular dose, health benefit or a remote text-only practice model."
+    },
+    {
+      "id": "K4",
+      "title": "Linden Huckle: Zenkutsu-dachi",
+      "url": "https://www.shotokankarateonline.com/blog/shotokan-karate-stances-zenkutsu-dachi-front-stance/",
+      "support": "Describes front stance, separated feet, knee orientation and avoiding a locked rear knee.",
+      "limit": "Source's deep bend, fixed length, load ratios, toe/angle and long-hold cues are not adopted as universal or individualized prescriptions. Our short stance is preparation, pending instructor review."
+    },
+    {
+      "id": "K5",
+      "title": "Linden Huckle: Seiken forefist",
+      "url": "https://www.shotokankarateonline.com/blog/the-karate-fist-seiken-fore-fist-video/",
+      "support": "Finger closure, thumb outside the fingers, straight wrist and index/middle knuckle identification.",
+      "limit": "No impact, squeezing maximally, makiwara/bag drill, “bulletproof” or categorical injury claim is adopted. Comfortable closure and written alternatives are editorial adaptations."
+    },
+    {
+      "id": "K6",
+      "title": "Linden Huckle: Shotokan punches",
+      "url": "https://www.shotokankarateonline.com/blog/shotokan-karate-punches/",
+      "support": "Choku-zuki is stationary; oi-zuki uses the same arm as the forward leg; hikite and palm rotation distinguish the basic pattern.",
+      "limit": "No copied exercise, attack target, impact, power, rapid snap, self-defense or other punch family is adopted. Our pause-before-punch is an explicit preparation variant."
+    },
+    {
+      "id": "K7",
+      "title": "Linden Huckle: Choku-zuki",
+      "url": "https://www.shotokankarateonline.com/blog/choku-zuki-straight-punch-like-a-whip-not-a-thud/",
+      "support": "States that the author's current method is one variation and introduces choku-zuki from parallel/natural stance after fist formation.",
+      "limit": "No high-speed whole-body loading, snap/recoil, forceful tension or source follow-along is adopted. Slow short-range movement and natural breathing are our proposal."
+    },
+    {
+      "id": "K8",
+      "title": "Linden Huckle: Gedan-barai and body dynamics",
+      "url": "https://www.shotokankarateonline.com/blog/gedan-barai-down-block-and-using-the-body/",
+      "support": "Preparation crosses the body; author emphasizes keeping the arm close and coordinating body/legs.",
+      "limit": "Does not authenticate our static, small-range palm orientation, endpoint or teaching adaptation. Multi-hip snap/power method is excluded; these precise cues need qualified review."
+    },
+    {
+      "id": "K9",
+      "title": "Linden Huckle: Stepping in zenkutsu-dachi",
+      "url": "https://www.shotokankarateonline.com/blog/you-are-stepping-in-zenkutsu-dachi-incorrectly/",
+      "support": "Explains straight forward stepping as one method, acknowledges school variation and warns against knee collapse/pressure.",
+      "limit": "Supports separate-track/individual-variation context. Does not prescribe our rear-foot-to-level exit, four-placement walking turns or return route. Driving, speed, knee initiation, source foot turn and simultaneous punch timing are excluded."
+    },
+    {
+      "id": "K10",
+      "title": "Linden Huckle: Hikite meaning",
+      "url": "https://www.shotokankarateonline.com/blog/hikite-meaning-and-3-simple-exercises-to-make-it-strong/",
+      "support": "Describes the returning hand beside the body under the ribs, elbow kept close, lowered shoulder and direct return rather than crossing the centerline.",
+      "limit": "Supports the location/path vocabulary. No exercise, sharp pull, strong grip, hip snap, elbow strike or partner-control claim is copied. Our slow up-and-back recovery from gedan-barai and both-hands preparation reset remain original adaptations requiring review."
+    }
+  ],
+  "lessons": [
+    {
+      "number": 1,
+      "id": "ka-01",
+      "prerequisiteIds": [],
+      "physicalPrerequisiteIds": [],
+      "sourceIds": [
+        "K1",
+        "K2",
+        "K3"
+      ],
+      "title": {
+        "tr": "Neyi öğreniyoruz?",
+        "en": "What are we learning?"
+      },
+      "teaching": {
+        "tr": "Kihon temel hareket çalışması, kata belirli bir okulun aktarılmış biçim/dizisi, kumite karşılıklı çalışma bağlamıdır. Bu kurs önce kihon hizalamasını ve dizi hatırlamayı hazırlar. Tek başına bir sırayı ezberlemek uygulama veya savunma yeterliği değildir. Geleneksel biçimin adı, sırası ve geçişleri seçilen okuldan doğrulanır; KA-P1 ise burada yazılmış özgün alıştırmadır.",
+        "en": "Kihon studies basic movements; kata is a form/sequence transmitted within a particular school; kumite concerns partnered practice. This course prepares kihon alignment and sequence recall first. Memorizing an order alone establishes neither application nor defensive competence. A traditional form’s name, order and transitions must be verified within the chosen school; KA-P1 is an original exercise written here."
+      },
+      "physical_task": {
+        "tr": "Bu dersin görevi yazılıdır; bir dövüş hareketi deneme.",
+        "en": "This lesson’s task is written; do not try a combat movement."
+      },
+      "written_task": {
+        "tr": "Üç terimi kendi sözlerinle açıkla. KA-P1 ve adlandırılmış geleneksel kata için iki ayrı başlık aç.",
+        "en": "Explain the three terms in your own words. Create separate headings for KA-P1 and named traditional kata."
+      },
+      "question": {
+        "tr": "KA-P1 biterse Heian Shodan veya kuşak kabulü oluşur mu?",
+        "en": "Does finishing KA-P1 establish Heian Shodan or belt acceptance?"
+      },
+      "answer_key": {
+        "tr": "Hayır. KA-P1 özgün hazırlıktır. Adlandırılmış kata öğretimi ve yetkili derece sınavı ayrı gereksinimlerdir; fiziksel kabul de yoktur.",
+        "en": "No. KA-P1 is original preparation. Named-kata instruction and authorized rank examination are separate requirements; physical acceptance is also absent."
+      },
+      "correction": {
+        "tr": "“Kata öğrendim” yazdıysan hangi özgün/yazılı parçayı yaptığını ve hangi geleneksel/fiziksel parçaların açık kaldığını belirt.",
+        "en": "If you wrote “I learned kata,” specify the original/written component completed and the traditional/physical components still open."
+      },
+      "retest": {
+        "tr": "Başlıkları kapatıp üç terimi ve tek sınırı yeniden yaz; emin olmadığın terimi açıkça işaretle.",
+        "en": "Hide the headings and rewrite the three terms and one boundary; mark any uncertain term explicitly."
+      }
+    },
+    {
+      "number": 2,
+      "id": "ka-02",
+      "prerequisiteIds": [
+        "ka-01"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0"
+      ],
+      "sourceIds": [
+        "K3"
+      ],
+      "title": {
+        "tr": "Alan, destek ve durma",
+        "en": "Space, support and stopping"
+      },
+      "teaching": {
+        "tr": "Yerdeki hareket yolu el yolundan uzundur. Başlangıç, ileri iki kısa yerleşme, sağa yön değişimi ve sıradan yürüyerek dönüş için boş alan düşün. Kâğıttaki plan fiziksel alan incelemesi değildir. Destek yüzeyinin sabitliğini ve hangi hareketleri destek bırakmadan yapabileceğini eğitmen belirler. Yardım gereksinimi eksiklik puanı değildir.",
+        "en": "The floor path extends beyond the hand path. Plan clear space for the start, two short forward settlements, a rightward direction change and ordinary walking return. A paper plan is not a physical space assessment. The instructor determines support stability and which movements can be done without releasing support. Needing help is not a negative score."
+      },
+      "physical_task": {
+        "tr": "P0 ileride karşılanırsa yalnız alanı ve rahat nötr giriş/çıkışı eğitmenle gözden geçir; şimdiki görev kâğıttadır.",
+        "en": "If P0 is met later, review only the space and comfortable neutral entry/exit with the instructor; the present task is on paper."
+      },
+      "written_task": {
+        "tr": "Oda taslağı çiz; engelleri, destek gereksinimini ve rahatça durabileceğin yeri belirt.",
+        "en": "Sketch the room; label obstacles, support needs and a comfortable stopping area."
+      },
+      "question": {
+        "tr": "Dönüşte ayak takılırsa bir sonraki tekrarı daha hızlı yapmak uygun mudur?",
+        "en": "If a foot binds during the turn, is a faster next attempt appropriate?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Hareket durur; güvenli çıkış ve kişisel uyarlama yeniden incelenir. Belirti veya belirsizlik varken fiziksel tekrar yoktur; yazılı görev seçilir.",
+        "en": "No. Stop movement and review safe exit and personal adaptation. There is no physical retest while symptoms or uncertainty remain; choose written work."
+      },
+      "correction": {
+        "tr": "“Boş alan var” yerine dönüş ve el yolları dahil hangi alanı kontrol edeceğini yaz.",
+        "en": "Replace “there is space” with the specific area to check, including turn and hand paths."
+      },
+      "retest": {
+        "tr": "Yeni hareket yapmadan taslağı yeniden anlat; durma nedenini ve destek bırakmama kuralını hatırla.",
+        "en": "Explain the sketch again without a new movement; recall the stopping reason and the rule against releasing support."
+      }
+    },
+    {
+      "number": 3,
+      "id": "ka-03",
+      "prerequisiteIds": [
+        "ka-02"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1"
+      ],
+      "sourceIds": [
+        "K4",
+        "K7"
+      ],
+      "title": {
+        "tr": "Rahat paralel başlangıç",
+        "en": "Comfortable parallel start"
+      },
+      "teaching": {
+        "tr": "Paralel hazırlıkta iki ayak ayrı izlerde, rahat kalça genişliği çevresinde ve zorlamadan öne bakar. Dizler kilitlenmez; gövde yükselir ama bel geriye itilmez. Baş rahatça ön yönü görür, omuzlar gevşek, eller dinlenir. Tam bir standart heikō-dachi görüntüsünü zorlamak yerine kişisel inceleme gerekir. Eğitmen farklı ayak yönü seçerse uyarlamayı açıkça adlandır.",
+        "en": "In parallel preparation, the feet occupy separate tracks around a comfortable hip-width spacing and face forward without force. Knees are not locked; the torso is upright without pushing the lower back backward. The head looks comfortably forward, shoulders relaxed, hands resting. Personal review comes before forcing an exact standard heikō-dachi appearance. If the instructor selects another foot direction, name the adaptation explicitly."
+      },
+      "physical_task": {
+        "tr": "P0/P1 ileride karşılanırsa bir kısa yerleşme ve rahat çıkış yap; derin çömelme veya uzun sabit bekleme yoktur.",
+        "en": "If P0/P1 are met later, make one short settlement and comfortable exit; no deep squat or prolonged static hold."
+      },
+      "written_task": {
+        "tr": "İki ayrı ayak izi çiz, diz ve gövde yönünü not et. Çizim fiziksel deneme sayılmaz.",
+        "en": "Draw two separate footprints and note knee and torso directions. A drawing is not a physical attempt."
+      },
+      "question": {
+        "tr": "Ayaklar tek çizgide veya dizler kilitli olmalı mı?",
+        "en": "Should the feet be on one line or the knees locked?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Ayrı rahat izler ve kilitlenmeyen dizler hazırlık ilkesidir; uygun açıklık ve yön kişisel incelemeye bağlıdır.",
+        "en": "No. Separate comfortable tracks and unlocked knees are preparation principles; suitable spacing and directions depend on individual review."
+      },
+      "correction": {
+        "tr": "Evrensel santimetre veya açı yazdıysan çıkar; hangi kişisel konumun inceleneceğini belirt.",
+        "en": "If you wrote a universal centimeter distance or angle, remove it and identify the personal position to review."
+      },
+      "retest": {
+        "tr": "Çizime bakmadan ayak, diz, gövde ve çıkış için birer cümle yaz.",
+        "en": "Without the drawing, write one sentence each for feet, knees, torso and exit."
+      }
+    },
+    {
+      "number": 4,
+      "id": "ka-04",
+      "prerequisiteIds": [
+        "ka-03"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1"
+      ],
+      "sourceIds": [
+        "K5"
+      ],
+      "title": {
+        "tr": "Seiken: el ve bilek ilişkisi",
+        "en": "Seiken: hand and wrist relationship"
+      },
+      "teaching": {
+        "tr": "Önce açık eli düşün. Dört parmağı rahatça avuç içine kıvır; başparmak parmakların içinde hapsolmaz, dışarıda işaret/orta parmağın katlanmış kısmı üstünde rahatça durur. El ve önkol arasında düz, rahat bilek ilişkisi korunur; bileği yukarı, aşağı veya yana kırarak konum arama. İşaret ve orta parmak kök boğumlarını tanı; hiçbir yüzeye vurma. Rahat kapanmayan el zorlanmaz.",
+        "en": "Start by considering an open hand. Curl the four fingers comfortably into the palm; the thumb is not trapped inside them and rests comfortably outside over the folded index/middle fingers. Maintain a straight comfortable wrist relationship between hand and forearm; do not seek position by bending the wrist up, down or sideways. Identify the index and middle base knuckles; strike no surface. Do not force a hand that cannot close comfortably."
+      },
+      "physical_task": {
+        "tr": "P0/P1 ileride karşılanırsa eğitmenin gözlediği bir rahat aç-kapa hazırlığı yap; sıkma, çarpma veya şınavla sınama yoktur.",
+        "en": "If P0/P1 are met later, make one comfortable open-close preparation observed by the instructor; no squeezing, impact or push-up test."
+      },
+      "written_task": {
+        "tr": "El şemasına başparmağı dışarıda ve bilek çizgisini işaretle; bilmediğin ayrıntıyı eğitmene sorulacak konu yap.",
+        "en": "Mark the thumb outside and the wrist line on a hand sketch; turn an unknown detail into an instructor question."
+      },
+      "question": {
+        "tr": "Başparmağı parmakların içine koymak veya bileği bükerek yumruğu yöneltmek bu hazırlığa uyar mı?",
+        "en": "Does placing the thumb inside the fingers or steering the fist by bending the wrist fit this preparation?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Başparmak dışarıda, bilek önkolla rahat düz ilişkide kalır. Şüphede çizim/yazı seçilir; hedefe vurarak doğrulama yapılmaz.",
+        "en": "No. The thumb remains outside and the wrist in a comfortable straight relationship with the forearm. Choose drawing/writing when uncertain; do not verify by striking a target."
+      },
+      "correction": {
+        "tr": "Bilek ile önkol dönmesini karıştırdıysan iki farklı hareketi ayrı yaz; rahatsızlığı düzeltilmiş teknik diye işaretleme.",
+        "en": "If you confused wrist bending and forearm rotation, describe them separately; do not mark discomfort as corrected technique."
+      },
+      "retest": {
+        "tr": "El çizimini kapatıp başparmak, bilek ve temas sınırını yeniden anlat.",
+        "en": "Hide the hand drawing and explain thumb, wrist and the contact boundary again."
+      }
+    },
+    {
+      "number": 5,
+      "id": "ka-05",
+      "prerequisiteIds": [
+        "ka-04"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "sourceIds": [
+        "K6"
+      ],
+      "title": {
+        "tr": "Hikite ve sakin el değişimi",
+        "en": "Hikite and quiet hand exchange"
+      },
+      "teaching": {
+        "tr": "Hikite burada geri gelen elin hazırlık konumudur, rakip çekme uygulaması değildir. Paralel hazırlıkta bir dirsek gövdeye yakın rahatça bükülür, yumruk alt kaburga yanına avuç yukarı gelecek rahatlıkta gelir; omuz geriye sıkılmaz, dirsek arkaya zorlanmaz. Diğer el önde küçük, yumuşak dirsekli bir yolda olabilir. Ellerin görevini yavaşça değiştir: biri öne giderken diğeri yan hazırlığa gelir. Bilek bükülmez; yol kısa ve rahat tutulur.",
+        "en": "Hikite here is the returning hand’s preparation position, not a partner-pulling application. In parallel preparation, one elbow bends comfortably near the torso and the fist comes beside the lower ribs with a comfortable palm-up orientation; do not squeeze the shoulder back or force the elbow behind. The other hand can occupy a small forward path with a soft elbow. Exchange roles slowly: one goes forward while the other returns beside the body. Keep the wrist unbent and the path short and comfortable."
+      },
+      "physical_task": {
+        "tr": "P0–P2 ileride karşılanırsa bir ayrı el değişimi yap; keskin çekiş veya gövde savurma yoktur. Destek gerekiyorsa iki el değişimi yapılmaz.",
+        "en": "If P0–P2 are met later, make one separate hand exchange; no sharp pull or torso swing. Do not exchange both hands if support is needed."
+      },
+      "written_task": {
+        "tr": "Sağ el öne giderken sol elin, sonra tersinin görevini iki okla çiz.",
+        "en": "Draw two arrows for the left hand’s role while the right goes forward, then reverse the roles."
+      },
+      "question": {
+        "tr": "Geri eli olabildiğince arkaya çekmek mi gerekir?",
+        "en": "Must the returning hand be pulled as far behind as possible?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Rahat alt-kaburga yan hazırlığı ve sakin omuz korunur; maksimal çekiş veya partner uygulaması hedef değildir.",
+        "en": "No. Retain comfortable preparation beside the lower ribs and a quiet shoulder; maximal pulling or partner application is not the goal."
+      },
+      "correction": {
+        "tr": "Omuz sıkma veya bilek kırma yazdıysan el yolu ile rahat hazırlık konumunu yeniden ayır.",
+        "en": "If you described shoulder squeezing or wrist bending, separate the hand path and comfortable preparation position again."
+      },
+      "retest": {
+        "tr": "Okları kapatıp iki elin değişen görevini yaz; emin değilsen bunu kaydet.",
+        "en": "Hide the arrows and write the changing roles of both hands; record uncertainty if present."
+      }
+    },
+    {
+      "number": 6,
+      "id": "ka-06",
+      "prerequisiteIds": [
+        "ka-05"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "sourceIds": [
+        "K5",
+        "K6",
+        "K7"
+      ],
+      "title": {
+        "tr": "Yerinde choku-zuki hazırlığı",
+        "en": "Stationary choku-zuki preparation"
+      },
+      "teaching": {
+        "tr": "Yerinde hazırlık, adım eklemeden el yolunu öğrenir. Paralel başlangıçtan yan hazırlıktaki yumruğu gövdenin önündeki boş orta-yükseklik yoluna yavaşça götür; diğer el aynı anda sakin hikiteye gelir. Dirsek aşağıya rahat yönlenir ve sona yaklaşırken yumuşak kalır. Önkol rahatça dönerek avucu aşağı yaklaştırabilir; bilek düz ilişkisini kaybetmez. Dirseği sonuna vurma, omzu yükseltme veya hız için gövdeyi savurma. Küçük duruş sonrası aynı yoldan rahat hazırlığa dön.",
+        "en": "Stationary preparation studies the hand path without adding a step. From the parallel start, move the chambered fist slowly into empty space on a middle-height path in front of the torso; the other hand comes quietly to hikite. The elbow points comfortably downward and remains soft near the end. Comfortable forearm rotation can bring the palm toward downward; retain the straight wrist relationship. Do not strike the elbow’s endpoint, raise the shoulder or swing the torso for speed. After a small pause, return comfortably along the same path to preparation."
+      },
+      "physical_task": {
+        "tr": "P0–P2 ileride karşılanırsa eğitmenle bir yavaş kısa sağ, sonra bir sol hazırlık seç; hedef, son hız ve darbe yoktur.",
+        "en": "If P0–P2 are met later, select one slow short right preparation and then one left with the instructor; no target, maximum speed or impact."
+      },
+      "written_task": {
+        "tr": "El, diğer el, dirsek, bilek ve dönüş için beş kısa not yaz.",
+        "en": "Write five short notes for hand, opposite hand, elbow, wrist and return."
+      },
+      "question": {
+        "tr": "Avuç yönü değişirken bileği kırmak veya dirseği kilitlemek gerekir mi?",
+        "en": "Does changing palm orientation require bending the wrist or locking the elbow?"
+      },
+      "answer_key": {
+        "tr": "Hayır. Rahat dönüş önkoldadır; bilek düz ilişkisini, dirsek yumuşak bitişi korur. Çalışma temas yeteneğini kanıtlamaz.",
+        "en": "No. Comfortable rotation is in the forearm; the wrist retains its straight relationship and the elbow its soft endpoint. The task does not prove impact ability."
+      },
+      "correction": {
+        "tr": "Yalnız öne gidişi yazdıysan diğer elin yerini ve sakin geri dönüşü ekle.",
+        "en": "If you described only the outward path, add the opposite hand’s position and quiet return."
+      },
+      "retest": {
+        "tr": "Beş notu kapatıp sırayı yeniden yaz; fiziksel tekrar ancak aynı P önkoşulları sürerse düşünülebilir.",
+        "en": "Hide the five notes and rewrite the order; a physical retest is considered only with the same P prerequisites retained."
+      }
+    },
+    {
+      "number": 7,
+      "id": "ka-07",
+      "prerequisiteIds": [
+        "ka-06"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "sourceIds": [
+        "K3",
+        "K7"
+      ],
+      "title": {
+        "tr": "Gördüğünü ve bilmediğini ayır",
+        "en": "Separate observation from uncertainty"
+      },
+      "teaching": {
+        "tr": "Bir yazılı yanıt teknik gözlem değildir. El yolunu anlatabilirsin ama kendi bilek veya diz konumunu görmediysen “bilmiyorum” dersin. Geri dönüş, diğer el ve rahat nefes dışarı gidiş kadar önemlidir. Bir kusuru hız artırarak örtemezsin. Oturarak açık el yolu çizmek hazırlık fikrini anlatabilir; ayakta karate tekniği kabulü sayılmaz.",
+        "en": "A written answer is not technical observation. You can describe the hand path, but if you did not observe your wrist or knee position, say “I do not know.” Recovery, the other hand and comfortable breathing matter alongside the outward path. Increasing speed cannot conceal a problem. A seated open-hand trace may explain the preparation idea; it does not count as acceptance of standing karate technique."
+      },
+      "physical_task": {
+        "tr": "P0–P2 ileride karşılanırsa önceki küçük görevi yalnız eğitmenin seçtiği tek odağa göre gözle; yeni hareket ekleme.",
+        "en": "If P0–P2 are met later, observe the preceding small task only for one focus selected by the instructor; add no new movement."
+      },
+      "written_task": {
+        "tr": "“Yazılı hatırladım / gerçekten gözlendi / bilinmiyor” başlıklarıyla üç satır oluştur.",
+        "en": "Create three rows headed “recalled in writing / actually observed / not known.”"
+      },
+      "question": {
+        "tr": "Dirsek konumunu görmedin ama yanıtın anahtara uydu. Ne kaydedersin?",
+        "en": "You did not observe elbow position, but your answer matched the key. What do you record?"
+      },
+      "answer_key": {
+        "tr": "Yazılı karşılaştırma yaptım; dirsek ve fiziksel teknik doğrulanmadı. Gözlenen sorun varsa somut düzeltme yazılır; gözlenmediyse belirsizlik kaydı korunur.",
+        "en": "I compared the written answer; the elbow and physical technique are unverified. An observed problem permits a concrete correction; an unobserved component retains an uncertainty record."
+      },
+      "correction": {
+        "tr": "Boş gözlem yerine doğru kabulü yazdıysan “gözlenmedi” ile değiştir; bir sonraki geri bildirim sorusunu belirt.",
+        "en": "If you substituted assumed correctness for missing observation, replace it with “unobserved” and state the next feedback question."
+      },
+      "retest": {
+        "tr": "İkinci bir örneği yazılı sınıflandır: “Diğer elim görünmedi.” Belirsizliği geçme işareti yapma.",
+        "en": "Classify a second example in writing: “My other hand was not visible.” Do not turn uncertainty into a passing mark."
+      }
+    },
+    {
+      "number": 8,
+      "id": "ka-08",
+      "prerequisiteIds": [
+        "ka-07"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3"
+      ],
+      "sourceIds": [
+        "K4",
+        "K9"
+      ],
+      "title": {
+        "tr": "Kısa ön duruş hazırlığı",
+        "en": "Short front-position preparation"
+      },
+      "teaching": {
+        "tr": "Bu, zenkutsu-dachi için kısa hazırlıktır; tam standart duruş kabulü değildir. Paralel başlangıçtan sol ayağı kendi sol izinde rahat küçük miktar öne al; sağ ayak ayrı sağ izde geride kalır. Ön diz kendi ayağın yönüyle ilişkisini korur; içeri çökme veya sabit taban üstünde diz/gövdeyi burma. Arka diz yumuşak, topuk ve taban ilişkisi rahat, gövde sakin olsun. Evrensel açı, diz derinliği veya ağırlık yüzdesi yoktur; kişisel konum eğitmen incelemesi ister. Bu önerinin seçilmiş nötr çıkışı şudur: önce elleri yanlarda dinlendir ve dur; sol ön ayak yerini korurken sağ arka ayağı kendi sağ izinde kaldırıp küçük öne adımla sol ayağın hizasına koy, önüne geçirme. İki ayak rahat genişlikte paralel yerleşir; tam dur. Sağ-ön konumda bunun tersi: sağ ön ayak yerinde, sol arka ayak kendi sol izinde öne gelip onun hizasına yerleşir. Ayakları birleştirme, çaprazlama, sıçrama veya yüklü tabanı döndürme yoktur. Çıkış ilerideki boşluğu da kullanır; yer veya rahatlık yoksa bu şemayı fiziksel olarak deneme. Bu somut ayak sırası özgün kısa hazırlık uyarlamasıdır ve P3 incelemesi ister.",
+        "en": "This is shortened preparation for zenkutsu-dachi, not acceptance of the full standard stance. From the parallel start, move the left foot a comfortable small amount forward on its own left track; the right remains behind on a separate right track. The front knee retains its relationship with the foot direction; do not collapse inward or twist the knee/torso over a planted sole. Keep the rear knee soft, heel/sole relationship comfortable and torso quiet. There is no universal angle, knee depth or load percentage; the personal position needs instructor review. This proposal selects the following neutral exit: first rest the hands at the sides and stop; keep the left front foot in place, lift the right rear foot and take a small forward step on its own right track until level with the left, without passing it. Both feet settle parallel at a comfortable width; stop completely. From right-forward, reverse this: right front foot stays, left rear foot advances on its own left track until level with it. No feet-together position, crossing, jump or rotation of a loaded sole. The exit also uses space ahead; if space or comfort is missing, do not attempt this diagram physically. This explicit foot order is an original short-preparation adaptation requiring P3 review."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3 ileride karşılanırsa bir sol-ön ve ayrı bir sağ-ön küçük hazırlığı gözlet; derinlik veya sabit bekleme hedefi yoktur.",
+        "en": "If P0/P1/P3 are met later, have one left-forward and a separate right-forward small preparation observed; no depth or static-hold target."
+      },
+      "written_task": {
+        "tr": "Sol-ön ve sağ-ön iki ayak şeması çiz. Her birinde sabit kalan ön ayağı, kendi izinde öne gelip onun hizasında duran arka ayağı, ayrı izleri ve tam durağı işaretle. Diz/ayak ilişkisini ve çıkış için öndeki boşluğu da yaz.",
+        "en": "Draw left-forward and right-forward footprint diagrams. In each, mark the front foot that stays, the rear foot advancing on its own track until level with it, the separate tracks and complete pause. Add the knee/foot relationship and space ahead for the exit."
+      },
+      "question": {
+        "tr": "Sol-ön konumdan bu önerinin nötr çıkışında hangi ayak hareket eder, nerede durur ve derin duruş kaynağı kişiye neyi dayatmaz?",
+        "en": "From left-forward, which foot moves in this proposal’s neutral exit, where does it stop, and what does a deep-stance source not prescribe for the individual?"
+      },
+      "answer_key": {
+        "tr": "Sol ön ayak yerinde kalır; sağ arka ayak kendi sağ izinde öne gelip sol ayağın hizasında, onu geçmeden durur. Sağ-ön için sağ ayak kalır, sol arka ayak kendi izinde öne gelip onun hizasında durur. Ayaklar rahat genişlikte ayrı/paralel; sonra tam durak. Derinlik, açı veya yük yüzdesi otomatik reçete değildir; bu kısa çıkışın kişisel uygunluğu da P3 ile incelenmelidir.",
+        "en": "The left front foot stays; the right rear foot advances on its own right track and stops level with the left without passing it. From right-forward, the right stays and the left rear foot advances on its own track until level with it. Feet remain separate/parallel at a comfortable width; then a complete pause. Depth, angle or load percentage is not an automatic prescription; personal suitability of this short exit also needs P3 review."
+      },
+      "correction": {
+        "tr": "Ön ayağı geriye çektin, arka ayağı öne geçirdin veya ayakları çaprazladın diye çizdiysen seçilmiş arka-ayak-hizaya çıkışını yeniden yaz. Diz ile ayak farklı yöne zorlanıyorsa durma/uyarlama konusu diye kaydet; kâğıt düzeltmesi fiziksel izin değildir.",
+        "en": "If your drawing pulls the front foot backward, passes the rear foot ahead or crosses the feet, rewrite the selected rear-foot-to-level exit. If the knee and foot are forced in different directions, record a stop/adaptation issue; a paper correction does not authorize physical practice."
+      },
+      "retest": {
+        "tr": "İki şemayı kapatıp ön ayak yerinde → arka ayak kendi izinde öne/hizaya → iki ayak yerleşir → dur sırasını iki taraf için yaz.",
+        "en": "Hide both diagrams and write front foot stays → rear foot advances on its own track to level → both feet settle → stop for both sides."
+      }
+    },
+    {
+      "number": 9,
+      "id": "ka-09",
+      "prerequisiteIds": [
+        "ka-08"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3"
+      ],
+      "sourceIds": [
+        "K4",
+        "K6"
+      ],
+      "title": {
+        "tr": "Arka ayağı kendi izinde öne geçir",
+        "en": "Pass the rear foot on its own track"
+      },
+      "teaching": {
+        "tr": "Sol kısa ön hazırlıktan sağdaki arka ayak yavaşça kaldırılıp kendi sağ izi boyunca sol ayağın ilerisindeki rahat sağ-ön konuma alınır. Ayağı yerde sürükleyerek veya sol ayağın üstünden çaprazlayarak geçirme; tabanı sabit tutup dizi çevirme. Önce ayaklar yerleşir, dizler rahat ilişkiye gelir ve gövde durur; eller yeni teknik yapmaz. Sağ-ön başlangıçtan soldaki arka ayak kendi sol izinde geçer. Geri dönüş geriye kör bir adım değil, nötre çıkıp alanı görerek sıradan küçük yürüyüştür.",
+        "en": "From the short left-forward preparation, lift the right rear foot slowly and take it along its own right track into a comfortable right-forward position beyond the left foot. Do not drag it on the floor or cross it over the left foot; do not turn the knee while keeping the sole planted. First settle the feet, restore comfortable knee relationships and stop the torso; the hands add no technique. From a right-forward start, the left rear foot passes on its own left track. Return by exiting to neutral and making small ordinary walking steps while seeing the space, rather than a blind backward step."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3 ileride karşılanırsa yalnız bir kısa geçiş ve nötr çıkış seç; denge belirsizliğinde başka tekrar yoktur.",
+        "en": "If P0/P1/P3 are met later, select only one short passing step and neutral exit; no additional attempt under uncertain balance."
+      },
+      "written_task": {
+        "tr": "Sol-ön→sağ-ön ve sağ-ön→sol-ön için iki ayrı iz çiz. Yerleşme durağını işaretle.",
+        "en": "Draw separate tracks for left-forward→right-forward and right-forward→left-forward. Mark the settling pause."
+      },
+      "question": {
+        "tr": "Sol ayak öndeyken ileri geçen ayak hangisi ve hangi izde?",
+        "en": "With the left foot forward, which foot passes forward and on which track?"
+      },
+      "answer_key": {
+        "tr": "Sağ arka ayak kendi sağ izinde geçer, sağ ön konumda durulur. Sağ ön başlangıçta bunun karşılığı sol ayaktır; ayaklar çaprazlanmaz.",
+        "en": "The right rear foot passes on its own right track, settling right-forward. From a right-forward start, the corresponding foot is the left; do not cross the feet."
+      },
+      "correction": {
+        "tr": "Boksun takip adımıyla karıştırdıysan bu hazırlıkta arka ayağın öne geçtiğini ve yeni ön tarafı yaz.",
+        "en": "If you confused this with a boxing follow-step, write that the rear foot passes forward here and identify the new forward side."
+      },
+      "retest": {
+        "tr": "Şemaya bakmadan iki başlangıcın sonucunu yaz; hareketi daha hızlı hayal ederek boşluğu kapatma.",
+        "en": "Without the diagram, write the outcome for both starts; do not fill the gap by imagining faster movement."
+      }
+    },
+    {
+      "number": 10,
+      "id": "ka-10",
+      "prerequisiteIds": [
+        "ka-09"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "sourceIds": [
+        "K5",
+        "K6",
+        "K10"
+      ],
+      "title": {
+        "tr": "Adım–yerleş–aynı yan el",
+        "en": "Step–settle–same-side hand"
+      },
+      "teaching": {
+        "tr": "Oi-zuki hazırlığında öne gelen ayağın yanındaki el kullanılır. Bu ayrılmış hazırlıkta iki yumruk önce rahat alt-kaburga yan hazırlığındadır; dirsekler gövdeye yakın, omuzlar sakin, avuçlar rahatça yukarı yönlenir. Sol-ön duruştan sağ arka ayak kendi izinde geçer; sağ-ön konumda tamamen yerleş ve dur. Sonra sağ yumruk sağ yan hazırlıktan kısa düz yola gider; sol el sol hikitede sakin kalır. Duraktan sonra sağ dirseği rahat büküp sağ yumruğu aynı kısa yol üzerinden sağ alt-kaburga yanına geri getir; önkol rahatça avucu yukarı yaklaştırır, bilek düz ilişkiyi korur. Sağ-ön başlangıçta sol ayak geçer; yerleşmeden sonra sol el çalışıp aynı yoldan sol yan hazırlığa döner, sağ hikite sakin kalır. Ayrı görev biterken ders 8’in arka-ayak-hizaya çıkışını kullan; KA-P1 içinde ise açıklanan sonraki birimi izle. Adım ve el burada bilinçli ayrılır; iki elin yan hazırlığa dönmesi de bu önerinin sıfırlamasıdır. Geleneksel oi-zuki zamanlamasının tam gösterimi veya uygulama kabulü değildir.",
+        "en": "Oi-zuki preparation uses the hand on the side of the foot that comes forward. In this separated preparation, both fists start comfortably beside the lower ribs; elbows remain near the torso, shoulders quiet and palms comfortably toward upward. From left-forward, the right rear foot passes on its own track; settle completely and stop right-forward. Then the right fist travels from its right-side preparation on a short straight path; the left stays quietly in left hikite. After a pause, bend the right elbow comfortably and bring the right fist back along the same short path beside the right lower ribs; comfortable forearm rotation brings the palm toward upward while retaining the straight wrist relationship. From right-forward, the left foot passes; after settling, the left works and returns along the same path to left-side preparation while right hikite stays quiet. When the separate task ends, use lesson 8’s rear-foot-to-level exit; within KA-P1, follow its specified next unit. Step and hand are deliberately separated; returning both hands to side preparation is also this proposal’s reset. This is not a full demonstration or application acceptance of traditional oi-zuki timing."
+      },
+      "physical_task": {
+        "tr": "P0–P4 ilgili kayıtları ileride varsa bir adım, tam durak, aynı yan el ve çıkış yap; yumruk giderken adım kovalanmaz.",
+        "en": "If the relevant P0–P4 records exist later, make one step, complete pause, same-side hand preparation and exit; do not chase a moving punch with the step."
+      },
+      "written_task": {
+        "tr": "İki başlangıç için “geçen ayak → yeni ön taraf → el” zinciri yaz.",
+        "en": "Write “passing foot → new forward side → hand” for each start."
+      },
+      "question": {
+        "tr": "Sol-ön başlangıçtan sağ ayak geçti. Bu hazırlıkta hangi el ve ne zaman?",
+        "en": "From left-forward, the right foot passed. Which hand, and when, in this preparation?"
+      },
+      "answer_key": {
+        "tr": "Yerleşip durduktan sonra sağ el. Ters başlangıçta sol ayak sonrası sol el. Önce yerleşme, sonra el; bu ayrılmış hazırlıktır.",
+        "en": "The right hand after settling and stopping. From the opposite start, the left hand follows the left foot. Settle first, then the hand; this is separated preparation."
+      },
+      "correction": {
+        "tr": "Karşı yan el yazdıysan yeni ön ayağı yeniden işaretle; elin bilek/dirsek ve geri dönüş sınırlarını da koru.",
+        "en": "If you wrote the opposite hand, mark the new forward foot again; retain wrist/elbow and recovery limits for the hand."
+      },
+      "retest": {
+        "tr": "Önce yalnız yazılı ayak-el eşlemesini tekrar et. Fiziksel tekrar aynı kayıtlar olmadan açılmaz.",
+        "en": "Retest only the written foot-hand match first. A physical retest does not open without the same records."
+      }
+    },
+    {
+      "number": 11,
+      "id": "ka-11",
+      "prerequisiteIds": [
+        "ka-10"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P5"
+      ],
+      "sourceIds": [
+        "K5",
+        "K8",
+        "K6",
+        "K10"
+      ],
+      "title": {
+        "tr": "Gedan-barai yolunu hazırlamak",
+        "en": "Prepare the gedan-barai path"
+      },
+      "teaching": {
+        "tr": "Bu seçilmiş hazırlığın başlangıç ve toparlama konumu iki yumruğun rahat alt-kaburga yanlarında olmasıdır; her dirsek kendi yanında gövdeye yakın, avuç rahatça yukarı yönlenir. Sol kısa ön konumda sol yumruğu rahat bükülü dirsekle göğsün önünden sağ omuz yakınına getir; yüz/boğaza dokunma. Sağ el önde küçük yumuşak hazırlığa gider. Sol önkol gövdeye yakın rahat aşağı-dış yol izleyip sol ön uyluğun üstünde boşlukta durur; bacağa vurmaz. Dirsek yumuşak ve bilek düz ilişkidedir; bu öneride bitiş avucu rahatça aşağı yaklaştırır. Sağ yumruk sağ alt-kaburga hikitesine döner. Dur. Sonra sol dirseği kendi sol yanında rahat bükerek sol yumruğu uyluk üstündeki boş bitişten gövdeye yakın kısa yukarı-geri yolla sol alt-kaburga yanına getir; önkol rahatça avucu yukarı yaklaştırır. Sağ yumruk sağ hikitede sakin kalır. Böylece iki el tanımlı başlangıç konumuna döner; sol el yüzün önünden veya tekrar sağ omuzdan dolaşmaz. Sağ-ön tarafta sağ kol sol omuz yakınına hazırlanır ve sağ uyluk üstüne iner; sol el sol hikiteye döner. Duraktan sonra sağ yumruk kendi sağ yanında aynı kısa yukarı-geri yolla sağ alt-kaburgaya döner, sol hikite kalır. Sonraki oi-zuki öncesinde iki yumruk bu yan hazırlıklarda bekler; yeni ön taraftaki el ancak ayak yerleşmesinden sonra uzar. Bu açık toparlama, küçük statik yol ve avuç/bitiş seçimi özgün uyarlamadır; P2/P5 incelemesi ister, gelen darbeyi engelleme iddiası yoktur.",
+        "en": "The selected starting and recovery position has both fists comfortably beside the lower ribs; each elbow stays near its own side of the torso and each palm points comfortably toward upward. In short left-forward position, bring the left fist across the front of the chest toward the right shoulder with a comfortably bent elbow; do not touch the face/throat. The right hand moves to a small soft forward preparation. Keeping near the torso, the left forearm follows a comfortable down-and-out path and stops in empty space above the left front thigh, without hitting the leg. Keep the elbow soft and the wrist in its straight relationship; this proposal brings the ending palm comfortably toward downward. The right fist returns to right lower-rib hikite. Pause. Then bend the left elbow comfortably at its own left side and move the left fist from the empty endpoint above the thigh on a short up-and-back path near the torso to the left lower ribs; comfortable forearm rotation brings its palm toward upward. The right stays quiet in right hikite. Both hands thus return to the defined start; the left does not circle in front of the face or via the right shoulder again. On the right-forward side, the right prepares near the left shoulder and descends above the right thigh; the left returns to left hikite. After the pause, the right fist follows the same short up-and-back path at its own right side to the right lower ribs while left hikite stays. Before the next oi-zuki, both fists wait in these side preparations; only the hand on the new forward side extends after the foot settles. This explicit recovery, small static path and palm/endpoint choice are original adaptations requiring P2/P5 review; no incoming-strike interception is claimed."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P2/P3/P5 ileride karşılanırsa eğitmenin seçtiği tek kısa kol yolu yap; partner, tekme, sert çekiş veya kalça çarpması yoktur.",
+        "en": "If P0/P1/P2/P3/P5 are met later, make one short arm path selected by the instructor; no partner, kick, sharp pull or hip snap."
+      },
+      "written_task": {
+        "tr": "İki taraf için iki el yan hazırlıkta → çapraz hazırlık/diğer el küçük önde → aşağı yol/diğer el hikite → dur → çalışan el kendi yanında yukarı-geri/hikite eli yerinde → iki el yan hazırlıkta okları çiz. Her elde bitiş kaburgasını ve avuç yönünü yaz.",
+        "en": "For both sides, draw both hands in side preparation → across-body preparation/other hand slightly forward → downward path/other hand hikite → pause → working hand up-and-back at its own side/hikite hand stays → both hands in side preparation. Label each hand’s finishing ribs and palm orientation."
+      },
+      "question": {
+        "tr": "Sol aşağı-yol bitişinden sonra hangi el, hangi yolla nereye toparlanır; sağ el ne yapar ve bu neyi kanıtlamaz?",
+        "en": "After the left downward-path endpoint, which hand recovers along which path to where; what does the right do, and what does this not prove?"
+      },
+      "answer_key": {
+        "tr": "Sol el önce sol ön uyluk üstünde boşlukta durur; sağ el sağ alt-kaburga hikitesindedir. Sol dirsek kendi sol yanında rahat bükülür, sol yumruk gövdeye yakın kısa yukarı-geri yolla sol alt-kaburgaya gelir, avuç rahatça yukarı yaklaşır; sağ hikite yerinde kalır. İki el başlangıç yan hazırlıklarına döner. Sağ taraf bunun tersidir. Temas/engelleme veya geleneksel tam teknik kabulü kanıtlanmaz; toparlama ve el yönü/bitişi P2/P5 incelemesi ister.",
+        "en": "The left first pauses in empty space above the left front thigh; the right is in right lower-rib hikite. Bend the left elbow comfortably at its own left side and bring the left fist on a short up-and-back path near the torso to the left lower ribs, palm comfortably toward upward; right hikite stays. Both hands return to their starting side preparations. Reverse for the right side. This proves neither contact/interception nor acceptance of the full traditional technique; recovery and palm/endpoint need P2/P5 review."
+      },
+      "correction": {
+        "tr": "“Elleri geri al” tek başına yeterli değildir: çalışan elin kendi tarafını, kısa yukarı-geri yolunu ve alt-kaburga bitişini; diğer hikite elinin yerinde kaldığını ekle. Bacağa vurma, yüz önünden dolaşma, sert omuz çekişi veya başarılı savunma yazdıysan bunları boşluk/yumuşak bitiş ve gözlenmemiş uygulama sınırıyla düzelt.",
+        "en": "“Return the hands” alone is insufficient: add the working hand’s own side, short up-and-back path and lower-rib endpoint, and the other hikite hand staying. If you wrote leg impact, circling in front of the face, sharp shoulder pulling or successful defense, correct these to the empty-space soft endpoint and unobserved application boundary."
+      },
+      "retest": {
+        "tr": "Okları kapatıp iki tarafın toparlamasını ve sonraki oi-zuki öncesi iki yumruğun konumunu yaz. Belirsiz yön/yolu fiziksel tekrar yerine eğitmen sorusu yap.",
+        "en": "Hide the arrows and write recovery on both sides plus both fists’ positions before the next oi-zuki. Turn uncertain orientation/path into an instructor question rather than a physical retest."
+      }
+    },
+    {
+      "number": 12,
+      "id": "ka-12",
+      "prerequisiteIds": [
+        "ka-11"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P3",
+        "P6"
+      ],
+      "sourceIds": [
+        "K1",
+        "K4",
+        "K9"
+      ],
+      "title": {
+        "tr": "Yürüyerek sağa çeyrek dönüş",
+        "en": "Walking right quarter-turn"
+      },
+      "teaching": {
+        "tr": "Bu yön çalışması geleneksel kata pivotu değildir. Önce eller yanlarda dinlenir; kısa ön konumdan ders 8’in arka-ayak-hizaya çıkışıyla paralel nötre gel ve dur. Bu önerinin sağa çeyrek yürüyüş dönüşü dört ayak yerleştirmesidir: sağ → sol → sağ → sol. Başlangıç önü N, hedef kendi sağı E’dir. (1) Sağ ayağı kaldırıp küçük ileri-sağ yere, N ile E arasındaki ara yöne bakacak rahatlıkta koy. (2) Sol ayağı kaldırıp küçük ilerlet, sağ ayağın sol yanında ayrı izde aynı ara yöne yerleştir. (3) Sağ ayağı kaldırıp kısa kıvrılan yolun devamına, E’ye yönelen rahat yere koy. (4) Sol ayağı kaldırıp sağ ayağın sol yanında onun hizasına, E’ye yönelen paralel rahat yere koy. Her ayak yeri ayrı ve küçüktür; her yerleşmede sakinleş, sonda iki ayak yerleşince tam dur. Yönü değiştiren ayak önce kalkar; diğer taban yüklüyken onu sürükleyip burma veya gövdeyle zorla çevirme. Çaprazlama, sıçrama ve dönerek vuruş yoktur. Adım açısı/uzunluğu ve destek uygunluğu kişisel P3/P6 incelemesi ister; şemayı zorla dört adıma sığdırma, uymuyorsa yalnız yazılı kal. E’de durduktan sonra ayrı sağ-ön hazırlık sağ ayağın kendi izinde küçük öne alınmasıyla başlar. Ayrı çıkışta sola çeyrek yürüyüş gerekiyorsa aynası sol → sağ → sol → sağdır: ilk iki ayak ara sola yöne, son iki ayak hedef yöne; son sağ ayak solun sağ yanında hizaya gelir. Yarım yürüyüş dönüşü iki aynı-yön çeyrek dizisidir, sabit taban pivotu değildir. Bunlar özgün yön hazırlıklarıdır; gösterilmiş veya fiziksel kabul edilmiş değildir.",
+        "en": "This orientation task is not a traditional kata pivot. First rest the hands at the sides; use lesson 8’s rear-foot-to-level exit from the short front position to parallel neutral and stop. This proposal’s walking right quarter-turn has four foot placements: right → left → right → left. Initial forward is N; the target on your own right is E. (1) Lift the right foot and place it a small amount forward-right, comfortably pointing toward the intermediate direction between N and E. (2) Lift and advance the left a small amount, keeping it on a separate track to the left of the right, pointing toward the same intermediate direction. (3) Lift the right and place it farther along the short curved path, comfortably toward E. (4) Lift the left and place it level on the left side of the right, parallel and comfortably toward E. Keep each placement separate and small; settle quietly at each placement and stop completely once both feet are settled at the end. The foot changing direction lifts first; do not drag/twist the other loaded sole or force it around with the torso. No crossing, jump or turning strike. Step angles/lengths and support suitability require personal P3/P6 review; do not force the diagram into four steps, and remain written-only if it does not fit. After stopping at E, separate right-forward preparation starts by moving the right foot a small amount forward on its own track. When the separate exit needs a walking left quarter-turn, mirror it as left → right → left → right: first two placements toward the intermediate leftward direction, last two toward the target; the final right foot comes level on the right side of the left. A walking half-turn is two same-direction quarter sequences, not a planted pivot. These are original orientation preparations, with no demonstration or physical acceptance supplied."
+      },
+      "physical_task": {
+        "tr": "P0/P1/P3/P6 ileride karşılanırsa eller dinlenirken tek yön değişimi ve tam durak seç; desteği bırakma gerekiyorsa görev değişir.",
+        "en": "If P0/P1/P3/P6 are met later, select one direction change and full stop with the hands resting; if it requires releasing support, change the task."
+      },
+      "written_task": {
+        "tr": "N, kendi sağı E ve aradaki ara yönü çiz. Nötr çıkışı, sağ-sol-sağ-sol dört yeni ayak yerini ve E’de tam durağı numaralandır; ayak izleri çaprazlanmasın. Sola çıkış aynasını sol-sağ-sol-sağ olarak ayrı yaz.",
+        "en": "Draw N, your own right E and the intermediate direction. Number the neutral exit, four new right-left-right-left footprints and complete pause at E; do not cross the tracks. Write the leftward exit mirror separately as left-right-left-right."
+      },
+      "question": {
+        "tr": "N’den E’ye seçilmiş yürüyüşte ayak sırası ve son yerleşme nedir; yüklü tabanı döndürmek uygun mudur?",
+        "en": "In the selected walk from N to E, what is the foot order and final settlement; is rotating a loaded sole appropriate?"
+      },
+      "answer_key": {
+        "tr": "Önce nötr çıkış ve durak. Sağ-sol iki küçük yerleştirme ara yöne, sağ-sol iki yerleştirme E’ye; son sol ayak sağın sol yanında hizalanır, iki ayak paralel yerleşir ve tam durulur. Yüklü taban burulmaz; yön değişen ayak kaldırılarak yeniden yerleşir. Sola aynası sol-sağ-sol-sağ, son sağ ayak solun sağ yanında hizadadır. Bu özgün yürüyüş şeması geleneksel pivot kabulü değildir.",
+        "en": "First neutral exit and a pause. Two small right-left placements toward the intermediate direction, then two right-left placements toward E; the final left comes level on the left side of the right, both feet settle parallel and stop completely. Do not twist a loaded sole; lift and relocate the foot changing direction. The leftward mirror is left-right-left-right, ending with the right level to the right of the left. This original walking diagram is not acceptance of a traditional pivot."
+      },
+      "correction": {
+        "tr": "Aynadaki sağ/solu, tek sabit ayak pivotunu veya belirsiz “küçük adımlar” ifadesini kullandıysan beden yönlerini ve dört ayak yerini yeniden etiketle. Kişisel uygunluk belirsizken kâğıt çizimiyle fiziksel izin verme.",
+        "en": "If you used mirrored right/left, a single planted-foot pivot or vague “small steps,” relabel the body directions and four foot placements. Do not use a paper diagram to authorize physical practice while personal suitability is uncertain."
+      },
+      "retest": {
+        "tr": "Ayağı hareket ettirmeden nötr çıkış → sağ-sol-sağ-sol → E’de dur sırasını ve sola çıkış aynasını hafızadan yaz.",
+        "en": "Without moving the feet, recall neutral exit → right-left-right-left → stop at E, plus the leftward exit mirror."
+      }
+    },
+    {
+      "number": 13,
+      "id": "ka-13",
+      "prerequisiteIds": [
+        "ka-12"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "sourceIds": [
+        "K1",
+        "K2",
+        "K4",
+        "K9"
+      ],
+      "title": {
+        "tr": "KA-P1 zemin planını oku",
+        "en": "Read the KA-P1 floor plan"
+      },
+      "teaching": {
+        "tr": "KA-P1 İki çizgi altı özgün çalışma birimidir. A başlangıç alanı, B ilk sol-ön yerleşme, C sağ ayağın ileri geçişinden sonraki alan, D E yönündeki sol ileri geçiş sonrası alandır. Bunlar tek ayak hedefi değil beden alanlarıdır; iki ayak ayrı izlerde kalır. C alanı arka ayağın hizaya gelişi, dört ayaklı sağ yürüyüş dönüşü ve ayrı sağ-ön hazırlığı; D alanı nötr bitiş ve dizi sonrası yürüyüş dönüşünü de kapsayacak boşluk ister. Ayrı dönüş yolu D→C batı W, C→A güney S, sonunda A’da N’dir; bu yönler başlangıçtaki N/E’ye bağlı kâğıt işaretleridir, pusula zorunluluğu değildir. Ders 15 bu çıkışın ayak sırasını verir. Bu önerinin kâğıt dönüş şeması her düz parçada sağ-sol iki ileri yerleştirme ve sağ ayağı solun hizasına getiren kapanıştır; bu küçük adımların yerlerini alanların boşluğuna göre önceden çiz, çaprazlatma. Eğitmen kişisel küçük uzunlukları ve yeterli boşluğu incelemelidir; yetersiz odada yolu sıkıştırma. Bu seçilmiş ayak sırası sığmıyorsa uydurma adım ekleyip çıkış yapma; yazılı görev ve açık uyarlama sorusu olarak bırak. Planı aynalama; bugün yalnız yazılı sırayı kullan.",
+        "en": "KA-P1 Two lines has six original practice units. A is the starting area, B the first left-forward settlement, C the area after the right foot passes forward, and D the area after the left passes forward toward E. These are body areas, not single-foot targets; both feet retain separate tracks. C needs clearance for the rear foot coming level, the four-placement walking right turn and separate right-forward preparation; D also needs space for neutral finishing and the walking turn after the sequence. The separate return route is D→C west W, C→A south S, ending at A facing N; these are paper labels relative to initial N/E, not a required compass. Lesson 15 supplies the exit’s foot order. This proposal’s paper return template uses two forward right-left placements on each straight segment and a closing right foot brought level with the left; draw these small footprints within the areas’ clearance in advance without crossing. The instructor must review personal small lengths and adequate clearance; do not compress the path into an inadequate room. If the selected foot order does not fit, do not invent extra steps for an exit; retain a written task and open adaptation question. Do not mirror the plan; today use written sequencing only."
+      },
+      "physical_task": {
+        "tr": "Bütün ilgili P0–P6 kayıtları ileride varsa eğitmen alanları yalnız yürüyerek inceler; el dizisini ekleme.",
+        "en": "If all relevant P0–P6 records exist later, inspect the areas with the instructor through ordinary walking only; do not add the hand sequence."
+      },
+      "written_task": {
+        "tr": "A→B→C çizgisini N’ye, C→D çizgisini E’ye çiz. C/D dönüş boşluğunu, ayrı D→C W ve C→A S çıkışını, her düz çıkıştaki sağ-sol-sağ(hizaya) ayak izlerini ve A’daki N sonunu işaretle.",
+        "en": "Draw A→B→C toward N and C→D toward E. Mark C/D turning clearance, the separate D→C W and C→A S exit, right-left-right(to level) footprints on each straight exit segment, and the N finish at A."
+      },
+      "question": {
+        "tr": "A–D ayakları tek izde sıralayan hedefler veya kamera ölçümleri midir?",
+        "en": "Are A–D targets that stack feet on one track or camera measurements?"
+      },
+      "answer_key": {
+        "tr": "Hayır. A–D beden alanlarıdır; ayaklar ayrı izlerde, ölçüm/puan yoktur. C’de nötr çıkış ve N→E yürüyüş dönüşü vardır. Dizi D’de E’ye bakan nötr durakta biter. Ayrı çıkış D→C W, C→A S ve A’da yeniden N’dir; dönüşler için boşluk ve her düz parçada sağ-sol-sağ(hizaya) gerekir.",
+        "en": "No. A–D are body areas; feet use separate tracks with no measurement/score. C has neutral exit and the N→E walking turn. The sequence ends at D in neutral facing E. The separate exit is D→C W, C→A S and finally N again at A; it needs turning clearance and right-left-right(to level) on each straight segment."
+      },
+      "correction": {
+        "tr": "İki el yolunu veya dönüş boşluğunu sığdırmadıysan kâğıtta daha fazla alan gereksinimini belirt; fiziksel olarak sıkıştırma.",
+        "en": "If hand paths or turning clearance do not fit, record the greater space requirement on paper; do not compress them physically."
+      },
+      "retest": {
+        "tr": "Planı kapatıp A, B, C, D ve N/E ilişkisini kendi sözlerinle yeniden yaz.",
+        "en": "Hide the plan and rewrite A, B, C, D and the N/E relationship in your own words."
+      }
+    },
+    {
+      "number": 14,
+      "id": "ka-14",
+      "prerequisiteIds": [
+        "ka-13"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "sourceIds": [
+        "K6",
+        "K8",
+        "K10"
+      ],
+      "title": {
+        "tr": "İlk çizginin üç durağı",
+        "en": "Three pauses on the first line"
+      },
+      "teaching": {
+        "tr": "Birinci birim A’da N’ye bakan paralel hazırlık, eller yanlarda dinlenir, tam durak. İkinci birim: sol ayağı kendi izinde küçük öne al, B’de kısa sol-ön konumda tamamen yerleş ve dur. İki yumruğu rahat alt-kaburga yan hazırlıklarına getir; sonra ders 11’in sol gedan-barai hazırlığı ve sağ hikitesini yap, dur. Sol yumruğu sol uyluk üstündeki boş bitişten sol dirseği rahat bükerek kendi yanında kısa yukarı-geri yolla sol alt-kaburgaya getir; avuç rahatça yukarı yaklaşır, sağ yumruk sağ hikitede kalır. İki el artık yan hazırlıklardadır. Üçüncü birim: sağ arka ayak kendi sağ izinde öne geçer; C’de sağ-ön yerleş ve dur. Sağ yumruk sağ yan hazırlıktan kısa düz yola gider; sol hikite sakin kalır. Duraktan sonra sağ yumruğu aynı kısa yol üzerinden sağ alt-kaburgaya geri getir; bilek düz ilişkide, dirsek/omuz rahat, avuç rahatça yukarı yaklaşır. İki yumruk yan hazırlıklara dönmüş olarak dur. Bu üç birim özgün sıradır; ayak-yerleşme-el ayrılığı korunur. Tam dizide bu duraktan sonra ders 15’in dördüncü birimi izler. Yalnız üç-birim incelemesini bitirirken elleri dinlendir; sağ ön ayak yerinde, sol arka ayak kendi izinde öne sağın hizasına gelir ve nötrde dur. Bu ayrı çıkış üç birimin parçası değildir; dönüş eklenmez.",
+        "en": "Unit one at A faces N in parallel preparation, hands resting at the sides, with a complete pause. Unit two: move the left foot a small amount forward on its own track, settle fully left-forward at B and stop. Bring both fists comfortably to lower-rib side preparations; then perform lesson 11’s left gedan-barai preparation and right hikite, and pause. From the empty endpoint above the left thigh, bend the left elbow comfortably and bring the left fist on the short up-and-back path at its own side to the left lower ribs, palm comfortably toward upward; the right remains in right hikite. Both hands are now in side preparation. Unit three: the right rear foot passes forward on its own right track; settle right-forward at C and stop. The right fist takes the short straight path from right-side preparation while left hikite stays quiet. After a pause, return the right along the same short path to the right lower ribs, retaining straight wrist relationship, comfortable elbow/shoulder and palm comfortably toward upward. Pause with both fists back in side preparation. These three units form an original order; retain foot–settle–hand separation. In the full sequence, lesson 15’s fourth unit follows this pause. When ending only the three-unit review, rest the hands; keep the right front foot in place and advance the left rear on its own track until level with the right, then stop in neutral. This separate exit is outside the three units; add no turn."
+      },
+      "physical_task": {
+        "tr": "Bütün ilgili P kayıtları ileride varsa yalnız ilk üç birimi bir kez, her aşamada durarak incelet. Dönüş eklenmez.",
+        "en": "If all relevant P records exist later, have only the first three units reviewed once, stopping at each phase. Add no turn."
+      },
+      "written_task": {
+        "tr": "Üç birimin konumunu, ön ayağını, çalışan ve hikite elini yaz. B’de sol elin ve C’de sağ elin hangi yoldan hangi kaburga yanına döndüğünü, diğer elin yerinde kaldığını ekle.",
+        "en": "Write each unit’s location, forward foot, working hand and hikite hand. Add which path returns the left at B and right at C to which side of the ribs, with the other hand staying."
+      },
+      "question": {
+        "tr": "B’de hangi el nasıl toparlanır; C’de hangi yeni ön ayak/el çalışır ve diğer el ne yapar?",
+        "en": "At B, which hand recovers and how; at C, which new forward foot/hand works and what does the other hand do?"
+      },
+      "answer_key": {
+        "tr": "B’de sol ön ayak, sol aşağı-yol ve sağ hikite vardır. Sol el kendi sol yanında kısa yukarı-geri yolla sol alt-kaburgaya döner; sağ hikite kalır. Sonra sağ ayak geçip C’de yerleşir; sağ el sağ yan hazırlıktan düz yola giderken sol hikite kalır, sağ el aynı kısa yoldan sağ alt-kaburgaya döner. Önce ayak yerleşir; iki elin belirli toparlama konumu kaybolmaz.",
+        "en": "At B are left forward foot, left downward path and right hikite. The left returns along its short up-and-back path at its own left side to the left lower ribs; right hikite stays. The right foot then passes and settles at C; the right goes from right-side preparation on the straight path while left hikite stays, and returns along the same short path to the right lower ribs. Settle the foot first; retain both hands’ defined recovery position."
+      },
+      "correction": {
+        "tr": "C’de sol el yazdıysan aynı-yan eşlemesini düzelt. B’de toparlamayı atladıysan sol elin kendi yanında sol kaburgaya dönüşünü ekle; diğer elin gereksiz ileri hareketini veya hızla birleşen birimleri kullanarak boşluğu gizleme.",
+        "en": "If you wrote the left hand at C, correct the same-side match. If you omitted recovery at B, add the left returning at its own side to its left ribs; do not hide the gap with an unnecessary forward movement of the other hand or rapidly joined units."
+      },
+      "retest": {
+        "tr": "Açıklamayı kapatıp üç birimi iki elin toparlama yollarıyla çiz; anahtarla karşılaştırdıktan sonra tek somut eşleme/yol düzeltmesi yaz.",
+        "en": "Hide the explanation and draw the three units with both hands’ recovery paths; after consulting the key, write one concrete matching/path correction."
+      }
+    },
+    {
+      "number": 15,
+      "id": "ka-15",
+      "prerequisiteIds": [
+        "ka-14"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "sourceIds": [
+        "K1",
+        "K2",
+        "K6",
+        "K8",
+        "K4",
+        "K9",
+        "K10"
+      ],
+      "title": {
+        "tr": "İkinci çizgi ve altı birim",
+        "en": "Second line and all six units"
+      },
+      "teaching": {
+        "tr": "Dördüncü birim C’de sağ-ön konumdan başlar: önce iki eli yanlarda dinlendir; sağ ön ayak yerinde kalırken sol arka ayağı kendi sol izinde öne, sağın hizasına getir; paralel nötrde dur. Ders 12’nin sağ-sol-sağ-sol yürüyüş dönüşüyle N’den E’ye yönel, iki ayak yerleşince dur. Sağ ayağı kendi sağ izinde küçük E yönüne öne alıp ayrı sağ-ön konumda yerleş ve dur. İki yumruğu alt-kaburga yanlarına getir; sağ gedan-barai hazırlığı ve sol hikite, durak. Sağ yumruğu sağ uyluk üstündeki boş bitişten kendi sağ yanında kısa yukarı-geri yolla sağ alt-kaburgaya getir; sol hikite kalır, iki avuç rahatça yukarı yönlenir. Beşinci birim: sol arka ayak kendi sol izinde E’ye öne geçer; D’de sol-ön tamamen yerleş ve dur. Sol yumruk sol yan hazırlıktan kısa düz yola gider, sağ hikite kalır. Duraktan sonra sol yumruk aynı kısa yoldan sol alt-kaburgaya döner. Altıncı birim: iki eli yanlarda dinlendir; sol ön ayak kalırken sağ arka ayak kendi sağ izinde öne gelip solun hizasında durur. İki ayak paralel yerleşir, E’ye bakarak tam dur. KA-P1 burada biter. Ayrı sıradan yürüyüş çıkışı şöyledir: D’de sağ çeyrek dönüşü iki kez yap (her biri sağ-sol-sağ-sol); E→S→W’ye bakıp dur. W’ye doğru sağ küçük ileri, sol küçük ileri, sonra sağ ayağı solun sağ yanında hizaya getiren kapanışla C dönüş alanına gel ve dur. C’de sola çeyrek yürüyüş sol-sağ-sol-sağ ile W→S’ye yönel ve dur. S’ye doğru sağ küçük ileri, sol küçük ileri, sağı solun hizasına getiren kapanışla A alanına gel ve dur. A’da iki sağ çeyrek yürüyüşle S→W→N’ye yönel; her çeyrek sağ-sol-sağ-sol, en sonda paralel nötr ve tam durak. Her düz parçada son sağ ayak solu geçmez. Alanları/ayak yerlerini ders 13’te bu seçilmiş sıraya göre önceden çiz; alanı görerek yürü, geriye kör adım atma, yeni adım uydurma veya yüklü tabanı burma. Şema kişisel alana/rahatlığa uymuyorsa fiziksel çıkış denenmez, yazılı görev ve uyarlama sorusu açık kalır. Bu ayrı çıkış bir kata tekniği veya yedinci birim değildir; tüm hareketler bugün kapalıdır ve tam şema P3/P6 incelemesi ister.",
+        "en": "Unit four starts right-forward at C: first rest both hands at the sides; keep the right front foot in place and bring the left rear foot forward on its own left track until level with the right; stop in parallel neutral. Use lesson 12’s right-left-right-left walking turn from N to E and stop once both feet settle. Move the right foot a small amount forward toward E on its own right track, settle separately right-forward and stop. Bring both fists beside the lower ribs; right gedan-barai preparation and left hikite, then pause. From the empty endpoint above the right thigh, return the right fist on the short up-and-back path at its own right side to the right lower ribs; left hikite stays and both palms point comfortably toward upward. Unit five: the left rear foot passes forward toward E on its own left track; settle completely left-forward at D and stop. The left travels from left-side preparation on the short straight path while right hikite stays. After a pause, the left returns along the same short path to the left lower ribs. Unit six: rest both hands at the sides; the left front foot stays while the right rear foot advances on its own right track and stops level with the left. Both feet settle parallel, facing E, with a complete pause. KA-P1 ends here. The separate ordinary walking exit is: at D, take the right quarter-turn twice (each right-left-right-left), facing E→S→W, then stop. Toward W, take a small right forward placement, a small left forward placement, then close by bringing the right level on the right side of the left into the C turning area, and stop. At C, use the walking left quarter-turn left-right-left-right from W→S and stop. Toward S, take a small right forward placement, a small left forward placement, then close with the right level beside the left into area A and stop. At A, take two walking right quarters S→W→N, each right-left-right-left, ending parallel neutral with a complete pause. On each straight segment the final right foot does not pass the left. Draw areas/footprints for this selected order in lesson 13 beforehand; walk while seeing the space, with no blind backward step, invented extra step or twisting a loaded sole. If the diagram does not fit personal space/comfort, do not attempt the physical exit; retain a written task and open adaptation question. The separate exit is not a kata technique or seventh unit; every movement is unavailable today and the complete diagram needs P3/P6 review."
+      },
+      "physical_task": {
+        "tr": "Bütün ilgili P0–P6 ileride gerçekten karşılanırsa eğitmen altı birimi ve çıkışı ayrı gözler. Temposu artırılmaz; kaçan birimde durulur ve yalnız yazılı sıra yeniden incelenir.",
+        "en": "If all relevant P0–P6 are actually met later, the instructor observes each of the six units and the exit separately. Do not increase tempo; stop at a lost unit and revisit the written order only."
+      },
+      "written_task": {
+        "tr": "KA-P1 tablosunu kapatıp altı birimi el toparlamaları ve nötr çıkış ayaklarıyla yaz. Ayrı çıkışı D E→S→W, sağ-sol-sağ(hizaya) C’ye, C W→S sol dönüş, sağ-sol-sağ(hizaya) A’ya, A S→W→N olarak çiz; her dönüşün ayak sırasını yaz. Belirsizlikte soru işareti kullan.",
+        "en": "Hide the KA-P1 table and write the six units with hand recoveries and neutral-exit feet. Draw the separate exit as D E→S→W, right-left-right(to level) to C, C W→S left turn, right-left-right(to level) to A, then A S→W→N; label each turn’s foot order. Mark uncertainty with a question mark."
+      },
+      "question": {
+        "tr": "C’de sağ aşağı-yoldan sonra hangi el nereye toparlanır; D’de nötre hangi ayak gelir ve ayrı A dönüşünün yön/ayak sırası nedir?",
+        "en": "After the right downward path at C, which hand recovers to where; which foot closes to neutral at D, and what is the separate return to A’s direction/foot order?"
+      },
+      "answer_key": {
+        "tr": "C’de sağ el kendi sağ yanında kısa yukarı-geri yolla sağ alt-kaburgaya döner, sol hikite kalır. Sol ayak D’ye geçip yerleşir; sol düz-el giderken sağ hikite kalır, sol el aynı yoldan sol alt-kaburgaya döner. D’de eller dinlenir, sol ön ayak kalır, sağ arka ayak kendi izinde solun hizasına gelir; E’de nötr durakla altıncı birim/dizi biter. Ayrı çıkış: D’de iki sağ çeyrek E→S→W; W’de sağ-sol-sağ(hizaya) C’ye; C’de sol çeyrek W→S; S’de sağ-sol-sağ(hizaya) A’ya; A’da iki sağ çeyrek S→W→N ve tam durak. Sağ çeyrekler sağ-sol-sağ-sol, sol çeyrek sol-sağ-sol-sağdır. Çıkış dizi dışıdır; bu Heian/Taikyoku değildir.",
+        "en": "At C the right returns on its short up-and-back path at its own right side to the right lower ribs while left hikite stays. The left foot passes to D and settles; the left straight hand works while right hikite stays, and returns on the same path to the left lower ribs. At D rest the hands, keep the left front foot and bring the right rear foot on its own track level with the left; neutral pause facing E ends unit six/the sequence. Separate exit: two right quarters at D E→S→W; right-left-right(to level) west to C; left quarter at C W→S; right-left-right(to level) south to A; two right quarters at A S→W→N and complete pause. Right quarters are right-left-right-left; the left quarter is left-right-left-right. The exit is outside the sequence; this is not Heian/Taikyoku."
+      },
+      "correction": {
+        "tr": "El toparlamasını “geri al” diye bıraktıysan taraf/yol/kaburga bitişini ekle. Nötrde ön ayağı hareket ettirdiysen arka-ayak-hizaya sırasını düzelt. Çıkışa kör geri adım, sabit taban pivotu, belirsiz adım veya geleneksel kata adı eklediysen seçilmiş yön/ayak sırasını yeniden yaz; kişisel uyarlama sorusunu kapatma.",
+        "en": "If hand recovery says only “return,” add side/path/rib endpoint. If you moved the front foot during neutral exit, correct to rear-foot-to-level order. If the exit adds blind backward walking, a planted pivot, unspecified steps or a traditional kata name, rewrite the selected direction/foot order; keep the personal adaptation question open."
+      },
+      "retest": {
+        "tr": "Yalnız karışan el/ayak geçişini kâğıtta bir kez düzelt, sonra altı birimi ve ayrı çıkışı hafızadan yaz. Her durağı ve bütün önceki P gereksinimlerini koru.",
+        "en": "Correct only the confused hand/foot transition once on paper, then recall the six units and separate exit. Retain every pause and all prior P requirements."
+      }
+    },
+    {
+      "number": 16,
+      "id": "ka-16",
+      "prerequisiteIds": [
+        "ka-15"
+      ],
+      "physicalPrerequisiteIds": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "sourceIds": [
+        "K1",
+        "K2",
+        "K3"
+      ],
+      "title": {
+        "tr": "Sınırlı sonuç ve sonraki gerçek öğretim",
+        "en": "Bounded outcome and further real instruction"
+      },
+      "teaching": {
+        "tr": "Önce metni kapat: kapsamı, durma kuralını, el/bilek ilişkisini, sol-ön→sağ-el adım zincirini ve altı KA-P1 birimini kendi sözlerinle yaz. Sonra anahtarla karşılaştır, tek somut düzeltme ve sonraki uygun yazılı tekrarını kaydet. Geleneksel kata için seçilen okul/versiyon, tam aktarılmış sıra, geçiş gösterimi ve kişisel geri bildirim gerekir; bu kursta sağlanmamıştır. Yazılı hatırlama ve fiziksel gözlemi ayrı sonuçlandır.",
+        "en": "Hide the text first: write the scope, stop rule, hand/wrist relationship, left-forward→right-hand stepping chain and six KA-P1 units in your own words. Then consult the key and record one concrete correction plus the next suitable written retest. Named traditional kata needs a chosen school/version, complete transmitted order, transition demonstrations and individual feedback; these have not been supplied here. Conclude written recall and physical observation separately."
+      },
+      "physical_task": {
+        "tr": "Bugün fiziksel bitirme görevi yoktur. İleride ilgili bütün P kayıtları varsa bile eğitmen her bileşeni ve eksikleri ayrı raporlar; otomatik kuşak/kata başarı sonucu yoktur.",
+        "en": "There is no physical finishing task today. Even if all relevant P records exist later, the instructor reports each component and remaining gaps separately; no automatic belt/kata success result."
+      },
+      "written_task": {
+        "tr": "Duruş, el, adım, dönüş ve dizi için ayrı “denenmedi / belirsiz / yazılı karşılaştırıldı” satırları yaz. Bir sonraki eğitmen sorunu ve adlandırılmış kata açığını belirt.",
+        "en": "Write separate “unattempted / uncertain / compared in writing” rows for stance, hands, stepping, turning and sequence. State the next instructor question and the named-kata gap."
+      },
+      "question": {
+        "tr": "“Yazılı sırayı biliyorum; fiziksel denemedim; Heian Shodan öğrendim” ifadesinde hangi sonuç yanlıştır?",
+        "en": "Which conclusion is wrong in “I know the written order; I did not attempt it physically; I learned Heian Shodan”?"
+      },
+      "answer_key": {
+        "tr": "Heian Shodan öğrendim sonucu yanlıştır. Doğru kayıt özgün KA-P1 yazılı incelemesi ve fiziksel parçaların denenmedi/doğrulanmadığıdır. Kuşak, kumite, darbe ve kendini savunma kabulü yoktur.",
+        "en": "The claim to have learned Heian Shodan is wrong. The correct record is written review of original KA-P1 and physical components unattempted/unverified. There is no belt, kumite, impact or self-defense acceptance."
+      },
+      "correction": {
+        "tr": "Bitirme ifadesini bileşenlere ayır; eksikleri silme. Gözlenmeyen bir bileşende anahtarla eşleşme yerine belirsizlik kaydı tut.",
+        "en": "Separate the completion statement by component and retain the gaps. For an unobserved component, record uncertainty rather than substituting a key match."
+      },
+      "retest": {
+        "tr": "Sonraki uygun yazılı oturumda yalnız yardımsız hatırla→karşılaştır→bir düzeltme döngüsünü yap. Fiziksel ya da geleneksel kata ilerlemesi yeni gerçek öğretim ve kabul gerektirir.",
+        "en": "At the next suitable written session, use unaided recall→comparison→one correction only. Physical or traditional-kata progression requires new real instruction and acceptance."
+      }
+    }
+  ]
+}
