@@ -102,7 +102,6 @@ class CoursePage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
           children: <Widget>[
-            const StudyReviewEntry(),
             Row(
               children: <Widget>[
                 // Hüküm 3: KÖK+güncelken geri değil, disiplin ızgarasına
@@ -182,6 +181,7 @@ class CoursePage extends StatelessWidget {
               const SizedBox(height: 16),
               SoloCourseEntryCard(onOpen: onOpenSoloCourse!),
             ],
+            const StudyReviewEntry(),
             if (isCurrent) ...<Widget>[
               const SizedBox(height: 20),
               _WhereYouLeftOff(

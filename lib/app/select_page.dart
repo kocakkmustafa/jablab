@@ -125,7 +125,6 @@ class _SelectPageState extends State<SelectPage> {
               ],
             ),
             const SizedBox(height: 20),
-            const StudyReviewEntry(),
             if (widget.historyUnavailable != null) ...<Widget>[
               // Tier 2-d: "hangi kurs güncel" bile bilinemiyor — bu TAM
               // OLARAK `UnknownGlassPanel`in rezerve ettiği "bilmiyorum"
@@ -194,6 +193,7 @@ class _SelectPageState extends State<SelectPage> {
               SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),
               const SizedBox(height: 16),
             ],
+            const StudyReviewEntry(),
             ...widget.library.items.map(
               (ShellItem i) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),

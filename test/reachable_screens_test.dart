@@ -1,3 +1,5 @@
+import 'package:jablab/app/study_review.dart';
+import 'package:jablab/app/study_review_content.dart';
 import 'package:jablab/app/yang16_written_course_page.dart';
 import 'package:jablab/app/muay_thai_course_page.dart';
 import 'package:jablab/app/karate_course_page.dart';
@@ -77,7 +79,7 @@ import 'app_pump.dart';
 // Proposed Karate control traversal; no runtime result for this source revision.
 // Muay Thai source expectation only; this candidate has never run.
 // Taikyoku source-only same-root traversal below; execution pending.
-const int kStrictRoutes = 20;
+const int kStrictRoutes = 22;
 
 /// Karşılama perdesi sayısı — "perde yürüyüşü" testi bunu YÜRÜYEREK doğrular.
 const int kOnboardingPanels = 3;
@@ -327,6 +329,26 @@ void main() {
     // > ***BİR EKRANIN KAYBOLMASI, BİR BAŞKASININ GELDİĞİ ANLAMINA
     // > GELMEZ.*** Çıkışın İNDİĞİ yer artık ölçülüyor.
     visit(SelectPage, 'select');
+
+    // Reading routes are witnessed from the real first-run select surface.
+    final reviewEntry = find.byKey(const Key('study-review-entry'));
+    await Scrollable.ensureVisible(t.element(reviewEntry), alignment: .5);
+    await t.pumpAndSettle();
+    await t.tap(reviewEntry.hitTestable());
+    await t.pumpAndSettle();
+    visit(StudyReviewPage, 'studyReview');
+    final recall = find.byKey(Key('study-lesson-${studyAreas.first.lessons.first.id}'));
+    await Scrollable.ensureVisible(t.element(recall), alignment: .5);
+    await t.pumpAndSettle();
+    await t.tap(recall.hitTestable());
+    await t.pumpAndSettle();
+    visit(RecallLessonPage, 'studyRecall');
+    await t.tap(find.byType(BackButton));
+    await t.pumpAndSettle();
+    await t.tap(find.byType(BackButton));
+    await t.pumpAndSettle();
+    expect(find.byType(SelectPage), findsOneWidget);
+
 
     // Proposed kickboxing first-run control traversal; qualification pending.
     final kbEntry = find.byKey(const Key('open-kickboxing-course'));
@@ -579,6 +601,8 @@ void main() {
       <String, Arrival>{
         'onboarding': Arrival.root,
         'select': Arrival.root,
+        'studyReview': Arrival.push,
+        'studyRecall': Arrival.push,
         'kickboxingCourse': Arrival.push,
         'kickboxingLesson': Arrival.push,
         'karateCourse': Arrival.push,
@@ -836,6 +860,8 @@ void main() {
     const Set<String> knownFloor = <String>{
       'OnboardingPage',
       'SelectPage',
+      'StudyReviewPage',
+      'RecallLessonPage',
       'SettingsPage',
       'WhyNotPage',
       'CoursePage',
@@ -1233,7 +1259,7 @@ void main() {
     // gevşek sayı bir yorumda yaşıyordu, kimse ona çarpmıyordu.
     expect(
       kLooseScreens,
-      25,
+      27,
       reason:
           'gevşek ekran sayısı değişti: devir notu, 📊 pano ve aile '
           'karşılaştırması bu sayıyı taşıyor — üçü de güncellenmeli',
