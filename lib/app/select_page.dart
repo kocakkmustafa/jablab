@@ -4,6 +4,7 @@ import 'kickboxing_course_page.dart';
 import 'tai_chi_course_page.dart';
 
 import 'package:flutter/material.dart';
+import 'study_review.dart';
 
 import '../shell_candidate/honesty_box.dart';
 import '../shell_candidate/shell_models.dart';
@@ -124,6 +125,7 @@ class _SelectPageState extends State<SelectPage> {
               ],
             ),
             const SizedBox(height: 20),
+            const StudyReviewEntry(),
             if (widget.historyUnavailable != null) ...<Widget>[
               // Tier 2-d: "hangi kurs güncel" bile bilinemiyor — bu TAM
               // OLARAK `UnknownGlassPanel`in rezerve ettiği "bilmiyorum"

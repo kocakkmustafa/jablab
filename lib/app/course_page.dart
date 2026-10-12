@@ -4,6 +4,7 @@ import 'kickboxing_course_page.dart';
 import 'tai_chi_course_page.dart';
 
 import 'package:flutter/material.dart';
+import 'study_review.dart';
 
 import '../shell_candidate/shell_models.dart';
 import 'course_locale.dart';
@@ -101,6 +102,7 @@ class CoursePage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(18, 8, 18, 32),
           children: <Widget>[
+            const StudyReviewEntry(),
             Row(
               children: <Widget>[
                 // Hüküm 3: KÖK+güncelken geri değil, disiplin ızgarasına
