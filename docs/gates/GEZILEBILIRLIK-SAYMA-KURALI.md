@@ -198,3 +198,19 @@ This candidate extends the accepted 453-file tree
 receipts do not qualify this new source. Written form-order learning preserves
 all false physical flags. Physical mechanics, media/device/store acceptance
 and publication remain separate.
+
+
+## 2026-10-12 Written recall routes — witnessed local source check
+
+All historical paragraphs above remain byte-identical. The first-run select
+surface now exposes a written recall entry after the existing course entries.
+The same-root test taps that visible control, observes StudyReviewPage, taps
+an actual lesson control, observes RecallLessonPage, and uses both visible back
+controls to return before continuing every original traversal. Neither route is
+registered as unreachable merely to satisfy the inventory.
+
+Current source/walk count: katı **22** · gevşek **27**; formula
+22 − 2 + 3 + 4 = **27**: 20 push arrivals and two root arrivals, with three
+onboarding panels and four session stages. The witnessed local walk reached
+all 22 classes and recorded both new arrivals as push events. This counts
+reading routes; it does not establish physical curricula or mastery.

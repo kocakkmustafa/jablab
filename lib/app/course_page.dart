@@ -4,6 +4,7 @@ import 'kickboxing_course_page.dart';
 import 'tai_chi_course_page.dart';
 
 import 'package:flutter/material.dart';
+import 'study_review.dart';
 
 import '../shell_candidate/shell_models.dart';
 import 'course_locale.dart';
@@ -180,6 +181,7 @@ class CoursePage extends StatelessWidget {
               const SizedBox(height: 16),
               SoloCourseEntryCard(onOpen: onOpenSoloCourse!),
             ],
+            const StudyReviewEntry(),
             if (isCurrent) ...<Widget>[
               const SizedBox(height: 20),
               _WhereYouLeftOff(

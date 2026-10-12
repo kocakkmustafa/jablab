@@ -4,6 +4,7 @@ import 'kickboxing_course_page.dart';
 import 'tai_chi_course_page.dart';
 
 import 'package:flutter/material.dart';
+import 'study_review.dart';
 
 import '../shell_candidate/honesty_box.dart';
 import '../shell_candidate/shell_models.dart';
@@ -192,6 +193,7 @@ class _SelectPageState extends State<SelectPage> {
               SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),
               const SizedBox(height: 16),
             ],
+            const StudyReviewEntry(),
             ...widget.library.items.map(
               (ShellItem i) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
