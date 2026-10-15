@@ -9,4 +9,8 @@ Kurucu, ayakta karma dövüş disiplinlerini temsil eden, kapüşonlu erkek spor
 | `hooded-knee-strike-App-Store-1024.png` | Kare ve opak 1024 × 1024 mağaza adayı |
 | `hooded-knee-strike-Google-Play-512.png` | Kare ve opak 512 × 512 mağaza adayı |
 
-Yuvarlatılmış önizleme, seçilen kaynak görsele yalnız alfa maskesi uygulanarak üretildi. Alfa kapatılarak yapılan piksel karşılaştırmasında kaynakla fark **0** çıktı. Kare/opak mağaza adayları aynı kaynaktan küçültüldü. Dosyalar henüz uygulamanın native iOS/Android ikon varlıklarına veya mağaza konsollarına aktarılmadı; mevcut paket simgeleri korunur.
+Yuvarlatılmış önizleme, seçilen kaynak görsele yalnız alfa maskesi uygulanarak üretildi. Alfa kapatılarak yapılan piksel karşılaştırmasında kaynakla fark **0** çıktı. Kare/opak mağaza adayları aynı kaynaktan küçültüldü. Seçilen simge native iOS AppIcon kümesindeki 15 ve Android mipmap kümesindeki 5 dosyaya aktarılmıştır. 2026-10-15 yerel kontrolünde iOS 1024 simgesi ile App Store adayının RGB pikselleri birebir eşleşti. Yeni binary kurulumu ve mağaza konsolu yükleme/geri okuması ayrıca doğrulanmalıdır.
+
+## 2026-10-15 — Google Play dosya biçimi
+
+Güncel `hooded-knee-strike-Google-Play-512.png` dosyası, [Google Play ikon şartına](https://developer.android.com/distribute/google-play/resources/icon-design-specifications) uygun 512 × 512, 32-bit RGBA PNG olarak dışa aktarıldı; sRGB etiketi taşır. Önceki RGB pikselleri birebir korundu (fark 0); alfa kanalı her pikselde 255, görünüm opaktır. Kaynak çizim, App Store adayı ve native ikonlar değişmedi. Bu yerel dosya doğrulamasıdır; mağazaya yükleme kabulü değildir.
