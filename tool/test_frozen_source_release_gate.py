@@ -18,12 +18,19 @@ class PortableCompletionTest(unittest.TestCase):
         free = os.statvfs(ROOT)
         self.assertGreaterEqual(free.f_bavail * free.f_frsize, 8 * 2**30,
                                 'Regression blocked by disk floor')
-        rows = gate.source_rows(ROOT)
-        identity = hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
         with tempfile.TemporaryDirectory(prefix='jablab-gate-negative-') as folder:
+            # Exercise the real CLI against a small candidate owned by this
+            # test. A developer checkout may contain ignored signing links;
+            # scanning it fails before reaching the no-op/receipt assertions.
+            candidate = Path(folder) / 'candidate'
+            (candidate / 'tool').mkdir(parents=True)
+            script = candidate / 'tool/frozen_source_release_gate.py'
+            shutil.copyfile(ROOT / 'tool/frozen_source_release_gate.py', script)
+            rows = gate.source_rows(candidate)
+            identity = hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
             manifest = Path(folder) / 'manifest.json'
             manifest.write_text(json.dumps(rows))
-            command = [sys.executable, str(ROOT / 'tool/frozen_source_release_gate.py')]
+            command = [sys.executable, str(script)]
             args = ['--manifest', str(manifest), '--candidate-identity', identity]
             result = subprocess.run(command + ['portable'] + args +
                                     ['--dart', shutil.which('true')], capture_output=True)
@@ -41,6 +48,16 @@ class PortableCompletionTest(unittest.TestCase):
                                     ['--portable-receipt', str(portable)], capture_output=True)
             self.assertEqual(result.returncode, 2)
             self.assertIn('expected checks', json.loads(result.stdout)['reason'])
+
+    def test_candidate_links_still_rejected(self):
+        with tempfile.TemporaryDirectory(prefix='jablab-gate-link-') as folder:
+            candidate = Path(folder) / 'candidate'
+            candidate.mkdir()
+            target = Path(folder) / 'signing-fixture.txt'
+            target.write_text('synthetic test data, not a signing credential')
+            (candidate / 'key.properties').symlink_to(target)
+            with self.assertRaisesRegex(ValueError, 'Candidate source link'):
+                gate.source_rows(candidate)
 
     def test_incomplete_and_wrong_candidate_reports_rejected(self):
         identity = '1' * 64
