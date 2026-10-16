@@ -1,3 +1,13 @@
+# Güncel native simge — 2026-10-16
+
+Yeni onay: **v14-natural-wrap**. Güncel master, platform envanteri,
+boyutlar ve hashler [onaylı simge kaydında](../../design/icon/approved-2026-10-16/README.md).
+15 iOS AppIcon ve 5 Android launcher PNG güncellendi. Aşağıdaki adaylar ve
+mağaza dosyaları tarihsel kayıttır; yeni onaylı simgeyle mağaza görsellerinin
+hazır olduğu anlamına gelmez. Native kurulum ve mağaza yüklemesi yapılmadı.
+
+---
+
 # JabLab mağaza simgesi adayı — 2026-09-24
 
 Kurucu, ayakta karma dövüş disiplinlerini temsil eden, kapüşonlu erkek sporcunun gard ve diz vuruşunu gösteren **fırça dokulu çizimi** seçti. Seçilen kaynak `hooded-knee-strike-selected-reference-1254.png` dosyasıdır (SHA-256: `33a679c2de63294a00df2b438c5e5dd39b3788047d74f8b3fd177e17cf32d4fe`).
