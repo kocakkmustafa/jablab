@@ -164,6 +164,7 @@ final class StrikingEngine {
     this.frameSize,
     MotionClock? clock,
     CueGate? cueGate,
+    Set<String>? allowedTechniqueIds,
     this.provenance = const <String, String>{},
   })  : clock = clock ?? StopwatchMotionClock.start(),
         cueGate = cueGate ?? CueGate(),
@@ -178,8 +179,14 @@ final class StrikingEngine {
                 derivativeCutoff: ruleSet.smoothingDerivativeCutoff,
               ),
             ) {
+    final allowed = allowedTechniqueIds == null ? null : Set<String>.of(allowedTechniqueIds);
+    final known = ruleSet.techniques.map((t) => t.id).toSet();
+    if (allowed != null && !known.containsAll(allowed)) {
+      throw ArgumentError('Lesson selected an unsupported technique');
+    }
+    _techniques = List.unmodifiable(ruleSet.techniques.where((t) => allowed == null || allowed.contains(t.id)));
     _ctx = _Ctx(ruleSet);
-    for (final TechniqueConfig t in ruleSet.techniques) {
+    for (final TechniqueConfig t in _techniques) {
       _machines[t.id] = PhaseStateMachine(
         techniqueId: t.id,
         phases: _compile(t),
@@ -189,6 +196,7 @@ final class StrikingEngine {
   }
 
   final RuleSet ruleSet;
+  late final List<TechniqueConfig> _techniques;
   final PosePipeline _pipeline;
   final StanceDetector stanceDetector;
   final MeasureCalculator measureCalculator;
@@ -331,7 +339,7 @@ final class StrikingEngine {
     AttemptDigest? fallback;
     final List<DetectedIssue> issues = <DetectedIssue>[];
 
-    for (final TechniqueConfig t in ruleSet.techniques) {
+    for (final TechniqueConfig t in _techniques) {
       final PhaseStateMachine machine = _machines[t.id]!;
       final String? before = machine.currentPhase;
       final AttemptRun? run = machine.update(pf.smoothed, pf.angles);
@@ -406,7 +414,7 @@ final class StrikingEngine {
     // Tahkim: spesifik teknik kazanır. Yedek yalnız hiçbir spesifik teknik
     // tamamlanmadı VE hiçbiri hâlâ çalışmıyorken sayılır — çalışan bir makine,
     // birkaç kare sonra tamamlanacak spesifik bir yumruk demektir.
-    final bool specificRunning = ruleSet.techniques.any((TechniqueConfig t) =>
+    final bool specificRunning = _techniques.any((TechniqueConfig t) =>
         !t.isFallback &&
         ((_machines[t.id]?.isRunning ?? false) ||
             // Girişimi kapanmış hareket hâlâ sürüyor: yedek onu SAYMAMALI.
@@ -447,7 +455,7 @@ final class StrikingEngine {
   /// sırası config'in kendi önceliği — ve iki fazı aynı anda göstermek
   /// kullanıcıya okuyamayacağı bir şey vermek olurdu.
   String? _activePhase() {
-    for (final TechniqueConfig t in ruleSet.techniques) {
+    for (final TechniqueConfig t in _techniques) {
       final String? p = _machines[t.id]?.currentPhase;
       if (p != null) return p;
     }

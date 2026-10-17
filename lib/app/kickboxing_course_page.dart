@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -125,6 +126,7 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
             ),
             key: const Key('kickboxing-physical-blocked'),
           ),
+          TechniqueCapabilityPanel(courseId: 'jablab.kickboxing_a', lessonId: l.id),
           Text(_text(context, widget.course.safety)),
           TextButton(
             key: const Key('kickboxing-toggle-reading'),

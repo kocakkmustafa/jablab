@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -117,6 +118,7 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          TechniqueCapabilityPanel(courseId: 'jablab.muay_thai_a', lessonId: l.id),
           Text(
             _label(
               context,

@@ -537,6 +537,23 @@ final class ContentRepository {
   bool usesCamera(Library lib, String lessonId) =>
       _lessonFor(lib, lessonId)?.usesCamera ?? false;
 
+  /// Exact lesson intent, including combination components. Camera access does
+  /// not make all boxing techniques eligible for that lesson's observations.
+  Set<String> liveTechniqueIdsFor(Library lib, RuleSet rules, String lessonId) {
+    final lesson = _lessonFor(lib, lessonId);
+    if (lesson == null) throw StateError('Unknown live lesson');
+    final ids = <String>{...lesson.techniques};
+    for (final combinationId in lesson.combinations) {
+      final matches = rules.combinations.where((c) => c.id == combinationId);
+      if (matches.length != 1) throw StateError('Unsupported lesson combination');
+      ids.addAll(matches.single.sequence);
+    }
+    if (!rules.techniques.map((t) => t.id).toSet().containsAll(ids)) {
+      throw StateError('Unsupported lesson technique');
+    }
+    return Set.unmodifiable(ids);
+  }
+
   /// Poz modelini asset'ten diske çıkarır — MediaPipe bir DOSYA YOLU
   /// istiyor, asset bundle'ı okuyamıyor (J-096).
   ///

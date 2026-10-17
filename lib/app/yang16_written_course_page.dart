@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -143,6 +144,7 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
       body: ListView(key: const Key('yang16-target-body'),
         padding: const EdgeInsets.all(20), children: [
           _copy(context, target.title, 'yang16-target-title'),
+          TechniqueCapabilityPanel(courseId: 'yang16-angela-written-v2', lessonId: target.id),
           Text(_label(context,
             'Written order and self-reported reconstruction only. Physical actions, mechanics and mastery remain unavailable.',
             'Yalnız yazılı sıra ve yeniden kurma öz beyanı. Fiziksel eylem, mekanik ve ustalık kullanıma açık değildir.'),

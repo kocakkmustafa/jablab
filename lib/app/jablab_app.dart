@@ -1091,15 +1091,17 @@ class _RootState extends State<_Root> {
       return (controller: null, failure: null);
     }
     try {
-      return (controller: _buildLiveJab(rules), failure: null);
+      return (controller: _buildLiveJab(rules,
+        widget.repository.liveTechniqueIdsFor(lib, rules, lessonId)), failure: null);
     } on Object catch (e) {
       return (controller: null, failure: LiveSetupFailed(e));
     }
   }
 
-  LiveJabController _buildLiveJab(RuleSet rules) {
+  LiveJabController _buildLiveJab(RuleSet rules, Set<String> techniqueIds) {
     return LiveJabController(
       ruleSet: rules,
+      allowedTechniqueIds: techniqueIds,
       cues: _cues!,
       modelPath: widget.repository.materializePoseModel,
       modelId: PoseModelPin.modelId,

@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -146,6 +147,7 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
         key: const Key('taikyoku-lesson-body'),
         padding: const EdgeInsets.all(20),
         children: [
+          TechniqueCapabilityPanel(courseId: 'jablab.taikyoku_shodan_jl', lessonId: lesson.id),
           _copy(context, lesson.title, 'taikyoku-lesson-title'),
           Text(_label(context,
             'Reading and written recall only. Physical kata remains unattempted and unverified; individual requirements are open.',

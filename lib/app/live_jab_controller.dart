@@ -48,18 +48,24 @@ final class LiveJabController {
     required this.cues,
     required this.modelPath,
     required this.modelId,
+    Set<String>? allowedTechniqueIds,
     MotionCameraController? camera,
     Future<bool> Function()? requestPermission,
     Future<bool> Function()? permissionPermanentlyDenied,
     OrientationAwarePoseSource Function(PoseSourceDriver)? sourceFactory,
     StrikingEngine Function(FrameSize)? engineFactory,
-  }) : _camera = camera ?? MotionCameraController(),
+  }) : allowedTechniqueIds = allowedTechniqueIds == null ? null : Set.unmodifiable(allowedTechniqueIds),
+       _camera = camera ?? MotionCameraController(),
        _requestPermission = requestPermission,
        _permissionPermanentlyDenied = permissionPermanentlyDenied,
        _sourceFactory = sourceFactory ?? OrientationAwarePoseSource.new,
        _engineFactory = engineFactory;
 
   final RuleSet ruleSet;
+
+  /// Immutable lesson intent; null retains unscoped diagnostic/test behavior.
+  /// Production always supplies the explicit lesson selection, including empty.
+  final Set<String>? allowedTechniqueIds;
 
   /// Replik kitabı — motorun hata KODUNU kullanıcı cümlesine çeviren tek yol.
   /// Enjekte ediliyor ki testler içerikten bağımsız koşabilsin.
@@ -500,6 +506,7 @@ final class LiveJabController {
       _engineFactory?.call(size) ??
       StrikingEngine(
         ruleSet: ruleSet,
+        allowedTechniqueIds: allowedTechniqueIds,
         frameSize: size,
         // KALİBRASYON YOK ve bu bilerek: taraf etiketi (M-F-06) raporlanamaz
         // ve K8 sayısal skoru kapalı tutar. `true` yazmak kalibre edilmemiş

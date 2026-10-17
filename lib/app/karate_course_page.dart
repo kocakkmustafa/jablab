@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -118,6 +119,7 @@ class _KarateLessonPageState extends State<KarateLessonPage>
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          TechniqueCapabilityPanel(courseId: 'jablab.karate_a', lessonId: l.id),
           Text(
             _label(
               context,

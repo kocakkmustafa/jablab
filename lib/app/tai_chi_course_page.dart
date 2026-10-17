@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -291,6 +292,7 @@ class _TaiChiLessonPageState extends State<TaiChiLessonPage>
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          TechniqueCapabilityPanel(courseId: widget.course.id, lessonId: lesson.id),
           Text(_text(context, lesson.objective)),
           Text(_text(context, widget.course.safety)),
           Text(_text(context, lesson.preparation)),

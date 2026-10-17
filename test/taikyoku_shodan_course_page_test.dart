@@ -36,7 +36,8 @@ Future<void> _show(WidgetTester t, String key, {bool fromTop = false}) async {
   if (fromTop) { t.state<ScrollableState>(scrollable).position.jumpTo(0); await t.pump(); }
   final target = find.byKey(Key(key));
   if (target.evaluate().isEmpty) {
-    await t.scrollUntilVisible(target, 600, scrollable: scrollable, maxScrolls: 300);
+    // Small steps keep short controls reachable between large lazy text blocks.
+    await t.scrollUntilVisible(target, 200, scrollable: scrollable, maxScrolls: 300);
   }
   await Scrollable.ensureVisible(t.element(target), alignment: 0.1);
   await t.pumpAndSettle();

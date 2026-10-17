@@ -1,3 +1,4 @@
+import 'technique_capability_panel.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -754,6 +755,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
         key: const Key('solo-lesson-list'),
         padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
         children: <Widget>[
+          TechniqueCapabilityPanel(courseId: widget.course.id, lessonId: lesson.id),
           Text(
             _copy(context, lesson.title),
             style: JText.pageTitle.copyWith(fontSize: 30),
