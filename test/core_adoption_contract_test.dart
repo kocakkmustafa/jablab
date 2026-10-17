@@ -3,7 +3,7 @@ import 'support/local_core_intake.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-const _approvedSha = 'ef60e346934d7e5d45c87deb81583b263575b208';
+const _approvedSha = '62c105567a9fdfa9d907a8f8a399494c8ae5b598';
 const _historicalSha = 'f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d';
 
 void main() {
@@ -31,7 +31,7 @@ void main() {
           '      ref: "$currentMotionSha"\n'
           '      resolved-ref: "$currentMotionSha"\n'
           '      url: "https://github.com/kocakkmustafa/motion-core.git"\n'
-          '    source: git\n    version: "0.12.0"\n';
+          '    source: git\n    version: "0.13.0"\n';
       final uri = Uri.file('/fixture/.dart_tool/package_config.json');
       verifyPublishedMotionGraph(
         config,

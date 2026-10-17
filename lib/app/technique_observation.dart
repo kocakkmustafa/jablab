@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kReleaseMode, visibleForTesting;
 import 'package:motion_core/motion_core.dart';
 
 import 'technique_task.dart';
+import 'technique_provider_adapter.dart';
 
 enum TechniqueObservationKind {
   unsupported,
@@ -214,6 +215,10 @@ final class TechniqueObservationSession {
     String courseId,
     String lessonId,
   ) : task = TechniqueTasks.forLesson(courseId, lessonId),
+      _productionBinding = TechniqueProviderAdapter.forLesson(
+        courseId,
+        lessonId,
+      ),
       _provider = null,
       _profile = null,
       _expectedProviderIdentity = null;
@@ -226,6 +231,7 @@ final class TechniqueObservationSession {
     required TechniquePhaseProvider provider,
     required TechniqueCaptureProfile profile,
   }) : _provider = provider,
+       _productionBinding = null,
        _profile = profile,
        _expectedProviderIdentity = provider.identity {
     if (kReleaseMode) {
@@ -234,6 +240,7 @@ final class TechniqueObservationSession {
   }
 
   final TechniqueTaskSpec? task;
+  final TechniqueProviderAdapter? _productionBinding;
   final TechniquePhaseProvider? _provider;
   final TechniqueCaptureProfile? _profile;
   final String? _expectedProviderIdentity;
@@ -243,13 +250,16 @@ final class TechniqueObservationSession {
   bool _busy = false, _retired = false, _needsReset = false;
   Future<void>? _closing;
   bool get isReplay => _provider != null;
+  MotionReadiness get providerReadiness =>
+      _productionBinding?.shippingReadiness ?? MotionReadiness.replayOnly;
 
   TechniqueObservation _result(
     TechniqueObservationKind kind,
     TechniqueObservationReason reason,
   ) => TechniqueObservation(kind: kind, reason: reason, isReplay: isReplay);
 
-  TechniqueObservation get availability => task == null
+  TechniqueObservation get availability =>
+      providerReadiness == MotionReadiness.unsupported || task == null
       ? _result(
           TechniqueObservationKind.unsupported,
           TechniqueObservationReason.unsupportedTask,
@@ -268,6 +278,7 @@ final class TechniqueObservationSession {
   /// Account, provider, camera or lifecycle changes invalidate pending results.
   /// Owners create a new production session when a new provider is admitted.
   void interrupt() {
+    _productionBinding?.clear();
     _epoch++;
     _clearPartial();
     _lastUs = null;

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "at_utc": "2026-10-17T18:25:20.957520+00:00",
+  "consumer_baseline": "013f0668b626cad25ab71c6f12c98e15d6c0012b",
+  "core_sha": "62c105567a9fdfa9d907a8f8a399494c8ae5b598",
+  "core_tree": "d307f5f4f4b7cf3c263af5417c3bf445478bd166",
+  "motion_core_version": "0.13.0",
+  "provider_contract_version": "1.0.0",
+  "core_pr": "https://github.com/kocakkmustafa/motion-core/pull/9",
+  "adoption": "LOCAL_CONSUMER_CONTRACT_AND_SINGLE_IMMUTABLE_GRAPH_VERIFIED",
+  "verification": {
+    "focused-tests.log": {
+      "exit_code": 0,
+      "passed": 69,
+      "sha256": "b232fce2fdd5bebe2d43fc44728328105441c9170781911b9c9d37e49e2aeb0a"
+    },
+    "engine-scope.log": {
+      "exit_code": 0,
+      "passed": 5,
+      "sha256": "ba87836fc9a90584c2290b6d483d04243846cad633c91f059957748099c32eb2"
+    },
+    "analyze.log": {
+      "exit_code": 0,
+      "result": "No issues found",
+      "sha256": "03da083ad8a3fee55dc96094d600bf7b73f31a79e55ae442aa8079d7b314c24b"
+    },
+    "resolved-graph.json": {
+      "root_motion_packages": 5,
+      "engine_motion_packages": 1,
+      "all_actual_checkout_head_and_tree_match": true,
+      "sha256": "85ef1819e7a5e946e53a26f65650c973d70cf3e891b0da7f1ec463e65c340e38"
+    }
+  },
+  "boundaries": {
+    "production_kb12": "calibrationRequired",
+    "other_tasks": "unsupported",
+    "actual_inference_calibration_or_accuracy": false,
+    "synthetic_positive_receipts": "test files only; no release acceptance",
+    "new_native_build_or_signed_package": false,
+    "new_push_ci_deploy": false,
+    "core_source_written": false,
+    "other_projects_written": false
+  }
+}
