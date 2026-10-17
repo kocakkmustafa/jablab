@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "at_utc": "2026-10-17T22:23:04.513480+00:00",
+  "source_baseline": "9e385834f7524bff28c829d69beff92ad707d8e9",
+  "status": "LOCAL_DVIDS_REFERENCE_INGESTION_CLOSED_NOT_QUALITY_MODEL_ACCEPTANCE",
+  "source_metadata": [
+    {
+      "id": "hook",
+      "publisher_label": "Hook",
+      "page": "https://www.dvidshub.net/video/756773/hook",
+      "video_id": "756773",
+      "virin": "200619-M-RN637-020",
+      "url": "https://d34w7g4gy10iej.cloudfront.net/video/2006/DOD_107860546/DOD_107860546-1024x576-1769k.mp4",
+      "expected_bytes": 4755525,
+      "local": "media/hook.mp4",
+      "author": "Bruce Hardcastle",
+      "publisher": "U.S. Marine Corps Training and Education Command",
+      "date_taken": "2020-06-19",
+      "classification": "MCMAP demonstration;publisher title only,not universal sports-boxing correctness",
+      "identity": "not identified;all3one conservative unresolved group",
+      "partition": "reference_extraction_only_no_train_validation_test",
+      "app_publication_allowed_by_this_task": false
+    },
+    {
+      "id": "lead-hand-punch",
+      "publisher_label": "Lead Hand Punch",
+      "page": "https://www.dvidshub.net/video/756778/lead-hand-punch",
+      "video_id": "756778",
+      "virin": "200619-M-RN637-023",
+      "url": "https://d34w7g4gy10iej.cloudfront.net/video/2006/DOD_107860554/DOD_107860554.mp4",
+      "expected_bytes": 2650910,
+      "local": "media/lead-hand-punch.mp4",
+      "author": "Bruce Hardcastle",
+      "publisher": "U.S. Marine Corps Training and Education Command",
+      "date_taken": "2020-06-19",
+      "classification": "MCMAP demonstration;publisher title only,not universal sports-boxing correctness",
+      "identity": "not identified;all3one conservative unresolved group",
+      "partition": "reference_extraction_only_no_train_validation_test",
+      "app_publication_allowed_by_this_task": false
+    },
+    {
+      "id": "uppercut",
+      "publisher_label": "Uppercut",
+      "page": "https://www.dvidshub.net/video/756817/uppercut",
+      "video_id": "756817",
+      "virin": "200619-M-RN637-038",
+      "url": "https://d34w7g4gy10iej.cloudfront.net/video/2006/DOD_107860655/DOD_107860655.mp4",
+      "expected_bytes": 4817814,
+      "local": "media/uppercut.mp4",
+      "author": "Bruce Hardcastle",
+      "publisher": "U.S. Marine Corps Training and Education Command",
+      "date_taken": "2020-06-19",
+      "classification": "MCMAP demonstration;publisher title only,not universal sports-boxing correctness",
+      "identity": "not identified;all3one conservative unresolved group",
+      "partition": "reference_extraction_only_no_train_validation_test",
+      "app_publication_allowed_by_this_task": false
+    }
+  ],
+  "copyright_url": "https://www.dvidshub.net/about/copyright",
+  "rights_scope": "Publisher PUBLICDOMAIN mark verified;privacy/publicity/trademarks/nonendorsement limits remain;localresearch only,no product video publication or identity recognition",
+  "source_receipts": [
+    {
+      "url": "https://www.dvidshub.net/video/756773/hook",
+      "bytes": 71414,
+      "sha256": "66e97ff631e6e7019c00c48a9d652a9ad6e48fd72f505bec3496873e1b6ab653",
+      "status_code": 200,
+      "authenticated": false
+    },
+    {
+      "url": "https://www.dvidshub.net/video/756778/lead-hand-punch",
+      "bytes": 71505,
+      "sha256": "bc2705d9bbe94878c1253b681b6efcb41459824821defabe19f60138bd1fd147",
+      "status_code": 200,
+      "authenticated": false
+    },
+    {
+      "url": "https://www.dvidshub.net/video/756817/uppercut",
+      "bytes": 71435,
+      "sha256": "fec9314b9015663fd1e4e0de974401af006339109320ab9b9c091cc9fdeeb8a7",
+      "status_code": 200,
+      "authenticated": false
+    },
+    {
+      "url": "https://www.dvidshub.net/about/copyright",
+      "bytes": 41849,
+      "sha256": "7a08c6bb67c6ab2d6c9235c4ff9dc6a93a62cd604ecf68004b8ca7ccfb175d48",
+      "status_code": 200,
+      "authenticated": false
+    },
+    {
+      "url": "https://d34w7g4gy10iej.cloudfront.net/video/2006/DOD_107860546/DOD_107860546-1024x576-1769k.mp4",
+      "bytes": 4755525,
+      "sha256": "55bcc5a5a1ef6c9aa9e35f7de4c48d36831293700fa7c49d5fe73b04a3d03899",
+      "status_code": 200,
+      "authenticated": false
+    },
+    {
+      "url": "https://d34w7g4gy10iej.cloudfront.net/video/2006/DOD_107860554/DOD_107860554.mp4",
+      "bytes": 2650910,
+      "sha256": "646e6396d4c2b4181f1c11d933cc87a10e65b2491a5345c54158976e9c19cb03",
+      "status_code": 200,
+      "authenticated": false
+    },
+    {
+      "url": "https://d34w7g4gy10iej.cloudfront.net/video/2006/DOD_107860655/DOD_107860655.mp4",
+      "bytes": 4817814,
+      "sha256": "c8e40d358a8e7b7c63058bf98c88e38b36f8d88778517c93a0cdc367b199061a",
+      "status_code": 200,
+      "authenticated": false
+    }
+  ],
+  "model": {
+    "id": "pose_landmarker_full/float16/1",
+    "sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+    "existing_asset_unchanged": true,
+    "new_model_downloaded_or_trained": false
+  },
+  "canonical_extractor_core_pin": "62c105567a9fdfa9d907a8f8a399494c8ae5b598",
+  "canonical_extractor_sha256": "ebb6f3f622c07d6386a325f676207274fed4762068991958accad29157c97130",
+  "runconfig_sha256": "df6a08be9d5413263ab882520832723da3aa58c98c86e548f9044fba413a78a0",
+  "research_script_sha256": "c198809d2695bda172847080e0927409eeb84ae270e4852c68abf250c976fdb2",
+  "results": [
+    {
+      "id": "hook",
+      "publisher_label": "Hook",
+      "source_sha256": "55bcc5a5a1ef6c9aa9e35f7de4c48d36831293700fa7c49d5fe73b04a3d03899",
+      "source_bytes": 4755525,
+      "frames": 138,
+      "fps": 23.976023976023978,
+      "resolution": "1024x576",
+      "first_pts_s": 0.0,
+      "last_pts_s": 5.714042,
+      "pts_monotonic": true,
+      "source_clock_max_residual_s": 3.333333342681044e-07,
+      "detected_frames": 67,
+      "normalized_frames": 65,
+      "visibility_coverage_all_frames": {
+        "11": 0.4855072463768116,
+        "12": 0.4855072463768116,
+        "13": 0.4855072463768116,
+        "14": 0.4855072463768116,
+        "15": 0.4855072463768116,
+        "16": 0.4855072463768116,
+        "23": 0.4855072463768116,
+        "24": 0.4855072463768116,
+        "25": 0.4855072463768116,
+        "26": 0.4855072463768116,
+        "27": 0.4855072463768116,
+        "28": 0.4855072463768116
+      },
+      "low_visibility_or_out_of_frame_not_blur_label": true,
+      "scene_change_candidates": [
+        71
+      ],
+      "scene_delta_max": 0.2759650945663452,
+      "host_inference_ms_per_frame": 6.78,
+      "reference_sha256": "c17bd4017025b64f4f2db2c0ec5668cb234033f0c570919bf3ec3a80bcd2a875",
+      "path_segment_counts": {
+        "left_wrist": 1,
+        "right_wrist": 1,
+        "left_elbow": 1,
+        "right_elbow": 1
+      }
+    },
+    {
+      "id": "lead-hand-punch",
+      "publisher_label": "Lead Hand Punch",
+      "source_sha256": "646e6396d4c2b4181f1c11d933cc87a10e65b2491a5345c54158976e9c19cb03",
+      "source_bytes": 2650910,
+      "frames": 104,
+      "fps": 23.976023976023978,
+      "resolution": "1920x1080",
+      "first_pts_s": 0.0,
+      "last_pts_s": 4.295958,
+      "pts_monotonic": true,
+      "source_clock_max_residual_s": 3.333333342681044e-07,
+      "detected_frames": 32,
+      "normalized_frames": 30,
+      "visibility_coverage_all_frames": {
+        "11": 0.3076923076923077,
+        "12": 0.3076923076923077,
+        "13": 0.3076923076923077,
+        "14": 0.3076923076923077,
+        "15": 0.3076923076923077,
+        "16": 0.3076923076923077,
+        "23": 0.3076923076923077,
+        "24": 0.3076923076923077,
+        "25": 0.3076923076923077,
+        "26": 0.3076923076923077,
+        "27": 0.3076923076923077,
+        "28": 0.3076923076923077
+      },
+      "low_visibility_or_out_of_frame_not_blur_label": true,
+      "scene_change_candidates": [
+        72
+      ],
+      "scene_delta_max": 0.2844286561012268,
+      "host_inference_ms_per_frame": 7.32,
+      "reference_sha256": "b7e8ebfce1f5a08b61d27f4f7fcca1d9cd5f888b4c96b7dabc6d11c0894b3d79",
+      "path_segment_counts": {
+        "left_wrist": 1,
+        "right_wrist": 1,
+        "left_elbow": 1,
+        "right_elbow": 1
+      }
+    },
+    {
+      "id": "uppercut",
+      "publisher_label": "Uppercut",
+      "source_sha256": "c8e40d358a8e7b7c63058bf98c88e38b36f8d88778517c93a0cdc367b199061a",
+      "source_bytes": 4817814,
+      "frames": 137,
+      "fps": 23.976023976023978,
+      "resolution": "1920x1080",
+      "first_pts_s": 0.0,
+      "last_pts_s": 5.672333,
+      "pts_monotonic": true,
+      "source_clock_max_residual_s": 3.333333342681044e-07,
+      "detected_frames": 66,
+      "normalized_frames": 64,
+      "visibility_coverage_all_frames": {
+        "11": 0.48175182481751827,
+        "12": 0.48175182481751827,
+        "13": 0.48175182481751827,
+        "14": 0.48175182481751827,
+        "15": 0.48175182481751827,
+        "16": 0.48175182481751827,
+        "23": 0.48175182481751827,
+        "24": 0.48175182481751827,
+        "25": 0.48175182481751827,
+        "26": 0.48175182481751827,
+        "27": 0.48175182481751827,
+        "28": 0.48175182481751827
+      },
+      "low_visibility_or_out_of_frame_not_blur_label": true,
+      "scene_change_candidates": [
+        71
+      ],
+      "scene_delta_max": 0.27643996477127075,
+      "host_inference_ms_per_frame": 6.87,
+      "reference_sha256": "4d6a38c8b85eea608fa14a8ef0e664bf8a487397a2673459bb908684a41822bd",
+      "path_segment_counts": {
+        "left_wrist": 1,
+        "right_wrist": 1,
+        "left_elbow": 1,
+        "right_elbow": 1
+      }
+    }
+  ],
+  "frames_total": 379,
+  "detected_total": 165,
+  "normalized_total": 159,
+  "checks": {
+    "unit_tests_passed": 11,
+    "unit_tests_exit_code": 0,
+    "unit_test_log_sha256": "c0774557642e61ced611e633af6896d6b458d637fb37fef9ded998df6ac3141d",
+    "three_real_sequence_artifact_audits": "PASS_THREE_REAL_SOURCE_REFERENCE_ARTIFACTS_NOT_TECHNIQUE_ACCEPTANCE",
+    "local_contact_sheet_and_paths_inspected": true,
+    "source_label_remapping": false
+  },
+  "limitations": [
+    "Single source clip perpublisher label;no independent train/validation/test split",
+    "MCMAP demonstration;not universal sportsboxing groundtruth orcorrect/incorrect labels",
+    "No mirror/anatomicalside orcameraangle calibration;predicted landmarks notexpert truth",
+    "Source titlecards andcutneighborhoods retained asunobservable;paths breakacrossgaps",
+    "Canonical VIDEO integer-ms inferenceclock distinct fromactualsourcePTS",
+    "MediaPipe NORM_RECT/projectionwarning retained;no physical/deviceparity claim"
+  ],
+  "budget": {
+    "download_payload_bytes": 12480452,
+    "maximum_payload_bytes": 20000000,
+    "usd": 0,
+    "new_runtime_install": false
+  },
+  "cpu_native_lease": {
+    "started_utc": "2026-10-17T22:20:04.041143+00:00",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/mustafakaankocak/Developer/YULAlab-AI/ventures/jablab/app/tool/research/dvids_reference_ingest.py",
+      "--root",
+      "/Users/mustafakaankocak/Documents/Codex/2026-10-17/task-14/dvids-boxing-references"
+    ],
+    "mutex": "/Users/mustafakaankocak/Developer/YULAlab-AI/scratch/2026-10-02-autonomous-e2e/shared-locks/machine-runtime.lock",
+    "acquired": true,
+    "released": true,
+    "no_training": true,
+    "no_cloud_gpu_or_provider": true,
+    "budget_usd": 0,
+    "acquired_utc": "2026-10-17T22:20:04.041844+00:00",
+    "pid": 32639,
+    "exit_code": 0,
+    "status": "PASS",
+    "released_utc": "2026-10-17T22:20:19.548873+00:00",
+    "finished_utc": "2026-10-17T22:20:19.548889+00:00",
+    "workspace_bytes": 14613276
+  },
+  "approval_review": {
+    "first_call": "CreateProcess notexecuted dueauto-reviewdeadline",
+    "same_call_single_retry": "approved andcompleted",
+    "safety_or_access_bypass": false
+  },
+  "preservation": {
+    "core_source_written": false,
+    "production_activation": false,
+    "new_training": false,
+    "new_push_ci_deploy_native_or_signed_build": false,
+    "raw_videos_landmarks_images_not_committed": true
+  },
+  "evidence_root": "Documents/Codex/2026-10-17/task-14/dvids-boxing-references/"
+}
