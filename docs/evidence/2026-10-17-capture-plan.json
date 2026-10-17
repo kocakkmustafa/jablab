@@ -1,0 +1,394 @@
+{
+  "date": "2026-10-17",
+  "full_teaching_goal_preserved": true,
+  "baseline": "2113289ee5372d3a0001c1947fbe05d78b8c11a4",
+  "shared_offline_intake": "ventures/motion-core/lib/tools/fixture_pipeline/first_party_capture.py",
+  "delivery_spec": "ventures/motion-core/lib/tools/fixture_pipeline/FIRST_PARTY_VIDEO_DELIVERY.tr.txt",
+  "areas": [
+    {
+      "app": "jablab",
+      "area": "boxing",
+      "title": "Boks",
+      "courses": [
+        {
+          "path": "assets/content/solo_boxing_course.v1.json",
+          "id": null,
+          "version": 1,
+          "units": 39,
+          "sha256": "0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f",
+          "bytes": 201068,
+          "lesson_ids": [
+            "boxing.start.space",
+            "boxing.start.stance",
+            "boxing.start.guard",
+            "boxing.start.breath",
+            "boxing.start.reset",
+            "boxing.footwork.forward_back",
+            "boxing.footwork.lateral",
+            "boxing.footwork.diagonal",
+            "boxing.footwork.pivot",
+            "boxing.footwork.enter_exit",
+            "boxing.straights.jab_line",
+            "boxing.straights.jab_return",
+            "boxing.straights.double_jab",
+            "boxing.straights.rear_straight",
+            "boxing.straights.rear_return",
+            "boxing.straights.one_two",
+            "boxing.defence.distance",
+            "boxing.defence.cover",
+            "boxing.defence.catch_parry",
+            "boxing.defence.slip",
+            "boxing.defence.roll",
+            "boxing.curves.lead_hook",
+            "boxing.curves.rear_hook",
+            "boxing.curves.lead_uppercut",
+            "boxing.curves.rear_uppercut",
+            "boxing.curves.targets",
+            "boxing.combinations.double_jab_cross",
+            "boxing.combinations.one_two_hook",
+            "boxing.combinations.one_two_uppercut",
+            "boxing.combinations.defend_return",
+            "boxing.combinations.angle_exit",
+            "boxing.rounds.short_round",
+            "boxing.rounds.footwork_round",
+            "boxing.rounds.imagined_target",
+            "boxing.rounds.pace",
+            "boxing.rounds.personal_plan",
+            "boxing.integration.skill_review",
+            "boxing.integration.two_round_rehearsal",
+            "boxing.integration.independent_round"
+          ]
+        }
+      ],
+      "current_baseline": "2113289ee5372d3a0001c1947fbe05d78b8c11a4",
+      "existing_architecture": "Existing pose → phase/attempt digest → boxing ruleset/live jab. Calibrate guard/extension/peak/return, visibility and rejection with human event times; do not call this pose-backbone training. Other four written disciplines have no equivalent accepted course-wide live classifier.",
+      "source_references": [
+        {
+          "path": "lib/app/pose_model.dart",
+          "sha256": "d3e184d3c011c79de371d9cff59ae0fe6e8648b7082e63bc3620668550ff56a5"
+        },
+        {
+          "path": "lib/app/live_jab_controller.dart",
+          "sha256": "cb71921db6875df89247d1b6b50f8c5b5e1416a49ebed13c6cf03dabe2a2f6b1"
+        },
+        {
+          "path": "packages/jablab_engine/lib/src/striking_engine.dart",
+          "sha256": "f210b360a687bf1d6908682596654e2fa93a54be96efd3483e3d32ff027fb08c"
+        },
+        {
+          "path": "assets/rulesets/boxing.v3.json",
+          "sha256": "da9bb624ec0ae032c749eee05435b554386f5ca6f1427d585e805301b1fa65f9"
+        }
+      ],
+      "next_operation": "Human teaching demonstration and annotation → exact pinned extraction/DSP replay → reference/rule calibration candidate → heldout evaluation → real-device parity. No runtime promotion in this change.",
+      "acceptance_gap": "Physical teaching/rights/learner and device evidence open; no first-party capture supplied.",
+      "first_party_data_received": false,
+      "trained": false,
+      "physical_or_device_validated": false
+    },
+    {
+      "app": "jablab",
+      "area": "taichi",
+      "title": "Tai Chi",
+      "courses": [
+        {
+          "path": "assets/content/tai_chi_course.v1.json",
+          "id": "jablab.tai_chi_foundations",
+          "version": 1,
+          "units": 14,
+          "sha256": "c1d98507e9517daf6ccc514465ba98a44eb24a2c639a3968a6648869c372f47b",
+          "bytes": 99378,
+          "lesson_ids": [
+            "tai_chi_foundations_01",
+            "tai_chi_foundations_02",
+            "tai_chi_foundations_03",
+            "tai_chi_foundations_04",
+            "tai_chi_foundations_05",
+            "tai_chi_foundations_06",
+            "tai_chi_foundations_07",
+            "tai_chi_foundations_08",
+            "tai_chi_foundations_09",
+            "tai_chi_foundations_10",
+            "tai_chi_foundations_11",
+            "tai_chi_foundations_12",
+            "tai_chi_foundations_13",
+            "tai_chi_foundations_14"
+          ]
+        },
+        {
+          "path": "assets/content/yang16_angela_written.v2.json",
+          "id": "yang16-angela-written-v2",
+          "version": null,
+          "units": 18,
+          "sha256": "d6f8488084fd1bc54005ee1bd952038408e7b41e7bd02ad4f98bb85a72a44f94",
+          "bytes": 245925,
+          "lesson_ids": [
+            "prepare",
+            "m01",
+            "m02",
+            "m03",
+            "m04",
+            "m05",
+            "m06",
+            "m07",
+            "m08",
+            "m09",
+            "m10",
+            "m11",
+            "m12",
+            "m13",
+            "m14",
+            "m15",
+            "m16",
+            "return"
+          ]
+        }
+      ],
+      "current_baseline": "2113289ee5372d3a0001c1947fbe05d78b8c11a4",
+      "existing_architecture": "Existing pose → phase/attempt digest → boxing ruleset/live jab. Calibrate guard/extension/peak/return, visibility and rejection with human event times; do not call this pose-backbone training. Other four written disciplines have no equivalent accepted course-wide live classifier.",
+      "source_references": [
+        {
+          "path": "lib/app/pose_model.dart",
+          "sha256": "d3e184d3c011c79de371d9cff59ae0fe6e8648b7082e63bc3620668550ff56a5"
+        },
+        {
+          "path": "lib/app/live_jab_controller.dart",
+          "sha256": "cb71921db6875df89247d1b6b50f8c5b5e1416a49ebed13c6cf03dabe2a2f6b1"
+        },
+        {
+          "path": "packages/jablab_engine/lib/src/striking_engine.dart",
+          "sha256": "f210b360a687bf1d6908682596654e2fa93a54be96efd3483e3d32ff027fb08c"
+        },
+        {
+          "path": "assets/rulesets/boxing.v3.json",
+          "sha256": "da9bb624ec0ae032c749eee05435b554386f5ca6f1427d585e805301b1fa65f9"
+        }
+      ],
+      "next_operation": "Human teaching demonstration and annotation → exact pinned extraction/DSP replay → reference/rule calibration candidate → heldout evaluation → real-device parity. No runtime promotion in this change.",
+      "acceptance_gap": "Physical teaching/rights/learner and device evidence open; no first-party capture supplied. Written course != integrated live movement classifier.",
+      "first_party_data_received": false,
+      "trained": false,
+      "physical_or_device_validated": false
+    },
+    {
+      "app": "jablab",
+      "area": "kickboxing",
+      "title": "Kickboxing",
+      "courses": [
+        {
+          "path": "assets/content/kickboxing_a.v1.json",
+          "id": "jablab.kickboxing_a",
+          "version": 1,
+          "units": 16,
+          "sha256": "00b338d0de111ee240cdf1292611db2b8d6c3e5654800fc8967c5dfb52042fa3",
+          "bytes": 60052,
+          "lesson_ids": [
+            "kb-01",
+            "kb-02",
+            "kb-03",
+            "kb-04",
+            "kb-05",
+            "kb-06",
+            "kb-07",
+            "kb-08",
+            "kb-09",
+            "kb-10",
+            "kb-11",
+            "kb-12",
+            "kb-13",
+            "kb-14",
+            "kb-15",
+            "kb-16"
+          ]
+        }
+      ],
+      "current_baseline": "2113289ee5372d3a0001c1947fbe05d78b8c11a4",
+      "existing_architecture": "Existing pose → phase/attempt digest → boxing ruleset/live jab. Calibrate guard/extension/peak/return, visibility and rejection with human event times; do not call this pose-backbone training. Other four written disciplines have no equivalent accepted course-wide live classifier.",
+      "source_references": [
+        {
+          "path": "lib/app/pose_model.dart",
+          "sha256": "d3e184d3c011c79de371d9cff59ae0fe6e8648b7082e63bc3620668550ff56a5"
+        },
+        {
+          "path": "lib/app/live_jab_controller.dart",
+          "sha256": "cb71921db6875df89247d1b6b50f8c5b5e1416a49ebed13c6cf03dabe2a2f6b1"
+        },
+        {
+          "path": "packages/jablab_engine/lib/src/striking_engine.dart",
+          "sha256": "f210b360a687bf1d6908682596654e2fa93a54be96efd3483e3d32ff027fb08c"
+        },
+        {
+          "path": "assets/rulesets/boxing.v3.json",
+          "sha256": "da9bb624ec0ae032c749eee05435b554386f5ca6f1427d585e805301b1fa65f9"
+        }
+      ],
+      "next_operation": "Human teaching demonstration and annotation → exact pinned extraction/DSP replay → reference/rule calibration candidate → heldout evaluation → real-device parity. No runtime promotion in this change.",
+      "acceptance_gap": "Physical teaching/rights/learner and device evidence open; no first-party capture supplied. Written course != integrated live movement classifier.",
+      "first_party_data_received": false,
+      "trained": false,
+      "physical_or_device_validated": false
+    },
+    {
+      "app": "jablab",
+      "area": "karate",
+      "title": "Karate kihon/başlangıç kata",
+      "courses": [
+        {
+          "path": "assets/content/karate_a.v1.json",
+          "id": "jablab.karate_a",
+          "version": 1,
+          "units": 16,
+          "sha256": "e9b3555f09a77eb20f5756ad4cefc647e2e32415b5f6f18bca7c80ef3b4b55b0",
+          "bytes": 93021,
+          "lesson_ids": [
+            "ka-01",
+            "ka-02",
+            "ka-03",
+            "ka-04",
+            "ka-05",
+            "ka-06",
+            "ka-07",
+            "ka-08",
+            "ka-09",
+            "ka-10",
+            "ka-11",
+            "ka-12",
+            "ka-13",
+            "ka-14",
+            "ka-15",
+            "ka-16"
+          ]
+        },
+        {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "id": "jablab.taikyoku_shodan_jl",
+          "version": 1,
+          "units": 10,
+          "sha256": "56ba6480867e8bf3481b1e5fbe1b11b9ef21970ed362e546c389790901f94f92",
+          "bytes": 141753,
+          "lesson_ids": [
+            "ts-01",
+            "ts-02",
+            "ts-03",
+            "ts-04",
+            "ts-05",
+            "ts-06",
+            "ts-07",
+            "ts-08",
+            "ts-09",
+            "ts-10"
+          ]
+        }
+      ],
+      "current_baseline": "2113289ee5372d3a0001c1947fbe05d78b8c11a4",
+      "existing_architecture": "Existing pose → phase/attempt digest → boxing ruleset/live jab. Calibrate guard/extension/peak/return, visibility and rejection with human event times; do not call this pose-backbone training. Other four written disciplines have no equivalent accepted course-wide live classifier.",
+      "source_references": [
+        {
+          "path": "lib/app/pose_model.dart",
+          "sha256": "d3e184d3c011c79de371d9cff59ae0fe6e8648b7082e63bc3620668550ff56a5"
+        },
+        {
+          "path": "lib/app/live_jab_controller.dart",
+          "sha256": "cb71921db6875df89247d1b6b50f8c5b5e1416a49ebed13c6cf03dabe2a2f6b1"
+        },
+        {
+          "path": "packages/jablab_engine/lib/src/striking_engine.dart",
+          "sha256": "f210b360a687bf1d6908682596654e2fa93a54be96efd3483e3d32ff027fb08c"
+        },
+        {
+          "path": "assets/rulesets/boxing.v3.json",
+          "sha256": "da9bb624ec0ae032c749eee05435b554386f5ca6f1427d585e805301b1fa65f9"
+        }
+      ],
+      "next_operation": "Human teaching demonstration and annotation → exact pinned extraction/DSP replay → reference/rule calibration candidate → heldout evaluation → real-device parity. No runtime promotion in this change.",
+      "acceptance_gap": "Physical teaching/rights/learner and device evidence open; no first-party capture supplied. Written course != integrated live movement classifier.",
+      "first_party_data_received": false,
+      "trained": false,
+      "physical_or_device_validated": false
+    },
+    {
+      "app": "jablab",
+      "area": "muaythai",
+      "title": "Muay Thai",
+      "courses": [
+        {
+          "path": "assets/content/muay_thai_a.v1.json",
+          "id": "jablab.muay_thai_a",
+          "version": 1,
+          "units": 16,
+          "sha256": "ee16b7fe958d45c08bdcef399147a2569d33b566110f3fc4675d2971ec403531",
+          "bytes": 87373,
+          "lesson_ids": [
+            "mt-01",
+            "mt-02",
+            "mt-03",
+            "mt-04",
+            "mt-05",
+            "mt-06",
+            "mt-07",
+            "mt-08",
+            "mt-09",
+            "mt-10",
+            "mt-11",
+            "mt-12",
+            "mt-13",
+            "mt-14",
+            "mt-15",
+            "mt-16"
+          ]
+        }
+      ],
+      "current_baseline": "2113289ee5372d3a0001c1947fbe05d78b8c11a4",
+      "existing_architecture": "Existing pose → phase/attempt digest → boxing ruleset/live jab. Calibrate guard/extension/peak/return, visibility and rejection with human event times; do not call this pose-backbone training. Other four written disciplines have no equivalent accepted course-wide live classifier.",
+      "source_references": [
+        {
+          "path": "lib/app/pose_model.dart",
+          "sha256": "d3e184d3c011c79de371d9cff59ae0fe6e8648b7082e63bc3620668550ff56a5"
+        },
+        {
+          "path": "lib/app/live_jab_controller.dart",
+          "sha256": "cb71921db6875df89247d1b6b50f8c5b5e1416a49ebed13c6cf03dabe2a2f6b1"
+        },
+        {
+          "path": "packages/jablab_engine/lib/src/striking_engine.dart",
+          "sha256": "f210b360a687bf1d6908682596654e2fa93a54be96efd3483e3d32ff027fb08c"
+        },
+        {
+          "path": "assets/rulesets/boxing.v3.json",
+          "sha256": "da9bb624ec0ae032c749eee05435b554386f5ca6f1427d585e805301b1fa65f9"
+        }
+      ],
+      "next_operation": "Human teaching demonstration and annotation → exact pinned extraction/DSP replay → reference/rule calibration candidate → heldout evaluation → real-device parity. No runtime promotion in this change.",
+      "acceptance_gap": "Physical teaching/rights/learner and device evidence open; no first-party capture supplied. Written course != integrated live movement classifier.",
+      "first_party_data_received": false,
+      "trained": false,
+      "physical_or_device_validated": false
+    }
+  ],
+  "inference_checks": {
+    "jablab": {
+      "exit_code": 0,
+      "cwd": "/Users/mustafakaankocak/Developer/YULAlab-AI/ventures/jablab/app/packages/jablab_engine",
+      "tests": [
+        "engine_test.dart",
+        "negative_motion_rejection_test.dart",
+        "event_negative_control_gate_test.dart"
+      ],
+      "log": "jablab-inference.log",
+      "dependency_resolution": "existing engine package config; direct VM test runner, no pub command/network",
+      "scope": "logic/recorded fixture replay only; not first-party training, native or physical acceptance"
+    }
+  },
+  "first_party_data_received": false,
+  "new_model_training": false,
+  "device_validation_completed": false,
+  "runtime_model_rules_or_pins_changed": false,
+  "large_changes": [
+    "Gravita three dedicated missing course/variant definitions",
+    "Lissom yoga-course pose/transition assessment",
+    "JabLab other-discipline live recognition",
+    "Ostinato finger/key/contact or broader instrument-specific feedback",
+    "Choreia all-style choreography/physical support recognition",
+    "Existing extract_landmarks.py timestamps are frame-index/fps, not original variable-rate PTS: intake blocks VFR timing calibration until a compatible PTS-preserving extractor proposal is accepted. No timestamp rewrite in this change."
+  ]
+}
