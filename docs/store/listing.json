@@ -45,7 +45,20 @@
     "lessonCount": 39,
     "moduleCount": 8,
     "mediaIncluded": false,
-    "physicalDeviceAccepted": false
+    "physicalDeviceAccepted": false,
+    "historical": true
   },
-  "$sourceOfFacts": "Current course: assets/content/solo_boxing_course.v1.json; its app-local UI and account-scoped practice store. Camera paid-access policy is unchanged. Readback of provider metadata is separate."
+  "$sourceOfFacts": "Current course: assets/content/solo_boxing_course.v1.json; its app-local UI and account-scoped practice store. Camera paid-access policy is unchanged. Readback of provider metadata is separate.",
+  "$courseSourceReadback20261017": {
+    "status": "local_source_readback_not_provider_or_physical_acceptance",
+    "sourceCommit": "e2626bd37d8d1e50e28f06a27b2db719d5f7750d",
+    "asset": "assets/content/solo_boxing_course.v1.json",
+    "version": 1,
+    "sha256": "0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f",
+    "bytes": 201068,
+    "lessonCount": 39,
+    "moduleCount": 8,
+    "mediaIncluded": false,
+    "physicalDeviceAccepted": false
+  }
 }
