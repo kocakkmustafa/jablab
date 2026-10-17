@@ -161,6 +161,70 @@ void main() {
   });
 
   group('canlı hat', () {
+    for (final loss in ['missing', 'low-confidence']) {
+      test('incomplete attempt cannot bridge $loss data', () async {
+        final cam = _FakeCamera();
+        final c = build(cam, permission: () async => true);
+        final seen = <LiveJabState>[];
+        final sub = c.states.listen(seen.add);
+        addTearDown(() async {
+          await sub.cancel();
+          await c.dispose();
+          await cam.close();
+        });
+        expect(await c.start(), isNull);
+        final sequence = _jabSequence();
+        for (final frame in sequence) {
+          if (frame.tUs == 366663) {
+            cam.emit(
+              CameraFrameEnvelope(
+                tUs: frame.tUs,
+                size: const FrameSize(480, 640),
+                modelVersion: 'test',
+                clockDomain: ClockDomain.monotonic,
+                inferenceUs: 1000,
+                dropped: 0,
+                passes: {
+                  BodyOrientation.upright: loss == 'missing'
+                      ? null
+                      : frame.copyWith(
+                          landmarks: [
+                            for (final point in frame.landmarks)
+                              point.copyWith(visibility: 0.01),
+                          ],
+                        ),
+                },
+              ),
+            );
+          } else {
+            cam.emit(_envelope(frame));
+          }
+        }
+        await Future<void>.delayed(Duration.zero);
+        expect(
+          seen.whereType<LiveJabRunning>().last.completedCount,
+          0,
+          reason:
+              'a return after lost observation cannot finish an old attempt',
+        );
+        expect(
+          seen.whereType<LiveJabRunning>().any(
+            (state) => state.surface == LiveState.noVerdict,
+          ),
+          isTrue,
+        );
+        for (final frame in _jabSequence(repOffsetUs: 1000000)) {
+          cam.emit(_envelope(frame));
+        }
+        await Future<void>.delayed(Duration.zero);
+        expect(
+          seen.whereType<LiveJabRunning>().last.completedCount,
+          1,
+          reason: 'a complete fresh synthetic sequence still counts',
+        );
+      });
+    }
+
     test('SENTETİK jab SAYILIYOR ve faz bildiriliyor', () async {
       final _FakeCamera cam = _FakeCamera();
       final LiveJabController c = build(cam, permission: () async => true);

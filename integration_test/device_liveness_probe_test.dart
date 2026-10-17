@@ -1,18 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data' show ByteData;
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:jablab/app/pose_model.dart';
+import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/thermal_channel.dart';
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart' show BodyOrientation;
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart' show getApplicationDocumentsDirectory;
 
 import 'liveness_metrics.dart';
 
@@ -181,19 +180,10 @@ void main() {
         );
       }
 
-      // 2) MODEL — asset'ten diske çıkar (camera_harness_screen ile AYNI
-      //    mekanizma; kopyalandı, icat edilmedi — H-71).
+      // 2) MODEL — verified cache, shared with app and debug harness.
       late final String modelPath;
       try {
-        final Directory dir = await getApplicationSupportDirectory();
-        final File out = File(
-          '${dir.path}/${PoseModelPin.assetPath.split('/').last}',
-        );
-        if (!out.existsSync()) {
-          final ByteData data = await rootBundle.load(PoseModelPin.assetPath);
-          await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
-        }
-        modelPath = out.path;
+        modelPath = await const ContentRepository().materializePoseModel();
       } on Object catch (e) {
         failureMode = 'model_materialize_failed';
         failureDetail = '$e';

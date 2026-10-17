@@ -1,15 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:motion_camera/motion_camera.dart';
 import 'package:motion_core/motion_core.dart' show BodyOrientation;
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'pose_model.dart';
+import 'content_repository.dart';
 import 'camera_capture_coordinator.dart';
 
 /// KAMERA KÖPRÜSÜ **DEV HARNESS** — kullanıcı ekranı DEĞİL (J-072).
@@ -95,22 +93,6 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
     super.dispose();
   }
 
-  /// Modeli asset'ten diske çıkarır — MediaPipe bir DOSYA YOLU istiyor,
-  /// asset bundle'ı okuyamıyor. SHA doğrulaması `tool/fetch_pose_model.sh`
-  /// ve `model_pin_test`te; burada tekrar hash'lemek çıkarma maliyetini
-  /// her açılışta ikiye katlardı.
-  Future<String> _materializeModel() async {
-    final Directory dir = await getApplicationSupportDirectory();
-    final File out = File(
-      '${dir.path}/${PoseModelPin.assetPath.split('/').last}',
-    );
-    if (!out.existsSync()) {
-      final data = await rootBundle.load(PoseModelPin.assetPath);
-      await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
-    }
-    return out.path;
-  }
-
   Future<void> _start() async {
     if (_starting || _session != null || CameraCaptureCoordinator.isBlocked) {
       return;
@@ -146,7 +128,8 @@ class _CameraHarnessScreenState extends State<CameraHarnessScreen> {
         return;
       }
       final String path =
-          await (widget.modelPath?.call() ?? _materializeModel());
+          await (widget.modelPath?.call() ??
+              const ContentRepository().materializePoseModel());
       if (!current()) return;
       final CameraSessionInfo info = await capture.start(
         modelPath: path,
@@ -352,8 +335,9 @@ class _MetricRows extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle? mono = Theme.of(context).textTheme.bodyLarge
-        ?.copyWith(fontFamily: 'monospace');
+    final TextStyle? mono = Theme.of(
+      context,
+    ).textTheme.bodyLarge?.copyWith(fontFamily: 'monospace');
     return Column(
       children: <Widget>[
         for (final MapEntry<String, String> e in rows.entries)

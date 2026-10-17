@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-17",
+  "baseline": "9e05c78f2eded4764f85be9dde380e8ebab528cf",
+  "scope": "Two bounded runtime integrity fixes, not non-boxing pilot or trained model acceptance",
+  "changes": [
+    {
+      "id": "J-03a",
+      "behavior": "Missing or unjudgeable pose data discards incomplete engine/smoothing state and correction comparison; completed session count retained.",
+      "evidence": "Two synthetic regression tests failed before fix with expected 0 / actual 1; same tests now pass; fresh full sequence still counts."
+    },
+    {
+      "id": "J-03b",
+      "behavior": "Production repository, debug harness and physical-device probe share verified bundled model materialization. SHA-addressed cache, pinned byte size/SHA, ByteData view range and staged verified publish. Legacy/corrupt files retained and never trusted."
+    }
+  ],
+  "verification": {
+    "live_path_cases": 33,
+    "model_and_harness_cases": 16,
+    "camera_session_and_written_course_cases": 94,
+    "total_distinct_targeted_cases": 143,
+    "analyzed_files": 8,
+    "analysis": "No issues found",
+    "native_or_physical_run": false,
+    "real_model_inference_run": false,
+    "real_account_or_iap_run": false,
+    "scope": "Synthetic/widget and actual local model-file integrity only. Previous native/CI acceptance remains bound to previous sources."
+  },
+  "boundaries": {
+    "pilot_user_decision": "PENDING",
+    "training": "DEFERRED",
+    "first_party_videos_received": false,
+    "shared_core_modified": false,
+    "dependency_pins_modified": false,
+    "new_native_build": false,
+    "signed_package_for_this_source": false,
+    "push_ci_deploy_upload": false,
+    "paid_services": false,
+    "full_teaching_goal": true
+  },
+  "remaining": [
+    "kb-12 vs existing boxing first decision and app-local task/provider/calibration layer",
+    "J-007 blur/occlusion with real labels; no raw-pixel quality in present envelope",
+    "J-011 sustained physical throughput/thermal",
+    "8 original stance/jab research checks; original inputs not replaced with synthetic ones",
+    "Empty demonstration catalog; licensed first-party lesson media and expert/learner acceptance",
+    "Real account/subscription/restoration and physical device acceptance",
+    "Current signed iOS/Android package parity, privacy and explicit release gate"
+  ],
+  "evidence_files": [
+    "TASKS.json",
+    "baseline.json",
+    "gap-red.log",
+    "gap-red-corrected-harness.log",
+    "live-path-green.log",
+    "model-cache-tests.log",
+    "affected-regressions.log",
+    "analyze-clean.log",
+    "acceptance-gates.json",
+    "pilot-decision.json",
+    "browser-session-check.json",
+    "auto-review-rejection.json"
+  ],
+  "review_note": "A proposed HEAD-based reconstruction was rejected for WIP preservation risk and did not execute. Current content/diff retained; safer exact replacements were approved. No rejection bypass."
+}

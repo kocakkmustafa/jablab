@@ -8,7 +8,7 @@ import 'tai_chi_course.dart';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/services.dart' show AssetBundle, ByteData, rootBundle;
+import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:motion_content/motion_content.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -20,7 +20,7 @@ import 'session_narrator.dart';
 import 'session_store.dart';
 import 'solo_boxing_course.dart';
 import 'solo_boxing_progress.dart';
-import 'pose_model.dart';
+import 'verified_pose_model.dart';
 import 'rehearse_material.dart';
 import 'teach_material.dart';
 
@@ -339,24 +339,34 @@ final class ContentRepository {
     ).load();
     if (result is ContentBlocked) throw ContentException(result.error);
     if (result is! ContentReady) {
-      throw const ContentException(ContentError(code: ContentErrorCode.capability));
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
     }
     final content = await result.assets.read(yang16CourseAsset);
     final mapping = await result.assets.read(yang16MappingAsset);
     if (computeSha256Hex(content) != Yang16WrittenCourse.reviewedAssetSha256 ||
-        computeSha256Hex(mapping) != Yang16WrittenCourse.reviewedMappingSha256) {
-      throw const ContentException(ContentError(
-        code: ContentErrorCode.hashMismatch, contentId: 'yang16-written-course-json',
-      ));
+        computeSha256Hex(mapping) !=
+            Yang16WrittenCourse.reviewedMappingSha256) {
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.hashMismatch,
+          contentId: 'yang16-written-course-json',
+        ),
+      );
     }
     try {
       return Yang16WrittenCourse.fromVerifiedStrings(
-        utf8.decode(content), utf8.decode(mapping),
+        utf8.decode(content),
+        utf8.decode(mapping),
       );
     } on FormatException {
-      throw const ContentException(ContentError(
-        code: ContentErrorCode.schema, contentId: 'yang16-written-course-json',
-      ));
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'yang16-written-course-json',
+        ),
+      );
     }
   }
 
@@ -376,30 +386,42 @@ final class ContentRepository {
     ).load();
     if (result is ContentBlocked) throw ContentException(result.error);
     if (result is! ContentReady) {
-      throw const ContentException(ContentError(code: ContentErrorCode.capability));
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
     }
     final bytes = await result.assets.read(taikyokuCourseAsset);
     if (computeSha256Hex(bytes) != TaikyokuCourse.reviewedAssetSha256) {
-      throw const ContentException(ContentError(
-        code: ContentErrorCode.hashMismatch, contentId: 'taikyoku-shodan-jl-course-json',
-      ));
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.hashMismatch,
+          contentId: 'taikyoku-shodan-jl-course-json',
+        ),
+      );
     }
     try {
       return TaikyokuCourse.fromJsonString(utf8.decode(bytes));
     } on FormatException {
-      throw const ContentException(ContentError(
-        code: ContentErrorCode.schema, contentId: 'taikyoku-shodan-jl-course-json',
-      ));
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'taikyoku-shodan-jl-course-json',
+        ),
+      );
     } on TypeError {
-      throw const ContentException(ContentError(
-        code: ContentErrorCode.schema, contentId: 'taikyoku-shodan-jl-course-json',
-      ));
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'taikyoku-shodan-jl-course-json',
+        ),
+      );
     }
   }
 
   static const String muayThaiIntegrityManifestAsset =
       'assets/motion_content/muay_thai.manifest.json';
-  static const String muayThaiCourseAsset = 'assets/content/muay_thai_a.v1.json';
+  static const String muayThaiCourseAsset =
+      'assets/content/muay_thai_a.v1.json';
 
   Future<MuayThaiCourse> loadMuayThaiCourse() async {
     final result = await ContentBundleLoader(
@@ -520,20 +542,12 @@ final class ContentRepository {
   ///
   /// Dev-harness'tan buraya taşındı: canlı ders ve harness AYNI yolu
   /// kullanmalı, yoksa iki kopya çıkar ve biri güncellenmeyi unutur.
-  /// SHA doğrulaması `tool/fetch_pose_model.sh` + `model_pin_test`te;
-  /// burada her açılışta yeniden hash'lemek çıkarma maliyetini ikiye
-  /// katlardı.
-  Future<String> materializePoseModel() async {
-    final Directory dir = await getApplicationSupportDirectory();
-    final File out = File(
-      '${dir.path}/${PoseModelPin.assetPath.split('/').last}',
-    );
-    if (!out.existsSync()) {
-      final ByteData data = await rootBundle.load(PoseModelPin.assetPath);
-      await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
-    }
-    return out.path;
-  }
+  /// Both packaged bytes and any cached file must match the current pin.
+  /// Old model versions keep separate hash paths and cannot be reused by name.
+  Future<String> materializePoseModel() async => VerifiedPoseModel.materialize(
+    bundle: contentBundleOverride ?? rootBundle,
+    directory: await getApplicationSupportDirectory(),
+  );
 
   /// Dersin anlatım materyali (J-094) — **tek karar noktası**.
   ///

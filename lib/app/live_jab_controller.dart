@@ -249,8 +249,6 @@ final class LiveJabController {
     // karelerinde ZORUNLU (J-028) ve doğru değeri yalnız zarf biliyor.
     // Sabit bir boyut yazmak ölçüleri en-boy oranı kadar SESSİZCE yanlış
     // yapardı — hiçbir test görmeden.
-    final StrikingEngine engine = _engine ??= _buildEngine(envelope.size);
-
     _driver.load(envelope);
     final OrientationResolution resolution = source.next(
       envelope.tUs,
@@ -258,6 +256,7 @@ final class LiveJabController {
     );
 
     if (!resolution.usable) {
+      _discardPartialObservation();
       // ⚠️ `!usable` TEK bir hâl DEĞİL, İKİ ayrı hâl (J-103). Ayrım verisi
       // `resolution.structural`da: `_run()` yalnız model bir iskelet
       // ÜRETTİĞİNDE doğrulayıcıyı çalıştırır, dolayısıyla
@@ -310,6 +309,7 @@ final class LiveJabController {
     // ile "beni hiç görmüyor" arasındaki farkı GÖZÜYLE de ayırt edebilsin.
     final List<PoseLandmark> skeleton = resolution.frame!.landmarks;
 
+    final StrikingEngine engine = _engine ??= _buildEngine(envelope.size);
     final EngineOutput out = engine.process(resolution.frame!);
 
     // DÜZELTME KAYBOLDU MU (J-105). Bir OLGU ölçülüyor, bir eşik DEĞİL:
@@ -342,6 +342,7 @@ final class LiveJabController {
     }
 
     if (!out.judgeable) {
+      _discardPartialObservation();
       _states.add(
         LiveJabState.live(
           surface: LiveState.noVerdict,
@@ -397,6 +398,15 @@ final class LiveJabController {
         skeleton: skeleton,
       ),
     );
+  }
+
+  // Lost or unreliable observations cannot finish a previously started
+  // attempt. Recreate both the smoother and phase state on the next usable
+  // frame; keep only completed session counts. No correction comparison may
+  // cross an unobserved interval either.
+  void _discardPartialObservation() {
+    _engine = null;
+    _lastAttemptIssueCode = null;
   }
 
   void _onStreamError(Object error) {

@@ -23,12 +23,14 @@ final class PoseModelPin {
 
   /// Flutter asset yolu. Dosya git'te DEĞİL (aile kuralı: `.task` ikilileri
   /// izlenmez) — `tool/fetch_pose_model.sh` indirir/kopyalar ve SHA doğrular.
-  static const String assetPath =
-      'assets/models/pose_landmarker_full.v1.task';
+  static const String assetPath = 'assets/models/pose_landmarker_full.v1.task';
 
   /// Zarfa damgalanan kimlik. Hasat fixture'larının `modelVersion` alanıyla
   /// BİREBİR aynı olmak zorunda — `model_pin_test` bunu zorluyor.
   static const String modelId = 'pose_landmarker_full/float16/1';
+
+  /// Pinned byte size. Same-size corruption still fails SHA-256.
+  static const int byteLength = 9398198;
 
   /// MODELS.md'deki kanonik hash (varyant `full`, sürüm `1`).
   static const String sha256 =
