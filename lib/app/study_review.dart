@@ -9,7 +9,8 @@ String _text(BuildContext context, String en, String tr) =>
 
 /// Written recall only. Responses never enter a course, sensor or account store.
 class StudyReviewEntry extends StatelessWidget {
-  const StudyReviewEntry({super.key});
+  const StudyReviewEntry({this.openCourses = const {}, super.key});
+  final Map<String, VoidCallback> openCourses;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -25,14 +26,15 @@ class StudyReviewEntry extends StatelessWidget {
         ),
       ),
       onPressed: () => Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(builder: (_) => const StudyReviewPage()),
+        MaterialPageRoute<void>(builder: (_) => StudyReviewPage(openCourses: openCourses)),
       ),
     ),
   );
 }
 
 class StudyReviewPage extends StatelessWidget {
-  const StudyReviewPage({super.key});
+  const StudyReviewPage({this.openCourses = const {}, super.key});
+  final Map<String, VoidCallback> openCourses;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -60,6 +62,13 @@ class StudyReviewPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(area.boundary.inContext(context)),
+                if (openCourses[area.id] case final VoidCallback open)
+                  TextButton.icon(
+                    key: Key('study-course-${area.id}'),
+                    icon: const Icon(Icons.menu_book_outlined),
+                    label: Text(_text(context, 'Open existing written course', 'Mevcut yazılı kursu aç')),
+                    onPressed: open,
+                  ),
                 for (final RecallLesson lesson in area.lessons)
                   ListTile(
                     key: Key('study-lesson-${lesson.id}'),

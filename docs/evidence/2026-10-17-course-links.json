@@ -1,0 +1,143 @@
+{
+  "date": "2026-10-17",
+  "baseline_sha": "3c57f9dd638949a9329e4a62fcd8ec0d158ddf65",
+  "scope": "Only written-recall to existing course/symbolic-aid navigation. No course content, rules, sensors, Core pins, production media catalog, entitlements or native package changed.",
+  "areas": [
+    {
+      "project": "jablab",
+      "area": "Boks",
+      "courses": [
+        {
+          "path": "assets/content/solo_boxing_course.v1.json",
+          "id": null,
+          "version": 1,
+          "units": 39,
+          "sha256": "0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f",
+          "bytes": 201068
+        }
+      ],
+      "dedicated_beginner_course_present": true,
+      "source_native_diagrams": [],
+      "remaining_acceptance": "39 ders/8 modül; J-007 blur/kapanma, J-011 sürdürülebilir FPS/termal ve 12 dış referans NO_CALL/sekiz eksik stance-jab girdisi açık. Yazılı içerik ile gerçek temassız teknik ve kişisel uygunluk ayrı doğrulanmalı.",
+      "full_physical_curriculum_acceptance": "NOT_ESTABLISHED",
+      "expert_or_learner_physical_validation_this_run": "UNRUN",
+      "shipping_playable_demonstrations": 0
+    },
+    {
+      "project": "jablab",
+      "area": "Tai Chi",
+      "courses": [
+        {
+          "path": "assets/content/tai_chi_course.v1.json",
+          "id": "jablab.tai_chi_foundations",
+          "version": 1,
+          "units": 14,
+          "sha256": "c1d98507e9517daf6ccc514465ba98a44eb24a2c639a3968a6648869c372f47b",
+          "bytes": 99378
+        },
+        {
+          "path": "assets/content/yang16_angela_written.v2.json",
+          "id": "yang16-angela-written-v2",
+          "version": null,
+          "units": 18,
+          "sha256": "d6f8488084fd1bc54005ee1bd952038408e7b41e7bd02ad4f98bb85a72a44f94",
+          "bytes": 245925
+        }
+      ],
+      "dedicated_beginner_course_present": true,
+      "source_native_diagrams": [],
+      "remaining_acceptance": "14 temel ders + 18 Yang16 yazılı düğüm; tam fiziksel form/denge/aktarım kabulü yok. Yazılı içerik ile gerçek temassız teknik ve kişisel uygunluk ayrı doğrulanmalı.",
+      "full_physical_curriculum_acceptance": "NOT_ESTABLISHED",
+      "expert_or_learner_physical_validation_this_run": "UNRUN",
+      "shipping_playable_demonstrations": 0
+    },
+    {
+      "project": "jablab",
+      "area": "Kickboxing",
+      "courses": [
+        {
+          "path": "assets/content/kickboxing_a.v1.json",
+          "id": "jablab.kickboxing_a",
+          "version": 1,
+          "units": 16,
+          "sha256": "00b338d0de111ee240cdf1292611db2b8d6c3e5654800fc8967c5dfb52042fa3",
+          "bytes": 60052
+        }
+      ],
+      "dedicated_beginner_course_present": true,
+      "source_native_diagrams": [],
+      "remaining_acceptance": "16 yazılı ders; tekme aileleri, ayak/destek/sıra gerçek öğretim-gösterim kabulü açık. Yazılı içerik ile gerçek temassız teknik ve kişisel uygunluk ayrı doğrulanmalı.",
+      "full_physical_curriculum_acceptance": "NOT_ESTABLISHED",
+      "expert_or_learner_physical_validation_this_run": "UNRUN",
+      "shipping_playable_demonstrations": 0
+    },
+    {
+      "project": "jablab",
+      "area": "Karate kihon/başlangıç kata",
+      "courses": [
+        {
+          "path": "assets/content/karate_a.v1.json",
+          "id": "jablab.karate_a",
+          "version": 1,
+          "units": 16,
+          "sha256": "e9b3555f09a77eb20f5756ad4cefc647e2e32415b5f6f18bca7c80ef3b4b55b0",
+          "bytes": 93021
+        },
+        {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "id": "jablab.taikyoku_shodan_jl",
+          "version": 1,
+          "units": 10,
+          "sha256": "56ba6480867e8bf3481b1e5fbe1b11b9ef21970ed362e546c389790901f94f92",
+          "bytes": 141753
+        }
+      ],
+      "dedicated_beginner_course_present": true,
+      "source_native_diagrams": [],
+      "remaining_acceptance": "16 temel + 10 Taikyoku yazılı ders/20 hareket sözleşmesi; kata/teknik fiziksel kabulü açık. Yazılı içerik ile gerçek temassız teknik ve kişisel uygunluk ayrı doğrulanmalı.",
+      "full_physical_curriculum_acceptance": "NOT_ESTABLISHED",
+      "expert_or_learner_physical_validation_this_run": "UNRUN",
+      "shipping_playable_demonstrations": 0
+    },
+    {
+      "project": "jablab",
+      "area": "Muay Thai",
+      "courses": [
+        {
+          "path": "assets/content/muay_thai_a.v1.json",
+          "id": "jablab.muay_thai_a",
+          "version": 1,
+          "units": 16,
+          "sha256": "ee16b7fe958d45c08bdcef399147a2569d33b566110f3fc4675d2971ec403531",
+          "bytes": 87373
+        }
+      ],
+      "dedicated_beginner_course_present": true,
+      "source_native_diagrams": [],
+      "remaining_acceptance": "16 yazılı ders; gard/destek/tekniğin gerçek gösterim ve uzman-öğrenci kabulü açık. Yazılı içerik ile gerçek temassız teknik ve kişisel uygunluk ayrı doğrulanmalı.",
+      "full_physical_curriculum_acceptance": "NOT_ESTABLISHED",
+      "expert_or_learner_physical_validation_this_run": "UNRUN",
+      "shipping_playable_demonstrations": 0
+    }
+  ],
+  "source_media_rights_or_expert_approval_added": false,
+  "verification": {
+    "new_link_tests": 10,
+    "existing_regression_tests": 8,
+    "passed": 18,
+    "accepted_logs": [
+      "jablab-links-tests-initial.log"
+    ],
+    "analyze": "jablab-analyze.log"
+  },
+  "shipping_playable_demonstrations": 0,
+  "release_acceptance": "OPEN",
+  "native_runtime_real_hardware_iap_store": "UNRUN in this change; prior scoped acceptance stays historical.",
+  "changed_behavior": "Recall reuses all five app-owned course callbacks from Select and Course pages, preserving owner/admission checks; ten root-to-first-lesson flows make zero native camera/permission calls.",
+  "evidence_source_manifest": {
+    "lib/app/study_review.dart": "da91193c317c28ed37084e4f632645a0a7fa618b523c25189876011a764aa5a1",
+    "lib/app/course_page.dart": "e8ba860b355a55e98e28869a81b9c270c95355d0b289554728fc0e71c7ff7b87",
+    "lib/app/select_page.dart": "26231dab1df41cb97cd1629fe985acb8aa051671a87a3b6447f942e3981bf0f6",
+    "test/study_course_links_test.dart": "44a44e6352eda6fd9da5ad9cd5dae1ab0d364f7861e7000e3321b616bf95177d"
+  }
+}

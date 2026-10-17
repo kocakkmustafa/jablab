@@ -193,7 +193,13 @@ class _SelectPageState extends State<SelectPage> {
               SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),
               const SizedBox(height: 16),
             ],
-            const StudyReviewEntry(),
+            StudyReviewEntry(openCourses: {
+                if (widget.onOpenSoloCourse != null) 'boxing': widget.onOpenSoloCourse!,
+                if (widget.onOpenTaiChiCourse != null) 'taichi': widget.onOpenTaiChiCourse!,
+                if (widget.onOpenKickboxingCourse != null) 'kickboxing': widget.onOpenKickboxingCourse!,
+                if (widget.onOpenKarateCourse != null) 'karate': widget.onOpenKarateCourse!,
+                if (widget.onOpenMuayThaiCourse != null) 'muaythai': widget.onOpenMuayThaiCourse!,
+            }),
             ...widget.library.items.map(
               (ShellItem i) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),

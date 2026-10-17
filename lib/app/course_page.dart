@@ -181,7 +181,13 @@ class CoursePage extends StatelessWidget {
               const SizedBox(height: 16),
               SoloCourseEntryCard(onOpen: onOpenSoloCourse!),
             ],
-            const StudyReviewEntry(),
+            StudyReviewEntry(openCourses: {
+                if (onOpenSoloCourse != null) 'boxing': onOpenSoloCourse!,
+                if (onOpenTaiChiCourse != null) 'taichi': onOpenTaiChiCourse!,
+                if (onOpenKickboxingCourse != null) 'kickboxing': onOpenKickboxingCourse!,
+                if (onOpenKarateCourse != null) 'karate': onOpenKarateCourse!,
+                if (onOpenMuayThaiCourse != null) 'muaythai': onOpenMuayThaiCourse!,
+            }),
             if (isCurrent) ...<Widget>[
               const SizedBox(height: 20),
               _WhereYouLeftOff(
