@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "at_utc": "2026-10-17T22:03:00.954445+00:00",
+  "source_baseline": "01d115c9da746dfe250254074491087c86effba7",
+  "outcome": "NO_GAIN_OVER_MEAN_BASELINE_STOP_AT_RESEARCH_SMOKE_NO_PRODUCTION_ADMISSION",
+  "objective": "Unsupervised8D angle PCA;masked4 left-arm channels;not jab/hook/uppercut/form classifier",
+  "rights_and_attribution": {
+    "commercial_product_inclusion": "Allowed per official home page",
+    "raw_or_converted_direct_resale": "Prohibited per official home page",
+    "copy_modify_redistribute": "FAQ permits",
+    "acknowledgment": "The data used in this project was obtained from mocap.cs.cmu.edu. The database was created with funding from NSF EIA-0196217.",
+    "raw_video_rights": "Separate;no video downloaded or admitted",
+    "attribution_source": "http://mocap.cs.cmu.edu/",
+    "terms_source": "http://mocap.cs.cmu.edu/faqs.php",
+    "quality_guarantee": false
+  },
+  "input_records": [
+    {
+      "url": "http://mocap.cs.cmu.edu/subjects/13/13.asf",
+      "bytes": 7264,
+      "sha256": "eb33390bcbccb739d7622bd583fd9be55020868f68689aa6f2060ad688df10dc",
+      "transport_authenticated": false
+    },
+    {
+      "url": "http://mocap.cs.cmu.edu/subjects/13/13_17.amc",
+      "bytes": 3848500,
+      "sha256": "f024bfe30728fb01debc868c011df16be5d8cca95e8a734dfe00c59722c4cfd1",
+      "transport_authenticated": false
+    },
+    {
+      "url": "http://mocap.cs.cmu.edu/subjects/13/13_18.amc",
+      "bytes": 2388498,
+      "sha256": "46f4cddbc8e7a3585d4e887bec6ccc5dc7e71382ad41e28607ff4ebd9b115cb8",
+      "transport_authenticated": false
+    }
+  ],
+  "metadata_receipts": [
+    {
+      "url": "http://mocap.cs.cmu.edu/faqs.php",
+      "sha256": "518f04f07d7b0e0e8b605089f1033320d3ad5aa092f9d164f2c76c484a3f4f4e"
+    },
+    {
+      "url": "http://mocap.cs.cmu.edu/",
+      "sha256": "4ac0024566573a10c87b668c826c2c44014b032ae57cbc5fbef2794b80c21cbc"
+    },
+    {
+      "url": "http://mocap.cs.cmu.edu/search.php?subjectnumber=13",
+      "sha256": "0966b450754cbe85cff17160db2071c9254a43ca5c541e85d613beee135d8c95"
+    },
+    {
+      "url": "http://mocap.cs.cmu.edu/tools.php",
+      "sha256": "05bc48161c8e5e9992a13dfd8e64956d1bc89f629c7c3c861a9329ddd00fd7c4"
+    }
+  ],
+  "test_evidence": {
+    "parser_and_synthetic_smoke_passed": 14,
+    "parser_log_sha256": "4ff2d7d8fdcdc4c37a47def36cb4a241c0b2cc23d65c17e1091c0ed800190c8f",
+    "product_boundary": {
+      "research_artifact": "replayOnly",
+      "production_mode_spoof": "incompatible",
+      "selected_provider": null,
+      "shipping_kb12": "calibrationRequired",
+      "new_product_model_enabled": false
+    },
+    "visual_debug_inspected": true,
+    "no_native_or_real_model_accuracy_claim": true,
+    "canonical_script_equals_tested_script_sha256": "e56dd7d3ae45ad30be1e327e33484d063056d64fff7c7ed7e1016de37ac9ab6d",
+    "canonical_test_equals_executed_test_sha256": "b4392484d3a26d8bc34cf79ef9fafb1d8feffbe33ac9c1c006ebcccce489262c"
+  },
+  "research_metrics": {
+    "status": "RESEARCH_ANGLE_EMBEDDING_PILOT_ONLY",
+    "frames": {
+      "13_17": {
+        "frames": 4840,
+        "nominal_hz": 120,
+        "last_nominal_time_s": 40.325,
+        "retained_samples": 1210,
+        "root_xyz_m_range": [
+          0.7025476311111112,
+          0.3200964444444442,
+          0.6210079866666667
+        ]
+      },
+      "13_18": {
+        "frames": 3000,
+        "nominal_hz": 120,
+        "last_nominal_time_s": 24.991666666666667,
+        "retained_samples": 750,
+        "root_xyz_m_range": [
+          0.7136276755555555,
+          0.330493511111111,
+          0.6130673822222222
+        ]
+      }
+    },
+    "channels": 38,
+    "feature_dimensions": 76,
+    "latent_dimensions": 8,
+    "train_motion": "13_17",
+    "diagnostic_motion": "13_18",
+    "person_independent_holdout": false,
+    "subject_id_is_unique_person_identity": false,
+    "source_session_independence_known": false,
+    "train_only_centering_and_basis": true,
+    "hyperparameters_selected_on_diagnostic": false,
+    "masked_bones": [
+      "lhumerus",
+      "lradius"
+    ],
+    "masked_angle_channels": 4,
+    "diagnostic_samples": 750,
+    "masked_angle_mae_deg": 16.154764136274625,
+    "mean_pose_baseline_mae_deg": 16.150119738321965,
+    "masked_feature_mse": 0.09440453436458308,
+    "train_explained_variance_fraction": 0.8264350463720906,
+    "model_sha256": "d888693a49a1c70f607671f212855d0ee72ff4b31ff98606176ce40b70a451ee",
+    "model_bytes": 6039,
+    "compute_seconds": 0.2863292919937521,
+    "meter_scale": 0.05644444444444444,
+    "runtime_provider_or_calibration_updated": false,
+    "punch_or_technique_accuracy_accepted": false,
+    "input_schema": "cmu.asf-amc.local-euler.sin-cos.v1",
+    "incompatible_with_production": "body33.image.v1 / image2d.aspectCorrected; no RGB MediaPipe parity",
+    "visualization": "Rest geometry and angle diagnostics only; animated FK/physical correctness not verified",
+    "versions": {
+      "numpy": "2.5.3"
+    },
+    "reproducibility": {
+      "script_sha256": "e56dd7d3ae45ad30be1e327e33484d063056d64fff7c7ed7e1016de37ac9ab6d",
+      "config_sha256": "33e527b11121dca7c148a49e23473316e86a7c9b81a623972d72f5379c0506cc"
+    }
+  },
+  "per_channel_analysis": {
+    "decision": "NO_GAIN_OVER_MEAN_BASELINE_STOP_AT_RESEARCH_SMOKE_NO_PRODUCTION_ADMISSION",
+    "mae_difference_deg_model_minus_baseline": 0.004644397952660029,
+    "per_channel": [
+      {
+        "channel": "lhumerus.rx",
+        "model_mae_deg": 25.33417255456115,
+        "baseline_mae_deg": 21.8889327735932,
+        "model_p95_abs_error_deg": 64.11720095150736
+      },
+      {
+        "channel": "lhumerus.ry",
+        "model_mae_deg": 13.290389661644305,
+        "baseline_mae_deg": 13.96729052191525,
+        "model_p95_abs_error_deg": 35.00436138167547
+      },
+      {
+        "channel": "lhumerus.rz",
+        "model_mae_deg": 12.499589493685324,
+        "baseline_mae_deg": 14.372402774008883,
+        "model_p95_abs_error_deg": 31.57785559371203
+      },
+      {
+        "channel": "lradius.rx",
+        "model_mae_deg": 13.494904835207718,
+        "baseline_mae_deg": 14.371852883770527,
+        "model_p95_abs_error_deg": 37.12581750602333
+      }
+    ],
+    "scored_samples": 750,
+    "sample_independence": "Time-correlated same-subject diagnostic;not IID;no significance/person-generalization claim",
+    "no_hyperparameter_retry": true,
+    "no_more_training_requested_with_this_source_scope": true,
+    "product_accuracy_accepted": false,
+    "sampling_limitation": "Every4th nominal120Hz frame used at30Hz without anti-alias filtering;no timing,velocity or frequency-accuracy claim."
+  },
+  "runconfig_sha256": "33e527b11121dca7c148a49e23473316e86a7c9b81a623972d72f5379c0506cc",
+  "lease": {
+    "at_utc": "2026-10-17T21:59:50.851071+00:00",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/mustafakaankocak/Developer/YULAlab-AI/ventures/jablab/app/tool/research/cmu_boxing_pilot.py",
+      "--root",
+      "/Users/mustafakaankocak/Documents/Codex/2026-10-17/task-14/cmu-boxing-pilot"
+    ],
+    "mutex": "/Users/mustafakaankocak/Developer/YULAlab-AI/scratch/2026-10-02-autonomous-e2e/shared-locks/machine-runtime.lock",
+    "acquired": true,
+    "released": true,
+    "budget_usd": 0,
+    "gpu": false,
+    "new_executable_installed": false,
+    "disk_before_bytes": 6367983,
+    "acquired_utc": "2026-10-17T21:59:50.852064+00:00",
+    "pid": 28420,
+    "exit_code": 0,
+    "status": "PASS",
+    "finished_utc": "2026-10-17T21:59:51.278180+00:00",
+    "disk_after_bytes": 7065483,
+    "released_utc": "2026-10-17T21:59:51.278642+00:00"
+  },
+  "budget": {
+    "source_payload_bytes": 6291549,
+    "data_bytes": 6244262,
+    "download_cap_bytes": 100000000,
+    "disk_cap_bytes": 500000000,
+    "current_evidence_bytes": 7069011,
+    "usd": 0
+  },
+  "product_boundary": {
+    "production_weights_model_pin_rules_provider_calibration_unchanged": true,
+    "core_source_written": false,
+    "remote_push_ci_deploy_upload": false,
+    "new_framework_or_executable_installed": false,
+    "research_weights_admitted": false,
+    "preserved_google_pose_model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1"
+  },
+  "evidence_root": "Documents/Codex/2026-10-17/task-14/cmu-boxing-pilot/",
+  "boxingvi": {
+    "source": "https://github.com/Bikudebug/BoxingVI",
+    "inspection": "Official repository root and README through web read",
+    "reported": {
+      "clips": 6915,
+      "youtube_videos": 20,
+      "athletes": 18,
+      "labels": "6 punch classes and temporal boundaries;not correct/incorrect technique ratings"
+    },
+    "license": "No license found in inspected root/README;commercial rights not established",
+    "source_video_rights": "Not established separately",
+    "data_downloaded": false,
+    "drive_link_followed": false,
+    "used_for_training": false,
+    "status": "RISK_NOTE_ONLY_NO_ADMISSION"
+  }
+}

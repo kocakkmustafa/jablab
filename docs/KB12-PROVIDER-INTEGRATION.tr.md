@@ -1,6 +1,6 @@
 # JabLab görev/provider bağlantısı — kb-12
 
-Bu sürüm tam ders hedefini korur. Model eğitimi ertelenmiştir. Üretimde `kb-12` için **kalibrasyon gerekli**, diğer yeni ders görevleri için **desteklenmiyor** gösterilir. Kamera değerlendirmesi açılmaz. Yazılı inceleme ve kullanıcının çalışma beyanı fiziksel teknik kabulü değildir.
+Bu sürüm tam ders hedefini korur. İnternet kaynaklı sınırlı CMU araştırma pilotu başladı; baseline kazancı göstermedi ([sonuç](CMU-BOXING-PILOT.tr.md)). Üretim tekniği modelinin kalibrasyon ve bağımsız doğruluk kabulü henüz yoktur. Üretimde `kb-12` için **kalibrasyon gerekli**, diğer yeni ders görevleri için **desteklenmiyor** gösterilir. Kamera değerlendirmesi açılmaz. Yazılı inceleme ve kullanıcının çalışma beyanı fiziksel teknik kabulü değildir.
 
 ## Bağlı görev
 
