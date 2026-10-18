@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_REVIEW_DRAFT_NOT_SUBMITTED",
+  "releasePolicy": {
+    "paidFeaturesAvailable": false,
+    "cameraCoachingAvailable": false,
+    "automaticPunchCountingAvailable": false,
+    "demonstrationVideoIncluded": false,
+    "manualPracticeRecordIsMastery": false,
+    "policySource": "motion_account/lib/src/motion_release_policy.dart at pinned Core 62c10556"
+  },
+  "appReview": {
+    "en-US": "JabLab contains bundled text lessons and manual self-reported practice records. The current solo boxing path has 39 lessons in 8 modules; additional written courses are available in the catalogue. A Motion account is optional. Camera coaching, automatic punch counting and subscription sales are disabled by the current release policy. No independent movement accuracy or mastery result is claimed. Demonstration video is not included. Do not use the local CMU/DVIDS research artifacts as product or test-account evidence. Real account and physical-device acceptance must be completed on the final build before submission.",
+    "tr-TR": "JabLab paketli metin dersleri ve kişinin kendi beyan ettiği yerel çalışma kayıtlarını içerir. Solo boks yolu 8 modülde 39 derstir; katalogda ek yazılı kurslar vardır. Motion hesabı isteğe bağlıdır. Mevcut sürüm politikasında kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı kapalıdır. Bağımsız hareket doğruluğu veya ustalık sonucu iddia edilmez. Gösterim videosu yoktur. Yerel CMU/DVIDS araştırma artefaktları ürün veya test hesabı kanıtı değildir. Gönderimden önce final build üzerinde gerçek hesap ve fiziksel cihaz kabulü tamamlanmalıdır.",
+    "reviewAccount": null,
+    "reviewAccountStatus": "ONLY_IF_REQUIRED_PROVIDE_THROUGH_SECURE_STORE_FLOW_NO_CREDENTIAL_IN_REPO"
+  },
+  "privacy": {
+    "appleSourceTypes": [
+      "EmailAddress",
+      "Name",
+      "UserID",
+      "OtherDiagnosticData",
+      "CoarseLocation",
+      "OtherDataTypes"
+    ],
+    "tracking": false,
+    "linked": true,
+    "purpose": "AppFunctionality",
+    "policyUrl": "https://yulalab.com/privacy/motion",
+    "supportUrl": "https://yulalab.com/support",
+    "urlLiveReadback": "UNVERIFIED_WEB_TOOL_UNAVAILABLE_2026_10_18",
+    "retentionAndProviderLogs": "Provider retention/deletion policy and final binary SDK data map require owner review; no new retention promise",
+    "finalProviderPublish": false
+  },
+  "play": {
+    "accountDeletionWebUrl": null,
+    "accountDeletionWebUrlStatus": "REQUIRED_FUNCTIONAL_PROMINENT_EXTERNAL_REQUEST_PATH_NOT_VERIFIED",
+    "inAppDeletion": "Source includes identity-bound remote deletion and local cleanup; real account acceptance pending",
+    "provisionalDataTypes": [
+      {
+        "apple": "EmailAddress",
+        "playCandidate": "Personal info / Email address",
+        "review": "optional account; verify final collection handling"
+      },
+      {
+        "apple": "Name",
+        "playCandidate": "Personal info / Name",
+        "review": "optional profile field"
+      },
+      {
+        "apple": "UserID",
+        "playCandidate": "Personal info / User IDs",
+        "review": "account identity"
+      },
+      {
+        "apple": "CoarseLocation",
+        "playCandidate": "Location / Approximate location",
+        "review": "IP-derived provider request logs; no GPS permission"
+      },
+      {
+        "apple": "OtherDiagnosticData",
+        "playCandidate": "App info and performance / Diagnostics",
+        "review": "provider security/technical logs; linked IP handling needs final review"
+      },
+      {
+        "apple": "OtherDataTypes",
+        "playCandidate": "Personal info / Other info",
+        "review": "classification inference for auth credentials/deletion receipts; owner must confirm"
+      }
+    ],
+    "sharingAnswer": "Pending processor-role and final data-map review; service providers acting solely on developer instructions may be excluded by Play definition",
+    "dataSafetySubmitted": false
+  },
+  "ageRating": {
+    "assignedRating": null,
+    "status": "QUESTIONNAIRE_AND_OWNER_REVIEW_PENDING_NO_AUTOMATIC_4_PLUS_CLAIM",
+    "contentFacts": [
+      "non-contact solo practice text",
+      "health/wellness instruction",
+      "no sparring or contact-readiness claim",
+      "no user media sharing or messaging in current source"
+    ],
+    "ratingAuthority": "Apple/Google questionnaires and region-specific result; local draft is not rating assignment"
+  },
+  "screenshots": {
+    "status": "CURRENT_NATIVE_CAPTURE_PENDING",
+    "locales": [
+      "en-US",
+      "tr-TR"
+    ],
+    "scenes": [
+      "course catalogue",
+      "solo boxing course overview",
+      "text lesson and manual self-check",
+      "other written-course overview",
+      "movement feedback calibration-required panel"
+    ],
+    "rules": [
+      "real current build and locale",
+      "no private account data or fabricated sensor results",
+      "no research source video or institution endorsement",
+      "record device/OS/source/config and screenshot SHA",
+      "check current ASC-required iPhone classes; current source targets iPhone only; re-evaluate if the final binary family changes"
+    ],
+    "sourceDeviceFamily": "iPhone only; pbxproj current TARGETED_DEVICE_FAMILY=1"
+  },
+  "openAcceptance": [
+    "current-source signed package",
+    "real account/login/recovery/deletion",
+    "physical device lifecycle/offline/persistence",
+    "real subscription/restoration if paid release is separately enabled",
+    "final privacy forms, URLs and retention",
+    "native screenshots",
+    "explicit upload/publication decision"
+  ],
+  "sources": [
+    "https://developer.apple.com/help/app-store-connect/manage-app-information/set-an-app-age-rating/",
+    "https://developer.apple.com/app-store/app-privacy-details/",
+    "https://support.google.com/googleplay/android-developer/answer/13327111",
+    "https://support.google.com/googleplay/android-developer/answer/10787469",
+    "https://supabase.com/docs/guides/auth/audit-logs"
+  ],
+  "storeGraphics": {
+    "icons": "Approved 2026-10-16 v14-natural-wrap: existing 1024 PNG byte copy and full-frame 512 derivative",
+    "featureGraphics": "Offline EN/TR code-defined composition drafts; owner visual review pending",
+    "historicalCandidates": "Hooded figure candidates/feature graphic retained historically; excluded from new packet",
+    "nativeScreenshots": "Only current native captures qualify; feature graphics are not screenshots"
+  }
+}
