@@ -1,0 +1,5 @@
+// Archive-only override. Supply JABLAB_APP_STORE_PROFILE_UUID on the command line.
+// Nested target lookup resolves to empty for Pods and other targets.
+JABLAB_STORE_PROFILE_Runner = $(JABLAB_APP_STORE_PROFILE_UUID)
+PROVISIONING_PROFILE_SPECIFIER = $(JABLAB_STORE_PROFILE_$(TARGET_NAME))
+PROVISIONING_PROFILE =
