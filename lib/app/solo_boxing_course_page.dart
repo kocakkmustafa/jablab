@@ -104,6 +104,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   bool _loading = true;
   bool _opening = false;
   bool _failed = false;
+  bool _progressUnavailable = false;
   ContentFailure? _contentFailure;
   int _generation = 0;
   ModalRoute<void>? _ownerRoute;
@@ -165,15 +166,23 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         _loading = true;
         _opening = false;
         _failed = false;
+        _progressUnavailable = false;
         _contentFailure = null;
       });
     }
     try {
       final SoloBoxingCourse course =
           _course ?? await widget.repository.loadSoloBoxingCourse();
-      final SoloCourseProgressStore store = await widget.repository
-          .openSoloProgressStore(accountUserId: account);
-      final SoloCourseProgress progress = await store.load();
+      SoloCourseProgressStore? store;
+      SoloCourseProgress? progress;
+      try {
+        store = await widget.repository.openSoloProgressStore(
+          accountUserId: account,
+        );
+        progress = await store.load();
+      } on Object {
+        // Content remains readable. Unknown progress is never an empty journal.
+      }
       if (!mounted ||
           generation != _generation ||
           widget.resourceAdmission?.value == false) {
@@ -183,6 +192,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         _course = course;
         _store = store;
         _progress = progress;
+        _progressUnavailable = progress == null;
         _loading = false;
       });
     } on Object catch (error) {
@@ -207,7 +217,6 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
     final SoloCourseProgressStore? store = _store;
     if (_opening ||
         course == null ||
-        store == null ||
         widget.resourceAdmission?.value == false) {
       return;
     }
@@ -224,9 +233,27 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         widget.resourceAdmission?.value != false;
     setState(() => _opening = true);
     try {
-      final SoloCourseProgress viewed = await store.markViewed(course, lesson);
+      SoloLessonProgress? initialProgress;
+      bool readOnly = _progressUnavailable || store == null;
+      if (!readOnly && store != null) {
+        try {
+          final SoloCourseProgress viewed = await store.markViewed(
+            course,
+            lesson,
+          );
+          if (!current()) return;
+          setState(() => _progress = viewed);
+          initialProgress = viewed.forLesson(lesson, course.version);
+        } on Object {
+          if (!current()) return;
+          readOnly = true;
+          setState(() {
+            _progress = null;
+            _progressUnavailable = true;
+          });
+        }
+      }
       if (!mounted || !current()) return;
-      setState(() => _progress = viewed);
       final navigator = Navigator.of(context);
       late final MaterialPageRoute<void> route;
       route = MaterialPageRoute<void>(
@@ -245,20 +272,17 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
             accountUserId: ownerNotifier,
             resourceAdmission: admissionNotifier,
             accountAtOpen: account,
-            initialProgress: viewed.forLesson(lesson, course.version),
+            initialProgress: initialProgress,
+            readOnly: readOnly,
           );
         },
       );
       await navigator.push<void>(route);
-      if (mounted && account == widget.accountUserId?.value) {
-        setState(() => _opening = false);
-        final SoloCourseProgress latest = await store.load();
-        if (mounted && account == widget.accountUserId?.value) {
-          setState(() => _progress = latest);
-        }
+      if (current()) {
+        await _load();
       }
     } on Object {
-      if (mounted) {
+      if (mounted && current()) {
         setState(() => _opening = false);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -304,7 +328,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: JColors.cool))
-          : _failed || course == null || progress == null
+          : _failed || course == null
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
@@ -342,10 +366,10 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   Widget _courseBody(
     BuildContext context,
     SoloBoxingCourse course,
-    SoloCourseProgress progress,
+    SoloCourseProgress? progress,
   ) {
-    final int done = progress.completedCount(course);
-    final SoloLesson? next = progress.nextLesson(course);
+    final int? done = progress?.completedCount(course);
+    final SoloLesson? next = progress?.nextLesson(course);
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
       children: <Widget>[
@@ -362,22 +386,33 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                UiLanguage.text(
-                  context,
-                  en: '$done / 39 self-reported complete',
-                  tr: '$done / 39 öz beyanla tamamlandı',
+              if (done == null) ...<Widget>[
+                const _SoloReadOnlyNotice(),
+                TextButton(
+                  key: const Key('solo-progress-retry'),
+                  onPressed: _load,
+                  child: Text(
+                    UiLanguage.text(context, en: 'Try again', tr: 'Yeniden dene'),
+                  ),
                 ),
-                key: const Key('solo-course-progress'),
-                style: JText.body.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 9),
-              LinearProgressIndicator(
-                value: done / course.lessons.length,
-                backgroundColor: JColors.border,
-                color: JColors.cool,
-              ),
-              const SizedBox(height: 9),
+              ] else ...<Widget>[
+                Text(
+                  UiLanguage.text(
+                    context,
+                    en: '$done / 39 self-reported complete',
+                    tr: '$done / 39 öz beyanla tamamlandı',
+                  ),
+                  key: const Key('solo-course-progress'),
+                  style: JText.body.copyWith(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 9),
+                LinearProgressIndicator(
+                  value: done / course.lessons.length,
+                  backgroundColor: JColors.border,
+                  color: JColors.cool,
+                ),
+                const SizedBox(height: 9),
+              ],
               Text(
                 UiLanguage.text(
                   context,
@@ -436,15 +471,17 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
     BuildContext context,
     SoloBoxingCourse course,
     SoloModule module,
-    SoloCourseProgress progress,
+    SoloCourseProgress? progress,
   ) {
-    final int completed = module.lessons
-        .where(
-          (SoloLesson lesson) =>
-              progress.forLesson(lesson, course.version)?.state ==
-              SoloLessonState.selfReportedComplete,
-        )
-        .length;
+    final int? completed = progress == null
+        ? null
+        : module.lessons
+              .where(
+                (SoloLesson lesson) =>
+                    progress.forLesson(lesson, course.version)?.state ==
+                    SoloLessonState.selfReportedComplete,
+              )
+              .length;
     return GlassPanel(
       padding: EdgeInsets.zero,
       child: Material(
@@ -461,8 +498,12 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
           subtitle: Text(
             UiLanguage.text(
               context,
-              en: '$completed / ${module.lessons.length} self-reported complete',
-              tr: '$completed / ${module.lessons.length} öz beyan tamamlandı',
+              en: completed == null
+                  ? 'Progress unavailable · read only'
+                  : '$completed / ${module.lessons.length} self-reported complete',
+              tr: completed == null
+                  ? 'İlerleme okunamıyor · salt okunur'
+                  : '$completed / ${module.lessons.length} öz beyan tamamlandı',
             ),
             style: JText.bodyMuted,
           ),
@@ -476,7 +517,9 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                 key: Key('solo-lesson-${module.lessons[i].id}'),
                 onTap: _opening ? null : () => _openLesson(module.lessons[i]),
                 leading: Icon(
-                  progress
+                  progress == null
+                      ? Icons.help_outline
+                      : progress
                               .forLesson(module.lessons[i], course.version)
                               ?.state ==
                           SoloLessonState.selfReportedComplete
@@ -501,6 +544,21 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   }
 }
 
+class _SoloReadOnlyNotice extends StatelessWidget {
+  const _SoloReadOnlyNotice();
+
+  @override
+  Widget build(BuildContext context) => Text(
+    UiLanguage.text(
+      context,
+      en: 'Progress could not be verified. You can read the lessons, but progress totals and saving are unavailable. This screen does not reset your files. Reopen the course to try again.',
+      tr: 'İlerleme doğrulanamadı. Dersleri okuyabilirsin; ilerleme toplamları ve kayıt kullanılamıyor. Bu ekran dosyalarını sıfırlamaz. Yeniden denemek için kursu yeniden aç.',
+    ),
+    key: const Key('solo-progress-unavailable'),
+    style: JText.bodyMuted,
+  );
+}
+
 class SoloBoxingLessonPage extends StatefulWidget {
   const SoloBoxingLessonPage({
     super.key,
@@ -512,11 +570,13 @@ class SoloBoxingLessonPage extends StatefulWidget {
     this.accountUserId,
     this.resourceAdmission,
     this.preparationClock,
+    this.readOnly = false,
   });
 
   final SoloBoxingCourse course;
   final SoloLesson lesson;
-  final SoloCourseProgressStore store;
+  final SoloCourseProgressStore? store;
+  final bool readOnly;
   final SoloLessonProgress? initialProgress;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
@@ -534,6 +594,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   late SoloLessonProgress? _progress;
   late List<bool> _checks;
   bool _saving = false;
+  late bool _readOnly;
   bool _ownerRetired = false;
   ModalRoute<void>? _ownerRoute;
   NavigatorState? _ownerNavigator;
@@ -593,7 +654,8 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   @override
   void initState() {
     super.initState();
-    _progress = widget.initialProgress;
+    _readOnly = widget.readOnly || widget.store == null;
+    _progress = _readOnly ? null : widget.initialProgress;
     _checks = List<bool>.filled(widget.lesson.selfChecks.length, false);
     widget.accountUserId?.addListener(_accountChanged);
     widget.resourceAdmission?.addListener(_accountChanged);
@@ -614,6 +676,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   @override
   void didUpdateWidget(covariant SoloBoxingLessonPage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (widget.readOnly || widget.store == null) {
+      _readOnly = true;
+      _progress = null;
+    }
     if (identical(oldWidget.accountUserId, widget.accountUserId) &&
         identical(oldWidget.resourceAdmission, widget.resourceAdmission) &&
         identical(oldWidget.store, widget.store) &&
@@ -683,7 +749,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
   }
 
   Future<void> _save({required bool complete}) async {
-    if (_ownerRetired ||
+    final SoloCourseProgressStore? store = widget.store;
+    if (_readOnly ||
+        store == null ||
+        _ownerRetired ||
         _saving ||
         widget.accountUserId?.value != widget.accountAtOpen ||
         widget.resourceAdmission?.value == false ||
@@ -695,12 +764,12 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
     final sessionEpoch = _sessionEpoch;
     try {
       final SoloCourseProgress updated = complete
-          ? await widget.store.markCompleted(
+          ? await store.markCompleted(
               widget.course,
               widget.lesson,
               selfChecksConfirmed: _checks.every((bool value) => value),
             )
-          : await widget.store.markPractised(widget.course, widget.lesson);
+          : await store.markPractised(widget.course, widget.lesson);
       if (!mounted ||
           widget.accountUserId?.value != widget.accountAtOpen ||
           widget.resourceAdmission?.value == false) {
@@ -715,7 +784,15 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
       });
     } on Object {
       if (!mounted) return;
-      setState(() => _saving = false);
+      if (widget.accountUserId?.value != widget.accountAtOpen ||
+          widget.resourceAdmission?.value == false) {
+        return;
+      }
+      setState(() {
+        _saving = false;
+        _readOnly = true;
+        _progress = null;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -755,6 +832,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
         key: const Key('solo-lesson-list'),
         padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
         children: <Widget>[
+          if (_readOnly) const _SoloReadOnlyNotice(),
           TechniqueCapabilityPanel(courseId: widget.course.id, lessonId: lesson.id),
           Text(
             _copy(context, lesson.title),
@@ -912,7 +990,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                       _copy(context, lesson.selfChecks[i]),
                       style: JText.body.copyWith(fontSize: 15),
                     ),
-                    onChanged: _saving || _preparationBlocked
+                    onChanged: _readOnly || _saving || _preparationBlocked
                         ? null
                         : (bool? value) =>
                               setState(() => _checks[i] = value ?? false),
@@ -952,7 +1030,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           const SizedBox(height: 18),
           FilledButton(
             key: const Key('solo-mark-practised'),
-            onPressed: _saving || _preparationBlocked
+            onPressed: _readOnly || _saving || _preparationBlocked
                 ? null
                 : () => _save(complete: false),
             child: Text(
@@ -971,7 +1049,8 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           OutlinedButton(
             key: const Key('solo-mark-complete'),
             onPressed:
-                _saving ||
+                _readOnly ||
+                    _saving ||
                     _preparationBlocked ||
                     (_needsSessionPreparation && !_practisedThisSession) ||
                     !practised ||

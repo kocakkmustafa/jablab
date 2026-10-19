@@ -97,9 +97,25 @@ final class SoloCourseProgressStore {
 
   Future<SoloCourseProgress> _loadUnlocked() async {
     _lease.checkCurrent();
-    final bool exists = await file.exists();
+    final FileSystemEntityType type = await FileSystemEntity.type(
+      file.path,
+      followLinks: false,
+    );
     _lease.checkCurrent();
-    if (!exists) return const SoloCourseProgress({});
+    if (type == FileSystemEntityType.notFound) {
+      final FileSystemEntityType pending = await FileSystemEntity.type(
+        '${file.path}.tmp',
+        followLinks: false,
+      );
+      _lease.checkCurrent();
+      if (pending == FileSystemEntityType.notFound) {
+        return const SoloCourseProgress({});
+      }
+      throw FileSystemException('Uncommitted progress needs review', file.path);
+    }
+    if (type != FileSystemEntityType.file) {
+      throw FileSystemException('Progress is not a regular file', file.path);
+    }
     final String raw = await file.readAsString();
     _lease.checkCurrent();
     final Map<String, dynamic> root = (jsonDecode(raw) as Map)
@@ -196,6 +212,10 @@ final class SoloCourseProgressStore {
     await file.parent.create(recursive: true);
     _lease.checkCurrent();
     final File temp = File('${file.path}.tmp');
+    // Never truncate an earlier incomplete write or follow a link at this path.
+    // A failed save remains unavailable until its files can be reviewed.
+    await temp.create(exclusive: true);
+    _lease.checkCurrent();
     await temp.writeAsString(
       jsonEncode(<String, Object>{
         'schemaVersion': 1,

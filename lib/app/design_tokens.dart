@@ -356,11 +356,12 @@ class GlassIconButton extends StatelessWidget {
   Widget build(BuildContext context) => ClipOval(
         child: GlassPanel(
           tier: GlassTier.resting,
-          borderRadius: 22,
+          borderRadius: 24,
           padding: EdgeInsets.zero,
           child: SizedBox(
-            width: 44,
-            height: 44,
+            // Keep the actual IconButton target at Android's 48dp minimum.
+            width: 48,
+            height: 48,
             child: IconButton(
               icon: Icon(icon, size: 18, color: JColors.ink),
               tooltip: tooltip,
