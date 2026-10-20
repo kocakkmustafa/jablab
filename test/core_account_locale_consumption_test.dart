@@ -6,6 +6,7 @@ import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/owner_resource_lifetime.dart';
+import 'package:flutter/foundation.dart' show debugPrintSynchronously;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/settings_page.dart';
@@ -19,6 +20,61 @@ class _SignedOutLocaleAccount implements MotionAccountClient {
   Stream<AuthState> get authChanges => const Stream<AuthState>.empty();
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+// Copied in shape from account_resource_shell_test.dart:_io (51-PASS suite).
+// Only filesystem/drain callbacks belong here; never wrap runAsync/pumpWidget.
+void _rootStage(String stage) {
+  debugPrintSynchronously('JABLAB_ROOT_LOCALE_STAGE $stage');
+}
+
+Future<T> _rootIo<T>(
+  WidgetTester tester,
+  String stage,
+  Future<T> Function() action,
+) async {
+  _rootStage('$stage/begin');
+  bool settled = false;
+  T? value;
+  Object? error;
+  StackTrace? stack;
+  action().then(
+    (result) {
+      value = result;
+      settled = true;
+    },
+    onError: (Object failure, StackTrace trace) {
+      error = failure;
+      stack = trace;
+      settled = true;
+    },
+  );
+  for (int i = 0; i < 80 && !settled; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 25)),
+    );
+    await tester.pump();
+  }
+  if (!settled) {
+    _rootStage('$stage/bounded-failure');
+  }
+  expectSync(
+    settled,
+    isTrue,
+    reason: '$stage: real IO and UI continuations must settle within 80 pumps',
+  );
+  if (error != null) {
+    _rootStage('$stage/error');
+    Error.throwWithStackTrace(error!, stack!);
+  }
+  _rootStage('$stage/done');
+  return value as T;
+}
+
+Future<void> _rootRouteSettled(WidgetTester tester, String stage) async {
+  _rootStage('$stage/begin');
+  await tester.pumpAndSettle(timeout: const Duration(seconds: 3));
+  _rootStage('$stage/done');
 }
 
 void main() {
@@ -159,17 +215,29 @@ void main() {
       (tester) async {
         tester.platformDispatcher.localesTestValue = [locale];
         addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-        final directory = (await tester.runAsync(
+        final trace = locale.toLanguageTag();
+        final directory = await _rootIo<Directory>(
+          tester,
+          '$trace/temp.create',
           () => Directory.systemTemp.createTemp('jablab-core-locale-'),
-        ))!;
+        );
         final owners = OwnerResourceRegistry();
         addTearDown(() async {
+          _rootStage('$trace/teardown.unmount/begin');
           await tester.pumpWidget(const SizedBox.shrink());
-          await tester.runAsync(() async {
-            await owners.retireAll();
-            await directory.delete(recursive: true);
-          });
+          _rootStage('$trace/teardown.unmount/done');
+          await _rootIo<void>(
+            tester,
+            '$trace/teardown.retire',
+            owners.retireAll,
+          );
+          await _rootIo<Directory>(
+            tester,
+            '$trace/teardown.delete',
+            () => directory.delete(recursive: true),
+          );
         });
+        _rootStage('$trace/root.mount/begin');
         await tester.runAsync(
           () => tester.pumpWidget(
             JabLabApp(
@@ -183,8 +251,11 @@ void main() {
             ),
           ),
         );
+        _rootStage('$trace/root.mount/done');
+        _rootStage('$trace/root.load/begin');
         await settleAppLoad(tester);
-        await tester.pumpAndSettle();
+        _rootStage('$trace/root.load/done');
+        await _rootRouteSettled(tester, '$trace/root.settle');
         final rootMaterial = tester.widget<MaterialApp>(
           find.byType(MaterialApp).first,
         );
@@ -192,12 +263,18 @@ void main() {
           rootMaterial.localizationsDelegates,
           contains(MotionAccountLocalizations.delegate),
         );
+        _rootStage('$trace/settings.tap/begin');
         await tester.tap(find.byKey(const Key('settings-button')));
-        await tester.pumpAndSettle();
+        _rootStage('$trace/settings.tap/done');
+        await _rootRouteSettled(tester, '$trace/settings.settle');
         expect(find.byType(SettingsPage), findsOneWidget);
+        _rootStage('$trace/account.ensureVisible/begin');
         await tester.ensureVisible(find.byKey(SettingsPage.accountEntryKey));
+        _rootStage('$trace/account.ensureVisible/done');
+        _rootStage('$trace/account.tap/begin');
         await tester.tap(find.byKey(SettingsPage.accountEntryKey));
-        await tester.pumpAndSettle();
+        _rootStage('$trace/account.tap/done');
+        await _rootRouteSettled(tester, '$trace/account.settle');
         final context = tester.element(find.byType(MotionAccountPage));
         final loaded = Localizations.of<MotionAccountLocalizations>(
           context,
@@ -218,6 +295,7 @@ void main() {
           findsOneWidget,
         );
         expect(tester.takeException(), isNull);
+        _rootStage('$trace/assertions/done');
       },
     );
   }
