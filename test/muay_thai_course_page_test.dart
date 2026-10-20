@@ -253,7 +253,7 @@ void main() {
             await tap(t, const Key('muay-thai-report-written'));
             expect(course().physicalPracticeAvailable, isFalse);
             expect(t.takeException(), isNull);
-            await t.pageBack();
+            await tapTestMaterialBack(t);
             await t.pumpAndSettle();
           }
           await show(t, const Key('muay-thai-written-progress'));
@@ -298,7 +298,7 @@ void main() {
             .text,
         isEmpty,
       );
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await show(t, const Key('muay-thai-written-progress'));
       expect(find.textContaining('0/16'), findsOneWidget);
@@ -369,7 +369,7 @@ void main() {
             .onPressed,
         isNull,
       );
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await show(t, const Key('muay-thai-written-progress'));
       expect(find.textContaining('0/16'), findsOneWidget);
@@ -390,13 +390,13 @@ void main() {
             .onPressed,
         isNull,
       );
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       for (final n in [1, 2]) {
         await tap(t, Key('muay-thai-lesson-$n'));
         await writeAndCompare(t);
         await tap(t, const Key('muay-thai-report-written'));
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
       }
       await show(t, const Key('muay-thai-written-progress'));
@@ -410,7 +410,7 @@ void main() {
       t.testTextInput.hide();
       await t.pumpAndSettle();
       expect(find.byKey(const Key('muay-thai-answer')), findsNothing);
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await show(t, const Key('muay-thai-written-progress'));
       expect(find.textContaining('0/16'), findsOneWidget);
@@ -426,11 +426,11 @@ void main() {
       await t.tap(find.byKey(const Key('muay-thai-stop-top')));
       await t.pumpAndSettle();
       expect(find.byKey(const Key('muay-thai-answer')), findsNothing);
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await show(t, const Key('muay-thai-written-progress'));
       expect(find.textContaining('0/16'), findsOneWidget);
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await t.tap(find.text('Open'));
       await t.pumpAndSettle();

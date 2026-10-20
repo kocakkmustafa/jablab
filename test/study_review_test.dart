@@ -1,6 +1,5 @@
 import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/study_review.dart';
 import 'package:jablab/app/study_review_content.dart';
@@ -69,12 +68,8 @@ void main() {
         MaterialApp(
           localeListResolutionCallback: resolveTestLocales,
           locale: Locale(language),
-          supportedLocales: const [Locale('en'), Locale('tr')],
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
           home: const Scaffold(body: StudyReviewEntry()),
         ),
       );
@@ -125,12 +120,15 @@ void main() {
       final message = t
           .widget<Text>(find.byKey(const Key('study-feedback')))
           .data!;
-      if (status == RecallObservation.uncertain)
+      if (status == RecallObservation.uncertain) {
         expect(message, contains('uncertainty'));
-      if (status == RecallObservation.difference)
+      }
+      if (status == RecallObservation.difference) {
         expect(message, contains('written answers'));
-      if (status == RecallObservation.notAttempted)
+      }
+      if (status == RecallObservation.notAttempted) {
         expect(message, contains('unattempted'));
+      }
       if (status == RecallObservation.stopped) {
         expect(message, contains('End this activity'));
         expect(find.byKey(const Key('study-next')), findsNothing);

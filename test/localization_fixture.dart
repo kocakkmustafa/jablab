@@ -29,10 +29,11 @@ Future<void> settleTestLocalizations(
         testSupportedLocales,
       );
   for (var attempt = 0; attempt < 40; attempt++) {
-    await tester.pump();
+    await tester.runAsync(() => tester.pump());
     for (final element in [
       ...find.byType(Scaffold).evaluate(),
       ...find.byType(Text).evaluate(),
+      ...find.byType(Builder).evaluate(),
     ]) {
       final resources = Localizations.of<AppLocalizations>(
         element,
@@ -50,4 +51,13 @@ Future<void> settleTestLocalizations(
     );
   }
   throw TestFailure('Packaged localization did not load for $expected');
+}
+
+// WidgetTester.pageBack searches the English Back tooltip. Tap the real
+// Material back control so translated tooltips do not change the UI action.
+Future<void> tapTestMaterialBack(WidgetTester tester) async {
+  final back = find.byType(BackButton).hitTestable();
+  expect(back, findsOneWidget, reason: 'One reachable Material back control');
+  await tester.tap(back);
+  await tester.pumpAndSettle();
 }

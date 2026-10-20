@@ -262,7 +262,7 @@ void main() {
               language,
             );
             expect(course.physicalPracticeAvailable, isFalse);
-            await t.pageBack();
+            await tapTestMaterialBack(t);
             await t.pumpAndSettle();
           }
           await _show(t, 'taikyoku-written-progress', fromTop: true);
@@ -348,7 +348,7 @@ void main() {
             .onPressed,
         isNull,
       );
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await _show(t, 'taikyoku-written-progress', fromTop: true);
       expect(find.textContaining('0/10'), findsOneWidget);
@@ -368,13 +368,13 @@ void main() {
           .onPressed,
       isNull,
     );
-    await t.pageBack();
+    await tapTestMaterialBack(t);
     await t.pumpAndSettle();
     for (final lesson in _course().lessons.take(2)) {
       await _tap(t, 'taikyoku-lesson-${lesson.number}');
       await _prepareReport(t, lesson);
       await _tap(t, 'taikyoku-report-written');
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
     }
     await _show(t, 'taikyoku-written-progress', fromTop: true);
@@ -385,7 +385,7 @@ void main() {
       'taikyoku-own-ts-q01',
       'Changed first boundary; uncertain.',
     );
-    await t.pageBack();
+    await tapTestMaterialBack(t);
     await t.pumpAndSettle();
     await _show(t, 'taikyoku-written-progress', fromTop: true);
     expect(find.textContaining('0/10'), findsOneWidget);
@@ -445,7 +445,7 @@ void main() {
             isEmpty,
           );
         }
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
         await _show(t, 'taikyoku-written-progress', fromTop: true);
         expect(find.textContaining('0/10'), findsOneWidget);
@@ -501,11 +501,11 @@ void main() {
       await _tap(t, 'taikyoku-lesson-1');
       await _prepareReport(t, _course().lessons.first);
       await _tap(t, 'taikyoku-report-written');
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await _show(t, 'taikyoku-written-progress', fromTop: true);
       expect(find.textContaining('1/10'), findsOneWidget);
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await t.tap(find.text('Open'));
       await t.pumpAndSettle();

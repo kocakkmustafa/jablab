@@ -44,7 +44,7 @@ Future<void> settleAppLoad(WidgetTester t) async {
         AppLocalizations.supportedLocales,
       );
   for (int i = 0; i < 40; i++) {
-    await t.pump();
+    await t.runAsync(() => t.pump());
     final rootReady = find.byType(Scaffold).evaluate().any((element) {
       final resources = Localizations.of<AppLocalizations>(
         element,
@@ -56,8 +56,9 @@ Future<void> settleAppLoad(WidgetTester t) async {
           resources.complete &&
           Localizations.localeOf(element) == expected;
     });
-    if (rootReady && find.byType(CircularProgressIndicator).evaluate().isEmpty)
+    if (rootReady && find.byType(CircularProgressIndicator).evaluate().isEmpty) {
       return;
+    }
     await t.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 50)),
     );

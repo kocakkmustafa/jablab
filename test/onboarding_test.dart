@@ -1,9 +1,14 @@
 import 'localization_fixture.dart';
+import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
+import 'package:jablab/app/content_failure_screen.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_page.dart';
 import 'package:jablab/app/settings_page.dart';
@@ -195,21 +200,71 @@ void main() {
     ) async {
       // "Bilmiyorum" ile "hayır" ayrımı: `false` başlatmak bir karelik
       // pencerede kabuğu gösterip üstüne karşılamayı açardı.
-      final OnboardingStore s = store();
-      await t.pumpWidget(
-        JabLabApp(
-          onboarding: s,
-          repository: ContentRepository(ownerRegistry: _owners),
-        ),
+      final pending = Completer<bool>();
+      final controlledStore = _ControlledSeenStore(pending);
+      final content = await _OnboardingMemoryContent.readPackaged(t);
+      var historyProviderCalls = 0;
+      var historyRequestedWhileSeenPending = false;
+      OwnerResourceLifetime? admittedOwner;
+      final repository = ContentRepository(
+        ownerRegistry: _owners,
+        loadStringOverride: content.loadString,
+        contentBundleOverride: content.bundle,
+        historyDirectoryProvider: () {
+          // _Root calls openStore only after resource admission becomes true.
+          historyProviderCalls += 1;
+          historyRequestedWhileSeenPending = !pending.isCompleted;
+          admittedOwner = _owners.capture(null);
+          return Future<Directory>.value(tmp);
+        },
       );
-      await t.pump();
+      await t.runAsync(() => t.pumpWidget(JabLabApp(
+        onboarding: controlledStore,
+        repository: repository,
+      )));
+      await settleTestLocalizations(t);
+      for (var attempt = 0; attempt < 40; attempt++) {
+        await t.runAsync(() async {
+          // An event turn drains the finite, in-memory content microtask chain.
+          // This is not a wall-clock delay used as a readiness substitute.
+          await Future<void>.delayed(Duration.zero);
+          await t.pump();
+        });
+        if (content.allInputsServed && historyProviderCalls == 1) {
+          break;
+        }
+      }
+      expect(content.servedStrings, containsAll(_OnboardingMemoryContent.stringPaths));
+      expect(content.bundle.requests.where((key) =>
+        key == ContentRepository.soloBoxingIntegrityManifestAsset), hasLength(1));
+      // Core verifies the asset once, then the host reads/parses it once more.
+      expect(content.bundle.requests.where((key) =>
+        key == ContentRepository.soloBoxingCourseAsset), hasLength(2));
+      expect(content.allInputsServed, isTrue);
+      expect(historyProviderCalls, 1);
+      expect(historyRequestedWhileSeenPending, isTrue);
+      expect(admittedOwner, isNotNull);
+      expect(admittedOwner!.isActive, isTrue);
+      // Service of the final bytes precedes decode/validation continuations.
+      // Drain those continuations before inspecting the rendered pending state.
+      await t.runAsync(() async {
+        await Future<void>.delayed(Duration.zero);
+        await t.pump();
+      });
+      expect(pending.isCompleted, isFalse);
+      expect(controlledStore.readCalls, 1);
+      expect(find.byType(ContentFailureScreen), findsNothing);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.byType(OnboardingPage), findsNothing);
-      // ⚠️ Burada `settleAppLoad` DEĞİL `settleUntil` — bu test yükleme
-      // penceresinin KENDİSİNİ sınıyor, ve "gösterge kalktı" ölçütü onun
-      // için fazla erken olabilir. Beklenen şey hedefin GÖRÜNMESİ.
-      await settleUntil(t, find.byType(OnboardingPage));
+      expect(find.byKey(const Key('item-boxing')), findsNothing);
+      expect(t.takeException(), isNull);
+      pending.complete(false);
+      await settleAppLoad(t);
       await t.pumpAndSettle();
       expect(find.byType(OnboardingPage), findsOneWidget);
+      expect(find.byKey(const Key('item-boxing')), findsNothing);
+      expect(controlledStore.readCalls, 1);
+      expect(t.takeException(), isNull);
     });
 
     testWidgets('SON adımda "Start" bayrağı yazıyor ve kabuğa geçiyor', (
@@ -408,4 +463,80 @@ void _settingsCountGate() {
       reason: 'elle yazılmış sayı geri kondu',
     );
   });
+}
+
+
+class _ControlledSeenStore extends OnboardingStore {
+  _ControlledSeenStore(this.pending);
+  final Completer<bool> pending;
+  int readCalls = 0;
+  @override
+  Future<bool> seen() {
+    readCalls += 1;
+    return pending.future;
+  }
+}
+
+// Only the owned content seams use memory. AppLocalizations still loads through
+// the real delegate; settleTestLocalizations proves it before the pending probe.
+class _OnboardingMemoryContent {
+  _OnboardingMemoryContent(this._strings, this.bundle);
+  static const stringPaths = <String>[
+    ContentRepository.libraryAsset,
+    ContentRepository.boxingRuleSetAsset,
+    ContentRepository.cuesAsset,
+    ContentRepository.curriculumAsset,
+  ];
+  final Map<String, String> _strings;
+  final _OnboardingMemoryBundle bundle;
+  final Set<String> servedStrings = <String>{};
+
+  static Future<_OnboardingMemoryContent> readPackaged(WidgetTester t) async {
+    late _OnboardingMemoryContent result;
+    await t.runAsync(() async {
+      final strings = <String, String>{
+        for (final key in stringPaths) key: await rootBundle.loadString(key),
+      };
+      final bytes = <String, Uint8List>{};
+      for (final key in <String>[
+        ContentRepository.soloBoxingIntegrityManifestAsset,
+        ContentRepository.soloBoxingCourseAsset,
+      ]) {
+        final data = await rootBundle.load(key);
+        bytes[key] = Uint8List.fromList(Uint8List.sublistView(data));
+      }
+      result = _OnboardingMemoryContent(
+        Map<String, String>.unmodifiable(strings),
+        _OnboardingMemoryBundle(Map<String, Uint8List>.unmodifiable(bytes)),
+      );
+    });
+    return result;
+  }
+
+  Future<String> loadString(String key) {
+    final value = _strings[key];
+    if (value == null) throw StateError('Unexpected content string: $key');
+    servedStrings.add(key);
+    return SynchronousFuture<String>(value);
+  }
+
+  bool get allInputsServed =>
+    servedStrings.containsAll(stringPaths) &&
+    bundle.requests.contains(ContentRepository.soloBoxingIntegrityManifestAsset) &&
+    bundle.requests.where((key) =>
+      key == ContentRepository.soloBoxingCourseAsset).length == 2;
+}
+
+class _OnboardingMemoryBundle extends AssetBundle {
+  _OnboardingMemoryBundle(this._bytes);
+  final Map<String, Uint8List> _bytes;
+  final List<String> requests = <String>[];
+
+  @override
+  Future<ByteData> load(String key) {
+    final bytes = _bytes[key];
+    if (bytes == null) throw StateError('Unexpected content bytes: $key');
+    requests.add(key);
+    return SynchronousFuture<ByteData>(ByteData.sublistView(bytes));
+  }
 }

@@ -107,7 +107,7 @@ void main() {
         await yangTap(t, 'yang16-report-written');
         _overviewProgress(t, 1, complete: false);
         expect(yangHasChildKey(t, 'yang16-target-completion-rule'), isTrue);
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
         await yangProgress(t, 1);
         expect(t.takeException(), isNull);
@@ -127,7 +127,7 @@ void main() {
           await yangTap(t, 'yang16-target-${target.id}');
           await yangPrepare(t, target, language: language);
           await yangTap(t, 'yang16-report-written');
-          await t.pageBack();
+          await tapTestMaterialBack(t);
           await t.pumpAndSettle();
         }
         await yangProgress(t, 23);
@@ -158,7 +158,7 @@ void main() {
         _overviewProgress(t, 23, complete: false);
         await yangTap(t, 'yang16-report-written');
         _overviewProgress(t, 24, complete: true);
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
         await yangProgress(t, 24);
         await yangShow(t, 'yang16-written-completion');
@@ -199,7 +199,7 @@ void main() {
           await yangTap(t, 'yang16-target-${target.id}');
           await yangPrepare(t, target, language: language, correction: i.isOdd);
           await yangTap(t, 'yang16-report-written');
-          await t.pageBack();
+          await tapTestMaterialBack(t);
           await t.pumpAndSettle();
           await yangProgress(t, i + 1);
           if (i < 23) {
@@ -221,7 +221,7 @@ void main() {
           ),
         );
         expect(course.reviewReadiness.values, everyElement(isFalse));
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
         await t.tap(find.text('Open'));
         await t.pumpAndSettle();
@@ -242,7 +242,7 @@ void main() {
         await yangPrepare(t, target);
         await yangDisabled(t, 'yang16-report-written');
         expect(yangHasChildKey(t, 'yang16-open-supplement'), isFalse);
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
         await yangProgress(t, 0);
       }
@@ -250,19 +250,19 @@ void main() {
         await yangTap(t, 'yang16-target-${target.id}');
         await yangPrepare(t, target);
         await yangTap(t, 'yang16-report-written');
-        await t.pageBack();
+        await tapTestMaterialBack(t);
         await t.pumpAndSettle();
       }
       await yangProgress(t, 3);
       await yangTap(t, 'yang16-target-m01');
       await yangTap(t, 'yang16-toggle-reading');
       await yangWrite(t, 'yang16-own-answer', 'A changed unresolved account.');
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await yangProgress(t, 1);
       await yangTap(t, 'yang16-target-prepare');
       await yangTap(t, 'yang16-toggle-reading');
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await yangProgress(t, 0);
       expect(t.takeException(), isNull);
@@ -398,7 +398,7 @@ void main() {
           );
           await yangDisabled(t, 'yang16-compare-answer');
           await yangDisabled(t, 'yang16-report-written');
-          await t.pageBack();
+          await tapTestMaterialBack(t);
           await t.pumpAndSettle();
           await yangProgress(t, 0);
           expect(t.takeException(), isNull);
@@ -620,10 +620,11 @@ void main() {
       await yangOpen(
         t,
         loader: () async {
-          if (++calls == 1)
+          if (++calls == 1) {
             throw const ContentException(
               ContentError(code: ContentErrorCode.timeout),
             );
+          }
           return yangCourse();
         },
       );

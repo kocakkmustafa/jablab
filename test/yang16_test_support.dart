@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,7 +18,10 @@ Future<void> yangOpen(WidgetTester t, {ValueNotifier<String?>? owner,
   ValueNotifier<bool>? admission, NavigatorObserver? observer,
   Future<Yang16WrittenCourse> Function()? loader, double scale = 1}) async {
   final load = loader ?? () async => yangCourse();
-  await t.pumpWidget(MaterialApp(
+  await t.runAsync(() => t.pumpWidget(MaterialApp(
+    supportedLocales: testSupportedLocales,
+    localizationsDelegates: testLocalizationDelegates,
+    localeListResolutionCallback: resolveTestLocales,
     navigatorObservers: observer == null ? [] : [observer],
     builder: (context, child) => MediaQuery(data: MediaQuery.of(context)
       .copyWith(textScaler: TextScaler.linear(scale)), child: child!),
@@ -27,7 +31,8 @@ Future<void> yangOpen(WidgetTester t, {ValueNotifier<String?>? owner,
           loader: load, accountUserId: owner, resourceAdmission: admission)),
       ),
     ))),
-  ));
+  )));
+  await settleTestLocalizations(t);
   await t.tap(find.text('Open'));
   if (loader == null) { await t.pumpAndSettle(); } else { await t.pump(); }
 }

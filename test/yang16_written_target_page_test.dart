@@ -325,7 +325,7 @@ void main() {
         isEmpty,
       );
       await yangDisabled(t, 'yang16-compare-answer');
-      await t.pageBack();
+      await tapTestMaterialBack(t);
       await t.pumpAndSettle();
       await yangProgress(t, 0);
     },

@@ -129,7 +129,7 @@ void main() {
             findsOneWidget,
           );
           expect(tester.takeException(), isNull);
-          await tester.pageBack();
+          await tapTestMaterialBack(tester);
           await tester.pumpAndSettle();
         }
       } finally {
@@ -265,7 +265,7 @@ void main() {
           .onChanged,
       isNotNull,
     );
-    await tester.pageBack();
+    await tapTestMaterialBack(tester);
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('tai-chi-course-list')), findsOneWidget);
     await lesson(tester);
@@ -314,7 +314,7 @@ void main() {
     await tester.tap(find.byKey(const Key('tai-chi-retry')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('tai-chi-course-list')), findsOneWidget);
-    await tester.pageBack();
+    await tapTestMaterialBack(tester);
     await tester.pumpAndSettle();
     final pending = Completer<TaiChiCourse>();
     final owner = ValueNotifier<String?>('a');
