@@ -96,17 +96,24 @@ class AppLocalizations {
     if (entry is String) translated = entry;
     if (entry is Map && pluralArg != null && args[pluralArg] is num) {
       final count = args[pluralArg]! as num;
-      final category = Intl.pluralLogic<String>(
-        count,
-        zero: 'zero',
-        one: 'one',
-        two: 'two',
-        few: 'few',
-        many: 'many',
-        other: 'other',
-        locale: locale.toLanguageTag(),
-        useExplicitNumberCases: false,
-      );
+      final String category;
+      if (locale.languageCode == 'hi' && count.isFinite) {
+        // CLDR Hindi uses integer digits: i = 0 or n = 1. Intl 0.20.3 rounds i.
+        // The signed interval also avoids abs overflow at the minimum VM int.
+        category = count >= -1 && count <= 1 ? 'one' : 'other';
+      } else {
+        category = Intl.pluralLogic<String>(
+          count,
+          zero: 'zero',
+          one: 'one',
+          two: 'two',
+          few: 'few',
+          many: 'many',
+          other: 'other',
+          locale: locale.toLanguageTag(),
+          useExplicitNumberCases: false,
+        );
+      }
       final value = entry[category] ?? entry['other'];
       if (value is String) translated = value;
     }

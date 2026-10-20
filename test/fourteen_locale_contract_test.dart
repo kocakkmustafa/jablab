@@ -1,4 +1,4 @@
-// Authored locale identities, script-preserving resolution and Intl cardinal contracts; glyph/device acceptance is separate.
+// Authored locale identities, script-preserving resolution and authored cardinal contracts; glyph/device acceptance is separate.
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/ui_language.dart';
@@ -80,7 +80,7 @@ void main() {
     }
   });
 
-  test('resolved intl rules choose all new cardinal categories', () {
+  test('authored cardinal rules choose all new categories', () {
     const sourceEn = '{count} items';
     const sourceTr = '{count} öğe';
     final key = AppLocalizations.sourceKey(sourceEn, sourceTr);
@@ -135,6 +135,99 @@ void main() {
           reason: '${vector.key.toLanguageTag()}: ${count.key}',
         );
       }
+    }
+  });
+
+  test('Hindi cardinal boundaries use integer digits, not rounding', () {
+    const en = 'items';
+    const tr = 'öğe';
+    final key = AppLocalizations.sourceKey(en, tr);
+    final translations = AppLocalizations(const Locale('hi'), {
+      key: {'one': 'one', 'other': 'other'},
+    });
+    // Fixed CLDR one: i = 0 or n = 1; n is absolute and i never rounds.
+    const vectors = <(num, String)>[
+      (0, 'one'),
+      (0.0, 'one'),
+      (0.1, 'one'),
+      (0.49, 'one'),
+      (0.5, 'one'),
+      (0.9, 'one'),
+      (0.999, 'one'),
+      (1, 'one'),
+      (1.0, 'one'),
+      (1.001, 'other'),
+      (1.1, 'other'),
+      (1.5, 'other'),
+      (2, 'other'),
+      (10, 'other'),
+      (-0.1, 'one'),
+      (-0.5, 'one'),
+      (-0.999, 'one'),
+      (-1, 'one'),
+      (-1.0, 'one'),
+      (-1.001, 'other'),
+      (-1.5, 'other'),
+      (-2, 'other'),
+      (-9223372036854775808, 'other'),
+      (9223372036854775807, 'other'),
+    ];
+    for (final (count, category) in vectors) {
+      expect(
+        translations.lookup(en, tr, args: {'count': count}, pluralArg: 'count'),
+        category,
+        reason: 'hi cardinal: $count',
+      );
+    }
+  });
+
+  test('Hindi decimal text and plural fallback keep the amount', () {
+    const en = '{count} items';
+    const tr = '{count} öğe';
+    final key = AppLocalizations.sourceKey(en, tr);
+    final translations = AppLocalizations(const Locale('hi'), {
+      key: {'one': '{count} one', 'other': '{count} other'},
+    });
+    // decimalPattern has no forced trailing zeros and keeps these <=3 decimals.
+    const vectors = <(num, String)>[
+      (0, '0 one'),
+      (0.0, '0 one'),
+      (0.1, '0.1 one'),
+      (0.49, '0.49 one'),
+      (0.5, '0.5 one'),
+      (0.9, '0.9 one'),
+      (0.999, '0.999 one'),
+      (1, '1 one'),
+      (1.0, '1 one'),
+      (1.001, '1.001 other'),
+      (1.5, '1.5 other'),
+      (2, '2 other'),
+      (10, '10 other'),
+      (-0.5, '-0.5 one'),
+      (-1, '-1 one'),
+      (-1.001, '-1.001 other'),
+      (-1.5, '-1.5 other'),
+      (-2, '-2 other'),
+    ];
+    for (final (count, expected) in vectors) {
+      expect(
+        translations.lookup(en, tr, args: {'count': count}, pluralArg: 'count'),
+        expected,
+        reason: 'hi formatted: $count',
+      );
+    }
+    final otherOnly = AppLocalizations(const Locale('hi'), {
+      key: {'other': '{count} other'},
+    });
+    for (final (count, expected) in <(num, String)>[
+      (0.5, '0.5 other'),
+      (-0.5, '-0.5 other'),
+    ]) {
+      expect(
+        otherOnly.lookup(en, tr, args: {'count': count}, pluralArg: 'count'),
+        expected,
+        reason: 'hi missing one form: $count',
+      );
     }
   });
 }
