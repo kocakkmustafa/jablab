@@ -153,6 +153,7 @@ class _Harness {
               'updated_at': '2026-10-20T00:00:00Z',
             }),
             200,
+            request: request,
             headers: {'content-type': 'application/json'},
           );
         }
