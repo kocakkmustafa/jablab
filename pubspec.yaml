@@ -26,6 +26,7 @@ dependencies:
   # 3. taraf DB BİLEREK YOK: sorgu ihtiyacı ölçülünce gelir.
   path_provider: ^2.1.0
   crypto: ^3.0.7
+  intl: 0.20.3
   # KAMERA KÖPRÜSÜ (J-071). TAG'e pinli git-dep (M-F-154 rejimi + M-F-03):
   # path bağımlılığı paylaşımlı ağaçta o an hangi dal çıkılıysa onu okur,
   # yani bağımlılığımız başka bir oturumun dal değiştirmesiyle sessizce
@@ -103,6 +104,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/content/
+    - assets/i18n/
     - assets/motion_content/manifest.json
     - assets/motion_content/tai_chi.manifest.json
     - assets/motion_content/kickboxing.manifest.json

@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -13,7 +14,7 @@ TaikyokuCourse _course() => TaikyokuCourse.fromJsonString(
 Future<void> _open(WidgetTester t, {ValueNotifier<String?>? owner,
   ValueNotifier<bool>? admission, NavigatorObserver? observer,
   Future<TaikyokuCourse> Function()? loader}) async {
-  await t.pumpWidget(MaterialApp(
+  await t.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
     navigatorObservers: observer == null ? [] : [observer],
     builder: (context, child) => MediaQuery(data: MediaQuery.of(context)
       .copyWith(textScaler: const TextScaler.linear(2)), child: child!),

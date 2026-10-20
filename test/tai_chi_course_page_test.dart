@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ Future<void> open(
   double textScale = 1,
 }) async {
   await tester.pumpWidget(
-    MaterialApp(
+    MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(
           context,
@@ -315,7 +316,7 @@ void main() {
     final owner = ValueNotifier<String?>('a');
     // Avoid pumpAndSettle while the deliberate pending loader shows a spinner.
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (context) => Scaffold(
             body: TextButton(

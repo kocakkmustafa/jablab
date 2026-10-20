@@ -337,9 +337,7 @@ class _SessionScreenState extends State<SessionScreen> {
       child: SessionFlowScaffold(
         title: lessonTitle(context, widget.lesson.id, widget.lesson.title),
         stage: _stage,
-        advanceLabel: UiLanguage.isTurkish(context)
-            ? (_stage == SessionStage.summary ? 'Bitti' : 'Devam et')
-            : (_stage == SessionStage.summary ? 'Done' : 'Continue'),
+        advanceLabel: UiLanguage.text(context, en: (_stage == SessionStage.summary ? 'Done' : 'Continue'), tr: (_stage == SessionStage.summary ? 'Bitti' : 'Devam et')),
         onAdvance: _advance,
         child: switch (_stage) {
           SessionStage.teach => _Teach(
@@ -945,13 +943,10 @@ class _LiveState extends State<_Live> with WidgetsBindingObserver {
           ),
         if (ivl != null)
           Text(
-            UiLanguage.isTurkish(context)
-                ? (_resting
-                      ? 'Toparlanma — sıradaki seri ${_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2}/${ivl.bursts}'
-                      : 'Seri ${_roundIndex + 1}/${ivl.bursts}')
-                : (_resting
-                      ? 'Recover — burst ${_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2} of ${ivl.bursts} next'
-                      : 'Burst ${_roundIndex + 1} of ${ivl.bursts}'),
+            UiLanguage.format(context,
+              en: _resting ? 'Recover — burst {position} of {total} next' : 'Burst {position} of {total}',
+              tr: _resting ? 'Toparlanma — sıradaki seri {position}/{total}' : 'Seri {position}/{total}',
+              args: {'position': _resting ? (_roundIndex + 2 > ivl.bursts ? ivl.bursts : _roundIndex + 2) : _roundIndex + 1, 'total': ivl.bursts}),
             key: const Key('live-burst-position'),
             style: Theme.of(context).textTheme.labelLarge,
           ),
@@ -960,13 +955,10 @@ class _LiveState extends State<_Live> with WidgetsBindingObserver {
         // hesaplayamaz.
         if (plan != null && plan.rounds > 1)
           Text(
-            UiLanguage.isTurkish(context)
-                ? (_resting
-                      ? 'Dinlenme — sıradaki tur ${_roundIndex + 2}/${plan.rounds}'
-                      : 'Tur ${_roundIndex + 1}/${plan.rounds}')
-                : (_resting
-                      ? 'Rest — round ${_roundIndex + 2} of ${plan.rounds} next'
-                      : 'Round ${_roundIndex + 1} of ${plan.rounds}'),
+            UiLanguage.format(context,
+              en: _resting ? 'Rest — round {position} of {total} next' : 'Round {position} of {total}',
+              tr: _resting ? 'Dinlenme — sıradaki tur {position}/{total}' : 'Tur {position}/{total}',
+              args: {'position': _roundIndex + (_resting ? 2 : 1), 'total': plan.rounds}),
             key: const Key('live-round-position'),
             style: Theme.of(context).textTheme.labelLarge,
           ),
@@ -1045,16 +1037,14 @@ extension on _LiveState {
           state: LiveState.noVerdict,
           eventCount: null,
           narration: _line,
-          noVerdictReason: UiLanguage.isTurkish(context)
-              ? (timed
-                    ? 'Bu ders süreyle ilerler; hareketiniz değerlendirilmez. Zamanlayıcı ve ekrandaki tempo yönergeleri çalışmaya devam eder.'
-                    : 'Bu bölümde hareketiniz değerlendirilmez ve zamanlayıcı yoktur. Kendi hızınızda çalışıp bitirdiğinizde ilerleyin.')
-              : (timed
+          noVerdictReason: UiLanguage.text(context, en: (timed
                     ? 'This lesson runs on the clock — nothing is being judged. '
                           'The timer and the on-screen pacing cues still work.'
                     : 'Nothing is being judged here, and there is no clock '
                           'either. Work at your own pace and move on when you are '
-                          'done.'),
+                          'done.'), tr: (timed
+                    ? 'Bu ders süreyle ilerler; hareketiniz değerlendirilmez. Zamanlayıcı ve ekrandaki tempo yönergeleri çalışmaya devam eder.'
+                    : 'Bu bölümde hareketiniz değerlendirilmez ve zamanlayıcı yoktur. Kendi hızınızda çalışıp bitirdiğinizde ilerleyin.')),
           preview: const SkeletonPreview(
             analysisRunning: false,
             state: LiveState.noVerdict,
@@ -1114,9 +1104,7 @@ extension on _LiveState {
 
   /// Tipli hâl → kullanıcı cümlesi. **Ham `detail` KULLANILMIYOR** (doc-75/5
   /// kamera tarafı): teşhis dizesi geliştirici içindir.
-  String _failureSentence(LiveSessionFailure f) => UiLanguage.isTurkish(context)
-      ? _failureSentenceTr(f)
-      : _failureSentenceEn(f);
+  String _failureSentence(LiveSessionFailure f) => UiLanguage.text(context, en: _failureSentenceEn(f), tr: _failureSentenceTr(f));
 
   String _failureSentenceTr(LiveSessionFailure f) => switch (f) {
     LivePermissionDenied(permanentlyDenied: final bool permanent) =>
@@ -1203,13 +1191,14 @@ class _Summary extends StatelessWidget {
         componentLabel(context, label),
     ],
     unitsCompleted: unitsCompleted,
-    unitLabel: UiLanguage.isTurkish(context)
-        ? switch (unitLabel) {
-            'interval' || 'intervals' => 'aralık',
-            'round' || 'rounds' => 'tur',
-            _ => unitLabel,
-          }
-        : unitLabel,
+    unitLabelContainsCount: true,
+    unitLabel: switch (unitLabel) {
+      'interval' || 'intervals' => UiLanguage.format(context,
+        en: '{count} intervals', tr: '{count} aralık', args: {'count': unitsCompleted}, pluralArg: 'count'),
+      'round' || 'rounds' => UiLanguage.format(context,
+        en: '{count} rounds', tr: '{count} tur', args: {'count': unitsCompleted}, pluralArg: 'count'),
+      _ => '${UiLanguage.number(context, unitsCompleted)} $unitLabel',
+    },
     workedSeconds: workedSeconds,
     tempoBand: tempoBandLabel(context, tempoBand),
   );

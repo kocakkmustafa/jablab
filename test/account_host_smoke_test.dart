@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/account_bridge.dart';
@@ -21,7 +22,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: SettingsPage(
           onOpenWhyNot: () {},
           excludedCount: 1,
@@ -58,7 +59,7 @@ void main() {
       tester.platformDispatcher.localeTestValue = Locale(locale);
       addTearDown(tester.platformDispatcher.clearLocaleTestValue);
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: SettingsPage(
             onOpenWhyNot: () {},
             excludedCount: 1,

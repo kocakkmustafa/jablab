@@ -10,13 +10,12 @@ typedef _TeachCopy = ({String sourceSha256, String tr});
 // The English lesson in library.json owns the meaning. A source edit must be
 // reviewed before its Turkish copy is shown again.
 String localizedTeachBody(BuildContext context, String id, String source) {
-  if (!UiLanguage.isTurkish(context)) return source;
   final _TeachCopy? copy = _teachCopies[id];
   if (copy == null ||
       sha256.convert(utf8.encode(source)).toString() != copy.sourceSha256) {
     return source;
   }
-  return copy.tr;
+  return UiLanguage.text(context, en: source, tr: copy.tr);
 }
 
 const Map<String, String> _materialReasonsTr = <String, String>{
@@ -31,9 +30,7 @@ const Map<String, String> _materialReasonsTr = <String, String>{
 };
 
 String localizedMaterialReason(BuildContext context, String source) =>
-    UiLanguage.isTurkish(context)
-    ? _materialReasonsTr[source] ?? source
-    : source;
+    UiLanguage.text(context, en: source, tr: _materialReasonsTr[source] ?? source);
 
 const Map<String, _TeachCopy> _teachCopies = <String, _TeachCopy>{
   'boxing.foundations.camera': (

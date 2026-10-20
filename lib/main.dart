@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:motion_account/motion_account.dart';
 
 import 'app/account_bridge.dart';
@@ -106,6 +107,14 @@ class JabLabAccountStartupFailure extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'JabLab',
+    supportedLocales: AppLocalizations.supportedLocales,
+    localeListResolutionCallback: AppLocalizations.resolve,
+    localizationsDelegates: const [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
     theme: ThemeData(
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFFB3261E),

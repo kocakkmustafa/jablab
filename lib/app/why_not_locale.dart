@@ -9,8 +9,8 @@ const String _turkishIntro =
     'Telefon kamerası bunların bir kısmını göremez. Bazıları ikinci bir kişiyi gerektirir. Bazılarında ise ne kadar ölçüm yapsak da dürüstçe hüküm veremeyiz. Tahmin eden bir sürüm yayımlamak yerine bunları dışarıda bırakıp nedenini söylüyoruz.';
 
 String whyNotIntro(BuildContext context, String source) =>
-    UiLanguage.isTurkish(context) && source == _englishIntro
-    ? _turkishIntro
+    source == _englishIntro
+    ? UiLanguage.text(context, en: source, tr: _turkishIntro)
     : source;
 
 typedef _ExclusionCopy = ({String enReason, String trTitle, String trReason});
@@ -108,14 +108,15 @@ List<ShellExclusion> whyNotExclusions(
   BuildContext context,
   List<ShellExclusion> source,
 ) {
-  if (!UiLanguage.isTurkish(context)) return source;
   return source
       .map((ShellExclusion item) {
         final _ExclusionCopy? translated = _exclusions[item.title];
     if (translated == null || translated.enReason != item.reason) {
       return item;
     }
-        return ShellExclusion(translated.trTitle, translated.trReason);
+        return ShellExclusion(
+          UiLanguage.text(context, en: item.title, tr: translated.trTitle),
+          UiLanguage.text(context, en: item.reason, tr: translated.trReason));
       })
       .toList(growable: false);
 }

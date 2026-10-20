@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ void main() {
   }) async {
     final ShellLibrary lib = await loadLibrary(t);
     await t.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: OnboardingPage(
           library: lib,
           onDone: onDone ?? () {},
@@ -379,7 +380,7 @@ void _settingsCountGate() {
     );
 
     await t.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: SettingsPage(onOpenWhyNot: () {}, excludedCount: expected),
       ),
     );

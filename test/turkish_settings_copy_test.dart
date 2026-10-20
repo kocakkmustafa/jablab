@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/settings_page.dart';
@@ -8,7 +9,7 @@ void main() {
     tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
     addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
 
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       home: SettingsPage(onOpenWhyNot: () {}, excludedCount: 1),
     ));
 

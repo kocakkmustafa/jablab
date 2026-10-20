@@ -8,10 +8,11 @@ import 'content_failure.dart';
 import 'ui_language.dart';
 import 'yang16_written_course.dart';
 
-String _label(BuildContext context, String en, String tr) =>
-    UiLanguage.text(context, en: en, tr: tr);
+String _label(BuildContext context, String en, String tr,
+    {Map<String, Object> args = const {}}) =>
+    UiLanguage.format(context, en: en, tr: tr, args: args);
 String _text(BuildContext context, Yang16Copy copy) =>
-    UiLanguage.isTurkish(context) ? copy.tr : copy.en;
+    UiLanguage.text(context, en: copy.en, tr: copy.tr);
 Widget _copy(BuildContext context, Yang16Copy copy, String key) => Padding(
   padding: const EdgeInsets.only(bottom: 12),
   child: Text(_text(context, copy), key: Key(key)),
@@ -451,8 +452,8 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
             'Angela Plarre sunumu · yalnız yazılı form sırası · 18 bölüm ve 6 son hedef'),
             key: const Key('yang16-course-scope')),
           Text(_label(context,
-            '${_written.length}/24 full written targets self-reported this visit; physical practice unavailable.',
-            'Bu ziyarette ${_written.length}/24 tam yazılı hedef öz beyanı; fiziksel uygulama kullanılamaz.'),
+            '{value1}/24 full written targets self-reported this visit; physical practice unavailable.',
+            'Bu ziyarette {value1}/24 tam yazılı hedef öz beyanı; fiziksel uygulama kullanılamaz.' , args: {'value1': _written.length},),
             key: const Key('yang16-written-progress')),
           if (_written.length == 24) Text(_label(context,
             'Whole-order written reconstruction self-reported. This does not establish physical completion or mastery.',

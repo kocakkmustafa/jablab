@@ -7,7 +7,7 @@ import 'yang16_written_course_page.dart';
 import 'ui_language.dart';
 
 String _text(BuildContext context, TaiChiCopy copy) =>
-    UiLanguage.isTurkish(context) ? copy.tr : copy.en;
+    UiLanguage.text(context, en: copy.en, tr: copy.tr);
 String _label(BuildContext context, String en, String tr) =>
     UiLanguage.text(context, en: en, tr: tr);
 

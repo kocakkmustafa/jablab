@@ -9,9 +9,10 @@ import 'taikyoku_shodan_course_page.dart';
 import 'ui_language.dart';
 
 String _text(BuildContext context, KarateCopy copy) =>
-    UiLanguage.isTurkish(context) ? copy.tr : copy.en;
-String _label(BuildContext context, String en, String tr) =>
-    UiLanguage.text(context, en: en, tr: tr);
+    UiLanguage.text(context, en: copy.en, tr: copy.tr);
+String _label(BuildContext context, String en, String tr,
+    {Map<String, Object> args = const {}}) =>
+    UiLanguage.format(context, en: en, tr: tr, args: args);
 
 class KarateCourseEntryCard extends StatelessWidget {
   const KarateCourseEntryCard({super.key, required this.onOpen});
@@ -182,11 +183,11 @@ class _KarateLessonPageState extends State<KarateLessonPage>
               context,
               l.physicalPrerequisiteIds.isEmpty
                   ? 'Written task only; physical course requirements remain unmet.'
-                  : 'Unmet technique requirements: ${l.physicalPrerequisiteIds.join(', ')}',
+                  : 'Unmet technique requirements: {value1}',
               l.physicalPrerequisiteIds.isEmpty
                   ? 'Yalnız yazılı görev; kursun fiziksel gereksinimleri karşılanmamıştır.'
-                  : 'Karşılanmamış teknik gereksinimler: ${l.physicalPrerequisiteIds.join(', ')}',
-            ),
+                  : 'Karşılanmamış teknik gereksinimler: {value1}',
+             args: {'value1': l.physicalPrerequisiteIds.join(', ')},),
             key: const Key('karate-physical-prerequisites'),
           ),
           Text(
@@ -626,9 +627,9 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                 Text(
                   _label(
                     context,
-                    '${_written.length}/16 written reviews reported this visit; physical components unattempted.',
-                    'Bu ziyarette ${_written.length}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
-                  ),
+                    '{value1}/16 written reviews reported this visit; physical components unattempted.',
+                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
+                   args: {'value1': _written.length},),
                   key: const Key('karate-written-progress'),
                 ),
                 if (_written.length == course.lessons.length)

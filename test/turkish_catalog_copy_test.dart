@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ void main() {
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: SelectPage(
           library: library,
           onOpenCourse: (_) {},
@@ -95,7 +96,7 @@ void main() {
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: SelectPage(
           library: library,
           onOpenCourse: (_) {},
@@ -121,7 +122,7 @@ void main() {
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: OnboardingPage(
           library: library,
           onDone: () {},
@@ -162,7 +163,7 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: CoursePage(
             course: foundations,
             onStart: (_) {},
@@ -179,7 +180,7 @@ void main() {
       expect(find.text('Camera and space'), findsNothing);
 
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: CoursePage(
             course: intermediate,
             onStart: (_) {},
@@ -201,7 +202,7 @@ void main() {
     tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
     addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (BuildContext context) => Text(
             courseTitle(context, 'boxing.foundations', 'Foundations revised'),
@@ -222,7 +223,7 @@ void main() {
     final ShellLibrary library = await loadLibrary(tester);
     late List<ShellExclusion> translated;
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (BuildContext context) {
             translated = whyNotExclusions(context, library.exclusions);
@@ -264,7 +265,7 @@ void main() {
       'A new rationale that has not been reviewed for translation.',
     );
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (BuildContext context) {
             translated = whyNotExclusions(context, <ShellExclusion>[
@@ -300,7 +301,7 @@ void main() {
         cues = await const ContentRepository().loadCues();
       });
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: SessionScreen(
             lesson: cameraLesson,
             cues: cues,
@@ -363,7 +364,7 @@ void main() {
       late Map<String, String> translated;
       late String changed;
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: Builder(
             builder: (BuildContext context) {
               translated = <String, String>{

@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ void main() {
         );
         var reports = 0;
         await t.pumpWidget(
-          MaterialApp(
+          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
             builder: (context, child) => MediaQuery(
               data: MediaQuery.of(
                 context,
@@ -82,7 +83,7 @@ void main() {
     t,
   ) async {
     await t.pumpWidget(
-      const MaterialApp(
+      const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: Scaffold(
           body: TechniqueCapabilityPanel(
             courseId: 'jablab.karate_a',

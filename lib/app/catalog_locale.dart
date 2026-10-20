@@ -50,10 +50,10 @@ const Map<String, String> _turkishBlurbs = <String, String>{
 };
 
 String catalogTitle(BuildContext context, String id, String english) =>
-    UiLanguage.isTurkish(context) ? _turkishTitles[id] ?? english : english;
+    UiLanguage.text(context, en: english, tr: _turkishTitles[id] ?? english);
 
 String catalogBlurb(BuildContext context, String id, String english) =>
-    UiLanguage.isTurkish(context) ? _turkishBlurbs[id] ?? english : english;
+    UiLanguage.text(context, en: english, tr: _turkishBlurbs[id] ?? english);
 
 const Map<String, String> _boxingMeasured = <String, String>{
   'Punch events and count — a fact from the phase machine, not a grade':
@@ -99,8 +99,8 @@ List<String> _catalogHonesty(
   List<String> source,
   Map<String, String> translations,
 ) {
-  if (!UiLanguage.isTurkish(context) || id != 'boxing') return source;
+  if (id != 'boxing') return source;
   return source
-      .map((String english) => translations[english] ?? english)
+      .map((String english) => UiLanguage.text(context, en: english, tr: translations[english] ?? english))
       .toList(growable: false);
 }

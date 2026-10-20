@@ -16,7 +16,7 @@ import 'solo_boxing_progress.dart';
 import 'ui_language.dart';
 
 String _copy(BuildContext context, CourseCopy value) =>
-    value.inLanguage(turkish: UiLanguage.isTurkish(context));
+    UiLanguage.text(context, en: value.en, tr: value.tr);
 
 /// A visible route to the complete course from both the first-run catalogue
 /// and an existing legacy course. Its promise is a learning path, not a score.
@@ -397,11 +397,11 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                 ),
               ] else ...<Widget>[
                 Text(
-                  UiLanguage.text(
+                  UiLanguage.format(
                     context,
-                    en: '$done / 39 self-reported complete',
-                    tr: '$done / 39 öz beyanla tamamlandı',
-                  ),
+                    en: '{value1} / 39 self-reported complete',
+                    tr: '{value1} / 39 öz beyanla tamamlandı',
+                   args: {'value1': done},),
                   key: const Key('solo-course-progress'),
                   style: JText.body.copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -496,15 +496,15 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
             style: JText.body.copyWith(fontWeight: FontWeight.w700),
           ),
           subtitle: Text(
-            UiLanguage.text(
+            UiLanguage.format(
               context,
               en: completed == null
                   ? 'Progress unavailable · read only'
-                  : '$completed / ${module.lessons.length} self-reported complete',
+                  : '{value1} / {value2} self-reported complete',
               tr: completed == null
                   ? 'İlerleme okunamıyor · salt okunur'
-                  : '$completed / ${module.lessons.length} öz beyan tamamlandı',
-            ),
+                  : '{value1} / {value2} öz beyan tamamlandı',
+             args: {if (completed != null) 'value1': completed, 'value2': module.lessons.length},),
             style: JText.bodyMuted,
           ),
           children: <Widget>[
@@ -842,27 +842,27 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           Text(_copy(context, lesson.objective), style: JText.bodyMuted),
           const SizedBox(height: 10),
           Text(
-            UiLanguage.text(
+            UiLanguage.format(
               context,
-              en: '${lesson.minutes} min suggested · self-report only',
-              tr: '${lesson.minutes} dk öneri · yalnız öz beyan',
-            ),
+              en: '{value1} min suggested · self-report only',
+              tr: '{value1} dk öneri · yalnız öz beyan',
+             args: {'value1': lesson.minutes},),
             style: JText.body.copyWith(color: JColors.cool),
           ),
           LessonMediaSlot.empty(
             course: widget.course,
             lesson: lesson,
-            locale: UiLanguage.isTurkish(context) ? 'tr' : 'en',
+            locale: UiLanguage.tag(context),
             accountUserId: widget.accountUserId,
           ),
           if (prerequisites.isNotEmpty) ...<Widget>[
             const SizedBox(height: 12),
             Text(
-              UiLanguage.text(
+              UiLanguage.format(
                 context,
-                en: 'Builds on: ${prerequisites.map((SoloLesson item) => _copy(context, item.title)).join(", ")}',
-                tr: 'Ön çalışma: ${prerequisites.map((SoloLesson item) => _copy(context, item.title)).join(", ")}',
-              ),
+                en: 'Builds on: {value1}',
+                tr: 'Ön çalışma: {value1}',
+               args: {'value1': prerequisites.map((SoloLesson item) => _copy(context, item.title)).join(", ")},),
               style: JText.bodyMuted,
             ),
           ],
@@ -1034,15 +1034,15 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                 ? null
                 : () => _save(complete: false),
             child: Text(
-              UiLanguage.text(
+              UiLanguage.format(
                 context,
                 en: practised
-                    ? 'Practise again · ${_progress!.practiceCount} recorded'
+                    ? 'Practise again · {value1} recorded'
                     : 'I practised this',
                 tr: practised
-                    ? 'Yeniden çalış · ${_progress!.practiceCount} kayıt'
+                    ? 'Yeniden çalış · {value1} kayıt'
                     : 'Bunu çalıştım',
-              ),
+               args: {if (practised) 'value1': _progress!.practiceCount},),
             ),
           ),
           const SizedBox(height: 8),

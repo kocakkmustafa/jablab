@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -83,7 +84,7 @@ void main() {
           isNot(contains(turkish ? 'iki rauntta da' : 'both rounds')),
         );
         await tester.pumpWidget(
-          MaterialApp(
+          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
             home: SoloBoxingLessonPage(
               course: course,
               lesson: lesson,
@@ -187,7 +188,7 @@ void main() {
       ownerLifetime: _owners.capture(null),
     );
     await tester.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: SoloBoxingLessonPage(
           course: course,
           lesson: lesson,
@@ -290,7 +291,7 @@ void main() {
         prior = saved.forLesson(lesson, course.version);
       }
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: SoloBoxingLessonPage(
             course: course,
             lesson: lesson,
@@ -504,7 +505,7 @@ void main() {
           loadStringOverride: (String path) => File(path).readAsString(),
         );
         await tester.pumpWidget(
-          MaterialApp(home: SoloBoxingCoursePage(repository: repository)),
+          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
         );
         await settleUntil(
           tester,
@@ -596,7 +597,7 @@ void main() {
 
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pumpWidget(
-          MaterialApp(home: SoloBoxingCoursePage(repository: repository)),
+          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
         );
         await settleUntil(tester, find.text(total));
         expect(find.text(total), findsOneWidget);
@@ -659,7 +660,7 @@ void main() {
     });
     store.file.writeAsStringSync(old);
     await tester.pumpWidget(
-      MaterialApp(home: SoloBoxingCoursePage(repository: repository)),
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
     );
     await settleUntil(tester, find.text('1 / 39 self-reported complete'));
     expect(find.text('1 / 39 self-reported complete'), findsOneWidget);
@@ -705,7 +706,7 @@ void main() {
       });
       final bobBytes = bobStore.file.readAsStringSync();
       await tester.pumpWidget(
-        MaterialApp(
+        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: SoloBoxingCoursePage(
             repository: repository,
             accountUserId: account,

@@ -63,16 +63,60 @@ class SettingsPage extends StatelessWidget {
                   onTap: () => Navigator.of(context).maybePop(),
                 ),
                 const SizedBox(width: 12),
-                Text(
+                Expanded(child: Text(
                   UiLanguage.text(context, en: 'Settings', tr: 'Ayarlar'),
                   style: JText.pageTitle.copyWith(
                     fontSize: 30,
                     letterSpacing: -.9,
                   ),
-                ),
+                )),
               ],
             ),
             const SizedBox(height: 26),
+            if (Localizations.of<AppLocalizations>(context, AppLocalizations)
+                case final translations? when translations.loadFailed || !translations.complete)
+              Text(UiLanguage.text(context,
+                en: 'Some translations are unavailable. Source English text is shown where needed.',
+                tr: 'Bazı çeviriler kullanılamıyor. Gerektiğinde kaynak İngilizce metin gösterilir.'),
+                key: const Key('settings.language.incomplete'),
+                style: JText.bodyMuted),
+            if (AppLanguageScope.maybeOf(context) case final language?)
+              GlassPanel(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(UiLanguage.text(context,
+                      en: 'Language for this session', tr: 'Bu oturumun dili'),
+                      style: JText.body),
+                    const SizedBox(height: 8),
+                    DropdownButton<Locale>(
+                      key: const Key('settings.language'),
+                      isExpanded: true,
+                      value: language.selected,
+                      hint: Text(UiLanguage.text(context,
+                        en: 'Follow device languages', tr: 'Cihaz dillerini izle')),
+                      items: [
+                        for (final locale in AppLocalizations.supportedLocales)
+                          DropdownMenuItem(value: locale,
+                            child: Text(_languageNames[locale.toLanguageTag()]!)),
+                      ],
+                      onChanged: language.select,
+                    ),
+                    TextButton(
+                      key: const Key('settings.language.device'),
+                      onPressed: () => language.select(null),
+                      child: Text(UiLanguage.text(context,
+                        en: 'Use device languages', tr: 'Cihaz dillerini kullan')),
+                    ),
+                    Text(UiLanguage.text(context,
+                      en: 'This choice resets when the app restarts. Account language and store currency are unchanged.',
+                      tr: 'Bu seçim uygulama yeniden başlatılınca sıfırlanır. Hesap dili ve mağaza para birimi değişmez.'),
+                      style: JText.bodyMuted),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 14),
             GlassPanel(
               tier: GlassTier.judgement,
               padding: const EdgeInsets.all(20),
@@ -237,11 +281,9 @@ class SettingsPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            UiLanguage.isTurkish(context)
-                                ? '$excludedCount özellik bilinçli olarak dışarıda; '
-                                      'her birinin gerekçesi var.'
-                                : '$excludedCount things left out on purpose, '
-                                      'each with its reason.',
+                            UiLanguage.format(context, en: '{value1} things left out on purpose, '
+                                      'each with its reason.', tr: '{value1} özellik bilinçli olarak dışarıda; '
+                                      'her birinin gerekçesi var.' , args: {'value1': excludedCount},),
                             style: JText.body.copyWith(
                               fontSize: 12.5,
                               color: JColors.ink2,
@@ -287,3 +329,9 @@ class SettingsPage extends StatelessWidget {
     ),
   );
 }
+
+const _languageNames = <String, String>{
+  'tr': 'Türkçe', 'en': 'English', 'es-419': 'Español (Latinoamérica)',
+  'pt-BR': 'Português (Brasil)', 'de': 'Deutsch', 'fr': 'Français',
+  'ja': '日本語', 'ar': 'العربية',
+};

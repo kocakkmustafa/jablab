@@ -101,7 +101,8 @@ class _SelectPageState extends State<SelectPage> {
                     UiLanguage.text(
                       context,
                       en: widget.library.title,
-                      tr: 'JabLab — Tek başına dövüş antrenmanı',
+                      tr: widget.library.title == 'JabLab — Solo Combat Training'
+                          ? 'JabLab — Tek başına dövüş antrenmanı' : widget.library.title,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -290,11 +291,7 @@ class _ItemBlock extends StatelessWidget {
                         const SizedBox(height: 3),
                         Text(
                           live
-                              ? UiLanguage.text(
-                                  context,
-                                  en: '${item.courses.length} course${item.courses.length == 1 ? '' : 's'}',
-                                  tr: '${item.courses.length} kurs',
-                                )
+                              ? UiLanguage.format(context, en: '{count} courses', tr: '{count} kurs', args: {'count': item.courses.length}, pluralArg: 'count')
                               : catalogBlurb(context, item.id, item.blurb),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -460,9 +457,7 @@ class _ItemBlock extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      UiLanguage.isTurkish(context)
-                                          ? '${c.lessons.length} ders'
-                                          : '${c.lessons.length} lessons',
+                                      UiLanguage.format(context, en: '{count} lessons', tr: '{count} ders', args: {'count': c.lessons.length}, pluralArg: 'count'),
                                       style: JText.mono.copyWith(
                                         color: JColors.cool2,
                                       ),

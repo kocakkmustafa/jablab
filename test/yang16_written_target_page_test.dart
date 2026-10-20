@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/yang16_written_course_page.dart';
@@ -17,7 +18,7 @@ void main() {
         try {
           for (final target in course.targets) {
             var reports = 0, invalidations = 0;
-            await t.pumpWidget(MaterialApp(key: ValueKey('${target.id}-$scale'),
+            await t.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, key: ValueKey('${target.id}-$scale'),
               builder: (context, child) => MediaQuery(data: MediaQuery.of(context)
                 .copyWith(textScaler: TextScaler.linear(scale)), child: child!),
               home: Yang16WrittenTargetPage(course: course, target: target,

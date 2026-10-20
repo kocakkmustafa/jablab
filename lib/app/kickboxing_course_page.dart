@@ -8,9 +8,10 @@ import 'kickboxing_course.dart';
 import 'ui_language.dart';
 
 String _text(BuildContext context, KickboxingCopy copy) =>
-    UiLanguage.isTurkish(context) ? copy.tr : copy.en;
-String _label(BuildContext context, String en, String tr) =>
-    UiLanguage.text(context, en: en, tr: tr);
+    UiLanguage.text(context, en: copy.en, tr: copy.tr);
+String _label(BuildContext context, String en, String tr,
+    {Map<String, Object> args = const {}}) =>
+    UiLanguage.format(context, en: en, tr: tr, args: args);
 
 class KickboxingCourseEntryCard extends StatelessWidget {
   const KickboxingCourseEntryCard({super.key, required this.onOpen});
@@ -587,9 +588,9 @@ class _KickboxingCoursePageState extends State<KickboxingCoursePage>
                 Text(
                   _label(
                     context,
-                    '${_written.length}/16 written reviews reported this visit; physical components unattempted.',
-                    'Bu ziyarette ${_written.length}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
-                  ),
+                    '{value1}/16 written reviews reported this visit; physical components unattempted.',
+                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
+                   args: {'value1': _written.length},),
                   key: const Key('kickboxing-written-progress'),
                 ),
                 if (_written.length == course.lessons.length)

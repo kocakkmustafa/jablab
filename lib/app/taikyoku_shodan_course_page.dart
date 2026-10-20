@@ -7,10 +7,11 @@ import 'content_failure.dart';
 import 'taikyoku_shodan_course.dart';
 import 'ui_language.dart';
 
-String _label(BuildContext context, String en, String tr) =>
-    UiLanguage.text(context, en: en, tr: tr);
+String _label(BuildContext context, String en, String tr,
+    {Map<String, Object> args = const {}}) =>
+    UiLanguage.format(context, en: en, tr: tr, args: args);
 String _text(BuildContext context, TaikyokuCopy copy) =>
-    UiLanguage.isTurkish(context) ? copy.tr : copy.en;
+    UiLanguage.text(context, en: copy.en, tr: copy.tr);
 Widget _copy(BuildContext context, TaikyokuCopy copy, String key) => Padding(
   padding: const EdgeInsets.only(bottom: 12),
   child: Text(_text(context, copy), key: Key(key)),
@@ -135,7 +136,7 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
     final lesson = widget.lesson;
     return Scaffold(
       appBar: AppBar(
-        title: Text(_label(context, 'Lesson ${lesson.number}', 'Ders ${lesson.number}')),
+        title: Text(_label(context, 'Lesson {value1}', 'Ders {value1}' , args: {'value1': lesson.number},)),
         actions: [IconButton(
           key: const Key('taikyoku-stop-top'),
           tooltip: _label(context, 'Stop and clear this visit', 'Dur ve bu ziyareti temizle'),
@@ -175,8 +176,8 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
             for (final movement in widget.course.movementsFor(lesson)) ...[
               Semantics(header: true, child: _copy(context, movement.title, '${movement.id}-title')),
               Text(_label(context,
-                'B · sampled position ${movement.evidence.sample}; this is not a movement-onset time.',
-                'B · ${movement.evidence.sample} örnek karesi; hareketin başlangıç zamanı değildir.')),
+                'B · sampled position {value1}; this is not a movement-onset time.',
+                'B · {value1} örnek karesi; hareketin başlangıç zamanı değildir.' , args: {'value1': movement.evidence.sample},)),
               for (final (sectionKey, sectionCopy, englishLabel, turkishLabel) in [
                 ('start', movement.start, 'Entry', 'Giriş'),
                 ('feet', movement.feet, 'Feet and torso', 'Ayak ve gövde'),
@@ -231,9 +232,9 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
           if (_answerVisible) ...[
             for (final q in lesson.recall) Semantics(
               container: true,
-              label: _label(context, 'Answer key for ${q.id}', '${q.id} yanıt anahtarı'),
+              label: _label(context, 'Answer key for {value1}', '{value1} yanıt anahtarı' , args: {'value1': q.id},),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(_label(context, 'Key: ${q.correctChoiceId}', 'Anahtar: ${q.correctChoiceId}'), key: Key('${q.id}-key')),
+                Text(_label(context, 'Key: {value1}', 'Anahtar: {value1}' , args: {'value1': q.correctChoiceId},), key: Key('${q.id}-key')),
                 _copy(context, q.correctChoice.text, '${q.id}-correct-answer'),
                 _copy(context, q.explanation, '${q.id}-explanation'),
               ]),
@@ -451,8 +452,8 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
             'Jason Leung referansı. Açılış/kapanış A’dan; 20 hareket ve gözlenen girişler B’den alınır.')),
           Text(_label(context, 'Reading and written review only. All six individual requirements and physical readiness remain open.',
             'Yalnız okuma ve yazılı inceleme. Altı bireysel gereksinim ve fiziksel hazır olma durumu açıktır.'), key: const Key('taikyoku-readiness')),
-          Text(_label(context, '${_written.length}/10 written reviews reported this visit; physical kata unattempted and unverified.',
-            'Bu ziyarette ${_written.length}/10 yazılı inceleme beyanı; fiziksel kata denenmedi ve doğrulanmadı.'), key: const Key('taikyoku-written-progress')),
+          Text(_label(context, '{value1}/10 written reviews reported this visit; physical kata unattempted and unverified.',
+            'Bu ziyarette {value1}/10 yazılı inceleme beyanı; fiziksel kata denenmedi ve doğrulanmadı.' , args: {'value1': _written.length},), key: const Key('taikyoku-written-progress')),
           if (_written.length == course.lessons.length) Text(_label(context,
             'Complete written sequence review reported this visit. This does not establish physical completion or mastery.',
             'Bu ziyarette tam yazılı sıra incelemesi beyan edildi. Fiziksel tamamlanma veya ustalık doğrulanmaz.'), key: const Key('taikyoku-written-completion')),
@@ -471,7 +472,7 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
               padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 _copy(context, requirement.title, '${requirement.id}-title'),
                 _copy(context, requirement.detail, '${requirement.id}-detail'),
-                Text(_label(context, '${requirement.id}: open', '${requirement.id}: açık')),
+                Text(_label(context, '{value1}: open', '{value1}: açık' , args: {'value1': requirement.id},)),
               ]),
             )]),
           ExpansionTile(key: const Key('taikyoku-source-limits'),

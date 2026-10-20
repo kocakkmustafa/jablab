@@ -12,9 +12,9 @@ String _copy(
   String source,
   Map<String, _Copy> translations,
 ) {
-  if (!UiLanguage.isTurkish(context)) return source;
   final _Copy? copy = translations[id];
-  return copy != null && copy.en == source ? copy.tr : source;
+  return copy != null && copy.en == source
+      ? UiLanguage.text(context, en: source, tr: copy.tr) : source;
 }
 
 const Map<String, _Copy> _courseTitles = <String, _Copy>{

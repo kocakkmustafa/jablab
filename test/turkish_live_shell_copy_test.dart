@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/shell_candidate/live_surface.dart';
@@ -15,7 +16,7 @@ void main() {
 
   testWidgets('session steps and advance control use Turkish',
       (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       home: SessionFlowScaffold(
         title: 'Test',
         stage: SessionStage.teach,
@@ -32,7 +33,7 @@ void main() {
 
   testWidgets('unknown camera measurement stays unknown in Turkish',
       (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(
+    await tester.pumpWidget(const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       home: Scaffold(
         body: LiveCoachSurface(
           state: LiveState.noVerdict,

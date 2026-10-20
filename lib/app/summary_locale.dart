@@ -42,12 +42,8 @@ const Map<String, String> _tempoBandsTr = <String, String>{
 };
 
 String componentLabel(BuildContext context, String source) =>
-    UiLanguage.isTurkish(context)
-    ? _componentLabelsTr[source] ?? source
-    : source;
+    UiLanguage.text(context, en: source, tr: _componentLabelsTr[source] ?? source);
 
 String? tempoBandLabel(BuildContext context, String? source) => source == null
     ? null
-    : UiLanguage.isTurkish(context)
-    ? _tempoBandsTr[source] ?? source
-    : source;
+    : UiLanguage.text(context, en: source, tr: _tempoBandsTr[source] ?? source);

@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_failure.dart';
@@ -15,7 +16,7 @@ void main() {
 
   testWidgets('integrity failure explains responsibility without retry',
       (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(
+    await tester.pumpWidget(const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       home: ContentFailureScreen(
         failure: ContentFailure(
           kind: ContentFailureKind.integrity,
@@ -30,7 +31,7 @@ void main() {
 
   testWidgets('unreadable content offers Turkish retry',
       (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       home: ContentFailureScreen(
         failure: const ContentFailure(
           kind: ContentFailureKind.unreadable,

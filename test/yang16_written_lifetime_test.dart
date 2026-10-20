@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -280,7 +281,7 @@ void main() {
       Future<Yang16WrittenCourse> newLoad() async => yangCourse();
       var replace = false;
       late StateSetter change;
-      await t.pumpWidget(MaterialApp(home:Builder(builder:(context) => Scaffold(body:TextButton(
+      await t.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home:Builder(builder:(context) => Scaffold(body:TextButton(
         child:const Text('Open'), onPressed:() => Navigator.of(context).push(MaterialPageRoute<void>(
           builder:(_) => StatefulBuilder(builder:(context,setState) {
             change = setState;

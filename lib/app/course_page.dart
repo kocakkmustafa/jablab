@@ -302,9 +302,7 @@ class _LessonRow extends StatelessWidget {
             if (lesson.minutes != 0) ...<Widget>[
               const SizedBox(width: 8),
               Text(
-                UiLanguage.isTurkish(context)
-                    ? '${lesson.minutes} dk'
-                    : '${lesson.minutes} min',
+                UiLanguage.format(context, en: '{value1} min', tr: '{value1} dk' , args: {'value1': lesson.minutes},),
                 // Kilitli ders SÖNÜK ama okunur: `ink4` 1,80:1 veriyordu
                 // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
                 // "daha az önemli" demek, "okunmasın" demek değil.
@@ -443,7 +441,10 @@ class _WhereYouLeftOff extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      e.key,
+                      e.key == 'Time worked'
+                          ? UiLanguage.text(context, en: 'Time worked', tr: 'Çalışılan süre')
+                          : e.key == 'Sessions'
+                          ? UiLanguage.text(context, en: 'Sessions', tr: 'Seanslar') : e.key,
                       style: JText.body.copyWith(fontSize: 14),
                     ),
                   ),
@@ -490,9 +491,7 @@ class _WhereYouLeftOff extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Center(
                         child: Text(
-                          UiLanguage.isTurkish(context)
-                              ? '${lessonTitle(context, resumeLesson!.id, resumeLesson!.title)} dersine devam et'
-                              : 'Resume ${resumeLesson!.title}',
+                          UiLanguage.format(context, en: 'Resume {lesson}', tr: '{lesson} dersine devam et', args: {'lesson': lessonTitle(context, resumeLesson!.id, resumeLesson!.title)}),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
@@ -556,7 +555,10 @@ class _HonestBands extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        e.key,
+                        e.key == 'Time worked'
+                          ? UiLanguage.text(context, en: 'Time worked', tr: 'Çalışılan süre')
+                          : e.key == 'Sessions'
+                          ? UiLanguage.text(context, en: 'Sessions', tr: 'Seanslar') : e.key,
                         style: JText.body.copyWith(fontSize: 14),
                       ),
                     ),

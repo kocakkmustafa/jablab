@@ -1,8 +1,6 @@
+import '../app/ui_language.dart';
 import 'package:flutter/material.dart';
 
-bool _isTurkish(BuildContext context) =>
-    View.of(context).platformDispatcher.locale.languageCode.toLowerCase() ==
-    'tr';
 
 /// Ders akışının alan-bağımsız iskeleti (standart §2):
 /// öğret → dene → canlı analiz → özet → sonraki adım.
@@ -93,14 +91,12 @@ class SessionFlowScaffold extends StatelessWidget {
                 for (final SessionStage s in all) ...<Widget>[
                   Chip(
                     key: Key('stage-${s.name}'),
-                    label: Text(_isTurkish(context)
-                        ? switch (s) {
-                            SessionStage.teach => 'Öğren',
-                            SessionStage.rehearse => 'Dene',
-                            SessionStage.live => 'Canlı',
-                            SessionStage.summary => 'Özet',
-                          }
-                        : s.label),
+                    label: Text(switch (s) {
+                      SessionStage.teach => UiLanguage.text(context, en: 'Learn', tr: 'Öğren'),
+                      SessionStage.rehearse => UiLanguage.text(context, en: 'Try it', tr: 'Dene'),
+                      SessionStage.live => UiLanguage.text(context, en: 'Live', tr: 'Canlı'),
+                      SessionStage.summary => UiLanguage.text(context, en: 'Summary', tr: 'Özet'),
+                    }),
                     backgroundColor: s == stage
                         ? Theme.of(context).colorScheme.primaryContainer
                         : null,
@@ -119,7 +115,7 @@ class SessionFlowScaffold extends StatelessWidget {
           key: const Key('advance-button'),
           onPressed: canAdvance ? onAdvance : null,
           child: Text(advanceLabel ??
-              (_isTurkish(context) ? 'Devam et' : 'Continue')),
+              (UiLanguage.text(context, en: 'Continue', tr: 'Devam et'))),
         ),
       ),
     );
@@ -161,7 +157,7 @@ class IntervalTimer extends StatelessWidget {
         if (paused)
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Text(_isTurkish(context) ? 'Duraklatıldı' : 'Paused',
+            child: Text(UiLanguage.text(context, en: 'Paused', tr: 'Duraklatıldı'),
                 key: const Key('timer-paused'),
                 style: Theme.of(context).textTheme.labelMedium),
           ),

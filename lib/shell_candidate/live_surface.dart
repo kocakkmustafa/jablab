@@ -1,8 +1,7 @@
+import '../app/ui_language.dart';
+import '../app/cue_locale.dart';
 import 'package:flutter/material.dart';
 
-bool _isTurkish(BuildContext context) =>
-    View.of(context).platformDispatcher.locale.languageCode.toLowerCase() ==
-    'tr';
 
 /// Canlı seansta ekranın söyleyebileceği üç şey.
 ///
@@ -92,7 +91,7 @@ class LiveCoachSurface extends StatelessWidget {
               // ve analiz hiç başlamamışken bu bir ölçüm değil, bir yalandır.
               if (eventCount != null) ...<Widget>[
                 Text(
-                  '$eventCount',
+                  UiLanguage.number(context, eventCount!),
                   key: const Key('event-count'),
                   style: theme.textTheme.displayMedium,
                 ),
@@ -100,7 +99,7 @@ class LiveCoachSurface extends StatelessWidget {
               ],
               switch (state) {
                 LiveState.correcting => Text(
-                  cue ?? '',
+                  cue == null ? '' : localizedCue(context, cue!),
                   key: const Key('live-cue'),
                   textAlign: TextAlign.center,
                   style: theme.textTheme.titleLarge,
@@ -115,17 +114,15 @@ class LiveCoachSurface extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      noVerdictReason ??
-                          (_isTurkish(context)
-                              ? 'Değerlendirmek için sizi yeterince iyi göremiyorum'
-                              : "I can't see you well enough to judge"),
+                      noVerdictReason != null ? localizedCue(context, noVerdictReason!) :
+                          (UiLanguage.text(context, en: "I can't see you well enough to judge", tr: 'Değerlendirmek için sizi yeterince iyi göremiyorum')),
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodyMedium,
                     ),
                   ],
                 ),
                 LiveState.clean => Text(
-                  _isTurkish(context) ? 'Devam edin' : 'Keep going',
+                  UiLanguage.text(context, en: 'Keep going', tr: 'Devam edin'),
                   key: const Key('live-clean'),
                   style: theme.textTheme.titleMedium,
                 ),
@@ -135,7 +132,7 @@ class LiveCoachSurface extends StatelessWidget {
               if (narration != null) ...<Widget>[
                 const SizedBox(height: 10),
                 Text(
-                  narration!,
+                  localizedCue(context, narration!),
                   key: const Key('live-narration'),
                   textAlign: TextAlign.center,
                   style: theme.textTheme.labelLarge?.copyWith(
@@ -162,6 +159,7 @@ class SessionSummaryView extends StatelessWidget {
     this.unitsCompleted = 0,
     this.unitLabel = '',
     this.workedSeconds = 0,
+    this.unitLabelContainsCount = false,
     this.tempoBand,
   });
 
@@ -210,6 +208,7 @@ class SessionSummaryView extends StatelessWidget {
   /// [SessionRecord.unitLabel]den (session_screen.dart) taşındı, icat
   /// edilmedi.
   final String unitLabel;
+  final bool unitLabelContainsCount;
 
   /// Bu seansta çalışılan süre, saniye (J-259). Diske zaten yazılıyordu.
   ///
@@ -230,26 +229,6 @@ class SessionSummaryView extends StatelessWidget {
   /// Burada kopya duruyor çünkü `RecordedSummary` ÇOKLU-seans toplamıdır
   /// (dosyadan okunur); bu tek, henüz kaydedilmemiş seans için o sınıfı
   /// kurmak yanlış soyutlama olurdu.
-  String get _workedLabel {
-    if (workedSeconds <= 0) return 'no time recorded';
-    if (workedSeconds < 60) return 'under a minute';
-    final int m = workedSeconds ~/ 60;
-    if (m < 60) return '$m min';
-    final int h = m ~/ 60;
-    final int rem = m % 60;
-    return rem == 0 ? '${h}h' : '${h}h ${rem}m';
-  }
-
-  String _workedLabelTr() {
-    if (workedSeconds <= 0) return 'süre kaydedilmedi';
-    if (workedSeconds < 60) return 'bir dakikadan az';
-    final int minutes = workedSeconds ~/ 60;
-    if (minutes < 60) return '$minutes dk';
-    final int hours = minutes ~/ 60;
-    final int remaining = minutes % 60;
-    return remaining == 0 ? '$hours sa' : '$hours sa $remaining dk';
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -261,14 +240,12 @@ class SessionSummaryView extends StatelessWidget {
         // iddia bırakırdı.
         if (eventCount != null) ...<Widget>[
           Text(
-            '$eventCount',
+            UiLanguage.number(context, eventCount!),
             key: const Key('summary-count'),
             style: theme.textTheme.displayMedium,
           ),
           Text(
-            _isTurkish(context)
-                ? 'bu seansta kaydedildi'
-                : 'recorded this session',
+            UiLanguage.text(context, en: 'recorded this session', tr: 'bu seansta kaydedildi'),
             style: theme.textTheme.bodySmall,
           ),
           const SizedBox(height: 20),
@@ -278,7 +255,7 @@ class SessionSummaryView extends StatelessWidget {
         // veremese bile kullanıcı turu bitirmiş, süre çalışmış olabilir.
         // Ayrı yuva, karıştırılmaz.
         Text(
-          '$unitsCompleted $unitLabel • ${_isTurkish(context) ? _workedLabelTr() : _workedLabel}',
+          UiLanguage.format(context, en: '{units} • {duration}', tr: '{units} • {duration}', args: {'units': unitLabelContainsCount ? unitLabel : '${UiLanguage.number(context, unitsCompleted)} $unitLabel', 'duration': UiLanguage.duration(context, workedSeconds)}),
           key: const Key('summary-worked'),
           style: theme.textTheme.titleSmall,
         ),
@@ -288,7 +265,7 @@ class SessionSummaryView extends StatelessWidget {
         if (tempoBand != null) ...<Widget>[
           const SizedBox(height: 4),
           Text(
-            '${_isTurkish(context) ? 'Tempo' : 'Pace'}: $tempoBand',
+            UiLanguage.format(context, en: 'Pace: {band}', tr: 'Tempo: {band}', args: {'band': tempoBand!}),
             key: const Key('summary-tempo-band'),
             style: theme.textTheme.bodySmall,
           ),
@@ -301,11 +278,9 @@ class SessionSummaryView extends StatelessWidget {
           // Metin `course_page.dart`taki `_HonestBands`ten AYNEN alındı
           // (`bands-only-note`) — aynı olgu, tek cümle, iki yerde tutarlı.
           Text(
-            _isTurkish(context)
-                ? 'Eşikler gerçek kayıtlarla kalibre edilmediği için puan gösterilmiyor. Dayanağı olmayan kesin bir sayı yanıltıcı olur.'
-                : 'Scores are unavailable because the thresholds have not been '
+            UiLanguage.text(context, en: 'Scores are unavailable because the thresholds have not been '
                       'calibrated on real recordings. A precise-looking number we '
-                      'cannot back up would be worse than no number.',
+                      'cannot back up would be worse than no number.', tr: 'Eşikler gerçek kayıtlarla kalibre edilmediği için puan gösterilmiyor. Dayanağı olmayan kesin bir sayı yanıltıcı olur.'),
             key: const Key('summary-bands-note'),
             style: theme.textTheme.bodySmall,
           ),
@@ -332,17 +307,13 @@ class SessionSummaryView extends StatelessWidget {
         if (coachedNotScored.isNotEmpty) ...<Widget>[
           const SizedBox(height: 20),
           Text(
-            _isTurkish(context)
-                ? 'Koçluk var, puan yok'
-                : 'Coached but not scored',
+            UiLanguage.text(context, en: 'Coached but not scored', tr: 'Koçluk var, puan yok'),
             style: theme.textTheme.titleSmall,
           ),
           const SizedBox(height: 4),
           Text(
-            _isTurkish(context)
-                ? 'Deneyimli eğitmenler bu konularda farklı görüşlere sahip; bu yüzden bunları belirtiriz ama puanlamayız.'
-                : 'Experienced instructors disagree about these, so we point them out '
-                      'but do not grade them.',
+            UiLanguage.text(context, en: 'Experienced instructors disagree about these, so we point them out '
+                      'but do not grade them.', tr: 'Deneyimli eğitmenler bu konularda farklı görüşlere sahip; bu yüzden bunları belirtiriz ama puanlamayız.'),
             key: const Key('coached-not-scored-note'),
             style: theme.textTheme.bodySmall,
           ),

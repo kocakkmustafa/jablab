@@ -150,14 +150,12 @@ class _CameraPlaceholder extends StatelessWidget {
                 // `LiveCoachSurface.noVerdictReason` zaten söylüyor ve iki
                 // yüzeyin aynı sebebi iki farklı cümleyle anlatması
                 // J-047'nin elle-kopyalanmış listesi sınıfına girerdi.
-                UiLanguage.isTurkish(context)
-                    ? (analysisRunning
-                        ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
-                        : 'Kamera önizlemesi bilerek gösterilmiyor.')
-                    : (analysisRunning
+                UiLanguage.text(context, en: (analysisRunning
                         ? 'Camera preview is left out on purpose — analysis runs '
                             'without it'
-                        : 'Camera preview is left out on purpose'),
+                        : 'Camera preview is left out on purpose'), tr: (analysisRunning
+                        ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
+                        : 'Kamera önizlemesi bilerek gösterilmiyor.')),
                 key: const Key('camera-preview-placeholder'),
                 textAlign: TextAlign.center,
                 // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin

@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -46,7 +47,7 @@ void main() {
   for (final language in ['en', 'tr']) {
     testWidgets('$language entry reaches every area and reference at 320px/2x', (t) async {
       await smallSurface(t, language);
-      await t.pumpWidget(MaterialApp(locale: Locale(language),
+      await t.pumpWidget(MaterialApp(localeListResolutionCallback: resolveTestLocales, locale: Locale(language),
         supportedLocales: const [Locale('en'), Locale('tr')],
         localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
         home: const Scaffold(body: StudyReviewEntry())));
@@ -72,7 +73,7 @@ void main() {
   for (final status in RecallObservation.values) {
     testWidgets('${status.name} gives a distinct next step without promotion', (t) async {
       final area = studyAreas.first;
-      await t.pumpWidget(MaterialApp(home: RecallLessonPage(area: area, lesson: area.lessons.first)));
+      await t.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: RecallLessonPage(area: area, lesson: area.lessons.first)));
       expect(find.byKey(const Key('study-feedback')), findsNothing);
       await tapVisible(t, find.byKey(Key('study-state-${status.name}')));
       expect(find.byKey(const Key('study-feedback')), findsOneWidget);
@@ -92,7 +93,7 @@ void main() {
   }
 
   testWidgets('notes, revealed reference and observation are discarded on leaving', (t) async {
-    await t.pumpWidget(const MaterialApp(home: Scaffold(body: StudyReviewEntry())));
+    await t.pumpWidget(const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: Scaffold(body: StudyReviewEntry())));
     await tapVisible(t, find.byKey(const Key('study-review-entry')));
     final key = Key('study-lesson-${studyAreas.first.lessons.first.id}');
     await tapVisible(t, find.byKey(key));

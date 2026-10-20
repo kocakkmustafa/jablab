@@ -46,7 +46,7 @@ import 'ui_language.dart';
 import 'why_not_locale.dart';
 
 /// JabLab uygulaması — kabuğu içerikle bağlar.
-class JabLabApp extends StatelessWidget {
+class JabLabApp extends StatefulWidget {
   const JabLabApp({
     super.key,
     this.repository = const ContentRepository(),
@@ -91,17 +91,30 @@ class JabLabApp extends StatelessWidget {
   final List<NavigatorObserver> navigatorObservers;
 
   @override
+  State<JabLabApp> createState() => _JabLabAppState();
+}
+
+class _JabLabAppState extends State<JabLabApp> {
+  Locale? _selectedLocale;
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return AppLanguageScope(
+      selected: _selectedLocale,
+      select: (locale) => setState(() => _selectedLocale = locale),
+      child: MaterialApp(
       title: 'JabLab',
-      supportedLocales: const <Locale>[Locale('en'), Locale('tr')],
+      locale: _selectedLocale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localeListResolutionCallback: AppLocalizations.resolve,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
-      navigatorObservers: navigatorObservers,
+      navigatorObservers: widget.navigatorObservers,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFB3261E),
@@ -110,13 +123,14 @@ class JabLabApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: _Root(
-        repository: repository,
-        onboarding: onboarding,
-        accountUserId: accountUserId,
-        accountRecovery: accountRecovery,
-        accountPageBuilder: accountPageBuilder,
-        beforeLessonStart: beforeLessonStart,
+        repository: widget.repository,
+        onboarding: widget.onboarding,
+        accountUserId: widget.accountUserId,
+        accountRecovery: widget.accountRecovery,
+        accountPageBuilder: widget.accountPageBuilder,
+        beforeLessonStart: widget.beforeLessonStart,
       ),
+    ),
     );
   }
 }
@@ -631,12 +645,10 @@ class _RootState extends State<_Root> {
     // diye ayrı sayılıyor (bir dalın bugün ulaşılmaz olması, onu yanlış
     // yazmak için gerekçe değil).
     if (notEvaluable == 0) return null;
-    final String lessons = notEvaluable == 1 ? 'lesson' : 'lessons';
-    return '$notEvaluable $lessons here have a progress gate that counts '
-        'punches. We are not showing you a count, because we are not keeping '
-        'one: the session counts while it runs and then lets the number go. '
-        'A zero would tell you that you did nothing, and that is not what we '
-        'measured. Nothing here is blocked — the gates do not close anything.';
+    return UiLanguage.format(context,
+      en: '{count} lessons here have a progress gate that counts punches. We are not showing you a count, because we are not keeping one: the session counts while it runs and then lets the number go. A zero would tell you that you did nothing, and that is not what we measured. Nothing here is blocked — the gates do not close anything.',
+      tr: 'Burada {count} dersin yumruk sayan ilerleme kapısı var. Sayımı saklamadığımız için sana bir sayı göstermiyoruz: seans sürerken sayıyor, ardından sayıyı bırakıyor. Sıfır göstermek hiçbir şey yapmadığını söylerdi; ölçtüğümüz bu değil. Burada hiçbir şey engellenmiyor; kapılar içeriği kapatmıyor.',
+      args: {'count': notEvaluable}, pluralArg: 'count');
   }
 
   void _openSettings(BuildContext context, ShellLibrary lib) {
@@ -970,12 +982,9 @@ class _RootState extends State<_Root> {
     // yeniden üretirdi. Çekirdek değişikliği koordinatörde.
     return _recorded == null || _recorded!.sessions == 0
         ? null
-        : 'These minutes are your history, not credit. Only lessons with a '
-              'round clock are counted here — the untimed practice lessons have '
-              'no timer, so their time is not measured and they leave no line. '
-              'Nothing here opens with time either: the lessons that are '
-              'closed are closed for a named technical reason, and each one '
-              'tells you its own.';
+        : UiLanguage.text(context,
+            en: 'These minutes are your history, not credit. Only lessons with a round clock are counted here — the untimed practice lessons have no timer, so their time is not measured and they leave no line. Nothing here opens with time either: the lessons that are closed are closed for a named technical reason, and each one tells you its own.',
+            tr: 'Bu dakikalar geçmişindir, kredi değildir. Burada yalnız tur saati olan dersler sayılır; süresiz çalışma derslerinin zamanlayıcısı yoktur, bu yüzden süreleri ölçülmez ve geçmişe satır bırakmazlar. Burada süreyle bir şey açılmaz: kapalı dersler belirtilen teknik bir nedenle kapalıdır ve her biri kendi nedenini açıklar.');
   }
 
   /// Geçmiş HİÇ okunamadıysa gösterilecek cümle (J-092), yoksa `null`.
@@ -1011,20 +1020,18 @@ class _RootState extends State<_Root> {
     if (_historyUnavailable != null) {
       // Ham `detail` yüzeye SIZMAZ (doc-75/5): kullanıcı metni app'in
       // sesiyle yazılır, teşhis dizesi geliştirici içindir.
-      return 'We could not read your saved sessions on this device. As far as '
-          'we know your training is still there — we simply cannot open the '
-          'file right now, so we are not going to show you numbers we did '
-          'not measure. Nothing is blocked: you can start a session as usual.';
+      return UiLanguage.text(context,
+        en: 'We could not read your saved sessions on this device. As far as we know your training is still there — we simply cannot open the file right now, so we are not going to show you numbers we did not measure. Nothing is blocked: you can start a session as usual.',
+        tr: 'Bu cihazdaki kayıtlı seanslarını okuyamadık. Bildiğimiz kadarıyla antrenman verilerin hâlâ orada; şu anda dosyayı açamıyoruz ve ölçmediğimiz sayıları göstermiyoruz. İçerik engellenmiyor: her zamanki gibi seans başlatabilirsin.');
     }
     final RecordedSummary? r = _recorded;
     if (r != null && r.sessions == 0 && r.status is HistoryPartial) {
       // ⚠️ doc-75/4: bu uçta "taban" DİLİ KULLANILMAZ. Taban sıfırken
       // "en az bu kadar" demek doğru ve işe yaramaz — o yüzden bu metin
       // `at least` TAŞIMAZ ve testte ikiziyle sınanır.
-      return 'Your history file is there but none of it could be read, so we '
-          'have no totals to show. This is not the same as never having '
-          'trained, and we would rather say so than show you a zero. New '
-          'sessions will be recorded normally.';
+      return UiLanguage.text(context,
+        en: 'Your history file is there but none of it could be read, so we have no totals to show. This is not the same as never having trained, and we would rather say so than show you a zero. New sessions will be recorded normally.',
+        tr: 'Geçmiş dosyan var, ancak hiçbir kaydı okunamadı; bu yüzden gösterecek toplamımız yok. Bu, hiç çalışmamış olmakla aynı şey değildir. Sıfır göstermek yerine bunu söylüyoruz. Yeni seanslar normal biçimde kaydedilecek.');
     }
     return null;
   }
@@ -1044,9 +1051,10 @@ class _RootState extends State<_Root> {
     // Kayıp SAYISI metne girer: sayısız bir "bazıları okunamadı" beyanı
     // kullanıcıya eksiğin BÜYÜKLÜĞÜNÜ vermez (doc-75 test asgarisi: metin
     // testi sayıyı arar — interpolasyon-kaçağı sınıfı).
-    return 'Some saved sessions could not be read (${status.unreadable} of '
-        'them), so the totals below are a floor, not a full count — you did '
-        'at least this much.';
+    return UiLanguage.format(context,
+      en: 'Some saved sessions could not be read ({count} of them), so the totals below are a floor, not a full count — you did at least this much.',
+      tr: 'Kayıtlı seansların {count} tanesi okunamadı. Aşağıdaki toplamlar tam sayım değil, alt sınırdır; en az bu kadarını yaptın.',
+      args: {'count': status.unreadable});
   }
 
   Map<String, String> _recordedRows() {
@@ -1057,10 +1065,10 @@ class _RootState extends State<_Root> {
     // ama kapıyı kendi rahatım için gevşetmek yerine değerleri birimiyle
     // yazıyorum: kapı sıkı kalır, cümle de daha okunur olur.
     return <String, String>{
-      'Time worked': r.workedLabel,
+      'Time worked': UiLanguage.duration(context, r.workedSeconds),
       'Sessions': r.stoppedEarly == 0
-          ? '${r.sessions} recorded'
-          : '${r.sessions} recorded, ${r.stoppedEarly} stopped early',
+          ? UiLanguage.format(context, en: '{count} recorded', tr: '{count} kayıt', args: {'count': r.sessions})
+          : UiLanguage.format(context, en: '{count} recorded, {stopped} stopped early', tr: '{count} kayıt, {stopped} erken bırakıldı', args: {'count': r.sessions, 'stopped': r.stoppedEarly}),
     };
   }
 

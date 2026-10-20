@@ -255,11 +255,7 @@ class _Honesty extends StatelessWidget {
               // kalır. Elle yazılmış bir "6 things" bir sonraki içerik
               // turunda sessizce yalan olurdu.
               Text(
-                UiLanguage.isTurkish(context)
-                    ? '$excluded özellik bilinçli olarak uygulamada yok.'
-                    : excluded == 1
-                    ? 'One thing is deliberately not in this app.'
-                    : '$excluded things are deliberately not in this app.',
+                UiLanguage.format(context, en: '{count} things are deliberately not in this app.', tr: '{count} özellik bilinçli olarak uygulamada yok.', args: {'count': excluded}, pluralArg: 'count'),
                 key: const Key('onboarding-excluded-count'),
                 style: JText.body,
               ),

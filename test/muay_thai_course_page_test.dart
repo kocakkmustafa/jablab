@@ -1,3 +1,4 @@
+import 'localization_fixture.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -18,7 +19,7 @@ Future<void> open(
   Future<MuayThaiCourse> Function()? loader,
 }) async {
   await t.pumpWidget(
-    MaterialApp(
+    MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       navigatorObservers: observer == null ? [] : [observer],
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context)
@@ -286,7 +287,7 @@ void main() {
     addTearDown(owner.dispose);
     final pending = Completer<MuayThaiCourse>();
     await t.pumpWidget(
-      MaterialApp(
+      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: MuayThaiCoursePage(
           loader: () => pending.future,
           accountUserId: owner,
