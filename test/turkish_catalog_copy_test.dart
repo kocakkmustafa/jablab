@@ -126,7 +126,10 @@ void main() {
 
     expect(find.text('Bu sürüm neleri kaydeder'), findsOneWidget);
     expect(find.text('Neleri ölçmez'), findsOneWidget);
-    expect(find.textContaining('Bu kurs kendi çalışma beyanını kaydeder.'), findsOneWidget);
+    expect(
+      find.textContaining('Bu kurs kendi çalışma beyanını kaydeder.'),
+      findsOneWidget,
+    );
     expect(find.textContaining('Yumruk kuvveti veya gücü'), findsOneWidget);
   });
 

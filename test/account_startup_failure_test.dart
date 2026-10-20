@@ -82,7 +82,11 @@ AppPreferencesController _startupPreferences(WidgetTester tester) {
   addTearDown(() async {
     try {
       await tester.pumpWidget(const SizedBox.shrink());
-      expect(store.writes, 0, reason: 'Untouched startup must not persist defaults');
+      expect(
+        store.writes,
+        0,
+        reason: 'Untouched startup must not persist defaults',
+      );
     } finally {
       controller.dispose();
     }

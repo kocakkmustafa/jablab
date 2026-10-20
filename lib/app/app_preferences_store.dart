@@ -24,6 +24,7 @@ class FileAppPreferencesStore implements AppPreferencesStore {
 
   final AppPreferencesCodec codec;
   final Future<Directory> Function() _supportDirectory;
+
   /// Fault-injection seam. Production uses rename to an unused sibling path.
   final Future<void> Function(File prepared, File committed) _commitPrepared;
   Future<void> _tail = Future<void>.value();
@@ -56,7 +57,9 @@ class FileAppPreferencesStore implements AppPreferencesStore {
     var count = 0;
     await for (final entity in directory.list(followLinks: false)) {
       if (++count > entryLimit) {
-        throw const FormatException('Preferences directory exceeds entry limit');
+        throw const FormatException(
+          'Preferences directory exceeds entry limit',
+        );
       }
       if (entity is! File) continue;
       final baseName = entity.uri.pathSegments.last;
@@ -78,7 +81,9 @@ class FileAppPreferencesStore implements AppPreferencesStore {
       // Decode rejects the extra byte; a corrupt huge file is not read whole.
       final result = <int>[];
       while (result.length <= AppPreferencesCodec.maxBytes) {
-        final chunk = await handle.read(AppPreferencesCodec.maxBytes + 1 - result.length);
+        final chunk = await handle.read(
+          AppPreferencesCodec.maxBytes + 1 - result.length,
+        );
         if (chunk.isEmpty) break;
         result.addAll(chunk);
       }
@@ -100,7 +105,9 @@ class FileAppPreferencesStore implements AppPreferencesStore {
         try {
           final value = codec.decode(await _boundedBytes(generation.file));
           return PreferencesReadResult(
-            skipped ? PreferencesReadKind.recovered : PreferencesReadKind.loaded,
+            skipped
+                ? PreferencesReadKind.recovered
+                : PreferencesReadKind.loaded,
             value,
           );
         } on Object {
@@ -124,7 +131,9 @@ class FileAppPreferencesStore implements AppPreferencesStore {
       try {
         result.complete(await _writeOne(value));
       } on Object {
-        result.complete(const PreferencesWriteResult(PreferencesWriteKind.failed));
+        result.complete(
+          const PreferencesWriteResult(PreferencesWriteKind.failed),
+        );
       }
     });
     return result.future;
@@ -147,11 +156,15 @@ class FileAppPreferencesStore implements AppPreferencesStore {
       }
       final number = last + 1;
       final prefix = '${directory.path}${Platform.pathSeparator}';
-      committed = File('${prefix}prefs-v1-${number.toString().padLeft(16, '0')}.json');
+      committed = File(
+        '${prefix}prefs-v1-${number.toString().padLeft(16, '0')}.json',
+      );
       if (await committed.exists()) {
         return const PreferencesWriteResult(PreferencesWriteKind.failed);
       }
-      prepared = File('${prefix}pending-$number-${DateTime.now().microsecondsSinceEpoch}');
+      prepared = File(
+        '${prefix}pending-$number-${DateTime.now().microsecondsSinceEpoch}',
+      );
       // Single store writer owns this new path. No existing committed file is
       // opened for writing. The same-directory rename is the commit point.
       await prepared.writeAsBytes(encoded, flush: true);
@@ -172,7 +185,9 @@ class FileAppPreferencesStore implements AppPreferencesStore {
               // Reuse the resolved immutable destination's directory. Do not
               // call the support-directory provider again after a known commit.
               await _pruneValidGenerations(committed.parent);
-              return const PreferencesWriteResult(PreferencesWriteKind.committed);
+              return const PreferencesWriteResult(
+                PreferencesWriteKind.committed,
+              );
             }
             return const PreferencesWriteResult(PreferencesWriteKind.uncertain);
           }

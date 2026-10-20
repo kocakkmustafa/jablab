@@ -343,7 +343,8 @@ final class LiveJabController {
         _tempoBandCounts[band] = (_tempoBandCounts[band] ?? 0) + 1;
       }
       final String? previous = _lastAttemptIssueCode;
-      final String? current = technicalJudgementsAdmitted && out.issues.isNotEmpty
+      final String? current =
+          technicalJudgementsAdmitted && out.issues.isNotEmpty
           ? out.issues.first.code
           : null;
       // GÖRÜNÜRLÜK kodları hariç: "seni göremiyordum, artık görüyorum" bir

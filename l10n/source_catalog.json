@@ -27247,7 +27247,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 114
+          "line": 117
         }
       ],
       "kind": "UI",
@@ -27262,7 +27262,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 129
+          "line": 132
         },
         {
           "path": "lib/app/settings_page.dart",
@@ -27281,11 +27281,11 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 148
+          "line": 150
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 122
+          "line": 124
         },
         {
           "path": "lib/app/settings_page.dart",
@@ -27304,15 +27304,15 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 365
+          "line": 379
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 409
+          "line": 425
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 143
+          "line": 145
         }
       ],
       "kind": "UI",
@@ -27331,11 +27331,11 @@
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 389
+          "line": 405
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 167
+          "line": 171
         }
       ],
       "kind": "UI",
@@ -27350,7 +27350,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 419
+          "line": 435
         }
       ],
       "kind": "UI",
@@ -27365,7 +27365,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 561
+          "line": 577
         },
         {
           "path": "lib/shell_candidate/live_surface.dart",
@@ -27384,11 +27384,11 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 708
+          "line": 716
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 239
+          "line": 247
         }
       ],
       "kind": "UI",
@@ -28092,7 +28092,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 283
+          "line": 286
         }
       ],
       "kind": "UI",
@@ -28107,7 +28107,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 304
+          "line": 311
         }
       ],
       "kind": "UI",
@@ -28122,7 +28122,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 339
+          "line": 346
         }
       ],
       "kind": "UI",
@@ -28137,7 +28137,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 344
+          "line": 351
         }
       ],
       "kind": "UI",
@@ -28152,7 +28152,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 357
+          "line": 364
         }
       ],
       "kind": "UI",
@@ -28167,7 +28167,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 365
+          "line": 372
         }
       ],
       "kind": "UI",
@@ -28182,7 +28182,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 373
+          "line": 380
         }
       ],
       "kind": "UI",
@@ -28197,7 +28197,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 385
+          "line": 392
         }
       ],
       "kind": "UI",
@@ -28212,7 +28212,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 398
+          "line": 405
         }
       ],
       "kind": "UI",
@@ -28227,7 +28227,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 355
+          "line": 367
         }
       ],
       "kind": "UI",
@@ -28242,7 +28242,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 422
+          "line": 434
         }
       ],
       "kind": "UI",
@@ -28257,7 +28257,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 432
+          "line": 444
         }
       ],
       "kind": "UI",
@@ -28272,7 +28272,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 497
+          "line": 511
         }
       ],
       "kind": "UI",
@@ -28287,7 +28287,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 558
+          "line": 572
         }
       ],
       "kind": "UI",
@@ -28377,7 +28377,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 192
+          "line": 219
         }
       ],
       "kind": "UI",
@@ -28392,7 +28392,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 205
+          "line": 232
         }
       ],
       "kind": "UI",
@@ -28407,11 +28407,11 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 216
+          "line": 243
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 322
+          "line": 328
         }
       ],
       "kind": "UI",
@@ -28426,7 +28426,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 228
+          "line": 255
         }
       ],
       "kind": "UI",
@@ -28441,7 +28441,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 241
+          "line": 268
         }
       ],
       "kind": "UI",
@@ -28456,7 +28456,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 260
+          "line": 287
         }
       ],
       "kind": "UI",
@@ -28471,7 +28471,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 269
+          "line": 296
         }
       ],
       "kind": "UI",
@@ -28486,7 +28486,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 290
+          "line": 317
         }
       ],
       "kind": "UI",
@@ -28501,7 +28501,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 299
+          "line": 326
         }
       ],
       "kind": "UI",
@@ -28516,7 +28516,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 334
+          "line": 361
         }
       ],
       "kind": "UI",
@@ -28591,11 +28591,11 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 290
+          "line": 296
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 808
+          "line": 833
         }
       ],
       "kind": "UI",
@@ -28610,7 +28610,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 339
+          "line": 349
         }
       ],
       "kind": "UI",
@@ -28625,11 +28625,11 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 351
+          "line": 361
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 395
+          "line": 405
         }
       ],
       "kind": "UI",
@@ -28644,7 +28644,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 422
+          "line": 434
         }
       ],
       "kind": "UI",
@@ -28659,7 +28659,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 443
+          "line": 455
         }
       ],
       "kind": "UI",
@@ -28674,7 +28674,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 561
+          "line": 586
         }
       ],
       "kind": "UI",
@@ -28689,7 +28689,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 635
+          "line": 660
         }
       ],
       "kind": "UI",
@@ -28704,7 +28704,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 645
+          "line": 670
         }
       ],
       "kind": "UI",
@@ -28719,7 +28719,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 650
+          "line": 675
         }
       ],
       "kind": "UI",
@@ -28734,7 +28734,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 655
+          "line": 680
         }
       ],
       "kind": "UI",
@@ -28749,7 +28749,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 891
+          "line": 921
         }
       ],
       "kind": "UI",
@@ -28764,7 +28764,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 900
+          "line": 930
         }
       ],
       "kind": "UI",
@@ -28779,7 +28779,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 911
+          "line": 944
         }
       ],
       "kind": "UI",
@@ -28794,7 +28794,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 926
+          "line": 959
         }
       ],
       "kind": "UI",
@@ -28809,7 +28809,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 939
+          "line": 972
         }
       ],
       "kind": "UI",
@@ -28824,7 +28824,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 953
+          "line": 986
         }
       ],
       "kind": "UI",
@@ -28839,7 +28839,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 981
+          "line": 1016
         }
       ],
       "kind": "UI",
@@ -28854,7 +28854,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 984
+          "line": 1019
         }
       ],
       "kind": "UI",
@@ -28869,7 +28869,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 997
+          "line": 1035
         }
       ],
       "kind": "UI",
@@ -28884,7 +28884,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1022
+          "line": 1060
         }
       ],
       "kind": "UI",
@@ -28899,7 +28899,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1028
+          "line": 1069
         }
       ],
       "kind": "UI",
@@ -28914,7 +28914,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1034
+          "line": 1078
         }
       ],
       "kind": "UI",
@@ -28929,7 +28929,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1093
+          "line": 1137
         }
       ],
       "kind": "UI",
@@ -28944,7 +28944,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1156
+          "line": 1200
         }
       ],
       "kind": "UI",
@@ -30967,7 +30967,7 @@
       "contexts": [
         {
           "path": "lib/main.dart",
-          "line": 164
+          "line": 171
         }
       ],
       "kind": "UI",
@@ -31205,7 +31205,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1080
+          "line": 1124
         }
       ],
       "kind": "UI",
@@ -31220,7 +31220,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1080
+          "line": 1124
         }
       ],
       "kind": "UI",
@@ -31672,7 +31672,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 309
+          "line": 321
         }
       ],
       "kind": "UI",
@@ -31691,7 +31691,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 512
+          "line": 528
         }
       ],
       "kind": "UI",
@@ -31822,7 +31822,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 304
+          "line": 316
         }
       ],
       "kind": "UI",
@@ -31850,7 +31850,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 476
+          "line": 490
         }
       ],
       "kind": "UI",
@@ -32095,7 +32095,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 137
+          "line": 139
         }
       ],
       "kind": "UI",
@@ -32112,7 +32112,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 346
+          "line": 373
         }
       ],
       "kind": "UI",
@@ -32129,7 +32129,7 @@
       "contexts": [
         {
           "path": "lib/app/skeleton_overlay.dart",
-          "line": 157
+          "line": 173
         }
       ],
       "kind": "UI",
@@ -32144,7 +32144,7 @@
       "contexts": [
         {
           "path": "lib/app/skeleton_overlay.dart",
-          "line": 157
+          "line": 173
         }
       ],
       "kind": "UI",
@@ -32161,7 +32161,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 404
+          "line": 414
         }
       ],
       "kind": "UI",
@@ -32178,7 +32178,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 504
+          "line": 523
         }
       ],
       "kind": "UI",
@@ -32196,7 +32196,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 504
+          "line": 523
         }
       ],
       "kind": "UI",
@@ -32216,7 +32216,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 857
+          "line": 885
         }
       ],
       "kind": "UI",
@@ -32235,7 +32235,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 874
+          "line": 904
         }
       ],
       "kind": "UI",
@@ -32254,7 +32254,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1055
+          "line": 1099
         }
       ],
       "kind": "UI",
@@ -32271,7 +32271,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1055
+          "line": 1099
         }
       ],
       "kind": "UI",
@@ -33420,11 +33420,11 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 454
+          "line": 470
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 588
+          "line": 604
         }
       ],
       "kind": "UI",
@@ -33439,11 +33439,11 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 460
+          "line": 476
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 594
+          "line": 610
         }
       ],
       "kind": "UI",
@@ -36369,7 +36369,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1042
+          "line": 1050
         }
       ],
       "kind": "UI",
@@ -36386,7 +36386,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1117
+          "line": 1125
         }
       ],
       "kind": "UI",
@@ -36405,7 +36405,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1135
+          "line": 1143
         }
       ],
       "kind": "UI",
@@ -36425,7 +36425,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1141
+          "line": 1149
         }
       ],
       "kind": "UI",
@@ -37142,7 +37142,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 682
+          "line": 690
         }
       ],
       "kind": "UI",
@@ -37168,7 +37168,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1082
+          "line": 1090
         }
       ],
       "kind": "UI",
@@ -37183,7 +37183,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1093
+          "line": 1101
         }
       ],
       "kind": "UI",
@@ -37198,7 +37198,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 417
+          "line": 429
         }
       ],
       "kind": "UI",
@@ -37228,7 +37228,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 145
+          "line": 147
         }
       ],
       "kind": "UI",
@@ -37243,7 +37243,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 161
+          "line": 164
         }
       ],
       "kind": "UI",
@@ -37258,7 +37258,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 168
+          "line": 179
         }
       ],
       "kind": "UI",
@@ -37273,7 +37273,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 170
+          "line": 189
         }
       ],
       "kind": "UI",
@@ -37288,7 +37288,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 172
+          "line": 195
         }
       ],
       "kind": "UI",
@@ -37303,7 +37303,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 415
+          "line": 448
         }
       ],
       "kind": "UI",
@@ -37318,7 +37318,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 417
+          "line": 453
         }
       ],
       "kind": "UI",
@@ -37333,7 +37333,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 420
+          "line": 458
         }
       ],
       "kind": "UI",
@@ -37348,7 +37348,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 424
+          "line": 465
         }
       ],
       "kind": "UI",
@@ -37363,7 +37363,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 425
+          "line": 470
         }
       ],
       "kind": "UI",
@@ -37378,7 +37378,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 427
+          "line": 477
         }
       ],
       "kind": "UI",
@@ -37393,7 +37393,7 @@
       "contexts": [
         {
           "path": "lib/app/settings_page.dart",
-          "line": 444
+          "line": 504
         }
       ],
       "kind": "UI",
@@ -37408,7 +37408,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 640
+          "line": 665
         }
       ],
       "kind": "UI",

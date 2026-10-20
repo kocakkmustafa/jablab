@@ -10,6 +10,7 @@ class AppPreferences {
   });
 
   final AppThemePreference theme;
+
   /// Null means follow the device's preferred languages.
   final String? localeTag;
 
@@ -19,8 +20,10 @@ class AppPreferences {
       AppPreferences(theme: theme, localeTag: value);
 
   @override
-  bool operator ==(Object other) => other is AppPreferences &&
-      other.theme == theme && other.localeTag == localeTag;
+  bool operator ==(Object other) =>
+      other is AppPreferences &&
+      other.theme == theme &&
+      other.localeTag == localeTag;
   @override
   int get hashCode => Object.hash(theme, localeTag);
 }
@@ -30,7 +33,7 @@ class AppPreferences {
 /// is deliberately enabled by its owner. Exact canonical BCP47 tags are used.
 class AppPreferencesCodec {
   AppPreferencesCodec({required Iterable<String> supportedLocaleTags})
-      : supportedLocaleTags = Set<String>.unmodifiable(supportedLocaleTags) {
+    : supportedLocaleTags = Set<String>.unmodifiable(supportedLocaleTags) {
     if (this.supportedLocaleTags.isEmpty) {
       throw ArgumentError('A shipped locale set is required');
     }
@@ -49,11 +52,13 @@ class AppPreferencesCodec {
 
   List<int> encode(AppPreferences value) {
     validate(value);
-    return utf8.encode(jsonEncode(<String, Object?>{
-      'schemaVersion': schemaVersion,
-      'theme': value.theme.name,
-      'locale': value.localeTag,
-    }));
+    return utf8.encode(
+      jsonEncode(<String, Object?>{
+        'schemaVersion': schemaVersion,
+        'theme': value.theme.name,
+        'locale': value.localeTag,
+      }),
+    );
   }
 
   AppPreferences decode(List<int> bytes) {
@@ -61,10 +66,12 @@ class AppPreferencesCodec {
       throw const FormatException('Preferences exceed byte limit');
     }
     final raw = jsonDecode(utf8.decode(bytes));
-    if (raw is! Map<String, dynamic> || raw.length != 3 ||
+    if (raw is! Map<String, dynamic> ||
+        raw.length != 3 ||
         raw['schemaVersion'] is! int ||
         raw['schemaVersion'] != schemaVersion ||
-        !raw.containsKey('locale') || !raw.containsKey('theme')) {
+        !raw.containsKey('locale') ||
+        !raw.containsKey('theme')) {
       throw const FormatException('Unsupported preferences schema');
     }
     final theme = switch (raw['theme']) {
@@ -83,7 +90,15 @@ class AppPreferencesCodec {
   }
 }
 
-enum PreferencesReadKind { loaded, missing, recovered, invalid, unavailable, timedOut }
+enum PreferencesReadKind {
+  loaded,
+  missing,
+  recovered,
+  invalid,
+  unavailable,
+  timedOut,
+}
+
 class PreferencesReadResult {
   const PreferencesReadResult(this.kind, [this.value]);
   final PreferencesReadKind kind;
@@ -91,6 +106,7 @@ class PreferencesReadResult {
 }
 
 enum PreferencesWriteKind { committed, failed, uncertain }
+
 class PreferencesWriteResult {
   const PreferencesWriteResult(this.kind);
   final PreferencesWriteKind kind;

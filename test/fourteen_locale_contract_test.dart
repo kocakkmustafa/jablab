@@ -9,8 +9,20 @@ void main() {
     expect(
       AppLocalizations.supportedLocales.map((locale) => locale.toLanguageTag()),
       <String>[
-        'tr', 'en', 'es-419', 'pt-BR', 'de', 'fr', 'ja', 'ar',
-        'it', 'ko', 'id', 'pl', 'hi', 'zh-Hans',
+        'tr',
+        'en',
+        'es-419',
+        'pt-BR',
+        'de',
+        'fr',
+        'ja',
+        'ar',
+        'it',
+        'ko',
+        'id',
+        'pl',
+        'hi',
+        'zh-Hans',
       ],
     );
     final chinese = AppLocalizations.supportedLocales.last;
@@ -24,27 +36,41 @@ void main() {
     const hant = Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant');
     final supported = AppLocalizations.supportedLocales;
     for (final preferred in <Locale>[
-      const Locale('zh'), const Locale('zh', 'CN'), const Locale('zh', 'SG'),
+      const Locale('zh'),
+      const Locale('zh', 'CN'),
+      const Locale('zh', 'SG'),
       hans,
       const Locale.fromSubtags(
-        languageCode: 'zh', scriptCode: 'Hans', countryCode: 'TW',
+        languageCode: 'zh',
+        scriptCode: 'Hans',
+        countryCode: 'TW',
       ),
     ]) {
       expect(AppLocalizations.resolve([preferred], supported), hans);
     }
     for (final preferred in <Locale>[
-      hant, const Locale('zh', 'TW'), const Locale('zh', 'HK'),
+      hant,
+      const Locale('zh', 'TW'),
+      const Locale('zh', 'HK'),
       const Locale('zh', 'MO'),
       const Locale.fromSubtags(
-        languageCode: 'zh', scriptCode: 'Hant', countryCode: 'CN',
+        languageCode: 'zh',
+        scriptCode: 'Hant',
+        countryCode: 'CN',
       ),
       const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Latn'),
     ]) {
       expect(
-        AppLocalizations.resolve([preferred, const Locale('fr', 'CA')], supported),
+        AppLocalizations.resolve([
+          preferred,
+          const Locale('fr', 'CA'),
+        ], supported),
         const Locale('fr'),
       );
-      expect(AppLocalizations.resolve([preferred], supported), const Locale('en'));
+      expect(
+        AppLocalizations.resolve([preferred], supported),
+        const Locale('en'),
+      );
     }
     for (final language in ['it', 'ko', 'id', 'pl', 'hi']) {
       expect(
@@ -65,23 +91,45 @@ void main() {
     final vectors = <Locale, Map<num, String>>{
       const Locale('it'): {0: 'other', 1: 'one', 2: 'other', 1000000: 'many'},
       const Locale('pl'): {
-        0: 'many', 1: 'one', 2: 'few', 4: 'few', 5: 'many', 12: 'many',
-        14: 'many', 21: 'many', 22: 'few', 24: 'few', 101: 'many',
-        102: 'few', 1.5: 'other',
+        0: 'many',
+        1: 'one',
+        2: 'few',
+        4: 'few',
+        5: 'many',
+        12: 'many',
+        14: 'many',
+        21: 'many',
+        22: 'few',
+        24: 'few',
+        101: 'many',
+        102: 'few',
+        1.5: 'other',
       },
-      const Locale('hi'): {0: 'one', 0.5: 'one', 1: 'one', 1.1: 'other', 2: 'other'},
+      const Locale('hi'): {
+        0: 'one',
+        0.5: 'one',
+        1: 'one',
+        1.1: 'other',
+        2: 'other',
+      },
       const Locale('ko'): {0: 'other', 1: 'other', 2: 'other', 1.5: 'other'},
       const Locale('id'): {0: 'other', 1: 'other', 2: 'other', 1.5: 'other'},
-      const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'):
-          {0: 'other', 1: 'other', 2: 'other', 1.5: 'other'},
+      const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'): {
+        0: 'other',
+        1: 'other',
+        2: 'other',
+        1.5: 'other',
+      },
     };
     for (final vector in vectors.entries) {
       final translations = AppLocalizations(vector.key, {key: forms});
       for (final count in vector.value.entries) {
         expect(
           translations.lookup(
-            sourceEn, sourceTr,
-            args: {'count': count.key}, pluralArg: 'count',
+            sourceEn,
+            sourceTr,
+            args: {'count': count.key},
+            pluralArg: 'count',
           ),
           endsWith(' ${count.value}'),
           reason: '${vector.key.toLanguageTag()}: ${count.key}',

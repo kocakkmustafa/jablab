@@ -270,7 +270,10 @@ class _Honesty extends StatelessWidget {
               ),
               if (intro.isNotEmpty) ...<Widget>[
                 const SizedBox(height: 8),
-                Text(whyNotIntro(context, intro), style: JText.of(context).bodyMuted),
+                Text(
+                  whyNotIntro(context, intro),
+                  style: JText.of(context).bodyMuted,
+                ),
               ],
               const SizedBox(height: 12),
               GestureDetector(
@@ -292,7 +295,11 @@ class _Honesty extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    Icon(Icons.arrow_forward, size: 16, color: JColors.of(context).observation),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 16,
+                      color: JColors.of(context).observation,
+                    ),
                   ],
                 ),
               ),
@@ -456,7 +463,9 @@ class _StepDots extends StatelessWidget {
             height: 4,
             margin: const EdgeInsetsDirectional.only(end: 6),
             decoration: BoxDecoration(
-              color: i == step ? JColors.of(context).accent : JColors.of(context).disabled,
+              color: i == step
+                  ? JColors.of(context).accent
+                  : JColors.of(context).disabled,
               borderRadius: BorderRadius.circular(2),
             ),
           ),

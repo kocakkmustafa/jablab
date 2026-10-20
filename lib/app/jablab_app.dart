@@ -105,10 +105,15 @@ class JabLabApp extends StatefulWidget {
 
 class _JabLabAppState extends State<JabLabApp> {
   AppPreferencesController? _transient;
-  AppPreferencesController get _preferences => widget.preferences ??
-      (_transient ??= AppPreferencesController.transient(AppPreferencesCodec(
-        supportedLocaleTags: AppLocalizations.supportedLocales.map((l) => l.toLanguageTag()),
-      )));
+  AppPreferencesController get _preferences =>
+      widget.preferences ??
+      (_transient ??= AppPreferencesController.transient(
+        AppPreferencesCodec(
+          supportedLocaleTags: AppLocalizations.supportedLocales.map(
+            (l) => l.toLanguageTag(),
+          ),
+        ),
+      ));
 
   @override
   void dispose() {
@@ -125,8 +130,11 @@ class _JabLabAppState extends State<JabLabApp> {
         animation: preferences,
         builder: (context, _) {
           final selected = preferences.value.localeTag;
-          final Locale? locale = selected == null ? null :
-              AppLocalizations.supportedLocales.firstWhere((l) => l.toLanguageTag() == selected);
+          final Locale? locale = selected == null
+              ? null
+              : AppLocalizations.supportedLocales.firstWhere(
+                  (l) => l.toLanguageTag() == selected,
+                );
           return AppLanguageScope(
             selected: locale,
             select: (value) => preferences.selectLocale(value?.toLanguageTag()),

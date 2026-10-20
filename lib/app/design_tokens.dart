@@ -35,8 +35,10 @@ Color oklch(double l, double c, double hDeg, [double alpha = 1]) {
   final double s3 = sp * sp * sp;
 
   final double rLin = 4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3;
-  final double gLin = -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3;
-  final double bLin = -0.0041960863 * l3 - 0.7034186147 * m3 + 1.7076147010 * s3;
+  final double gLin =
+      -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3;
+  final double bLin =
+      -0.0041960863 * l3 - 0.7034186147 * m3 + 1.7076147010 * s3;
 
   double gamma(double x) {
     final double v = x.clamp(0.0, 1.0);
@@ -44,14 +46,20 @@ Color oklch(double l, double c, double hDeg, [double alpha = 1]) {
   }
 
   int byte(double x) => (gamma(x) * 255).round().clamp(0, 255);
-  return Color.fromARGB((alpha * 255).round().clamp(0, 255), byte(rLin), byte(gLin), byte(bLin));
+  return Color.fromARGB(
+    (alpha * 255).round().clamp(0, 255),
+    byte(rLin),
+    byte(gLin),
+    byte(bLin),
+  );
 }
 
 /// § PALETTE — "No green anywhere" (tasarımın kendi kuralı, §6.4 karşılığı).
 class JColors {
   JColors._();
 
-  static JPalette of(BuildContext context) => JPalette.fromTheme(Theme.of(context));
+  static JPalette of(BuildContext context) =>
+      JPalette.fromTheme(Theme.of(context));
 
   static const Color ground = Color(0xFF0A0608);
   static final Color backdropCore = oklch(.34, .14, 27);
@@ -77,37 +85,60 @@ class JColors {
 class JText {
   JText._();
 
-  static JTypography of(BuildContext context) => JTypography(JColors.of(context));
+  static JTypography of(BuildContext context) =>
+      JTypography(JColors.of(context));
 
   static const String _familjenGrotesk = 'Familjen Grotesk';
   static const String _ibmPlexMono = 'IBM Plex Mono';
 
   static const TextStyle correction = TextStyle(
-      fontFamily: _familjenGrotesk,
-      fontSize: 40, fontWeight: FontWeight.w700, height: .96, letterSpacing: -1.4, color: JColors.ink);
+    fontFamily: _familjenGrotesk,
+    fontSize: 40,
+    fontWeight: FontWeight.w700,
+    height: .96,
+    letterSpacing: -1.4,
+    color: JColors.ink,
+  );
 
   static const TextStyle clock = TextStyle(
-      fontFamily: _ibmPlexMono,
-      fontSize: 76,
-      fontWeight: FontWeight.w500,
-      height: .9,
-      letterSpacing: -3.0,
-      color: JColors.ink,
-      fontFeatures: <FontFeature>[FontFeature.tabularFigures()]);
+    fontFamily: _ibmPlexMono,
+    fontSize: 76,
+    fontWeight: FontWeight.w500,
+    height: .9,
+    letterSpacing: -3.0,
+    color: JColors.ink,
+    fontFeatures: <FontFeature>[FontFeature.tabularFigures()],
+  );
 
   static const TextStyle pageTitle = TextStyle(
-      fontFamily: _familjenGrotesk,
-      fontSize: 46, fontWeight: FontWeight.w700, height: 1, letterSpacing: -1.6, color: JColors.ink);
+    fontFamily: _familjenGrotesk,
+    fontSize: 46,
+    fontWeight: FontWeight.w700,
+    height: 1,
+    letterSpacing: -1.6,
+    color: JColors.ink,
+  );
 
   static const TextStyle body = TextStyle(
-      fontFamily: _familjenGrotesk,
-      fontSize: 17, fontWeight: FontWeight.w400, height: 1.35, color: JColors.ink);
+    fontFamily: _familjenGrotesk,
+    fontSize: 17,
+    fontWeight: FontWeight.w400,
+    height: 1.35,
+    color: JColors.ink,
+  );
 
-  static final TextStyle bodyMuted = body.copyWith(color: JColors.ink2, fontSize: 15);
+  static final TextStyle bodyMuted = body.copyWith(
+    color: JColors.ink2,
+    fontSize: 15,
+  );
 
   static final TextStyle label = TextStyle(
-      fontFamily: _ibmPlexMono,
-      fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 1.8, color: JColors.cool2);
+    fontFamily: _ibmPlexMono,
+    fontSize: 10,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 1.8,
+    color: JColors.cool2,
+  );
 
   /// ⚠️ Varsayılan renk `ink3`ten `ink2`ye ÇEKİLDİ (J-116). ÖLÇÜLDÜ:
   /// `ink3` 12 puntoda zemine karşı **3,51:1**, WCAG 2.2 AA'nın normal
@@ -117,8 +148,12 @@ class JText {
   /// Sönüklük hiyerarşisi KAYBOLMADI: `ink` (18,43) ile `ink2` (7,61)
   /// arasında hâlâ belirgin bir fark var ve ikisi de eşiği geçiyor.
   /// Kaybolan tek şey, okunamayacak kadar sönük olma seçeneği.
-  static final TextStyle mono =
-      TextStyle(fontFamily: _ibmPlexMono, fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink2);
+  static final TextStyle mono = TextStyle(
+    fontFamily: _ibmPlexMono,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: JColors.ink2,
+  );
 }
 
 /// Immutable resolved semantic roles. Static JColors/JText members above
@@ -273,7 +308,11 @@ class JPalette extends ThemeExtension<JPalette> {
       outline: Color.lerp(outline, other.outline, t)!,
       focus: Color.lerp(focus, other.focus, t)!,
       glassResting: Color.lerp(glassResting, other.glassResting, t)!,
-      glassObservation: Color.lerp(glassObservation, other.glassObservation, t)!,
+      glassObservation: Color.lerp(
+        glassObservation,
+        other.glassObservation,
+        t,
+      )!,
       glassJudgement: Color.lerp(glassJudgement, other.glassJudgement, t)!,
       shadow: Color.lerp(shadow, other.shadow, t)!,
     );
@@ -295,13 +334,27 @@ class JTypography {
 
 ThemeData jablabTheme(Brightness brightness) {
   final p = brightness == Brightness.dark ? JPalette.dark : JPalette.light;
-  final scheme = ColorScheme.fromSeed(seedColor: p.accent, brightness: brightness).copyWith(
-    primary: p.accent, onPrimary: p.onAccent,
-    secondary: p.observation, onSecondary: p.ground,
-    surface: p.surface, onSurface: p.ink, onSurfaceVariant: p.inkMuted,
-    error: p.accent, onError: p.onAccent, outline: p.outline,
+  final scheme =
+      ColorScheme.fromSeed(
+        seedColor: p.accent,
+        brightness: brightness,
+      ).copyWith(
+        primary: p.accent,
+        onPrimary: p.onAccent,
+        secondary: p.observation,
+        onSecondary: p.ground,
+        surface: p.surface,
+        onSurface: p.ink,
+        onSurfaceVariant: p.inkMuted,
+        error: p.accent,
+        onError: p.onAccent,
+        outline: p.outline,
+      );
+  final base = ThemeData(
+    useMaterial3: true,
+    brightness: brightness,
+    colorScheme: scheme,
   );
-  final base = ThemeData(useMaterial3: true, brightness: brightness, colorScheme: scheme);
   return base.copyWith(
     scaffoldBackgroundColor: p.ground,
     cardColor: p.glassResting,
@@ -309,7 +362,9 @@ ThemeData jablabTheme(Brightness brightness) {
     focusColor: p.focus.withValues(alpha: .2),
     iconTheme: base.iconTheme.copyWith(color: p.inkSubtle),
     textTheme: base.textTheme.apply(
-      fontFamily: 'Familjen Grotesk', bodyColor: p.ink, displayColor: p.ink,
+      fontFamily: 'Familjen Grotesk',
+      bodyColor: p.ink,
+      displayColor: p.ink,
     ),
     extensions: <ThemeExtension<dynamic>>[p],
   );
@@ -331,7 +386,10 @@ ThemeData jablabSessionThemeFor(ThemeData base) {
     textTheme: base.textTheme.copyWith(
       headlineSmall: text.pageTitle.copyWith(fontSize: 26, letterSpacing: -.8),
       titleLarge: text.correction,
-      titleMedium: text.body.copyWith(fontWeight: FontWeight.w600, fontSize: 17),
+      titleMedium: text.body.copyWith(
+        fontWeight: FontWeight.w600,
+        fontSize: 17,
+      ),
       titleSmall: text.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
       bodyMedium: text.body,
       bodySmall: text.bodyMuted,
@@ -368,7 +426,9 @@ ThemeData jablabHonestyThemeFor(ThemeData base) {
 
 /// Immutable compatibility value for legacy tests. Production subtrees use
 /// jablabSessionThemeFor(Theme.of(context)); this is never a mutable singleton.
-final ThemeData jablabSessionTheme = jablabSessionThemeFor(jablabTheme(Brightness.dark));
+final ThemeData jablabSessionTheme = jablabSessionThemeFor(
+  jablabTheme(Brightness.dark),
+);
 
 /// ARALIK KİPİNİN DÜZELTME TONU (J-119, koordinatör hükmü 2026-08-07).
 ///
@@ -510,9 +570,10 @@ class GlassPanel extends StatelessWidget {
         boxShadow: tier == GlassTier.judgement
             ? <BoxShadow>[
                 BoxShadow(
-                    color: colors.shadow,
-                    blurRadius: 40,
-                    offset: const Offset(0, 12)),
+                  color: colors.shadow,
+                  blurRadius: 40,
+                  offset: const Offset(0, 12),
+                ),
               ]
             : null,
       ),
@@ -559,10 +620,16 @@ class UnknownGlassPanel extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 13, sigmaY: 13),
         child: CustomPaint(
-          painter: _DashedRRectPainter(radius: borderRadius, color: JColors.of(context).outline),
+          painter: _DashedRRectPainter(
+            radius: borderRadius,
+            color: JColors.of(context).outline,
+          ),
           child: Container(
             padding: padding,
-            decoration: BoxDecoration(color: JColors.of(context).observation.withValues(alpha: .03), borderRadius: br),
+            decoration: BoxDecoration(
+              color: JColors.of(context).observation.withValues(alpha: .03),
+              borderRadius: br,
+            ),
             child: child,
           ),
         ),
@@ -575,7 +642,12 @@ class UnknownGlassPanel extends StatelessWidget {
 /// (Ayarlar'da doğdu, Sayfa B/A da AYNI görsel dili istiyor; üç kopya yerine
 /// tek paylaşılan widget).
 class GlassIconButton extends StatelessWidget {
-  const GlassIconButton({super.key, required this.icon, required this.onTap, this.tooltip});
+  const GlassIconButton({
+    super.key,
+    required this.icon,
+    required this.onTap,
+    this.tooltip,
+  });
 
   final IconData icon;
   final VoidCallback onTap;
@@ -583,22 +655,22 @@ class GlassIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ClipOval(
-        child: GlassPanel(
-          tier: GlassTier.resting,
-          borderRadius: 24,
-          padding: EdgeInsets.zero,
-          child: SizedBox(
-            // Keep the actual IconButton target at Android's 48dp minimum.
-            width: 48,
-            height: 48,
-            child: IconButton(
-              icon: Icon(icon, size: 18, color: JColors.of(context).ink),
-              tooltip: tooltip,
-              onPressed: onTap,
-            ),
-          ),
+    child: GlassPanel(
+      tier: GlassTier.resting,
+      borderRadius: 24,
+      padding: EdgeInsets.zero,
+      child: SizedBox(
+        // Keep the actual IconButton target at Android's 48dp minimum.
+        width: 48,
+        height: 48,
+        child: IconButton(
+          icon: Icon(icon, size: 18, color: JColors.of(context).ink),
+          tooltip: tooltip,
+          onPressed: onTap,
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _DashedRRectPainter extends CustomPainter {
@@ -610,7 +682,9 @@ class _DashedRRectPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final RRect rrect = RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width, size.height), Radius.circular(radius));
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      Radius.circular(radius),
+    );
     final Path path = Path()..addRRect(rrect);
     final Paint paint = Paint()
       ..color = color
@@ -621,7 +695,10 @@ class _DashedRRectPainter extends CustomPainter {
       double distance = 0;
       while (distance < metric.length) {
         final double next = distance + dashWidth;
-        canvas.drawPath(metric.extractPath(distance, math.min(next, metric.length)), paint);
+        canvas.drawPath(
+          metric.extractPath(distance, math.min(next, metric.length)),
+          paint,
+        );
         distance = next + gapWidth;
       }
     }

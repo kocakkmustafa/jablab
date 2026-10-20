@@ -40,21 +40,28 @@ Future<T> _io<T>(
   T? value;
   Object? error;
   StackTrace? stack;
-  action().then((result) {
-    value = result;
-    settled = true;
-  }, onError: (Object failure, StackTrace trace) {
-    error = failure;
-    stack = trace;
-    settled = true;
-  });
+  action().then(
+    (result) {
+      value = result;
+      settled = true;
+    },
+    onError: (Object failure, StackTrace trace) {
+      error = failure;
+      stack = trace;
+      settled = true;
+    },
+  );
   for (int i = 0; i < 80 && !settled; i++) {
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 25)),
     );
     await tester.pump();
   }
-  expect(settled, isTrue, reason: '$stage: bounded dual-clock IO did not settle');
+  expect(
+    settled,
+    isTrue,
+    reason: '$stage: bounded dual-clock IO did not settle',
+  );
   if (error != null) {
     Error.throwWithStackTrace(error!, stack!);
   }
@@ -62,12 +69,11 @@ Future<T> _io<T>(
   return value as T;
 }
 
-Future<void> _settle(WidgetTester tester) =>
-    tester.pumpAndSettle(
-      const Duration(milliseconds: 100),
-      EnginePhase.sendSemanticsUpdate,
-      const Duration(seconds: 3),
-    );
+Future<void> _settle(WidgetTester tester) => tester.pumpAndSettle(
+  const Duration(milliseconds: 100),
+  EnginePhase.sendSemanticsUpdate,
+  const Duration(seconds: 3),
+);
 
 Future<void> _until(WidgetTester tester, Finder finder) async {
   for (int i = 0; i < 40 && finder.evaluate().isEmpty; i++) {
@@ -79,19 +85,17 @@ Future<void> _until(WidgetTester tester, Finder finder) async {
   expect(finder, findsOneWidget, reason: 'Positive route/resource readiness');
 }
 
-Future<void> _choose<T>(
-  WidgetTester tester,
-  Key key,
-  T value,
-) async {
+Future<void> _choose<T>(WidgetTester tester, Key key, T value) async {
   final control = find.byKey(key);
   expect(control, findsOneWidget);
   await tester.ensureVisible(control);
   await tester.tap(control);
   await _settle(tester);
-  final choice = find.byWidgetPredicate(
-    (widget) => widget is DropdownMenuItem<T> && widget.value == value,
-  ).last;
+  final choice = find
+      .byWidgetPredicate(
+        (widget) => widget is DropdownMenuItem<T> && widget.value == value,
+      )
+      .last;
   expect(choice, findsOneWidget);
   await tester.ensureVisible(choice);
   await tester.tap(choice);
@@ -110,8 +114,10 @@ void _expectLoaded(WidgetTester tester, Finder target, Locale expected) {
   expect(resources.complete, isTrue);
   expect(resources.loadFailed, isFalse);
   expect(Localizations.localeOf(context), expected);
-  expect(Directionality.of(context), expected.languageCode == 'ar'
-      ? TextDirection.rtl : TextDirection.ltr);
+  expect(
+    Directionality.of(context),
+    expected.languageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+  );
 }
 
 // Faults affect preference IO only. Content, courses, assets, owner lifetimes
@@ -169,8 +175,11 @@ class _RootHarness {
   bool _markerReady = false;
 
   static Future<_RootHarness> create(WidgetTester tester) async {
-    final support = await _io<Directory>(tester, 'temp.create',
-      () => Directory.systemTemp.createTemp('jablab-appearance-root-'));
+    final support = await _io<Directory>(
+      tester,
+      'temp.create',
+      () => Directory.systemTemp.createTemp('jablab-appearance-root-'),
+    );
     // Register owned cleanup before the remaining filesystem setup can fail.
     final history = Directory('${support.path}/history');
     final marker = File('${history.path}/unrelated-owned-marker.txt');
@@ -179,8 +188,11 @@ class _RootHarness {
     addTearDown(result.close);
     await tester.binding.setSurfaceSize(const Size(375, 900));
     await _io<Directory>(tester, 'history.create', history.create);
-    await _io<File>(tester, 'marker.write',
-      () => marker.writeAsString('owned-marker-keep'));
+    await _io<File>(
+      tester,
+      'marker.write',
+      () => marker.writeAsString('owned-marker-keep'),
+    );
     result._markerReady = true;
     return result;
   }
@@ -272,50 +284,69 @@ class _RootHarness {
     // No deletion if write/owner drain failed or remained pending.
     await unmount();
     if (_markerReady) {
-      expect(await _io<String>(tester, 'marker.read', marker.readAsString),
-        'owned-marker-keep');
+      expect(
+        await _io<String>(tester, 'marker.read', marker.readAsString),
+        'owned-marker-keep',
+      );
     }
-    await _io<FileSystemEntity>(tester, 'temp.delete',
-      () => support.delete(recursive: true));
+    await _io<FileSystemEntity>(
+      tester,
+      'temp.delete',
+      () => support.delete(recursive: true),
+    );
     owner.dispose();
   }
 }
 
 void main() {
-  testWidgets('ROOT-PREF-01 disk locale and theme feed first mounted MaterialApp',
+  testWidgets(
+    'ROOT-PREF-01 disk locale and theme feed first mounted MaterialApp',
     (tester) async {
-    tester.platformDispatcher.localesTestValue = const [Locale('en')];
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
-    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-    addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
-    final h = await _RootHarness.create(tester);
-    const saved = AppPreferences(theme: AppThemePreference.light, localeTag: 'ar');
-    expect((await _io<PreferencesWriteResult>(tester, 'seed.write',
-      () => h.disk().write(saved))).kind, PreferencesWriteKind.committed);
-    final store = h.store();
-    final c = h.controller(store);
-    await h.load(c);
-    expect(c.readPhase, PreferencesReadPhase.loaded);
-    expect(c.value, saved);
-    await h.mount(c);
-    // First mounted Flutter root input; not localized body/native splash SLA.
-    final first = tester.widget<MaterialApp>(find.byType(MaterialApp));
-    expect(first.locale, const Locale('ar'));
-    expect(first.themeMode, ThemeMode.light);
-    expect(first.theme!.brightness, Brightness.light);
-    expect(first.darkTheme!.brightness, Brightness.dark);
-    expect(store.payloads, isEmpty);
-    await h.ready();
-    await h.settings();
-    _expectLoaded(tester, find.byType(SettingsPage), const Locale('ar'));
-    expect(Theme.of(tester.element(find.byType(SettingsPage))).brightness,
-      Brightness.light);
-    expect(c.dirty, isFalse);
-    expect(tester.takeException(), isNull);
-  });
+      tester.platformDispatcher.localesTestValue = const [Locale('en')];
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+      addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+      final h = await _RootHarness.create(tester);
+      const saved = AppPreferences(
+        theme: AppThemePreference.light,
+        localeTag: 'ar',
+      );
+      expect(
+        (await _io<PreferencesWriteResult>(
+          tester,
+          'seed.write',
+          () => h.disk().write(saved),
+        )).kind,
+        PreferencesWriteKind.committed,
+      );
+      final store = h.store();
+      final c = h.controller(store);
+      await h.load(c);
+      expect(c.readPhase, PreferencesReadPhase.loaded);
+      expect(c.value, saved);
+      await h.mount(c);
+      // First mounted Flutter root input; not localized body/native splash SLA.
+      final first = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      expect(first.locale, const Locale('ar'));
+      expect(first.themeMode, ThemeMode.light);
+      expect(first.theme!.brightness, Brightness.light);
+      expect(first.darkTheme!.brightness, Brightness.dark);
+      expect(store.payloads, isEmpty);
+      await h.ready();
+      await h.settings();
+      _expectLoaded(tester, find.byType(SettingsPage), const Locale('ar'));
+      expect(
+        Theme.of(tester.element(find.byType(SettingsPage))).brightness,
+        Brightness.light,
+      );
+      expect(c.dirty, isFalse);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
-  testWidgets('ROOT-PREF-02 actual settings pair persists into a fresh root',
-    (tester) async {
+  testWidgets('ROOT-PREF-02 actual settings pair persists into a fresh root', (
+    tester,
+  ) async {
     tester.platformDispatcher.localesTestValue = const [Locale('en')];
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
     final h = await _RootHarness.create(tester);
@@ -325,16 +356,24 @@ void main() {
     await h.mount(c);
     await h.ready();
     await h.settings();
-    await _choose<Locale>(tester, const Key('settings.language'), const Locale('pl'));
+    await _choose<Locale>(
+      tester,
+      const Key('settings.language'),
+      const Locale('pl'),
+    );
     await settleTestLocalizations(tester, expectedLocale: const Locale('pl'));
-    await _choose<AppThemePreference>(tester, const Key('settings.appearance'),
-      AppThemePreference.dark);
+    await _choose<AppThemePreference>(
+      tester,
+      const Key('settings.appearance'),
+      AppThemePreference.dark,
+    );
     await h.drain();
-    const chosen = AppPreferences(theme: AppThemePreference.dark, localeTag: 'pl');
+    const chosen = AppPreferences(
+      theme: AppThemePreference.dark,
+      localeTag: 'pl',
+    );
     expect(c.value, chosen);
-    expect(store.payloads, const [
-      AppPreferences(localeTag: 'pl'), chosen,
-    ]);
+    expect(store.payloads, const [AppPreferences(localeTag: 'pl'), chosen]);
     expect(c.savePhase, PreferencesSavePhase.saved);
     expect(c.dirty, isFalse);
     expect(find.byKey(_statusKey), findsOneWidget);
@@ -345,82 +384,139 @@ void main() {
     await h.load(fresh);
     expect(fresh.value, chosen);
     await h.mount(fresh);
-    expect(tester.widget<MaterialApp>(find.byType(MaterialApp)).locale,
-      const Locale('pl'));
-    expect(tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode,
-      ThemeMode.dark);
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).locale,
+      const Locale('pl'),
+    );
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode,
+      ThemeMode.dark,
+    );
     await h.ready();
     await h.settings();
     expect(identical(oldState, tester.state(find.byType(JabLabApp))), isFalse);
     _expectLoaded(tester, find.byType(SettingsPage), const Locale('pl'));
-    expect(tester.widget<DropdownButton<AppThemePreference>>(
-      find.byKey(const Key('settings.appearance'))).value, AppThemePreference.dark);
+    expect(
+      tester
+          .widget<DropdownButton<AppThemePreference>>(
+            find.byKey(const Key('settings.appearance')),
+          )
+          .value,
+      AppThemePreference.dark,
+    );
     expect(reopened.payloads, isEmpty, reason: 'Restart must not auto-save');
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('ROOT-PREF-03 platform order and Hant fallback preserve admitted course',
+  testWidgets(
+    'ROOT-PREF-03 platform order and Hant fallback preserve admitted course',
     (tester) async {
-    tester.platformDispatcher.localesTestValue = const [Locale('xx'), Locale('fr', 'CA')];
-    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-    final h = await _RootHarness.create(tester);
-    final store = h.store();
-    final c = h.controller(store);
-    await h.load(c);
-    await h.mount(c);
-    await h.ready();
-    final rootState = tester.state(find.byType(JabLabApp));
-    final open = find.byKey(const Key('open-solo-boxing-course'));
-    expect(open, findsOneWidget);
-    await tester.ensureVisible(open);
-    await tester.tap(open);
-    await _until(tester, find.byKey(const Key('solo-course-progress')));
-    await _settle(tester);
-    final route = find.byType(SoloBoxingCoursePage);
-    _expectLoaded(tester, route, const Locale('fr'));
-    final routeState = tester.state(route);
-    final navigator = tester.state(find.byType(Navigator).first);
-    final admission = tester.widget<SoloBoxingCoursePage>(route).resourceAdmission;
-    expect(admission, isNotNull);
-    expect(admission!.value, isTrue);
-    final lifetime = h.owners.capture(null);
-    final reads = h.directoryReads;
-    int lifetimeChanges = 0;
-    void changed() { lifetimeChanges++; }
-    lifetime.active.addListener(changed);
-    addTearDown(() => lifetime.active.removeListener(changed));
-    final variants = <(List<Locale>, Locale)>[
-      ([const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'), const Locale('ar')], const Locale('ar')),
-      ([const Locale('zh', 'TW'), const Locale('ko')], const Locale('ko')),
-      ([const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')], const Locale('en')),
-      ([const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN')], const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans')),
-      ([const Locale('xx')], const Locale('en')),
-    ];
-    for (final (preferences, expected) in variants) {
-      tester.platformDispatcher.localesTestValue = preferences;
-      await settleTestLocalizations(tester, expectedLocale: expected);
+      tester.platformDispatcher.localesTestValue = const [
+        Locale('xx'),
+        Locale('fr', 'CA'),
+      ];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+      final h = await _RootHarness.create(tester);
+      final store = h.store();
+      final c = h.controller(store);
+      await h.load(c);
+      await h.mount(c);
+      await h.ready();
+      final rootState = tester.state(find.byType(JabLabApp));
+      final open = find.byKey(const Key('open-solo-boxing-course'));
+      expect(open, findsOneWidget);
+      await tester.ensureVisible(open);
+      await tester.tap(open);
+      await _until(tester, find.byKey(const Key('solo-course-progress')));
       await _settle(tester);
-      _expectLoaded(tester, route, expected);
-      expect(identical(tester.widget<JabLabApp>(find.byType(JabLabApp)), h.root), isTrue);
-      expect(identical(tester.state(find.byType(JabLabApp)), rootState), isTrue);
-      expect(identical(tester.state(route), routeState), isTrue);
-      expect(identical(tester.state(find.byType(Navigator).first), navigator), isTrue);
-      expect(identical(tester.widget<SoloBoxingCoursePage>(route).resourceAdmission,
-        admission), isTrue);
-      expect(admission.value, isTrue);
-      expect(identical(h.owners.capture(null), lifetime), isTrue);
-      expect(lifetime.journalWrites.isActive, isTrue);
-      expect(lifetimeChanges, 0);
-      expect(h.directoryReads, reads, reason: 'Presentation must not reopen owner IO');
-      expect(c.value.localeTag, isNull);
-      expect(store.payloads, isEmpty);
-      expect(tester.takeException(), isNull);
-    }
-    // This is actual JabLabApp continuity. It does not cover a blocked Core gate.
-  });
+      final route = find.byType(SoloBoxingCoursePage);
+      _expectLoaded(tester, route, const Locale('fr'));
+      final routeState = tester.state(route);
+      final navigator = tester.state(find.byType(Navigator).first);
+      final admission = tester
+          .widget<SoloBoxingCoursePage>(route)
+          .resourceAdmission;
+      expect(admission, isNotNull);
+      expect(admission!.value, isTrue);
+      final lifetime = h.owners.capture(null);
+      final reads = h.directoryReads;
+      int lifetimeChanges = 0;
+      void changed() {
+        lifetimeChanges++;
+      }
 
-  testWidgets('ROOT-PREF-04 system brightness updates same settings route',
-    (tester) async {
+      lifetime.active.addListener(changed);
+      addTearDown(() => lifetime.active.removeListener(changed));
+      final variants = <(List<Locale>, Locale)>[
+        (
+          [
+            const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
+            const Locale('ar'),
+          ],
+          const Locale('ar'),
+        ),
+        ([const Locale('zh', 'TW'), const Locale('ko')], const Locale('ko')),
+        (
+          [const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')],
+          const Locale('en'),
+        ),
+        (
+          [
+            const Locale.fromSubtags(
+              languageCode: 'zh',
+              scriptCode: 'Hans',
+              countryCode: 'CN',
+            ),
+          ],
+          const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+        ),
+        ([const Locale('xx')], const Locale('en')),
+      ];
+      for (final (preferences, expected) in variants) {
+        tester.platformDispatcher.localesTestValue = preferences;
+        await settleTestLocalizations(tester, expectedLocale: expected);
+        await _settle(tester);
+        _expectLoaded(tester, route, expected);
+        expect(
+          identical(tester.widget<JabLabApp>(find.byType(JabLabApp)), h.root),
+          isTrue,
+        );
+        expect(
+          identical(tester.state(find.byType(JabLabApp)), rootState),
+          isTrue,
+        );
+        expect(identical(tester.state(route), routeState), isTrue);
+        expect(
+          identical(tester.state(find.byType(Navigator).first), navigator),
+          isTrue,
+        );
+        expect(
+          identical(
+            tester.widget<SoloBoxingCoursePage>(route).resourceAdmission,
+            admission,
+          ),
+          isTrue,
+        );
+        expect(admission.value, isTrue);
+        expect(identical(h.owners.capture(null), lifetime), isTrue);
+        expect(lifetime.journalWrites.isActive, isTrue);
+        expect(lifetimeChanges, 0);
+        expect(
+          h.directoryReads,
+          reads,
+          reason: 'Presentation must not reopen owner IO',
+        );
+        expect(c.value.localeTag, isNull);
+        expect(store.payloads, isEmpty);
+        expect(tester.takeException(), isNull);
+      }
+      // This is actual JabLabApp continuity. It does not cover a blocked Core gate.
+    },
+  );
+
+  testWidgets('ROOT-PREF-04 system brightness updates same settings route', (
+    tester,
+  ) async {
     tester.platformDispatcher.localesTestValue = const [Locale('en')];
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
@@ -436,138 +532,227 @@ void main() {
     final rootState = tester.state(find.byType(JabLabApp));
     final lifetime = h.owners.capture(null);
     final reads = h.directoryReads;
-    for (final brightness in [Brightness.dark, Brightness.light, Brightness.dark]) {
+    for (final brightness in [
+      Brightness.dark,
+      Brightness.light,
+      Brightness.dark,
+    ]) {
       tester.platformDispatcher.platformBrightnessTestValue = brightness;
       await _settle(tester);
-      expect(Theme.of(tester.element(find.byType(SettingsPage))).brightness, brightness);
-      expect(identical(tester.element(find.byType(SettingsPage)), settingsElement), isTrue);
-      expect(identical(tester.state(find.byType(JabLabApp)), rootState), isTrue);
+      expect(
+        Theme.of(tester.element(find.byType(SettingsPage))).brightness,
+        brightness,
+      );
+      expect(
+        identical(tester.element(find.byType(SettingsPage)), settingsElement),
+        isTrue,
+      );
+      expect(
+        identical(tester.state(find.byType(JabLabApp)), rootState),
+        isTrue,
+      );
       expect(identical(h.owners.capture(null), lifetime), isTrue);
       expect(h.directoryReads, reads);
     }
     expect(store.payloads, isEmpty, reason: 'System events are not user edits');
-    await _choose<AppThemePreference>(tester, const Key('settings.appearance'),
-      AppThemePreference.light);
+    await _choose<AppThemePreference>(
+      tester,
+      const Key('settings.appearance'),
+      AppThemePreference.light,
+    );
     await h.drain();
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     await _settle(tester);
-    expect(Theme.of(tester.element(find.byType(SettingsPage))).brightness,
-      Brightness.light);
+    expect(
+      Theme.of(tester.element(find.byType(SettingsPage))).brightness,
+      Brightness.light,
+    );
     expect(c.value.theme, AppThemePreference.light);
-    expect(store.payloads, const [AppPreferences(theme: AppThemePreference.light)]);
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('ROOT-PREF-05 failed read retry keeps edited UI and save retry payload',
-    (tester) async {
-    tester.platformDispatcher.localesTestValue = const [Locale('en')];
-    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-    final h = await _RootHarness.create(tester);
-    final store = h.store();
-    store.nextRead = () async =>
-      const PreferencesReadResult(PreferencesReadKind.unavailable);
-    final c = h.controller(store);
-    await h.load(c);
-    await h.mount(c);
-    await h.ready();
-    await h.settings();
-    expect(find.textContaining('Saved preferences could not be fully read.'), findsOneWidget);
-    expect(store.payloads, isEmpty);
-    final writing = Completer<PreferencesWriteResult>();
-    store.nextWrite = (_) => writing.future;
-    await _choose<AppThemePreference>(tester, const Key('settings.appearance'),
-      AppThemePreference.dark);
-    expect(c.dirty, isTrue);
-    final late = Completer<PreferencesReadResult>();
-    store.nextRead = () => late.future;
-    // The current candidate has no read-Retry UI button. Exercise its public
-    // load API, while all selected controls and save-Retry remain actual UI.
-    final retryRead = c.load();
-    late.complete(const PreferencesReadResult(PreferencesReadKind.loaded,
-      AppPreferences(theme: AppThemePreference.light, localeTag: 'fr')));
-    await _io<void>(tester, 'read.retry', () => retryRead);
-    expect(c.readPhase, PreferencesReadPhase.ignoredAfterEdit);
-    expect(c.value, const AppPreferences(theme: AppThemePreference.dark));
-    expect(tester.widget<DropdownButton<AppThemePreference>>(
-      find.byKey(const Key('settings.appearance'))).value, AppThemePreference.dark);
-    expect(Theme.of(tester.element(find.byType(SettingsPage))).brightness,
-      Brightness.dark);
-    _expectLoaded(tester, find.byType(SettingsPage), const Locale('en'));
-    writing.complete(const PreferencesWriteResult(PreferencesWriteKind.failed));
-    await h.drain();
-    expect(find.textContaining('could not be saved.'), findsOneWidget);
-    expect(find.text('Saved on this device.'), findsNothing);
-    final retry = find.byKey(_saveRetryKey);
-    expect(retry, findsOneWidget);
-    await tester.ensureVisible(retry);
-    await tester.tap(retry);
-    await h.drain();
     expect(store.payloads, const [
-      AppPreferences(theme: AppThemePreference.dark),
-      AppPreferences(theme: AppThemePreference.dark),
+      AppPreferences(theme: AppThemePreference.light),
     ]);
-    expect(c.savePhase, PreferencesSavePhase.saved);
-    expect(c.dirty, isFalse);
-    expect(find.text('Saved on this device.'), findsOneWidget);
-    expect(find.byKey(_saveRetryKey), findsNothing);
-    final persisted = await _io<PreferencesReadResult>(tester, 'read.confirm', h.disk().read);
-    expect(persisted.value, const AppPreferences(theme: AppThemePreference.dark));
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('ROOT-PREF-06 failed and uncertain UI never replace known disk state',
+  testWidgets(
+    'ROOT-PREF-05 failed read retry keeps edited UI and save retry payload',
     (tester) async {
-    tester.platformDispatcher.localesTestValue = const [Locale('en')];
-    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-    final h = await _RootHarness.create(tester);
-    const known = AppPreferences(theme: AppThemePreference.light, localeTag: 'en');
-    expect((await _io<PreferencesWriteResult>(tester, 'known.seed',
-      () => h.disk().write(known))).kind, PreferencesWriteKind.committed);
-    for (final outcome in [PreferencesWriteKind.failed, PreferencesWriteKind.uncertain]) {
+      tester.platformDispatcher.localesTestValue = const [Locale('en')];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+      final h = await _RootHarness.create(tester);
       final store = h.store();
+      store.nextRead = () async =>
+          const PreferencesReadResult(PreferencesReadKind.unavailable);
       final c = h.controller(store);
       await h.load(c);
-      expect(c.value, known);
       await h.mount(c);
       await h.ready();
       await h.settings();
-      store.nextWrite = (_) async => PreferencesWriteResult(outcome);
-      await _choose<AppThemePreference>(tester, const Key('settings.appearance'),
-        AppThemePreference.dark);
-      await h.drain();
+      expect(
+        find.textContaining('Saved preferences could not be fully read.'),
+        findsOneWidget,
+      );
+      expect(store.payloads, isEmpty);
+      final writing = Completer<PreferencesWriteResult>();
+      store.nextWrite = (_) => writing.future;
+      await _choose<AppThemePreference>(
+        tester,
+        const Key('settings.appearance'),
+        AppThemePreference.dark,
+      );
       expect(c.dirty, isTrue);
-      expect(c.value, const AppPreferences(theme: AppThemePreference.dark, localeTag: 'en'));
-      expect(c.savePhase, outcome == PreferencesWriteKind.failed
-        ? PreferencesSavePhase.failed : PreferencesSavePhase.uncertain);
-      expect(find.byKey(_statusKey), findsOneWidget);
-      expect(find.textContaining(outcome == PreferencesWriteKind.failed
-        ? 'could not be saved.' : 'Saving could not be confirmed;'), findsOneWidget);
+      final late = Completer<PreferencesReadResult>();
+      store.nextRead = () => late.future;
+      // The current candidate has no read-Retry UI button. Exercise its public
+      // load API, while all selected controls and save-Retry remain actual UI.
+      final retryRead = c.load();
+      late.complete(
+        const PreferencesReadResult(
+          PreferencesReadKind.loaded,
+          AppPreferences(theme: AppThemePreference.light, localeTag: 'fr'),
+        ),
+      );
+      await _io<void>(tester, 'read.retry', () => retryRead);
+      expect(c.readPhase, PreferencesReadPhase.ignoredAfterEdit);
+      expect(c.value, const AppPreferences(theme: AppThemePreference.dark));
+      expect(
+        tester
+            .widget<DropdownButton<AppThemePreference>>(
+              find.byKey(const Key('settings.appearance')),
+            )
+            .value,
+        AppThemePreference.dark,
+      );
+      expect(
+        Theme.of(tester.element(find.byType(SettingsPage))).brightness,
+        Brightness.dark,
+      );
+      _expectLoaded(tester, find.byType(SettingsPage), const Locale('en'));
+      writing.complete(
+        const PreferencesWriteResult(PreferencesWriteKind.failed),
+      );
+      await h.drain();
+      expect(find.textContaining('could not be saved.'), findsOneWidget);
       expect(find.text('Saved on this device.'), findsNothing);
-      expect(find.byKey(_saveRetryKey), findsOneWidget);
-      expect(Theme.of(tester.element(find.byType(SettingsPage))).brightness,
-        Brightness.dark);
-      final stillKnown = await _io<PreferencesReadResult>(tester, 'known.read', h.disk().read);
-      expect(stillKnown.value, known);
+      final retry = find.byKey(_saveRetryKey);
+      expect(retry, findsOneWidget);
+      await tester.ensureVisible(retry);
+      await tester.tap(retry);
+      await h.drain();
       expect(store.payloads, const [
-        AppPreferences(theme: AppThemePreference.dark, localeTag: 'en'),
+        AppPreferences(theme: AppThemePreference.dark),
+        AppPreferences(theme: AppThemePreference.dark),
       ]);
-      await h.unmount();
-      final freshStore = h.store();
-      final fresh = h.controller(freshStore);
-      await h.load(fresh);
-      expect(fresh.value, known);
-      await h.mount(fresh);
-      expect(tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode,
-        ThemeMode.light);
-      await h.ready();
-      await h.settings();
-      expect(Theme.of(tester.element(find.byType(SettingsPage))).brightness,
-        Brightness.light);
-      expect(freshStore.payloads, isEmpty);
+      expect(c.savePhase, PreferencesSavePhase.saved);
+      expect(c.dirty, isFalse);
+      expect(find.text('Saved on this device.'), findsOneWidget);
+      expect(find.byKey(_saveRetryKey), findsNothing);
+      final persisted = await _io<PreferencesReadResult>(
+        tester,
+        'read.confirm',
+        h.disk().read,
+      );
+      expect(
+        persisted.value,
+        const AppPreferences(theme: AppThemePreference.dark),
+      );
       expect(tester.takeException(), isNull);
-      await h.unmount();
-    }
-    // Injected uncertainty here means no commit; it does not infer the real
-    // destination after an actual OS readback failure. File fault tests do that.
-  });
+    },
+  );
+
+  testWidgets(
+    'ROOT-PREF-06 failed and uncertain UI never replace known disk state',
+    (tester) async {
+      tester.platformDispatcher.localesTestValue = const [Locale('en')];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+      final h = await _RootHarness.create(tester);
+      const known = AppPreferences(
+        theme: AppThemePreference.light,
+        localeTag: 'en',
+      );
+      expect(
+        (await _io<PreferencesWriteResult>(
+          tester,
+          'known.seed',
+          () => h.disk().write(known),
+        )).kind,
+        PreferencesWriteKind.committed,
+      );
+      for (final outcome in [
+        PreferencesWriteKind.failed,
+        PreferencesWriteKind.uncertain,
+      ]) {
+        final store = h.store();
+        final c = h.controller(store);
+        await h.load(c);
+        expect(c.value, known);
+        await h.mount(c);
+        await h.ready();
+        await h.settings();
+        store.nextWrite = (_) async => PreferencesWriteResult(outcome);
+        await _choose<AppThemePreference>(
+          tester,
+          const Key('settings.appearance'),
+          AppThemePreference.dark,
+        );
+        await h.drain();
+        expect(c.dirty, isTrue);
+        expect(
+          c.value,
+          const AppPreferences(theme: AppThemePreference.dark, localeTag: 'en'),
+        );
+        expect(
+          c.savePhase,
+          outcome == PreferencesWriteKind.failed
+              ? PreferencesSavePhase.failed
+              : PreferencesSavePhase.uncertain,
+        );
+        expect(find.byKey(_statusKey), findsOneWidget);
+        expect(
+          find.textContaining(
+            outcome == PreferencesWriteKind.failed
+                ? 'could not be saved.'
+                : 'Saving could not be confirmed;',
+          ),
+          findsOneWidget,
+        );
+        expect(find.text('Saved on this device.'), findsNothing);
+        expect(find.byKey(_saveRetryKey), findsOneWidget);
+        expect(
+          Theme.of(tester.element(find.byType(SettingsPage))).brightness,
+          Brightness.dark,
+        );
+        final stillKnown = await _io<PreferencesReadResult>(
+          tester,
+          'known.read',
+          h.disk().read,
+        );
+        expect(stillKnown.value, known);
+        expect(store.payloads, const [
+          AppPreferences(theme: AppThemePreference.dark, localeTag: 'en'),
+        ]);
+        await h.unmount();
+        final freshStore = h.store();
+        final fresh = h.controller(freshStore);
+        await h.load(fresh);
+        expect(fresh.value, known);
+        await h.mount(fresh);
+        expect(
+          tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode,
+          ThemeMode.light,
+        );
+        await h.ready();
+        await h.settings();
+        expect(
+          Theme.of(tester.element(find.byType(SettingsPage))).brightness,
+          Brightness.light,
+        );
+        expect(freshStore.payloads, isEmpty);
+        expect(tester.takeException(), isNull);
+        await h.unmount();
+      }
+      // Injected uncertainty here means no commit; it does not infer the real
+      // destination after an actual OS readback failure. File fault tests do that.
+    },
+  );
 }

@@ -52,18 +52,18 @@ enum LiveHonestyBucket {
   none;
 
   Color get accent => switch (this) {
-        // Gözlem tonu (Tier 2): "bak" diyor, "hata" demiyor.
-        LiveHonestyBucket.yours => JColors.cool,
-        // Nötr-parlak: görünür ama yönlendirmiyor — söyleyecek bir eylem yok.
-        LiveHonestyBucket.ours => JColors.ink2,
-        // Sönük ama GÖRÜNÜR. ⚠️ Burada `ink4` yazıyordu ve ÖLÇÜLDÜ:
-        // zemine karşı kontrastı **1,80:1**, WCAG 2.2 SC 1.4.11'in
-        // metin-dışı eşiğinin (3,0) altında — yani "analiz hiç yok" ikonu
-        // pratikte görünmüyordu. Ve bu hâl izin reddi ile kamerasız dersin
-        // hâli, yani en sık görülecek olanlardan biri: **görünmeyen bir
-        // dürüst hâl, susmakla aynı şeydir.** `ink3` 3,51:1 veriyor.
-        LiveHonestyBucket.none => JColors.ink3,
-      };
+    // Gözlem tonu (Tier 2): "bak" diyor, "hata" demiyor.
+    LiveHonestyBucket.yours => JColors.cool,
+    // Nötr-parlak: görünür ama yönlendirmiyor — söyleyecek bir eylem yok.
+    LiveHonestyBucket.ours => JColors.ink2,
+    // Sönük ama GÖRÜNÜR. ⚠️ Burada `ink4` yazıyordu ve ÖLÇÜLDÜ:
+    // zemine karşı kontrastı **1,80:1**, WCAG 2.2 SC 1.4.11'in
+    // metin-dışı eşiğinin (3,0) altında — yani "analiz hiç yok" ikonu
+    // pratikte görünmüyordu. Ve bu hâl izin reddi ile kamerasız dersin
+    // hâli, yani en sık görülecek olanlardan biri: **görünmeyen bir
+    // dürüst hâl, susmakla aynı şeydir.** `ink3` 3,51:1 veriyor.
+    LiveHonestyBucket.none => JColors.ink3,
+  };
 
   /// Palette-aware equivalent. The icon still carries the semantic split;
   /// a low-confidence/no-analysis state is never a success verdict.
@@ -80,10 +80,10 @@ enum LiveHonestyBucket {
   /// (`visibility_off_outlined` orada sabit); ikon ekseni bu yüzden app'in
   /// KENDİ yuvasından (`SkeletonPreview`) taşınıyor.
   IconData get icon => switch (this) {
-        LiveHonestyBucket.yours => Icons.center_focus_strong_outlined,
-        LiveHonestyBucket.ours => Icons.sync_problem_outlined,
-        LiveHonestyBucket.none => Icons.videocam_off_outlined,
-      };
+    LiveHonestyBucket.yours => Icons.center_focus_strong_outlined,
+    LiveHonestyBucket.ours => Icons.sync_problem_outlined,
+    LiveHonestyBucket.none => Icons.videocam_off_outlined,
+  };
 
   /// Donmuş yüzeyi giydiren tema. **YALNIZ `error` eşleniyor** — o alan
   /// yüzeyin "göremiyorum" ikonunun okuduğu tek renk. Kullanılmayan bir
@@ -113,6 +113,6 @@ enum LiveHonestyBucket {
   /// yapılmadı (sim erişimi kurucu onayı bekliyor); bu paragraf onun yerine
   /// geçmez, borcu adıyla tutar.
   ThemeData themeFor(ThemeData base) => base.copyWith(
-        colorScheme: base.colorScheme.copyWith(error: accentFor(base)),
-      );
+    colorScheme: base.colorScheme.copyWith(error: accentFor(base)),
+  );
 }

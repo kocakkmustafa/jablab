@@ -6,9 +6,17 @@ import 'package:flutter/widgets.dart' show BuildContext, InheritedNotifier;
 import 'app_preferences.dart';
 
 enum PreferencesReadPhase {
-  notStarted, loading, loaded, missing, recovered, invalid, unavailable,
-  timedOut, ignoredAfterEdit,
+  notStarted,
+  loading,
+  loaded,
+  missing,
+  recovered,
+  invalid,
+  unavailable,
+  timedOut,
+  ignoredAfterEdit,
 }
+
 enum PreferencesSavePhase { idle, saving, saved, failed, uncertain }
 
 /// Lives above MotionIdentityGate. It is device state, independent of account
@@ -31,7 +39,10 @@ class AppPreferencesController extends ChangeNotifier {
   /// Harness-only fallback. The production launcher injects the file store;
   /// mounting JabLabApp in a widget test never starts path_provider I/O.
   factory AppPreferencesController.transient(AppPreferencesCodec codec) =>
-      AppPreferencesController(store: _TransientPreferencesStore(), codec: codec);
+      AppPreferencesController(
+        store: _TransientPreferencesStore(),
+        codec: codec,
+      );
 
   final AppPreferencesStore store;
   final AppPreferencesCodec codec;
@@ -61,7 +72,8 @@ class AppPreferencesController extends ChangeNotifier {
     try {
       result = await store.read().timeout(
         readDeadline,
-        onTimeout: () => const PreferencesReadResult(PreferencesReadKind.timedOut),
+        onTimeout: () =>
+            const PreferencesReadResult(PreferencesReadKind.timedOut),
       );
     } on Object {
       result = const PreferencesReadResult(PreferencesReadKind.unavailable);
@@ -74,8 +86,9 @@ class AppPreferencesController extends ChangeNotifier {
       return;
     }
     final loaded = result.value;
-    if (loaded == null && (result.kind == PreferencesReadKind.loaded ||
-        result.kind == PreferencesReadKind.recovered)) {
+    if (loaded == null &&
+        (result.kind == PreferencesReadKind.loaded ||
+            result.kind == PreferencesReadKind.recovered)) {
       result = const PreferencesReadResult(PreferencesReadKind.invalid);
     }
     if (loaded != null) {
@@ -97,7 +110,8 @@ class AppPreferencesController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectTheme(AppThemePreference theme) => _select(_value.withTheme(theme));
+  void selectTheme(AppThemePreference theme) =>
+      _select(_value.withTheme(theme));
   void selectLocale(String? localeTag) => _select(_value.withLocale(localeTag));
 
   void _select(AppPreferences next) {
@@ -130,7 +144,8 @@ class AppPreferencesController extends ChangeNotifier {
       result = const PreferencesWriteResult(PreferencesWriteKind.failed);
     }
     if (_disposed) return;
-    if (result.kind == PreferencesWriteKind.committed && revision > _savedRevision) {
+    if (result.kind == PreferencesWriteKind.committed &&
+        revision > _savedRevision) {
       _savedRevision = revision;
     }
     // An older Save completion may not replace the newer draft's status.
@@ -160,8 +175,9 @@ class AppPreferencesScope extends InheritedNotifier<AppPreferencesController> {
     required super.child,
   }) : super(notifier: controller);
 
-  static AppPreferencesController? maybeOf(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<AppPreferencesScope>()?.notifier;
+  static AppPreferencesController? maybeOf(BuildContext context) => context
+      .dependOnInheritedWidgetOfExactType<AppPreferencesScope>()
+      ?.notifier;
 }
 
 class _TransientPreferencesStore implements AppPreferencesStore {
@@ -170,8 +186,9 @@ class _TransientPreferencesStore implements AppPreferencesStore {
   bool get persistent => false;
   @override
   Future<PreferencesReadResult> read() async => PreferencesReadResult(
-      _value == null ? PreferencesReadKind.missing : PreferencesReadKind.loaded,
-      _value);
+    _value == null ? PreferencesReadKind.missing : PreferencesReadKind.loaded,
+    _value,
+  );
   @override
   Future<PreferencesWriteResult> write(AppPreferences value) async {
     _value = value;

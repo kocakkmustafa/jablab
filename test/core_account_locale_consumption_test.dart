@@ -133,18 +133,8 @@ void main() {
       "Crea un nuovo account",
       "Email",
     ],
-    const Locale('ko'): [
-      "로그인",
-      "계정 만들기",
-      "새 계정 만들기",
-      "이메일",
-    ],
-    const Locale('id'): [
-      "Masuk",
-      "Buat akun",
-      "Buat akun baru",
-      "Email",
-    ],
+    const Locale('ko'): ["로그인", "계정 만들기", "새 계정 만들기", "이메일"],
+    const Locale('id'): ["Masuk", "Buat akun", "Buat akun baru", "Email"],
     const Locale('pl'): [
       "Zaloguj się",
       "Utwórz konto",

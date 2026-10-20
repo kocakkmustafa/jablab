@@ -86,7 +86,10 @@ class _SelectPageState extends State<SelectPage> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: <Color>[JColors.of(context).gradientTop, JColors.of(context).ground],
+          colors: <Color>[
+            JColors.of(context).gradientTop,
+            JColors.of(context).ground,
+          ],
           stops: const <double>[0, .42],
         ),
       ),
@@ -109,10 +112,9 @@ class _SelectPageState extends State<SelectPage> {
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: JText.of(context).pageTitle.copyWith(
-                      fontSize: 22,
-                      letterSpacing: -.6,
-                    ),
+                    style: JText.of(
+                      context,
+                    ).pageTitle.copyWith(fontSize: 22, letterSpacing: -.6),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -146,7 +148,9 @@ class _SelectPageState extends State<SelectPage> {
                         tr: 'Kaldığın yer',
                       ),
                       key: const Key('recorded-heading'),
-                      style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
+                      style: JText.of(
+                        context,
+                      ).body.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -232,7 +236,11 @@ class _SelectPageState extends State<SelectPage> {
                 onTap: widget.onOpenWhyNot,
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.help_outline, color: JColors.of(context).judgement, size: 18),
+                    Icon(
+                      Icons.help_outline,
+                      color: JColors.of(context).judgement,
+                      size: 18,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -247,7 +255,11 @@ class _SelectPageState extends State<SelectPage> {
                         ),
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: JColors.of(context).judgement, size: 18),
+                    Icon(
+                      Icons.chevron_right,
+                      color: JColors.of(context).judgement,
+                      size: 18,
+                    ),
                   ],
                 ),
               ),
@@ -430,7 +442,9 @@ class _ItemBlock extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       UiLanguage.text(context, en: 'Courses', tr: 'Kurslar'),
-                      style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
+                      style: JText.of(
+                        context,
+                      ).body.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 8),
                     ...item.courses
@@ -453,9 +467,10 @@ class _ItemBlock extends StatelessWidget {
                                         children: <Widget>[
                                           Text(
                                             courseTitle(context, c.id, c.title),
-                                            style: JText.of(context).body.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                            style: JText.of(context).body
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
                                           if (c.goal.isNotEmpty) ...<Widget>[
                                             const SizedBox(height: 3),
@@ -463,9 +478,8 @@ class _ItemBlock extends StatelessWidget {
                                               courseGoal(context, c.id, c.goal),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
-                                              style: JText.of(context).bodyMuted.copyWith(
-                                                fontSize: 12.5,
-                                              ),
+                                              style: JText.of(context).bodyMuted
+                                                  .copyWith(fontSize: 12.5),
                                             ),
                                           ],
                                         ],
@@ -562,7 +576,9 @@ class _SoonBadge extends StatelessWidget {
       // ölçmedim; kontrast kapısı da onu göremedi çünkü token
       // VARSAYILANLARINI ölçüyor, yerinde `copyWith(color:)` ile
       // geçilenleri değil (J-126). Rozet 7 kapalı disiplin kartında var.
-      style: JText.of(context).label.copyWith(color: JColors.of(context).inkMuted, letterSpacing: 1),
+      style: JText.of(
+        context,
+      ).label.copyWith(color: JColors.of(context).inkMuted, letterSpacing: 1),
     ),
   );
 }

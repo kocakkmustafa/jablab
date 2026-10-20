@@ -7,7 +7,14 @@ import 'package:jablab/app/app_preferences_store.dart';
 
 AppPreferencesCodec _codec() => AppPreferencesCodec(
   supportedLocaleTags: const [
-    'tr', 'en', 'es-419', 'pt-BR', 'de', 'fr', 'ja', 'ar',
+    'tr',
+    'en',
+    'es-419',
+    'pt-BR',
+    'de',
+    'fr',
+    'ja',
+    'ar',
   ],
 );
 
@@ -37,10 +44,10 @@ File _generation(Directory directory, int number) => File(
 Future<void> _seedValid(Directory directory, int count) async {
   await directory.create(recursive: true);
   for (var number = 1; number <= count; number++) {
-    await _generation(directory, number).writeAsBytes(
-      _codec().encode(_previous),
-      flush: true,
-    );
+    await _generation(
+      directory,
+      number,
+    ).writeAsBytes(_codec().encode(_previous), flush: true);
   }
 }
 
@@ -92,7 +99,11 @@ Future<void> _expectOrphansUnchanged(
   for (final entry in expected.entries) {
     final file = File('${directory.path}${Platform.pathSeparator}${entry.key}');
     expect(await file.exists(), isTrue, reason: entry.key);
-    expect(await file.readAsBytes(), orderedEquals(entry.value), reason: entry.key);
+    expect(
+      await file.readAsBytes(),
+      orderedEquals(entry.value),
+      reason: entry.key,
+    );
   }
 }
 
@@ -110,7 +121,9 @@ void main() {
         '31 raw entries, $orphanCount orphans, after-commit throw '
         '$throwAfterCommit: exact reopen and subsequent save remain readable',
         () async {
-          final support = await Directory.systemTemp.createTemp('prefs-slot-v2-');
+          final support = await Directory.systemTemp.createTemp(
+            'prefs-slot-v2-',
+          );
           addTearDown(() => support.delete(recursive: true));
           final directory = _preferencesDirectory(support);
           final validCount = 31 - orphanCount;
@@ -143,14 +156,23 @@ void main() {
             },
           );
 
-          expect((await store.write(_desired)).kind, PreferencesWriteKind.committed);
+          expect(
+            (await store.write(_desired)).kind,
+            PreferencesWriteKind.committed,
+          );
           expect(commits, 1);
           expect(preparedCounts, [32]);
           expect(renamedCounts, [32]);
           expect(preparedWasPresent, [true]);
           expect(destinationWasAbsent, [true]);
-          expect(committedPayloads.single, orderedEquals(_codec().encode(_desired)));
-          expect(await previousFile.readAsBytes(), orderedEquals(previousBytes));
+          expect(
+            committedPayloads.single,
+            orderedEquals(_codec().encode(_desired)),
+          );
+          expect(
+            await previousFile.readAsBytes(),
+            orderedEquals(previousBytes),
+          );
           await _expectOrphansUnchanged(directory, orphans);
           // GC keeps the latest two valid generations, not unknown/orphan files.
           expect(await _rawEntryCount(directory), orphanCount + 2);
@@ -162,13 +184,19 @@ void main() {
           final desiredBytes = await desiredFile.readAsBytes();
           // Use the same queue after the normal/throwing completion. An omitted
           // known-commit GC leaves 32 valid files and makes this save fail.
-          expect((await store.write(_subsequent)).kind, PreferencesWriteKind.committed);
+          expect(
+            (await store.write(_subsequent)).kind,
+            PreferencesWriteKind.committed,
+          );
           expect(commits, 2);
           expect(preparedCounts, [32, orphanCount + 3]);
           expect(renamedCounts, [32, orphanCount + 3]);
           expect(preparedWasPresent, [true, true]);
           expect(destinationWasAbsent, [true, true]);
-          expect(committedPayloads.last, orderedEquals(_codec().encode(_subsequent)));
+          expect(
+            committedPayloads.last,
+            orderedEquals(_codec().encode(_subsequent)),
+          );
           // The immediately preceding good value remains as rollback bytes.
           expect(await desiredFile.readAsBytes(), orderedEquals(desiredBytes));
           await _expectOrphansUnchanged(directory, orphans);
@@ -208,7 +236,11 @@ void main() {
           },
         );
         expect((await store.write(_desired)).kind, PreferencesWriteKind.failed);
-        expect(commits, 0, reason: 'Full-directory rejection precedes the commit seam');
+        expect(
+          commits,
+          0,
+          reason: 'Full-directory rejection precedes the commit seam',
+        );
         expect(await _rawEntryCount(directory), 32);
         _expectSnapshotEqual(await _fileBytes(directory), before);
         final reopened = await _reopen(support).read();
@@ -218,36 +250,46 @@ void main() {
     );
   }
 
-  test('known committed catch reuses the resolved path, not the support provider', () async {
-    final support = await Directory.systemTemp.createTemp('prefs-provider-v2-');
-    addTearDown(() => support.delete(recursive: true));
-    final directory = _preferencesDirectory(support);
-    await _seedValid(directory, 31);
-    var providerCalls = 0;
-    var commits = 0;
-    final store = FileAppPreferencesStore(
-      codec: _codec(),
-      supportDirectory: () async {
-        providerCalls++;
-        if (providerCalls > 1) {
-          throw const FileSystemException('provider must not resolve again after commit');
-        }
-        return support;
-      },
-      commitPrepared: (prepared, committed) async {
-        commits++;
-        await prepared.rename(committed.path);
-        throw const FileSystemException('injected after real rename');
-      },
-    );
-    expect((await store.write(_desired)).kind, PreferencesWriteKind.committed);
-    expect(providerCalls, 1);
-    expect(commits, 1);
-    expect(await _rawEntryCount(directory), 2);
-    final reopened = await _reopen(support).read();
-    expect(reopened.kind, PreferencesReadKind.loaded);
-    expect(reopened.value, _desired);
-  });
+  test(
+    'known committed catch reuses the resolved path, not the support provider',
+    () async {
+      final support = await Directory.systemTemp.createTemp(
+        'prefs-provider-v2-',
+      );
+      addTearDown(() => support.delete(recursive: true));
+      final directory = _preferencesDirectory(support);
+      await _seedValid(directory, 31);
+      var providerCalls = 0;
+      var commits = 0;
+      final store = FileAppPreferencesStore(
+        codec: _codec(),
+        supportDirectory: () async {
+          providerCalls++;
+          if (providerCalls > 1) {
+            throw const FileSystemException(
+              'provider must not resolve again after commit',
+            );
+          }
+          return support;
+        },
+        commitPrepared: (prepared, committed) async {
+          commits++;
+          await prepared.rename(committed.path);
+          throw const FileSystemException('injected after real rename');
+        },
+      );
+      expect(
+        (await store.write(_desired)).kind,
+        PreferencesWriteKind.committed,
+      );
+      expect(providerCalls, 1);
+      expect(commits, 1);
+      expect(await _rawEntryCount(directory), 2);
+      final reopened = await _reopen(support).read();
+      expect(reopened.kind, PreferencesReadKind.loaded);
+      expect(reopened.value, _desired);
+    },
+  );
 
   // A deterministic cleanup-scan fault, without a new production test seam.
   // The seam deliberately adds its OWN marker after rename, taking 32 to 33.
@@ -257,7 +299,9 @@ void main() {
     test(
       'cleanup scan fault after rename, throw $throwAfterCommit: known commit survives',
       () async {
-        final support = await Directory.systemTemp.createTemp('prefs-gc-fault-v2-');
+        final support = await Directory.systemTemp.createTemp(
+          'prefs-gc-fault-v2-',
+        );
         addTearDown(() => support.delete(recursive: true));
         final directory = _preferencesDirectory(support);
         await _seedValid(directory, 31);
@@ -274,24 +318,36 @@ void main() {
             await prepared.rename(committed.path);
             await marker.writeAsString('owned-by-this-fault-test', flush: true);
             if (throwAfterCommit) {
-              throw const FileSystemException('injected after rename plus GC fault');
+              throw const FileSystemException(
+                'injected after rename plus GC fault',
+              );
             }
           },
         );
-        expect((await store.write(_desired)).kind, PreferencesWriteKind.committed);
+        expect(
+          (await store.write(_desired)).kind,
+          PreferencesWriteKind.committed,
+        );
         expect(commits, 1);
         expect(await _rawEntryCount(directory), 33);
         final after = await _fileBytes(directory);
         expect(after.length, before.length + 2); // New commit and owned marker.
         for (final entry in before.entries) {
-          expect(after[entry.key], orderedEquals(entry.value), reason: entry.key);
+          expect(
+            after[entry.key],
+            orderedEquals(entry.value),
+            reason: entry.key,
+          );
         }
         expect(await marker.readAsString(), 'owned-by-this-fault-test');
         expect(
           await _generation(directory, 32).readAsBytes(),
           orderedEquals(_codec().encode(_desired)),
         );
-        expect((await _reopen(support).read()).kind, PreferencesReadKind.invalid);
+        expect(
+          (await _reopen(support).read()).kind,
+          PreferencesReadKind.invalid,
+        );
 
         // Explicit fixture recovery only; production does not erase this file.
         await marker.delete();

@@ -94,7 +94,10 @@ class CoursePage extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: <Color>[JColors.of(context).gradientTop, JColors.of(context).ground],
+          colors: <Color>[
+            JColors.of(context).gradientTop,
+            JColors.of(context).ground,
+          ],
           stops: const <double>[0, .42],
         ),
       ),
@@ -135,10 +138,9 @@ class CoursePage extends StatelessWidget {
                     courseTitle(context, course.id, course.title),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: JText.of(context).pageTitle.copyWith(
-                      fontSize: 26,
-                      letterSpacing: -.8,
-                    ),
+                    style: JText.of(
+                      context,
+                    ).pageTitle.copyWith(fontSize: 26, letterSpacing: -.8),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -158,7 +160,10 @@ class CoursePage extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 courseGoal(context, course.id, course.goal),
-                style: JText.of(context).body.copyWith(color: JColors.of(context).inkMuted, fontSize: 15),
+                style: JText.of(context).body.copyWith(
+                  color: JColors.of(context).inkMuted,
+                  fontSize: 15,
+                ),
               ),
             ],
             if (onOpenKickboxingCourse != null) ...<Widget>[
@@ -252,7 +257,9 @@ class _LessonRow extends StatelessWidget {
     // gerekçenin hemen yanındaki metin. Kontrast kapısı burayı göremiyordu
     // çünkü renk bir DEĞİŞKENDEN geliyor; kapı yalnız `copyWith(color:)`
     // içindeki doğrudan `JColors.*` referanslarını çözüyordu.
-    final Color fg = locked ? JColors.of(context).inkMuted : JColors.of(context).ink;
+    final Color fg = locked
+        ? JColors.of(context).inkMuted
+        : JColors.of(context).ink;
     return GlassPanel(
       padding: const EdgeInsets.all(14),
       child: InkWell(
@@ -268,7 +275,9 @@ class _LessonRow extends StatelessWidget {
               // bile altında — kilit ikonu pratikte görünmüyordu. `ink3`
               // 3,51:1 veriyor ve sönüklük hiyerarşisi (ember ↔ ink3)
               // korunuyor.
-              color: locked ? JColors.of(context).inkSubtle : JColors.of(context).judgement,
+              color: locked
+                  ? JColors.of(context).inkSubtle
+                  : JColors.of(context).judgement,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -277,10 +286,9 @@ class _LessonRow extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     lessonTitle(context, lesson.id, lesson.title),
-                    style: JText.of(context).body.copyWith(
-                      color: fg,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: JText.of(
+                      context,
+                    ).body.copyWith(color: fg, fontWeight: FontWeight.w600),
                   ),
                   if (locked) ...<Widget>[
                     const SizedBox(height: 4),
@@ -291,13 +299,17 @@ class _LessonRow extends StatelessWidget {
                         lesson.lockedReason,
                       )!,
                       key: Key('locked-why-${lesson.id}'),
-                      style: JText.of(context).bodyMuted.copyWith(fontSize: 12.5),
+                      style: JText.of(
+                        context,
+                      ).bodyMuted.copyWith(fontSize: 12.5),
                     ),
                   ] else if (lesson.subtitle.isNotEmpty) ...<Widget>[
                     const SizedBox(height: 4),
                     Text(
                       lesson.subtitle,
-                      style: JText.of(context).bodyMuted.copyWith(fontSize: 12.5),
+                      style: JText.of(
+                        context,
+                      ).bodyMuted.copyWith(fontSize: 12.5),
                     ),
                   ],
                 ],
@@ -316,7 +328,9 @@ class _LessonRow extends StatelessWidget {
                 // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
                 // "daha az önemli" demek, "okunmasın" demek değil.
                 style: JText.of(context).mono.copyWith(
-                  color: locked ? JColors.of(context).inkMuted : JColors.of(context).observation,
+                  color: locked
+                      ? JColors.of(context).inkMuted
+                      : JColors.of(context).observation,
                 ),
               ),
             ],
@@ -368,7 +382,9 @@ class _WhereYouLeftOff extends StatelessWidget {
                 tr: 'Kaldığın yer',
               ),
               key: const Key('recorded-heading'),
-              style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
+              style: JText.of(
+                context,
+              ).body.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
             Text(

@@ -75,7 +75,11 @@ class _ProbeLedger {
 }
 
 class _AdmittedProbe extends StatefulWidget {
-  const _AdmittedProbe({required super.key, required this.ledger, required this.child});
+  const _AdmittedProbe({
+    required super.key,
+    required this.ledger,
+    required this.child,
+  });
   final _ProbeLedger ledger;
   final Widget child;
 
@@ -140,11 +144,16 @@ class _Harness {
         if (request.method == 'GET' &&
             request.url.path.endsWith('/rest/v1/motion_profiles')) {
           h.profileReads++;
-          return http.Response(jsonEncode({
-            'user_id': _owner, 'display_name': 'Synthetic profile baseline',
-            'created_at': '2026-10-20T00:00:00Z',
-            'updated_at': '2026-10-20T00:00:00Z',
-          }), 200, headers: {'content-type': 'application/json'});
+          return http.Response(
+            jsonEncode({
+              'user_id': _owner,
+              'display_name': 'Synthetic profile baseline',
+              'created_at': '2026-10-20T00:00:00Z',
+              'updated_at': '2026-10-20T00:00:00Z',
+            }),
+            200,
+            headers: {'content-type': 'application/json'},
+          );
         }
         h.unexpectedRequests++;
         return http.Response('{"message":"unexpected synthetic request"}', 400);
@@ -159,16 +168,18 @@ class _Harness {
       ),
     );
     await tester.runAsync(() async {
-      await h.client.auth.setInitialSession(jsonEncode({
-        'access_token': 'ap14-synthetic-token',
-        'token_type': 'bearer',
-        'user': {
-          'id': _owner,
-          'aud': 'authenticated',
-          'created_at': '2026-10-20T00:00:00Z',
-          'app_metadata': <String, dynamic>{},
-        },
-      }));
+      await h.client.auth.setInitialSession(
+        jsonEncode({
+          'access_token': 'ap14-synthetic-token',
+          'token_type': 'bearer',
+          'user': {
+            'id': _owner,
+            'aud': 'authenticated',
+            'created_at': '2026-10-20T00:00:00Z',
+            'app_metadata': <String, dynamic>{},
+          },
+        }),
+      );
       // Future listeners still receive Auth replay. Initial/replayed and
       // explicit verification share the same held response, never an orphan.
       await Future<void>.delayed(Duration.zero);
@@ -183,12 +194,18 @@ class _Harness {
       h.beginProof();
       await Future<void>.delayed(Duration.zero);
     });
-    h.support = await _io<Directory>(tester, 'temp.create',
-      () => Directory.systemTemp.createTemp('jablab-identity-host-'));
+    h.support = await _io<Directory>(
+      tester,
+      'temp.create',
+      () => Directory.systemTemp.createTemp('jablab-identity-host-'),
+    );
     h.marker = File('${h.support.path}/owned-marker.txt');
     addTearDown(() => h.close(tester));
-    await _io<File>(tester, 'marker.write',
-      () => h.marker.writeAsString('preserve-owned-marker'));
+    await _io<File>(
+      tester,
+      'marker.write',
+      () => h.marker.writeAsString('preserve-owned-marker'),
+    );
     h.app = JabLabApp(
       preferences: h.preferences,
       repository: ContentRepository(
@@ -205,8 +222,8 @@ class _Harness {
         account: h.runtime.account,
         ownerRegistry: h.owners,
         lifetime: h.owners.capture(h.runtime.userId.value),
-        canInitiate: () => h.runtime.isCurrentSessionVerified &&
-            !h.runtime.isPasswordRecovery,
+        canInitiate: () =>
+            h.runtime.isCurrentSessionVerified && !h.runtime.isPasswordRecovery,
         onRetryIdentity: h.runtime.refreshIdentity,
       ),
     );
@@ -222,8 +239,11 @@ class _Harness {
 
   void beginProof() {
     if (_proof != null) {
-      expect(_response.isCompleted, isTrue,
-        reason: 'A proof is never replaced while its transport is pending');
+      expect(
+        _response.isCompleted,
+        isTrue,
+        reason: 'A proof is never replaced while its transport is pending',
+      );
       _response = Completer<http.Response>();
     }
     _proof = runtime.refreshIdentity().then<void>(
@@ -234,21 +254,25 @@ class _Harness {
 
   Future<void> finishProof(WidgetTester tester, {bool success = true}) async {
     await tester.runAsync(() async {
-      _response.complete(success
-          ? _userResponse()
-          : http.Response(
-              '{"message":"synthetic verification failure",'
-              '"code":"synthetic_auth_failure"}',
-              400,
-              headers: {'content-type': 'application/json'},
-            ));
+      _response.complete(
+        success
+            ? _userResponse()
+            : http.Response(
+                '{"message":"synthetic verification failure",'
+                '"code":"synthetic_auth_failure"}',
+                400,
+                headers: {'content-type': 'application/json'},
+              ),
+      );
       await _proof;
       await Future<void>.delayed(Duration.zero);
     });
     await tester.pump();
     await tester.pump();
-    expect(runtime.phase.value, success
-        ? MotionIdentityPhase.verified : MotionIdentityPhase.unavailable);
+    expect(
+      runtime.phase.value,
+      success ? MotionIdentityPhase.verified : MotionIdentityPhase.unavailable,
+    );
     expect(runtime.isCurrentSessionVerified, success);
   }
 
@@ -295,10 +319,15 @@ class _Harness {
       await Future<void>.delayed(Duration.zero);
     });
     await _io<void>(tester, 'owners.retire', owners.retireAll);
-    expect(await _io<String>(tester, 'marker.read', marker.readAsString),
-      'preserve-owned-marker');
-    await _io<FileSystemEntity>(tester, 'temp.delete',
-      () => support.delete(recursive: true));
+    expect(
+      await _io<String>(tester, 'marker.read', marker.readAsString),
+      'preserve-owned-marker',
+    );
+    await _io<FileSystemEntity>(
+      tester,
+      'temp.delete',
+      () => support.delete(recursive: true),
+    );
     runtime.dispose();
     await _io<void>(tester, 'client.dispose', client.dispose);
     transport.close();
@@ -311,19 +340,26 @@ class _Harness {
 }
 
 // Dual-clock helper follows the already accepted real-root fixture recipe.
-Future<T> _io<T>(WidgetTester tester, String stage, Future<T> Function() action) async {
+Future<T> _io<T>(
+  WidgetTester tester,
+  String stage,
+  Future<T> Function() action,
+) async {
   bool settled = false;
   T? value;
   Object? error;
   StackTrace? trace;
-  action().then((result) {
-    value = result;
-    settled = true;
-  }, onError: (Object failure, StackTrace stack) {
-    error = failure;
-    trace = stack;
-    settled = true;
-  });
+  action().then(
+    (result) {
+      value = result;
+      settled = true;
+    },
+    onError: (Object failure, StackTrace stack) {
+      error = failure;
+      trace = stack;
+      settled = true;
+    },
+  );
   for (int turn = 0; turn < 80 && !settled; turn++) {
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 25)),
@@ -369,13 +405,16 @@ Future<void> _blocker(
   expect(target, findsOneWidget, reason: 'Actual, literal localized blocker');
   final context = tester.element(target);
   final loaded = Localizations.of<MotionAccountLocalizations>(
-    context, MotionAccountLocalizations,
+    context,
+    MotionAccountLocalizations,
   );
   expect(loaded, isNotNull, reason: 'Real Core delegate must be mounted');
   expect(loaded!.locale, locale);
   expect(Localizations.localeOf(context), locale);
-  expect(Directionality.of(context), locale.languageCode == 'ar'
-      ? TextDirection.rtl : TextDirection.ltr);
+  expect(
+    Directionality.of(context),
+    locale.languageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+  );
   if (brightness != null) {
     expect(Theme.of(context).brightness, brightness);
   }
@@ -410,17 +449,24 @@ void _platformReset(WidgetTester tester) {
 }
 
 void main() {
-  testWidgets('AP14-01 root OS locale event updates the held real blocker',
-    (tester) async {
+  testWidgets('AP14-01 root OS locale event updates the held real blocker', (
+    tester,
+  ) async {
     _platformReset(tester);
-    tester.platformDispatcher.localesTestValue = const [Locale('xx'), Locale('fr')];
+    tester.platformDispatcher.localesTestValue = const [
+      Locale('xx'),
+      Locale('fr'),
+    ];
     final h = await _Harness.create(tester);
     await h.mount(tester);
     await _blocker(tester, const Locale('fr'));
     final gate = _gate(tester, h);
     final session = h.client.auth.currentSession;
     final calls = h.userRequests;
-    tester.platformDispatcher.localesTestValue = const [Locale('ar'), Locale('en')];
+    tester.platformDispatcher.localesTestValue = const [
+      Locale('ar'),
+      Locale('en'),
+    ];
     await _blocker(tester, const Locale('ar'));
     expect(_gate(tester, h), same(gate));
     expect(h.client.auth.currentSession, same(session));
@@ -431,17 +477,23 @@ void main() {
     h.expectClosed();
   });
 
-  testWidgets('AP14-02 explicit locale wins until actual follow-device edit',
-    (tester) async {
+  testWidgets('AP14-02 explicit locale wins until actual follow-device edit', (
+    tester,
+  ) async {
     _platformReset(tester);
     tester.platformDispatcher.localesTestValue = const [Locale('fr')];
-    final h = await _Harness.create(tester,
-      value: const AppPreferences(localeTag: 'tr'));
+    final h = await _Harness.create(
+      tester,
+      value: const AppPreferences(localeTag: 'tr'),
+    );
     await h.mount(tester);
     await _blocker(tester, const Locale('tr'));
     final gate = _gate(tester, h);
     final calls = h.userRequests;
-    tester.platformDispatcher.localesTestValue = const [Locale('ar'), Locale('en')];
+    tester.platformDispatcher.localesTestValue = const [
+      Locale('ar'),
+      Locale('en'),
+    ];
     await _blocker(tester, const Locale('tr'));
     expect(h.store.writes, isEmpty);
     h.preferences.selectLocale(null);
@@ -452,8 +504,9 @@ void main() {
     h.expectClosed();
   });
 
-  testWidgets('AP14-03 Hant lists continue to French and Hans stays explicit',
-    (tester) async {
+  testWidgets('AP14-03 Hant lists continue to French and Hans stays explicit', (
+    tester,
+  ) async {
     _platformReset(tester);
     tester.platformDispatcher.localesTestValue = const [Locale('en')];
     final h = await _Harness.create(tester);
@@ -463,9 +516,14 @@ void main() {
     final calls = h.userRequests;
     for (final traditional in const [
       Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
-      Locale('zh', 'TW'), Locale('zh', 'HK'), Locale('zh', 'MO'),
+      Locale('zh', 'TW'),
+      Locale('zh', 'HK'),
+      Locale('zh', 'MO'),
     ]) {
-      tester.platformDispatcher.localesTestValue = [traditional, const Locale('fr')];
+      tester.platformDispatcher.localesTestValue = [
+        traditional,
+        const Locale('fr'),
+      ];
       await _blocker(tester, const Locale('fr'));
       expect(find.text(_checking['zh-Hans']!), findsNothing);
       expect(_gate(tester, h), same(gate));
@@ -480,69 +538,116 @@ void main() {
     h.expectClosed();
   });
 
-  testWidgets('AP14-04 parent inheritance and explicit adapter preferences differ',
+  testWidgets(
+    'AP14-04 parent inheritance and explicit adapter preferences differ',
     (tester) async {
-    _platformReset(tester);
-    tester.platformDispatcher.localesTestValue = const [Locale('fr')];
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
-    final h = await _Harness.create(tester,
-      value: const AppPreferences(theme: AppThemePreference.light, localeTag: 'tr'));
-    const inheritedGround = Color(0xFF012345);
-    await tester.pumpWidget(Localizations(
-      locale: const Locale('ar'),
-      delegates: MotionAccountLocalizations.delegates,
-      child: Theme(
-        data: ThemeData.dark().copyWith(scaffoldBackgroundColor: inheritedGround),
-        child: MotionIdentityGate(runtime: h.runtime, child: h.child),
-      ),
-    ));
-    await _blocker(tester, const Locale('ar'), brightness: Brightness.dark,
-      background: inheritedGround);
-    h.expectClosed();
-    final calls = h.userRequests;
-    // Actual JabLab wrapper supplies an explicit palette/locale preference.
-    await tester.pumpWidget(Localizations(
-      locale: const Locale('ar'),
-      delegates: MotionAccountLocalizations.delegates,
-      child: Theme(
-        data: ThemeData.dark().copyWith(scaffoldBackgroundColor: inheritedGround),
-        child: h.adapter(),
-      ),
-    ));
-    await _blocker(tester, const Locale('tr'), brightness: Brightness.light,
-      background: const Color(0xFFFFF8F9), foreground: const Color(0xFF251D22));
-    expect(h.userRequests, calls);
-    expect(h.store.writes, isEmpty);
-    expect(h.runtime.isDisposed, isFalse);
-    h.expectClosed();
-  });
+      _platformReset(tester);
+      tester.platformDispatcher.localesTestValue = const [Locale('fr')];
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+      final h = await _Harness.create(
+        tester,
+        value: const AppPreferences(
+          theme: AppThemePreference.light,
+          localeTag: 'tr',
+        ),
+      );
+      const inheritedGround = Color(0xFF012345);
+      await tester.pumpWidget(
+        Localizations(
+          locale: const Locale('ar'),
+          delegates: MotionAccountLocalizations.delegates,
+          child: Theme(
+            data: ThemeData.dark().copyWith(
+              scaffoldBackgroundColor: inheritedGround,
+            ),
+            child: MotionIdentityGate(runtime: h.runtime, child: h.child),
+          ),
+        ),
+      );
+      await _blocker(
+        tester,
+        const Locale('ar'),
+        brightness: Brightness.dark,
+        background: inheritedGround,
+      );
+      h.expectClosed();
+      final calls = h.userRequests;
+      // Actual JabLab wrapper supplies an explicit palette/locale preference.
+      await tester.pumpWidget(
+        Localizations(
+          locale: const Locale('ar'),
+          delegates: MotionAccountLocalizations.delegates,
+          child: Theme(
+            data: ThemeData.dark().copyWith(
+              scaffoldBackgroundColor: inheritedGround,
+            ),
+            child: h.adapter(),
+          ),
+        ),
+      );
+      await _blocker(
+        tester,
+        const Locale('tr'),
+        brightness: Brightness.light,
+        background: const Color(0xFFFFF8F9),
+        foreground: const Color(0xFF251D22),
+      );
+      expect(h.userRequests, calls);
+      expect(h.store.writes, isEmpty);
+      expect(h.runtime.isDisposed, isFalse);
+      h.expectClosed();
+    },
+  );
 
-  testWidgets('AP14-05 explicit modes govern pending and failure canvases',
-    (tester) async {
+  testWidgets('AP14-05 explicit modes govern pending and failure canvases', (
+    tester,
+  ) async {
     _platformReset(tester);
     tester.platformDispatcher.localesTestValue = const [Locale('en')];
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
-    final h = await _Harness.create(tester,
-      value: const AppPreferences(theme: AppThemePreference.light));
+    final h = await _Harness.create(
+      tester,
+      value: const AppPreferences(theme: AppThemePreference.light),
+    );
     await h.mount(tester);
-    await _blocker(tester, const Locale('en'), brightness: Brightness.light,
-      background: const Color(0xFFFFF8F9), foreground: const Color(0xFF251D22));
+    await _blocker(
+      tester,
+      const Locale('en'),
+      brightness: Brightness.light,
+      background: const Color(0xFFFFF8F9),
+      foreground: const Color(0xFF251D22),
+    );
     final gate = _gate(tester, h);
     final calls = h.userRequests;
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
     h.preferences.selectTheme(AppThemePreference.dark);
-    await _blocker(tester, const Locale('en'), brightness: Brightness.dark,
-      background: const Color(0xFF0A0608), foreground: const Color(0xFFF7F4F5));
+    await _blocker(
+      tester,
+      const Locale('en'),
+      brightness: Brightness.dark,
+      background: const Color(0xFF0A0608),
+      foreground: const Color(0xFFF7F4F5),
+    );
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     await _blocker(tester, const Locale('en'), brightness: Brightness.dark);
     await h.finishProof(tester, success: false);
-    await _blocker(tester, const Locale('en'), text: _failureEn,
-      brightness: Brightness.dark, background: const Color(0xFF0A0608));
+    await _blocker(
+      tester,
+      const Locale('en'),
+      text: _failureEn,
+      brightness: Brightness.dark,
+      background: const Color(0xFF0A0608),
+    );
     expect(find.text('Retry'), findsOneWidget);
     expect(find.byType(FilledButton), findsOneWidget);
     h.preferences.selectTheme(AppThemePreference.light);
-    await _blocker(tester, const Locale('en'), text: _failureEn,
-      brightness: Brightness.light, background: const Color(0xFFFFF8F9));
+    await _blocker(
+      tester,
+      const Locale('en'),
+      text: _failureEn,
+      brightness: Brightness.light,
+      background: const Color(0xFFFFF8F9),
+    );
     expect(_gate(tester, h), same(gate));
     expect(h.userRequests, calls);
     expect(h.store.writes, [
@@ -552,132 +657,165 @@ void main() {
     h.expectClosed();
   });
 
-  testWidgets('AP14-06 system events and same-session refresh retain real app state',
+  testWidgets(
+    'AP14-06 system events and same-session refresh retain real app state',
     (tester) async {
-    _platformReset(tester);
-    tester.platformDispatcher.localesTestValue = const [Locale('en')];
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
-    final h = await _Harness.create(tester);
-    await h.mount(tester);
-    await _blocker(tester, const Locale('en'), brightness: Brightness.light,
-      background: const Color(0xFFFFF8F9));
-    final gate = _gate(tester, h);
-    final calls = h.userRequests;
-    for (final brightness in [Brightness.dark, Brightness.light]) {
-      tester.platformDispatcher.platformBrightnessTestValue = brightness;
-      await _blocker(tester, const Locale('en'), brightness: brightness,
-        background: brightness == Brightness.dark
-            ? const Color(0xFF0A0608) : const Color(0xFFFFF8F9));
-      expect(_gate(tester, h), same(gate));
-    }
-    expect(h.store.writes, isEmpty);
-    expect(h.userRequests, calls);
-    h.expectClosed();
-    await h.finishProof(tester);
-    await settleAppLoad(tester);
-    await _routeSettled(tester);
-    expect(find.byType(JabLabApp), findsOneWidget);
-    expect(h.ledger.initialized, 1);
-    expect(h.directoryReads, greaterThan(0));
-    final probeState = h.probeKey.currentState;
-    expect(probeState, isNotNull);
-    final appState = tester.state(find.byType(JabLabApp));
-    final lifetime = h.owners.capture(_owner);
-    expect(lifetime.isActive, isTrue);
-    expect(lifetime.journalWrites.isActive, isTrue);
-    await tester.tap(find.byKey(const Key('settings-button')));
-    await _routeSettled(tester);
-    expect(find.byType(SettingsPage), findsOneWidget);
-    await tester.ensureVisible(find.byKey(SettingsPage.accountEntryKey));
-    await tester.tap(find.byKey(SettingsPage.accountEntryKey));
-    await _routeSettled(tester);
-    final account = find.byType(MotionAccountPage);
-    expect(account, findsOneWidget);
-    for (int turn = 0; turn < 40 && h.profileReads == 0; turn++) {
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 25)),
+      _platformReset(tester);
+      tester.platformDispatcher.localesTestValue = const [Locale('en')];
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+      final h = await _Harness.create(tester);
+      await h.mount(tester);
+      await _blocker(
+        tester,
+        const Locale('en'),
+        brightness: Brightness.light,
+        background: const Color(0xFFFFF8F9),
       );
-      await tester.pump();
-    }
-    expect(h.profileReads, 1);
-    await _routeSettled(tester);
-    final profileField = find.byWidgetPredicate((widget) => widget is TextField &&
-      widget.controller?.text == 'Synthetic profile baseline');
-    expect(profileField, findsOneWidget,
-      reason: 'The actual Core profile read must populate an actual field');
-    await tester.ensureVisible(profileField);
-    final fieldController = tester.widget<TextField>(profileField).controller!;
-    await tester.enterText(profileField, 'retained typed draft');
-    final editedField = find.byWidgetPredicate((widget) => widget is TextField &&
-      identical(widget.controller, fieldController));
-    final accountState = tester.state(account);
-    final navigator = Navigator.of(tester.element(account));
-    final maybeRoute = ModalRoute.of(tester.element(account));
-    expect(maybeRoute, isNotNull);
-    final route = maybeRoute!;
-    expect(route.isCurrent, isTrue);
-    expect(fieldController.text, 'retained typed draft');
-    final session = h.client.auth.currentSession;
-
-    Future<void> retained(Locale locale) async {
-      // Appearance may reload real packaged app assets. Route animation
-      // settlement alone cannot prove that real asynchronous IO completed.
+      final gate = _gate(tester, h);
+      final calls = h.userRequests;
+      for (final brightness in [Brightness.dark, Brightness.light]) {
+        tester.platformDispatcher.platformBrightnessTestValue = brightness;
+        await _blocker(
+          tester,
+          const Locale('en'),
+          brightness: brightness,
+          background: brightness == Brightness.dark
+              ? const Color(0xFF0A0608)
+              : const Color(0xFFFFF8F9),
+        );
+        expect(_gate(tester, h), same(gate));
+      }
+      expect(h.store.writes, isEmpty);
+      expect(h.userRequests, calls);
+      h.expectClosed();
+      await h.finishProof(tester);
       await settleAppLoad(tester);
       await _routeSettled(tester);
-      expect(_gate(tester, h), same(gate));
-      expect(h.probeKey.currentState, same(probeState));
-      expect(tester.state(find.byType(JabLabApp)), same(appState));
-      expect(tester.state(find.byType(MotionAccountPage)), same(accountState));
-      expect(Navigator.of(tester.element(account)), same(navigator));
-      expect(ModalRoute.of(tester.element(account)), same(route));
-      expect(route.isCurrent, isTrue);
-      expect(editedField, findsOneWidget);
-      expect(fieldController.text, 'retained typed draft');
-      final context = tester.element(editedField);
-      expect(Localizations.localeOf(context), locale);
-      expect(Localizations.of<MotionAccountLocalizations>(
-        context, MotionAccountLocalizations)!.locale, locale);
-      expect(h.owners.capture(_owner), same(lifetime));
+      expect(find.byType(JabLabApp), findsOneWidget);
+      expect(h.ledger.initialized, 1);
+      expect(h.directoryReads, greaterThan(0));
+      final probeState = h.probeKey.currentState;
+      expect(probeState, isNotNull);
+      final appState = tester.state(find.byType(JabLabApp));
+      final lifetime = h.owners.capture(_owner);
       expect(lifetime.isActive, isTrue);
       expect(lifetime.journalWrites.isActive, isTrue);
-      expect(h.client.auth.currentSession, same(session));
-      expect(h.runtime.isCurrentSessionVerified, isTrue);
-      expect(h.ledger.initialized, 1);
-      expect(h.ledger.disposed, 0);
+      await tester.tap(find.byKey(const Key('settings-button')));
+      await _routeSettled(tester);
+      expect(find.byType(SettingsPage), findsOneWidget);
+      await tester.ensureVisible(find.byKey(SettingsPage.accountEntryKey));
+      await tester.tap(find.byKey(SettingsPage.accountEntryKey));
+      await _routeSettled(tester);
+      final account = find.byType(MotionAccountPage);
+      expect(account, findsOneWidget);
+      for (int turn = 0; turn < 40 && h.profileReads == 0; turn++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 25)),
+        );
+        await tester.pump();
+      }
       expect(h.profileReads, 1);
-      expect(h.unexpectedRequests, 0);
-      expect(tester.takeException(), isNull);
-    }
+      await _routeSettled(tester);
+      final profileField = find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField &&
+            widget.controller?.text == 'Synthetic profile baseline',
+      );
+      expect(
+        profileField,
+        findsOneWidget,
+        reason: 'The actual Core profile read must populate an actual field',
+      );
+      await tester.ensureVisible(profileField);
+      final fieldController = tester
+          .widget<TextField>(profileField)
+          .controller!;
+      await tester.enterText(profileField, 'retained typed draft');
+      final editedField = find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField &&
+            identical(widget.controller, fieldController),
+      );
+      final accountState = tester.state(account);
+      final navigator = Navigator.of(tester.element(account));
+      final maybeRoute = ModalRoute.of(tester.element(account));
+      expect(maybeRoute, isNotNull);
+      final route = maybeRoute!;
+      expect(route.isCurrent, isTrue);
+      expect(fieldController.text, 'retained typed draft');
+      final session = h.client.auth.currentSession;
 
-    h.preferences.selectLocale('ar');
-    h.preferences.selectTheme(AppThemePreference.dark);
-    await retained(const Locale('ar'));
-    expect(h.userRequests, calls);
-    // Ordinary verification of the unchanged Session preserves current proof.
-    // A failed/distinct credential proof has a separate owner-retirement rule.
-    await tester.runAsync(() async {
-      h.beginProof();
-      await Future<void>.delayed(Duration.zero);
-    });
-    expect(h.userRequests, calls + 1);
-    expect(h.runtime.phase.value, MotionIdentityPhase.verified);
-    expect(h.runtime.isCurrentSessionVerified, isTrue);
-    h.preferences.selectLocale(null);
-    h.preferences.selectTheme(AppThemePreference.system);
-    tester.platformDispatcher.localesTestValue = const [Locale('xx'), Locale('fr')];
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
-    await retained(const Locale('fr'));
-    expect(find.byType(CircularProgressIndicator), findsNothing);
-    expect(h.userRequests, calls + 1);
-    await h.finishProof(tester);
-    await retained(const Locale('fr'));
-    expect(h.runtime.isDisposed, isFalse);
-    expect(h.client.auth.currentUser!.id, _owner);
-    await h.close(tester);
-    tester.platformDispatcher.localesTestValue = const [Locale('ja')];
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
-    await tester.pump();
-    expect(find.byType(JabLabIdentityAppearanceGate), findsNothing);
-    expect(tester.takeException(), isNull);
-  });
+      Future<void> retained(Locale locale) async {
+        // Appearance may reload real packaged app assets. Route animation
+        // settlement alone cannot prove that real asynchronous IO completed.
+        await settleAppLoad(tester);
+        await _routeSettled(tester);
+        expect(_gate(tester, h), same(gate));
+        expect(h.probeKey.currentState, same(probeState));
+        expect(tester.state(find.byType(JabLabApp)), same(appState));
+        expect(
+          tester.state(find.byType(MotionAccountPage)),
+          same(accountState),
+        );
+        expect(Navigator.of(tester.element(account)), same(navigator));
+        expect(ModalRoute.of(tester.element(account)), same(route));
+        expect(route.isCurrent, isTrue);
+        expect(editedField, findsOneWidget);
+        expect(fieldController.text, 'retained typed draft');
+        final context = tester.element(editedField);
+        expect(Localizations.localeOf(context), locale);
+        expect(
+          Localizations.of<MotionAccountLocalizations>(
+            context,
+            MotionAccountLocalizations,
+          )!.locale,
+          locale,
+        );
+        expect(h.owners.capture(_owner), same(lifetime));
+        expect(lifetime.isActive, isTrue);
+        expect(lifetime.journalWrites.isActive, isTrue);
+        expect(h.client.auth.currentSession, same(session));
+        expect(h.runtime.isCurrentSessionVerified, isTrue);
+        expect(h.ledger.initialized, 1);
+        expect(h.ledger.disposed, 0);
+        expect(h.profileReads, 1);
+        expect(h.unexpectedRequests, 0);
+        expect(tester.takeException(), isNull);
+      }
+
+      h.preferences.selectLocale('ar');
+      h.preferences.selectTheme(AppThemePreference.dark);
+      await retained(const Locale('ar'));
+      expect(h.userRequests, calls);
+      // Ordinary verification of the unchanged Session preserves current proof.
+      // A failed/distinct credential proof has a separate owner-retirement rule.
+      await tester.runAsync(() async {
+        h.beginProof();
+        await Future<void>.delayed(Duration.zero);
+      });
+      expect(h.userRequests, calls + 1);
+      expect(h.runtime.phase.value, MotionIdentityPhase.verified);
+      expect(h.runtime.isCurrentSessionVerified, isTrue);
+      h.preferences.selectLocale(null);
+      h.preferences.selectTheme(AppThemePreference.system);
+      tester.platformDispatcher.localesTestValue = const [
+        Locale('xx'),
+        Locale('fr'),
+      ];
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      await retained(const Locale('fr'));
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(h.userRequests, calls + 1);
+      await h.finishProof(tester);
+      await retained(const Locale('fr'));
+      expect(h.runtime.isDisposed, isFalse);
+      expect(h.client.auth.currentUser!.id, _owner);
+      await h.close(tester);
+      tester.platformDispatcher.localesTestValue = const [Locale('ja')];
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      await tester.pump();
+      expect(find.byType(JabLabIdentityAppearanceGate), findsNothing);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

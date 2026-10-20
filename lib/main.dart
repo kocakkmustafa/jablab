@@ -54,11 +54,16 @@ Future<void> launchJabLab({
   ),
 }) async {
   final codec = AppPreferencesCodec(
-    supportedLocaleTags: AppLocalizations.supportedLocales.map((l) => l.toLanguageTag()),
+    supportedLocaleTags: AppLocalizations.supportedLocales.map(
+      (l) => l.toLanguageTag(),
+    ),
   );
-  final preferences = preferencesOverride ?? AppPreferencesController(
-    store: FileAppPreferencesStore(codec: codec), codec: codec,
-  );
+  final preferences =
+      preferencesOverride ??
+      AppPreferencesController(
+        store: FileAppPreferencesStore(codec: codec),
+        codec: codec,
+      );
   // Outside the identity gate. Bounded read settles before any Flutter root;
   // The same controller supplies appearance to the shell and Core blocker.
   await preferences.load();
@@ -135,9 +140,11 @@ class JabLabAccountStartupFailure extends StatelessWidget {
   Widget _material(AppPreferences value) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'JabLab',
-    locale: value.localeTag == null ? null : AppLocalizations.supportedLocales.firstWhere(
-      (locale) => locale.toLanguageTag() == value.localeTag,
-    ),
+    locale: value.localeTag == null
+        ? null
+        : AppLocalizations.supportedLocales.firstWhere(
+            (locale) => locale.toLanguageTag() == value.localeTag,
+          ),
     supportedLocales: AppLocalizations.supportedLocales,
     localeListResolutionCallback: AppLocalizations.resolve,
     localizationsDelegates: const [

@@ -337,7 +337,9 @@ void main() {
     await t.tap(reviewEntry.hitTestable());
     await t.pumpAndSettle();
     visit(StudyReviewPage, 'studyReview');
-    final recall = find.byKey(Key('study-lesson-${studyAreas.first.lessons.first.id}'));
+    final recall = find.byKey(
+      Key('study-lesson-${studyAreas.first.lessons.first.id}'),
+    );
     await Scrollable.ensureVisible(t.element(recall), alignment: .5);
     await t.pumpAndSettle();
     await t.tap(recall.hitTestable());
@@ -348,7 +350,6 @@ void main() {
     await t.tap(find.byType(BackButton));
     await t.pumpAndSettle();
     expect(find.byType(SelectPage), findsOneWidget);
-
 
     // Proposed kickboxing first-run control traversal; qualification pending.
     final kbEntry = find.byKey(const Key('open-kickboxing-course'));

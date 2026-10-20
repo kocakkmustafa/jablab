@@ -173,8 +173,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/motion_core"
-      ref: "8f38158e092c6c9fc60c8ff88ecef449802a259f"
-      resolved-ref: "8f38158e092c6c9fc60c8ff88ecef449802a259f"
+      ref: d69e10786e2f1cd509b9eeadeb3ef6ea42d93b5d
+      resolved-ref: d69e10786e2f1cd509b9eeadeb3ef6ea42d93b5d
       url: "https://github.com/kocakkmustafa/motion-core.git"
     source: git
     version: "0.13.0"

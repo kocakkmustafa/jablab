@@ -92,10 +92,18 @@ class SkeletonPreview extends StatelessWidget {
         if (skeleton != null)
           CustomPaint(
             key: const Key('skeleton-overlay'),
-            painter: _SkeletonPainter(skeleton!, state, observationColor: appearance.observation),
+            painter: _SkeletonPainter(
+              skeleton!,
+              state,
+              observationColor: appearance.observation,
+            ),
           ),
         // Foreground caption/scrim is painted after the skeleton.
-        _CameraCaption(appearance: appearance, bucket: bucket, analysisRunning: analysisRunning),
+        _CameraCaption(
+          appearance: appearance,
+          bucket: bucket,
+          analysisRunning: analysisRunning,
+        ),
       ],
     );
   }
@@ -118,65 +126,73 @@ class _CameraPlaceholder extends StatelessWidget {
 }
 
 class _CameraCaption extends StatelessWidget {
-  const _CameraCaption({required this.appearance, required this.bucket, required this.analysisRunning});
+  const _CameraCaption({
+    required this.appearance,
+    required this.bucket,
+    required this.analysisRunning,
+  });
   final JCameraCanvasAppearance appearance;
   final LiveHonestyBucket bucket;
   final bool analysisRunning;
   @override
   Widget build(BuildContext context) => Center(
-      // Foreground scrim retains alpha .81 as a draft design input.
-      // Historic ratios do not replace a new skeleton-overlap render check.
-      child: DecoratedBox(
-        key: const Key('camera-caption-scrim'),
-        decoration: BoxDecoration(
-          color: appearance.captionScrim,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Icon(bucket.icon, size: 28, color: switch (bucket) {
+    // Foreground scrim retains alpha .81 as a draft design input.
+    // Historic ratios do not replace a new skeleton-overlap render check.
+    child: DecoratedBox(
+      key: const Key('camera-caption-scrim'),
+      decoration: BoxDecoration(
+        color: appearance.captionScrim,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              bucket.icon,
+              size: 28,
+              color: switch (bucket) {
                 LiveHonestyBucket.yours => appearance.observation,
                 LiveHonestyBucket.ours => appearance.neutralIcon,
                 LiveHonestyBucket.none => appearance.noAnalysisIcon,
-              }),
-              const SizedBox(height: 8),
-              Text(
-                // İKİNCİ YARI KOŞULLU (J-250). Analiz koşmuyorken *"analysis
-                // runs without it"* basmak, ekranın hemen altındaki arıza
-                // cümlesiyle ÇELİŞİR ve yanlıştır. Sorumluluğu üstlenen ilk
-                // yarı ("left out on purpose") her hâlde doğru ve KALIYOR —
-                // önizlemenin yokluğu bir tercih, bir arıza değil.
-                //
-                // Analiz koşmuyorken SEBEP burada tekrarlanmıyor: onu
-                // `LiveCoachSurface.noVerdictReason` zaten söylüyor ve iki
-                // yüzeyin aynı sebebi iki farklı cümleyle anlatması
-                // J-047'nin elle-kopyalanmış listesi sınıfına girerdi.
-                UiLanguage.text(
-                  context,
-                  en: (analysisRunning
-                      ? 'Camera preview is left out on purpose — analysis runs '
-                            'without it'
-                      : 'Camera preview is left out on purpose'),
-                  tr: (analysisRunning
-                      ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
-                      : 'Kamera önizlemesi bilerek gösterilmiyor.'),
-                ),
-                key: const Key('camera-preview-placeholder'),
-                textAlign: TextAlign.center,
-                // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin
-                // eşiğinin (4,5) çok altında. Bu altyazı kameranın NEDEN
-                // görünmediğini açıklıyor, yani en çok iskelet çizilirken
-                // gerekiyor; okunamaz olması onu hiç yazmamakla aynı şey.
-                style: appearance.captionStyle,
+              },
+            ),
+            const SizedBox(height: 8),
+            Text(
+              // İKİNCİ YARI KOŞULLU (J-250). Analiz koşmuyorken *"analysis
+              // runs without it"* basmak, ekranın hemen altındaki arıza
+              // cümlesiyle ÇELİŞİR ve yanlıştır. Sorumluluğu üstlenen ilk
+              // yarı ("left out on purpose") her hâlde doğru ve KALIYOR —
+              // önizlemenin yokluğu bir tercih, bir arıza değil.
+              //
+              // Analiz koşmuyorken SEBEP burada tekrarlanmıyor: onu
+              // `LiveCoachSurface.noVerdictReason` zaten söylüyor ve iki
+              // yüzeyin aynı sebebi iki farklı cümleyle anlatması
+              // J-047'nin elle-kopyalanmış listesi sınıfına girerdi.
+              UiLanguage.text(
+                context,
+                en: (analysisRunning
+                    ? 'Camera preview is left out on purpose — analysis runs '
+                          'without it'
+                    : 'Camera preview is left out on purpose'),
+                tr: (analysisRunning
+                    ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
+                    : 'Kamera önizlemesi bilerek gösterilmiyor.'),
               ),
-            ],
-          ),
+              key: const Key('camera-preview-placeholder'),
+              textAlign: TextAlign.center,
+              // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin
+              // eşiğinin (4,5) çok altında. Bu altyazı kameranın NEDEN
+              // görünmediğini açıklıyor, yani en çok iskelet çizilirken
+              // gerekiyor; okunamaz olması onu hiç yazmamakla aynı şey.
+              style: appearance.captionStyle,
+            ),
+          ],
         ),
       ),
-    );
+    ),
+  );
 }
 
 /// Boks için ilgili 13 nokta + kemik bağlantıları — 33 MediaPipe noktasının
@@ -202,7 +218,11 @@ const List<(int, int)> _bones = <(int, int)>[
 const int _headPoint = Lm.nose;
 
 class _SkeletonPainter extends CustomPainter {
-  _SkeletonPainter(this.landmarks, this.state, {required this.observationColor});
+  _SkeletonPainter(
+    this.landmarks,
+    this.state, {
+    required this.observationColor,
+  });
 
   final List<PoseLandmark> landmarks;
   final LiveState state;
@@ -253,7 +273,8 @@ class _SkeletonPainter extends CustomPainter {
       canvas.drawCircle(
         _xy(i, size),
         3.2,
-        joint..color = observationColor.withValues(alpha: _alpha(i) * sceneAlpha),
+        joint
+          ..color = observationColor.withValues(alpha: _alpha(i) * sceneAlpha),
       );
     }
 
@@ -280,6 +301,7 @@ class _SkeletonPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SkeletonPainter oldDelegate) =>
-      oldDelegate.landmarks != landmarks || oldDelegate.state != state ||
+      oldDelegate.landmarks != landmarks ||
+      oldDelegate.state != state ||
       oldDelegate.observationColor != observationColor;
 }

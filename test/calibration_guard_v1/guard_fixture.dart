@@ -31,16 +31,22 @@ const correctedMarker = 'fixture-corrected';
 const fixtureStepUs = 33333;
 const fixtureGuardUs = 200000;
 const guardPose = SyntheticPose(
-  leftUpperArm: 1.35, leftForearm: -1.45,
-  rightUpperArm: 1.75, rightForearm: -1.65,
+  leftUpperArm: 1.35,
+  leftForearm: -1.45,
+  rightUpperArm: 1.75,
+  rightForearm: -1.65,
 );
 const extendedPose = SyntheticPose(
-  leftUpperArm: 0, leftForearm: 0,
-  rightUpperArm: 0, rightForearm: 0,
+  leftUpperArm: 0,
+  leftForearm: 0,
+  rightUpperArm: 0,
+  rightForearm: 0,
 );
 
 Future<Map<String, dynamic>> loadRulesJson() async =>
-    (jsonDecode(await rootBundle.loadString(ContentRepository.boxingRuleSetAsset))
+    (jsonDecode(
+              await rootBundle.loadString(ContentRepository.boxingRuleSetAsset),
+            )
             as Map)
         .cast<String, dynamic>();
 
@@ -94,17 +100,20 @@ List<PoseFrame> jabFrames({
 List<PoseFrame> steadyFrames({int offsetUs = 0, int count = 8}) => [
   for (var i = 0; i < count; i++)
     const SyntheticPoseBuilder().build(
-      guardPose, tUs: offsetUs + i * fixtureStepUs,
+      guardPose,
+      tUs: offsetUs + i * fixtureStepUs,
     ),
 ];
 
 PoseFrame hideLandmark(PoseFrame frame, int index, double visibility) =>
-    frame.copyWith(landmarks: [
-      for (var i = 0; i < frame.landmarks.length; i++)
-        i == index
-            ? frame.landmarks[i].copyWith(visibility: visibility)
-            : frame.landmarks[i],
-    ]);
+    frame.copyWith(
+      landmarks: [
+        for (var i = 0; i < frame.landmarks.length; i++)
+          i == index
+              ? frame.landmarks[i].copyWith(visibility: visibility)
+              : frame.landmarks[i],
+      ],
+    );
 
 CameraFrameEnvelope envelope(PoseFrame? frame, {int? tUs}) =>
     CameraFrameEnvelope(
@@ -118,23 +127,34 @@ CameraFrameEnvelope envelope(PoseFrame? frame, {int? tUs}) =>
     );
 
 class RecordingCues extends CueBook {
-  RecordingCues() : super(const {}, byKey: {
-    for (final entry in jabLabIssueCueMapping.entries)
-      entry.value: [jabLabVisibilityIssueCodes.contains(entry.key)
-          ? 'visibility:${entry.key}' : 'technical:${entry.key}'],
-    jabLabReadyCueKey: [readyMarker],
-    jabLabCorrectedCueKey: [correctedMarker],
-    'cue.structural': ['fixture-structural'],
-  });
+  RecordingCues()
+    : super(
+        const {},
+        byKey: {
+          for (final entry in jabLabIssueCueMapping.entries)
+            entry.value: [
+              jabLabVisibilityIssueCodes.contains(entry.key)
+                  ? 'visibility:${entry.key}'
+                  : 'technical:${entry.key}',
+            ],
+          jabLabReadyCueKey: [readyMarker],
+          jabLabCorrectedCueKey: [correctedMarker],
+          'cue.structural': ['fixture-structural'],
+        },
+      );
   final keyCalls = <String>[];
   @override
   String? sayKey(String key) {
     keyCalls.add(key);
     return super.sayKey(key);
   }
-  Iterable<String> get technicalCalls => keyCalls.where((key) =>
-      jabLabIssueCueMapping.entries.any((entry) =>
-          !jabLabVisibilityIssueCodes.contains(entry.key) && entry.value == key));
+
+  Iterable<String> get technicalCalls => keyCalls.where(
+    (key) => jabLabIssueCueMapping.entries.any(
+      (entry) =>
+          !jabLabVisibilityIssueCodes.contains(entry.key) && entry.value == key,
+    ),
+  );
 }
 
 class RawSample {
@@ -159,7 +179,12 @@ class RawProbe {
     count = 0;
     samples.clear();
   }
-  void accept(CameraFrameEnvelope input, LiveJabRunning state, {bool rearm = false}) {
+
+  void accept(
+    CameraFrameEnvelope input,
+    LiveJabRunning state, {
+    bool rearm = false,
+  }) {
     final skeleton = state.skeleton;
     if (skeleton == null) {
       engine = null;
@@ -176,11 +201,13 @@ class RawProbe {
     if (rearm) {
       current.startRound();
     }
-    final output = current.process(PoseFrame(
-      tUs: input.tUs,
-      landmarks: skeleton,
-      modelVersion: input.modelVersion,
-    ));
+    final output = current.process(
+      PoseFrame(
+        tUs: input.tUs,
+        landmarks: skeleton,
+        modelVersion: input.modelVersion,
+      ),
+    );
     if (output.completedAttempt?.completed ?? false) {
       count++;
     }
@@ -191,6 +218,7 @@ class RawProbe {
       engine = null;
     }
   }
+
   Iterable<DetectedIssue> get firstIssues => samples
       .map((sample) => sample.output)
       .whereType<EngineOutput>()
@@ -205,8 +233,10 @@ class GuardFixture {
     Future<String> Function()? modelPath,
     Object? cameraStartError,
   }) : camera = OwnedTestCamera(
-         startError: cameraStartError, libraryTag: 'guard-v1-owned-synthetic',
-       ), raw = RawProbe(rules) {
+         startError: cameraStartError,
+         libraryTag: 'guard-v1-owned-synthetic',
+       ),
+       raw = RawProbe(rules) {
     controller = LiveJabController(
       ruleSet: rules,
       cues: cues,
@@ -218,7 +248,8 @@ class GuardFixture {
       permissionPermanentlyDenied: () async => false,
       engineFactory: (size) {
         final engine = StrikingEngine(
-          ruleSet: rules, frameSize: size,
+          ruleSet: rules,
+          frameSize: size,
           allowedTechniqueIds: const {'jab'},
           calibrationMapped: false,
           provenance: const {'modelId': 'guard-test-synthetic'},
@@ -244,9 +275,12 @@ class GuardFixture {
     raw.resetSession();
     return controller.start();
   }
+
   Future<LiveJabRunning?> emit(
-    PoseFrame? frame, {int? tUs, bool rearm = false}
-  ) async {
+    PoseFrame? frame, {
+    int? tUs,
+    bool rearm = false,
+  }) async {
     if (rearm && engines.isNotEmpty) {
       engines.last.startRound();
     }
@@ -263,9 +297,13 @@ class GuardFixture {
     raw.accept(input, state, rearm: rearm);
     return state;
   }
+
   Future<void> emitAll(Iterable<PoseFrame> frames, {bool rearm = false}) async {
-    for (final frame in frames) { await emit(frame, rearm: rearm); }
+    for (final frame in frames) {
+      await emit(frame, rearm: rearm);
+    }
   }
+
   Future<void> close() async {
     if (_closed) {
       return;
@@ -283,11 +321,23 @@ class GuardFixture {
 void expectBlocked(GuardFixture fixture) {
   expect(fixture.runs, isNotEmpty);
   expect(fixture.cues.technicalCalls, isEmpty);
-  expect(fixture.cues.keyCalls.where((key) => key == jabLabCorrectedCueKey), isEmpty);
+  expect(
+    fixture.cues.keyCalls.where((key) => key == jabLabCorrectedCueKey),
+    isEmpty,
+  );
   expect(fixture.runs.every((state) => state.cue == null), isTrue);
-  expect(fixture.runs.every((state) => state.surface == LiveState.noVerdict), isTrue);
-  final valid = fixture.raw.samples.where((sample) => sample.output?.judgeable ?? false).toList();
-  expect(valid, isNotEmpty, reason: 'A no-frame/no-person path cannot satisfy this witness');
+  expect(
+    fixture.runs.every((state) => state.surface == LiveState.noVerdict),
+    isTrue,
+  );
+  final valid = fixture.raw.samples
+      .where((sample) => sample.output?.judgeable ?? false)
+      .toList();
+  expect(
+    valid,
+    isNotEmpty,
+    reason: 'A no-frame/no-person path cannot satisfy this witness',
+  );
   for (final sample in valid) {
     expect(sample.state.noVerdictReason, calibrationReason);
     expect(sample.state.bucket, LiveHonestyBucket.ours);
@@ -298,8 +348,14 @@ void expectBlocked(GuardFixture fixture) {
 }
 
 void expectFirstIssue(GuardFixture fixture, String code, String band) {
-  expect(fixture.raw.firstIssues.any((issue) => issue.code == code && issue.band == band),
-      isTrue, reason: 'Must witness an actually FIRST raw issue, not a union or an empty stream');
+  expect(
+    fixture.raw.firstIssues.any(
+      (issue) => issue.code == code && issue.band == band,
+    ),
+    isTrue,
+    reason:
+        'Must witness an actually FIRST raw issue, not a union or an empty stream',
+  );
 }
 
 // Fault-fixture preparation ONLY. It aligns an existing synthetic completion
@@ -310,8 +366,10 @@ void expectFirstIssue(GuardFixture fixture, String code, String band) {
 List<PoseFrame> correctedOpportunityFrames(RuleSet rules) {
   List<EngineOutput> trace(List<PoseFrame> frames) {
     final engine = StrikingEngine(
-      ruleSet: rules, frameSize: const FrameSize(480, 640),
-      allowedTechniqueIds: const {'jab'}, calibrationMapped: false,
+      ruleSet: rules,
+      frameSize: const FrameSize(480, 640),
+      allowedTechniqueIds: const {'jab'},
+      calibrationMapped: false,
     );
     final outputs = <EngineOutput>[];
     for (final frame in frames) {
@@ -320,16 +378,34 @@ List<PoseFrame> correctedOpportunityFrames(RuleSet rules) {
       final values = Float32List.fromList([
         for (final p in frame.landmarks) ...[p.x, p.y, p.z, p.visibility],
       ]);
-      outputs.add(engine.process(frame.copyWith(landmarks: [
-        for (var i = 0; i < values.length; i += 4)
-          PoseLandmark(values[i], values[i + 1], values[i + 2], values[i + 3]),
-      ])));
+      outputs.add(
+        engine.process(
+          frame.copyWith(
+            landmarks: [
+              for (var i = 0; i < values.length; i += 4)
+                PoseLandmark(
+                  values[i],
+                  values[i + 1],
+                  values[i + 2],
+                  values[i + 3],
+                ),
+            ],
+          ),
+        ),
+      );
     }
     return outputs;
   }
+
   final baseline = trace(jabFrames());
-  final completed = baseline.where((out) => out.completedAttempt?.completed ?? false).toList();
-  expect(completed, isNotEmpty, reason: 'Baseline synthetic movement must really complete');
+  final completed = baseline
+      .where((out) => out.completedAttempt?.completed ?? false)
+      .toList();
+  expect(
+    completed,
+    isNotEmpty,
+    reason: 'Baseline synthetic movement must really complete',
+  );
   // Constant comes from striking_engine.dart STANCE_SAMPLE scheduling, not a
   // new admissible FPS/gap/physical threshold.
   const sampleIntervalUs = 2000000;
@@ -339,31 +415,52 @@ List<PoseFrame> correctedOpportunityFrames(RuleSet rules) {
     final first = jabFrames(guardUs: alignedGuardUs + delta * fixtureStepUs);
     final second = jabFrames(offsetUs: first.last.tUs + fixtureStepUs);
     final frames = [...first, ...second];
-    final attempts = trace(frames)
-        .where((out) => out.completedAttempt?.completed ?? false).toList();
+    final attempts = trace(
+      frames,
+    ).where((out) => out.completedAttempt?.completed ?? false).toList();
     for (var i = 1; i < attempts.length; i++) {
-      final before = attempts[i - 1].issues.isEmpty ? null : attempts[i - 1].issues.first.code;
-      final current = attempts[i].issues.isEmpty ? null : attempts[i].issues.first.code;
-      if (before != null && current != before && !jabLabVisibilityIssueCodes.contains(before)) {
+      final before = attempts[i - 1].issues.isEmpty
+          ? null
+          : attempts[i - 1].issues.first.code;
+      final current = attempts[i].issues.isEmpty
+          ? null
+          : attempts[i].issues.first.code;
+      if (before != null &&
+          current != before &&
+          !jabLabVisibilityIssueCodes.contains(before)) {
         return frames;
       }
     }
   }
-  throw StateError('No non-vacuous raw completion-code-change fixture; do not skip or claim corrected coverage');
+  throw StateError(
+    'No non-vacuous raw completion-code-change fixture; do not skip or claim corrected coverage',
+  );
 }
 
 void expectRawCorrectedOpportunity(GuardFixture fixture) {
   final completed = fixture.raw.samples
-      .map((sample) => sample.output).whereType<EngineOutput>()
-      .where((out) => out.completedAttempt?.completed ?? false).toList();
+      .map((sample) => sample.output)
+      .whereType<EngineOutput>()
+      .where((out) => out.completedAttempt?.completed ?? false)
+      .toList();
   expect(completed.length, greaterThanOrEqualTo(2));
   var opportunities = 0;
   for (var i = 1; i < completed.length; i++) {
-    final before = completed[i - 1].issues.isEmpty ? null : completed[i - 1].issues.first.code;
-    final current = completed[i].issues.isEmpty ? null : completed[i].issues.first.code;
-    if (before != null && current != before && !jabLabVisibilityIssueCodes.contains(before)) {
+    final before = completed[i - 1].issues.isEmpty
+        ? null
+        : completed[i - 1].issues.first.code;
+    final current = completed[i].issues.isEmpty
+        ? null
+        : completed[i].issues.first.code;
+    if (before != null &&
+        current != before &&
+        !jabLabVisibilityIssueCodes.contains(before)) {
       opportunities++;
     }
   }
-  expect(opportunities, greaterThan(0), reason: 'No corrected suppression claim from an unarmed event');
+  expect(
+    opportunities,
+    greaterThan(0),
+    reason: 'No corrected suppression claim from an unarmed event',
+  );
 }
