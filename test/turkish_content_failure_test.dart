@@ -8,11 +8,11 @@ void main() {
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
-        .localeTestValue = const Locale('tr');
+        .localesTestValue = <Locale>[const Locale('tr')];
   });
   tearDown(() => TestWidgetsFlutterBinding.ensureInitialized()
       .platformDispatcher
-      .clearLocaleTestValue());
+      .clearLocalesTestValue());
 
   testWidgets('integrity failure explains responsibility without retry',
       (WidgetTester tester) async {

@@ -64,7 +64,7 @@ void main() {
       testWidgets(
         '${path.entry} recall link opens its $language lesson with camera off',
         (tester) async {
-          tester.platformDispatcher.localeTestValue = Locale(language);
+          tester.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
           tester.view.physicalSize = const Size(375, 812);
           tester.view.devicePixelRatio = 1;
           final owners = OwnerResourceRegistry();
@@ -88,7 +88,7 @@ void main() {
             for (final channel in channels) {
               messenger.setMockMethodCallHandler(channel, null);
             }
-            tester.platformDispatcher.clearLocaleTestValue();
+            tester.platformDispatcher.clearLocalesTestValue();
             tester.view.resetPhysicalSize();
             tester.view.resetDevicePixelRatio();
           });

@@ -57,8 +57,8 @@ void main() {
     testWidgets('settings explains course and closed sales in $locale', (
       tester,
     ) async {
-      tester.platformDispatcher.localeTestValue = Locale(locale);
-      addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+      tester.platformDispatcher.localesTestValue = <Locale>[Locale(locale)];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
       await tester.pumpWidget(
         MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
           home: SettingsPage(

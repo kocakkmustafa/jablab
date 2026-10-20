@@ -66,8 +66,8 @@ void main() {
 
   for (final language in ['tr','en']) {
     testWidgets('post-report 24/24 endpoint $language retracts on Compare and returns only after fresh facts plus a fresh report', (t) async {
-      t.platformDispatcher.localeTestValue = Locale(language);
-      addTearDown(t.platformDispatcher.clearLocaleTestValue);
+      t.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+      addTearDown(t.platformDispatcher.clearLocalesTestValue);
       await yangOpen(t,scale:2.2); final course = yangCourse();
       for (final target in course.targets.take(23)) {
         await yangTap(t,'yang16-target-${target.id}'); await yangPrepare(t,target,language:language);
@@ -101,8 +101,8 @@ void main() {
 
   for (final language in ['tr','en']) {
     testWidgets('all24 $language targets alone reach the honest per-visit written endpoint', (t) async {
-      t.platformDispatcher.localeTestValue = Locale(language);
-      addTearDown(t.platformDispatcher.clearLocaleTestValue);
+      t.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+      addTearDown(t.platformDispatcher.clearLocalesTestValue);
       await yangOpen(t, scale:2.2); final course = yangCourse();
       for (var i = 0; i < course.reading.length; i++) {
         await yangExact(t, 'yang16-overview-reading-$i', course.reading[i], language);

@@ -9,8 +9,8 @@ void main() {
   for (final language in ['tr','en']) {
     for (final scale in [1.0,2.2]) {
       testWidgets('all24 original $language targets preserve hidden keys and same-target correction at scale$scale', (t) async {
-        t.platformDispatcher.localeTestValue = Locale(language);
-        addTearDown(t.platformDispatcher.clearLocaleTestValue);
+        t.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+        addTearDown(t.platformDispatcher.clearLocalesTestValue);
         await t.binding.setSurfaceSize(const Size(360,800));
         addTearDown(() => t.binding.setSurfaceSize(null));
         final semantics = t.ensureSemantics();

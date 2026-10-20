@@ -12,8 +12,8 @@ void main() {
     testWidgets(
       'kb-12 $language has calibration/phase state with no measurement or completion',
       (t) async {
-        t.platformDispatcher.localeTestValue = Locale(language);
-        addTearDown(t.platformDispatcher.clearLocaleTestValue);
+        t.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+        addTearDown(t.platformDispatcher.clearLocalesTestValue);
         await t.binding.setSurfaceSize(const Size(320, 640));
         addTearDown(() => t.binding.setSurfaceSize(null));
         final course = KickboxingCourse.fromJsonString(

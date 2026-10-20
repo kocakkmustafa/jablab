@@ -8,11 +8,11 @@ void main() {
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
-        .localeTestValue = const Locale('tr');
+        .localesTestValue = <Locale>[const Locale('tr')];
   });
   tearDown(() => TestWidgetsFlutterBinding.ensureInitialized()
       .platformDispatcher
-      .clearLocaleTestValue());
+      .clearLocalesTestValue());
 
   testWidgets('session steps and advance control use Turkish',
       (WidgetTester tester) async {

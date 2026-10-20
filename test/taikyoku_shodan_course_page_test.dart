@@ -77,8 +77,8 @@ Future<void> _prepareReport(WidgetTester t, TaikyokuLesson lesson) async {
 void main() {
   for (final language in ['tr','en']) {
     testWidgets('all10 $language lessons and20 counts render exact teaching at large text with keys hidden', (t) async {
-      t.platformDispatcher.localeTestValue = Locale(language);
-      addTearDown(t.platformDispatcher.clearLocaleTestValue);
+      t.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+      addTearDown(t.platformDispatcher.clearLocalesTestValue);
       await t.binding.setSurfaceSize(const Size(360,800));
       addTearDown(() => t.binding.setSurfaceSize(null));
       final semantics = t.ensureSemantics();

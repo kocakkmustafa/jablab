@@ -26,11 +26,11 @@ void main() {
   Future<void> smallSurface(WidgetTester t, String language) async {
     t.view.physicalSize = const Size(320, 900);
     t.view.devicePixelRatio = 1;
-    t.binding.platformDispatcher.localeTestValue = Locale(language);
+    t.binding.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
     t.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(t.view.resetPhysicalSize);
     addTearDown(t.view.resetDevicePixelRatio);
-    addTearDown(t.binding.platformDispatcher.clearLocaleTestValue);
+    addTearDown(t.binding.platformDispatcher.clearLocalesTestValue);
     addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
   }
 

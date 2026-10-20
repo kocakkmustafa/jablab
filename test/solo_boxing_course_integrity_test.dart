@@ -235,6 +235,7 @@ void main() {
       );
     });
     await settleAppLoad(tester);
+    await settleUntil(tester, find.byType(ContentFailureScreen));
     await tester.pumpAndSettle();
 
     expect(find.byType(ContentFailureScreen), findsOneWidget);
@@ -261,6 +262,7 @@ void main() {
       );
     });
     await settleAppLoad(tester);
+    await settleUntil(tester, find.byType(ContentFailureScreen));
     await tester.pumpAndSettle();
     expect(find.byType(ContentFailureScreen), findsOneWidget);
     expect(find.byKey(const Key('failure-retry')), findsNothing);
@@ -288,6 +290,7 @@ void main() {
           );
         });
         await settleAppLoad(tester);
+        await settleUntil(tester, find.byType(ContentFailureScreen));
         await tester.pumpAndSettle();
         expect(find.byType(ContentFailureScreen), findsOneWidget);
         expect(find.byKey(const Key('failure-retry')), findsNothing);

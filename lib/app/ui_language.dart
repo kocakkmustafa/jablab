@@ -36,10 +36,14 @@ class AppLocalizations {
     for (final locale in preferred ?? const <Locale>[]) {
       for (final candidate in supported) {
         if (candidate.toLanguageTag().toLowerCase() ==
-            locale.toLanguageTag().toLowerCase()) return candidate;
+            locale.toLanguageTag().toLowerCase()) {
+          return candidate;
+        }
       }
       for (final candidate in supported) {
-        if (candidate.languageCode == locale.languageCode) return candidate;
+        if (candidate.languageCode == locale.languageCode) {
+          return candidate;
+        }
       }
     }
     return const Locale('en');
@@ -143,13 +147,19 @@ abstract final class UiLanguage {
   static String number(BuildContext context, num value) =>
       NumberFormat.decimalPattern(tag(context)).format(value);
   static String duration(BuildContext context, int seconds) {
-    if (seconds <= 0) return text(context,
-      en: 'no time recorded', tr: 'süre kaydedilmedi');
-    if (seconds < 60) return text(context,
-      en: 'under a minute', tr: 'bir dakikadan az');
+    if (seconds <= 0) {
+      return text(context,
+        en: 'no time recorded', tr: 'süre kaydedilmedi');
+    }
+    if (seconds < 60) {
+      return text(context,
+        en: 'under a minute', tr: 'bir dakikadan az');
+    }
     final minutes = seconds ~/ 60;
-    if (minutes < 60) return format(context,
-      en: '{minutes} min', tr: '{minutes} dk', args: {'minutes': minutes});
+    if (minutes < 60) {
+      return format(context,
+        en: '{minutes} min', tr: '{minutes} dk', args: {'minutes': minutes});
+    }
     final hours = minutes ~/ 60;
     final remaining = minutes % 60;
     return remaining == 0

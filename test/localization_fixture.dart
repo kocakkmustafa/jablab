@@ -14,15 +14,23 @@ const testLocalizationDelegates = <LocalizationsDelegate<dynamic>>[
 Locale resolveTestLocales(List<Locale>? preferred, Iterable<Locale> supported) =>
     AppLocalizations.resolve(preferred, supported);
 
-Future<void> settleTestLocalizations(WidgetTester tester) async {
+Future<void> settleTestLocalizations(
+  WidgetTester tester, {
+  Locale? expectedLocale,
+}) async {
   final app = tester.widget<MaterialApp>(find.byType(MaterialApp).first);
-  final expected = app.locale ?? AppLocalizations.resolve(
+  final expected = expectedLocale ?? app.locale ?? AppLocalizations.resolve(
     tester.binding.platformDispatcher.locales, testSupportedLocales);
   for (var attempt = 0; attempt < 40; attempt++) {
     await tester.pump();
     for (final element in [...find.byType(Scaffold).evaluate(), ...find.byType(Text).evaluate()]) {
       final resources = Localizations.of<AppLocalizations>(element, AppLocalizations);
-      if (resources?.locale == expected) return;
+      if (resources != null && resources.locale == expected) {
+        expect(Localizations.localeOf(element), expected);
+        expect(resources.loadFailed, isFalse);
+        expect(resources.complete, isTrue);
+        return;
+      }
     }
     await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
   }

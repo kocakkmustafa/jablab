@@ -93,8 +93,9 @@ void main() {
   }
 
   testWidgets('explicit locale overrides device and live change rebuilds route', (tester) async {
-    tester.binding.platformDispatcher.localeTestValue=const Locale('tr');
-    addTearDown(tester.binding.platformDispatcher.clearLocaleTestValue);
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(tester.binding.platformDispatcher.clearLocalesTestValue);
+    expect(tester.binding.platformDispatcher.locales, <Locale>[const Locale('tr')]);
     final locale=ValueNotifier<Locale>(const Locale('fr'));
     addTearDown(locale.dispose);
     await tester.pumpWidget(ValueListenableBuilder<Locale>(valueListenable:locale,

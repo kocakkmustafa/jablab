@@ -117,8 +117,8 @@ void main() {
     testWidgets('current course and closed camera intro in $language', (
       tester,
     ) async {
-      tester.platformDispatcher.localeTestValue = Locale(language);
-      addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+      tester.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
       await pumpOnboarding(tester);
       expect(
         find.textContaining(

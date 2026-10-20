@@ -57,8 +57,8 @@ void main() {
   testWidgets('Turkish catalog keeps live and closed discipline copy Turkish', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
-    addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
@@ -92,8 +92,8 @@ void main() {
   testWidgets('Turkish boxing honesty keeps measured limits accurate', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
-    addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
@@ -119,8 +119,8 @@ void main() {
   testWidgets('Turkish honesty onboarding uses translated explanation', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
-    addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
@@ -149,9 +149,9 @@ void main() {
   testWidgets(
     'Turkish boxing course shows localized metadata and lock reason',
     (WidgetTester tester) async {
-      tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
+      tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
       addTearDown(
-        () => tester.binding.platformDispatcher.clearLocaleTestValue(),
+        () => tester.binding.platformDispatcher.clearLocalesTestValue(),
       );
 
       final ShellLibrary library = await loadLibrary(tester);
@@ -204,8 +204,8 @@ void main() {
   testWidgets('Changed English source is shown instead of stale translation', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
-    addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
     await tester.pumpWidget(
       MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
         home: Builder(
@@ -223,8 +223,8 @@ void main() {
   testWidgets('Turkish scope page translates all authored exclusions', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
-    addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
 
     final ShellLibrary library = await loadLibrary(tester);
     late List<ShellExclusion> translated;
@@ -264,8 +264,8 @@ void main() {
   testWidgets('Changed exclusion rationale falls back to its source', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
-    addTearDown(() => tester.binding.platformDispatcher.clearLocaleTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
     late ShellExclusion translated;
     const ShellExclusion changed = ShellExclusion(
       'Brazilian Jiu-Jitsu',
@@ -291,9 +291,9 @@ void main() {
   testWidgets(
     'Turkish lesson heading stays localized after course navigation',
     (WidgetTester tester) async {
-      tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
+      tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
       addTearDown(
-        () => tester.binding.platformDispatcher.clearLocaleTestValue(),
+        () => tester.binding.platformDispatcher.clearLocalesTestValue(),
       );
 
       final ShellLibrary library = await loadLibrary(tester);
@@ -365,9 +365,9 @@ void main() {
   testWidgets(
     'All authored Boxing teach bodies have source-matched Turkish copy',
     (WidgetTester tester) async {
-      tester.binding.platformDispatcher.localeTestValue = const Locale('tr');
+      tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
       addTearDown(
-        () => tester.binding.platformDispatcher.clearLocaleTestValue(),
+        () => tester.binding.platformDispatcher.clearLocalesTestValue(),
       );
       final Map<String, String> authored = await loadAuthoredTeach(tester);
       late Map<String, String> translated;

@@ -8,7 +8,6 @@ import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/owner_resource_lifetime.dart';
 import 'package:jablab/app/solo_boxing_course.dart';
 import 'package:jablab/app/solo_boxing_course_page.dart';
-import 'package:jablab/app/solo_boxing_progress.dart';
 
 import 'app_pump.dart';
 
@@ -32,15 +31,29 @@ void main() {
   });
   tearDown(() => directory.deleteSync(recursive: true));
 
+  Finder lessonScroll() => find.descendant(
+    of: find.byKey(const Key('solo-lesson-list')),
+    matching: find.byType(Scrollable),
+  ).first;
+
+  Finder pageScroll() => find.byType(SoloBoxingLessonPage).evaluate().isNotEmpty
+      ? lessonScroll()
+      : find.descendant(
+          of: find.byType(SoloBoxingCoursePage),
+          matching: find.byType(Scrollable),
+        ).first;
+
   Future<void> reveal(WidgetTester tester, Finder target) async {
     await tester.scrollUntilVisible(
       target,
       300,
       maxScrolls: 20,
-      scrollable: find.byType(Scrollable).last,
+      scrollable: pageScroll(),
     );
+    expect(target, findsOneWidget);
     await Scrollable.ensureVisible(tester.element(target), alignment: .5);
     await tester.pumpAndSettle();
+    expect(target.hitTestable(), findsOneWidget);
   }
 
   Future<void> openFirstLesson(WidgetTester tester) async {
@@ -66,8 +79,8 @@ void main() {
   for (final turkish in [false, true]) {
     for (final wrongType in [false, true]) {
       testWidgets('unreadable ${wrongType ? 'directory' : 'JSON'} ${turkish ? 'TR' : 'EN'} keeps lessons readable without zero totals', (tester) async {
-        tester.binding.platformDispatcher.localeTestValue = Locale(turkish ? 'tr' : 'en');
-        addTearDown(tester.binding.platformDispatcher.clearLocaleTestValue);
+        tester.binding.platformDispatcher.localesTestValue = <Locale>[Locale(turkish ? 'tr' : 'en')];
+        addTearDown(tester.binding.platformDispatcher.clearLocalesTestValue);
         final file = courseFileFor(directory, null);
         const raw = '{preserve this broken progress';
         if (wrongType) {
@@ -77,7 +90,7 @@ void main() {
           file.writeAsStringSync(raw);
         }
         await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)));
-    await settleTestLocalizations(tester);
+    await settleTestLocalizations(tester, expectedLocale: Locale(turkish ? 'tr' : 'en'));
         await settleUntil(tester, find.byKey(const Key('solo-progress-unavailable')));
         expect(find.byKey(const Key('solo-course-progress')), findsNothing);
         expect(find.byType(LinearProgressIndicator), findsNothing);
@@ -86,7 +99,7 @@ void main() {
         await openFirstLesson(tester);
         await expectReadOnlyLesson(tester);
         final step = find.text(turkish ? course.lessons.first.steps.first.tr : course.lessons.first.steps.first.en);
-        await tester.scrollUntilVisible(step, -300, maxScrolls: 20, scrollable: find.byType(Scrollable).last);
+        await tester.scrollUntilVisible(step, -300, maxScrolls: 20, scrollable: pageScroll());
         expect(step, findsOneWidget);
         expect(File(wrongType ? '${file.path}/sentinel' : file.path).readAsStringSync(), raw);
         expect(FileSystemEntity.typeSync('${file.path}.tmp', followLinks: false), FileSystemEntityType.notFound);
@@ -130,7 +143,7 @@ void main() {
       notice,
       -300,
       maxScrolls: 20,
-      scrollable: find.byType(Scrollable).last,
+      scrollable: pageScroll(),
     );
     expect(notice, findsOneWidget);
     expect(find.textContaining('Practise again'), findsNothing);

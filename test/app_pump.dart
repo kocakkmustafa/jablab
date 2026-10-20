@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:jablab/app/ui_language.dart';
 
 /// UYGULAMA KÖKÜNÜ YÜKLENENE KADAR PUMP'LA — sabit gecikmenin yerine (J-219).
 ///
@@ -29,20 +30,33 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// ## Ölçüt: SÜRE değil, DURUM
 ///
-/// `_Root` içerik **ve** karşılama bayrağı gelene kadar
-/// `CircularProgressIndicator` çiziyor (`jablab_app.dart`). Yükleme bittiğinde
-/// — başarıyla **ya da** hata ekranıyla — gösterge kalkar. Beklenen şey bu.
+/// Yerelleştirme delegesi yüklenip gerçek bir kök Scaffold çizildikten sonra
+/// içerik ve karşılama yükleme göstergesinin kalkmasını bekler. Delegeden önce
+/// boş ağaçta gösterge bulunmaması hazır oluş değildir.
 ///
-/// **Sınırlı** (~2 s): takılan bir yükleme *sessizce beklemez*. Süre dolarsa
-/// döngü çıkar ve çağıranın `pumpAndSettle`ı sonsuz animasyonda **patlar** —
-/// yani başarısızlık görünür kalır, gizlenmez.
+/// Sınırlı (~2 s); hazır durum oluşmazsa açıkça hata verir.
 Future<void> settleAppLoad(WidgetTester t) async {
+  final app = t.widget<MaterialApp>(find.byType(MaterialApp).first);
+  final expected = app.locale ?? AppLocalizations.resolve(
+    t.binding.platformDispatcher.locales, AppLocalizations.supportedLocales);
   for (int i = 0; i < 40; i++) {
-    if (find.byType(CircularProgressIndicator).evaluate().isEmpty) return;
-    await t
-        .runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
     await t.pump();
+    final rootReady = find.byType(Scaffold).evaluate().any((element) {
+      final resources = Localizations.of<AppLocalizations>(
+        element, AppLocalizations);
+      return resources != null && resources.locale == expected &&
+          !resources.loadFailed && resources.complete &&
+          Localizations.localeOf(element) == expected;
+    });
+    if (rootReady &&
+        find.byType(CircularProgressIndicator).evaluate().isEmpty) return;
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)));
   }
+  throw TestFailure(
+    'App localization/root did not become ready for $expected; '
+    'scaffolds=${find.byType(Scaffold).evaluate().length}, '
+    'loading=${find.byType(CircularProgressIndicator).evaluate().length}');
 }
 
 /// Belirli bir widget GÖRÜNENE kadar pump'la — sınırlı.

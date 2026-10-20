@@ -208,15 +208,19 @@ final _countTemplates = <({RegExp pattern, String en, String tr})>[
 
 String localizedCue(BuildContext context, String source) {
   final translated = cueCopies[source];
-  if (translated != null) return UiLanguage.text(context, en: source, tr: translated);
+  if (translated != null) {
+    return UiLanguage.text(context, en: source, tr: translated);
+  }
   // Only four authored numeric announcement templates. Full anchoring avoids
   // interpreting an arbitrary message, code or user text as a known cue.
   for (final template in _countTemplates) {
     final match = template.pattern.firstMatch(source);
     if (match != null) {
       final count = int.tryParse(match[1]!);
-      if (count != null) return UiLanguage.format(context,
-        en: template.en, tr: template.tr, args: {'n': count});
+      if (count != null) {
+        return UiLanguage.format(context,
+          en: template.en, tr: template.tr, args: {'n': count});
+      }
     }
   }
   return source;

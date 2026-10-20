@@ -72,8 +72,8 @@ void main() {
     testWidgets('all 14 $language lessons remain usable at large text scale', (
       tester,
     ) async {
-      tester.platformDispatcher.localeTestValue = Locale(language);
-      addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+      tester.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
       final semantics = tester.ensureSemantics();
       try {
         await open(tester, textScale: 2);
@@ -214,8 +214,8 @@ void main() {
     testWidgets('$language lesson renders translated task and hidden answer', (
       tester,
     ) async {
-      tester.platformDispatcher.localeTestValue = Locale(language);
-      addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+      tester.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
       await open(tester);
       await lesson(tester);
       final first = course().lessons.first;

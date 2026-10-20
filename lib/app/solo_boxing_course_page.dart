@@ -235,7 +235,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
     try {
       SoloLessonProgress? initialProgress;
       bool readOnly = _progressUnavailable || store == null;
-      if (!readOnly && store != null) {
+      if (!readOnly) {
         try {
           final SoloCourseProgress viewed = await store.markViewed(
             course,
