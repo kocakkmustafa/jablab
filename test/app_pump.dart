@@ -56,7 +56,8 @@ Future<void> settleAppLoad(WidgetTester t) async {
           resources.complete &&
           Localizations.localeOf(element) == expected;
     });
-    if (rootReady && find.byType(CircularProgressIndicator).evaluate().isEmpty) {
+    if (rootReady &&
+        find.byType(CircularProgressIndicator).evaluate().isEmpty) {
       return;
     }
     await t.runAsync(

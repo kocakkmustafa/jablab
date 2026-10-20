@@ -218,10 +218,11 @@ void main() {
           return Future<Directory>.value(tmp);
         },
       );
-      await t.runAsync(() => t.pumpWidget(JabLabApp(
-        onboarding: controlledStore,
-        repository: repository,
-      )));
+      await t.runAsync(
+        () => t.pumpWidget(
+          JabLabApp(onboarding: controlledStore, repository: repository),
+        ),
+      );
       await settleTestLocalizations(t);
       for (var attempt = 0; attempt < 40; attempt++) {
         await t.runAsync(() async {
@@ -234,12 +235,23 @@ void main() {
           break;
         }
       }
-      expect(content.servedStrings, containsAll(_OnboardingMemoryContent.stringPaths));
-      expect(content.bundle.requests.where((key) =>
-        key == ContentRepository.soloBoxingIntegrityManifestAsset), hasLength(1));
+      expect(
+        content.servedStrings,
+        containsAll(_OnboardingMemoryContent.stringPaths),
+      );
+      expect(
+        content.bundle.requests.where(
+          (key) => key == ContentRepository.soloBoxingIntegrityManifestAsset,
+        ),
+        hasLength(1),
+      );
       // Core verifies the asset once, then the host reads/parses it once more.
-      expect(content.bundle.requests.where((key) =>
-        key == ContentRepository.soloBoxingCourseAsset), hasLength(2));
+      expect(
+        content.bundle.requests.where(
+          (key) => key == ContentRepository.soloBoxingCourseAsset,
+        ),
+        hasLength(2),
+      );
       expect(content.allInputsServed, isTrue);
       expect(historyProviderCalls, 1);
       expect(historyRequestedWhileSeenPending, isTrue);
@@ -465,7 +477,6 @@ void _settingsCountGate() {
   });
 }
 
-
 class _ControlledSeenStore extends OnboardingStore {
   _ControlledSeenStore(this.pending);
   final Completer<bool> pending;
@@ -521,10 +532,14 @@ class _OnboardingMemoryContent {
   }
 
   bool get allInputsServed =>
-    servedStrings.containsAll(stringPaths) &&
-    bundle.requests.contains(ContentRepository.soloBoxingIntegrityManifestAsset) &&
-    bundle.requests.where((key) =>
-      key == ContentRepository.soloBoxingCourseAsset).length == 2;
+      servedStrings.containsAll(stringPaths) &&
+      bundle.requests.contains(
+        ContentRepository.soloBoxingIntegrityManifestAsset,
+      ) &&
+      bundle.requests
+              .where((key) => key == ContentRepository.soloBoxingCourseAsset)
+              .length ==
+          2;
 }
 
 class _OnboardingMemoryBundle extends AssetBundle {
