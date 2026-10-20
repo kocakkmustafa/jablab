@@ -10,9 +10,12 @@ import 'ui_language.dart';
 
 String _text(BuildContext context, KarateCopy copy) =>
     UiLanguage.text(context, en: copy.en, tr: copy.tr);
-String _label(BuildContext context, String en, String tr,
-    {Map<String, Object> args = const {}}) =>
-    UiLanguage.format(context, en: en, tr: tr, args: args);
+String _label(
+  BuildContext context,
+  String en,
+  String tr, {
+  Map<String, Object> args = const {},
+}) => UiLanguage.format(context, en: en, tr: tr, args: args);
 
 class KarateCourseEntryCard extends StatelessWidget {
   const KarateCourseEntryCard({super.key, required this.onOpen});
@@ -187,7 +190,8 @@ class _KarateLessonPageState extends State<KarateLessonPage>
               l.physicalPrerequisiteIds.isEmpty
                   ? 'Yalnız yazılı görev; kursun fiziksel gereksinimleri karşılanmamıştır.'
                   : 'Karşılanmamış teknik gereksinimler: {value1}',
-             args: {'value1': l.physicalPrerequisiteIds.join(', ')},),
+              args: {'value1': l.physicalPrerequisiteIds.join(', ')},
+            ),
             key: const Key('karate-physical-prerequisites'),
           ),
           Text(
@@ -592,14 +596,18 @@ class _KarateCoursePageState extends State<KarateCoursePage>
               padding: const EdgeInsets.all(20),
               children: [
                 if (widget.onOpenTaikyokuCourse != null)
-                  TaikyokuCourseEntryCard(onOpen: () {
-                    if (!_retired && widget.resourceAdmission?.value != false &&
-                        _overview?.isCurrent == true &&
-                        (WidgetsBinding.instance.lifecycleState == null ||
-                         WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed)) {
-                      widget.onOpenTaikyokuCourse!();
-                    }
-                  }),
+                  TaikyokuCourseEntryCard(
+                    onOpen: () {
+                      if (!_retired &&
+                          widget.resourceAdmission?.value != false &&
+                          _overview?.isCurrent == true &&
+                          (WidgetsBinding.instance.lifecycleState == null ||
+                              WidgetsBinding.instance.lifecycleState ==
+                                  AppLifecycleState.resumed)) {
+                        widget.onOpenTaikyokuCourse!();
+                      }
+                    },
+                  ),
                 Text(
                   _text(context, course.title),
                   style: Theme.of(context).textTheme.headlineSmall,
@@ -629,7 +637,8 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                     context,
                     '{value1}/16 written reviews reported this visit; physical components unattempted.',
                     'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
-                   args: {'value1': _written.length},),
+                    args: {'value1': _written.length},
+                  ),
                   key: const Key('karate-written-progress'),
                 ),
                 if (_written.length == course.lessons.length)

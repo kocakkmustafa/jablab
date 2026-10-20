@@ -19,11 +19,15 @@ Future<void> open(
   Future<MuayThaiCourse> Function()? loader,
 }) async {
   await t.pumpWidget(
-    MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+    MaterialApp(
+      supportedLocales: testSupportedLocales,
+      localizationsDelegates: testLocalizationDelegates,
+      localeListResolutionCallback: resolveTestLocales,
       navigatorObservers: observer == null ? [] : [observer],
       builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context)
-            .copyWith(textScaler: const TextScaler.linear(2)),
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: const TextScaler.linear(2)),
         child: child!,
       ),
       home: Builder(
@@ -44,7 +48,7 @@ Future<void> open(
       ),
     ),
   );
-    await settleTestLocalizations(t);
+  await settleTestLocalizations(t);
   await t.tap(find.text('Open'));
   await t.pumpAndSettle();
 }
@@ -136,15 +140,32 @@ void main() {
             );
             await show(t, const Key('muay-thai-written-task'));
             expect(
-              t.widget<Text>(find.byKey(const Key('muay-thai-written-task'))).data,
+              t
+                  .widget<Text>(find.byKey(const Key('muay-thai-written-task')))
+                  .data,
               language == 'tr' ? l.writtenTask.tr : l.writtenTask.en,
             );
             await show(t, const Key('muay-thai-physical-prerequisites'));
-            final prerequisites = t.widget<Text>(find.byKey(const Key('muay-thai-physical-prerequisites'))).data!;
-            expect(prerequisites, startsWith(language == 'tr'
-              ? (l.physicalPrerequisiteIds.isEmpty ? 'Yalnız yazılı görev' : 'Karşılanmamış teknik gereksinimler:')
-              : (l.physicalPrerequisiteIds.isEmpty ? 'Written task only' : 'Unmet technique requirements:')));
-            for (final id in l.physicalPrerequisiteIds) { expect(prerequisites, contains(id)); }
+            final prerequisites = t
+                .widget<Text>(
+                  find.byKey(const Key('muay-thai-physical-prerequisites')),
+                )
+                .data!;
+            expect(
+              prerequisites,
+              startsWith(
+                language == 'tr'
+                    ? (l.physicalPrerequisiteIds.isEmpty
+                          ? 'Yalnız yazılı görev'
+                          : 'Karşılanmamış teknik gereksinimler:')
+                    : (l.physicalPrerequisiteIds.isEmpty
+                          ? 'Written task only'
+                          : 'Unmet technique requirements:'),
+              ),
+            );
+            for (final id in l.physicalPrerequisiteIds) {
+              expect(prerequisites, contains(id));
+            }
             if (l.number == 15) {
               t
                   .state<ScrollableState>(find.byType(Scrollable).first)
@@ -215,7 +236,9 @@ void main() {
             await show(t, const Key('muay-thai-retest-guidance'));
             expect(
               t
-                  .widget<Text>(find.byKey(const Key('muay-thai-retest-guidance')))
+                  .widget<Text>(
+                    find.byKey(const Key('muay-thai-retest-guidance')),
+                  )
                   .data,
               language == 'tr' ? l.retest.tr : l.retest.en,
             );
@@ -288,7 +311,10 @@ void main() {
     addTearDown(owner.dispose);
     final pending = Completer<MuayThaiCourse>();
     await t.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: MuayThaiCoursePage(
           loader: () => pending.future,
           accountUserId: owner,
@@ -320,7 +346,9 @@ void main() {
       await show(t, const Key('muay-thai-report-written'));
       expect(
         t
-            .widget<TextButton>(find.byKey(const Key('muay-thai-report-written')))
+            .widget<TextButton>(
+              find.byKey(const Key('muay-thai-report-written')),
+            )
             .onPressed,
         isNull,
       );
@@ -335,7 +363,9 @@ void main() {
       await show(t, const Key('muay-thai-report-written'));
       expect(
         t
-            .widget<TextButton>(find.byKey(const Key('muay-thai-report-written')))
+            .widget<TextButton>(
+              find.byKey(const Key('muay-thai-report-written')),
+            )
             .onPressed,
         isNull,
       );
@@ -354,7 +384,9 @@ void main() {
       await show(t, const Key('muay-thai-report-written'));
       expect(
         t
-            .widget<TextButton>(find.byKey(const Key('muay-thai-report-written')))
+            .widget<TextButton>(
+              find.byKey(const Key('muay-thai-report-written')),
+            )
             .onPressed,
         isNull,
       );

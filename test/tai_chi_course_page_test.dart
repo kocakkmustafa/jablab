@@ -17,7 +17,10 @@ Future<void> open(
   double textScale = 1,
 }) async {
   await tester.pumpWidget(
-    MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+    MaterialApp(
+      supportedLocales: testSupportedLocales,
+      localizationsDelegates: testLocalizationDelegates,
+      localeListResolutionCallback: resolveTestLocales,
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(
           context,
@@ -42,7 +45,7 @@ Future<void> open(
       ),
     ),
   );
-    await settleTestLocalizations(tester);
+  await settleTestLocalizations(tester);
   await tester.tap(find.text('Open'));
   await tester.pumpAndSettle();
 }
@@ -317,7 +320,10 @@ void main() {
     final owner = ValueNotifier<String?>('a');
     // Avoid pumpAndSettle while the deliberate pending loader shows a spinner.
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (context) => Scaffold(
             body: TextButton(

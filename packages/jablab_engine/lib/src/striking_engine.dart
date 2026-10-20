@@ -61,7 +61,8 @@ final class AttemptDigest {
   bool get completed => outcome == AttemptOutcome.completed;
 
   @override
-  String toString() => 'AttemptDigest($techniqueId/${limb.name}, '
+  String toString() =>
+      'AttemptDigest($techniqueId/${limb.name}, '
       '${outcome.name}, ext=${extensionMs?.toStringAsFixed(1)}ms, $tempoBand)';
 }
 
@@ -172,25 +173,32 @@ final class StrikingEngine {
     CueGate? cueGate,
     Set<String>? allowedTechniqueIds,
     this.provenance = const <String, String>{},
-  })  : clock = clock ?? StopwatchMotionClock.start(),
-        cueGate = cueGate ?? CueGate(),
-        _pipeline = pipeline ??
-            PosePipeline(
-              // Filtre config'ten gelir: eşikler ve filtre AYRI AYRI
-              // değiştirilemez (M-C-07/J-016). Varsayılan çekirdek filtresi
-              // (1 Hz) bir yumruğu yok eder — ölçüldü.
-              smoother: PoseSmoother(
-                minCutoff: ruleSet.smoothingMinCutoff,
-                beta: ruleSet.smoothingBeta,
-                derivativeCutoff: ruleSet.smoothingDerivativeCutoff,
-              ),
-            ) {
-    final allowed = allowedTechniqueIds == null ? null : Set<String>.of(allowedTechniqueIds);
+  }) : clock = clock ?? StopwatchMotionClock.start(),
+       cueGate = cueGate ?? CueGate(),
+       _pipeline =
+           pipeline ??
+           PosePipeline(
+             // Filtre config'ten gelir: eşikler ve filtre AYRI AYRI
+             // değiştirilemez (M-C-07/J-016). Varsayılan çekirdek filtresi
+             // (1 Hz) bir yumruğu yok eder — ölçüldü.
+             smoother: PoseSmoother(
+               minCutoff: ruleSet.smoothingMinCutoff,
+               beta: ruleSet.smoothingBeta,
+               derivativeCutoff: ruleSet.smoothingDerivativeCutoff,
+             ),
+           ) {
+    final allowed = allowedTechniqueIds == null
+        ? null
+        : Set<String>.of(allowedTechniqueIds);
     final known = ruleSet.techniques.map((t) => t.id).toSet();
     if (allowed != null && !known.containsAll(allowed)) {
       throw ArgumentError('Lesson selected an unsupported technique');
     }
-    _techniques = List.unmodifiable(ruleSet.techniques.where((t) => allowed == null || allowed.contains(t.id)));
+    _techniques = List.unmodifiable(
+      ruleSet.techniques.where(
+        (t) => allowed == null || allowed.contains(t.id),
+      ),
+    );
     _ctx = _Ctx(ruleSet);
     for (final TechniqueConfig t in _techniques) {
       _machines[t.id] = PhaseStateMachine(
@@ -231,11 +239,13 @@ final class StrikingEngine {
 
   final Map<String, String> provenance;
 
-  final Map<String, PhaseStateMachine> _machines = <String, PhaseStateMachine>{};
+  final Map<String, PhaseStateMachine> _machines =
+      <String, PhaseStateMachine>{};
   final Map<String, int> _lastFiredUs = <String, int>{};
   final Map<String, int> _firedThisRound = <String, int>{};
   final Map<String, Map<String, MeasureSet>> _snapshots =
       <String, Map<String, MeasureSet>>{};
+
   /// Girişim içinde görülen en yüksek uzanma (M-F-60 histerezisi için).
   final Map<String, double> _peak = <String, double>{};
 
@@ -243,7 +253,8 @@ final class StrikingEngine {
   /// aynı hareketi saymasını engeller — sayım sözleşmesi değişmez.
   final Set<String> _abortedMotion = <String>{};
 
-  final Map<String, Map<String, int>> _transitions = <String, Map<String, int>>{};
+  final Map<String, Map<String, int>> _transitions =
+      <String, Map<String, int>>{};
 
   late final _Ctx _ctx;
   MeasureSet? _previous;
@@ -274,17 +285,19 @@ final class StrikingEngine {
   }
 
   List<PhaseDefinition> _compile(TechniqueConfig t) {
-    return t.phases.map((TechniquePhase p) {
-      return PhaseDefinition(
-        id: p.id,
-        enter: (PhaseContext _) {
-          _ctx.limb = t.limb;
-          return p.enter.test(_ctx);
-        },
-        timeoutUs: p.timeoutMs == null ? null : p.timeoutMs! * 1000,
-        isTerminal: p.terminal,
-      );
-    }).toList(growable: false);
+    return t.phases
+        .map((TechniquePhase p) {
+          return PhaseDefinition(
+            id: p.id,
+            enter: (PhaseContext _) {
+              _ctx.limb = t.limb;
+              return p.enter.test(_ctx);
+            },
+            timeoutUs: p.timeoutMs == null ? null : p.timeoutMs! * 1000,
+            isTerminal: p.terminal,
+          );
+        })
+        .toList(growable: false);
   }
 
   EngineOutput process(PoseFrame frame) {
@@ -299,16 +312,20 @@ final class StrikingEngine {
     );
     _lastStance = stance.stance;
 
-    final MeasureSet m = measureCalculator
-        .compute(pf.smoothed, stance.stance,
-            previous: _previous, frameSize: frameSize);
+    final MeasureSet m = measureCalculator.compute(
+      pf.smoothed,
+      stance.stance,
+      previous: _previous,
+      frameSize: frameSize,
+    );
     _previous = m;
 
     // --- Hüküm verilebilir mi? Üç kapı, sırayla ------------------------
     String? suppress;
     if (!pf.structure.plausible) {
       // M-019: güven yüksek olsa bile vücut yapısı imkânsızsa hüküm YOK.
-      suppress = 'structural:${pf.structure.faults.map((StructuralFault f) => f.name).join(",")}';
+      suppress =
+          'structural:${pf.structure.faults.map((StructuralFault f) => f.name).join(",")}';
     } else if (!pf.quality.judgeable) {
       suppress = 'quality:${pf.quality.issue?.name ?? "low"}';
     } else {
@@ -354,8 +371,10 @@ final class StrikingEngine {
       // --- M-F-60: girişim-kapatma (PEAK'e ulaşmadan geri çekilme) --------
       final AbortOnRetreat? abort = t.abortOnRetreat;
       if (abort != null) {
-        final double? ext = m.read('extensionRatio',
-            limb: abort.side == 'lead' ? Side.lead : Side.rear);
+        final double? ext = m.read(
+          'extensionRatio',
+          limb: abort.side == 'lead' ? Side.lead : Side.rear,
+        );
         if (after == null) {
           // Makine durdu → izleyici sıfırlanır. Gard'a dönüş, yedek
           // bastırmasını da serbest bırakır.
@@ -364,7 +383,8 @@ final class StrikingEngine {
         } else if (ext != null) {
           final double peak = math.max(_peak[t.id] ?? 0, ext);
           _peak[t.id] = peak;
-          final bool reachedTarget = after == abort.beforePhase ||
+          final bool reachedTarget =
+              after == abort.beforePhase ||
               (_transitions[t.id]?.containsKey(abort.beforePhase) ?? false);
           if (!reachedTarget &&
               peak >= abort.minPeakExtension &&
@@ -372,17 +392,20 @@ final class StrikingEngine {
             // Girişim burada KAPANIR. Bu, yedek tekniğin olayı değil,
             // spesifik makinenin KENDİ terminal olayı — bu yüzden yedek
             // bastırma kuralına takılmaz ve doğrudan söylenir.
-            issues.add(DetectedIssue(
-              code: 'ATTEMPT_ABORTED',
-              severity: 'low',
-              // Koçlanan katman: hüküm değil gözlem. Skora girmez.
-              band: 'coached',
-              confidence: 1,
-              evidence: 'peakExtension=${peak.toStringAsFixed(2)} '
-                  '< ${abort.beforePhase} eşiği; geri çekilme başladı',
-              feedbackKey: abort.feedbackKey,
-              tUs: frame.tUs,
-            ));
+            issues.add(
+              DetectedIssue(
+                code: 'ATTEMPT_ABORTED',
+                severity: 'low',
+                // Koçlanan katman: hüküm değil gözlem. Skora girmez.
+                band: 'coached',
+                confidence: 1,
+                evidence:
+                    'peakExtension=${peak.toStringAsFixed(2)} '
+                    '< ${abort.beforePhase} eşiği; geri çekilme başladı',
+                feedbackKey: abort.feedbackKey,
+                tUs: frame.tUs,
+              ),
+            );
             machine.reset();
             _snapshots.remove(t.id);
             _transitions.remove(t.id);
@@ -397,7 +420,8 @@ final class StrikingEngine {
 
       if (after != null && after != before) {
         _snapshots.putIfAbsent(t.id, () => <String, MeasureSet>{})[after] = m;
-        _transitions.putIfAbsent(t.id, () => <String, int>{})[after] = frame.tUs;
+        _transitions.putIfAbsent(t.id, () => <String, int>{})[after] =
+            frame.tUs;
         if (t.emitsErrors) {
           issues.addAll(_evaluateErrors(t, after, m, frame.tUs));
         }
@@ -420,11 +444,13 @@ final class StrikingEngine {
     // Tahkim: spesifik teknik kazanır. Yedek yalnız hiçbir spesifik teknik
     // tamamlanmadı VE hiçbiri hâlâ çalışmıyorken sayılır — çalışan bir makine,
     // birkaç kare sonra tamamlanacak spesifik bir yumruk demektir.
-    final bool specificRunning = _techniques.any((TechniqueConfig t) =>
-        !t.isFallback &&
-        ((_machines[t.id]?.isRunning ?? false) ||
-            // Girişimi kapanmış hareket hâlâ sürüyor: yedek onu SAYMAMALI.
-            _abortedMotion.contains(t.id)));
+    final bool specificRunning = _techniques.any(
+      (TechniqueConfig t) =>
+          !t.isFallback &&
+          ((_machines[t.id]?.isRunning ?? false) ||
+              // Girişimi kapanmış hareket hâlâ sürüyor: yedek onu SAYMAMALI.
+              _abortedMotion.contains(t.id)),
+    );
     final AttemptDigest? finished =
         specific ?? (specificRunning ? null : fallback);
 
@@ -474,10 +500,13 @@ final class StrikingEngine {
       tr[x.toPhase] = x.tUs;
     }
     // M-F-91 legacy alanı korunur; yeni tempo yalnız adlandırılmış aralıktan.
-    final int? t0 = run.transitions.isNotEmpty ? run.transitions.first.tUs : null;
+    final int? t0 = run.transitions.isNotEmpty
+        ? run.transitions.first.tUs
+        : null;
     final int? tPeak = tr['PEAK'];
-    final double? extMs =
-        (t0 != null && tPeak != null) ? (tPeak - t0) / 1000.0 : null;
+    final double? extMs = (t0 != null && tPeak != null)
+        ? (tPeak - t0) / 1000.0
+        : null;
     final double? observedMs = extensionToPeakDurationMs(run);
 
     return AttemptDigest(
@@ -486,7 +515,8 @@ final class StrikingEngine {
       outcome: run.outcome,
       transitions: tr,
       snapshots: Map<String, MeasureSet>.from(
-          _snapshots[t.id] ?? const <String, MeasureSet>{}),
+        _snapshots[t.id] ?? const <String, MeasureSet>{},
+      ),
       extensionMs: extMs,
       extensionToPeakMs: observedMs,
       tempoBand: observedMs == null ? null : ruleSet.tempoBandFor(observedMs),
@@ -503,13 +533,20 @@ final class StrikingEngine {
   }
 
   List<DetectedIssue> _evaluateErrors(
-      TechniqueConfig t, String phaseId, MeasureSet m, int tUs) {
+    TechniqueConfig t,
+    String phaseId,
+    MeasureSet m,
+    int tUs,
+  ) {
     _ctx.limb = t.limb;
     return _evaluateErrorsAtMarker(phaseId, m, tUs);
   }
 
   List<DetectedIssue> _evaluateErrorsAtMarker(
-      String marker, MeasureSet m, int tUs) {
+    String marker,
+    MeasureSet m,
+    int tUs,
+  ) {
     final List<DetectedIssue> out = <DetectedIssue>[];
     for (final ErrorConfig e in ruleSet.errors) {
       if (!e.evaluateAt.contains(marker)) continue;
@@ -517,16 +554,18 @@ final class StrikingEngine {
       if (!_cooldownOk(e, tUs)) continue;
       if (!e.condition.test(_ctx)) continue;
       _fire(e, tUs);
-      out.add(DetectedIssue(
-        code: e.code,
-        severity: e.severity,
-        band: e.band,
-        confidence: e.minConfidence,
-        evidence: _evidence(e),
-        feedbackKey: e.feedbackKey,
-        drillId: e.drillId,
-        tUs: tUs,
-      ));
+      out.add(
+        DetectedIssue(
+          code: e.code,
+          severity: e.severity,
+          band: e.band,
+          confidence: e.minConfidence,
+          evidence: _evidence(e),
+          feedbackKey: e.feedbackKey,
+          drillId: e.drillId,
+          tUs: tUs,
+        ),
+      );
     }
     return out;
   }
@@ -535,22 +574,26 @@ final class StrikingEngine {
     final List<DetectedIssue> out = <DetectedIssue>[];
     for (final ErrorConfig e in ruleSet.errors) {
       if (!e.suppressesJudgement) continue;
-      final bool matches = (e.code == 'OUT_OF_FRAME' &&
+      final bool matches =
+          (e.code == 'OUT_OF_FRAME' &&
               reason.startsWith('quality') &&
               _ctx.requiredRegionOutOfFrame) ||
-          (e.code == 'LOW_TRACKING_CONFIDENCE' && !reason.startsWith('integrity'));
+          (e.code == 'LOW_TRACKING_CONFIDENCE' &&
+              !reason.startsWith('integrity'));
       if (!matches || !_cooldownOk(e, tUs)) continue;
       _fire(e, tUs);
-      out.add(DetectedIssue(
-        code: e.code,
-        severity: e.severity,
-        band: e.band,
-        confidence: 1,
-        evidence: reason,
-        feedbackKey: e.feedbackKey,
-        drillId: e.drillId,
-        tUs: tUs,
-      ));
+      out.add(
+        DetectedIssue(
+          code: e.code,
+          severity: e.severity,
+          band: e.band,
+          confidence: 1,
+          evidence: reason,
+          feedbackKey: e.feedbackKey,
+          drillId: e.drillId,
+          tUs: tUs,
+        ),
+      );
     }
     return out;
   }

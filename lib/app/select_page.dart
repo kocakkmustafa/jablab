@@ -101,8 +101,11 @@ class _SelectPageState extends State<SelectPage> {
                     UiLanguage.text(
                       context,
                       en: widget.library.title,
-                      tr: widget.library.title == 'JabLab — Solo Combat Training'
-                          ? 'JabLab — Tek başına dövüş antrenmanı' : widget.library.title,
+                      tr:
+                          widget.library.title ==
+                              'JabLab — Solo Combat Training'
+                          ? 'JabLab — Tek başına dövüş antrenmanı'
+                          : widget.library.title,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -194,13 +197,20 @@ class _SelectPageState extends State<SelectPage> {
               SoloCourseEntryCard(onOpen: widget.onOpenSoloCourse!),
               const SizedBox(height: 16),
             ],
-            StudyReviewEntry(openCourses: {
-                if (widget.onOpenSoloCourse != null) 'boxing': widget.onOpenSoloCourse!,
-                if (widget.onOpenTaiChiCourse != null) 'taichi': widget.onOpenTaiChiCourse!,
-                if (widget.onOpenKickboxingCourse != null) 'kickboxing': widget.onOpenKickboxingCourse!,
-                if (widget.onOpenKarateCourse != null) 'karate': widget.onOpenKarateCourse!,
-                if (widget.onOpenMuayThaiCourse != null) 'muaythai': widget.onOpenMuayThaiCourse!,
-            }),
+            StudyReviewEntry(
+              openCourses: {
+                if (widget.onOpenSoloCourse != null)
+                  'boxing': widget.onOpenSoloCourse!,
+                if (widget.onOpenTaiChiCourse != null)
+                  'taichi': widget.onOpenTaiChiCourse!,
+                if (widget.onOpenKickboxingCourse != null)
+                  'kickboxing': widget.onOpenKickboxingCourse!,
+                if (widget.onOpenKarateCourse != null)
+                  'karate': widget.onOpenKarateCourse!,
+                if (widget.onOpenMuayThaiCourse != null)
+                  'muaythai': widget.onOpenMuayThaiCourse!,
+              },
+            ),
             ...widget.library.items.map(
               (ShellItem i) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -291,7 +301,13 @@ class _ItemBlock extends StatelessWidget {
                         const SizedBox(height: 3),
                         Text(
                           live
-                              ? UiLanguage.format(context, en: '{count} courses', tr: '{count} kurs', args: {'count': item.courses.length}, pluralArg: 'count')
+                              ? UiLanguage.format(
+                                  context,
+                                  en: '{count} courses',
+                                  tr: '{count} kurs',
+                                  args: {'count': item.courses.length},
+                                  pluralArg: 'count',
+                                )
                               : catalogBlurb(context, item.id, item.blurb),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -457,7 +473,13 @@ class _ItemBlock extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      UiLanguage.format(context, en: '{count} lessons', tr: '{count} ders', args: {'count': c.lessons.length}, pluralArg: 'count'),
+                                      UiLanguage.format(
+                                        context,
+                                        en: '{count} lessons',
+                                        tr: '{count} ders',
+                                        args: {'count': c.lessons.length},
+                                        pluralArg: 'count',
+                                      ),
                                       style: JText.mono.copyWith(
                                         color: JColors.cool2,
                                       ),

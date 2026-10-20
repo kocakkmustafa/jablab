@@ -37,26 +37,36 @@ import 'package:jablab/app/ui_language.dart';
 /// Sınırlı (~2 s); hazır durum oluşmazsa açıkça hata verir.
 Future<void> settleAppLoad(WidgetTester t) async {
   final app = t.widget<MaterialApp>(find.byType(MaterialApp).first);
-  final expected = app.locale ?? AppLocalizations.resolve(
-    t.binding.platformDispatcher.locales, AppLocalizations.supportedLocales);
+  final expected =
+      app.locale ??
+      AppLocalizations.resolve(
+        t.binding.platformDispatcher.locales,
+        AppLocalizations.supportedLocales,
+      );
   for (int i = 0; i < 40; i++) {
     await t.pump();
     final rootReady = find.byType(Scaffold).evaluate().any((element) {
       final resources = Localizations.of<AppLocalizations>(
-        element, AppLocalizations);
-      return resources != null && resources.locale == expected &&
-          !resources.loadFailed && resources.complete &&
+        element,
+        AppLocalizations,
+      );
+      return resources != null &&
+          resources.locale == expected &&
+          !resources.loadFailed &&
+          resources.complete &&
           Localizations.localeOf(element) == expected;
     });
-    if (rootReady &&
-        find.byType(CircularProgressIndicator).evaluate().isEmpty) return;
+    if (rootReady && find.byType(CircularProgressIndicator).evaluate().isEmpty)
+      return;
     await t.runAsync(
-      () => Future<void>.delayed(const Duration(milliseconds: 50)));
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
   }
   throw TestFailure(
     'App localization/root did not become ready for $expected; '
     'scaffolds=${find.byType(Scaffold).evaluate().length}, '
-    'loading=${find.byType(CircularProgressIndicator).evaluate().length}');
+    'loading=${find.byType(CircularProgressIndicator).evaluate().length}',
+  );
 }
 
 /// Belirli bir widget GÖRÜNENE kadar pump'la — sınırlı.
@@ -68,8 +78,9 @@ Future<void> settleAppLoad(WidgetTester t) async {
 Future<void> settleUntil(WidgetTester t, Finder target) async {
   for (int i = 0; i < 40; i++) {
     if (target.evaluate().isNotEmpty) return;
-    await t
-        .runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
     await t.pump();
   }
 }

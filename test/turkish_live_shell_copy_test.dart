@@ -8,22 +8,31 @@ void main() {
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
-        .localesTestValue = <Locale>[const Locale('tr')];
+        .localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
   });
-  tearDown(() => TestWidgetsFlutterBinding.ensureInitialized()
-      .platformDispatcher
-      .clearLocalesTestValue());
+  tearDown(
+    () => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher
+        .clearLocalesTestValue(),
+  );
 
-  testWidgets('session steps and advance control use Turkish',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
-      home: SessionFlowScaffold(
-        title: 'Test',
-        stage: SessionStage.teach,
-        onAdvance: () {},
-        child: const SizedBox(),
+  testWidgets('session steps and advance control use Turkish', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
+        home: SessionFlowScaffold(
+          title: 'Test',
+          stage: SessionStage.teach,
+          onAdvance: () {},
+          child: const SizedBox(),
+        ),
       ),
-    ));
+    );
     await settleTestLocalizations(tester);
     expect(find.text('Öğren'), findsOneWidget);
     expect(find.text('Dene'), findsOneWidget);
@@ -32,19 +41,24 @@ void main() {
     expect(find.text('Devam et'), findsOneWidget);
   });
 
-  testWidgets('unknown camera measurement stays unknown in Turkish',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
-      home: Scaffold(
-        body: LiveCoachSurface(
-          state: LiveState.noVerdict,
-          eventCount: null,
+  testWidgets('unknown camera measurement stays unknown in Turkish', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
+        home: Scaffold(
+          body: LiveCoachSurface(state: LiveState.noVerdict, eventCount: null),
         ),
       ),
-    ));
+    );
     await settleTestLocalizations(tester);
-    expect(find.text('Değerlendirmek için sizi yeterince iyi göremiyorum'),
-        findsOneWidget);
+    expect(
+      find.text('Değerlendirmek için sizi yeterince iyi göremiyorum'),
+      findsOneWidget,
+    );
     expect(find.byKey(const Key('event-count')), findsNothing);
   });
 }

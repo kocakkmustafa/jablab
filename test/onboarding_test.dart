@@ -69,7 +69,10 @@ void main() {
   }) async {
     final ShellLibrary lib = await loadLibrary(t);
     await t.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: OnboardingPage(
           library: lib,
           onDone: onDone ?? () {},
@@ -381,7 +384,10 @@ void _settingsCountGate() {
     );
 
     await t.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: SettingsPage(onOpenWhyNot: () {}, excludedCount: expected),
       ),
     );

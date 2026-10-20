@@ -181,13 +181,17 @@ class CoursePage extends StatelessWidget {
               const SizedBox(height: 16),
               SoloCourseEntryCard(onOpen: onOpenSoloCourse!),
             ],
-            StudyReviewEntry(openCourses: {
+            StudyReviewEntry(
+              openCourses: {
                 if (onOpenSoloCourse != null) 'boxing': onOpenSoloCourse!,
                 if (onOpenTaiChiCourse != null) 'taichi': onOpenTaiChiCourse!,
-                if (onOpenKickboxingCourse != null) 'kickboxing': onOpenKickboxingCourse!,
+                if (onOpenKickboxingCourse != null)
+                  'kickboxing': onOpenKickboxingCourse!,
                 if (onOpenKarateCourse != null) 'karate': onOpenKarateCourse!,
-                if (onOpenMuayThaiCourse != null) 'muaythai': onOpenMuayThaiCourse!,
-            }),
+                if (onOpenMuayThaiCourse != null)
+                  'muaythai': onOpenMuayThaiCourse!,
+              },
+            ),
             if (isCurrent) ...<Widget>[
               const SizedBox(height: 20),
               _WhereYouLeftOff(
@@ -302,7 +306,12 @@ class _LessonRow extends StatelessWidget {
             if (lesson.minutes != 0) ...<Widget>[
               const SizedBox(width: 8),
               Text(
-                UiLanguage.format(context, en: '{value1} min', tr: '{value1} dk' , args: {'value1': lesson.minutes},),
+                UiLanguage.format(
+                  context,
+                  en: '{value1} min',
+                  tr: '{value1} dk',
+                  args: {'value1': lesson.minutes},
+                ),
                 // Kilitli ders SÖNÜK ama okunur: `ink4` 1,80:1 veriyordu
                 // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
                 // "daha az önemli" demek, "okunmasın" demek değil.
@@ -442,9 +451,18 @@ class _WhereYouLeftOff extends StatelessWidget {
                   Expanded(
                     child: Text(
                       e.key == 'Time worked'
-                          ? UiLanguage.text(context, en: 'Time worked', tr: 'Çalışılan süre')
+                          ? UiLanguage.text(
+                              context,
+                              en: 'Time worked',
+                              tr: 'Çalışılan süre',
+                            )
                           : e.key == 'Sessions'
-                          ? UiLanguage.text(context, en: 'Sessions', tr: 'Seanslar') : e.key,
+                          ? UiLanguage.text(
+                              context,
+                              en: 'Sessions',
+                              tr: 'Seanslar',
+                            )
+                          : e.key,
                       style: JText.body.copyWith(fontSize: 14),
                     ),
                   ),
@@ -491,7 +509,18 @@ class _WhereYouLeftOff extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Center(
                         child: Text(
-                          UiLanguage.format(context, en: 'Resume {lesson}', tr: '{lesson} dersine devam et', args: {'lesson': lessonTitle(context, resumeLesson!.id, resumeLesson!.title)}),
+                          UiLanguage.format(
+                            context,
+                            en: 'Resume {lesson}',
+                            tr: '{lesson} dersine devam et',
+                            args: {
+                              'lesson': lessonTitle(
+                                context,
+                                resumeLesson!.id,
+                                resumeLesson!.title,
+                              ),
+                            },
+                          ),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
@@ -556,9 +585,18 @@ class _HonestBands extends StatelessWidget {
                     Expanded(
                       child: Text(
                         e.key == 'Time worked'
-                          ? UiLanguage.text(context, en: 'Time worked', tr: 'Çalışılan süre')
-                          : e.key == 'Sessions'
-                          ? UiLanguage.text(context, en: 'Sessions', tr: 'Seanslar') : e.key,
+                            ? UiLanguage.text(
+                                context,
+                                en: 'Time worked',
+                                tr: 'Çalışılan süre',
+                              )
+                            : e.key == 'Sessions'
+                            ? UiLanguage.text(
+                                context,
+                                en: 'Sessions',
+                                tr: 'Seanslar',
+                              )
+                            : e.key,
                         style: JText.body.copyWith(fontSize: 14),
                       ),
                     ),

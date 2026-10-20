@@ -84,7 +84,10 @@ void main() {
           isNot(contains(turkish ? 'iki rauntta da' : 'both rounds')),
         );
         await tester.pumpWidget(
-          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+          MaterialApp(
+            supportedLocales: testSupportedLocales,
+            localizationsDelegates: testLocalizationDelegates,
+            localeListResolutionCallback: resolveTestLocales,
             home: SoloBoxingLessonPage(
               course: course,
               lesson: lesson,
@@ -94,7 +97,10 @@ void main() {
             ),
           ),
         );
-    await settleTestLocalizations(tester, expectedLocale: Locale(turkish ? 'tr' : 'en'));
+        await settleTestLocalizations(
+          tester,
+          expectedLocale: Locale(turkish ? 'tr' : 'en'),
+        );
         final lessonScroll = find
             .descendant(
               of: find.byKey(const Key('solo-lesson-list')),
@@ -189,7 +195,10 @@ void main() {
       ownerLifetime: _owners.capture(null),
     );
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: SoloBoxingLessonPage(
           course: course,
           lesson: lesson,
@@ -284,7 +293,11 @@ void main() {
       return target;
     }
 
-    Future<void> open(WidgetTester tester, {bool priorPractice = false, Locale? expectedLocale}) async {
+    Future<void> open(
+      WidgetTester tester, {
+      bool priorPractice = false,
+      Locale? expectedLocale,
+    }) async {
       SoloLessonProgress? prior;
       if (priorPractice) {
         final saved = (await tester.runAsync(
@@ -293,7 +306,10 @@ void main() {
         prior = saved.forLesson(lesson, course.version);
       }
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: SoloBoxingLessonPage(
             course: course,
             lesson: lesson,
@@ -304,7 +320,7 @@ void main() {
           ),
         ),
       );
-    await settleTestLocalizations(tester, expectedLocale: expectedLocale);
+      await settleTestLocalizations(tester, expectedLocale: expectedLocale);
     }
 
     Future<void> acknowledge(WidgetTester tester) async {
@@ -371,8 +387,14 @@ void main() {
             tester.binding.platformDispatcher.localesTestValue = <Locale>[
               Locale(turkish ? 'tr' : 'en'),
             ];
-            addTearDown(tester.binding.platformDispatcher.clearLocalesTestValue);
-            await open(tester, priorPractice: true, expectedLocale: Locale(turkish ? 'tr' : 'en'));
+            addTearDown(
+              tester.binding.platformDispatcher.clearLocalesTestValue,
+            );
+            await open(
+              tester,
+              priorPractice: true,
+              expectedLocale: Locale(turkish ? 'tr' : 'en'),
+            );
             await expectBlocked(tester, turkish: turkish);
             await acknowledge(tester);
             final check = await reveal(tester, 'solo-check-${lesson.id}-0');
@@ -508,9 +530,17 @@ void main() {
           loadStringOverride: (String path) => File(path).readAsString(),
         );
         await tester.pumpWidget(
-          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
+          MaterialApp(
+            supportedLocales: testSupportedLocales,
+            localizationsDelegates: testLocalizationDelegates,
+            localeListResolutionCallback: resolveTestLocales,
+            home: SoloBoxingCoursePage(repository: repository),
+          ),
         );
-    await settleTestLocalizations(tester, expectedLocale: Locale(turkish ? 'tr' : 'en'));
+        await settleTestLocalizations(
+          tester,
+          expectedLocale: Locale(turkish ? 'tr' : 'en'),
+        );
         await settleUntil(
           tester,
           find.byKey(const Key('solo-course-progress')),
@@ -601,9 +631,17 @@ void main() {
 
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pumpWidget(
-          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
+          MaterialApp(
+            supportedLocales: testSupportedLocales,
+            localizationsDelegates: testLocalizationDelegates,
+            localeListResolutionCallback: resolveTestLocales,
+            home: SoloBoxingCoursePage(repository: repository),
+          ),
         );
-    await settleTestLocalizations(tester, expectedLocale: Locale(turkish ? 'tr' : 'en'));
+        await settleTestLocalizations(
+          tester,
+          expectedLocale: Locale(turkish ? 'tr' : 'en'),
+        );
         await settleUntil(tester, find.text(total));
         expect(find.text(total), findsOneWidget);
         final Finder firstRow = find.byKey(
@@ -665,7 +703,12 @@ void main() {
     });
     store.file.writeAsStringSync(old);
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
+        home: SoloBoxingCoursePage(repository: repository),
+      ),
     );
     await settleTestLocalizations(tester);
     await settleUntil(tester, find.text('1 / 39 self-reported complete'));
@@ -712,14 +755,17 @@ void main() {
       });
       final bobBytes = bobStore.file.readAsStringSync();
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: SoloBoxingCoursePage(
             repository: repository,
             accountUserId: account,
           ),
         ),
       );
-    await settleTestLocalizations(tester);
+      await settleTestLocalizations(tester);
       await settleUntil(tester, find.text('1 / 39 self-reported complete'));
       expect(find.text('1 / 39 self-reported complete'), findsOneWidget);
       await tester.tap(find.byKey(const Key('solo-next-lesson')));

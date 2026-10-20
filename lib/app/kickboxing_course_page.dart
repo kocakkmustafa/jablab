@@ -9,9 +9,12 @@ import 'ui_language.dart';
 
 String _text(BuildContext context, KickboxingCopy copy) =>
     UiLanguage.text(context, en: copy.en, tr: copy.tr);
-String _label(BuildContext context, String en, String tr,
-    {Map<String, Object> args = const {}}) =>
-    UiLanguage.format(context, en: en, tr: tr, args: args);
+String _label(
+  BuildContext context,
+  String en,
+  String tr, {
+  Map<String, Object> args = const {},
+}) => UiLanguage.format(context, en: en, tr: tr, args: args);
 
 class KickboxingCourseEntryCard extends StatelessWidget {
   const KickboxingCourseEntryCard({super.key, required this.onOpen});
@@ -127,7 +130,10 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
             ),
             key: const Key('kickboxing-physical-blocked'),
           ),
-          TechniqueCapabilityPanel(courseId: 'jablab.kickboxing_a', lessonId: l.id),
+          TechniqueCapabilityPanel(
+            courseId: 'jablab.kickboxing_a',
+            lessonId: l.id,
+          ),
           Text(_text(context, widget.course.safety)),
           TextButton(
             key: const Key('kickboxing-toggle-reading'),
@@ -590,7 +596,8 @@ class _KickboxingCoursePageState extends State<KickboxingCoursePage>
                     context,
                     '{value1}/16 written reviews reported this visit; physical components unattempted.',
                     'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
-                   args: {'value1': _written.length},),
+                    args: {'value1': _written.length},
+                  ),
                   key: const Key('kickboxing-written-progress'),
                 ),
                 if (_written.length == course.lessons.length)

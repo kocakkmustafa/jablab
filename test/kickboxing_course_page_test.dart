@@ -19,11 +19,15 @@ Future<void> open(
   Future<KickboxingCourse> Function()? loader,
 }) async {
   await t.pumpWidget(
-    MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+    MaterialApp(
+      supportedLocales: testSupportedLocales,
+      localizationsDelegates: testLocalizationDelegates,
+      localeListResolutionCallback: resolveTestLocales,
       navigatorObservers: observer == null ? [] : [observer],
       builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context)
-            .copyWith(textScaler: const TextScaler.linear(2)),
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: const TextScaler.linear(2)),
         child: child!,
       ),
       home: Builder(
@@ -44,7 +48,7 @@ Future<void> open(
       ),
     ),
   );
-    await settleTestLocalizations(t);
+  await settleTestLocalizations(t);
   await t.tap(find.text('Open'));
   await t.pumpAndSettle();
 }
@@ -237,7 +241,10 @@ void main() {
     addTearDown(owner.dispose);
     final pending = Completer<KickboxingCourse>();
     await t.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: KickboxingCoursePage(
           loader: () => pending.future,
           accountUserId: owner,

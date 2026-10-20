@@ -57,12 +57,19 @@ void main() {
   testWidgets('Turkish catalog keeps live and closed discipline copy Turkish', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
-    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
+    addTearDown(
+      () => tester.binding.platformDispatcher.clearLocalesTestValue(),
+    );
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: SelectPage(
           library: library,
           onOpenCourse: (_) {},
@@ -92,12 +99,19 @@ void main() {
   testWidgets('Turkish boxing honesty keeps measured limits accurate', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
-    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
+    addTearDown(
+      () => tester.binding.platformDispatcher.clearLocalesTestValue(),
+    );
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: SelectPage(
           library: library,
           onOpenCourse: (_) {},
@@ -119,12 +133,19 @@ void main() {
   testWidgets('Turkish honesty onboarding uses translated explanation', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
-    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
+    addTearDown(
+      () => tester.binding.platformDispatcher.clearLocalesTestValue(),
+    );
 
     final ShellLibrary library = await loadLibrary(tester);
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: OnboardingPage(
           library: library,
           onDone: () {},
@@ -149,7 +170,9 @@ void main() {
   testWidgets(
     'Turkish boxing course shows localized metadata and lock reason',
     (WidgetTester tester) async {
-      tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+      tester.binding.platformDispatcher.localesTestValue = <Locale>[
+        const Locale('tr'),
+      ];
       addTearDown(
         () => tester.binding.platformDispatcher.clearLocalesTestValue(),
       );
@@ -166,7 +189,10 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: CoursePage(
             course: foundations,
             onStart: (_) {},
@@ -174,7 +200,7 @@ void main() {
           ),
         ),
       );
-    await settleTestLocalizations(tester);
+      await settleTestLocalizations(tester);
       expect(find.text('Temeller'), findsOneWidget);
       expect(
         find.textContaining('Düşünmeden tekrarlayabileceğin'),
@@ -184,7 +210,10 @@ void main() {
       expect(find.text('Camera and space'), findsNothing);
 
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: CoursePage(
             course: intermediate,
             onStart: (_) {},
@@ -192,7 +221,7 @@ void main() {
           ),
         ),
       );
-    await settleTestLocalizations(tester);
+      await settleTestLocalizations(tester);
       expect(find.text('Orta seviye'), findsOneWidget);
       expect(
         find.textContaining('Kroşe ve aparkat burada modellenmedi'),
@@ -204,10 +233,17 @@ void main() {
   testWidgets('Changed English source is shown instead of stale translation', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
-    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
+    addTearDown(
+      () => tester.binding.platformDispatcher.clearLocalesTestValue(),
+    );
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (BuildContext context) => Text(
             courseTitle(context, 'boxing.foundations', 'Foundations revised'),
@@ -223,13 +259,20 @@ void main() {
   testWidgets('Turkish scope page translates all authored exclusions', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
-    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
+    addTearDown(
+      () => tester.binding.platformDispatcher.clearLocalesTestValue(),
+    );
 
     final ShellLibrary library = await loadLibrary(tester);
     late List<ShellExclusion> translated;
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (BuildContext context) {
             translated = whyNotExclusions(context, library.exclusions);
@@ -264,15 +307,22 @@ void main() {
   testWidgets('Changed exclusion rationale falls back to its source', (
     WidgetTester tester,
   ) async {
-    tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
-    addTearDown(() => tester.binding.platformDispatcher.clearLocalesTestValue());
+    tester.binding.platformDispatcher.localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
+    addTearDown(
+      () => tester.binding.platformDispatcher.clearLocalesTestValue(),
+    );
     late ShellExclusion translated;
     const ShellExclusion changed = ShellExclusion(
       'Brazilian Jiu-Jitsu',
       'A new rationale that has not been reviewed for translation.',
     );
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: Builder(
           builder: (BuildContext context) {
             translated = whyNotExclusions(context, <ShellExclusion>[
@@ -291,7 +341,9 @@ void main() {
   testWidgets(
     'Turkish lesson heading stays localized after course navigation',
     (WidgetTester tester) async {
-      tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+      tester.binding.platformDispatcher.localesTestValue = <Locale>[
+        const Locale('tr'),
+      ];
       addTearDown(
         () => tester.binding.platformDispatcher.clearLocalesTestValue(),
       );
@@ -309,7 +361,10 @@ void main() {
         cues = await const ContentRepository().loadCues();
       });
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: SessionScreen(
             lesson: cameraLesson,
             cues: cues,
@@ -331,7 +386,7 @@ void main() {
           ),
         ),
       );
-    await settleTestLocalizations(tester);
+      await settleTestLocalizations(tester);
       await tester.pumpAndSettle();
       expect(find.text('Kamera ve çalışma alanı'), findsWidgets);
       expect(find.text('Camera and space'), findsNothing);
@@ -365,7 +420,9 @@ void main() {
   testWidgets(
     'All authored Boxing teach bodies have source-matched Turkish copy',
     (WidgetTester tester) async {
-      tester.binding.platformDispatcher.localesTestValue = <Locale>[const Locale('tr')];
+      tester.binding.platformDispatcher.localesTestValue = <Locale>[
+        const Locale('tr'),
+      ];
       addTearDown(
         () => tester.binding.platformDispatcher.clearLocalesTestValue(),
       );
@@ -373,7 +430,10 @@ void main() {
       late Map<String, String> translated;
       late String changed;
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: Builder(
             builder: (BuildContext context) {
               translated = <String, String>{
@@ -395,7 +455,7 @@ void main() {
           ),
         ),
       );
-    await settleTestLocalizations(tester);
+      await settleTestLocalizations(tester);
       expect(authored, hasLength(18));
       expect(translated.keys, containsAll(authored.keys));
       for (final MapEntry<String, String> entry in authored.entries) {

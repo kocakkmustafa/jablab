@@ -14,7 +14,8 @@ String _copy(
 ) {
   final _Copy? copy = translations[id];
   return copy != null && copy.en == source
-      ? UiLanguage.text(context, en: source, tr: copy.tr) : source;
+      ? UiLanguage.text(context, en: source, tr: copy.tr)
+      : source;
 }
 
 const Map<String, _Copy> _courseTitles = <String, _Copy>{

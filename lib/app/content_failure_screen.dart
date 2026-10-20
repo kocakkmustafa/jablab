@@ -66,8 +66,11 @@ class ContentFailureScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           children: <Widget>[
             const SizedBox(height: 24),
-            Icon(Icons.report_outlined,
-                size: 48, color: theme.colorScheme.error),
+            Icon(
+              Icons.report_outlined,
+              size: 48,
+              color: theme.colorScheme.error,
+            ),
             const SizedBox(height: 16),
             Text(
               UiLanguage.text(context, en: _headline, tr: _headlineTr),
@@ -85,7 +88,9 @@ class ContentFailureScreen extends StatelessWidget {
               FilledButton(
                 key: const Key('failure-retry'),
                 onPressed: () => onRetry!(),
-                child: Text(UiLanguage.text(context, en: 'Try again', tr: 'Tekrar dene')),
+                child: Text(
+                  UiLanguage.text(context, en: 'Try again', tr: 'Tekrar dene'),
+                ),
               ),
             const SizedBox(height: 24),
             // Ayrıntı KATLANMIŞ: birincil mesaj insan cümlesi, ikincil
@@ -93,18 +98,34 @@ class ContentFailureScreen extends StatelessWidget {
             Card(
               child: ExpansionTile(
                 key: const Key('failure-detail-tile'),
-                title: Text(UiLanguage.text(context, en: 'Technical detail', tr: 'Teknik ayrıntı')),
-                subtitle: Text(UiLanguage.text(context, en: 'What to send us if you report this', tr: 'Sorunu bildirirken paylaşabileceğiniz bilgi')),
-                childrenPadding:
-                    const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                title: Text(
+                  UiLanguage.text(
+                    context,
+                    en: 'Technical detail',
+                    tr: 'Teknik ayrıntı',
+                  ),
+                ),
+                subtitle: Text(
+                  UiLanguage.text(
+                    context,
+                    en: 'What to send us if you report this',
+                    tr: 'Sorunu bildirirken paylaşabileceğiniz bilgi',
+                  ),
+                ),
+                childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 children: <Widget>[
                   SelectableText(
                     failure.detail.isEmpty
-                        ? (UiLanguage.text(context, en: '(no detail reported)', tr: '(ayrıntı bildirilmedi)'))
+                        ? (UiLanguage.text(
+                            context,
+                            en: '(no detail reported)',
+                            tr: '(ayrıntı bildirilmedi)',
+                          ))
                         : failure.detail,
                     key: const Key('failure-detail'),
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(fontFamily: 'monospace'),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontFamily: 'monospace',
+                    ),
                   ),
                 ],
               ),
@@ -116,33 +137,33 @@ class ContentFailureScreen extends StatelessWidget {
   }
 
   String get _headline => switch (failure.kind) {
-        // "Bir şeyler ters gitti" DEMİYOR: o cümle hiçbir şey söylemez ve
-        // kullanıcıya ne yapacağını bırakmaz.
-        ContentFailureKind.integrity => 'We stopped ourselves',
-        ContentFailureKind.unreadable => 'We could not read our own content',
-      };
+    // "Bir şeyler ters gitti" DEMİYOR: o cümle hiçbir şey söylemez ve
+    // kullanıcıya ne yapacağını bırakmaz.
+    ContentFailureKind.integrity => 'We stopped ourselves',
+    ContentFailureKind.unreadable => 'We could not read our own content',
+  };
 
   String get _headlineTr => switch (failure.kind) {
-        ContentFailureKind.integrity => 'İçeriği durdurduk',
-        ContentFailureKind.unreadable => 'Uygulama içeriği okunamadı',
-      };
+    ContentFailureKind.integrity => 'İçeriği durdurduk',
+    ContentFailureKind.unreadable => 'Uygulama içeriği okunamadı',
+  };
 
   String get _bodyTr => switch (failure.kind) {
-        ContentFailureKind.integrity =>
-          'Bu sürümün paketlenmiş eğitim içeriği eksik veya bütünlük kontrollerimizden geçmedi. Güvenle sunamadığımız için içeriği göstermiyoruz. Sorun cihazınızda değil; bu bizim sürüm hatamız. Aynı dosyayı yeniden okumak sonucu değiştirmez. Düzeltme için yeni bir uygulama sürümü gerekiyor.',
-        ContentFailureKind.unreadable =>
-          'Eğitim içeriğini bu denemede okuyamadık. Geçici bir okuma hatası olabilir. Bir kez yeniden deneyin; sorun sürerse destek ekibine bildirin.',
-      };
+    ContentFailureKind.integrity =>
+      'Bu sürümün paketlenmiş eğitim içeriği eksik veya bütünlük kontrollerimizden geçmedi. Güvenle sunamadığımız için içeriği göstermiyoruz. Sorun cihazınızda değil; bu bizim sürüm hatamız. Aynı dosyayı yeniden okumak sonucu değiştirmez. Düzeltme için yeni bir uygulama sürümü gerekiyor.',
+    ContentFailureKind.unreadable =>
+      'Eğitim içeriğini bu denemede okuyamadık. Geçici bir okuma hatası olabilir. Bir kez yeniden deneyin; sorun sürerse destek ekibine bildirin.',
+  };
 
   String get _body => switch (failure.kind) {
-        ContentFailureKind.integrity =>
-          'The training content bundled with this build is missing or failed '
-              'our integrity checks. We cannot vouch for it, so we do not '
-              'show it. This is on us; trying again cannot change the files '
-              'in this build. We need to fix it in an app update.',
-        ContentFailureKind.unreadable =>
-          'We could not read the training content on this attempt. It may be '
-              'a temporary read error. Trying again is worth one attempt; '
-              'if it continues, please contact support.',
-      };
+    ContentFailureKind.integrity =>
+      'The training content bundled with this build is missing or failed '
+          'our integrity checks. We cannot vouch for it, so we do not '
+          'show it. This is on us; trying again cannot change the files '
+          'in this build. We need to fix it in an app update.',
+    ContentFailureKind.unreadable =>
+      'We could not read the training content on this attempt. It may be '
+          'a temporary read error. Trying again is worth one attempt; '
+          'if it continues, please contact support.',
+  };
 }

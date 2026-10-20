@@ -8,39 +8,54 @@ void main() {
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
-        .localesTestValue = <Locale>[const Locale('tr')];
+        .localesTestValue = <Locale>[
+      const Locale('tr'),
+    ];
   });
-  tearDown(() => TestWidgetsFlutterBinding.ensureInitialized()
-      .platformDispatcher
-      .clearLocalesTestValue());
+  tearDown(
+    () => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher
+        .clearLocalesTestValue(),
+  );
 
-  testWidgets('integrity failure explains responsibility without retry',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
-      home: ContentFailureScreen(
-        failure: ContentFailure(
-          kind: ContentFailureKind.integrity,
-          detail: 'bad lesson',
+  testWidgets('integrity failure explains responsibility without retry', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
+        home: ContentFailureScreen(
+          failure: ContentFailure(
+            kind: ContentFailureKind.integrity,
+            detail: 'bad lesson',
+          ),
         ),
       ),
-    ));
+    );
     await settleTestLocalizations(tester);
     expect(find.text('İçeriği durdurduk'), findsOneWidget);
     expect(find.textContaining('Sorun cihazınızda değil'), findsOneWidget);
     expect(find.byKey(const Key('failure-retry')), findsNothing);
   });
 
-  testWidgets('unreadable content offers Turkish retry',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
-      home: ContentFailureScreen(
-        failure: const ContentFailure(
-          kind: ContentFailureKind.unreadable,
-          detail: 'asset missing',
+  testWidgets('unreadable content offers Turkish retry', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
+        home: ContentFailureScreen(
+          failure: const ContentFailure(
+            kind: ContentFailureKind.unreadable,
+            detail: 'asset missing',
+          ),
+          onRetry: () async {},
         ),
-        onRetry: () async {},
       ),
-    ));
+    );
     await settleTestLocalizations(tester);
     expect(find.text('Uygulama içeriği okunamadı'), findsOneWidget);
     expect(find.text('Tekrar dene'), findsOneWidget);

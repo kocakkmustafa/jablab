@@ -1,7 +1,6 @@
 import '../app/ui_language.dart';
 import 'package:flutter/material.dart';
 
-
 /// Ders akışının alan-bağımsız iskeleti (standart §2):
 /// öğret → dene → canlı analiz → özet → sonraki adım.
 ///
@@ -43,11 +42,11 @@ extension SessionStageLabel on SessionStage {
   /// Ostinato/Choreia için de aynı (terfi şartı #3): çello pasajını
   /// "izlemek" ile salsa adımını "izlemek" farklı ortamlar, öğrenmek ortak.
   String get label => switch (this) {
-        SessionStage.teach => 'Learn',
-        SessionStage.rehearse => 'Try it',
-        SessionStage.live => 'Live',
-        SessionStage.summary => 'Summary',
-      };
+    SessionStage.teach => 'Learn',
+    SessionStage.rehearse => 'Try it',
+    SessionStage.live => 'Live',
+    SessionStage.summary => 'Summary',
+  };
 
   /// Bu aşamada teknik hüküm verilir mi?
   ///
@@ -92,10 +91,26 @@ class SessionFlowScaffold extends StatelessWidget {
                   Chip(
                     key: Key('stage-${s.name}'),
                     label: Text(switch (s) {
-                      SessionStage.teach => UiLanguage.text(context, en: 'Learn', tr: 'Öğren'),
-                      SessionStage.rehearse => UiLanguage.text(context, en: 'Try it', tr: 'Dene'),
-                      SessionStage.live => UiLanguage.text(context, en: 'Live', tr: 'Canlı'),
-                      SessionStage.summary => UiLanguage.text(context, en: 'Summary', tr: 'Özet'),
+                      SessionStage.teach => UiLanguage.text(
+                        context,
+                        en: 'Learn',
+                        tr: 'Öğren',
+                      ),
+                      SessionStage.rehearse => UiLanguage.text(
+                        context,
+                        en: 'Try it',
+                        tr: 'Dene',
+                      ),
+                      SessionStage.live => UiLanguage.text(
+                        context,
+                        en: 'Live',
+                        tr: 'Canlı',
+                      ),
+                      SessionStage.summary => UiLanguage.text(
+                        context,
+                        en: 'Summary',
+                        tr: 'Özet',
+                      ),
                     }),
                     backgroundColor: s == stage
                         ? Theme.of(context).colorScheme.primaryContainer
@@ -114,8 +129,10 @@ class SessionFlowScaffold extends StatelessWidget {
         child: FilledButton(
           key: const Key('advance-button'),
           onPressed: canAdvance ? onAdvance : null,
-          child: Text(advanceLabel ??
-              (UiLanguage.text(context, en: 'Continue', tr: 'Devam et'))),
+          child: Text(
+            advanceLabel ??
+                (UiLanguage.text(context, en: 'Continue', tr: 'Devam et')),
+          ),
         ),
       ),
     );
@@ -142,7 +159,8 @@ class IntervalTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Duration left = total - elapsed;
-    final String text = '${left.inMinutes.toString().padLeft(2, '0')}:'
+    final String text =
+        '${left.inMinutes.toString().padLeft(2, '0')}:'
         '${(left.inSeconds % 60).toString().padLeft(2, '0')}';
     return Column(
       key: const Key('interval-timer'),
@@ -157,9 +175,11 @@ class IntervalTimer extends StatelessWidget {
         if (paused)
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Text(UiLanguage.text(context, en: 'Paused', tr: 'Duraklatıldı'),
-                key: const Key('timer-paused'),
-                style: Theme.of(context).textTheme.labelMedium),
+            child: Text(
+              UiLanguage.text(context, en: 'Paused', tr: 'Duraklatıldı'),
+              key: const Key('timer-paused'),
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
           ),
       ],
     );

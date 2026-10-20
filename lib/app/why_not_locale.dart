@@ -111,12 +111,13 @@ List<ShellExclusion> whyNotExclusions(
   return source
       .map((ShellExclusion item) {
         final _ExclusionCopy? translated = _exclusions[item.title];
-    if (translated == null || translated.enReason != item.reason) {
-      return item;
-    }
+        if (translated == null || translated.enReason != item.reason) {
+          return item;
+        }
         return ShellExclusion(
           UiLanguage.text(context, en: item.title, tr: translated.trTitle),
-          UiLanguage.text(context, en: item.reason, tr: translated.trReason));
+          UiLanguage.text(context, en: item.reason, tr: translated.trReason),
+        );
       })
       .toList(growable: false);
 }

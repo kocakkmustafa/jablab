@@ -101,6 +101,12 @@ List<String> _catalogHonesty(
 ) {
   if (id != 'boxing') return source;
   return source
-      .map((String english) => UiLanguage.text(context, en: english, tr: translations[english] ?? english))
+      .map(
+        (String english) => UiLanguage.text(
+          context,
+          en: english,
+          tr: translations[english] ?? english,
+        ),
+      )
       .toList(growable: false);
 }

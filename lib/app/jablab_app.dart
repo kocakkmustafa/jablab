@@ -103,34 +103,34 @@ class _JabLabAppState extends State<JabLabApp> {
       selected: _selectedLocale,
       select: (locale) => setState(() => _selectedLocale = locale),
       child: MaterialApp(
-      title: 'JabLab',
-      locale: _selectedLocale,
-      supportedLocales: AppLocalizations.supportedLocales,
-      localeListResolutionCallback: AppLocalizations.resolve,
-      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      debugShowCheckedModeBanner: false,
-      navigatorObservers: widget.navigatorObservers,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFB3261E),
-          brightness: Brightness.dark,
+        title: 'JabLab',
+        locale: _selectedLocale,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localeListResolutionCallback: AppLocalizations.resolve,
+        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        debugShowCheckedModeBanner: false,
+        navigatorObservers: widget.navigatorObservers,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFB3261E),
+            brightness: Brightness.dark,
+          ),
+          useMaterial3: true,
         ),
-        useMaterial3: true,
+        home: _Root(
+          repository: widget.repository,
+          onboarding: widget.onboarding,
+          accountUserId: widget.accountUserId,
+          accountRecovery: widget.accountRecovery,
+          accountPageBuilder: widget.accountPageBuilder,
+          beforeLessonStart: widget.beforeLessonStart,
+        ),
       ),
-      home: _Root(
-        repository: widget.repository,
-        onboarding: widget.onboarding,
-        accountUserId: widget.accountUserId,
-        accountRecovery: widget.accountRecovery,
-        accountPageBuilder: widget.accountPageBuilder,
-        beforeLessonStart: widget.beforeLessonStart,
-      ),
-    ),
     );
   }
 }
@@ -645,10 +645,13 @@ class _RootState extends State<_Root> {
     // diye ayrı sayılıyor (bir dalın bugün ulaşılmaz olması, onu yanlış
     // yazmak için gerekçe değil).
     if (notEvaluable == 0) return null;
-    return UiLanguage.format(context,
+    return UiLanguage.format(
+      context,
       en: '{count} lessons here have a progress gate that counts punches. We are not showing you a count, because we are not keeping one: the session counts while it runs and then lets the number go. A zero would tell you that you did nothing, and that is not what we measured. Nothing here is blocked — the gates do not close anything.',
       tr: 'Burada {count} dersin yumruk sayan ilerleme kapısı var. Sayımı saklamadığımız için sana bir sayı göstermiyoruz: seans sürerken sayıyor, ardından sayıyı bırakıyor. Sıfır göstermek hiçbir şey yapmadığını söylerdi; ölçtüğümüz bu değil. Burada hiçbir şey engellenmiyor; kapılar içeriği kapatmıyor.',
-      args: {'count': notEvaluable}, pluralArg: 'count');
+      args: {'count': notEvaluable},
+      pluralArg: 'count',
+    );
   }
 
   void _openSettings(BuildContext context, ShellLibrary lib) {
@@ -776,8 +779,11 @@ class _RootState extends State<_Root> {
           resourceAdmission: _resourceAdmission,
           onOpenYang16WrittenCourse: () {
             final lifecycle = WidgetsBinding.instance.lifecycleState;
-            if (mounted && route.isCurrent && _resourceAdmission.value &&
-                generation == _historyGeneration && owner == widget.accountUserId?.value &&
+            if (mounted &&
+                route.isCurrent &&
+                _resourceAdmission.value &&
+                generation == _historyGeneration &&
+                owner == widget.accountUserId?.value &&
                 (lifecycle == null || lifecycle == AppLifecycleState.resumed)) {
               _openYang16WrittenCourse(context);
             }
@@ -843,8 +849,11 @@ class _RootState extends State<_Root> {
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
           onOpenTaikyokuCourse: () {
-            if (mounted && route.isCurrent && _resourceAdmission.value &&
-                generation == _historyGeneration && owner == widget.accountUserId?.value) {
+            if (mounted &&
+                route.isCurrent &&
+                _resourceAdmission.value &&
+                generation == _historyGeneration &&
+                owner == widget.accountUserId?.value) {
               _openTaikyokuCourse(context);
             }
           },
@@ -856,7 +865,8 @@ class _RootState extends State<_Root> {
 
   void _openTaikyokuCourse(BuildContext context) {
     final lifecycle = WidgetsBinding.instance.lifecycleState;
-    if (!_resourceAdmission.value || widget.accountRecovery?.value == true ||
+    if (!_resourceAdmission.value ||
+        widget.accountRecovery?.value == true ||
         (lifecycle != null && lifecycle != AppLifecycleState.resumed)) {
       return;
     }
@@ -864,27 +874,33 @@ class _RootState extends State<_Root> {
     final String? owner = widget.accountUserId?.value;
     final NavigatorState navigator = Navigator.of(context);
     late final MaterialPageRoute<void> route;
-    route = MaterialPageRoute<void>(builder: (_) {
-      if (!mounted || !_resourceAdmission.value || generation != _historyGeneration ||
-          owner != widget.accountUserId?.value) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (route.isActive && navigator.mounted) navigator.removeRoute(route);
-        });
-        WidgetsBinding.instance.ensureVisualUpdate();
-        return const SizedBox.shrink();
-      }
-      return TaikyokuCoursePage(
-        loader: widget.repository.loadTaikyokuCourse,
-        accountUserId: widget.accountUserId,
-        resourceAdmission: _resourceAdmission,
-      );
-    });
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive && navigator.mounted)
+              navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return TaikyokuCoursePage(
+          loader: widget.repository.loadTaikyokuCourse,
+          accountUserId: widget.accountUserId,
+          resourceAdmission: _resourceAdmission,
+        );
+      },
+    );
     unawaited(navigator.push<void>(route));
   }
 
   void _openYang16WrittenCourse(BuildContext context) {
     final lifecycle = WidgetsBinding.instance.lifecycleState;
-    if (!_resourceAdmission.value || widget.accountRecovery?.value == true ||
+    if (!_resourceAdmission.value ||
+        widget.accountRecovery?.value == true ||
         (lifecycle != null && lifecycle != AppLifecycleState.resumed)) {
       return;
     }
@@ -892,21 +908,26 @@ class _RootState extends State<_Root> {
     final String? owner = widget.accountUserId?.value;
     final NavigatorState navigator = Navigator.of(context);
     late final MaterialPageRoute<void> route;
-    route = MaterialPageRoute<void>(builder: (_) {
-      if (!mounted || !_resourceAdmission.value || generation != _historyGeneration ||
-          owner != widget.accountUserId?.value) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (route.isActive && navigator.mounted) navigator.removeRoute(route);
-        });
-        WidgetsBinding.instance.ensureVisualUpdate();
-        return const SizedBox.shrink();
-      }
-      return Yang16WrittenCoursePage(
-        loader: widget.repository.loadYang16WrittenCourse,
-        accountUserId: widget.accountUserId,
-        resourceAdmission: _resourceAdmission,
-      );
-    });
+    route = MaterialPageRoute<void>(
+      builder: (_) {
+        if (!mounted ||
+            !_resourceAdmission.value ||
+            generation != _historyGeneration ||
+            owner != widget.accountUserId?.value) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (route.isActive && navigator.mounted)
+              navigator.removeRoute(route);
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+          return const SizedBox.shrink();
+        }
+        return Yang16WrittenCoursePage(
+          loader: widget.repository.loadYang16WrittenCourse,
+          accountUserId: widget.accountUserId,
+          resourceAdmission: _resourceAdmission,
+        );
+      },
+    );
     unawaited(navigator.push<void>(route));
   }
 
@@ -982,9 +1003,11 @@ class _RootState extends State<_Root> {
     // yeniden üretirdi. Çekirdek değişikliği koordinatörde.
     return _recorded == null || _recorded!.sessions == 0
         ? null
-        : UiLanguage.text(context,
+        : UiLanguage.text(
+            context,
             en: 'These minutes are your history, not credit. Only lessons with a round clock are counted here — the untimed practice lessons have no timer, so their time is not measured and they leave no line. Nothing here opens with time either: the lessons that are closed are closed for a named technical reason, and each one tells you its own.',
-            tr: 'Bu dakikalar geçmişindir, kredi değildir. Burada yalnız tur saati olan dersler sayılır; süresiz çalışma derslerinin zamanlayıcısı yoktur, bu yüzden süreleri ölçülmez ve geçmişe satır bırakmazlar. Burada süreyle bir şey açılmaz: kapalı dersler belirtilen teknik bir nedenle kapalıdır ve her biri kendi nedenini açıklar.');
+            tr: 'Bu dakikalar geçmişindir, kredi değildir. Burada yalnız tur saati olan dersler sayılır; süresiz çalışma derslerinin zamanlayıcısı yoktur, bu yüzden süreleri ölçülmez ve geçmişe satır bırakmazlar. Burada süreyle bir şey açılmaz: kapalı dersler belirtilen teknik bir nedenle kapalıdır ve her biri kendi nedenini açıklar.',
+          );
   }
 
   /// Geçmiş HİÇ okunamadıysa gösterilecek cümle (J-092), yoksa `null`.
@@ -1020,18 +1043,22 @@ class _RootState extends State<_Root> {
     if (_historyUnavailable != null) {
       // Ham `detail` yüzeye SIZMAZ (doc-75/5): kullanıcı metni app'in
       // sesiyle yazılır, teşhis dizesi geliştirici içindir.
-      return UiLanguage.text(context,
+      return UiLanguage.text(
+        context,
         en: 'We could not read your saved sessions on this device. As far as we know your training is still there — we simply cannot open the file right now, so we are not going to show you numbers we did not measure. Nothing is blocked: you can start a session as usual.',
-        tr: 'Bu cihazdaki kayıtlı seanslarını okuyamadık. Bildiğimiz kadarıyla antrenman verilerin hâlâ orada; şu anda dosyayı açamıyoruz ve ölçmediğimiz sayıları göstermiyoruz. İçerik engellenmiyor: her zamanki gibi seans başlatabilirsin.');
+        tr: 'Bu cihazdaki kayıtlı seanslarını okuyamadık. Bildiğimiz kadarıyla antrenman verilerin hâlâ orada; şu anda dosyayı açamıyoruz ve ölçmediğimiz sayıları göstermiyoruz. İçerik engellenmiyor: her zamanki gibi seans başlatabilirsin.',
+      );
     }
     final RecordedSummary? r = _recorded;
     if (r != null && r.sessions == 0 && r.status is HistoryPartial) {
       // ⚠️ doc-75/4: bu uçta "taban" DİLİ KULLANILMAZ. Taban sıfırken
       // "en az bu kadar" demek doğru ve işe yaramaz — o yüzden bu metin
       // `at least` TAŞIMAZ ve testte ikiziyle sınanır.
-      return UiLanguage.text(context,
+      return UiLanguage.text(
+        context,
         en: 'Your history file is there but none of it could be read, so we have no totals to show. This is not the same as never having trained, and we would rather say so than show you a zero. New sessions will be recorded normally.',
-        tr: 'Geçmiş dosyan var, ancak hiçbir kaydı okunamadı; bu yüzden gösterecek toplamımız yok. Bu, hiç çalışmamış olmakla aynı şey değildir. Sıfır göstermek yerine bunu söylüyoruz. Yeni seanslar normal biçimde kaydedilecek.');
+        tr: 'Geçmiş dosyan var, ancak hiçbir kaydı okunamadı; bu yüzden gösterecek toplamımız yok. Bu, hiç çalışmamış olmakla aynı şey değildir. Sıfır göstermek yerine bunu söylüyoruz. Yeni seanslar normal biçimde kaydedilecek.',
+      );
     }
     return null;
   }
@@ -1051,10 +1078,12 @@ class _RootState extends State<_Root> {
     // Kayıp SAYISI metne girer: sayısız bir "bazıları okunamadı" beyanı
     // kullanıcıya eksiğin BÜYÜKLÜĞÜNÜ vermez (doc-75 test asgarisi: metin
     // testi sayıyı arar — interpolasyon-kaçağı sınıfı).
-    return UiLanguage.format(context,
+    return UiLanguage.format(
+      context,
       en: 'Some saved sessions could not be read ({count} of them), so the totals below are a floor, not a full count — you did at least this much.',
       tr: 'Kayıtlı seansların {count} tanesi okunamadı. Aşağıdaki toplamlar tam sayım değil, alt sınırdır; en az bu kadarını yaptın.',
-      args: {'count': status.unreadable});
+      args: {'count': status.unreadable},
+    );
   }
 
   Map<String, String> _recordedRows() {
@@ -1067,8 +1096,18 @@ class _RootState extends State<_Root> {
     return <String, String>{
       'Time worked': UiLanguage.duration(context, r.workedSeconds),
       'Sessions': r.stoppedEarly == 0
-          ? UiLanguage.format(context, en: '{count} recorded', tr: '{count} kayıt', args: {'count': r.sessions})
-          : UiLanguage.format(context, en: '{count} recorded, {stopped} stopped early', tr: '{count} kayıt, {stopped} erken bırakıldı', args: {'count': r.sessions, 'stopped': r.stoppedEarly}),
+          ? UiLanguage.format(
+              context,
+              en: '{count} recorded',
+              tr: '{count} kayıt',
+              args: {'count': r.sessions},
+            )
+          : UiLanguage.format(
+              context,
+              en: '{count} recorded, {stopped} stopped early',
+              tr: '{count} kayıt, {stopped} erken bırakıldı',
+              args: {'count': r.sessions, 'stopped': r.stoppedEarly},
+            ),
     };
   }
 
@@ -1099,8 +1138,13 @@ class _RootState extends State<_Root> {
       return (controller: null, failure: null);
     }
     try {
-      return (controller: _buildLiveJab(rules,
-        widget.repository.liveTechniqueIdsFor(lib, rules, lessonId)), failure: null);
+      return (
+        controller: _buildLiveJab(
+          rules,
+          widget.repository.liveTechniqueIdsFor(lib, rules, lessonId),
+        ),
+        failure: null,
+      );
     } on Object catch (e) {
       return (controller: null, failure: LiveSetupFailed(e));
     }

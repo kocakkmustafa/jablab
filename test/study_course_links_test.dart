@@ -64,7 +64,9 @@ void main() {
       testWidgets(
         '${path.entry} recall link opens its $language lesson with camera off',
         (tester) async {
-          tester.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
+          tester.platformDispatcher.localesTestValue = <Locale>[
+            Locale(language),
+          ];
           tester.view.physicalSize = const Size(375, 812);
           tester.view.devicePixelRatio = 1;
           final owners = OwnerResourceRegistry();

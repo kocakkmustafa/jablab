@@ -59,9 +59,9 @@ Future<_CourseAssetOverlayBundle> _schemaInvalidButHashMatchedBundle({
   bool wrongFieldType = false,
 }) async {
   final ByteData courseData = await rootBundle.load(_coursePath);
-  final Map<String, dynamic> invalid = (jsonDecode(
-    utf8.decode(Uint8List.sublistView(courseData)),
-  ) as Map).cast<String, dynamic>();
+  final Map<String, dynamic> invalid =
+      (jsonDecode(utf8.decode(Uint8List.sublistView(courseData))) as Map)
+          .cast<String, dynamic>();
   if (wrongFieldType) {
     final Map<String, dynamic> firstModule =
         ((invalid['modules'] as List).first as Map).cast<String, dynamic>();
@@ -78,9 +78,9 @@ Future<_CourseAssetOverlayBundle> _schemaInvalidButHashMatchedBundle({
   );
 
   final ByteData manifestData = await rootBundle.load(_manifestPath);
-  final Map<String, dynamic> manifest = (jsonDecode(
-    utf8.decode(Uint8List.sublistView(manifestData)),
-  ) as Map).cast<String, dynamic>();
+  final Map<String, dynamic> manifest =
+      (jsonDecode(utf8.decode(Uint8List.sublistView(manifestData))) as Map)
+          .cast<String, dynamic>();
   final Map<String, dynamic> asset =
       ((manifest['assets'] as List).single as Map).cast<String, dynamic>();
   asset['byteLength'] = invalidBytes.length;
@@ -94,8 +94,9 @@ Future<_CourseAssetOverlayBundle> _schemaInvalidButHashMatchedBundle({
 
 Future<ContentException> _rejection(_CourseAssetOverlayBundle bundle) async {
   try {
-    await ContentRepository(contentBundleOverride: bundle)
-        .loadSoloBoxingCourse();
+    await ContentRepository(
+      contentBundleOverride: bundle,
+    ).loadSoloBoxingCourse();
   } on ContentException catch (error) {
     return error;
   }
@@ -124,9 +125,9 @@ void main() {
     );
 
     final ByteData data = await rootBundle.load(_manifestPath);
-    final Map<String, dynamic> manifest = (jsonDecode(
-      utf8.decode(Uint8List.sublistView(data)),
-    ) as Map).cast<String, dynamic>();
+    final Map<String, dynamic> manifest =
+        (jsonDecode(utf8.decode(Uint8List.sublistView(data))) as Map)
+            .cast<String, dynamic>();
     expect(manifest['courses'], isEmpty);
     expect(manifest['lessons'], isEmpty);
     expect(manifest['models'], isEmpty);

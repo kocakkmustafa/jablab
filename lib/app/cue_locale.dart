@@ -72,13 +72,18 @@ const Map<String, String> cueCopies = <String, String>{
   "I can only see part of you.": "Yalnızca bir kısmını görebiliyorum.",
   "Move back — you're out of frame.": "Geri çekil; kadraj dışındasın.",
   "I've lost your legs.": "Bacaklarını takip edemiyorum.",
-  "I can't see you clearly enough to judge.": "Değerlendirmek için seni yeterince net göremiyorum.",
+  "I can't see you clearly enough to judge.":
+      "Değerlendirmek için seni yeterince net göremiyorum.",
   "Losing track of you.": "Seni takip etmekte zorlanıyorum.",
-  "Tracking isn't clean — holding off.": "Takip net değil; değerlendirmeyi bekletiyorum.",
-  "Not confident enough to call that.": "Hüküm vermek için yeterince emin değilim.",
-  "My tracking looks wrong — holding off.": "Takibim hatalı görünüyor; değerlendirmeyi bekletiyorum.",
+  "Tracking isn't clean — holding off.":
+      "Takip net değil; değerlendirmeyi bekletiyorum.",
+  "Not confident enough to call that.":
+      "Hüküm vermek için yeterince emin değilim.",
+  "My tracking looks wrong — holding off.":
+      "Takibim hatalı görünüyor; değerlendirmeyi bekletiyorum.",
   "Not confident in what I'm seeing.": "Gördüğümden emin değilim.",
-  "Something's off in my read. Staying quiet.": "Okumamda bir sorun var. Sessiz kalıyorum.",
+  "Something's off in my read. Staying quiet.":
+      "Okumamda bir sorun var. Sessiz kalıyorum.",
   "Halfway.": "Yarısı bitti.",
   "Half done.": "Yarıya geldin.",
   "Half gone.": "Yarısı geçti.",
@@ -173,12 +178,17 @@ const Map<String, String> cueCopies = <String, String>{
   "Reset your stance.": "Duruşunu yeniden kur.",
   "Breathe, then go.": "Nefes al, sonra başla.",
   "Almost time. Set.": "Vakit yaklaştı. Hazır ol.",
-  "Slow jabs. Only the other hand matters.": "Yavaş jablar. Yalnız diğer el önemli.",
-  "Forget speed. Watch the hand that stays home.": "Hızı unut. Yerinde kalan eli izle.",
+  "Slow jabs. Only the other hand matters.":
+      "Yavaş jablar. Yalnız diğer el önemli.",
+  "Forget speed. Watch the hand that stays home.":
+      "Hızı unut. Yerinde kalan eli izle.",
   "Throw and bring it straight back.": "Yumruğu at ve dümdüz geri getir.",
-  "The return is the rep, not the punch.": "Tekrarın odağı yumruk değil, geri dönüş.",
-  "Reset your stance between each one.": "Her yumruk arasında duruşunu yeniden kur.",
-  "Step out, step back, find the base.": "Dışarı adım at, geri gel, tabanını bul.",
+  "The return is the rep, not the punch.":
+      "Tekrarın odağı yumruk değil, geri dönüş.",
+  "Reset your stance between each one.":
+      "Her yumruk arasında duruşunu yeniden kur.",
+  "Step out, step back, find the base.":
+      "Dışarı adım at, geri gel, tabanını bul.",
   "Step and slide. Never cross.": "Adım at ve kaydır. Asla çaprazlama.",
   "Small steps. Feet never meet.": "Küçük adımlar. Ayaklar asla birleşmesin.",
   "Punch, then hold your finish.": "Yumruk at, sonra bitiş duruşunu tut.",
@@ -193,17 +203,26 @@ const Map<String, String> cueCopies = <String, String>{
   "Elbow follows the fist.": "Dirsek yumruğu izler.",
   "Stay planted. Don't chase.": "Ayakların sabit kalsın. Peşinden gitme.",
   "Punch from where you stand.": "Bulunduğun yerden yumruk at.",
-  "Something in that one needs fixing, but we do not have the words for it.": "O tekrarda düzeltilmesi gereken bir şey var, ancak onu anlatacak metnimiz yok.",
-  "I cannot judge that clearly enough right now.": "Şu anda bunu yeterince net değerlendiremiyorum.",
-  "I cannot see you well enough to judge — step back so your head and hands are in frame.": "Değerlendirmek için seni yeterince iyi göremiyorum; başın ve ellerin kadraja girene kadar geri çekil.",
-  "I can't get a steady read on your torso — square up so your shoulders and hips are both visible.": "Gövdeni tutarlı biçimde okuyamıyorum; omuzların ve kalçaların birlikte görünecek şekilde yönel.",
+  "Something in that one needs fixing, but we do not have the words for it.":
+      "O tekrarda düzeltilmesi gereken bir şey var, ancak onu anlatacak metnimiz yok.",
+  "I cannot judge that clearly enough right now.":
+      "Şu anda bunu yeterince net değerlendiremiyorum.",
+  "I cannot see you well enough to judge — step back so your head and hands are in frame.":
+      "Değerlendirmek için seni yeterince iyi göremiyorum; başın ve ellerin kadraja girene kadar geri çekil.",
+  "I can't get a steady read on your torso — square up so your shoulders and hips are both visible.":
+      "Gövdeni tutarlı biçimde okuyamıyorum; omuzların ve kalçaların birlikte görünecek şekilde yönel.",
 };
 
 final _countTemplates = <({RegExp pattern, String en, String tr})>[
   for (final entry in cueCopies.entries)
     if (entry.key.contains('{n}'))
-      (pattern: RegExp('^${RegExp.escape(entry.key).replaceAll(r'\{n\}', r'([0-9]+)')}\$'),
-       en: entry.key, tr: entry.value),
+      (
+        pattern: RegExp(
+          '^${RegExp.escape(entry.key).replaceAll(r'\{n\}', r'([0-9]+)')}\$',
+        ),
+        en: entry.key,
+        tr: entry.value,
+      ),
 ];
 
 String localizedCue(BuildContext context, String source) {
@@ -218,8 +237,12 @@ String localizedCue(BuildContext context, String source) {
     if (match != null) {
       final count = int.tryParse(match[1]!);
       if (count != null) {
-        return UiLanguage.format(context,
-          en: template.en, tr: template.tr, args: {'n': count});
+        return UiLanguage.format(
+          context,
+          en: template.en,
+          tr: template.tr,
+          args: {'n': count},
+        );
       }
     }
   }

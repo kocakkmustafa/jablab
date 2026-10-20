@@ -210,14 +210,19 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
                   ),
                 ),
                 if (widget.onOpenYang16WrittenCourse != null)
-                  Yang16WrittenEntryCard(onOpen: () {
-                    final lifecycle = WidgetsBinding.instance.lifecycleState;
-                    if (mounted && !_retired && _overview?.isCurrent == true &&
-                        widget.resourceAdmission?.value != false &&
-                        (lifecycle == null || lifecycle == AppLifecycleState.resumed)) {
-                      widget.onOpenYang16WrittenCourse?.call();
-                    }
-                  }),
+                  Yang16WrittenEntryCard(
+                    onOpen: () {
+                      final lifecycle = WidgetsBinding.instance.lifecycleState;
+                      if (mounted &&
+                          !_retired &&
+                          _overview?.isCurrent == true &&
+                          widget.resourceAdmission?.value != false &&
+                          (lifecycle == null ||
+                              lifecycle == AppLifecycleState.resumed)) {
+                        widget.onOpenYang16WrittenCourse?.call();
+                      }
+                    },
+                  ),
                 for (final lesson in course.lessons)
                   ListTile(
                     key: Key('tai-chi-lesson-${lesson.number}'),
@@ -292,7 +297,10 @@ class _TaiChiLessonPageState extends State<TaiChiLessonPage>
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          TechniqueCapabilityPanel(courseId: widget.course.id, lessonId: lesson.id),
+          TechniqueCapabilityPanel(
+            courseId: widget.course.id,
+            lessonId: lesson.id,
+          ),
           Text(_text(context, lesson.objective)),
           Text(_text(context, widget.course.safety)),
           Text(_text(context, lesson.preparation)),

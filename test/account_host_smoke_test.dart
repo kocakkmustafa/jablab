@@ -22,7 +22,10 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: SettingsPage(
           onOpenWhyNot: () {},
           excludedCount: 1,
@@ -60,7 +63,10 @@ void main() {
       tester.platformDispatcher.localesTestValue = <Locale>[Locale(locale)];
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
       await tester.pumpWidget(
-        MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+        MaterialApp(
+          supportedLocales: testSupportedLocales,
+          localizationsDelegates: testLocalizationDelegates,
+          localeListResolutionCallback: resolveTestLocales,
           home: SettingsPage(
             onOpenWhyNot: () {},
             excludedCount: 1,
@@ -69,7 +75,7 @@ void main() {
           ),
         ),
       );
-    await settleTestLocalizations(tester);
+      await settleTestLocalizations(tester);
       expect(
         find.textContaining(
           locale == 'tr'

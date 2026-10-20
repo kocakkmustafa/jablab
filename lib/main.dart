@@ -68,7 +68,8 @@ Future<void> launchJabLab({
       final OwnerResourceLifetime? captured = deletionLifetime;
       return OwnerBoundAccountPage(
         account: runtime.account,
-        canInitiate: () => runtime.isCurrentSessionVerified && !runtime.isPasswordRecovery,
+        canInitiate: () =>
+            runtime.isCurrentSessionVerified && !runtime.isPasswordRecovery,
         lifetime: captured,
         onRetryIdentity: runtime.refreshIdentity,
         initialPasswordRecovery: runtime.isPasswordRecovery,

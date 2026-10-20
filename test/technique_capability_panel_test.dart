@@ -21,7 +21,10 @@ void main() {
         );
         var reports = 0;
         await t.pumpWidget(
-          MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+          MaterialApp(
+            supportedLocales: testSupportedLocales,
+            localizationsDelegates: testLocalizationDelegates,
+            localeListResolutionCallback: resolveTestLocales,
             builder: (context, child) => MediaQuery(
               data: MediaQuery.of(
                 context,
@@ -41,7 +44,7 @@ void main() {
             ),
           ),
         );
-    await settleTestLocalizations(t);
+        await settleTestLocalizations(t);
         await t.pumpAndSettle();
         await t.scrollUntilVisible(
           find.byKey(const Key('technique-capability-panel')),
@@ -84,7 +87,10 @@ void main() {
     t,
   ) async {
     await t.pumpWidget(
-      const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
+      const MaterialApp(
+        supportedLocales: testSupportedLocales,
+        localizationsDelegates: testLocalizationDelegates,
+        localeListResolutionCallback: resolveTestLocales,
         home: Scaffold(
           body: TechniqueCapabilityPanel(
             courseId: 'jablab.karate_a',

@@ -255,7 +255,13 @@ class _Honesty extends StatelessWidget {
               // kalır. Elle yazılmış bir "6 things" bir sonraki içerik
               // turunda sessizce yalan olurdu.
               Text(
-                UiLanguage.format(context, en: '{count} things are deliberately not in this app.', tr: '{count} özellik bilinçli olarak uygulamada yok.', args: {'count': excluded}, pluralArg: 'count'),
+                UiLanguage.format(
+                  context,
+                  en: '{count} things are deliberately not in this app.',
+                  tr: '{count} özellik bilinçli olarak uygulamada yok.',
+                  args: {'count': excluded},
+                  pluralArg: 'count',
+                ),
                 key: const Key('onboarding-excluded-count'),
                 style: JText.body,
               ),
@@ -363,10 +369,8 @@ class _Setup extends StatelessWidget {
           n: '3',
           text: UiLanguage.text(
             context,
-            en:
-                'Practise controlled movements without contact. Stop if it hurts.',
-            tr:
-                'Temassız ve kontrollü hareketlerle çalış. Ağrı olursa dur.',
+            en: 'Practise controlled movements without contact. Stop if it hurts.',
+            tr: 'Temassız ve kontrollü hareketlerle çalış. Ağrı olursa dur.',
           ),
         ),
         const SizedBox(height: 18),

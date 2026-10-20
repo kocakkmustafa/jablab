@@ -9,9 +9,12 @@ import 'ui_language.dart';
 
 String _text(BuildContext context, MuayThaiCopy copy) =>
     UiLanguage.text(context, en: copy.en, tr: copy.tr);
-String _label(BuildContext context, String en, String tr,
-    {Map<String, Object> args = const {}}) =>
-    UiLanguage.format(context, en: en, tr: tr, args: args);
+String _label(
+  BuildContext context,
+  String en,
+  String tr, {
+  Map<String, Object> args = const {},
+}) => UiLanguage.format(context, en: en, tr: tr, args: args);
 
 class MuayThaiCourseEntryCard extends StatelessWidget {
   const MuayThaiCourseEntryCard({super.key, required this.onOpen});
@@ -119,7 +122,10 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          TechniqueCapabilityPanel(courseId: 'jablab.muay_thai_a', lessonId: l.id),
+          TechniqueCapabilityPanel(
+            courseId: 'jablab.muay_thai_a',
+            lessonId: l.id,
+          ),
           Text(
             _label(
               context,
@@ -153,13 +159,22 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
           if (_readingVisible) ...[
             for (final entry in widget.course.shared.entries) ...[
               if (entry.key == 'status')
-                Text(_label(context, 'Original manuscript status at drafting:', 'Özgün metnin yazıldığı tarihteki durum:')),
+                Text(
+                  _label(
+                    context,
+                    'Original manuscript status at drafting:',
+                    'Özgün metnin yazıldığı tarihteki durum:',
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Text(_text(context, entry.value)),
               ),
             ],
-            Text(_text(context, l.teaching), key: const Key('muay-thai-teaching')),
+            Text(
+              _text(context, l.teaching),
+              key: const Key('muay-thai-teaching'),
+            ),
             Text(
               _label(
                 context,
@@ -189,7 +204,8 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
               l.physicalPrerequisiteIds.isEmpty
                   ? 'Yalnız yazılı görev; kursun fiziksel gereksinimleri karşılanmamıştır.'
                   : 'Karşılanmamış teknik gereksinimler: {value1}',
-             args: {'value1': l.physicalPrerequisiteIds.join(', ')},),
+              args: {'value1': l.physicalPrerequisiteIds.join(', ')},
+            ),
             key: const Key('muay-thai-physical-prerequisites'),
           ),
           Text(
@@ -562,7 +578,9 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
   Widget build(BuildContext context) {
     final course = _course;
     return Scaffold(
-      appBar: AppBar(title: Text(_label(context, 'Muay Thai A', 'Muay Thai A'))),
+      appBar: AppBar(
+        title: Text(_label(context, 'Muay Thai A', 'Muay Thai A')),
+      ),
       body: _retired
           ? const SizedBox.shrink()
           : _failed
@@ -597,7 +615,13 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                 ),
                 for (final entry in course.shared.entries) ...[
                   if (entry.key == 'status')
-                    Text(_label(context, 'Original manuscript status at drafting:', 'Özgün metnin yazıldığı tarihteki durum:')),
+                    Text(
+                      _label(
+                        context,
+                        'Original manuscript status at drafting:',
+                        'Özgün metnin yazıldığı tarihteki durum:',
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(_text(context, entry.value)),
@@ -623,7 +647,8 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                     context,
                     '{value1}/16 written reviews reported this visit; physical components unattempted.',
                     'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
-                   args: {'value1': _written.length},),
+                    args: {'value1': _written.length},
+                  ),
                   key: const Key('muay-thai-written-progress'),
                 ),
                 if (_written.length == course.lessons.length)

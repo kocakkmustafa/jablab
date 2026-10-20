@@ -2,7 +2,6 @@ import '../app/ui_language.dart';
 import '../app/cue_locale.dart';
 import 'package:flutter/material.dart';
 
-
 /// Canlı seansta ekranın söyleyebileceği üç şey.
 ///
 /// Üçüncüsü ürünün karakteri: **"göremiyorum" ayrı bir durumdur**, sessizlik
@@ -114,8 +113,13 @@ class LiveCoachSurface extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      noVerdictReason != null ? localizedCue(context, noVerdictReason!) :
-                          (UiLanguage.text(context, en: "I can't see you well enough to judge", tr: 'Değerlendirmek için sizi yeterince iyi göremiyorum')),
+                      noVerdictReason != null
+                          ? localizedCue(context, noVerdictReason!)
+                          : (UiLanguage.text(
+                              context,
+                              en: "I can't see you well enough to judge",
+                              tr: 'Değerlendirmek için sizi yeterince iyi göremiyorum',
+                            )),
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodyMedium,
                     ),
@@ -245,7 +249,11 @@ class SessionSummaryView extends StatelessWidget {
             style: theme.textTheme.displayMedium,
           ),
           Text(
-            UiLanguage.text(context, en: 'recorded this session', tr: 'bu seansta kaydedildi'),
+            UiLanguage.text(
+              context,
+              en: 'recorded this session',
+              tr: 'bu seansta kaydedildi',
+            ),
             style: theme.textTheme.bodySmall,
           ),
           const SizedBox(height: 20),
@@ -255,7 +263,17 @@ class SessionSummaryView extends StatelessWidget {
         // veremese bile kullanıcı turu bitirmiş, süre çalışmış olabilir.
         // Ayrı yuva, karıştırılmaz.
         Text(
-          UiLanguage.format(context, en: '{units} • {duration}', tr: '{units} • {duration}', args: {'units': unitLabelContainsCount ? unitLabel : '${UiLanguage.number(context, unitsCompleted)} $unitLabel', 'duration': UiLanguage.duration(context, workedSeconds)}),
+          UiLanguage.format(
+            context,
+            en: '{units} • {duration}',
+            tr: '{units} • {duration}',
+            args: {
+              'units': unitLabelContainsCount
+                  ? unitLabel
+                  : '${UiLanguage.number(context, unitsCompleted)} $unitLabel',
+              'duration': UiLanguage.duration(context, workedSeconds),
+            },
+          ),
           key: const Key('summary-worked'),
           style: theme.textTheme.titleSmall,
         ),
@@ -265,7 +283,12 @@ class SessionSummaryView extends StatelessWidget {
         if (tempoBand != null) ...<Widget>[
           const SizedBox(height: 4),
           Text(
-            UiLanguage.format(context, en: 'Pace: {band}', tr: 'Tempo: {band}', args: {'band': tempoBand!}),
+            UiLanguage.format(
+              context,
+              en: 'Pace: {band}',
+              tr: 'Tempo: {band}',
+              args: {'band': tempoBand!},
+            ),
             key: const Key('summary-tempo-band'),
             style: theme.textTheme.bodySmall,
           ),
@@ -278,9 +301,14 @@ class SessionSummaryView extends StatelessWidget {
           // Metin `course_page.dart`taki `_HonestBands`ten AYNEN alındı
           // (`bands-only-note`) — aynı olgu, tek cümle, iki yerde tutarlı.
           Text(
-            UiLanguage.text(context, en: 'Scores are unavailable because the thresholds have not been '
-                      'calibrated on real recordings. A precise-looking number we '
-                      'cannot back up would be worse than no number.', tr: 'Eşikler gerçek kayıtlarla kalibre edilmediği için puan gösterilmiyor. Dayanağı olmayan kesin bir sayı yanıltıcı olur.'),
+            UiLanguage.text(
+              context,
+              en:
+                  'Scores are unavailable because the thresholds have not been '
+                  'calibrated on real recordings. A precise-looking number we '
+                  'cannot back up would be worse than no number.',
+              tr: 'Eşikler gerçek kayıtlarla kalibre edilmediği için puan gösterilmiyor. Dayanağı olmayan kesin bir sayı yanıltıcı olur.',
+            ),
             key: const Key('summary-bands-note'),
             style: theme.textTheme.bodySmall,
           ),
@@ -307,13 +335,22 @@ class SessionSummaryView extends StatelessWidget {
         if (coachedNotScored.isNotEmpty) ...<Widget>[
           const SizedBox(height: 20),
           Text(
-            UiLanguage.text(context, en: 'Coached but not scored', tr: 'Koçluk var, puan yok'),
+            UiLanguage.text(
+              context,
+              en: 'Coached but not scored',
+              tr: 'Koçluk var, puan yok',
+            ),
             style: theme.textTheme.titleSmall,
           ),
           const SizedBox(height: 4),
           Text(
-            UiLanguage.text(context, en: 'Experienced instructors disagree about these, so we point them out '
-                      'but do not grade them.', tr: 'Deneyimli eğitmenler bu konularda farklı görüşlere sahip; bu yüzden bunları belirtiriz ama puanlamayız.'),
+            UiLanguage.text(
+              context,
+              en:
+                  'Experienced instructors disagree about these, so we point them out '
+                  'but do not grade them.',
+              tr: 'Deneyimli eğitmenler bu konularda farklı görüşlere sahip; bu yüzden bunları belirtiriz ama puanlamayız.',
+            ),
             key: const Key('coached-not-scored-note'),
             style: theme.textTheme.bodySmall,
           ),

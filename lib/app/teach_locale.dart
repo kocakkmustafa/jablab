@@ -30,7 +30,11 @@ const Map<String, String> _materialReasonsTr = <String, String>{
 };
 
 String localizedMaterialReason(BuildContext context, String source) =>
-    UiLanguage.text(context, en: source, tr: _materialReasonsTr[source] ?? source);
+    UiLanguage.text(
+      context,
+      en: source,
+      tr: _materialReasonsTr[source] ?? source,
+    );
 
 const Map<String, _TeachCopy> _teachCopies = <String, _TeachCopy>{
   'boxing.foundations.camera': (

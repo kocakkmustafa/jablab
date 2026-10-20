@@ -23,43 +23,54 @@ AttemptRun run(
 );
 
 void main() {
-  test('legacy constructor remains valid without the optional timing field', () {
-    const digest = AttemptDigest(
-      techniqueId: 'legacy',
-      limb: Side.lead,
-      outcome: AttemptOutcome.completed,
-      transitions: <String, int>{},
-      snapshots: <String, MeasureSet>{},
-      extensionMs: 1120,
-      tempoBand: 'controlled',
-      provenance: <String, String>{},
-    );
-    expect(digest.extensionMs, 1120);
-    expect(digest.extensionToPeakMs, isNull);
-  });
+  test(
+    'legacy constructor remains valid without the optional timing field',
+    () {
+      const digest = AttemptDigest(
+        techniqueId: 'legacy',
+        limb: Side.lead,
+        outcome: AttemptOutcome.completed,
+        transitions: <String, int>{},
+        snapshots: <String, MeasureSet>{},
+        extensionMs: 1120,
+        tempoBand: 'controlled',
+        provenance: <String, String>{},
+      );
+      expect(digest.extensionMs, 1120);
+      expect(digest.extensionToPeakMs, isNull);
+    },
+  );
 
   test('named interval excludes guard, shoulder rotation and recovery', () {
-    final result = extensionToPeakDurationMs(run(<(String, int)>[
-      ('GUARD_READY', 0),
-      ('REAR_SHOULDER_ROTATION', 500000),
-      ('EXTENSION', 1000000),
-      ('PEAK', 1120000),
-      ('RETRACTION', 1200000),
-      ('GUARD_RECOVERED', 1300000),
-    ]));
+    final result = extensionToPeakDurationMs(
+      run(<(String, int)>[
+        ('GUARD_READY', 0),
+        ('REAR_SHOULDER_ROTATION', 500000),
+        ('EXTENSION', 1000000),
+        ('PEAK', 1120000),
+        ('RETRACTION', 1200000),
+        ('GUARD_RECOVERED', 1300000),
+      ]),
+    );
     expect(result, 120);
   });
 
   test('microseconds retain fractional milliseconds', () {
-    expect(extensionToPeakDurationMs(run(<(String, int)>[
-      ('EXTENSION', 1000001), ('PEAK', 1123457),
-    ])), closeTo(123.456, .000001));
+    expect(
+      extensionToPeakDurationMs(
+        run(<(String, int)>[('EXTENSION', 1000001), ('PEAK', 1123457)]),
+      ),
+      closeTo(123.456, .000001),
+    );
   });
 
   test('zero is a valid timestamp, but zero duration is not', () {
-    expect(extensionToPeakDurationMs(run(<(String, int)>[
-      ('EXTENSION', 0), ('PEAK', 120000),
-    ])), 120);
+    expect(
+      extensionToPeakDurationMs(
+        run(<(String, int)>[('EXTENSION', 0), ('PEAK', 120000)]),
+      ),
+      120,
+    );
   });
 
   final invalid = <String, List<(String, int)>>{
@@ -67,23 +78,32 @@ void main() {
     'missing extension': [('GUARD_READY', 0), ('PEAK', 120000)],
     'missing peak': [('GUARD_READY', 0), ('EXTENSION', 100000)],
     'fallback has neither boundary': [
-      ('GUARD_READY', 0), ('STRIKE_WINDOW', 100000),
+      ('GUARD_READY', 0),
+      ('STRIKE_WINDOW', 100000),
       ('GUARD_RECOVERED', 300000),
     ],
     'duplicate extension': [
-      ('EXTENSION', 100000), ('EXTENSION', 110000), ('PEAK', 220000),
+      ('EXTENSION', 100000),
+      ('EXTENSION', 110000),
+      ('PEAK', 220000),
     ],
     'duplicate peak': [
-      ('EXTENSION', 100000), ('PEAK', 200000), ('PEAK', 220000),
+      ('EXTENSION', 100000),
+      ('PEAK', 200000),
+      ('PEAK', 220000),
     ],
     'peak before extension': [('PEAK', 100000), ('EXTENSION', 220000)],
     'equal boundary timestamps': [('EXTENSION', 100000), ('PEAK', 100000)],
     'backward boundary timestamp': [('EXTENSION', 200000), ('PEAK', 100000)],
     'backward timestamp before interval': [
-      ('GUARD_READY', 200000), ('EXTENSION', 100000), ('PEAK', 220000),
+      ('GUARD_READY', 200000),
+      ('EXTENSION', 100000),
+      ('PEAK', 220000),
     ],
     'backward timestamp after interval': [
-      ('EXTENSION', 100000), ('PEAK', 220000), ('GUARD_RECOVERED', 210000),
+      ('EXTENSION', 100000),
+      ('PEAK', 220000),
+      ('GUARD_RECOVERED', 210000),
     ],
   };
   for (final entry in invalid.entries) {
@@ -92,12 +112,20 @@ void main() {
     });
   }
   for (final outcome in <AttemptOutcome>[
-    AttemptOutcome.timedOut, AttemptOutcome.aborted, AttemptOutcome.lostTracking,
+    AttemptOutcome.timedOut,
+    AttemptOutcome.aborted,
+    AttemptOutcome.lostTracking,
   ]) {
     test('incomplete outcome has no tempo interval: ${outcome.name}', () {
-      expect(extensionToPeakDurationMs(run(<(String, int)>[
-        ('EXTENSION', 100000), ('PEAK', 220000),
-      ], outcome: outcome)), isNull);
+      expect(
+        extensionToPeakDurationMs(
+          run(<(String, int)>[
+            ('EXTENSION', 100000),
+            ('PEAK', 220000),
+          ], outcome: outcome),
+        ),
+        isNull,
+      );
     });
   }
 }

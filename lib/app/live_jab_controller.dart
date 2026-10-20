@@ -54,7 +54,9 @@ final class LiveJabController {
     Future<bool> Function()? permissionPermanentlyDenied,
     OrientationAwarePoseSource Function(PoseSourceDriver)? sourceFactory,
     StrikingEngine Function(FrameSize)? engineFactory,
-  }) : allowedTechniqueIds = allowedTechniqueIds == null ? null : Set.unmodifiable(allowedTechniqueIds),
+  }) : allowedTechniqueIds = allowedTechniqueIds == null
+           ? null
+           : Set.unmodifiable(allowedTechniqueIds),
        _camera = camera ?? MotionCameraController(),
        _requestPermission = requestPermission,
        _permissionPermanentlyDenied = permissionPermanentlyDenied,

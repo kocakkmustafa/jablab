@@ -94,7 +94,10 @@ class SkeletonPreview extends StatelessWidget {
 }
 
 class _CameraPlaceholder extends StatelessWidget {
-  const _CameraPlaceholder({required this.bucket, required this.analysisRunning});
+  const _CameraPlaceholder({
+    required this.bucket,
+    required this.analysisRunning,
+  });
 
   final LiveHonestyBucket bucket;
 
@@ -150,12 +153,16 @@ class _CameraPlaceholder extends StatelessWidget {
                 // `LiveCoachSurface.noVerdictReason` zaten söylüyor ve iki
                 // yüzeyin aynı sebebi iki farklı cümleyle anlatması
                 // J-047'nin elle-kopyalanmış listesi sınıfına girerdi.
-                UiLanguage.text(context, en: (analysisRunning
-                        ? 'Camera preview is left out on purpose — analysis runs '
+                UiLanguage.text(
+                  context,
+                  en: (analysisRunning
+                      ? 'Camera preview is left out on purpose — analysis runs '
                             'without it'
-                        : 'Camera preview is left out on purpose'), tr: (analysisRunning
-                        ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
-                        : 'Kamera önizlemesi bilerek gösterilmiyor.')),
+                      : 'Camera preview is left out on purpose'),
+                  tr: (analysisRunning
+                      ? 'Kamera önizlemesi bilerek gösterilmiyor; analiz onsuz çalışıyor.'
+                      : 'Kamera önizlemesi bilerek gösterilmiyor.'),
+                ),
                 key: const Key('camera-preview-placeholder'),
                 textAlign: TextAlign.center,
                 // ⚠️ `ink4` idi ve ÖLÇÜLDÜ: 1,80:1 — WCAG AA normal metin

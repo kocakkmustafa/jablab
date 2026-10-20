@@ -392,7 +392,11 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                   key: const Key('solo-progress-retry'),
                   onPressed: _load,
                   child: Text(
-                    UiLanguage.text(context, en: 'Try again', tr: 'Yeniden dene'),
+                    UiLanguage.text(
+                      context,
+                      en: 'Try again',
+                      tr: 'Yeniden dene',
+                    ),
                   ),
                 ),
               ] else ...<Widget>[
@@ -401,7 +405,8 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                     context,
                     en: '{value1} / 39 self-reported complete',
                     tr: '{value1} / 39 öz beyanla tamamlandı',
-                   args: {'value1': done},),
+                    args: {'value1': done},
+                  ),
                   key: const Key('solo-course-progress'),
                   style: JText.body.copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -504,7 +509,11 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
               tr: completed == null
                   ? 'İlerleme okunamıyor · salt okunur'
                   : '{value1} / {value2} öz beyan tamamlandı',
-             args: {if (completed != null) 'value1': completed, 'value2': module.lessons.length},),
+              args: {
+                if (completed != null) 'value1': completed,
+                'value2': module.lessons.length,
+              },
+            ),
             style: JText.bodyMuted,
           ),
           children: <Widget>[
@@ -520,9 +529,9 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                   progress == null
                       ? Icons.help_outline
                       : progress
-                              .forLesson(module.lessons[i], course.version)
-                              ?.state ==
-                          SoloLessonState.selfReportedComplete
+                                .forLesson(module.lessons[i], course.version)
+                                ?.state ==
+                            SoloLessonState.selfReportedComplete
                       ? Icons.check_circle_outline
                       : Icons.radio_button_unchecked,
                   color: JColors.cool,
@@ -833,7 +842,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
         padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
         children: <Widget>[
           if (_readOnly) const _SoloReadOnlyNotice(),
-          TechniqueCapabilityPanel(courseId: widget.course.id, lessonId: lesson.id),
+          TechniqueCapabilityPanel(
+            courseId: widget.course.id,
+            lessonId: lesson.id,
+          ),
           Text(
             _copy(context, lesson.title),
             style: JText.pageTitle.copyWith(fontSize: 30),
@@ -846,7 +858,8 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
               context,
               en: '{value1} min suggested · self-report only',
               tr: '{value1} dk öneri · yalnız öz beyan',
-             args: {'value1': lesson.minutes},),
+              args: {'value1': lesson.minutes},
+            ),
             style: JText.body.copyWith(color: JColors.cool),
           ),
           LessonMediaSlot.empty(
@@ -862,7 +875,12 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                 context,
                 en: 'Builds on: {value1}',
                 tr: 'Ön çalışma: {value1}',
-               args: {'value1': prerequisites.map((SoloLesson item) => _copy(context, item.title)).join(", ")},),
+                args: {
+                  'value1': prerequisites
+                      .map((SoloLesson item) => _copy(context, item.title))
+                      .join(", "),
+                },
+              ),
               style: JText.bodyMuted,
             ),
           ],
@@ -1042,7 +1060,8 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                 tr: practised
                     ? 'Yeniden çalış · {value1} kayıt'
                     : 'Bunu çalıştım',
-               args: {if (practised) 'value1': _progress!.practiceCount},),
+                args: {if (practised) 'value1': _progress!.practiceCount},
+              ),
             ),
           ),
           const SizedBox(height: 8),
