@@ -881,8 +881,9 @@ class _RootState extends State<_Root> {
             generation != _historyGeneration ||
             owner != widget.accountUserId?.value) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (route.isActive && navigator.mounted)
+            if (route.isActive && navigator.mounted) {
               navigator.removeRoute(route);
+            }
           });
           WidgetsBinding.instance.ensureVisualUpdate();
           return const SizedBox.shrink();
@@ -915,8 +916,9 @@ class _RootState extends State<_Root> {
             generation != _historyGeneration ||
             owner != widget.accountUserId?.value) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (route.isActive && navigator.mounted)
+            if (route.isActive && navigator.mounted) {
               navigator.removeRoute(route);
+            }
           });
           WidgetsBinding.instance.ensureVisualUpdate();
           return const SizedBox.shrink();

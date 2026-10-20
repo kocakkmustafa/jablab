@@ -657,19 +657,21 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     if (_retired) return;
     _retired = true;
     _generation++;
-    if (mounted)
+    if (mounted) {
       setState(() {
         _course = null;
         _written.clear();
       });
+    }
     final navigator = _navigator;
     final overview = _overview;
     final target = _target;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (navigator == null || !navigator.mounted) return;
       if (target != null && target.isActive) navigator.removeRoute(target);
-      if (overview != null && overview.isActive)
+      if (overview != null && overview.isActive) {
         navigator.removeRoute(overview);
+      }
     });
   }
 
@@ -703,8 +705,9 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     if (!_admitted ||
         course == null ||
         _target != null ||
-        _overview?.isCurrent != true)
+        _overview?.isCurrent != true) {
       return;
+    }
     late final MaterialPageRoute<void> route;
     bool current() => _admitted && identical(_target, route) && route.isCurrent;
     bool prior() =>
@@ -720,10 +723,11 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
               admitted: current,
               priorWritten: prior,
               onWritten: () {
-                if (current() && prior())
+                if (current() && prior()) {
                   setState(() {
                     _written.add(target.id);
                   });
+                }
               },
               onInvalidate: () {
                 if (!current()) return;

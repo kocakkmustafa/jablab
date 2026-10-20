@@ -603,19 +603,21 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
     if (_retired) return;
     _retired = true;
     _generation++;
-    if (mounted)
+    if (mounted) {
       setState(() {
         _course = null;
         _written.clear();
       });
+    }
     final navigator = _navigator;
     final overview = _overview;
     final lesson = _lesson;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (navigator == null || !navigator.mounted) return;
       if (lesson != null && lesson.isActive) navigator.removeRoute(lesson);
-      if (overview != null && overview.isActive)
+      if (overview != null && overview.isActive) {
         navigator.removeRoute(overview);
+      }
     });
   }
 
@@ -649,8 +651,9 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
     if (!_admitted ||
         course == null ||
         _lesson != null ||
-        _overview?.isCurrent != true)
+        _overview?.isCurrent != true) {
       return;
+    }
     late final MaterialPageRoute<void> route;
     bool current() => _admitted && identical(_lesson, route) && route.isCurrent;
     bool prior() =>
@@ -665,10 +668,11 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
               admitted: current,
               priorWritten: prior,
               onWritten: () {
-                if (current() && prior())
+                if (current() && prior()) {
                   setState(() {
                     _written.add(lesson.id);
                   });
+                }
               },
               onInvalidate: () {
                 if (current()) {

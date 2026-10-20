@@ -257,8 +257,9 @@ void main() {
       for (var i = 0; i < 40; i++) {
         await tester.pump();
         if (UiLanguage.tag(tester.element(find.byKey(const Key('copy')))) ==
-            'ar')
+            'ar') {
           break;
+        }
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 50)),
         );
