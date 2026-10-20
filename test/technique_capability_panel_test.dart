@@ -41,6 +41,7 @@ void main() {
             ),
           ),
         );
+    await settleTestLocalizations(t);
         await t.pumpAndSettle();
         await t.scrollUntilVisible(
           find.byKey(const Key('technique-capability-panel')),
@@ -92,6 +93,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(t);
     await t.pumpAndSettle();
     expect(find.byKey(const Key('technique-task-phases')), findsNothing);
     expect(find.byType(Switch), findsNothing);

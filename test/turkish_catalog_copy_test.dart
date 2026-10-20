@@ -71,6 +71,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     await tester.pumpAndSettle();
 
     expect(find.text('Boks'), findsOneWidget);
@@ -105,6 +106,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     await tester.tap(find.byKey(const Key('item-boxing')));
     await tester.pumpAndSettle();
 
@@ -130,6 +132,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     await tester.tap(find.byKey(const Key('onboarding-next')));
     await tester.pumpAndSettle();
 
@@ -171,6 +174,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
       expect(find.text('Temeller'), findsOneWidget);
       expect(
         find.textContaining('Düşünmeden tekrarlayabileceğin'),
@@ -188,6 +192,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
       expect(find.text('Orta seviye'), findsOneWidget);
       expect(
         find.textContaining('Kroşe ve aparkat burada modellenmedi'),
@@ -210,6 +215,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     expect(find.text('Foundations revised'), findsOneWidget);
     expect(find.text('Temeller'), findsNothing);
   });
@@ -241,6 +247,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
 
     expect(translated, hasLength(12));
     for (int index = 0; index < translated.length; index++) {
@@ -276,6 +283,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     expect(translated.title, changed.title);
     expect(find.text(changed.reason), findsOneWidget);
   });
@@ -323,6 +331,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
       await tester.pumpAndSettle();
       expect(find.text('Kamera ve çalışma alanı'), findsWidgets);
       expect(find.text('Camera and space'), findsNothing);
@@ -386,6 +395,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
       expect(authored, hasLength(18));
       expect(translated.keys, containsAll(authored.keys));
       for (final MapEntry<String, String> entry in authored.entries) {

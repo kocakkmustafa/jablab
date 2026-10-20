@@ -26,6 +26,7 @@ Future<void> _open(WidgetTester t, {ValueNotifier<String?>? owner,
       ),
     ))),
   ));
+    await settleTestLocalizations(t);
   await t.tap(find.text('Open'));
   if (loader == null) { await t.pumpAndSettle(); } else { await t.pump(); }
 }

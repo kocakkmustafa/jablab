@@ -12,6 +12,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales,
       home: SettingsPage(onOpenWhyNot: () {}, excludedCount: 1),
     ));
+    await settleTestLocalizations(tester);
 
     expect(find.text('Ayarlar'), findsOneWidget);
     expect(find.textContaining('Hesap girişi bağlı değil'), findsOneWidget);

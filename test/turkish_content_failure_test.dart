@@ -24,6 +24,7 @@ void main() {
         ),
       ),
     ));
+    await settleTestLocalizations(tester);
     expect(find.text('İçeriği durdurduk'), findsOneWidget);
     expect(find.textContaining('Sorun cihazınızda değil'), findsOneWidget);
     expect(find.byKey(const Key('failure-retry')), findsNothing);
@@ -40,6 +41,7 @@ void main() {
         onRetry: () async {},
       ),
     ));
+    await settleTestLocalizations(tester);
     expect(find.text('Uygulama içeriği okunamadı'), findsOneWidget);
     expect(find.text('Tekrar dene'), findsOneWidget);
     expect(find.text('Teknik ayrıntı'), findsOneWidget);

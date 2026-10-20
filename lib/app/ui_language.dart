@@ -21,6 +21,7 @@ class AppLocalizations {
     Locale('de'), Locale('fr'), Locale('ja'), Locale('ar'),
   ];
   static const delegate = _AppLocalizationsDelegate();
+  static const _unavailable = (en: 'Text unavailable', tr: 'Metin kullanılamıyor');
   static final Map<String, String> _keys = <String, String>{};
 
   static String sourceKey(String en, String tr) {
@@ -61,8 +62,10 @@ class AppLocalizations {
     final fallback = locale.languageCode == 'tr' ? tr : en;
     final template = translated ?? fallback;
     final expected = _placeholders(en);
-    final valid = setEquals(expected, _placeholders(template)) &&
-        expected.every(args.containsKey);
+    if (!expected.every(args.containsKey)) {
+      return lookup(_unavailable.en, _unavailable.tr);
+    }
+    final valid = setEquals(expected, _placeholders(template));
     final selected = valid ? template : fallback;
     return selected.replaceAllMapped(RegExp(r'\{(\w+)\}'), (match) {
       final value = args[match[1]];
@@ -87,7 +90,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   Future<AppLocalizations> load(Locale locale) async {
     try {
       final raw = jsonDecode(await rootBundle.loadString(
-        'assets/i18n/${locale.toLanguageTag()}.json'));
+        'assets/i18n/${locale.toLanguageTag()}.json', cache: false));
       if (raw is! Map || raw['schemaVersion'] != 1 ||
           raw['locale'] != locale.toLanguageTag() || raw['messages'] is! Map) {
         throw const FormatException('Invalid localization bundle');

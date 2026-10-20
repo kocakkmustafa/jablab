@@ -94,6 +94,7 @@ void main() {
             ),
           ),
         );
+    await settleTestLocalizations(tester);
         final lessonScroll = find
             .descendant(
               of: find.byKey(const Key('solo-lesson-list')),
@@ -198,6 +199,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     final lessonScroll = find
         .descendant(
           of: find.byKey(const Key('solo-lesson-list')),
@@ -302,6 +304,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
     }
 
     Future<void> acknowledge(WidgetTester tester) async {
@@ -507,6 +510,7 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
         );
+    await settleTestLocalizations(tester);
         await settleUntil(
           tester,
           find.byKey(const Key('solo-course-progress')),
@@ -599,6 +603,7 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
         );
+    await settleTestLocalizations(tester);
         await settleUntil(tester, find.text(total));
         expect(find.text(total), findsOneWidget);
         final Finder firstRow = find.byKey(
@@ -662,6 +667,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)),
     );
+    await settleTestLocalizations(tester);
     await settleUntil(tester, find.text('1 / 39 self-reported complete'));
     expect(find.text('1 / 39 self-reported complete'), findsOneWidget);
     expect(store.file.readAsStringSync(), old);
@@ -713,6 +719,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
       await settleUntil(tester, find.text('1 / 39 self-reported complete'));
       expect(find.text('1 / 39 self-reported complete'), findsOneWidget);
       await tester.tap(find.byKey(const Key('solo-next-lesson')));

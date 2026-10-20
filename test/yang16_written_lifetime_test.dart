@@ -292,6 +292,7 @@ void main() {
           })),
         ),
       )))));
+    await settleTestLocalizations(t);
       await t.tap(find.text('Open')); await t.pumpAndSettle();
       await yangTap(t, 'yang16-target-prepare'); await yangPrepare(t, yangCourse().targets.first);
       await yangShow(t, 'yang16-report-written');

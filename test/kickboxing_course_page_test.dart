@@ -44,6 +44,7 @@ Future<void> open(
       ),
     ),
   );
+    await settleTestLocalizations(t);
   await t.tap(find.text('Open'));
   await t.pumpAndSettle();
 }
@@ -243,6 +244,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(t);
     await t.pump();
     owner.value = 'second';
     await t.pump();

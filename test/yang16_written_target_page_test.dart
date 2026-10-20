@@ -24,6 +24,7 @@ void main() {
               home: Yang16WrittenTargetPage(course: course, target: target,
                 admitted: () => true, priorWritten: () => true,
                 onWritten: () { reports++; }, onInvalidate: () { invalidations++; }, onReset: () {})));
+    await settleTestLocalizations(t);
             await t.pumpAndSettle();
             await yangExact(t, 'yang16-target-title', target.title, language);
             for (var i = 0; i < target.reading.length; i++) {

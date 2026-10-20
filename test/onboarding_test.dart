@@ -77,6 +77,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(t);
     await t.pumpAndSettle();
   }
 
@@ -384,6 +385,7 @@ void _settingsCountGate() {
         home: SettingsPage(onOpenWhyNot: () {}, excludedCount: expected),
       ),
     );
+    await settleTestLocalizations(t);
     await t.pumpAndSettle();
 
     expect(

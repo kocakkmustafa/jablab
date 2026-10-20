@@ -24,6 +24,7 @@ void main() {
         child: const SizedBox(),
       ),
     ));
+    await settleTestLocalizations(tester);
     expect(find.text('Öğren'), findsOneWidget);
     expect(find.text('Dene'), findsOneWidget);
     expect(find.text('Canlı'), findsOneWidget);
@@ -41,6 +42,7 @@ void main() {
         ),
       ),
     ));
+    await settleTestLocalizations(tester);
     expect(find.text('Değerlendirmek için sizi yeterince iyi göremiyorum'),
         findsOneWidget);
     expect(find.byKey(const Key('event-count')), findsNothing);

@@ -51,6 +51,7 @@ void main() {
         supportedLocales: const [Locale('en'), Locale('tr')],
         localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
         home: const Scaffold(body: StudyReviewEntry())));
+    await settleTestLocalizations(t);
       await tapVisible(t, find.byKey(const Key('study-review-entry')));
       for (final area in studyAreas) {
         final lesson = area.lessons.first;
@@ -74,6 +75,7 @@ void main() {
     testWidgets('${status.name} gives a distinct next step without promotion', (t) async {
       final area = studyAreas.first;
       await t.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: RecallLessonPage(area: area, lesson: area.lessons.first)));
+    await settleTestLocalizations(t);
       expect(find.byKey(const Key('study-feedback')), findsNothing);
       await tapVisible(t, find.byKey(Key('study-state-${status.name}')));
       expect(find.byKey(const Key('study-feedback')), findsOneWidget);
@@ -94,6 +96,7 @@ void main() {
 
   testWidgets('notes, revealed reference and observation are discarded on leaving', (t) async {
     await t.pumpWidget(const MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: Scaffold(body: StudyReviewEntry())));
+    await settleTestLocalizations(t);
     await tapVisible(t, find.byKey(const Key('study-review-entry')));
     final key = Key('study-lesson-${studyAreas.first.lessons.first.id}');
     await tapVisible(t, find.byKey(key));

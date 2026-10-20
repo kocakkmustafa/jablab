@@ -42,6 +42,7 @@ Future<void> open(
       ),
     ),
   );
+    await settleTestLocalizations(tester);
   await tester.tap(find.text('Open'));
   await tester.pumpAndSettle();
 }
@@ -334,6 +335,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     await tester.tap(find.text('Pending'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));

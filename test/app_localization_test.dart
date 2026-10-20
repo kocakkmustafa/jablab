@@ -29,6 +29,7 @@ void main() {
     final malformed = AppLocalizations(const Locale('fr'), {key: 'Lire {other}'});
     expect(malformed.lookup('Read {count}', 'Oku {count}', args: {'count': 7}), 'Read 7');
     expect(const AppLocalizations(Locale('tr'), {}).lookup('Read', 'Oku'), 'Oku');
+    expect(translations.lookup('Read {count}', 'Oku {count}'), 'Text unavailable');
   });
 
   test('CLDR categories include Arabic six forms and French zero', () {

@@ -187,6 +187,8 @@ def refresh():
                 else:result[k]=decode(v)
             return result
         return {}
+    for english,turkish in [('Uncertain','Emin değilim'),('Needs correction','Düzeltme gerekiyor'),('I noticed the stated cues','Belirtilen ipuçlarını fark ettim')]:
+        add(english,turkish,ROOT/'lib/app/tai_chi_course_page.dart',0)
     library=json.loads((ROOT/'assets/content/library.json').read_text())
     add(library['productName'],'JabLab — Tek başına dövüş antrenmanı',ROOT/'lib/app/select_page.dart',0)
     titles=read_map('lib/app/catalog_locale.dart','_turkishTitles')
@@ -208,7 +210,7 @@ def refresh():
     def expression(filename,name):
         text=(ROOT/filename).read_text();t=lex(text)
         for i,x in enumerate(t):
-            if x[1]!=name:continue
+            if x[1]!=name or i==0 or t[i-1][1] not in ('String','get'):continue
             arrow=next((j for j in range(i+1,min(i+25,len(t)-1)) if t[j][1]=='=' and t[j+1][1]=='>'),None)
             if arrow is None or t[arrow+2][1]!='switch':continue
             end=next((j for j in range(arrow+2,len(t)) if t[j][1]==';'),None)
@@ -236,6 +238,7 @@ def refresh():
 def validate(data,allow_partial=False,write=False):
     errors=[];coverage={};bundles={};source={e['id']:e for e in data['entries']}
     for ident,e in source.items():
+        if '\0' in e['en'] or '\0' in e['tr']:errors.append(ident+': embedded source delimiter')
         if ident!=key(e['en'],e['tr']):errors.append(ident+': stale ID')
         if sorted(re.findall(r'\{(\w+)\}',e['en']))!=sorted(re.findall(r'\{(\w+)\}',e['tr'])):errors.append(ident+': source placeholders')
     for locale in LOCALES:
@@ -265,7 +268,7 @@ def validate(data,allow_partial=False,write=False):
         bundles[locale]={'schemaVersion':1,'locale':locale,'complete':not bool(missing),'sourceCount':len(source),'messages':messages}
     if write and not errors:
         for locale,bundle in bundles.items():
-            target=ROOT/f'assets/i18n/{locale}.json';target.parent.mkdir(exist_ok=True);target.write_text(json.dumps(bundle,ensure_ascii=False,separators=(',',':'))+'\n')
+            target=ROOT/f'assets/i18n/{locale}.json';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(bundle,ensure_ascii=False,separators=(',',':'))+'\n')
     print(json.dumps({'coverage':coverage,'errors':errors},ensure_ascii=False,indent=2))
     return not errors
 

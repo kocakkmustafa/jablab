@@ -77,6 +77,7 @@ void main() {
           file.writeAsStringSync(raw);
         }
         await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)));
+    await settleTestLocalizations(tester);
         await settleUntil(tester, find.byKey(const Key('solo-progress-unavailable')));
         expect(find.byKey(const Key('solo-course-progress')), findsNothing);
         expect(find.byType(LinearProgressIndicator), findsNothing);
@@ -100,6 +101,7 @@ void main() {
     final original = store.file.readAsBytesSync();
     final pending = File('${store.file.path}.tmp')..writeAsStringSync('pending bytes');
     await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)));
+    await settleTestLocalizations(tester);
     await settleUntil(tester, find.byKey(const Key('solo-course-progress')));
     await openFirstLesson(tester);
     await expectReadOnlyLesson(tester);
@@ -110,6 +112,7 @@ void main() {
 
   testWidgets('corruption after opening never turns a failed practice into success', (tester) async {
     await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)));
+    await settleTestLocalizations(tester);
     await settleUntil(tester, find.byKey(const Key('solo-course-progress')));
     await openFirstLesson(tester);
     final file = courseFileFor(directory, null);
@@ -139,6 +142,7 @@ void main() {
   testWidgets('retry uses a fresh read and never silently resets damaged bytes', (tester) async {
     final file = courseFileFor(directory, null)..writeAsStringSync('{broken');
     await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository)));
+    await settleTestLocalizations(tester);
     await settleUntil(tester, find.byKey(const Key('solo-progress-unavailable')));
     for (var i = 0; i < 2; i++) {
       await tester.tap(find.byKey(const Key('solo-progress-retry')));
@@ -167,6 +171,7 @@ void main() {
     await tester.runAsync(() => bobStore.markPractised(course, course.lessons.first));
     final bobBytes = bobStore.file.readAsBytesSync();
     await tester.pumpWidget(MaterialApp(supportedLocales: testSupportedLocales, localizationsDelegates: testLocalizationDelegates, localeListResolutionCallback: resolveTestLocales, home: SoloBoxingCoursePage(repository: repository, accountUserId: account)));
+    await settleTestLocalizations(tester);
     await settleUntil(tester, find.byKey(const Key('solo-progress-unavailable')));
     await openFirstLesson(tester);
     expect(find.byType(SoloBoxingLessonPage), findsOneWidget);

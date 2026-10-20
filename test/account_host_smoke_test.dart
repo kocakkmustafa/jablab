@@ -33,6 +33,7 @@ void main() {
         ),
       ),
     );
+    await settleTestLocalizations(tester);
     expect(
       find.textContaining('Browse lessons without signing in'),
       findsOneWidget,
@@ -68,6 +69,7 @@ void main() {
           ),
         ),
       );
+    await settleTestLocalizations(tester);
       expect(
         find.textContaining(
           locale == 'tr'

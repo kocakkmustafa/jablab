@@ -32475,7 +32475,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 143
+          "line": 146
         }
       ],
       "kind": "UI",
@@ -32490,7 +32490,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 145
+          "line": 148
         }
       ],
       "kind": "UI",
@@ -32507,7 +32507,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 148
+          "line": 151
         }
       ],
       "kind": "UI",
@@ -32526,7 +32526,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 153
+          "line": 156
         }
       ],
       "kind": "UI",
@@ -32546,7 +32546,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 154
+          "line": 157
         }
       ],
       "kind": "UI",
@@ -33639,66 +33639,6 @@
       "contexts": [
         {
           "path": "lib/app/content_failure_screen.dart",
-          "line": 1
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_30b7198840930553b8357930946c2c31a199a1320ba9fe3d5257f62cf8864d3e",
-      "en": "JabLab için kamera erişimi kapalı ve sistem yeniden izin istemeyecek. Ayarlar bölümünden açabilirsiniz. Kamera olmadan da tur saati çalışır.",
-      "tr": "JabLab için kamera erişimi kapalı ve sistem yeniden izin istemeyecek. Ayarlar bölümünden açabilirsiniz. Kamera olmadan da tur saati çalışır.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/session_screen.dart",
-          "line": 1
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_59c2e21d84f810fa3e7fec582ce3aaa6158cc0a11db8e951b601eb32df473278",
-      "en": "Jab hareketinizi izlemek için kameraya ihtiyacımız var. Kamera olmadan analiz yapılmaz; tur saati çalışmaya devam eder.",
-      "tr": "Jab hareketinizi izlemek için kameraya ihtiyacımız var. Kamera olmadan analiz yapılmaz; tur saati çalışmaya devam eder.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/session_screen.dart",
-          "line": 1
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_b4ce6a7bab2731eae485e2f91f5253cf1d6af00cf63f29c05dcd29529da1f5af",
-      "en": "Bu cihazda kamera açılamadı, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.",
-      "tr": "Bu cihazda kamera açılamadı, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/session_screen.dart",
-          "line": 1
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_6e1627f58bc5c00a945fd72607b0bb58d2e3b8fb77fba73133972f7a94b5099e",
-      "en": "Kamera hazırlanırken bir sorun oluştu, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.",
-      "tr": "Kamera hazırlanırken bir sorun oluştu, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/session_screen.dart",
           "line": 1
         }
       ],
@@ -37242,6 +37182,126 @@
       "placeholder_types": {
         "value1": "num"
       }
+    },
+    {
+      "id": "s_eba21c0e02729c09ced0f54fe33232224e00352e4dadc79de1fb5d852ec7d839",
+      "en": "Text unavailable",
+      "tr": "Metin kullanılamıyor",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/ui_language.dart",
+          "line": 24
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_2176fea53615b2d66f63915cd1b7b4e82144cfcd47071aa966d54fd3471faaf2",
+      "en": "Uncertain",
+      "tr": "Emin değilim",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/tai_chi_course_page.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_7eef3cf41770c5ccc3277c700c8aeeea33170084239441721d56747abcecb2f8",
+      "en": "Needs correction",
+      "tr": "Düzeltme gerekiyor",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/tai_chi_course_page.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_3c8adfe92eb4e306722a24cf7711712362b4fe209c217010ebae8ede1dfb60ad",
+      "en": "I noticed the stated cues",
+      "tr": "Belirtilen ipuçlarını fark ettim",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/tai_chi_course_page.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_fcd5878c1e17936703d1df5e429410121d6c4a2a9aaf4d102bd275ad531e3641",
+      "en": "Camera access is off for JabLab, and the system will not ask again. You can turn it on in Settings. The round clock still runs without it.",
+      "tr": "JabLab için kamera erişimi kapalı ve sistem yeniden izin istemeyecek. Ayarlar bölümünden açabilirsiniz. Kamera olmadan da tur saati çalışır.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/session_screen.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_f511900b6b82763c6e762a16dbdd40040980de0afb66e77cd4fd086a6f4a0e35",
+      "en": "We need the camera to watch your jab. Nothing is analysed without it — the round clock still runs.",
+      "tr": "Jab hareketinizi izlemek için kameraya ihtiyacımız var. Kamera olmadan analiz yapılmaz; tur saati çalışmaya devam eder.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/session_screen.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_eba9cdc48a9091867e382a678035391c66f7df6fffab7eaef6111682474e2fbe",
+      "en": "We could not open the camera on this device, so nothing is being analysed. The round clock still runs.",
+      "tr": "Bu cihazda kamera açılamadı, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/session_screen.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39",
+      "en": "Something went wrong setting up the camera, so nothing is being analysed. The round clock still runs.",
+      "tr": "Kamera hazırlanırken bir sorun oluştu, bu yüzden analiz yapılmıyor. Tur saati çalışmaya devam eder.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/session_screen.dart",
+          "line": 1
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
     }
   ],
   "limits": [
