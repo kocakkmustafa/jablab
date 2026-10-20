@@ -31,6 +31,10 @@ void main() {
       expect(rules.tempoBandFor(60), 'fast');
       expect(rules.tempoBandFor(120), 'brisk');
       expect(rules.tempoBandFor(220), 'controlled');
+      expect(rules.tempoBandFor(94.999), 'fast');
+      expect(rules.tempoBandFor(95), 'brisk');
+      expect(rules.tempoBandFor(159.999), 'brisk');
+      expect(rules.tempoBandFor(160), 'controlled');
     });
   });
 
@@ -41,6 +45,8 @@ void main() {
           provenance: const <String, String>{
             'poseModelVariant': 'synthetic',
             'calibrationProfileId': 'test',
+            'tempoTimingRevision': 'caller-must-not-override',
+            'tempoWindow': 'first-transition->PEAK',
           },
         );
 
@@ -70,11 +76,83 @@ void main() {
       expect(digest.tempoBand, isNotNull);
       // ADR-001: hız faz süresinden türetildi, kare-arası pikselden değil.
       expect(digest.extensionMs, greaterThan(0));
+      final double namedMs =
+          (digest.transitions['PEAK']! - digest.transitions['EXTENSION']!) /
+              1000.0;
+      expect(digest.extensionToPeakMs, namedMs);
+      expect(digest.tempoBand, rules.tempoBandFor(namedMs));
+      expect(digest.extensionMs, greaterThan(namedMs));
+      expect(digest.provenance['tempoTimingRevision'], 'extension-to-peak@1');
+      expect(digest.provenance['tempoWindow'], 'EXTENSION->PEAK');
+      expect(digest.provenance['poseModelVariant'], 'synthetic');
+      expect(digest.provenance['calibrationProfileId'], 'test');
+      expect(digest.provenance['eventLogicRevision'], rules.eventLogicRevision);
       // M-F-07 provenance zorunlu.
       expect(digest.provenance['ruleSetVersion'], 'boxing@1.0.0');
       expect(digest.provenance['thresholdStatus'],
           'raw-signal-pending-revision');
     });
+
+    // Aynı FPS içinde hareket suffix'i ve örnekleme fazı sabittir.
+    // 1 sn ortak gard warm-up'ına yalnız ek bekleme kareleri eklenir.
+    for (final int fps in <int>[30, 60]) {
+      test('MS-1: ${fps}fps gard beklemesi tempo aralığını değiştirmez', () {
+        final SyntheticSequence motion = SyntheticSequence(
+          <SyntheticKeyframe>[
+            SyntheticKeyframe(0, guardPose),
+            SyntheticKeyframe(180000, extendedPose),
+            SyntheticKeyframe(200000, extendedPose),
+            SyntheticKeyframe(380000, guardPose),
+            SyntheticKeyframe(600000, guardPose),
+          ],
+        );
+        double? baselineNamedMs;
+        double? baselineLegacyMs;
+        String? baselineBand;
+        for (final int dwellMs in <int>[0, 100, 300, 1100]) {
+          final StrikingEngine e = StrikingEngine(
+            ruleSet: rules,
+            calibrationMapped: true,
+            allowedTechniqueIds: <String>{'jab'},
+          );
+          final int guardFrames = fps + dwellMs * fps ~/ 1000;
+          final int movementFrames = (600000 * fps / 1000000).round();
+          final List<AttemptDigest> completed = <AttemptDigest>[];
+          for (int i = 0; i <= guardFrames + movementFrames; i++) {
+            final int tUs = (i * 1000000 / fps).round();
+            final int localUs = ((i - guardFrames) * 1000000 / fps).round();
+            final SyntheticPose pose = i < guardFrames
+                ? guardPose
+                : motion.poseAt(localUs);
+            final AttemptDigest? d =
+                e.process(builder().build(pose, tUs: tUs)).completedAttempt;
+            if (d != null) completed.add(d);
+          }
+          expect(completed, hasLength(1), reason: 'dwellMs=$dwellMs');
+          final AttemptDigest d = completed.single;
+          expect(d.techniqueId, 'jab');
+          expect(d.outcome, AttemptOutcome.completed);
+          expect(d.transitions.keys.toList(), <String>[
+            'GUARD_READY', 'EXTENSION', 'PEAK',
+            'RETRACTION', 'GUARD_RECOVERED',
+          ]);
+          final double namedMs =
+              (d.transitions['PEAK']! - d.transitions['EXTENSION']!) / 1000.0;
+          expect(d.extensionToPeakMs, namedMs);
+          expect(d.tempoBand, rules.tempoBandFor(namedMs));
+          expect(d.extensionMs, greaterThan(namedMs));
+          if (dwellMs == 0) {
+            baselineNamedMs = namedMs;
+            baselineLegacyMs = d.extensionMs!;
+            baselineBand = d.tempoBand!;
+          } else {
+            expect(namedMs, baselineNamedMs);
+            expect(d.tempoBand, baselineBand);
+            expect(d.extensionMs! - baselineLegacyMs!, closeTo(dwellMs, .002));
+          }
+        }
+      });
+    }
 
     test('J-009 REGRESYON: kolunu uzatıp BEKLEMEK yumruk sayılmaz', () {
       // D2 ölçümünde detektör, torbaya yaslanıp kolu uzatan boksörü

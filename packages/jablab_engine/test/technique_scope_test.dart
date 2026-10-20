@@ -54,7 +54,23 @@ void main() {
   test(
     'synthetic rear-only sequence with shoulder projection is a positive cross control',
     () {
-      expect(completed({'cross'}).map((a) => a.techniqueId), ['cross']);
+      final attempts = completed({'cross'});
+      expect(attempts.map((a) => a.techniqueId), ['cross']);
+      final d = attempts.single;
+      final int rotation = d.transitions['REAR_SHOULDER_ROTATION']!;
+      final int extension = d.transitions['EXTENSION']!;
+      final int peak = d.transitions['PEAK']!;
+      expect(rotation, lessThan(extension));
+      expect(extension, lessThan(peak));
+      final double namedMs = (peak - extension) / 1000.0;
+      expect(d.extensionToPeakMs, namedMs);
+      expect(d.tempoBand, rules.tempoBandFor(namedMs));
+      expect(d.extensionMs, greaterThan(namedMs));
+      expect(
+        d.extensionMs! - namedMs,
+        closeTo((extension - d.transitions['GUARD_READY']!) / 1000.0, .000001),
+      );
+      expect(d.provenance['tempoTimingRevision'], 'extension-to-peak@1');
     },
   );
   test('cross cannot complete or fall back in a jab-only lesson', () {

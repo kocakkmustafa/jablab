@@ -106,17 +106,18 @@ final class LiveJabController {
   /// D18: motor her tamamlanmış denemede bir tempo bandı üretiyordu
   /// (ADR-001, `AttemptDigest.tempoBand`) ve hiçbir yüzey göstermiyordu —
   /// ürünün kendi dürüstlük metni bunu itiraf ediyordu ("there is no
-  /// screen that shows you the band"). Bant SAYI değil (K8 bunu
-  /// zorlamıyor bile — ADR-001 zaten sayı değil bant üretiyor), yani
-  /// kalibrasyon kapısına takılmaz.
+  /// screen that shows you the band"). MS-1 sonrasında bant yalnız geçerli
+  /// EXTENSION→PEAK gözleminden gelir. Bu yazılım aralığı ve ham eşikler,
+  /// fiziksel tempo kalibrasyonu veya kamera aktivasyonu kabulü değildir.
   ///
   /// Tekil bant yerine SAYAÇ tutuluyor: bir seansta yumruklar farklı
   /// bantlara düşebilir (yorgunluk yavaşlatır), "son yumruk" o değişimi
   /// gizler. Özet ekranı en SIK görüleni gösterir — [dominantTempoBand].
   final Map<String, int> _tempoBandCounts = <String, int>{};
 
-  /// Bu seansta en çok görülen tempo bandı — `null` = hiç tamamlanmış
-  /// deneme yok (ölçülmedi, sıfır DEĞİL).
+  /// Geçerli tempo gözlemi olan tamamlanmış denemelerde en sık bant.
+  /// `null`, geçerli tempo gözlemi yok demektir; tamamlanmış deneme sayısı
+  /// pozitif olabilir. Varsayılan bant veya sıfır uydurulmaz.
   String? get dominantTempoBand => modeOfCounts(_tempoBandCounts);
 
   /// Son TAMAMLANMIŞ denemenin ilk hata kodu — `cue.corrected`in tek girdisi

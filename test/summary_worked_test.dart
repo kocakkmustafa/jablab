@@ -41,13 +41,14 @@ void main() {
     int units = 0,
     String unitLabel = 'rounds',
     int seconds = 0,
+    int? eventCount,
     String? tempoBand,
     Map<String, String> bands = const <String, String>{},
   }) => t.pumpWidget(
     MaterialApp(
       home: Scaffold(
         body: SessionSummaryView(
-          eventCount: null,
+          eventCount: eventCount,
           bands: bands,
           coachedNotScored: const <String>[],
           unitsCompleted: units,
@@ -109,6 +110,16 @@ void main() {
   });
 
   group('D18 — tempo bandı', () {
+    testWidgets('completed events without valid tempo do not invent a band', (
+      WidgetTester t,
+    ) async {
+      await pump(t, eventCount: 3);
+      expect(find.byKey(const Key('summary-count')), findsOneWidget);
+      expect(t.widget<Text>(find.byKey(const Key('summary-count'))).data, '3');
+      expect(find.byKey(const Key('summary-tempo-band')), findsNothing);
+      expect(find.text('Pace: controlled'), findsNothing);
+    });
+
     testWidgets('bant YOKSA yuva da YOK (hiç ölçülmüş deneme yok)', (
       WidgetTester t,
     ) async {

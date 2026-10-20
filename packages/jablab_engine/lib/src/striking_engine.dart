@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:motion_core/motion_core.dart';
 
+import 'attempt_timing.dart';
 import 'measures.dart';
 import 'ruleset.dart';
 import 'stance.dart';
@@ -21,6 +22,7 @@ final class AttemptDigest {
     required this.extensionMs,
     required this.tempoBand,
     required this.provenance,
+    this.extensionToPeakMs,
   });
 
   final String techniqueId;
@@ -33,7 +35,7 @@ final class AttemptDigest {
   /// t0 / tPeak / t1 anlarının ölçüleri.
   final Map<String, MeasureSet> snapshots;
 
-  /// ADR-001: hız/tempo YALNIZ buradan türetilir, kare-arası pikselden DEĞİL.
+  /// Legacy ilk faz girişi → PEAK süresi; tempo girdisi DEĞİLDİR.
   ///
   /// M-F-91 alan-adı beyanı: bu, faz makinesinin İLK faz girişinden (bu
   /// teknik için GUARD_READY — bir sonraki hareket beklenirken burada
@@ -42,9 +44,13 @@ final class AttemptDigest {
   /// `tool/segment_punches.dart`) bastığı "extension-süresi" bu yüzden
   /// GUARD_READY bekleme süresini kapsayabilir (834-3804ms gibi fiziksel
   /// olarak imkânsız görünen değerler böyle çıkar) — kusur değil, tanım.
-  /// Bir tüketici SALT-uzanma zamanlaması türetecekse `transitions['EXTENSION']`
-  /// ile `transitions['PEAK']` farkını kullanmalı, bu alanı değil.
+  /// Yeni tempo tüketicileri doğrulanmış [extensionToPeakMs] alanını kullanır.
   final double? extensionMs;
+
+  /// Gözlenen EXTENSION girişi → PEAK girişi (ms), gard beklemesi hariç.
+  /// Eksik, tekrarlı veya zaman sırası geçersiz fazlarda null kalır.
+  /// Fiziksel hız, kuvvet veya kalibrasyon kabulü değildir.
+  final double? extensionToPeakMs;
 
   /// ADR-001: kullanıcıya sayı değil BANT gösterilir.
   final String? tempoBand;
@@ -467,11 +473,12 @@ final class StrikingEngine {
     for (final PhaseTransition x in run.transitions) {
       tr[x.toPhase] = x.tUs;
     }
-    // ADR-001: uzanma süresi = ilk faz girişi → tepe fazı girişi.
+    // M-F-91 legacy alanı korunur; yeni tempo yalnız adlandırılmış aralıktan.
     final int? t0 = run.transitions.isNotEmpty ? run.transitions.first.tUs : null;
     final int? tPeak = tr['PEAK'];
     final double? extMs =
         (t0 != null && tPeak != null) ? (tPeak - t0) / 1000.0 : null;
+    final double? observedMs = extensionToPeakDurationMs(run);
 
     return AttemptDigest(
       techniqueId: t.id,
@@ -481,12 +488,16 @@ final class StrikingEngine {
       snapshots: Map<String, MeasureSet>.from(
           _snapshots[t.id] ?? const <String, MeasureSet>{}),
       extensionMs: extMs,
-      tempoBand: extMs == null ? null : ruleSet.tempoBandFor(extMs),
+      extensionToPeakMs: observedMs,
+      tempoBand: observedMs == null ? null : ruleSet.tempoBandFor(observedMs),
       provenance: <String, String>{
         'ruleSetVersion': '${ruleSet.rulesetId}@${ruleSet.version}',
         'thresholdStatus': ruleSet.thresholdStatus,
         ...provenance,
         'eventLogicRevision': ruleSet.eventLogicRevision,
+        // Çağıranın metadata'sı zaman tanımını değiştiremez.
+        'tempoTimingRevision': tempoTimingRevision,
+        'tempoWindow': tempoTimingWindow,
       },
     );
   }
