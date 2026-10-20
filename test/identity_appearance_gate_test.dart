@@ -116,6 +116,7 @@ class _Harness {
   late final Widget child;
   Completer<http.Response> _response = Completer<http.Response>();
   Future<void>? _proof;
+  Object? _proofError;
   int userRequests = 0;
   int unexpectedRequests = 0;
   int deletionCallbacks = 0;
@@ -246,29 +247,42 @@ class _Harness {
       );
       _response = Completer<http.Response>();
     }
+    _proofError = null;
     _proof = runtime.refreshIdentity().then<void>(
       (_) {},
-      onError: (Object _, StackTrace __) {},
+      onError: (Object error, StackTrace _) {
+        _proofError = error;
+      },
     );
   }
 
   Future<void> finishProof(WidgetTester tester, {bool success = true}) async {
-    await tester.runAsync(() async {
-      _response.complete(
-        success
-            ? _userResponse()
-            : http.Response(
-                '{"message":"synthetic verification failure",'
-                '"code":"synthetic_auth_failure"}',
-                400,
-                headers: {'content-type': 'application/json'},
-              ),
+    _response.complete(
+      success
+          ? _userResponse()
+          : http.Response(
+              '{"message":"synthetic verification failure",'
+              '"error_code":"synthetic_auth_failure"}',
+              400,
+              headers: {'content-type': 'application/json'},
+            ),
+    );
+    // The held response belongs to the widget zone, while Core's timeout and
+    // transport listeners also need real work. Progress both clocks together.
+    await _io<void>(tester, 'identity.proof', () => _proof!);
+    await tester.pump();
+    await tester.pump();
+    if (success) {
+      expect(_proofError, isNull);
+    } else {
+      expect(
+        _proofError,
+        isA<AuthException>()
+            .having((error) => error.code, 'code', 'synthetic_auth_failure')
+            .having((error) => error.statusCode, 'statusCode', '400'),
+        reason: 'A timeout cannot stand in for the controlled HTTP rejection',
       );
-      await _proof;
-      await Future<void>.delayed(Duration.zero);
-    });
-    await tester.pump();
-    await tester.pump();
+    }
     expect(
       runtime.phase.value,
       success ? MotionIdentityPhase.verified : MotionIdentityPhase.unavailable,
@@ -308,34 +322,53 @@ class _Harness {
       return;
     }
     _closed = true;
-    await tester.pumpWidget(const SizedBox.shrink());
-    // Unmount must not own or dispose either caller-owned dependency.
-    expect(runtime.isDisposed, isFalse);
-    if (!_response.isCompleted) {
-      await finishProof(tester);
+    Object? firstError;
+    StackTrace? firstTrace;
+    Future<void> cleanup(FutureOr<void> Function() action) async {
+      try {
+        await action();
+      } catch (error, trace) {
+        firstError ??= error;
+        firstTrace ??= trace;
+      }
     }
-    await tester.runAsync(() async {
-      await _proof;
-      await Future<void>.delayed(Duration.zero);
+
+    await cleanup(() => tester.pumpWidget(const SizedBox.shrink()));
+    // Every owned resource is released even if an earlier assertion fails.
+    // Unmount must not own or dispose either caller-owned dependency.
+    await cleanup(() => expect(runtime.isDisposed, isFalse));
+    await cleanup(() async {
+      if (!_response.isCompleted) {
+        await finishProof(tester);
+      } else {
+        await _io<void>(tester, 'identity.proof', () => _proof!);
+      }
     });
-    await _io<void>(tester, 'owners.retire', owners.retireAll);
-    expect(
-      await _io<String>(tester, 'marker.read', marker.readAsString),
-      'preserve-owned-marker',
+    await cleanup(() => _io<void>(tester, 'owners.retire', owners.retireAll));
+    await cleanup(() async {
+      expect(
+        await _io<String>(tester, 'marker.read', marker.readAsString),
+        'preserve-owned-marker',
+      );
+    });
+    await cleanup(
+      () => _io<FileSystemEntity>(
+        tester,
+        'temp.delete',
+        () => support.delete(recursive: true),
+      ),
     );
-    await _io<FileSystemEntity>(
-      tester,
-      'temp.delete',
-      () => support.delete(recursive: true),
-    );
-    runtime.dispose();
-    await _io<void>(tester, 'client.dispose', client.dispose);
-    transport.close();
-    preferences.dispose();
-    expect(ledger.disposed, ledger.initialized);
-    expect(unexpectedRequests, 0);
-    expect(deletionCallbacks, 0);
-    expect(tester.takeException(), isNull);
+    await cleanup(runtime.dispose);
+    await cleanup(() => _io<void>(tester, 'client.dispose', client.dispose));
+    await cleanup(transport.close);
+    await cleanup(preferences.dispose);
+    await cleanup(() => expect(ledger.disposed, ledger.initialized));
+    await cleanup(() => expect(unexpectedRequests, 0));
+    await cleanup(() => expect(deletionCallbacks, 0));
+    await cleanup(() => expect(tester.takeException(), isNull));
+    if (firstError != null) {
+      Error.throwWithStackTrace(firstError!, firstTrace!);
+    }
   }
 }
 
@@ -388,20 +421,42 @@ Future<void> _blocker(
   Color? foreground,
 }) async {
   final literal = text ?? _checking[locale.toLanguageTag()]!;
+  final target = find.text(literal);
+  final canvas = find.descendant(
+    of: find.byType(Scaffold),
+    matching: find.byWidgetPredicate(
+      (widget) => widget is Material && widget.type == MaterialType.canvas,
+    ),
+  );
   // A pending indicator intentionally animates forever; pumpAndSettle is not
-  // an admissible readiness oracle here. Advance bounded frames and real work.
+  // an admissible readiness oracle here. Keep the same bounded frame budget,
+  // but await both nested theme/text animations, not just an existing literal.
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 300));
   for (int turn = 0; turn < 40; turn++) {
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 10)),
     );
     await tester.pump(const Duration(milliseconds: 10));
-    if (find.text(literal).evaluate().isNotEmpty) {
-      break;
+    final elements = target.evaluate();
+    if (elements.length != 1) {
+      continue;
     }
+    final context = elements.single;
+    if (brightness != null && Theme.of(context).brightness != brightness) {
+      continue;
+    }
+    if (background != null &&
+        (canvas.evaluate().length != 1 ||
+            tester.widget<Material>(canvas).color != background)) {
+      continue;
+    }
+    if (foreground != null &&
+        DefaultTextStyle.of(context).style.color != foreground) {
+      continue;
+    }
+    break;
   }
-  await tester.pump();
-  await tester.pump(const Duration(milliseconds: 300));
-  final target = find.text(literal);
   expect(target, findsOneWidget, reason: 'Actual, literal localized blocker');
   final context = tester.element(target);
   final loaded = Localizations.of<MotionAccountLocalizations>(
@@ -419,12 +474,6 @@ Future<void> _blocker(
     expect(Theme.of(context).brightness, brightness);
   }
   if (background != null) {
-    final canvas = find.descendant(
-      of: find.byType(Scaffold),
-      matching: find.byWidgetPredicate(
-        (widget) => widget is Material && widget.type == MaterialType.canvas,
-      ),
-    );
     expect(canvas, findsOneWidget, reason: 'Actual Scaffold canvas required');
     expect(tester.widget<Material>(canvas).color, background);
   }
@@ -708,7 +757,17 @@ void main() {
       await _routeSettled(tester);
       final account = find.byType(MotionAccountPage);
       expect(account, findsOneWidget);
-      for (int turn = 0; turn < 40 && h.profileReads == 0; turn++) {
+      final profileField = find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField &&
+            widget.controller?.text == 'Synthetic profile baseline',
+      );
+      // A request counter proves dispatch, not decoded data or a painted field.
+      // Retain the same bound and wait for the actual Core-owned controller.
+      for (int turn = 0; turn < 40; turn++) {
+        if (profileField.evaluate().isNotEmpty) {
+          break;
+        }
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 25)),
         );
@@ -716,11 +775,6 @@ void main() {
       }
       expect(h.profileReads, 1);
       await _routeSettled(tester);
-      final profileField = find.byWidgetPredicate(
-        (widget) =>
-            widget is TextField &&
-            widget.controller?.text == 'Synthetic profile baseline',
-      );
       expect(
         profileField,
         findsOneWidget,
