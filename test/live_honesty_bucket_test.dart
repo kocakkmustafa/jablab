@@ -112,7 +112,7 @@ void main() {
         expect(styles.length, 7);
         for (final entry in styles.entries) {
           final actual = entry.value.$1;
-          expect(actual, entry.value.$2, reason: '$brightness / ' + entry.key);
+          expect(actual, entry.value.$2, reason: '$brightness / ${entry.key}');
           final size = actual.fontSize ?? 14;
           final bold =
               (actual.fontWeight?.value ?? 400) >= FontWeight.w700.value;
@@ -120,8 +120,7 @@ void main() {
           expect(
             _contrast(_over(actual.color!, p.ground), p.ground),
             greaterThanOrEqualTo(threshold),
-            reason:
-                '$brightness / ' + entry.key + ': uniform role/background math',
+            reason: '$brightness / ${entry.key}: uniform role/background math',
           );
         }
       }
