@@ -73,7 +73,11 @@ Future<T> _rootIo<T>(
 
 Future<void> _rootRouteSettled(WidgetTester tester, String stage) async {
   _rootStage('$stage/begin');
-  await tester.pumpAndSettle(timeout: const Duration(seconds: 3));
+  await tester.pumpAndSettle(
+    const Duration(milliseconds: 100),
+    EnginePhase.sendSemanticsUpdate,
+    const Duration(seconds: 3),
+  );
   _rootStage('$stage/done');
 }
 
@@ -231,7 +235,7 @@ void main() {
             '$trace/teardown.retire',
             owners.retireAll,
           );
-          await _rootIo<Directory>(
+          await _rootIo<FileSystemEntity>(
             tester,
             '$trace/teardown.delete',
             () => directory.delete(recursive: true),
