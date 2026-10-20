@@ -471,7 +471,10 @@ void main() {
         final TextStyle steady = cueStyle(t);
         expect(
           steady,
-          JText.correction.copyWith(color: p.ink),
+          // Full style equality includes Material's inherited script geometry.
+          Typography.englishLike2021.titleLarge!.merge(
+            JText.correction.copyWith(color: p.ink),
+          ),
           reason: 'steady keeps complete correction geometry and weight',
         );
         expect(

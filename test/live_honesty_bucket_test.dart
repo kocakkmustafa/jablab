@@ -417,7 +417,10 @@ void main() {
         _expectText(
           t,
           find.text('appearance-no-verdict'),
-          JText.body.copyWith(color: p.ink),
+          // Theme.of resolves Material's English-script geometry first.
+          Typography.englishLike2021.bodyMedium!.merge(
+            JText.body.copyWith(color: p.ink),
+          ),
         );
         expect(find.byKey(const Key('live-cue')), findsNothing);
         expect(find.byKey(const Key('live-clean')), findsNothing);
