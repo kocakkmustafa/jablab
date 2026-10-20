@@ -41,6 +41,7 @@ class SkeletonPreview extends StatelessWidget {
     required this.analysisRunning,
     this.skeleton,
     this.bucket = LiveHonestyBucket.none,
+    this.canvasAppearance,
   });
 
   /// Analiz GERÇEKTEN koşuyor mu (J-250).
@@ -71,6 +72,10 @@ class SkeletonPreview extends StatelessWidget {
   /// BURADAN taşınıyor — bu yuva app'in kendi mülkü.
   final LiveHonestyBucket bucket;
 
+  /// Explicit paired image-canvas role. Null keeps a dark image canvas in
+  /// both app themes; no mutable global theme or anatomical mirroring.
+  final JCameraCanvasAppearance? canvasAppearance;
+
   final LiveState state;
 
   /// `null` yalnız kimse hiç bulunamadığında (bkz. alan dokümanı
@@ -79,60 +84,52 @@ class SkeletonPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appearance = canvasAppearance ?? JCameraCanvasAppearance.dark;
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        _CameraPlaceholder(bucket: bucket, analysisRunning: analysisRunning),
+        _CameraPlaceholder(appearance: appearance),
         if (skeleton != null)
           CustomPaint(
             key: const Key('skeleton-overlay'),
-            painter: _SkeletonPainter(skeleton!, state),
+            painter: _SkeletonPainter(skeleton!, state, observationColor: appearance.observation),
           ),
+        // Foreground caption/scrim is painted after the skeleton.
+        _CameraCaption(appearance: appearance, bucket: bucket, analysisRunning: analysisRunning),
       ],
     );
   }
 }
 
 class _CameraPlaceholder extends StatelessWidget {
-  const _CameraPlaceholder({
-    required this.bucket,
-    required this.analysisRunning,
-  });
-
-  final LiveHonestyBucket bucket;
-
-  /// bkz. `SkeletonPreview.analysisRunning` — cümlenin İKİNCİ yarısı buna bağlı.
-  final bool analysisRunning;
-
+  const _CameraPlaceholder({required this.appearance});
+  final JCameraCanvasAppearance appearance;
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: <Color>[JColors.deep.withValues(alpha: .55), JColors.ground],
+        colors: <Color>[appearance.gradientTop, appearance.background],
       ),
     ),
-    child: Center(
-      // SCRIM (J-117, koordinatör hükmü a). İskelet bu metnin ÜSTÜNDEN
-      // geçiyor — ölçüldü: sentetik nötr duruşta iki dirsek altyazı
-      // kutusunun içine düşüyor, ve parlak bir eklem noktasının üstünde
-      // metnin kontrastı **1,72:1**e iniyor (eşik 4,5). Yani J-116'da
-      // düzelttiğim kontrast, örtüşme durumunda zaten kırılıyordu.
-      //
-      // Altyazıyı üst banda TAŞIMAK çözüm değildi: bu boks, eller
-      // yukarıda duruyor — üst bant tam da tehlikeli bölge. Kusuru
-      // çözmez, taşırdı. Scrim ise okunabilirliğin bozulmasını
-      // **duruştan bağımsız imkânsız** kılıyor (aile dersi #7).
-      //
-      // ⚠️ ALFA SEÇİLMEDİ, TÜRETİLDİ. Hedef: *iskelet hiç yokken metnin
-      // sahip olduğu kontrastı geri vermek* (6,56:1). Bunu karşılayan
-      // en küçük değer **0,81** (6,58:1). Daha yükseği gereksiz opaklık,
-      // daha düşüğü örtüşmede kayıp. Altındakinin %19'u hâlâ geçiyor,
-      // yani iskelet metnin arkasında SEZİLİYOR — gizlenmiyor.
+    child: const SizedBox.expand(),
+  );
+}
+
+class _CameraCaption extends StatelessWidget {
+  const _CameraCaption({required this.appearance, required this.bucket, required this.analysisRunning});
+  final JCameraCanvasAppearance appearance;
+  final LiveHonestyBucket bucket;
+  final bool analysisRunning;
+  @override
+  Widget build(BuildContext context) => Center(
+      // Foreground scrim retains alpha .81 as a draft design input.
+      // Historic ratios do not replace a new skeleton-overlap render check.
       child: DecoratedBox(
+        key: const Key('camera-caption-scrim'),
         decoration: BoxDecoration(
-          color: JColors.ground.withValues(alpha: .81),
+          color: appearance.captionScrim,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
@@ -140,7 +137,11 @@ class _CameraPlaceholder extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(bucket.icon, size: 28, color: bucket.accent),
+              Icon(bucket.icon, size: 28, color: switch (bucket) {
+                LiveHonestyBucket.yours => appearance.observation,
+                LiveHonestyBucket.ours => appearance.neutralIcon,
+                LiveHonestyBucket.none => appearance.noAnalysisIcon,
+              }),
               const SizedBox(height: 8),
               Text(
                 // İKİNCİ YARI KOŞULLU (J-250). Analiz koşmuyorken *"analysis
@@ -169,14 +170,13 @@ class _CameraPlaceholder extends StatelessWidget {
                 // eşiğinin (4,5) çok altında. Bu altyazı kameranın NEDEN
                 // görünmediğini açıklıyor, yani en çok iskelet çizilirken
                 // gerekiyor; okunamaz olması onu hiç yazmamakla aynı şey.
-                style: JText.mono.copyWith(fontSize: 11, color: JColors.ink2),
+                style: appearance.captionStyle,
               ),
             ],
           ),
         ),
       ),
-    ),
-  );
+    );
 }
 
 /// Boks için ilgili 13 nokta + kemik bağlantıları — 33 MediaPipe noktasının
@@ -202,10 +202,11 @@ const List<(int, int)> _bones = <(int, int)>[
 const int _headPoint = Lm.nose;
 
 class _SkeletonPainter extends CustomPainter {
-  _SkeletonPainter(this.landmarks, this.state);
+  _SkeletonPainter(this.landmarks, this.state, {required this.observationColor});
 
   final List<PoseLandmark> landmarks;
   final LiveState state;
+  final Color observationColor;
 
   Offset _xy(int i, Size size) =>
       Offset(landmarks[i].x * size.width, landmarks[i].y * size.height);
@@ -230,7 +231,7 @@ class _SkeletonPainter extends CustomPainter {
       canvas.drawLine(
         _xy(a, size),
         _xy(b, size),
-        bone..color = JColors.cool.withValues(alpha: a2 * .55),
+        bone..color = observationColor.withValues(alpha: a2 * .55),
       );
     }
 
@@ -252,7 +253,7 @@ class _SkeletonPainter extends CustomPainter {
       canvas.drawCircle(
         _xy(i, size),
         3.2,
-        joint..color = JColors.cool.withValues(alpha: _alpha(i) * sceneAlpha),
+        joint..color = observationColor.withValues(alpha: _alpha(i) * sceneAlpha),
       );
     }
 
@@ -268,16 +269,17 @@ class _SkeletonPainter extends CustomPainter {
     canvas.drawLine(
       shoulderMid,
       _xy(_headPoint, size),
-      bone..color = JColors.cool.withValues(alpha: headAlpha * .55),
+      bone..color = observationColor.withValues(alpha: headAlpha * .55),
     );
     canvas.drawCircle(
       _xy(_headPoint, size),
       6,
-      joint..color = JColors.cool.withValues(alpha: headAlpha),
+      joint..color = observationColor.withValues(alpha: headAlpha),
     );
   }
 
   @override
   bool shouldRepaint(covariant _SkeletonPainter oldDelegate) =>
-      oldDelegate.landmarks != landmarks || oldDelegate.state != state;
+      oldDelegate.landmarks != landmarks || oldDelegate.state != state ||
+      oldDelegate.observationColor != observationColor;
 }

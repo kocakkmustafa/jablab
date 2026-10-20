@@ -38,12 +38,12 @@ const Map<String, _Copy> _courseGoals = <String, _Copy>{
     tr: 'Temeller bölümünde geliştirdiğin duruşu ve dengeyi kaybetmeden hareket et.',
   ),
   'boxing.conditioning': (
-    en: "Work rounds without a bag. The app keeps time, counts what it can see, and stays quiet about what it can't.",
-    tr: 'Kum torbası olmadan raunt çalış. Uygulama süre tutar, görebildiğini sayar ve göremediği konuda yorum yapmaz.',
+    en: 'Legacy timed sessions are unavailable in this release. The separate solo boxing course offers written learning, practice tasks and self-report, without automatic punch counting.',
+    tr: 'Bu sürümde eski süreli seanslar kullanılamaz. Ayrı solo boks kursu otomatik yumruk sayımı olmadan yazılı öğrenme, çalışma görevleri ve öz beyan sunar.',
   ),
   'boxing.intermediate': (
-    en: 'One lesson is open: holding your shape through a long round. The other three are locked for three different reasons, and each names its own.',
-    tr: 'Uzun bir rauntta formunu koruma dersi açık. Diğer üç ders farklı nedenlerle kapalı; her birinde nedeni yazıyor.',
+    en: 'Live camera lessons are unavailable in this release. The separate solo boxing course remains available for written learning, practice tasks and self-report.',
+    tr: 'Bu sürümde canlı kamera dersleri kullanılamaz. Ayrı solo boks kursu yazılı öğrenme, çalışma görevleri ve öz beyan için kullanılabilir.',
   ),
 };
 

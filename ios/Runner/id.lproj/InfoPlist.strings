@@ -1,0 +1,1 @@
+"NSCameraUsageDescription" = "Bimbingan kamera dinonaktifkan dalam rilis ini. Jika diaktifkan secara terpisah pada suatu rilis mendatang, JabLab menggunakan kamera untuk memberikan umpan balik gerakan di perangkat. Gambar kamera dan posisi tubuh tidak diunggah atau disimpan. Riwayat sesi tetap berada di perangkat ini.";

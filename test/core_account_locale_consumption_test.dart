@@ -1,4 +1,4 @@
-// Consumer locale contract for published Core 8f.
+// Consumer locale contract for published Core d69; device and provider acceptance is separate.
 import 'dart:io';
 import 'app_pump.dart';
 import 'localization_fixture.dart';
@@ -82,7 +82,7 @@ Future<void> _rootRouteSettled(WidgetTester tester, String stage) async {
 }
 
 void main() {
-  // Literal values from published 8f, independent of the renderer's lookup.
+  // Literal values from published Core, independent of the renderer's lookup.
   final variants = <Locale, List<String>>{
     const Locale('tr'): [
       "Giriş yap",
@@ -126,6 +126,42 @@ void main() {
       "إنشاء حساب",
       "إنشاء حساب جديد",
       "البريد الإلكتروني",
+    ],
+    const Locale('it'): [
+      "Accedi",
+      "Crea account",
+      "Crea un nuovo account",
+      "Email",
+    ],
+    const Locale('ko'): [
+      "로그인",
+      "계정 만들기",
+      "새 계정 만들기",
+      "이메일",
+    ],
+    const Locale('id'): [
+      "Masuk",
+      "Buat akun",
+      "Buat akun baru",
+      "Email",
+    ],
+    const Locale('pl'): [
+      "Zaloguj się",
+      "Utwórz konto",
+      "Utwórz nowe konto",
+      "E-mail",
+    ],
+    const Locale('hi'): [
+      "साइन इन करें",
+      "खाता बनाएँ",
+      "नया खाता बनाएँ",
+      "ईमेल",
+    ],
+    const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'): [
+      "登录",
+      "创建账户",
+      "创建新账户",
+      "电子邮箱",
     ],
   };
   for (final entry in variants.entries) {

@@ -475,8 +475,8 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
                 en: 'DEMONSTRATION · MUTED',
                 tr: 'GÖSTERİM · SESSİZ',
               ),
-              style: JText.body.copyWith(
-                color: JColors.cool,
+              style: JText.of(context).body.copyWith(
+                color: JColors.of(context).observation,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -487,7 +487,7 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
                 en: 'Watch the movement with captions. This does not grade your form or record practice.',
                 tr: 'Hareketi altyazıyla izle. Bu gösterim formunu puanlamaz veya çalışma kaydı oluşturmaz.',
               ),
-              style: JText.bodyMuted,
+              style: JText.of(context).bodyMuted,
             ),
             if (_ready && port != null) ...[
               const SizedBox(height: 12),
@@ -507,7 +507,7 @@ class _LessonMediaSlotState extends State<LessonMediaSlot>
                     child: Text(
                       shown.isEmpty ? '' : shown.single.text,
                       key: const Key('solo-media-caption'),
-                      style: JText.body,
+                      style: JText.of(context).body,
                     ),
                   );
                 },

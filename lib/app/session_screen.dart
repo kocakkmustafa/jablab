@@ -333,7 +333,7 @@ class _SessionScreenState extends State<SessionScreen> {
     // `Theme.of(context)` üzerinden beslenir (bkz. sınıf dokümanı +
     // design_tokens.dart'taki `jablabSessionTheme` yorumu).
     return Theme(
-      data: jablabSessionTheme,
+      data: jablabSessionThemeFor(Theme.of(context)),
       child: SessionFlowScaffold(
         title: lessonTitle(context, widget.lesson.id, widget.lesson.title),
         stage: _stage,

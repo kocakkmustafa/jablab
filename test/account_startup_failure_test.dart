@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/main.dart';
+import 'package:jablab/app/app_preferences.dart';
+import 'package:jablab/app/app_preferences_controller.dart';
+import 'package:jablab/app/ui_language.dart';
 
 import 'localization_fixture.dart';
 
@@ -10,7 +13,11 @@ void main() {
     (WidgetTester tester) async {
       tester.platformDispatcher.localesTestValue = const [Locale('en')];
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-      await launchJabLab(url: '', publishableKey: '');
+      await launchJabLab(
+        preferencesOverride: _startupPreferences(tester),
+        url: '',
+        publishableKey: '',
+      );
       await tester.pump();
 
       // The failure root must mount on the first pump, before asset readiness.
@@ -36,7 +43,11 @@ void main() {
         tester.platformDispatcher.localesTestValue = [Locale(language)];
         addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
-        await launchJabLab(url: 'invalid', publishableKey: 'test-key');
+        await launchJabLab(
+          preferencesOverride: _startupPreferences(tester),
+          url: 'invalid',
+          publishableKey: 'test-key',
+        );
         await tester.pump();
 
         expect(find.byType(JabLabAccountStartupFailure), findsOneWidget);
@@ -53,5 +64,45 @@ void main() {
         expect(tester.takeException(), isNull);
       },
     );
+  }
+}
+
+// Only this fixture's future preferences read is replaced. App delegate/assets,
+// launchJabLab, invalid account config, root and original assertions stay real.
+AppPreferencesController _startupPreferences(WidgetTester tester) {
+  final store = _MissingStartupPreferencesStore();
+  final controller = AppPreferencesController(
+    codec: AppPreferencesCodec(
+      supportedLocaleTags: AppLocalizations.supportedLocales.map(
+        (locale) => locale.toLanguageTag(),
+      ),
+    ),
+    store: store,
+  );
+  addTearDown(() async {
+    try {
+      await tester.pumpWidget(const SizedBox.shrink());
+      expect(store.writes, 0, reason: 'Untouched startup must not persist defaults');
+    } finally {
+      controller.dispose();
+    }
+  });
+  return controller;
+}
+
+class _MissingStartupPreferencesStore implements AppPreferencesStore {
+  int writes = 0;
+
+  @override
+  bool get persistent => false;
+
+  @override
+  Future<PreferencesReadResult> read() async =>
+      const PreferencesReadResult(PreferencesReadKind.missing);
+
+  @override
+  Future<PreferencesWriteResult> write(AppPreferences value) async {
+    writes++;
+    return const PreferencesWriteResult(PreferencesWriteKind.committed);
   }
 }

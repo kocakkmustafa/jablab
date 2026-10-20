@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse, hashlib, json, re
 ROOT = Path(__file__).resolve().parents[2]
-LOCALES = ['tr','en','es-419','pt-BR','de','fr','ja','ar']
+LOCALES = ['tr','en','es-419','pt-BR','de','fr','ja','ar','it','ko','id','pl','hi','zh-Hans']
 
 def key(en, tr):
     return 's_' + hashlib.sha256((en+'\0'+tr).encode()).hexdigest()
@@ -228,6 +228,7 @@ def refresh():
     # contexts, but do not make translators retain unreachable UI tombstones.
     data['entries']=[e for e in entries.values()
                      if e.get('kind') != 'UI' or e['contexts']]
+    data['locales']=list(LOCALES)
     data['limits']=['Exact source pair overlay; this generator does not rewrite content or progress IDs.','Translation source is not native-speaker, clinical, legal or rendered UI acceptance.']
     singulars={'{count} courses':'{count} course','{count} lessons':'{count} lesson','{count} rounds':'{count} round','{count} intervals':'{count} interval','{count} things are deliberately not in this app.':'{count} thing is deliberately not in this app.'}
     for e in data['entries']:
@@ -265,7 +266,7 @@ def validate(data,allow_partial=False,write=False):
                 if sorted(re.findall(r'\{(\w+)\}',v))!=expected:errors.append(locale+': placeholder mismatch '+ident)
             if isinstance(value,dict) and 'other' not in value:errors.append(locale+': plural other absent '+ident)
             if source[ident]['plural_arg']:
-                required={'ar':{'zero','one','two','few','many','other'},'ja':{'other'},'tr':{'other'},'en':{'one','other'},'de':{'one','other'},'fr':{'one','many','other'},'es-419':{'one','many','other'},'pt-BR':{'one','many','other'}}[locale]
+                required={'ar':{'zero','one','two','few','many','other'},'ja':{'other'},'tr':{'other'},'en':{'one','other'},'de':{'one','other'},'fr':{'one','many','other'},'es-419':{'one','many','other'},'pt-BR':{'one','many','other'},'it':{'one','many','other'},'ko':{'other'},'id':{'other'},'pl':{'one','few','many','other'},'hi':{'one','other'},'zh-Hans':{'other'}}[locale]
                 if not isinstance(value,dict) or not required.issubset(value):errors.append(locale+': plural forms absent '+ident)
 
         bundles[locale]={'schemaVersion':1,'locale':locale,'complete':not bool(missing),'sourceCount':len(source),'messages':messages}

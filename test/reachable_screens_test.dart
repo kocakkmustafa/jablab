@@ -559,7 +559,9 @@ void main() {
       // değil, GERÇEK bir durum değişikliği bekleniyor.
       for (int f = 0; f < 6; f++) {
         await t.pump(const Duration(milliseconds: 200));
-        if (stageNow() != s) break;
+        if (stageNow() != s) {
+          break;
+        }
       }
     }
     walkedStages = stages.length;
@@ -744,7 +746,9 @@ void main() {
     for (final FileSystemEntity e in Directory(
       'lib',
     ).listSync(recursive: true)) {
-      if (e is! File || !e.path.endsWith('.dart')) continue;
+      if (e is! File || !e.path.endsWith('.dart')) {
+        continue;
+      }
       libSrc[e.path] = codeOnly(e.readAsStringSync());
     }
     // Sökücünün POZİTİF KONTROLÜ: gerçekten söküyor mu? (yeşil bir sökücü,
@@ -757,13 +761,17 @@ void main() {
     for (final String src in libSrc.values) {
       for (final String chunk in src.split(RegExp(r'\n(?=class )'))) {
         final RegExpMatch? m = RegExp(r'class\s+(\w+)').firstMatch(chunk);
-        if (m == null || !chunk.contains('Scaffold(')) continue;
+        if (m == null || !chunk.contains('Scaffold(')) {
+          continue;
+        }
         String name = m.group(1)!;
         // StatefulWidget'ın Scaffold'u State'te yaşar: `_XState` → `X`.
         if (name.startsWith('_') && name.endsWith('State')) {
           name = name.substring(1, name.length - 5);
         }
-        if (!name.startsWith('_')) derived.add(name);
+        if (!name.startsWith('_')) {
+          derived.add(name);
+        }
       }
     }
 
@@ -1062,7 +1070,9 @@ void main() {
       'JabLabAccountStartupFailure': () {
         final String main = libSrc['lib/main.dart'] ?? '';
         return main.contains('class JabLabAccountStartupFailure') &&
-            main.contains('runApp(const JabLabAccountStartupFailure());') &&
+            RegExp(
+              r'runApp\(\s*JabLabAccountStartupFailure\(\s*preferences:\s*preferences,?\s*\)\s*\);',
+            ).hasMatch(main) &&
             !routed.contains('JabLabAccountStartupFailure');
       },
       // iddia: "ayrı bir ekran değil, kökün iskelesi" → sınıf ÖZEL (`_Root`,

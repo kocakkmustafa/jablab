@@ -1,3 +1,4 @@
+// Real appearance consumers, bounded palette/paint and original behavior witnesses; physical/native acceptance is separate.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
@@ -40,12 +41,18 @@ void main() {
     required RoundPlan? plan,
     IntervalPlan? intervalPlan,
     SessionStore? store,
+    Brightness brightness = Brightness.dark,
   }) async {
     late final CueBook cues;
     await t.runAsync(() async {
       cues = await const ContentRepository().loadCues();
     });
     await t.pumpWidget(MaterialApp(
+      locale: const Locale('en'),
+      theme: jablabTheme(Brightness.light),
+      darkTheme: jablabTheme(Brightness.dark),
+      themeMode: brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
+      themeAnimationDuration: Duration.zero,
       home: SessionScreen(
         lesson: const ShellLesson(id: 'x', title: 'Test lesson', minutes: 12),
         cues: cues,
@@ -359,38 +366,47 @@ void main() {
       .textTheme
       .titleLarge!;
 
-  testWidgets('ARALIK kipinde düzeltme GÖZLEM tonunda (J-119)',
-      (WidgetTester t) async {
-    await pumpLive(t,
-        plan: null,
-        intervalPlan: const IntervalPlan(
-            bursts: 2,
-            burstSeconds: 10,
-            recoverSeconds: 10,
-            planProvenance: 'test'));
-    expect(cueStyle(t).color, JColors.cool,
-        reason: 'aralık kipinde düzeltme hâlâ HÜKÜM tonunda çiziliyor');
-  });
-
-  testWidgets('⭐ NEGATİF İKİZ: TURLU kipte ton DEĞİŞMİYOR (J-119)',
-      (WidgetTester t) async {
-    // Bu olmadan yukarıdaki test, her iki kipte de gözlem tonu kullanılsa
-    // bile geçerdi — hüküm yuvası sessizce hükmünü kaybeder ve ayrım
-    // vakum-doğru olurdu (ders #4).
-    await pumpLive(t,
-        plan: const RoundPlan(
-            rounds: 1,
-            roundSeconds: 60,
-            restSeconds: 0,
-            planProvenance: 'test'));
-    final TextStyle steady = cueStyle(t);
-    expect(steady.color, isNot(JColors.cool),
-        reason: 'turlu kipte de gözlem tonu kullanılıyor — hüküm yuvası '
-            'hükmünü kaybetmiş');
-    expect(steady.fontSize, JText.correction.fontSize,
-        reason: 'punto değişmiş: kullanıcı 2-3 m uzakta ve okunurluk '
-            'tonun altında değil — ton rengi değiştirir, boyutu değil');
-  });
+  for (final brightness in <Brightness>[Brightness.light, Brightness.dark]) {
+    final p = brightness == Brightness.dark ? JPalette.dark : JPalette.light;
+    testWidgets('ARALIK kipinde düzeltme GÖZLEM tonunda — $brightness (J-119)',
+        (WidgetTester t) async {
+      await pumpLive(t,
+          brightness: brightness, plan: null,
+          intervalPlan: const IntervalPlan(
+              bursts: 2, burstSeconds: 10, recoverSeconds: 10,
+              planProvenance: 'test'));
+      final style = cueStyle(t);
+      expect(style.color, p.observation);
+      expect(style.color, isNot(p.judgement));
+      expect(style.color!.a, 1.0);
+      expect(style.fontSize, JText.correction.fontSize);
+      expect(style.fontFamily, JText.correction.fontFamily);
+      expect(style.height, JText.correction.height);
+      expect(style.letterSpacing, JText.correction.letterSpacing);
+      expect(style.fontWeight, FontWeight.w500);
+      final theme = Theme.of(t.element(find.byType(SkeletonPreview).first));
+      expect(theme.brightness, brightness);
+      expect(JPalette.fromTheme(theme), same(p));
+    });
+    testWidgets('NEGATİF İKİZ: TURLU kip ton/puntoyu korur — $brightness (J-119)',
+        (WidgetTester t) async {
+      // Separate instance: never restart pumpLive with an old periodic timer.
+      await pumpLive(t,
+          brightness: brightness,
+          plan: const RoundPlan(rounds: 1, roundSeconds: 60,
+              restSeconds: 0, planProvenance: 'test'));
+      final TextStyle steady = cueStyle(t);
+      expect(steady, JText.correction.copyWith(color: p.ink),
+          reason: 'steady keeps complete correction geometry and weight');
+      expect(steady.color, isNot(p.observation),
+          reason: 'both modes using observation would erase the distinction');
+      expect(steady.fontSize, JText.correction.fontSize,
+          reason: 'tone changes color, never distant-reading size');
+      final theme = Theme.of(t.element(find.byType(SkeletonPreview).first));
+      expect(theme.brightness, brightness);
+      expect(JPalette.fromTheme(theme), same(p));
+    });
+  }
 
 }
 
@@ -412,7 +428,9 @@ class _FakeStore implements SessionStore {
   Future<int> workedSecondsFor(String lessonId) async {
     int total = 0;
     for (final SessionRecord r in written) {
-      if (r.lessonId == lessonId) total += r.workedSeconds;
+      if (r.lessonId == lessonId) {
+        total += r.workedSeconds;
+      }
     }
     return total;
   }

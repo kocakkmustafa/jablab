@@ -51,6 +51,8 @@ Color oklch(double l, double c, double hDeg, [double alpha = 1]) {
 class JColors {
   JColors._();
 
+  static JPalette of(BuildContext context) => JPalette.fromTheme(Theme.of(context));
+
   static const Color ground = Color(0xFF0A0608);
   static final Color backdropCore = oklch(.34, .14, 27);
   static final Color accent = oklch(.56, .195, 24); // scarlet
@@ -74,6 +76,8 @@ class JColors {
 /// (saat, sayaç, teknik sebep). Öznel hiçbir şey mono'da DİZİLMEZ.
 class JText {
   JText._();
+
+  static JTypography of(BuildContext context) => JTypography(JColors.of(context));
 
   static const String _familjenGrotesk = 'Familjen Grotesk';
   static const String _ibmPlexMono = 'IBM Plex Mono';
@@ -117,62 +121,254 @@ class JText {
       TextStyle(fontFamily: _ibmPlexMono, fontSize: 12, fontWeight: FontWeight.w400, color: JColors.ink2);
 }
 
-/// Ders akışının frozen kabuk parçalarını (`SessionFlowScaffold`,
-/// `LiveCoachSurface`, `SessionSummaryView`, `IntervalTimer` —
-/// `shell_candidate/`, `motion_shell` adayı) DEĞİŞTİRMEDEN dışarıdan
-/// giydirmek için. Settings/Sayfa A/B'nin aksine bu parçalar `JColors`/
-/// `JText`i DOĞRUDAN okuyamaz — yalnız `Theme.of(context)` üzerinden
-/// beslenirler, o yüzden token'lar burada bir `ThemeData`ya eşleniyor ve
-/// `Theme(data: jablabSessionTheme, child: ...)` ile o alt ağaca sarılıyor
-/// (bkz. `session_screen.dart`). Eşleme yalnız o dört bileşenin GERÇEKTEN
-/// okuduğu alanları kapsıyor — kullanılmayan bir `TextTheme` girişi icat
-/// edilmedi.
-final ThemeData jablabSessionTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.dark,
-  scaffoldBackgroundColor: JColors.ground,
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: JColors.accent,
-    brightness: Brightness.dark,
-  ).copyWith(
-    primaryContainer: JColors.ember.withValues(alpha: .28),
-    error: JColors.ember,
-    outline: JColors.ink3,
-    surfaceContainerHighest: JColors.deep,
-  ),
-  textTheme: TextTheme(
-    // `_Teach`in ders başlığı (session_screen.dart).
-    headlineSmall: JText.pageTitle.copyWith(fontSize: 26, letterSpacing: -.8),
-    // `LiveCoachSurface`in DÜZELTME yuvası — JText.correction'ın ta kendisi
-    // için var olduğu yer (§ TYPE SCALE dokümanı).
-    titleLarge: JText.correction,
-    // "Keep going" (temiz hâl).
-    titleMedium: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 17),
-    // Özet bant değerleri + "Coached but not scored" başlığı.
-    titleSmall: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
-    bodyMedium: JText.body,
-    bodySmall: JText.bodyMuted,
-    // Anlatı (narration) — GÖZLEM tonlu, hüküm değil.
-    labelLarge: JText.mono.copyWith(color: JColors.cool2, fontSize: 13),
-    labelMedium: JText.label,
-    // `IntervalTimer`in geri sayımı — SAYAÇ, mono ailesinin tam da var
-    // olduğu yer.
-    displaySmall: JText.clock.copyWith(fontSize: 44, letterSpacing: -1.6),
-    // Yumruk/olay sayacı (canlı VE özet) — aynı gerekçe.
-    displayMedium: JText.clock,
-  ),
-  // ⚠️ ÖLÇÜLDÜ (simülatör, design turu Parça 2, 2026-08-06): `Chip`
-  // (`SessionFlowScaffold`in aşama rozetleri — Learn/Try/Live/Summary)
-  // VARSAYILAN olarak `textTheme.labelLarge`i okuyor — bu, narration için
-  // BİLEREK mono seçilen stille AYNI yuva. Sonuç: "Learn"/"Live" rozetlerde
-  // KIRPILIYORDU ("Lear"/"Liv") — mono harfler aynı punto boyutunda daha
-  // GENİŞ, sabit rozet genişliğine sığmadı. `chipTheme` AÇIKÇA ayrılıyor ki
-  // narration'ın mono kimliği (JText'in "yalnız ÖLÇÜLEN şeyler" kuralı)
-  // aşama ETİKETLERİNE (ölçüm değil, gezinme) sızmasın.
-  chipTheme: ChipThemeData(
-    labelStyle: JText.body.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-  ),
-);
+/// Immutable resolved semantic roles. Static JColors/JText members above
+/// remain transitional dark-only compatibility APIs for unmigrated consumers.
+/// New rendered UI reads JColors.of(context) and JText.of(context).
+class JPalette extends ThemeExtension<JPalette> {
+  const JPalette({
+    required this.ground,
+    required this.gradientTop,
+    required this.surface,
+    required this.accent,
+    required this.onAccent,
+    required this.judgement,
+    required this.onJudgement,
+    required this.observation,
+    required this.ink,
+    required this.inkMuted,
+    required this.inkSubtle,
+    required this.disabled,
+    required this.outline,
+    required this.focus,
+    required this.glassResting,
+    required this.glassObservation,
+    required this.glassJudgement,
+    required this.shadow,
+  });
+
+  final Color ground;
+  final Color gradientTop;
+  final Color surface;
+  final Color accent;
+  final Color onAccent;
+  final Color judgement;
+  final Color onJudgement;
+  final Color observation;
+  final Color ink;
+  final Color inkMuted;
+  final Color inkSubtle;
+  final Color disabled;
+  final Color outline;
+  final Color focus;
+  final Color glassResting;
+  final Color glassObservation;
+  final Color glassJudgement;
+  final Color shadow;
+
+  static final dark = JPalette(
+    ground: JColors.ground,
+    gradientTop: const Color(0xFF170809),
+    surface: const Color(0xFF21181D),
+    accent: JColors.accent,
+    onAccent: JColors.ink,
+    judgement: JColors.ember,
+    onJudgement: const Color(0xFF180A05),
+    observation: JColors.cool,
+    ink: JColors.ink,
+    inkMuted: const Color(0xFFB3ADB0),
+    inkSubtle: const Color(0xFFA49BA1),
+    disabled: const Color(0xFF766D72),
+    outline: const Color(0xFF81747C),
+    focus: JColors.cool,
+    glassResting: const Color(0x13E4ECF3),
+    glassObservation: JColors.cool.withValues(alpha: .095),
+    glassJudgement: JColors.ember.withValues(alpha: .16),
+    shadow: JColors.deep.withValues(alpha: .4),
+  );
+
+  // Proposed light roles: require effective-background/glyph/device review.
+  // These values are draft design inputs, not a contrast or language PASS.
+  static final light = JPalette(
+    ground: const Color(0xFFFFF8F9),
+    gradientTop: const Color(0xFFFBECEE),
+    surface: const Color(0xFFFFFFFF),
+    accent: JColors.accent,
+    onAccent: JColors.ink,
+    judgement: const Color(0xFF8B3F0F),
+    onJudgement: const Color(0xFFFFFFFF),
+    observation: const Color(0xFF345166),
+    ink: const Color(0xFF251D22),
+    inkMuted: const Color(0xFF584D55),
+    inkSubtle: const Color(0xFF675C63),
+    disabled: const Color(0xFF9F959B),
+    outline: const Color(0xFF80717A),
+    focus: const Color(0xFFB3261E),
+    glassResting: const Color(0xE6FFFFFF),
+    glassObservation: const Color(0xE6ECF1F5),
+    glassJudgement: const Color(0xE6FAE8DD),
+    shadow: const Color(0x1A4A1422),
+  );
+
+  static JPalette fromTheme(ThemeData theme) =>
+      theme.extension<JPalette>() ??
+      (theme.brightness == Brightness.dark ? dark : light);
+
+  @override
+  JPalette copyWith({
+    Color? ground,
+    Color? gradientTop,
+    Color? surface,
+    Color? accent,
+    Color? onAccent,
+    Color? judgement,
+    Color? onJudgement,
+    Color? observation,
+    Color? ink,
+    Color? inkMuted,
+    Color? inkSubtle,
+    Color? disabled,
+    Color? outline,
+    Color? focus,
+    Color? glassResting,
+    Color? glassObservation,
+    Color? glassJudgement,
+    Color? shadow,
+  }) => JPalette(
+    ground: ground ?? this.ground,
+    gradientTop: gradientTop ?? this.gradientTop,
+    surface: surface ?? this.surface,
+    accent: accent ?? this.accent,
+    onAccent: onAccent ?? this.onAccent,
+    judgement: judgement ?? this.judgement,
+    onJudgement: onJudgement ?? this.onJudgement,
+    observation: observation ?? this.observation,
+    ink: ink ?? this.ink,
+    inkMuted: inkMuted ?? this.inkMuted,
+    inkSubtle: inkSubtle ?? this.inkSubtle,
+    disabled: disabled ?? this.disabled,
+    outline: outline ?? this.outline,
+    focus: focus ?? this.focus,
+    glassResting: glassResting ?? this.glassResting,
+    glassObservation: glassObservation ?? this.glassObservation,
+    glassJudgement: glassJudgement ?? this.glassJudgement,
+    shadow: shadow ?? this.shadow,
+  );
+
+  @override
+  JPalette lerp(covariant ThemeExtension<JPalette>? other, double t) {
+    if (other is! JPalette) return this;
+    return JPalette(
+      ground: Color.lerp(ground, other.ground, t)!,
+      gradientTop: Color.lerp(gradientTop, other.gradientTop, t)!,
+      surface: Color.lerp(surface, other.surface, t)!,
+      accent: Color.lerp(accent, other.accent, t)!,
+      onAccent: Color.lerp(onAccent, other.onAccent, t)!,
+      judgement: Color.lerp(judgement, other.judgement, t)!,
+      onJudgement: Color.lerp(onJudgement, other.onJudgement, t)!,
+      observation: Color.lerp(observation, other.observation, t)!,
+      ink: Color.lerp(ink, other.ink, t)!,
+      inkMuted: Color.lerp(inkMuted, other.inkMuted, t)!,
+      inkSubtle: Color.lerp(inkSubtle, other.inkSubtle, t)!,
+      disabled: Color.lerp(disabled, other.disabled, t)!,
+      outline: Color.lerp(outline, other.outline, t)!,
+      focus: Color.lerp(focus, other.focus, t)!,
+      glassResting: Color.lerp(glassResting, other.glassResting, t)!,
+      glassObservation: Color.lerp(glassObservation, other.glassObservation, t)!,
+      glassJudgement: Color.lerp(glassJudgement, other.glassJudgement, t)!,
+      shadow: Color.lerp(shadow, other.shadow, t)!,
+    );
+  }
+}
+
+/// Font geometry is preserved; every returned style resolves its current role.
+class JTypography {
+  const JTypography(this.colors);
+  final JPalette colors;
+  TextStyle get correction => JText.correction.copyWith(color: colors.ink);
+  TextStyle get clock => JText.clock.copyWith(color: colors.ink);
+  TextStyle get pageTitle => JText.pageTitle.copyWith(color: colors.ink);
+  TextStyle get body => JText.body.copyWith(color: colors.ink);
+  TextStyle get bodyMuted => JText.bodyMuted.copyWith(color: colors.inkMuted);
+  TextStyle get label => JText.label.copyWith(color: colors.observation);
+  TextStyle get mono => JText.mono.copyWith(color: colors.inkMuted);
+}
+
+ThemeData jablabTheme(Brightness brightness) {
+  final p = brightness == Brightness.dark ? JPalette.dark : JPalette.light;
+  final scheme = ColorScheme.fromSeed(seedColor: p.accent, brightness: brightness).copyWith(
+    primary: p.accent, onPrimary: p.onAccent,
+    secondary: p.observation, onSecondary: p.ground,
+    surface: p.surface, onSurface: p.ink, onSurfaceVariant: p.inkMuted,
+    error: p.accent, onError: p.onAccent, outline: p.outline,
+  );
+  final base = ThemeData(useMaterial3: true, brightness: brightness, colorScheme: scheme);
+  return base.copyWith(
+    scaffoldBackgroundColor: p.ground,
+    cardColor: p.glassResting,
+    disabledColor: p.disabled,
+    focusColor: p.focus.withValues(alpha: .2),
+    iconTheme: base.iconTheme.copyWith(color: p.inkSubtle),
+    textTheme: base.textTheme.apply(
+      fontFamily: 'Familjen Grotesk', bodyColor: p.ink, displayColor: p.ink,
+    ),
+    extensions: <ThemeExtension<dynamic>>[p],
+  );
+}
+
+/// Context-preserving adapters for the frozen shell components. They keep
+/// the resolved brightness, palette extension and all unrelated base settings.
+ThemeData jablabSessionThemeFor(ThemeData base) {
+  final p = JPalette.fromTheme(base);
+  final text = JTypography(p);
+  return base.copyWith(
+    scaffoldBackgroundColor: p.ground,
+    colorScheme: base.colorScheme.copyWith(
+      primaryContainer: p.judgement.withValues(alpha: .28),
+      error: p.judgement,
+      outline: p.outline,
+      surfaceContainerHighest: p.surface,
+    ),
+    textTheme: base.textTheme.copyWith(
+      headlineSmall: text.pageTitle.copyWith(fontSize: 26, letterSpacing: -.8),
+      titleLarge: text.correction,
+      titleMedium: text.body.copyWith(fontWeight: FontWeight.w600, fontSize: 17),
+      titleSmall: text.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
+      bodyMedium: text.body,
+      bodySmall: text.bodyMuted,
+      labelLarge: text.mono.copyWith(color: p.observation, fontSize: 13),
+      labelMedium: text.label,
+      displaySmall: text.clock.copyWith(fontSize: 44, letterSpacing: -1.6),
+      displayMedium: text.clock,
+    ),
+    chipTheme: base.chipTheme.copyWith(
+      labelStyle: text.body.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+    ),
+  );
+}
+
+ThemeData jablabHonestyThemeFor(ThemeData base) {
+  final p = JPalette.fromTheme(base);
+  final text = JTypography(p);
+  return base.copyWith(
+    cardColor: p.glassResting,
+    cardTheme: base.cardTheme.copyWith(
+      color: p.glassResting,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+    ),
+    iconTheme: base.iconTheme.copyWith(color: p.inkSubtle),
+    textTheme: base.textTheme.copyWith(
+      titleSmall: text.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
+      bodySmall: text.bodyMuted,
+    ),
+  );
+}
+
+/// Immutable compatibility value for legacy tests. Production subtrees use
+/// jablabSessionThemeFor(Theme.of(context)); this is never a mutable singleton.
+final ThemeData jablabSessionTheme = jablabSessionThemeFor(jablabTheme(Brightness.dark));
 
 /// ARALIK KİPİNİN DÜZELTME TONU (J-119, koordinatör hükmü 2026-08-07).
 ///
@@ -199,13 +395,45 @@ final ThemeData jablabSessionTheme = ThemeData(
 /// ağırlığı · Tier 2 gözlem = `cool`). Punto DÜŞÜRÜLMEDİ: kullanıcı 2-3 m
 /// uzakta ve okunurluk tonun altında değil.
 ThemeData jablabIntervalTone(ThemeData base) => base.copyWith(
-      textTheme: base.textTheme.copyWith(
-        titleLarge: JText.correction.copyWith(
-          color: JColors.cool,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
+  textTheme: base.textTheme.copyWith(
+    titleLarge: JTypography(JPalette.fromTheme(base)).correction.copyWith(
+      color: JPalette.fromTheme(base).observation,
+      fontWeight: FontWeight.w500,
+    ),
+  ),
+);
+
+/// A fixed dark image/camera canvas with paired caption and observation
+/// colors. It is content rendering, not an app-level forced-dark subtree.
+/// Surrounding controls continue to resolve the app palette from context.
+class JCameraCanvasAppearance {
+  const JCameraCanvasAppearance({
+    required this.background,
+    required this.gradientTop,
+    required this.captionScrim,
+    required this.captionStyle,
+    required this.observation,
+    required this.neutralIcon,
+    required this.noAnalysisIcon,
+  });
+  final Color background;
+  final Color gradientTop;
+  final Color captionScrim;
+  final TextStyle captionStyle;
+  final Color observation;
+  final Color neutralIcon;
+  final Color noAnalysisIcon;
+
+  static final dark = JCameraCanvasAppearance(
+    background: JPalette.dark.ground,
+    gradientTop: JPalette.dark.shadow.withValues(alpha: .55),
+    captionScrim: JPalette.dark.ground.withValues(alpha: .81),
+    captionStyle: JTypography(JPalette.dark).mono.copyWith(fontSize: 11),
+    observation: JPalette.dark.observation,
+    neutralIcon: JPalette.dark.inkMuted,
+    noAnalysisIcon: JPalette.dark.inkSubtle,
+  );
+}
 
 /// § MOTION TOKENS — "No curve overshoots. JabLab arrives and stops."
 class JMotion {
@@ -260,15 +488,16 @@ class GlassPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BorderRadius br = BorderRadius.circular(borderRadius);
+    final colors = JColors.of(context);
     final Color fill = switch (tier) {
-      GlassTier.resting => const Color(0x13E4ECF3),
-      GlassTier.observation => JColors.cool.withValues(alpha: .095),
-      GlassTier.judgement => JColors.ember.withValues(alpha: .16),
+      GlassTier.resting => colors.glassResting,
+      GlassTier.observation => colors.glassObservation,
+      GlassTier.judgement => colors.glassJudgement,
     };
     final Color edge = switch (tier) {
-      GlassTier.resting => JColors.border,
-      GlassTier.observation => JColors.cool.withValues(alpha: .24),
-      GlassTier.judgement => JColors.ember.withValues(alpha: .5),
+      GlassTier.resting => colors.outline.withValues(alpha: .45),
+      GlassTier.observation => colors.observation.withValues(alpha: .5),
+      GlassTier.judgement => colors.judgement.withValues(alpha: .6),
     };
     // ⚠️ Gölge, KIRPILMAYAN bir dış katmanda — Gravita'nın kalıp-dersi
     // (koordinatör 2026-08-06): `BoxShadow` kutunun DIŞINA taşar, ama
@@ -281,7 +510,7 @@ class GlassPanel extends StatelessWidget {
         boxShadow: tier == GlassTier.judgement
             ? <BoxShadow>[
                 BoxShadow(
-                    color: JColors.deep.withValues(alpha: .4),
+                    color: colors.shadow,
                     blurRadius: 40,
                     offset: const Offset(0, 12)),
               ]
@@ -330,10 +559,10 @@ class UnknownGlassPanel extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 13, sigmaY: 13),
         child: CustomPaint(
-          painter: _DashedRRectPainter(radius: borderRadius, color: JColors.cool3),
+          painter: _DashedRRectPainter(radius: borderRadius, color: JColors.of(context).outline),
           child: Container(
             padding: padding,
-            decoration: BoxDecoration(color: JColors.cool.withValues(alpha: .03), borderRadius: br),
+            decoration: BoxDecoration(color: JColors.of(context).observation.withValues(alpha: .03), borderRadius: br),
             child: child,
           ),
         ),
@@ -363,7 +592,7 @@ class GlassIconButton extends StatelessWidget {
             width: 48,
             height: 48,
             child: IconButton(
-              icon: Icon(icon, size: 18, color: JColors.ink),
+              icon: Icon(icon, size: 18, color: JColors.of(context).ink),
               tooltip: tooltip,
               onPressed: onTap,
             ),

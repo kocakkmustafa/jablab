@@ -88,13 +88,13 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: JColors.ground,
+    backgroundColor: JColors.of(context).ground,
     body: DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: <Color>[const Color(0xFF170809), JColors.ground],
+          colors: <Color>[JColors.of(context).gradientTop, JColors.of(context).ground],
           stops: const <double>[0, .42],
         ),
       ),
@@ -135,7 +135,7 @@ class CoursePage extends StatelessWidget {
                     courseTitle(context, course.id, course.title),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: JText.pageTitle.copyWith(
+                    style: JText.of(context).pageTitle.copyWith(
                       fontSize: 26,
                       letterSpacing: -.8,
                     ),
@@ -158,7 +158,7 @@ class CoursePage extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 courseGoal(context, course.id, course.goal),
-                style: JText.body.copyWith(color: JColors.ink2, fontSize: 15),
+                style: JText.of(context).body.copyWith(color: JColors.of(context).inkMuted, fontSize: 15),
               ),
             ],
             if (onOpenKickboxingCourse != null) ...<Widget>[
@@ -214,12 +214,12 @@ class CoursePage extends StatelessWidget {
                   child: Text(
                     gateNote!,
                     key: const Key('gate-note'),
-                    style: JText.bodyMuted,
+                    style: JText.of(context).bodyMuted,
                   ),
                 ),
               ],
               const SizedBox(height: 8),
-              Divider(color: JColors.hairline, height: 40),
+              Divider(color: JColors.of(context).outline, height: 40),
             ] else
               const SizedBox(height: 20),
             // Kilitli ders LİSTEDE KALIR ama açılmaz — göster, açma, SEBEBİNİ
@@ -252,7 +252,7 @@ class _LessonRow extends StatelessWidget {
     // gerekçenin hemen yanındaki metin. Kontrast kapısı burayı göremiyordu
     // çünkü renk bir DEĞİŞKENDEN geliyor; kapı yalnız `copyWith(color:)`
     // içindeki doğrudan `JColors.*` referanslarını çözüyordu.
-    final Color fg = locked ? JColors.ink2 : JColors.ink;
+    final Color fg = locked ? JColors.of(context).inkMuted : JColors.of(context).ink;
     return GlassPanel(
       padding: const EdgeInsets.all(14),
       child: InkWell(
@@ -268,7 +268,7 @@ class _LessonRow extends StatelessWidget {
               // bile altında — kilit ikonu pratikte görünmüyordu. `ink3`
               // 3,51:1 veriyor ve sönüklük hiyerarşisi (ember ↔ ink3)
               // korunuyor.
-              color: locked ? JColors.ink3 : JColors.ember,
+              color: locked ? JColors.of(context).inkSubtle : JColors.of(context).judgement,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -277,7 +277,7 @@ class _LessonRow extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     lessonTitle(context, lesson.id, lesson.title),
-                    style: JText.body.copyWith(
+                    style: JText.of(context).body.copyWith(
                       color: fg,
                       fontWeight: FontWeight.w600,
                     ),
@@ -291,13 +291,13 @@ class _LessonRow extends StatelessWidget {
                         lesson.lockedReason,
                       )!,
                       key: Key('locked-why-${lesson.id}'),
-                      style: JText.bodyMuted.copyWith(fontSize: 12.5),
+                      style: JText.of(context).bodyMuted.copyWith(fontSize: 12.5),
                     ),
                   ] else if (lesson.subtitle.isNotEmpty) ...<Widget>[
                     const SizedBox(height: 4),
                     Text(
                       lesson.subtitle,
-                      style: JText.bodyMuted.copyWith(fontSize: 12.5),
+                      style: JText.of(context).bodyMuted.copyWith(fontSize: 12.5),
                     ),
                   ],
                 ],
@@ -315,8 +315,8 @@ class _LessonRow extends StatelessWidget {
                 // Kilitli ders SÖNÜK ama okunur: `ink4` 1,80:1 veriyordu
                 // (J-116). Kilitli dersin süresi de bir olgu — dimlemek
                 // "daha az önemli" demek, "okunmasın" demek değil.
-                style: JText.mono.copyWith(
-                  color: locked ? JColors.ink2 : JColors.cool2,
+                style: JText.of(context).mono.copyWith(
+                  color: locked ? JColors.of(context).inkMuted : JColors.of(context).observation,
                 ),
               ),
             ],
@@ -368,21 +368,21 @@ class _WhereYouLeftOff extends StatelessWidget {
                 tr: 'Kaldığın yer',
               ),
               key: const Key('recorded-heading'),
-              style: JText.body.copyWith(fontWeight: FontWeight.w600),
+              style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
             Text(
               unavailable,
               key: const Key('recorded-unavailable'),
-              style: JText.bodyMuted,
+              style: JText.of(context).bodyMuted,
             ),
             if (onRetry != null) ...<Widget>[
               const SizedBox(height: 12),
               OutlinedButton(
                 key: const Key('retry-history'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: JColors.ink,
-                  side: BorderSide(color: JColors.border),
+                  foregroundColor: JColors.of(context).ink,
+                  side: BorderSide(color: JColors.of(context).outline),
                 ),
                 onPressed: onRetry,
                 child: Text(
@@ -412,7 +412,7 @@ class _WhereYouLeftOff extends StatelessWidget {
               tr: 'Kaldığın yer',
             ),
             key: const Key('recorded-heading'),
-            style: JText.body.copyWith(fontWeight: FontWeight.w600),
+            style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 4),
           Text(
@@ -422,7 +422,7 @@ class _WhereYouLeftOff extends StatelessWidget {
               tr: 'Bunlar ölçümdür, not değildir. Hiçbiri ne kadar iyi hareket ettiğine dair bir yargı içermez.',
             ),
             key: const Key('recorded-vs-judged-note'),
-            style: JText.bodyMuted,
+            style: JText.of(context).bodyMuted,
           ),
           // Nitelik satırlardan ÖNCE (J-092): toplamlar okunmadan önce
           // eksik oldukları bilinmeli.
@@ -431,7 +431,7 @@ class _WhereYouLeftOff extends StatelessWidget {
             Text(
               historyIncomplete!,
               key: const Key('recorded-incomplete'),
-              style: JText.bodyMuted,
+              style: JText.of(context).bodyMuted,
             ),
           ],
           const SizedBox(height: 10),
@@ -463,14 +463,14 @@ class _WhereYouLeftOff extends StatelessWidget {
                               tr: 'Seanslar',
                             )
                           : e.key,
-                      style: JText.body.copyWith(fontSize: 14),
+                      style: JText.of(context).body.copyWith(fontSize: 14),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Flexible(
                     child: Text(
                       e.value,
-                      style: JText.body.copyWith(
+                      style: JText.of(context).body.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
@@ -487,7 +487,7 @@ class _WhereYouLeftOff extends StatelessWidget {
               child: Text(
                 recordedNote!,
                 key: const Key('recorded-note'),
-                style: JText.bodyMuted,
+                style: JText.of(context).bodyMuted,
               ),
             ),
           if (resumeLesson != null) ...<Widget>[
@@ -496,7 +496,7 @@ class _WhereYouLeftOff extends StatelessWidget {
               width: double.infinity,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: JColors.ember,
+                  color: JColors.of(context).judgement,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Material(
@@ -521,10 +521,10 @@ class _WhereYouLeftOff extends StatelessWidget {
                               ),
                             },
                           ),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
-                            color: Color(0xFF180A05),
+                            color: JColors.of(context).onJudgement,
                           ),
                         ),
                       ),
@@ -569,7 +569,7 @@ class _HonestBands extends StatelessWidget {
                   'gösterilmiyor. Dayanağı olmayan kesin bir sayı yanıltıcı olur.',
             ),
             key: const Key('bands-only-note'),
-            style: JText.bodyMuted,
+            style: JText.of(context).bodyMuted,
           ),
           if (bands.isNotEmpty) ...<Widget>[
             const SizedBox(height: 10),
@@ -597,14 +597,14 @@ class _HonestBands extends StatelessWidget {
                                 tr: 'Seanslar',
                               )
                             : e.key,
-                        style: JText.body.copyWith(fontSize: 14),
+                        style: JText.of(context).body.copyWith(fontSize: 14),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Flexible(
                       child: Text(
                         e.value,
-                        style: JText.body.copyWith(
+                        style: JText.of(context).body.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),

@@ -72,7 +72,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: JColors.ground,
+      backgroundColor: JColors.of(context).ground,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
@@ -104,8 +104,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   key: const Key('onboarding-next'),
                   onPressed: _next,
                   style: FilledButton.styleFrom(
-                    backgroundColor: JColors.accent,
-                    foregroundColor: JColors.ink,
+                    backgroundColor: JColors.of(context).accent,
+                    foregroundColor: JColors.of(context).onAccent,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -115,7 +115,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     _step + 1 < _steps
                         ? UiLanguage.text(context, en: 'Next', tr: 'İleri')
                         : UiLanguage.text(context, en: 'Start', tr: 'Başla'),
-                    style: JText.body.copyWith(fontWeight: FontWeight.w600),
+                    style: JText.of(context).body.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: JColors.of(context).onAccent,
+                    ),
                   ),
                 ),
               ),
@@ -138,7 +141,7 @@ class _Welcome extends StatelessWidget {
       children: <Widget>[
         Text(
           UiLanguage.text(context, en: 'THE CORNER', tr: 'KÖŞEN'),
-          style: JText.label,
+          style: JText.of(context).label,
         ),
         const SizedBox(height: 10),
         Text(
@@ -147,7 +150,7 @@ class _Welcome extends StatelessWidget {
             en: 'Boxing practice\nyou can do alone.',
             tr: 'Tek başına\nboks pratiği.',
           ),
-          style: JText.pageTitle,
+          style: JText.of(context).pageTitle,
         ),
         const SizedBox(height: 18),
         Text(
@@ -162,7 +165,7 @@ class _Welcome extends StatelessWidget {
                 'denetimlerle öğren. Kurs için kum torbası, eldiven, hesap '
                 'veya kamera gerekmez. Açık, kaymaz bir alan hazırla.',
           ),
-          style: JText.body,
+          style: JText.of(context).body,
         ),
         const SizedBox(height: 14),
         Text(
@@ -177,7 +180,7 @@ class _Welcome extends StatelessWidget {
                 'gösterir. Bu sürümde canlı kamera seansları ve abonelik '
                 'satışı kapalıdır. Kurs video yakalamaz.',
           ),
-          style: JText.bodyMuted,
+          style: JText.of(context).bodyMuted,
         ),
       ],
     );
@@ -210,7 +213,7 @@ class _Honesty extends StatelessWidget {
             en: 'BEFORE YOU START',
             tr: 'BAŞLAMADAN ÖNCE',
           ),
-          style: JText.label,
+          style: JText.of(context).label,
         ),
         const SizedBox(height: 10),
         Text(
@@ -219,7 +222,7 @@ class _Honesty extends StatelessWidget {
             en: 'What this\ncannot do.',
             tr: 'Neleri\nyapamaz.',
           ),
-          style: JText.pageTitle,
+          style: JText.of(context).pageTitle,
         ),
         const SizedBox(height: 18),
         Text(
@@ -234,7 +237,7 @@ class _Honesty extends StatelessWidget {
                 'darbe gücünü veya ustalığı otomatik puanlamaz. Temassız ve '
                 'sparring partneri olmadan çalış.',
           ),
-          style: JText.body,
+          style: JText.of(context).body,
         ),
         const SizedBox(height: 16),
         GlassPanel(
@@ -248,7 +251,7 @@ class _Honesty extends StatelessWidget {
                   en: 'LEFT OUT ON PURPOSE',
                   tr: 'BİLEREK DIŞARIDA',
                 ),
-                style: JText.label,
+                style: JText.of(context).label,
               ),
               const SizedBox(height: 8),
               // Sayı da veriden: liste büyürse bu cümle kendiliğinden doğru
@@ -263,11 +266,11 @@ class _Honesty extends StatelessWidget {
                   pluralArg: 'count',
                 ),
                 key: const Key('onboarding-excluded-count'),
-                style: JText.body,
+                style: JText.of(context).body,
               ),
               if (intro.isNotEmpty) ...<Widget>[
                 const SizedBox(height: 8),
-                Text(whyNotIntro(context, intro), style: JText.bodyMuted),
+                Text(whyNotIntro(context, intro), style: JText.of(context).bodyMuted),
               ],
               const SizedBox(height: 12),
               GestureDetector(
@@ -282,14 +285,14 @@ class _Honesty extends StatelessWidget {
                         en: 'See the list',
                         tr: 'Listeyi gör',
                       ),
-                      style: JText.body.copyWith(
-                        color: JColors.cool,
+                      style: JText.of(context).body.copyWith(
+                        color: JColors.of(context).observation,
                         decoration: TextDecoration.underline,
-                        decorationColor: JColors.cool3,
+                        decorationColor: JColors.of(context).outline,
                       ),
                     ),
                     const SizedBox(width: 6),
-                    Icon(Icons.arrow_forward, size: 16, color: JColors.cool),
+                    Icon(Icons.arrow_forward, size: 16, color: JColors.of(context).observation),
                   ],
                 ),
               ),
@@ -307,7 +310,7 @@ class _Honesty extends StatelessWidget {
                 'Dersi çalışma kaydın ve öz denetimlerinle tamamla. '
                 'Tamamlama, doğru teknik belgesi değildir.',
           ),
-          style: JText.bodyMuted,
+          style: JText.of(context).bodyMuted,
         ),
       ],
     );
@@ -334,7 +337,7 @@ class _Setup extends StatelessWidget {
         // FAYDALI: kullanıcıya bunun rutin olduğunu söylüyor.
         Text(
           UiLanguage.text(context, en: 'EVERY SESSION', tr: 'HER SEANSTA'),
-          style: JText.label,
+          style: JText.of(context).label,
         ),
         const SizedBox(height: 10),
         Text(
@@ -343,7 +346,7 @@ class _Setup extends StatelessWidget {
             en: 'Prepare your\npractice space.',
             tr: 'Çalışma\nalanını hazırla.',
           ),
-          style: JText.pageTitle,
+          style: JText.of(context).pageTitle,
         ),
         const SizedBox(height: 18),
         // ADR-003: ön-eğik ~30-45°. Bir ÖNERİ olarak yazılıyor, ölçüm
@@ -384,7 +387,7 @@ class _Setup extends StatelessWidget {
                   en: 'CAMERA IS NOT NEEDED',
                   tr: 'KAMERA GEREKMEZ',
                 ),
-                style: JText.label,
+                style: JText.of(context).label,
               ),
               const SizedBox(height: 8),
               // Bu bir vaat DEĞİL, bugünkü davranışın beyanı: kamerasız ders
@@ -403,7 +406,7 @@ class _Setup extends StatelessWidget {
                       'Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.',
                 ),
                 key: const Key('onboarding-permission-note'),
-                style: JText.body,
+                style: JText.of(context).body,
               ),
             ],
           ),
@@ -426,8 +429,8 @@ class _SetupLine extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(width: 22, child: Text(n, style: JText.mono)),
-          Expanded(child: Text(text, style: JText.body)),
+          SizedBox(width: 22, child: Text(n, style: JText.of(context).mono)),
+          Expanded(child: Text(text, style: JText.of(context).body)),
         ],
       ),
     );
@@ -451,9 +454,9 @@ class _StepDots extends StatelessWidget {
             key: Key('onboarding-dot-$i'),
             width: i == step ? 22 : 8,
             height: 4,
-            margin: const EdgeInsets.only(right: 6),
+            margin: const EdgeInsetsDirectional.only(end: 6),
             decoration: BoxDecoration(
-              color: i == step ? JColors.accent : JColors.ink4,
+              color: i == step ? JColors.of(context).accent : JColors.of(context).disabled,
               borderRadius: BorderRadius.circular(2),
             ),
           ),

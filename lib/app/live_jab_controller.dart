@@ -330,6 +330,11 @@ final class LiveJabController {
     // eşik icat etmeye zorlardı ("kaç kare boyunca yok olursa düzeldi
     // sayılır") ve motor zaten denemeyi kendisi kapatıyor — sınırı ondan
     // almak, uydurmamanın tek yolu.
+    // This is a source-level guard for the current uncalibrated configuration.
+    // A future calibrated label still needs separate capability/model/device
+    // acceptance before production camera admission; these flags cannot grant it.
+    final bool technicalJudgementsAdmitted =
+        !ruleSet.calibrationPending && ruleSet.thresholdStatus == 'calibrated';
     String? correctedLine;
     if (out.completedAttempt?.completed ?? false) {
       _completed += 1;
@@ -338,11 +343,14 @@ final class LiveJabController {
         _tempoBandCounts[band] = (_tempoBandCounts[band] ?? 0) + 1;
       }
       final String? previous = _lastAttemptIssueCode;
-      final String? current = out.issues.isEmpty ? null : out.issues.first.code;
+      final String? current = technicalJudgementsAdmitted && out.issues.isNotEmpty
+          ? out.issues.first.code
+          : null;
       // GÖRÜNÜRLÜK kodları hariç: "seni göremiyordum, artık görüyorum" bir
       // DÜZELTME değil — kullanıcı bir şey düzeltmedi, koşullar değişti.
       // Onu övmek, yapmadığı bir işi ona mal etmek olurdu.
-      if (previous != null &&
+      if (technicalJudgementsAdmitted &&
+          previous != null &&
           current != previous &&
           !jabLabVisibilityIssueCodes.contains(previous)) {
         correctedLine = cues.sayKey(jabLabCorrectedCueKey);
@@ -388,6 +396,21 @@ final class LiveJabController {
           // GÖRÜNÜRLÜK kodu: "seni göremiyorum" — eylem sende.
           bucket: LiveHonestyBucket.yours,
           narration: readyLine ?? correctedLine,
+          phase: out.activePhase,
+          skeleton: skeleton,
+        ),
+      );
+      return;
+    }
+
+    if (!technicalJudgementsAdmitted) {
+      _states.add(
+        LiveJabState.live(
+          surface: LiveState.noVerdict,
+          completedCount: _completed,
+          noVerdictReason: _calibrationUnavailableReason,
+          bucket: LiveHonestyBucket.ours,
+          narration: readyLine,
           phase: out.activePhase,
           skeleton: skeleton,
         ),
@@ -488,6 +511,10 @@ final class LiveJabController {
 
   /// İçerik boşluğunda gösterilen cümle. Kodun kendisi DEĞİL — ve sessizlik
   /// de değil: sessizlik canlı koçta "her şey yolunda" diye okunur.
+  static const String _calibrationUnavailableReason =
+      'Technique feedback is unavailable while this setup is awaiting calibration. '
+      'The count records detected attempts; it is not a judgement of technique.';
+
   static const String _genericIssue =
       'Something in that one needs fixing, but we do not have the words for '
       'it.';

@@ -155,14 +155,8 @@ Yumruktan çıkarken dengeni kaybettiğini görebilir ve uyarabiliriz. Bunun ad�
   ),
   'boxing.conditioning.r3': (
     sourceSha256:
-        '6f47fb8a451c68393b3220f2a0d68b05c1818fd369559bcea6ca6307999a86c4',
-    tr: '''Üçer dakikalık üç raunt; aralarında doksan saniye dinlenme. Bu süreler rastgele bir stil tercihi değil: dersin toplamı on iki dakika, bunun dokuzu çalışma. Kalan süre dinlenmeden oluşur.
-
-İlk raunt kolay gelir; tuzak da budur. Orada seçtiğin tempoyu üçüncü rauntta da sürdürmen gerekir. Sana doğru gelenden biraz yavaş başla.
-
-Dinlenme aralarını kullan. Doksan saniye nefesini toparlamaya yeterli olabilir. Raunta zaten yorgun dönmek vücuduna istemediğin bir formu tekrarlatır.
-
-Kamera seni göremese bile saat işlemeye devam eder. Görüntünü kaybederse bunu söyler, raunt sürer.''',
+        '854684da367a9e1f298875c3f946dc9442ab8f4dbeb954c43df1dddb31da0a48',
+    tr: 'Üçer dakikalık üç raunt; rauntlar arasında planlanmış doksan saniye dinlenme. Bu düzen toplam on iki dakika eder: dokuz dakika çalışma ve üç dakika dinlenme.\n\nİlk raunttan itibaren kontrol edebildiğin bir tempo seç. Rahat veya kontrollü olmaktan çıkan bir tempoyu sürdürmek zorunda değilsin.\n\nDinlenme aralarını kullan. Doksan saniye planlanmış bir aralıktır; toparlandığını garanti etmez. Devam etmeye hazır değilsen seansı bitir ve ihtiyaç duyduğun kadar dinlen. Saate uymak için ağrı, baş dönmesi, alışılmadık nefes darlığı veya denge kaybına rağmen çalışma.\n\nKamera seni okuyamasa bile saat işlemeye devam eder. Sayacın çalışması veya kamera uyarısı olmaması devam etmenin sana uygun olduğu anlamına gelmez.',
   ),
   'boxing.conditioning.tempo': (
     sourceSha256:
@@ -212,14 +206,8 @@ Seans uygulamanın takibini de sınayacak kadar uzun; uygulama görüntünü kay
   ),
   'boxing.conditioning.hiit': (
     sourceSha256:
-        '97c0650d49e64b4eb982e6c5fbe7dee9a1caed1410c592a04c01f345fd2eded4',
-    tr: '''Otuzar saniyelik on iki yoğun bölüm; her birinin arasında otuz saniye toparlanma. On iki dakikalık sürenin altı dakikası çalışmadır.
-
-Yoğun bölümde gerçekten yüksek tempoda çalış. Bu derste hız, hareketin kusursuzluğunun önüne geçer.
-
-Bu yoğunlukta formun bozulması beklenir; bunu başarısızlık sayma. Senden formunu zorlayan bir tempo istedik. Buradaki düzeltmeleri raunt hakkında hüküm olarak değil, sınırını gösteren bilgi olarak değerlendir.
-
-Otuz saniye çalışma, otuz saniye dinlenme yaygın bir başlangıç düzenidir; bizim ölçümümüz değil. Fazla geliyorsa çalışma bölümünü kısaltmak yerine yoğunluğu yaklaşık dörtte üçe indir. Süreyi doğru tutmak, burada yoğunluktan daha önemlidir.''',
+        'dd149ef8971f30a1892372afc36c19f7af93a40b92fc3bd18d9659236bd965f4',
+    tr: 'Otuz saniye çalışma ve otuz saniye toparlanmadan oluşan on iki planlı döngü, altı dakikası çalışma olan on iki dakika eder. Kontrolün ve rahatlığın bu planı tamamlamaktan önce gelir.\n\nKontrol edebildiğin bir tempoda çalış. Hareket formundan hız uğruna ödün verme.\n\nGardın, geri dönüşün veya dengen bozulmaya başlarsa yavaşla. Rahat kontrolü yeniden kuramıyorsan seansı bitir. Ağrı, baş dönmesi, alışılmadık nefes darlığı veya denge kaybına rağmen çalışma. Kamera geri bildirimi devam etmenin sana uygun olduğunu doğrulayamaz.\n\nOtuz saniye çalışma ve otuz saniye toparlanma, önerilen bir zaman planıdır; hazır oluşunun ölçümü veya kişisel egzersiz reçetesi değildir. Gerektiğinde tempoyu düşür veya erken bitir. Sayaç planı anlatır; süreyi tamamlamak geçmen gereken bir sınav değildir.',
   ),
   'boxing.conditioning.technique_round': (
     sourceSha256:

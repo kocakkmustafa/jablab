@@ -55,10 +55,10 @@ const Map<String, _ExclusionCopy> _exclusions = <String, _ExclusionCopy>{
   ),
   'Punch power': (
     enReason:
-        'Force needs a sensor. A camera can estimate timing and tempo — we show those as bands — but we will not print a power number we cannot measure.',
+        'Punch force is not measured here. The current solo course uses written guidance and self-checks; it does not produce a camera tempo band or a power number.',
     trTitle: 'Yumruk gücü',
     trReason:
-        'Kuvveti ölçmek için sensör gerekir. Kamera zamanlama ve tempoyu tahmin edebilir; bunları aralık olarak gösteriyoruz. Ölçemediğimiz bir güç sayısını göstermiyoruz.',
+        'Burada yumruk kuvveti ölçülmez. Mevcut solo kurs yazılı yönlendirmeler ve öz kontroller kullanır; kamera tempo bandı veya güç değeri üretmez.',
   ),
   'Self-defence guarantees': (
     enReason:

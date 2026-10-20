@@ -65,6 +65,17 @@ enum LiveHonestyBucket {
         LiveHonestyBucket.none => JColors.ink3,
       };
 
+  /// Palette-aware equivalent. The icon still carries the semantic split;
+  /// a low-confidence/no-analysis state is never a success verdict.
+  Color accentFor(ThemeData base) {
+    final colors = JPalette.fromTheme(base);
+    return switch (this) {
+      LiveHonestyBucket.yours => colors.observation,
+      LiveHonestyBucket.ours => colors.inkMuted,
+      LiveHonestyBucket.none => colors.inkSubtle,
+    };
+  }
+
   /// Önizleme yuvasının ikonu. Donmuş yüzeyin ikonu DEĞİŞTİRİLEMİYOR
   /// (`visibility_off_outlined` orada sabit); ikon ekseni bu yüzden app'in
   /// KENDİ yuvasından (`SkeletonPreview`) taşınıyor.
@@ -102,6 +113,6 @@ enum LiveHonestyBucket {
   /// yapılmadı (sim erişimi kurucu onayı bekliyor); bu paragraf onun yerine
   /// geçmez, borcu adıyla tutar.
   ThemeData themeFor(ThemeData base) => base.copyWith(
-        colorScheme: base.colorScheme.copyWith(error: accent),
+        colorScheme: base.colorScheme.copyWith(error: accentFor(base)),
       );
 }

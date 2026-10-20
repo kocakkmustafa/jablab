@@ -80,13 +80,13 @@ class _SelectPageState extends State<SelectPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: JColors.ground,
+    backgroundColor: JColors.of(context).ground,
     body: DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: <Color>[const Color(0xFF170809), JColors.ground],
+          colors: <Color>[JColors.of(context).gradientTop, JColors.of(context).ground],
           stops: const <double>[0, .42],
         ),
       ),
@@ -109,7 +109,7 @@ class _SelectPageState extends State<SelectPage> {
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: JText.pageTitle.copyWith(
+                    style: JText.of(context).pageTitle.copyWith(
                       fontSize: 22,
                       letterSpacing: -.6,
                     ),
@@ -146,21 +146,21 @@ class _SelectPageState extends State<SelectPage> {
                         tr: 'Kaldığın yer',
                       ),
                       key: const Key('recorded-heading'),
-                      style: JText.body.copyWith(fontWeight: FontWeight.w600),
+                      style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       widget.historyUnavailable!,
                       key: const Key('recorded-unavailable'),
-                      style: JText.bodyMuted,
+                      style: JText.of(context).bodyMuted,
                     ),
                     if (widget.onRetryHistory != null) ...<Widget>[
                       const SizedBox(height: 12),
                       OutlinedButton(
                         key: const Key('retry-history'),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: JColors.ink,
-                          side: BorderSide(color: JColors.border),
+                          foregroundColor: JColors.of(context).ink,
+                          side: BorderSide(color: JColors.of(context).outline),
                         ),
                         onPressed: widget.onRetryHistory,
                         child: Text(
@@ -232,7 +232,7 @@ class _SelectPageState extends State<SelectPage> {
                 onTap: widget.onOpenWhyNot,
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.help_outline, color: JColors.ember, size: 18),
+                    Icon(Icons.help_outline, color: JColors.of(context).judgement, size: 18),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -241,13 +241,13 @@ class _SelectPageState extends State<SelectPage> {
                           en: "Why isn't my art here?",
                           tr: 'Disiplinim neden burada yok?',
                         ),
-                        style: JText.body.copyWith(
+                        style: JText.of(context).body.copyWith(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: JColors.ember, size: 18),
+                    Icon(Icons.chevron_right, color: JColors.of(context).judgement, size: 18),
                   ],
                 ),
               ),
@@ -293,7 +293,7 @@ class _ItemBlock extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           catalogTitle(context, item.id, item.title),
-                          style: JText.body.copyWith(
+                          style: JText.of(context).body.copyWith(
                             fontSize: 17,
                             fontWeight: FontWeight.w600,
                           ),
@@ -311,7 +311,7 @@ class _ItemBlock extends StatelessWidget {
                               : catalogBlurb(context, item.id, item.blurb),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: JText.bodyMuted,
+                          style: JText.of(context).bodyMuted,
                         ),
                       ],
                     ),
@@ -320,7 +320,7 @@ class _ItemBlock extends StatelessWidget {
                   if (live)
                     Icon(
                       expanded ? Icons.expand_less : Icons.expand_more,
-                      color: JColors.ink3,
+                      color: JColors.of(context).inkSubtle,
                     )
                   else
                     // `waveLabel` BİLEREK GEÇİLMİYOR (J-150, koordinatör
@@ -364,15 +364,15 @@ class _ItemBlock extends StatelessWidget {
                               'arkasında örnek ders yok.',
                         ),
                         key: const Key('coming-soon-note'),
-                        style: JText.bodyMuted,
+                        style: JText.of(context).bodyMuted,
                       ),
                     ),
                   if (item.blurb.isNotEmpty && live) ...<Widget>[
                     const SizedBox(height: 8),
                     Text(
                       catalogBlurb(context, item.id, item.blurb),
-                      style: JText.body.copyWith(
-                        color: JColors.ink2,
+                      style: JText.of(context).body.copyWith(
+                        color: JColors.of(context).inkMuted,
                         fontSize: 14,
                       ),
                     ),
@@ -402,7 +402,7 @@ class _ItemBlock extends StatelessWidget {
                   // doğrulandı), durum rozette ve notta.
                   if (live)
                     Theme(
-                      data: _honestyBoxTheme,
+                      data: jablabHonestyThemeFor(Theme.of(context)),
                       child: HonestyBox(
                         measured: catalogMeasured(
                           context,
@@ -416,8 +416,8 @@ class _ItemBlock extends StatelessWidget {
                         ),
                         measuredHeading: UiLanguage.text(
                           context,
-                          en: 'What this measures',
-                          tr: 'Neleri ölçer',
+                          en: 'What this release records',
+                          tr: 'Bu sürüm neleri kaydeder',
                         ),
                         notMeasuredHeading: UiLanguage.text(
                           context,
@@ -430,7 +430,7 @@ class _ItemBlock extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       UiLanguage.text(context, en: 'Courses', tr: 'Kurslar'),
-                      style: JText.body.copyWith(fontWeight: FontWeight.w600),
+                      style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 8),
                     ...item.courses
@@ -453,7 +453,7 @@ class _ItemBlock extends StatelessWidget {
                                         children: <Widget>[
                                           Text(
                                             courseTitle(context, c.id, c.title),
-                                            style: JText.body.copyWith(
+                                            style: JText.of(context).body.copyWith(
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -463,7 +463,7 @@ class _ItemBlock extends StatelessWidget {
                                               courseGoal(context, c.id, c.goal),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
-                                              style: JText.bodyMuted.copyWith(
+                                              style: JText.of(context).bodyMuted.copyWith(
                                                 fontSize: 12.5,
                                               ),
                                             ),
@@ -480,8 +480,8 @@ class _ItemBlock extends StatelessWidget {
                                         args: {'count': c.lessons.length},
                                         pluralArg: 'count',
                                       ),
-                                      style: JText.mono.copyWith(
-                                        color: JColors.cool2,
+                                      style: JText.of(context).mono.copyWith(
+                                        color: JColors.of(context).observation,
                                       ),
                                     ),
                                   ],
@@ -499,7 +499,7 @@ class _ItemBlock extends StatelessWidget {
                         en: 'Not open in this section',
                         tr: 'Bu bölümde açık değil',
                       ),
-                      style: JText.body.copyWith(
+                      style: JText.of(context).body.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
@@ -508,7 +508,7 @@ class _ItemBlock extends StatelessWidget {
                     ...item.pendingNotes.map(
                       (String n) => Padding(
                         padding: const EdgeInsets.only(bottom: 4),
-                        child: Text('• $n', style: JText.bodyMuted),
+                        child: Text('• $n', style: JText.of(context).bodyMuted),
                       ),
                     ),
                   ],
@@ -551,7 +551,7 @@ class _SoonBadge extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
     decoration: BoxDecoration(
-      border: Border.all(color: JColors.border),
+      border: Border.all(color: JColors.of(context).outline),
       borderRadius: BorderRadius.circular(4),
     ),
     child: Text(
@@ -562,27 +562,9 @@ class _SoonBadge extends StatelessWidget {
       // ölçmedim; kontrast kapısı da onu göremedi çünkü token
       // VARSAYILANLARINI ölçüyor, yerinde `copyWith(color:)` ile
       // geçilenleri değil (J-126). Rozet 7 kapalı disiplin kartında var.
-      style: JText.label.copyWith(color: JColors.ink2, letterSpacing: 1),
+      style: JText.of(context).label.copyWith(color: JColors.of(context).inkMuted, letterSpacing: 1),
     ),
   );
 }
 
-/// `HonestyBox`un okuduğu tek yüzey (`Card`+`titleSmall`/`bodySmall`) —
-/// design_tokens.dart'ın kendi `jablabSessionTheme`iyle AYNI eşleme deseni,
-/// yalnız bu sayfanın frozen tek bileşenine ölçekli.
-final ThemeData _honestyBoxTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.dark,
-  cardColor: const Color(0x13E4ECF3),
-  cardTheme: const CardThemeData(
-    elevation: 0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(16)),
-    ),
-  ),
-  iconTheme: IconThemeData(color: JColors.ink3),
-  textTheme: TextTheme(
-    titleSmall: JText.body.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
-    bodySmall: JText.bodyMuted,
-  ),
-);
+// HonestyBox theme is derived from the current palette in design_tokens.dart.

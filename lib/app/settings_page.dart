@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_preferences.dart';
+import 'app_preferences_controller.dart';
 import 'camera_harness_screen.dart';
 import 'design_tokens.dart';
 import 'ui_language.dart';
@@ -38,14 +40,18 @@ class SettingsPage extends StatelessWidget {
   final int excludedCount;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: JColors.ground,
+  Widget build(BuildContext context) {
+    final colors = JColors.of(context);
+    final text = JText.of(context);
+    final preferences = AppPreferencesScope.maybeOf(context);
+    return Scaffold(
+    backgroundColor: colors.ground,
     body: DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: <Color>[const Color(0xFF170809), JColors.ground],
+          colors: <Color>[colors.gradientTop, colors.ground],
           stops: const <double>[0, .42],
         ),
       ),
@@ -66,7 +72,7 @@ class SettingsPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     UiLanguage.text(context, en: 'Settings', tr: 'Ayarlar'),
-                    style: JText.pageTitle.copyWith(
+                    style: text.pageTitle.copyWith(
                       fontSize: 30,
                       letterSpacing: -.9,
                     ),
@@ -85,7 +91,7 @@ class SettingsPage extends StatelessWidget {
                   tr: 'Bazı çeviriler kullanılamıyor. Gerektiğinde kaynak İngilizce metin gösterilir.',
                 ),
                 key: const Key('settings.language.incomplete'),
-                style: JText.bodyMuted,
+                style: text.bodyMuted,
               ),
             if (AppLanguageScope.maybeOf(context) case final language?)
               GlassPanel(
@@ -96,10 +102,10 @@ class SettingsPage extends StatelessWidget {
                     Text(
                       UiLanguage.text(
                         context,
-                        en: 'Language for this session',
-                        tr: 'Bu oturumun dili',
+                        en: 'App language',
+                        tr: 'Uygulama dili',
                       ),
-                      style: JText.body,
+                      style: text.body,
                     ),
                     const SizedBox(height: 8),
                     DropdownButton<Locale>(
@@ -118,7 +124,7 @@ class SettingsPage extends StatelessWidget {
                           DropdownMenuItem(
                             value: locale,
                             child: Text(
-                              _languageNames[locale.toLanguageTag()]!,
+                              _languageNames[locale.toLanguageTag()] ?? locale.toLanguageTag(),
                             ),
                           ),
                       ],
@@ -138,14 +144,40 @@ class SettingsPage extends StatelessWidget {
                     Text(
                       UiLanguage.text(
                         context,
-                        en: 'This choice resets when the app restarts. Account language and store currency are unchanged.',
-                        tr: 'Bu seçim uygulama yeniden başlatılınca sıfırlanır. Hesap dili ve mağaza para birimi değişmez.',
+                        en: 'Language and appearance are device preferences. They do not change your account details or store currency.',
+                        tr: 'Dil ve görünüm cihaz tercihleridir. Hesap bilgilerini veya mağaza para birimini değiştirmez.',
                       ),
-                      style: JText.bodyMuted,
+                      style: text.bodyMuted,
                     ),
                   ],
                 ),
               ),
+            if (preferences != null) ...<Widget>[
+              const SizedBox(height: 14),
+              GlassPanel(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(UiLanguage.text(context, en: 'Appearance', tr: 'Görünüm'), style: text.body),
+                    DropdownButton<AppThemePreference>(
+                      key: const Key('settings.appearance'),
+                      isExpanded: true,
+                      value: preferences.value.theme,
+                      items: <DropdownMenuItem<AppThemePreference>>[
+                        DropdownMenuItem(value: AppThemePreference.system,
+                          child: Text(UiLanguage.text(context, en: 'Follow device appearance', tr: 'Cihaz görünümünü izle'))),
+                        DropdownMenuItem(value: AppThemePreference.light,
+                          child: Text(UiLanguage.text(context, en: 'Light', tr: 'Açık'))),
+                        DropdownMenuItem(value: AppThemePreference.dark,
+                          child: Text(UiLanguage.text(context, en: 'Dark', tr: 'Koyu'))),
+                      ],
+                      onChanged: (mode) { if (mode != null) preferences.selectTheme(mode); },
+                    ),
+                    _PreferencesStatus(preferences),
+                  ],
+                ),
+              ),
+            ],
             const SizedBox(height: 14),
             GlassPanel(
               tier: GlassTier.judgement,
@@ -158,7 +190,7 @@ class SettingsPage extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         UiLanguage.text(context, en: 'ACCESS', tr: 'ERİŞİM'),
-                        style: JText.label.copyWith(color: JColors.ember),
+                        style: text.label.copyWith(color: colors.judgement),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -166,13 +198,13 @@ class SettingsPage extends StatelessWidget {
                           vertical: 5,
                         ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: JColors.border),
+                          border: Border.all(color: colors.outline),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
                           UiLanguage.text(context, en: 'COURSE', tr: 'KURS'),
-                          style: JText.label.copyWith(
-                            color: JColors.ink2,
+                          style: text.label.copyWith(
+                            color: colors.inkMuted,
                             letterSpacing: 1,
                           ),
                         ),
@@ -186,7 +218,7 @@ class SettingsPage extends StatelessWidget {
                       en: 'Solo boxing course',
                       tr: 'Solo boks kursu',
                     ),
-                    style: JText.pageTitle.copyWith(
+                    style: text.pageTitle.copyWith(
                       fontSize: 28,
                       letterSpacing: -1,
                     ),
@@ -198,9 +230,9 @@ class SettingsPage extends StatelessWidget {
                       en: 'Practise the solo boxing course without an account or camera. Course progress stays on this device and reflects your own practice record. A Motion account is optional. Live camera sessions and subscription sales are closed in this release.',
                       tr: 'Solo boks kursunu hesap veya kamera olmadan çalışabilirsiniz. Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydınızı gösterir. Motion hesabı isteğe bağlıdır. Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.',
                     ),
-                    style: JText.body.copyWith(
+                    style: text.body.copyWith(
                       fontSize: 14,
-                      color: JColors.ink2,
+                      color: colors.inkMuted,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -212,9 +244,9 @@ class SettingsPage extends StatelessWidget {
                         tr: 'Hesap girişi bağlı değil. Seans geçmişi bu cihazda kalır.',
                       ),
                       key: const Key('account-not-connected'),
-                      style: JText.body.copyWith(
+                      style: text.body.copyWith(
                         fontSize: 13,
-                        color: JColors.ink2,
+                        color: colors.inkMuted,
                       ),
                     )
                   else
@@ -239,9 +271,9 @@ class SettingsPage extends StatelessWidget {
                         en: 'Browse lessons without signing in. Existing guest history stays on this device and does not move into an account.',
                         tr: 'Derslere giriş yapmadan göz atabilirsiniz. Mevcut misafir geçmişi bu cihazda kalır ve hesaba aktarılmaz.',
                       ),
-                      style: JText.body.copyWith(
+                      style: text.body.copyWith(
                         fontSize: 13,
-                        color: JColors.ink2,
+                        color: colors.inkMuted,
                       ),
                     ),
                   const SizedBox(height: 14),
@@ -260,7 +292,7 @@ class SettingsPage extends StatelessWidget {
                                   en: 'SUBSCRIPTIONS',
                                   tr: 'ABONELİKLER',
                                 ),
-                                style: JText.label.copyWith(fontSize: 9),
+                                style: text.label.copyWith(fontSize: 9),
                               ),
                               const SizedBox(height: 5),
                               Text(
@@ -270,8 +302,8 @@ class SettingsPage extends StatelessWidget {
                                   tr: 'Bu sürümde abonelik satışı kapalıdır. Kurs için satın alma gerekmez.',
                                 ),
                                 key: const Key('store-prices-in-account'),
-                                style: JText.mono.copyWith(
-                                  color: JColors.ink,
+                                style: text.mono.copyWith(
+                                  color: colors.ink,
                                   fontSize: 13,
                                 ),
                               ),
@@ -304,7 +336,7 @@ class SettingsPage extends StatelessWidget {
                               en: "What we don't do, and why",
                               tr: 'Yapmadıklarımız ve nedenleri',
                             ),
-                            style: JText.body.copyWith(
+                            style: text.body.copyWith(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -321,15 +353,15 @@ class SettingsPage extends StatelessWidget {
                                   'her birinin gerekçesi var.',
                               args: {'value1': excludedCount},
                             ),
-                            style: JText.body.copyWith(
+                            style: text.body.copyWith(
                               fontSize: 12.5,
-                              color: JColors.ink2,
+                              color: colors.inkMuted,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: JColors.ember, size: 18),
+                    Icon(Icons.chevron_right, color: colors.judgement, size: 18),
                   ],
                 ),
               ),
@@ -340,17 +372,17 @@ class SettingsPage extends StatelessWidget {
             // için de geçerli).
             if (CameraHarnessScreen.isAvailable) ...<Widget>[
               const SizedBox(height: 24),
-              Divider(color: JColors.hairline),
+              Divider(color: colors.outline),
               Builder(
                 builder: (BuildContext context) => ListTile(
                   key: const Key('open-camera-harness'),
-                  iconColor: JColors.ink3,
-                  textColor: JColors.ink2,
+                  iconColor: colors.inkSubtle,
+                  textColor: colors.inkMuted,
                   leading: const Icon(Icons.biotech_outlined),
                   title: const Text('Camera bridge — dev harness'),
                   subtitle: Text(
                     'Debug build only. Raw bridge metrics, no preview, no judgement.',
-                    style: TextStyle(color: JColors.ink3),
+                    style: TextStyle(color: colors.inkSubtle),
                   ),
                   onTap: () => Navigator.of(context).push<void>(
                     MaterialPageRoute<void>(
@@ -365,6 +397,55 @@ class SettingsPage extends StatelessWidget {
       ),
     ),
   );
+  }
+}
+
+/// Honest persistence state, shared by locale and appearance changes.
+class _PreferencesStatus extends StatelessWidget {
+  const _PreferencesStatus(this.controller);
+  final AppPreferencesController controller;
+  @override
+  Widget build(BuildContext context) {
+    final save = controller.savePhase;
+    final read = controller.readPhase;
+    final readProblem = read == PreferencesReadPhase.invalid ||
+        read == PreferencesReadPhase.unavailable || read == PreferencesReadPhase.timedOut ||
+        read == PreferencesReadPhase.recovered;
+    final message = switch (save) {
+      PreferencesSavePhase.saving => UiLanguage.text(context,
+        en: 'Saving device preferences…', tr: 'Cihaz tercihleri kaydediliyor…'),
+      PreferencesSavePhase.failed => UiLanguage.text(context,
+        en: 'Your choices apply now, but could not be saved. Any previously saved choices are kept.',
+        tr: 'Seçimlerin şu anda geçerli ancak kaydedilemedi. Varsa önceki kayıtlı seçimler korunuyor.'),
+      PreferencesSavePhase.uncertain => UiLanguage.text(context,
+        en: 'Your choices apply now. Saving could not be confirmed; retry to save the current choices.',
+        tr: 'Seçimlerin şu anda geçerli. Kayıt doğrulanamadı; mevcut seçimleri kaydetmek için yeniden dene.'),
+      PreferencesSavePhase.saved => controller.persistent
+        ? UiLanguage.text(context, en: 'Saved on this device.', tr: 'Bu cihaza kaydedildi.')
+        : UiLanguage.text(context, en: 'Applied for this session.', tr: 'Bu oturum için uygulandı.'),
+      PreferencesSavePhase.idle => readProblem
+        ? UiLanguage.text(context,
+            en: 'Saved preferences could not be fully read. Current preferences are shown; nothing was overwritten.',
+            tr: 'Kayıtlı tercihler tam okunamadı. Mevcut tercihler gösteriliyor; hiçbir kaydın üzerine yazılmadı.')
+        : '',
+    };
+    if (message.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Semantics(
+          liveRegion: true,
+          child: Text(message, key: const Key('settings.preferences.status'), style: JText.of(context).bodyMuted),
+        ),
+        if (save == PreferencesSavePhase.failed || save == PreferencesSavePhase.uncertain)
+          TextButton(
+            key: const Key('settings.preferences.retry'),
+            onPressed: () async { await controller.retrySave(); },
+            child: Text(UiLanguage.text(context, en: 'Retry saving preferences', tr: 'Tercihleri kaydetmeyi yeniden dene')),
+          ),
+      ],
+    );
+  }
 }
 
 const _languageNames = <String, String>{
@@ -376,4 +457,10 @@ const _languageNames = <String, String>{
   'fr': 'Français',
   'ja': '日本語',
   'ar': 'العربية',
+  'it': 'Italiano',
+  'ko': '한국어',
+  'id': 'Bahasa Indonesia',
+  'pl': 'Polski',
+  'hi': 'हिन्दी',
+  'zh-Hans': '简体中文',
 };

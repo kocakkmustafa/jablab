@@ -41,8 +41,8 @@ class SoloCourseEntryCard extends StatelessWidget {
               en: 'SOLO BOXING PATH',
               tr: 'SOLO BOKS YOLU',
             ),
-            style: JText.body.copyWith(
-              color: JColors.cool,
+            style: JText.of(context).body.copyWith(
+              color: JColors.of(context).observation,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -53,7 +53,7 @@ class SoloCourseEntryCard extends StatelessWidget {
               en: '39 lessons · from stance to your own round',
               tr: '39 ders · duruştan kendi rauntuna',
             ),
-            style: JText.body.copyWith(fontWeight: FontWeight.w600),
+            style: JText.of(context).body.copyWith(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 6),
           Text(
@@ -62,17 +62,17 @@ class SoloCourseEntryCard extends StatelessWidget {
               en: 'Non-contact practice with a clear next step and saved self-reported progress.',
               tr: 'Temassız çalışma, belirgin sıradaki adım ve kaydedilen öz beyan ilerlemesi.',
             ),
-            style: JText.bodyMuted,
+            style: JText.of(context).bodyMuted,
           ),
           const SizedBox(height: 10),
           Row(
             children: <Widget>[
               Text(
                 UiLanguage.text(context, en: 'Open course', tr: 'Kursu aç'),
-                style: JText.body.copyWith(color: JColors.cool),
+                style: JText.of(context).body.copyWith(color: JColors.of(context).observation),
               ),
               const SizedBox(width: 6),
-              const Icon(Icons.arrow_forward, size: 18, color: JColors.cool),
+              Icon(Icons.arrow_forward, size: 18, color: JColors.of(context).observation),
             ],
           ),
         ],
@@ -314,10 +314,10 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
     final SoloBoxingCourse? course = _course;
     final SoloCourseProgress? progress = _progress;
     return Scaffold(
-      backgroundColor: JColors.ground,
+      backgroundColor: JColors.of(context).ground,
       appBar: AppBar(
-        backgroundColor: JColors.ground,
-        foregroundColor: JColors.ink,
+        backgroundColor: JColors.of(context).ground,
+        foregroundColor: JColors.of(context).ink,
         title: Text(
           UiLanguage.text(
             context,
@@ -327,7 +327,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         ),
       ),
       body: _loading
-          ? const Center(child: CircularProgressIndicator(color: JColors.cool))
+          ? Center(child: CircularProgressIndicator(color: JColors.of(context).observation))
           : _failed || course == null
           ? Center(
               child: Padding(
@@ -342,7 +342,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                         tr: 'Kurs veya ilerleme okunamadı. İlerleme toplamı gösterilmiyor.',
                       ),
                       textAlign: TextAlign.center,
-                      style: JText.body,
+                      style: JText.of(context).body,
                     ),
                     const SizedBox(height: 12),
                     OutlinedButton(
@@ -375,10 +375,10 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
       children: <Widget>[
         Text(
           _copy(context, course.title),
-          style: JText.pageTitle.copyWith(fontSize: 30),
+          style: JText.of(context).pageTitle.copyWith(fontSize: 30),
         ),
         const SizedBox(height: 12),
-        Text(_copy(context, course.goal), style: JText.bodyMuted),
+        Text(_copy(context, course.goal), style: JText.of(context).bodyMuted),
         const SizedBox(height: 18),
         GlassPanel(
           tier: GlassTier.observation,
@@ -408,13 +408,13 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                     args: {'value1': done},
                   ),
                   key: const Key('solo-course-progress'),
-                  style: JText.body.copyWith(fontWeight: FontWeight.w700),
+                  style: JText.of(context).body.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 9),
                 LinearProgressIndicator(
                   value: done / course.lessons.length,
-                  backgroundColor: JColors.border,
-                  color: JColors.cool,
+                  backgroundColor: JColors.of(context).outline,
+                  color: JColors.of(context).observation,
                 ),
                 const SizedBox(height: 9),
               ],
@@ -424,7 +424,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                   en: 'Reading, practice and self-report are recorded separately. No camera score or skill certification.',
                   tr: 'Okuma, çalışma ve öz beyan ayrı kaydedilir. Kamera puanı veya beceri belgesi yok.',
                 ),
-                style: JText.bodyMuted,
+                style: JText.of(context).bodyMuted,
               ),
             ],
           ),
@@ -441,15 +441,15 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                 children: [
                   Text(
                     UiLanguage.text(context, en: 'UP NEXT', tr: 'SIRADAKİ'),
-                    style: JText.body.copyWith(color: JColors.cool),
+                    style: JText.of(context).body.copyWith(color: JColors.of(context).observation),
                   ),
                   const SizedBox(height: 5),
                   Text(
                     _copy(context, next.title),
-                    style: JText.body.copyWith(fontWeight: FontWeight.w700),
+                    style: JText.of(context).body.copyWith(fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 4),
-                  Text(_copy(context, next.objective), style: JText.bodyMuted),
+                  Text(_copy(context, next.objective), style: JText.of(context).bodyMuted),
                 ],
               ),
             ),
@@ -459,7 +459,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
           padding: const EdgeInsets.all(16),
           child: Text(
             _copy(context, course.healthNotice),
-            style: JText.bodyMuted,
+            style: JText.of(context).bodyMuted,
           ),
         ),
         const SizedBox(height: 20),
@@ -494,11 +494,11 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         child: ExpansionTile(
           key: PageStorageKey<String>(module.id),
           initiallyExpanded: module == course.modules.first,
-          iconColor: JColors.cool,
-          collapsedIconColor: JColors.cool,
+          iconColor: JColors.of(context).observation,
+          collapsedIconColor: JColors.of(context).observation,
           title: Text(
             _copy(context, module.title),
-            style: JText.body.copyWith(fontWeight: FontWeight.w700),
+            style: JText.of(context).body.copyWith(fontWeight: FontWeight.w700),
           ),
           subtitle: Text(
             UiLanguage.format(
@@ -514,12 +514,12 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                 'value2': module.lessons.length,
               },
             ),
-            style: JText.bodyMuted,
+            style: JText.of(context).bodyMuted,
           ),
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-              child: Text(_copy(context, module.intro), style: JText.bodyMuted),
+              child: Text(_copy(context, module.intro), style: JText.of(context).bodyMuted),
             ),
             for (int i = 0; i < module.lessons.length; i++)
               ListTile(
@@ -534,17 +534,17 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                             SoloLessonState.selfReportedComplete
                       ? Icons.check_circle_outline
                       : Icons.radio_button_unchecked,
-                  color: JColors.cool,
+                  color: JColors.of(context).observation,
                 ),
                 title: Text(
                   _copy(context, module.lessons[i].title),
-                  style: JText.body.copyWith(fontSize: 15),
+                  style: JText.of(context).body.copyWith(fontSize: 15),
                 ),
                 subtitle: Text(
                   _copy(context, module.lessons[i].objective),
-                  style: JText.bodyMuted,
+                  style: JText.of(context).bodyMuted,
                 ),
-                trailing: const Icon(Icons.chevron_right, color: JColors.cool),
+                trailing: Icon(Icons.chevron_right, color: JColors.of(context).observation),
               ),
           ],
         ),
@@ -564,7 +564,7 @@ class _SoloReadOnlyNotice extends StatelessWidget {
       tr: 'İlerleme doğrulanamadı. Dersleri okuyabilirsin; ilerleme toplamları ve kayıt kullanılamıyor. Bu ekran dosyalarını sıfırlamaz. Yeniden denemek için kursu yeniden aç.',
     ),
     key: const Key('solo-progress-unavailable'),
-    style: JText.bodyMuted,
+    style: JText.of(context).bodyMuted,
   );
 }
 
@@ -640,7 +640,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
       'straights' => UiLanguage.text(
         context,
         en: 'Recall stance and guard, then extend and return a few easy straight punches into open air.',
-        tr: 'Duruş ve gardı hatırla; ardından açık havaya birkaç rahat düz yumruk uzatıp geri çek.',
+        tr: 'Duruş ve gardı hatırla; ardından boşluğa birkaç rahat düz yumruk uzatıp geri çek.',
       ),
       'defence' => UiLanguage.text(
         context,
@@ -831,10 +831,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
         .where((SoloLesson item) => lesson.prerequisites.contains(item.id))
         .toList(growable: false);
     return Scaffold(
-      backgroundColor: JColors.ground,
+      backgroundColor: JColors.of(context).ground,
       appBar: AppBar(
-        backgroundColor: JColors.ground,
-        foregroundColor: JColors.ink,
+        backgroundColor: JColors.of(context).ground,
+        foregroundColor: JColors.of(context).ink,
         title: Text(_copy(context, lesson.title)),
       ),
       body: ListView(
@@ -848,10 +848,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           ),
           Text(
             _copy(context, lesson.title),
-            style: JText.pageTitle.copyWith(fontSize: 30),
+            style: JText.of(context).pageTitle.copyWith(fontSize: 30),
           ),
           const SizedBox(height: 10),
-          Text(_copy(context, lesson.objective), style: JText.bodyMuted),
+          Text(_copy(context, lesson.objective), style: JText.of(context).bodyMuted),
           const SizedBox(height: 10),
           Text(
             UiLanguage.format(
@@ -860,7 +860,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
               tr: '{value1} dk öneri · yalnız öz beyan',
               args: {'value1': lesson.minutes},
             ),
-            style: JText.body.copyWith(color: JColors.cool),
+            style: JText.of(context).body.copyWith(color: JColors.of(context).observation),
           ),
           LessonMediaSlot.empty(
             course: widget.course,
@@ -881,7 +881,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                       .join(", "),
                 },
               ),
-              style: JText.bodyMuted,
+              style: JText.of(context).bodyMuted,
             ),
           ],
           if (_needsSessionPreparation) ...<Widget>[
@@ -902,10 +902,10 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                       en: 'Clear your space. Begin with comfortable walking in place and gentle joint movement, then gradually rehearse familiar boxing movements at low effort without tiring yourself. Take the preparation time you need; a short lesson or reading this card does not establish readiness. You may read without performing the movement.',
                       tr: 'Alanı boşalt. Yerinde rahat yürüyüş ve nazik eklem hareketleriyle başla; ardından tanıdık boks hareketlerini yorulmadan düşük eforla kademeli prova et. Hazırlığa gereken zamanı ayır; kısa bir ders veya bu kartı okumak hazır oluşunu göstermez. Hareketi yapmadan okuyabilirsin.',
                     ),
-                    style: JText.body,
+                    style: JText.of(context).body,
                   ),
                   const SizedBox(height: 8),
-                  Text(_specificPreparation(context), style: JText.body),
+                  Text(_specificPreparation(context), style: JText.of(context).body),
                   const SizedBox(height: 8),
                   Text(
                     UiLanguage.text(
@@ -913,7 +913,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                       en: 'After practice, step and breathe more slowly; stop for pain, dizziness or feeling unwell.',
                       tr: 'Çalışma sonunda adımı ve nefesi yavaşlat; ağrı, baş dönmesi veya kötü hissetmede dur.',
                     ),
-                    style: JText.bodyMuted,
+                    style: JText.of(context).bodyMuted,
                   ),
                   CheckboxListTile(
                     key: const Key('solo-session-prepared'),
@@ -928,7 +928,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                         en: 'I prepared for this session · self-report, not a readiness check',
                         tr: 'Bu oturuma hazırlandım · öz beyan, hazır oluş kontrolü değil',
                       ),
-                      style: JText.bodyMuted,
+                      style: JText.of(context).bodyMuted,
                     ),
                   ),
                   if (_sessionPrepared)
@@ -961,12 +961,12 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                       children: [
                         Text(
                           '${i + 1}. ',
-                          style: JText.body.copyWith(color: JColors.cool),
+                          style: JText.of(context).body.copyWith(color: JColors.of(context).observation),
                         ),
                         Expanded(
                           child: Text(
                             _copy(context, lesson.steps[i]),
-                            style: JText.body,
+                            style: JText.of(context).body,
                           ),
                         ),
                       ],
@@ -987,9 +987,9 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                       tr: 'Fiziksel çalışmadan önce yukarıdaki hazırlığı yap. Hareketleri denemeden dersi okuyabilirsin; bu, fiziksel pratik olarak kaydedilmez.',
                     ),
                     key: const Key('solo-preparation-required'),
-                    style: JText.body,
+                    style: JText.of(context).body,
                   )
-                : Text(_copy(context, lesson.practice), style: JText.body),
+                : Text(_copy(context, lesson.practice), style: JText.of(context).body),
           ),
           const SizedBox(height: 12),
           _section(
@@ -1002,11 +1002,11 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
                     key: Key('solo-check-${lesson.id}-$i'),
                     contentPadding: EdgeInsets.zero,
                     value: _checks[i],
-                    activeColor: JColors.cool,
-                    checkColor: JColors.ground,
+                    activeColor: JColors.of(context).observation,
+                    checkColor: JColors.of(context).ground,
                     title: Text(
                       _copy(context, lesson.selfChecks[i]),
-                      style: JText.body.copyWith(fontSize: 15),
+                      style: JText.of(context).body.copyWith(fontSize: 15),
                     ),
                     onChanged: _readOnly || _saving || _preparationBlocked
                         ? null
@@ -1020,13 +1020,13 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           _section(
             context,
             UiLanguage.text(context, en: 'ADAPT', tr: 'UYARLA'),
-            Text(_copy(context, lesson.adaptation), style: JText.body),
+            Text(_copy(context, lesson.adaptation), style: JText.of(context).body),
           ),
           const SizedBox(height: 12),
           _section(
             context,
             UiLanguage.text(context, en: 'STOP SIGNAL', tr: 'DURMA İŞARETİ'),
-            Text(_copy(context, lesson.stopSignal), style: JText.body),
+            Text(_copy(context, lesson.stopSignal), style: JText.of(context).body),
           ),
           const SizedBox(height: 12),
           _section(
@@ -1095,7 +1095,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
               en: 'These buttons record your report. They do not verify technique or medical safety.',
               tr: 'Bu düğmeler beyanını kaydeder. Tekniği veya tıbbi güvenliği doğrulamaz.',
             ),
-            style: JText.bodyMuted,
+            style: JText.of(context).bodyMuted,
           ),
         ],
       ),
@@ -1110,8 +1110,8 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           children: [
             Text(
               label,
-              style: JText.body.copyWith(
-                color: JColors.cool,
+              style: JText.of(context).body.copyWith(
+                color: JColors.of(context).observation,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -1131,23 +1131,23 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
             children: [
               Text(
                 '${source.publisher}: ${source.title}',
-                style: JText.body.copyWith(fontSize: 14),
+                style: JText.of(context).body.copyWith(fontSize: 14),
               ),
               SelectableText(
                 source.url.toString(),
-                style: JText.bodyMuted.copyWith(fontSize: 12),
+                style: JText.of(context).bodyMuted.copyWith(fontSize: 12),
               ),
               if (source.supports case final support?)
                 Text(
                   '${UiLanguage.text(context, en: 'Supports only:', tr: 'Yalnız destekler:')} ${_copy(context, support)}',
                   key: Key('boxing.sourceScope.${source.id}'),
-                  style: JText.bodyMuted.copyWith(fontSize: 12),
+                  style: JText.of(context).bodyMuted.copyWith(fontSize: 12),
                 ),
               if (source.doesNotSupport case final limit?)
                 Text(
                   '${UiLanguage.text(context, en: 'Does not establish:', tr: 'Kanıtlamaz:')} ${_copy(context, limit)}',
                   key: Key('boxing.sourceLimit.${source.id}'),
-                  style: JText.bodyMuted.copyWith(fontSize: 12),
+                  style: JText.of(context).bodyMuted.copyWith(fontSize: 12),
                 ),
             ],
           ),
@@ -1160,7 +1160,7 @@ class _SoloBoxingLessonPageState extends State<SoloBoxingLessonPage>
           ),
           onPressed: () =>
               Clipboard.setData(ClipboardData(text: source.url.toString())),
-          icon: const Icon(Icons.copy, color: JColors.cool),
+          icon: Icon(Icons.copy, color: JColors.of(context).observation),
         ),
       ],
     ),

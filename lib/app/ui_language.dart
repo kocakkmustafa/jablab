@@ -30,6 +30,12 @@ class AppLocalizations {
     Locale('fr'),
     Locale('ja'),
     Locale('ar'),
+    Locale('it'),
+    Locale('ko'),
+    Locale('id'),
+    Locale('pl'),
+    Locale('hi'),
+    Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
   ];
   static const delegate = _AppLocalizationsDelegate();
   static const _unavailable = (
@@ -57,11 +63,26 @@ class AppLocalizations {
       }
       for (final candidate in supported) {
         if (candidate.languageCode == locale.languageCode) {
+          // Authored Chinese is Simplified only. An explicit or region-implied
+          // Traditional preference must continue to the next preferred language.
+          if (locale.languageCode == 'zh' &&
+              _chineseScript(locale) != _chineseScript(candidate)) {
+            continue;
+          }
           return candidate;
         }
       }
     }
     return const Locale('en');
+  }
+
+  static String _chineseScript(Locale locale) {
+    final explicit = locale.scriptCode;
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    return switch (locale.countryCode) {
+      'TW' || 'HK' || 'MO' => 'Hant',
+      _ => 'Hans',
+    };
   }
 
   String lookup(
@@ -148,7 +169,8 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-/// Session-only choice. No account, system-language or store-currency mutation.
+/// Device preference provided by the host controller. No account,
+/// system-language or store-currency mutation. Standalone harnesses may be transient.
 class AppLanguageScope extends InheritedWidget {
   const AppLanguageScope({
     required this.selected,

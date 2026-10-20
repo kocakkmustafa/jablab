@@ -3,8 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:motion_account/motion_account.dart';
 
+import 'app/app_preferences.dart';
+import 'app/app_preferences_controller.dart';
+import 'app/app_preferences_store.dart';
+import 'app/design_tokens.dart';
 import 'app/account_bridge.dart';
 import 'app/jablab_app.dart';
+import 'app/identity_appearance_gate.dart';
 import 'app/owner_resource_lifetime.dart';
 import 'app/owner_bound_account_page.dart';
 import 'app/ui_language.dart';
@@ -42,11 +47,21 @@ Future<void> main() async {
 
 /// A missing or invalid account build cannot silently enter the guest shell.
 Future<void> launchJabLab({
+  AppPreferencesController? preferencesOverride,
   String url = const String.fromEnvironment('MOTION_SUPABASE_URL'),
   String publishableKey = const String.fromEnvironment(
     'MOTION_SUPABASE_PUBLISHABLE_KEY',
   ),
 }) async {
+  final codec = AppPreferencesCodec(
+    supportedLocaleTags: AppLocalizations.supportedLocales.map((l) => l.toLanguageTag()),
+  );
+  final preferences = preferencesOverride ?? AppPreferencesController(
+    store: FileAppPreferencesStore(codec: codec), codec: codec,
+  );
+  // Outside the identity gate. Bounded read settles before any Flutter root;
+  // The same controller supplies appearance to the shell and Core blocker.
+  await preferences.load();
   try {
     final MotionAccountRuntime runtime = await MotionAccountRuntime.initialize(
       url: url,
@@ -82,9 +97,11 @@ Future<void> launchJabLab({
     }
 
     runApp(
-      MotionIdentityGate(
+      JabLabIdentityAppearanceGate(
         runtime: runtime,
+        preferences: preferences,
         child: JabLabApp(
+          preferences: preferences,
           accountUserId: runtime.userId,
           accountRecovery: runtime.passwordRecovery,
           accountPageBuilder: accountPage,
@@ -97,32 +114,47 @@ Future<void> launchJabLab({
       ),
     );
   } on Object {
-    runApp(const JabLabAccountStartupFailure());
+    runApp(JabLabAccountStartupFailure(preferences: preferences));
   }
 }
 
 class JabLabAccountStartupFailure extends StatelessWidget {
-  const JabLabAccountStartupFailure({super.key});
+  const JabLabAccountStartupFailure({super.key, this.preferences});
+  final AppPreferencesController? preferences;
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) {
+    final controller = preferences;
+    if (controller == null) return _material(const AppPreferences());
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, _) => _material(controller.value),
+    );
+  }
+
+  Widget _material(AppPreferences value) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'JabLab',
+    locale: value.localeTag == null ? null : AppLocalizations.supportedLocales.firstWhere(
+      (locale) => locale.toLanguageTag() == value.localeTag,
+    ),
     supportedLocales: AppLocalizations.supportedLocales,
     localeListResolutionCallback: AppLocalizations.resolve,
     localizationsDelegates: const [
       AppLocalizations.delegate,
+      MotionAccountLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
       GlobalCupertinoLocalizations.delegate,
     ],
-    theme: ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFFB3261E),
-        brightness: Brightness.dark,
-      ),
-      useMaterial3: true,
-    ),
+    theme: jablabTheme(Brightness.light),
+    darkTheme: jablabTheme(Brightness.dark),
+    themeMode: switch (value.theme) {
+      AppThemePreference.system => ThemeMode.system,
+      AppThemePreference.light => ThemeMode.light,
+      AppThemePreference.dark => ThemeMode.dark,
+    },
+    themeAnimationDuration: Duration.zero,
     home: Scaffold(
       body: Center(
         child: Padding(

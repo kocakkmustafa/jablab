@@ -26,6 +26,9 @@ import '../shell_candidate/shell_models.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
+import 'app_preferences.dart';
+import 'app_preferences_controller.dart';
+import 'design_tokens.dart';
 import 'content_failure.dart';
 import 'content_failure_screen.dart';
 import 'content_repository.dart';
@@ -57,9 +60,14 @@ class JabLabApp extends StatefulWidget {
     this.accountRecovery,
     this.accountPageBuilder,
     this.beforeLessonStart,
+    this.preferences,
   });
 
   final ContentRepository repository;
+
+  /// Production injects the already loaded device controller from outside
+  /// MotionIdentityGate. Null uses an I/O-free widget-harness fallback.
+  final AppPreferencesController? preferences;
 
   /// Filled by a host adapter after the shared Motion account package is
   /// pinned. `null` means the existing guest journal.
@@ -96,42 +104,66 @@ class JabLabApp extends StatefulWidget {
 }
 
 class _JabLabAppState extends State<JabLabApp> {
-  Locale? _selectedLocale;
+  AppPreferencesController? _transient;
+  AppPreferencesController get _preferences => widget.preferences ??
+      (_transient ??= AppPreferencesController.transient(AppPreferencesCodec(
+        supportedLocaleTags: AppLocalizations.supportedLocales.map((l) => l.toLanguageTag()),
+      )));
+
+  @override
+  void dispose() {
+    _transient?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AppLanguageScope(
-      selected: _selectedLocale,
-      select: (locale) => setState(() => _selectedLocale = locale),
-      child: MaterialApp(
-        title: 'JabLab',
-        locale: _selectedLocale,
-        supportedLocales: AppLocalizations.supportedLocales,
-        localeListResolutionCallback: AppLocalizations.resolve,
-        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-          AppLocalizations.delegate,
-          MotionAccountLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        debugShowCheckedModeBanner: false,
-        navigatorObservers: widget.navigatorObservers,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFB3261E),
-            brightness: Brightness.dark,
-          ),
-          useMaterial3: true,
-        ),
-        home: _Root(
-          repository: widget.repository,
-          onboarding: widget.onboarding,
-          accountUserId: widget.accountUserId,
-          accountRecovery: widget.accountRecovery,
-          accountPageBuilder: widget.accountPageBuilder,
-          beforeLessonStart: widget.beforeLessonStart,
-        ),
+    final preferences = _preferences;
+    return AppPreferencesScope(
+      controller: preferences,
+      child: AnimatedBuilder(
+        animation: preferences,
+        builder: (context, _) {
+          final selected = preferences.value.localeTag;
+          final Locale? locale = selected == null ? null :
+              AppLocalizations.supportedLocales.firstWhere((l) => l.toLanguageTag() == selected);
+          return AppLanguageScope(
+            selected: locale,
+            select: (value) => preferences.selectLocale(value?.toLanguageTag()),
+            child: MaterialApp(
+              title: 'JabLab',
+              locale: locale,
+              supportedLocales: AppLocalizations.supportedLocales,
+              localeListResolutionCallback: AppLocalizations.resolve,
+              localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+                AppLocalizations.delegate,
+                MotionAccountLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              debugShowCheckedModeBanner: false,
+              navigatorObservers: widget.navigatorObservers,
+              theme: jablabTheme(Brightness.light),
+              darkTheme: jablabTheme(Brightness.dark),
+              themeMode: switch (preferences.value.theme) {
+                AppThemePreference.system => ThemeMode.system,
+                AppThemePreference.light => ThemeMode.light,
+                AppThemePreference.dark => ThemeMode.dark,
+              },
+              // No new decorative theme animation in this first slice.
+              themeAnimationDuration: Duration.zero,
+              home: _Root(
+                repository: widget.repository,
+                onboarding: widget.onboarding,
+                accountUserId: widget.accountUserId,
+                accountRecovery: widget.accountRecovery,
+                accountPageBuilder: widget.accountPageBuilder,
+                beforeLessonStart: widget.beforeLessonStart,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -649,8 +681,8 @@ class _RootState extends State<_Root> {
     if (notEvaluable == 0) return null;
     return UiLanguage.format(
       context,
-      en: '{count} lessons here have a progress gate that counts punches. We are not showing you a count, because we are not keeping one: the session counts while it runs and then lets the number go. A zero would tell you that you did nothing, and that is not what we measured. Nothing here is blocked — the gates do not close anything.',
-      tr: 'Burada {count} dersin yumruk sayan ilerleme kapısı var. Sayımı saklamadığımız için sana bir sayı göstermiyoruz: seans sürerken sayıyor, ardından sayıyı bırakıyor. Sıfır göstermek hiçbir şey yapmadığını söylerdi; ölçtüğümüz bu değil. Burada hiçbir şey engellenmiyor; kapılar içeriği kapatmıyor.',
+      en: '{count} lessons here have legacy punch-count criteria. This number describes lesson criteria, not your practice attempts. Saved session records do not provide the required punch-count evidence, so no personal count is shown. Legacy live sessions are unavailable in this release; this message does not mean punches are being counted now. These criteria do not control access to lessons or change your saved history.',
+      tr: 'Burada {count} dersin eski yumruk sayımı ölçütleri var. Bu sayı çalışma denemelerini değil, ölçüt bulunan dersleri belirtir. Kayıtlı seanslar gereken yumruk sayımı kanıtını sağlamadığı için kişisel sayım gösterilmiyor. Bu sürümde eski canlı seanslar kullanılamaz; bu mesaj şu anda yumruk sayıldığı anlamına gelmez. Bu ölçütler derslere erişimi belirlemez ve kayıtlı geçmişini değiştirmez.',
       args: {'count': notEvaluable},
       pluralArg: 'count',
     );
@@ -1049,8 +1081,8 @@ class _RootState extends State<_Root> {
       // sesiyle yazılır, teşhis dizesi geliştirici içindir.
       return UiLanguage.text(
         context,
-        en: 'We could not read your saved sessions on this device. As far as we know your training is still there — we simply cannot open the file right now, so we are not going to show you numbers we did not measure. Nothing is blocked: you can start a session as usual.',
-        tr: 'Bu cihazdaki kayıtlı seanslarını okuyamadık. Bildiğimiz kadarıyla antrenman verilerin hâlâ orada; şu anda dosyayı açamıyoruz ve ölçmediğimiz sayıları göstermiyoruz. İçerik engellenmiyor: her zamanki gibi seans başlatabilirsin.',
+        en: 'Saved legacy sessions on this device could not be read, so session totals are unavailable. This is not evidence that you did no practice. Live camera sessions are closed in this release. The separate written course uses its own self-reported progress.',
+        tr: 'Bu cihazdaki kayıtlı eski seanslar okunamadığı için seans toplamları kullanılamıyor. Bu, hiç çalışma yapmadığının kanıtı değildir. Bu sürümde canlı kamera seansları kapalıdır. Ayrı yazılı kurs kendi öz beyana dayalı ilerlemesini kullanır.',
       );
     }
     final RecordedSummary? r = _recorded;
@@ -1060,8 +1092,8 @@ class _RootState extends State<_Root> {
       // `at least` TAŞIMAZ ve testte ikiziyle sınanır.
       return UiLanguage.text(
         context,
-        en: 'Your history file is there but none of it could be read, so we have no totals to show. This is not the same as never having trained, and we would rather say so than show you a zero. New sessions will be recorded normally.',
-        tr: 'Geçmiş dosyan var, ancak hiçbir kaydı okunamadı; bu yüzden gösterecek toplamımız yok. Bu, hiç çalışmamış olmakla aynı şey değildir. Sıfır göstermek yerine bunu söylüyoruz. Yeni seanslar normal biçimde kaydedilecek.',
+        en: 'Your saved legacy session file is present, but no record in it could be read. We have no session totals to show; this does not mean you never practised. Live camera sessions are closed in this release. Written-course progress is a separate self-reported record.',
+        tr: 'Kayıtlı eski seans dosyan var, ancak içindeki hiçbir kayıt okunamadı. Gösterecek seans toplamımız yok; bu, hiç çalışma yapmadığın anlamına gelmez. Bu sürümde canlı kamera seansları kapalıdır. Yazılı kurs ilerlemesi ayrı bir öz beyan kaydıdır.',
       );
     }
     return null;

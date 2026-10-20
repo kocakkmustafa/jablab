@@ -205,6 +205,8 @@ const Map<String, String> cueCopies = <String, String>{
   "Punch from where you stand.": "Bulunduğun yerden yumruk at.",
   "Something in that one needs fixing, but we do not have the words for it.":
       "O tekrarda düzeltilmesi gereken bir şey var, ancak onu anlatacak metnimiz yok.",
+  "Technique feedback is unavailable while this setup is awaiting calibration. The count records detected attempts; it is not a judgement of technique.":
+      "Bu kurulumun kalibrasyonu beklenirken teknik geri bildirimi kullanılamaz. Sayı algılanan denemeleri kaydeder; teknik doğruluğu göstermez.",
   "I cannot judge that clearly enough right now.":
       "Şu anda bunu yeterince net değerlendiremiyorum.",
   "I cannot see you well enough to judge — step back so your head and hands are in frame.":

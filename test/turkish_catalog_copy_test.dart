@@ -124,9 +124,9 @@ void main() {
     await tester.tap(find.byKey(const Key('item-boxing')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Neleri ölçer'), findsOneWidget);
+    expect(find.text('Bu sürüm neleri kaydeder'), findsOneWidget);
     expect(find.text('Neleri ölçmez'), findsOneWidget);
-    expect(find.textContaining('Yumruk olayları ve sayısı'), findsOneWidget);
+    expect(find.textContaining('Bu kurs kendi çalışma beyanını kaydeder.'), findsOneWidget);
     expect(find.textContaining('Yumruk kuvveti veya gücü'), findsOneWidget);
   });
 

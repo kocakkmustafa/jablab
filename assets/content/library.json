@@ -19,21 +19,21 @@
       "status": "live",
       "wave": "V1",
       "rulesetId": "boxing",
-      "blurb": "Put your phone in front of you and shadow box. Your corner calls out guard, stance and balance — no bag, no sensors.",
+      "blurb": "Read and practise the solo boxing course without a camera. Written cues and your own self-checks guide the course; live camera coaching is closed in this release.",
       "honesty": {
         "measured": [
-          "Punch events and count — a fact from the phase machine, not a grade",
-          "Combination order and timing, for the punches we model. A combination built from hooks or uppercuts is not ordered, because those punches are not recognised in the first place",
-          "Stance width, crossed feet, balance — these are graded",
-          "Guard hand position — detected and coached, but NOT graded. Coaches disagree about it: across our reference takes the rear forearm spread past 45 degrees, and we do not know how far past. We will flag a dropping hand; we will not put a number on it",
-          "Tempo as a band (controlled / brisk / fast), based on the observed time from extension to peak, not pixel speed. The session summary shows the most frequent band among completed attempts with a valid tempo observation."
+          "This course records your own practice report. No automatic camera punch count is produced in this release.",
+          "Combination order and timing are not assessed automatically in this release. Written and self-reported practice do not verify them.",
+          "Stance width, crossed feet and balance are not graded by the camera in this release.",
+          "Guard hand position is not detected or coached automatically in this release. The course provides written cues and your own self-checks.",
+          "Tempo is self-selected in the current solo course. No camera speed measurement or tempo band is produced here."
         ],
         "notMeasured": [
           "Punch force or power — a camera cannot measure force, and we will not pretend otherwise",
-          "Punch mechanics — the path your arm takes is coached, not graded. We do have reference takes for the jab, so this is not a gap in our data: the arm is simply where coaches disagree most, and the lead arm most of all.",
+          "Punch mechanics are studied through written paths, practice tasks and self-checks. This course does not automatically grade the arm path or certify technique.",
           "Hook and uppercut technique — not modelled. We ran a real hook lesson through the app: it missed almost every hook, and the handful it did register it counted as jabs or crosses. We would rather say that than let a wrong number look right.",
           "Head movement quality (slip / duck / roll) — reaction skills need an opponent",
-          "Anything while your body is out of frame or tracking confidence is low — the app says so instead of guessing"
+          "No camera analysis runs in the current solo course. A missing observation is not evidence of a correct technique."
         ],
         "$measuredBoundaryWhy": "2026-08-07 OLCUMU: bu liste IKI farkli iddiayi tek baslik altinda topluyordu — 'tespit edip kocluyoruz' ve 'puanliyoruz'. Besin UCU yalnizca BIRINCISIYDI ve kullanici ikincisi diye okuyordu. Kanit config'in KENDISINDE: references.stance.coachedOnlyJoints icinde lead_forearm/rear_forearm/rear_shoulder/lead_upper_arm/rear_upper_arm/lead_elbow/rear_elbow var — yani GARD ELI acikca 'koclanan ama SKORLANMAYAN' kovada (rear_forearm dagilimi 45 derece TAVANA kirpilmis: 'daha buyuk, ne kadar bilinmiyor'). Ayni anda SessionSummaryView 'Coached but not scored' basligi altinda ayni seyi soyluyordu: iki temsil CELISIYORDU ve celisen taraf en gorunur yerdeydi — disiplinin kendi durustluk listesi, yani guveni kuran sey. COMBINATION ORDER: boxing.intermediate.combinations KILITLI ve kilit metni 'we don't score combination order' diyor; liste ise sinirsiz 'Combination order and timing' vaat ediyordu. Sinir artik cumlenin ICINDE. TEMPO: tempoBands GERCEKTEN hesaplaniyor (ADR-001, faz suresinden; controlled >=160ms / brisk 95-160 / fast <=95) ve TEMPO_TOO_FAST_FOR_FORM kapisini besliyor — ama hicbir ekran bandi GOSTERMIYOR (summary'nin bant yuvalari sabit '—' ve tempo aralarinda bile yok). 'Olculuyor' dogruydu, 'goreceksin' degildi. M-F-287 / ders #5: bir siniri olmadigindan GENIS yazmak, dar yazmak kadar pahali.",
         "$punchMechanicsWhy": "⚠️ IKINCI EK NOT (J-278, H-49, 2026-08-16): asagidaki 'J-276' notunun basligi ('2 bagimsiz kimlik, taban altinda') da bir asama bayatladi — dogrusu KIMLIK OLCULMEDI, kanal-kimligi vekil, ekrandaki kisi degil. Tam gerekce: $gradedWhy (assets/rulesets/boxing@1.0.0.json, punchMechanics), DEFTER J-278, aile H-49. — ⚠️ EK NOT (J-276, H-47, 2026-08-16): asagidaki '3 bagimsiz kaynak' sayisi bayatladi — olcum artik 2 BAGIMSIZ KIMLIK gosteriyor (yA5WNu-sx34'un kanali M-F-257'de Yankello'nun kendi kanali ciktigi icin, channel_id UCFd-tIEZTYhdR3lWCQ7inyg). Bu notun asil gerekcesi (referans VAR, ayrisma oncu kolda, kullanici puanlandigini varsayar) DEGISMEDI — yalnizca kaynak-sayisi rakami yanlisti. Tam duzeltme: $gradedWhy (assets/rulesets/boxing@1.0.0.json, punchMechanics), DEFTER J-275/J-276, aile M-F-655/H-47. — TARIHI METIN (silinmedi): J-149 (koordinator hukmu 09:55). OLCUT: kullanici bunun puanlandigini VARSAYAR MI? Bu bir BOKS uygulamasi ve urun YUMRUK SAYIYOR — yani yumruk mekaniginin degerlendirildigi dogal olarak varsayilir. Karsiliksiz bir beklenti vardi, sinir beyan edildi. `recovery` ayni olcutten GECMEDI: urun toparlanmayi hicbir yerde gostermiyor, beyan olmayan bir beklentiye cevap olurdu (gurultu, M-F-331). Cumle references.jab.$splitRule'a dayaniyor: referans VAR (3 bagimsiz kaynak, 11/11 attested — bu sayi J-276'da duzeltildi) ve ayrisma tam ONCU KOLDA — yani 'veri yok' DEGIL 'uzlasi yok'. J-147'de uydurdugum gerekce ('referans yok') gercek gerekceden ZAYIFTI."
@@ -223,13 +223,13 @@
           "id": "boxing.conditioning",
           "displayName": "Rounds and conditioning",
           "level": "all",
-          "goal": "Work rounds without a bag. The app keeps time, counts what it can see, and stays quiet about what it can't.",
+          "goal": "Legacy timed sessions are unavailable in this release. The separate solo boxing course offers written learning, practice tasks and self-report, without automatic punch counting.",
           "estimatedMinutes": 78,
           "lessons": [
             {
               "id": "boxing.conditioning.r3",
               "displayName": "3 x 3 minute rounds",
-              "teach": "Three rounds of three minutes, ninety seconds between them. That shape is not a style choice — the total time this lesson claims is twelve minutes, nine of them working, so the rest falls out of the arithmetic.\n\nRound one is easy and that is the trap: the pace you set there is the pace you have to pay for in round three. Start slower than feels right.\n\nUse the rest. Ninety seconds is long enough to get your breath fully back, and coming back to a round already tired teaches your body a shape you do not want.\n\nThe clock runs whether or not the camera can read you. If it loses you it says so, and the round keeps going.",
+              "teach": "Three rounds of three minutes, with ninety seconds of scheduled rest between rounds. That adds up to twelve planned minutes: nine working and three resting.\n\nChoose a pace you can control from the first round. You do not have to maintain a pace that stops being comfortable or controlled.\n\nUse the rest. Ninety seconds is a scheduled interval, not a guarantee that you have recovered. If you are not ready to continue, end the session and take the rest you need. Do not push through pain, dizziness, unusual breathlessness or loss of balance to keep to the clock.\n\nThe clock continues even when the camera cannot read you. A running timer or the absence of a camera warning does not mean that continuing is suitable.",
               "techniques": [
                 "jab",
                 "cross"
@@ -348,7 +348,7 @@
             {
               "id": "boxing.conditioning.hiit",
               "displayName": "Interval burst",
-              "teach": "Twelve bursts of thirty seconds, thirty seconds of recovery between each. Six minutes of work inside twelve minutes of clock.\n\nGo hard in the burst. Genuinely hard — this is the one lesson where pace beats polish.\n\nAt that intensity your shape will drift, and that is expected rather than a failure: we asked you for a tempo that costs shape. Take the corrections you see here as information about where your limit is, not as a verdict on the round.\n\nThe thirty-thirty cycle is a common starting split, not a measurement of ours. If it is too much, take the burst at three quarters rather than shortening it — keeping the clock honest matters more than the intensity.",
+              "teach": "Twelve planned cycles of thirty seconds of work and thirty seconds of recovery make twelve minutes, with six minutes of work. Your control and comfort take priority over completing that schedule.\n\nWork at a pace you can control. Do not trade movement form for speed.\n\nIf your guard, return or balance starts to drift, slow down. If you cannot restore comfortable control, end the session. Do not push through pain, dizziness, unusual breathlessness or loss of balance. Camera feedback cannot confirm that continuing is suitable for you.\n\nThe thirty-thirty cycle is a suggested schedule, not a measurement of your readiness or a personal exercise prescription. Reduce the pace or stop early when needed. The timer describes the plan; finishing it is not a test you have to pass.",
               "focus": "conditioning",
               "minutes": 12,
               "techniques": [
@@ -405,7 +405,7 @@
           "id": "boxing.intermediate",
           "displayName": "Intermediate",
           "level": "intermediate",
-          "goal": "One lesson is open: holding your shape through a long round. The other three are locked for three different reasons, and each names its own.",
+          "goal": "Live camera lessons are unavailable in this release. The separate solo boxing course remains available for written learning, practice tasks and self-report.",
           "estimatedMinutes": 63,
           "$scopeWhy": "Bu kursun cogu ders KILITLI ve kilidin sebebi her derste yazili. Kilit bir 'yakinda' pazarlama rozeti degil: o dersin kapisini kurabilmek icin eksik olan OLCUM adiyla yaziliyor. Kapsami bastan gostermek ile olcemedigimizi vaat etmek ayni sey degil.",
           "lessons": [
@@ -505,7 +505,7 @@
       "displayName": "Tai Chi",
       "status": "coming_soon",
       "wave": "W1",
-      "blurb": "The camera is not the blocker here — slow forms are the easiest thing it reads, with no motion blur at all. What is missing is the reference: nobody has told us what correct looks like for the 24-form, and we do not grade from our own opinion.",
+      "blurb": "Slow forms may reduce motion blur, but they do not guarantee readable camera tracking. We also lack an accepted expert reference and validated camera conditions for assessing the 24-form. We do not grade it from our own opinion; camera feedback for this form remains unavailable.",
       "honesty": {
         "measured": [],
         "notMeasured": [
@@ -617,7 +617,7 @@
       {
         "id": "power_measurement",
         "displayName": "Punch power",
-        "reason": "Force needs a sensor. A camera can estimate timing and tempo — we show those as bands — but we will not print a power number we cannot measure."
+        "reason": "Punch force is not measured here. The current solo course uses written guidance and self-checks; it does not produce a camera tempo band or a power number."
       },
       {
         "id": "self_defense_outcome",
