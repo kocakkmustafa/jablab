@@ -801,9 +801,40 @@ void main() {
       final session = h.client.auth.currentSession;
 
       Future<void> retained(Locale locale) async {
-        // Appearance may reload real packaged app assets. Route animation
-        // settlement alone cannot prove that real asynchronous IO completed.
-        await settleAppLoad(tester);
+        // The preference has not rebuilt MaterialApp yet. Wait for the explicit
+        // target locale on this retained field, not the old root's resources.
+        bool appearanceReady = false;
+        for (int turn = 0; turn < 40; turn++) {
+          await tester.runAsync(() => tester.pump());
+          final elements = editedField.evaluate();
+          if (elements.length == 1) {
+            final context = elements.single;
+            final appCopy = Localizations.of<AppLocalizations>(
+              context,
+              AppLocalizations,
+            );
+            final accountCopy = Localizations.of<MotionAccountLocalizations>(
+              context,
+              MotionAccountLocalizations,
+            );
+            appearanceReady =
+                appCopy != null &&
+                appCopy.locale == locale &&
+                appCopy.complete &&
+                !appCopy.loadFailed &&
+                accountCopy?.locale == locale &&
+                Localizations.localeOf(context) == locale;
+            if (appearanceReady) break;
+          }
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 50)),
+          );
+        }
+        expect(
+          appearanceReady,
+          isTrue,
+          reason: 'Both actual catalogs must reach the requested field locale',
+        );
         await _routeSettled(tester);
         expect(_gate(tester, h), same(gate));
         expect(h.probeKey.currentState, same(probeState));
