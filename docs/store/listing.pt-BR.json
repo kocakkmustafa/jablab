@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation draft only; not submitted or provider-accepted. Application locale pt-BR is not a verified provider API locale mapping. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab: Boxe solo",
+    "subtitle": "Crie sua prática de boxe solo",
+    "promotionalText": "Pratique boxe de sombra sem contato: base, guarda, deslocamentos, movimentos de golpes, defesa planejada, combinações e rounds por conta própria.",
+    "keywords": "boxe,boxe de sombra,jab,direto,base,guarda,treino solo,referência"
+  },
+  "playStore": {
+    "shortDescription": "Aulas de boxe solo, prática e progresso; orientação por câmera indisponível."
+  },
+  "description": "O JabLab inclui 39 aulas originais em texto de boxe solo, distribuídas em 8 módulos. Aprenda base, guarda, deslocamentos, movimentos de golpes retos e curvos, movimentos defensivos planejados e combinações. A prática guiada e as autoavaliações levam aos seus próprios rounds de boxe de sombra sem contato. Este percurso não ensina sparring nem afirma que você esteja pronto para o boxe com contato.\n\nLeia as aulas originais em texto incluídas no app, siga as tarefas, reveja sua prática e continue a partir do registro de aulas no dispositivo. Você pode explorar sem entrar e usar uma conta compartilhada Motion, se quiser. A conta usa seu e-mail, o identificador da conta e um nome de exibição opcional. Você pode solicitar a exclusão da conta pelo app. Os registros do curso ficam no dispositivo, no perfil de visitante ou da conta atual. Concluir uma aula não certifica domínio. Esta versão de preparação de conteúdo não inclui vídeos de demonstração.\n\nVocê registra sua prática e a conclusão das aulas. A orientação por câmera, a contagem automática de golpes e a venda de assinaturas não estão disponíveis. O curso não mede força de impacto, velocidade dos golpes nem segurança pessoal.",
+  "cameraPermissionRationale": {
+    "ios": "A orientação por câmera está desativada nesta versão. Se for habilitada separadamente em uma versão futura, o JabLab usará a câmera para dar feedback sobre os movimentos no próprio dispositivo. As imagens da câmera e as posições do corpo não são enviadas nem salvas. O histórico de sessões permanece neste dispositivo."
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}

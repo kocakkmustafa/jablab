@@ -27,6 +27,18 @@ class ReleasePreparationTests(unittest.TestCase):
   key='x.'+base64.urlsafe_b64encode(b'{"role":"anon"}').decode()+'.x';self.assertFalse(validate_public_config(self.config(key))['live_account_verified'])
  def test_store_export_is_explicit_allowlist(self):
   r=public_listing(self.listing());s=json.dumps(r);self.assertNotIn('DO_NOT_EXPORT',s);self.assertNotIn('cameraPermissionRationale',r);self.assertEqual(set(r['playStore']),{'shortDescription'})
+ def test_keywords_accept_exactly_100_utf8_bytes(self):
+  for keywords in ['x'*100,'影'*32+',jab','م'*48+',jab']:
+   with self.subTest(keywords=keywords):
+    self.assertEqual(len(keywords.encode('utf-8')),100)
+    data=self.listing();data['appStore']['keywords']=keywords
+    self.assertEqual(public_listing(data)['appStore']['keywords'],keywords)
+ def test_keywords_reject_101_utf8_bytes(self):
+  for keywords in ['x'*101,'影'*32+',jaba','م'*48+',jaba']:
+   with self.subTest(keywords=keywords):
+    self.assertEqual(len(keywords.encode('utf-8')),101)
+    data=self.listing();data['appStore']['keywords']=keywords
+    with self.assertRaisesRegex(ValueError,'App Store text limit: keywords'):public_listing(data)
  def test_overlong_store_text_and_insecure_policy_url_rejected(self):
   for field,value in [('description','x'*4001),('privacyPolicyUrl','http://example.invalid/privacy')]:
    d=self.listing();d[field]=value

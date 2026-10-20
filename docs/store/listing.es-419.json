@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation draft only; not submitted or provider-accepted. Application locale es-419 is not a verified provider API locale mapping. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab: Boxeo de sombra",
+    "subtitle": "Practica boxeo por tu cuenta",
+    "promotionalText": "Practica boxeo de sombra sin contacto: postura, guardia, desplazamientos, trayectorias de golpes, defensa planificada, combinaciones y rounds por tu cuenta.",
+    "keywords": "boxeo,boxeo de sombra,jab,directo,postura,guardia,entrenamiento individual,referencia"
+  },
+  "playStore": {
+    "shortDescription": "Boxeo individual, práctica y progreso; guía con cámara no disponible."
+  },
+  "description": "JabLab incluye 39 lecciones originales de texto de boxeo individual en 8 módulos. Aprende postura, guardia, desplazamientos, movimientos de golpes rectos y curvos, movimientos defensivos planificados y combinaciones. La práctica guiada y las revisiones personales te llevan a tus propias rondas de boxeo de sombra sin contacto. Este recorrido no enseña sparring ni afirma que estés listo para el boxeo con contacto.\n\nLee las lecciones de texto originales incluidas, sigue las tareas, revisa tu propia práctica y continúa desde el registro de lecciones de tu dispositivo. Puedes explorar sin iniciar sesión y usar una cuenta compartida de Motion de forma opcional. La cuenta usa tu correo electrónico, el identificador de la cuenta y, si lo eliges, un nombre visible. Puedes solicitar la eliminación de la cuenta desde la app. Los registros del curso quedan en el dispositivo, dentro del perfil de invitado o de la cuenta actual. Completar una lección no certifica dominio. Esta versión de preparación del contenido no incluye videos de demostración.\n\nTú registras tu práctica y la finalización de las lecciones. La guía con cámara, el conteo automático de golpes y la venta de suscripciones no están disponibles. El curso no mide fuerza de impacto, velocidad de golpe ni seguridad personal.",
+  "cameraPermissionRationale": {
+    "ios": "La guía con cámara está desactivada en esta versión. Si se habilita por separado en una versión posterior, JabLab usará la cámara para dar comentarios sobre el movimiento en el dispositivo. Las imágenes de la cámara y las posiciones corporales no se suben ni se guardan. El historial de sesiones permanece en este dispositivo."
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}

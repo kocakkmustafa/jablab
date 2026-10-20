@@ -11,7 +11,7 @@
   },
   "description": "JabLab, 8 modülde 39 özgün Türkçe ve İngilizce solo boks dersi sunar. Duruş, gard, ayak çalışması, düz ve kavisli yumruk şekilleri, planlı savunma ve kombinasyonları öğren. Rehberli çalışma ve öz denetim, kendi temassız gölge boksu rauntlarına ilerler. Bu yol sparring öğretmez veya temaslı boksa hazır olduğun hükmünü vermez.\n\nÖzgün metin derslerini oku, uygulama görevlerini takip et, kendi çalışmanı değerlendir ve cihazdaki ders kaydından devam et. Hesabın olmadan kataloğu gezebilir, isteğe bağlı ortak Motion hesabını kullanabilirsin. Hesap; e-posta, hesap kimliği ve eklediysen görünen adını kullanır; uygulamadan hesap silme isteği yapabilirsin. Kurs kayıtları cihazda mevcut konuk veya hesap kapsamında kalır. Ders bitirme ustalık belgesi değildir. Bu içerik hazırlığı sürümünde gösterim videosu bulunmaz.\n\nÇalışmanı ve tamamlamayı kendin kaydedersin. Kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı açık değildir. Kurs darbe kuvveti, yumruk hızı veya kişisel güvenliği ölçmez.",
   "cameraPermissionRationale": {
-    "ios": "JabLab, gölge boksundaki hareketlerine geri bildirim vermek için kamerayı kullanır. Kamera görüntüsü cihazında kalır ve yüklenmez; video veya okunan vücut konumları saklanmaz. Oturum geçmişin (hangi ders, ne zaman, ne kadar süre) bu cihazda tutulur."
+    "ios": "Bu sürümde kamera koçluğu devre dışıdır. Daha sonraki bir sürümde ayrıca etkinleştirilirse JabLab, cihaz üzerinde hareket geri bildirimi vermek için kamerayı kullanır. Kamera görüntüleri ve vücut konumları yüklenmez veya kaydedilmez. Oturum geçmişi bu cihazda kalır."
   },
   "supportUrl": "https://yulalab.com/support",
   "privacyPolicyUrl": "https://yulalab.com/privacy/motion",

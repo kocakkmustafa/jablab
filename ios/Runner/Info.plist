@@ -15,6 +15,17 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>tr</string>
+		<string>es-419</string>
+		<string>pt-BR</string>
+		<string>de</string>
+		<string>fr</string>
+		<string>ja</string>
+		<string>ar</string>
+	</array>
 	<key>CFBundleDisplayName</key>
 	<string>JabLab</string>
 	<key>CFBundleExecutable</key>
@@ -36,7 +47,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>JabLab watches your shadow boxing to coach your form. The camera image stays on this device and is never uploaded, and nothing from the camera is saved — not the video, and not the body positions we read from it. Your session history (which lesson, when, how long) is stored on this device.</string>
+	<string>Camera coaching is disabled in this release. If separately enabled in a later release, JabLab uses the camera for on-device movement feedback. Camera images and body positions are not uploaded or saved. Session history stays on this device.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

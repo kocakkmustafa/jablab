@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation draft only; not submitted or provider-accepted. Application locale fr is not a verified provider API locale mapping. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab : Boxe en solo",
+    "subtitle": "Créez votre pratique de boxe",
+    "promotionalText": "Du placement aux rounds autonomes : pratiquez le shadow-boxing sans contact, avec garde, déplacements, formes de coups, défense planifiée et combinaisons.",
+    "keywords": "boxe,shadow-boxing,jab,direct,position,garde,entraînement solo,référence"
+  },
+  "playStore": {
+    "shortDescription": "Boxe solo, exercices et progression ; guidage caméra indisponible."
+  },
+  "description": "JabLab propose 39 leçons textuelles originales de boxe solo, intégrées à l’app et réparties en 8 modules. Apprenez la position, la garde, les déplacements, les formes de coups droits et courbes, les mouvements défensifs planifiés et les combinaisons. La pratique guidée et les autovérifications vous mènent à vos propres rounds de shadow-boxing sans contact. Ce parcours n’enseigne pas le sparring et n’affirme pas votre aptitude à la boxe avec contact.\n\nLisez les leçons originales incluses, suivez les exercices, examinez votre pratique et reprenez depuis le relevé de leçons sur votre appareil. Vous pouvez parcourir sans vous connecter et utiliser, au choix, le compte Motion commun. Le compte utilise votre adresse e-mail, votre identifiant de compte et un nom d’affichage facultatif. Vous pouvez demander sa suppression dans l’app. Les données du cours restent sur l’appareil, dans le périmètre du profil invité ou du compte actuel. Terminer une leçon ne certifie pas la maîtrise. Cette version de préparation du contenu ne comprend pas de vidéo de démonstration.\n\nVous consignez vous-même votre pratique et les leçons terminées. Le guidage caméra, le comptage automatique des coups et la vente d’abonnements sont indisponibles. Le cours ne mesure ni force d’impact, ni vitesse de frappe, ni sécurité personnelle.",
+  "cameraPermissionRationale": {
+    "ios": "Le guidage caméra est désactivé dans cette version. S’il est activé séparément dans une version ultérieure, JabLab utilisera la caméra pour fournir un retour sur les mouvements sur l’appareil. Les images de la caméra et les positions du corps ne sont ni envoyées ni enregistrées. L’historique des séances reste sur cet appareil."
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}

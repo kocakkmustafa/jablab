@@ -1,0 +1,1 @@
+"NSCameraUsageDescription" = "A orientação por câmera está desativada nesta versão. Se for habilitada separadamente em uma versão futura, o JabLab usará a câmera para dar feedback sobre os movimentos no próprio dispositivo. As imagens da câmera e as posições do corpo não são enviadas nem salvas. O histórico de sessões permanece neste dispositivo.";

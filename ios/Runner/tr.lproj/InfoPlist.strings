@@ -1,1 +1,1 @@
-"NSCameraUsageDescription" = "JabLab, gölge boksundaki hareketlerine geri bildirim vermek için kamerayı kullanır. Kamera görüntüsü cihazında kalır ve yüklenmez; video veya okunan vücut konumları saklanmaz. Oturum geçmişin (hangi ders, ne zaman, ne kadar süre) bu cihazda tutulur.";
+"NSCameraUsageDescription" = "Bu sürümde kamera koçluğu devre dışıdır. Daha sonraki bir sürümde ayrıca etkinleştirilirse JabLab, cihaz üzerinde hareket geri bildirimi vermek için kamerayı kullanır. Kamera görüntüleri ve vücut konumları yüklenmez veya kaydedilmez. Oturum geçmişi bu cihazda kalır.";

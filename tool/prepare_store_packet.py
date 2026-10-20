@@ -35,7 +35,10 @@ def public_listing(data):
     result['playStore']={'shortDescription':data['playStore']['shortDescription']}
     if set(result['appStore'])!=set(LIMITS):raise ValueError('Unexpected App Store fields')
     for name,limit in LIMITS.items():
-        if not isinstance(result['appStore'][name],str) or not 0<len(result['appStore'][name])<=limit:raise ValueError('App Store text limit: '+name)
+        value=result['appStore'][name]
+        if not isinstance(value,str):raise ValueError('App Store text limit: '+name)
+        length=len(value.encode('utf-8')) if name=='keywords' else len(value)
+        if not 0<length<=limit:raise ValueError('App Store text limit: '+name)
     if not 0<len(result['playStore']['shortDescription'])<=80 or not 0<len(result['description'])<=4000:raise ValueError('Play/description text limit')
     for name in ['supportUrl','privacyPolicyUrl']:
         if urllib.parse.urlsplit(result[name]).scheme!='https':raise ValueError('HTTPS listing URL required')

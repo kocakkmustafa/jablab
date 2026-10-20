@@ -1,0 +1,1 @@
+"NSCameraUsageDescription" = "Le guidage caméra est désactivé dans cette version. S’il est activé séparément dans une version ultérieure, JabLab utilisera la caméra pour fournir un retour sur les mouvements sur l’appareil. Les images de la caméra et les positions du corps ne sont ni envoyées ni enregistrées. L’historique des séances reste sur cet appareil.";
