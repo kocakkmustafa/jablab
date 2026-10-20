@@ -52,6 +52,7 @@ void main() {
         hasLength(1),
       );
       expect(tester.takeException(), isNull);
+      await closeWidgetFixture(tester, f);
     },
   );
 
@@ -74,6 +75,7 @@ void main() {
       );
       expect(find.byKey(const Key('live-clean')), findsNothing);
       expect(tester.takeException(), isNull);
+      await closeWidgetFixture(tester, f);
     },
   );
 
@@ -99,6 +101,7 @@ void main() {
         '0',
       );
       expect(find.byKey(const Key('skeleton-overlay')), findsOneWidget);
+      await closeWidgetFixture(tester, f);
     },
   );
 
@@ -114,6 +117,7 @@ void main() {
       expect(find.text(correctedMarker), findsNothing);
       expect(find.text(calibrationReason), findsOneWidget);
       expect(f.runs.last.completedCount, greaterThanOrEqualTo(2));
+      await closeWidgetFixture(tester, f);
     },
   );
 
@@ -141,6 +145,7 @@ void main() {
         '1',
       );
       expect(f.runs.last.phase, isNull);
+      await closeWidgetFixture(tester, f);
     },
   );
 
