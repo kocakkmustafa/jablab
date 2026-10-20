@@ -1622,7 +1622,6 @@
     "s_0c6c83bc38bcaad61e0ffa7c0b246b58926f8b0139cc65ad907dfca77c4a8bf5": "Kombinationsfolge und Timing für modellierte Schläge. Kombination aus Haken oder Uppercuts wird nicht geordnet, da diese Schläge gar nicht erkannt werden",
     "s_cf2bba776fa64ad4bc075ef271df19dd1667e06348b1ed58dcddd4863386fb67": "Standbreite, gekreuzte Füße, Gleichgewicht — diese werden bewertet",
     "s_fa1d8c4159c4751b22652184531b7c9b97f499c6189eb66f486178f153a2a878": "Deckungshandposition — erkannt und angeleitet, aber NICHT bewertet. Coaches sind uneinig: In unseren Referenzaufnahmen wich der hintere Unterarm über 45 Grad ab, wie weit darüber wissen wir nicht. Sinkende Hand markieren wir; wir geben ihr keine Zahl.",
-    "s_8dc41a044509955ac3cb702ee4d430f908a682c19e09bad438869188e52e446f": "Tempo als Band (kontrolliert / zügig / schnell), abgeleitet aus der Streckdauer des Schlags — nicht aus Pixelgeschwindigkeit. Die Engine entscheidet damit, wann sie zum Verlangsamen auffordert; die Sitzungsübersicht zeigt dein zeitlich häufigstes Band.",
     "s_e878956c0b9bac7c29e7d8f1c257953c24ae437a486af4d71e13cd5513a99802": "Schlagkraft oder Leistung — eine Kamera misst keine Kraft, und wir tun nicht so.",
     "s_b64e958cb73d4cb580b86acdff2c9338a92b1d2bc68134a8e5f10be6a57c065d": "Schlagmechanik — dein Armweg wird angeleitet, nicht bewertet. Für Jab haben wir Referenzaufnahmen; es ist keine Datenlücke: Am Arm sind Coaches schlicht am uneinigsten, besonders am vorderen.",
     "s_fa94f0b655acea624e1150a3d68faeecba18ac25226ca443d1db50dbc38f6224": "Haken- und Uppercut-Technik — nicht modelliert. Wir ließen eine echte Hakenlektion durch die App laufen: Fast alle Haken wurden verpasst, die wenigen erkannten als Jabs oder Crosses gezählt. Wir sagen das lieber, als eine falsche Zahl richtig aussehen zu lassen.",
@@ -2298,6 +2297,7 @@
     "s_fcd5878c1e17936703d1df5e429410121d6c4a2a9aaf4d102bd275ad531e3641": "Kamerazugriff für JabLab ist deaktiviert, System fragt nicht erneut. In Einstellungen aktivierbar. Rundenuhr läuft auch ohne Kamera.",
     "s_f511900b6b82763c6e762a16dbdd40040980de0afb66e77cd4fd086a6f4a0e35": "Zum Beobachten deiner Jab-Bewegung brauchen wir Kamera. Ohne sie keine Analyse; Rundenuhr läuft weiter.",
     "s_eba9cdc48a9091867e382a678035391c66f7df6fffab7eaef6111682474e2fbe": "Kamera dieses Geräts nicht startbar; keine Analyse. Rundenuhr läuft weiter.",
-    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Problem bei Kameravorbereitung; keine Analyse. Rundenuhr läuft weiter."
+    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Problem bei Kameravorbereitung; keine Analyse. Rundenuhr läuft weiter.",
+    "s_9b3c8e595733dcdc69729369f0c18ca36e888656e1804a9f9103b30b85970125": "Das Tempo wird als Bereich angezeigt (kontrolliert / zügig / schnell), anhand der beobachteten Zeit von der Streckung bis zum Höhepunkt und nicht anhand der Pixelgeschwindigkeit. Die Sitzungsübersicht zeigt den häufigsten Bereich unter den abgeschlossenen Versuchen mit einer gültigen Tempobeobachtung."
   }
 }

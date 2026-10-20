@@ -1622,7 +1622,6 @@
     "s_0c6c83bc38bcaad61e0ffa7c0b246b58926f8b0139cc65ad907dfca77c4a8bf5": "Ordem e ritmo de combinações, para os socos que modelamos. Não ordenamos combinação com cruzados ou uppercuts, pois esses socos nem são reconhecidos de início",
     "s_cf2bba776fa64ad4bc075ef271df19dd1667e06348b1ed58dcddd4863386fb67": "Largura da postura, pés cruzados, equilíbrio — estes são avaliados",
     "s_fa1d8c4159c4751b22652184531b7c9b97f499c6189eb66f486178f153a2a878": "Posição da mão na guarda — detectada e orientada, mas NÃO pontuada. Treinadores discordam: nas nossas gravações de referência o antebraço de trás abriu além de 45 graus, e não sabemos quanto além. Sinalizaremos mão que cai; não daremos número a isso",
-    "s_8dc41a044509955ac3cb702ee4d430f908a682c19e09bad438869188e52e446f": "Tempo como faixa (controlado / animado / rápido), derivado do tempo de extensão do soco — não da velocidade em pixels. O mecanismo usa isso para decidir quando pedir para desacelerar, e o resumo da sessão mostra a faixa em que você passou mais tempo",
     "s_e878956c0b9bac7c29e7d8f1c257953c24ae437a486af4d71e13cd5513a99802": "Força ou potência do soco — câmera não mede força, e não fingiremos o contrário",
     "s_b64e958cb73d4cb580b86acdff2c9338a92b1d2bc68134a8e5f10be6a57c065d": "Mecânica do soco — o trajeto do braço recebe orientação, não nota. Temos gravações de referência para jab, então não é lacuna de dados: o braço é simplesmente onde treinadores mais discordam, sobretudo o braço da frente.",
     "s_fa94f0b655acea624e1150a3d68faeecba18ac25226ca443d1db50dbc38f6224": "Técnica de cruzado e uppercut — não modelada. Testamos uma lição real de cruzados no aplicativo: ele perdeu quase todos; os poucos registrados foram contados como jabs ou diretos. Preferimos dizer isso a deixar um número errado parecer certo.",
@@ -2304,6 +2303,7 @@
     "s_fcd5878c1e17936703d1df5e429410121d6c4a2a9aaf4d102bd275ad531e3641": "O acesso à câmera do JabLab está desativado e o sistema não pedirá permissão novamente. Você pode ativá-lo em Configurações. O relógio do round funciona mesmo sem câmera.",
     "s_f511900b6b82763c6e762a16dbdd40040980de0afb66e77cd4fd086a6f4a0e35": "Precisamos da câmera para acompanhar seu jab. Sem câmera não há análise; o relógio do round continua funcionando.",
     "s_eba9cdc48a9091867e382a678035391c66f7df6fffab7eaef6111682474e2fbe": "Não foi possível abrir a câmera neste dispositivo, então não há análise. O relógio do round continua funcionando.",
-    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Ocorreu um problema ao preparar a câmera, então não há análise. O relógio do round continua funcionando."
+    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Ocorreu um problema ao preparar a câmera, então não há análise. O relógio do round continua funcionando.",
+    "s_9b3c8e595733dcdc69729369f0c18ca36e888656e1804a9f9103b30b85970125": "O ritmo é apresentado em faixas (controlado / animado / rápido), com base no tempo observado da extensão até o ponto máximo, e não na velocidade em pixels. O resumo da sessão mostra a faixa mais frequente entre as tentativas concluídas com uma observação válida de ritmo."
   }
 }

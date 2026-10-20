@@ -64,8 +64,8 @@ const Map<String, String> _boxingMeasured = <String, String>{
       'Duruş genişliği, çaprazlanan ayaklar ve denge — bunlar değerlendirilir.',
   'Guard hand position — detected and coached, but NOT graded. Coaches disagree about it: across our reference takes the rear forearm spread past 45 degrees, and we do not know how far past. We will flag a dropping hand; we will not put a number on it':
       'Gard elinin konumu algılanır ve hakkında yönlendirme verilir; puanlanmaz. Referans kayıtlarımızda arka önkol 45 derecenin ötesine açılıyor, ancak antrenörler kabul edilebilir sınırda uzlaşmıyor. Düşen eli belirtiriz; buna sayı vermeyiz.',
-  'Tempo as a band (controlled / brisk / fast), derived from how long the punch takes to extend — not from pixel speed. The engine uses it to decide when to say slow down, and the session summary shows the band you spent the most time in':
-      'Tempo, yumruğun uzanma süresinden türetilen bir aralık olarak gösterilir (kontrollü / canlı / hızlı); piksel hızından hesaplanmaz. Motor bunu ne zaman yavaşlama uyarısı vereceğini belirlemek için kullanır; seans özetinde en çok bulunduğun aralık görünür.',
+  'Tempo as a band (controlled / brisk / fast), based on the observed time from extension to peak, not pixel speed. The session summary shows the most frequent band among completed attempts with a valid tempo observation.':
+      'Tempo, uzanma evresinden tepe evresine gözlenen süreye dayanan bir bant olarak gösterilir (kontrollü / tempolu / hızlı); piksel hızı değildir. Seans özeti, geçerli tempo gözlemi olan tamamlanmış denemelerde en sık görülen bandı gösterir.',
 };
 
 const Map<String, String> _boxingNotMeasured = <String, String>{

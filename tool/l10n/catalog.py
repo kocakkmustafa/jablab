@@ -224,8 +224,11 @@ def refresh():
         if x[1] in ('_englishIntro','_turkishIntro') and i+1<len(t) and t[i+1][1]=='=':
             end=next(j for j in range(i+2,len(t)) if t[j][1]==';');constants[x[1]]=decode(t[i+2:end])
     if len(constants)==2:add(constants['_englishIntro'],constants['_turkishIntro'],p,0)
-    data['entries']=list(entries.values())
-    data['limits']=['Exact source pair overlay; canonical content bytes are unchanged.','Translation source is not native-speaker, clinical, legal or rendered UI acceptance.']
+    # A changed source pair replaces its previous UI key. Keep authored content
+    # contexts, but do not make translators retain unreachable UI tombstones.
+    data['entries']=[e for e in entries.values()
+                     if e.get('kind') != 'UI' or e['contexts']]
+    data['limits']=['Exact source pair overlay; this generator does not rewrite content or progress IDs.','Translation source is not native-speaker, clinical, legal or rendered UI acceptance.']
     singulars={'{count} courses':'{count} course','{count} lessons':'{count} lesson','{count} rounds':'{count} round','{count} intervals':'{count} interval','{count} things are deliberately not in this app.':'{count} thing is deliberately not in this app.'}
     for e in data['entries']:
         e['placeholder_types']={name:('num' if name in {'count','n','minutes','hours','position','total','stopped'} or (name.startswith('value') and (e['en'].startswith('Lesson {') or any(term in e['en'] for term in ['written reviews reported','written targets','written review','self-reported complete','/24','/16','/20',' min','recorded','Written lesson ']))) else 'String') for name in e['placeholders']}

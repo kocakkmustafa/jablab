@@ -1622,7 +1622,6 @@
     "s_0c6c83bc38bcaad61e0ffa7c0b246b58926f8b0139cc65ad907dfca77c4a8bf5": "Ordre et timing des combinaisons pour les coups modélisés. Une combinaison de crochets ou d’uppercuts n’est pas ordonnée, car ces coups ne sont d’abord pas reconnus.",
     "s_cf2bba776fa64ad4bc075ef271df19dd1667e06348b1ed58dcddd4863386fb67": "Largeur de garde, pieds croisés, équilibre : ces éléments sont notés",
     "s_fa1d8c4159c4751b22652184531b7c9b97f499c6189eb66f486178f153a2a878": "Position des mains en garde : détectée et conseillée, mais PAS notée. Les entraîneurs divergent : dans nos prises de référence, l’avant-bras arrière s’écartait au-delà de 45 degrés, sans que nous sachions de combien. Nous signalerons une main qui tombe, sans la chiffrer.",
-    "s_8dc41a044509955ac3cb702ee4d430f908a682c19e09bad438869188e52e446f": "Tempo par catégorie (contrôlé / vif / rapide), déduit du temps d’extension du coup, pas d’une vitesse en pixels. Le moteur s’en sert pour demander de ralentir ; le bilan affiche la catégorie la plus fréquente.",
     "s_e878956c0b9bac7c29e7d8f1c257953c24ae437a486af4d71e13cd5513a99802": "Force ou puissance de frappe : une caméra ne mesure pas la force et nous ne prétendrons pas le contraire.",
     "s_b64e958cb73d4cb580b86acdff2c9338a92b1d2bc68134a8e5f10be6a57c065d": "Mécanique des coups : trajet du bras conseillé, pas noté. Nous avons des prises de référence du jab ; ce n’est donc pas un manque de données : le bras est simplement le point de plus grand désaccord entre entraîneurs, surtout le bras avant.",
     "s_fa94f0b655acea624e1150a3d68faeecba18ac25226ca443d1db50dbc38f6224": "Technique des crochets et uppercuts : non modélisée. Nous avons passé une vraie leçon de crochets dans l’app : presque tous manqués et les quelques-uns enregistrés comptés comme jabs ou directs arrière. Nous préférons le dire plutôt que laisser un nombre faux paraître juste.",
@@ -2304,6 +2303,7 @@
     "s_fcd5878c1e17936703d1df5e429410121d6c4a2a9aaf4d102bd275ad531e3641": "L’accès caméra de JabLab est fermé et le système ne redemandera pas l’autorisation. Vous pouvez l’activer dans Réglages. Sans caméra, le chronomètre du round fonctionne aussi.",
     "s_f511900b6b82763c6e762a16dbdd40040980de0afb66e77cd4fd086a6f4a0e35": "Nous avons besoin de la caméra pour suivre votre jab. Sans elle, aucune analyse ; le chronomètre du round continue.",
     "s_eba9cdc48a9091867e382a678035391c66f7df6fffab7eaef6111682474e2fbe": "Caméra impossible à ouvrir sur cet appareil ; aucune analyse. Le chronomètre du round continue.",
-    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Problème à la préparation de la caméra ; aucune analyse. Le chronomètre du round continue."
+    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Problème à la préparation de la caméra ; aucune analyse. Le chronomètre du round continue.",
+    "s_9b3c8e595733dcdc69729369f0c18ca36e888656e1804a9f9103b30b85970125": "Le tempo est présenté par plages (contrôlé / vif / rapide), selon le temps observé entre l’extension et le point culminant, et non selon la vitesse en pixels. Le bilan de séance affiche la plage la plus fréquente parmi les tentatives terminées avec une observation valide du tempo."
   }
 }

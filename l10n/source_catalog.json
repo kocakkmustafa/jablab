@@ -26809,21 +26809,6 @@
       "placeholder_types": {}
     },
     {
-      "id": "s_8dc41a044509955ac3cb702ee4d430f908a682c19e09bad438869188e52e446f",
-      "en": "Tempo as a band (controlled / brisk / fast), derived from how long the punch takes to extend — not from pixel speed. The engine uses it to decide when to say slow down, and the session summary shows the band you spent the most time in",
-      "tr": "Tempo, yumruğun uzanma süresinden türetilen bir aralık olarak gösterilir (kontrollü / canlı / hızlı); piksel hızından hesaplanmaz. Motor bunu ne zaman yavaşlama uyarısı vereceğini belirlemek için kullanır; seans özetinde en çok bulunduğun aralık görünür.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/catalog_locale.dart",
-          "line": 67
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
       "id": "s_e878956c0b9bac7c29e7d8f1c257953c24ae437a486af4d71e13cd5513a99802",
       "en": "Punch force or power — a camera cannot measure force, and we will not pretend otherwise",
       "tr": "Yumruk kuvveti veya gücü — kamera kuvveti ölçemez; ölçüyormuş gibi davranmıyoruz.",
@@ -32475,7 +32460,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 146
+          "line": 151
         }
       ],
       "kind": "UI",
@@ -32490,7 +32475,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 148
+          "line": 155
         }
       ],
       "kind": "UI",
@@ -32507,7 +32492,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 151
+          "line": 160
         }
       ],
       "kind": "UI",
@@ -32526,7 +32511,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 156
+          "line": 166
         }
       ],
       "kind": "UI",
@@ -32546,7 +32531,7 @@
       "contexts": [
         {
           "path": "lib/app/ui_language.dart",
-          "line": 157
+          "line": 167
         }
       ],
       "kind": "UI",
@@ -37302,10 +37287,25 @@
       ],
       "kind": "UI",
       "placeholder_types": {}
+    },
+    {
+      "id": "s_9b3c8e595733dcdc69729369f0c18ca36e888656e1804a9f9103b30b85970125",
+      "en": "Tempo as a band (controlled / brisk / fast), based on the observed time from extension to peak, not pixel speed. The session summary shows the most frequent band among completed attempts with a valid tempo observation.",
+      "tr": "Tempo, uzanma evresinden tepe evresine gözlenen süreye dayanan bir bant olarak gösterilir (kontrollü / tempolu / hızlı); piksel hızı değildir. Seans özeti, geçerli tempo gözlemi olan tamamlanmış denemelerde en sık görülen bandı gösterir.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/catalog_locale.dart",
+          "line": 67
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
     }
   ],
   "limits": [
-    "Exact source pair overlay; canonical content bytes are unchanged.",
+    "Exact source pair overlay; this generator does not rewrite content or progress IDs.",
     "Translation source is not native-speaker, clinical, legal or rendered UI acceptance."
   ]
 }

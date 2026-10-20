@@ -1622,7 +1622,6 @@
     "s_0c6c83bc38bcaad61e0ffa7c0b246b58926f8b0139cc65ad907dfca77c4a8bf5": "Orden y tiempos de combinaciones de puños modelados. No se ordena combinación de ganchos o uppercuts porque esos puños no se reconocen en primer lugar",
     "s_cf2bba776fa64ad4bc075ef271df19dd1667e06348b1ed58dcddd4863386fb67": "Anchura de postura, pies cruzados y equilibrio: se califican",
     "s_fa1d8c4159c4751b22652184531b7c9b97f499c6189eb66f486178f153a2a878": "Posición de manos en guardia: se detecta y orienta, pero NO se califica. Los entrenadores discrepan: en tomas de referencia antebrazo trasero se abrió más de 45 grados y no sabemos cuánto más. Señalaremos mano que baja; no le pondremos cifra",
-    "s_8dc41a044509955ac3cb702ee4d430f908a682c19e09bad438869188e52e446f": "Tempo por banda (controlado / ágil / rápido), según duración de extensión del puño, no velocidad de píxeles. Motor decide cuándo pedir bajar ritmo y resumen muestra banda más frecuente",
     "s_e878956c0b9bac7c29e7d8f1c257953c24ae437a486af4d71e13cd5513a99802": "Fuerza o potencia del golpe: cámara no mide fuerza y no fingiremos lo contrario",
     "s_b64e958cb73d4cb580b86acdff2c9338a92b1d2bc68134a8e5f10be6a57c065d": "Mecánica de puños: se orienta trayectoria del brazo, no se califica. Sí tenemos tomas de referencia de jab, así que no es carencia de datos: brazo es donde más discrepan entrenadores, sobre todo delantero.",
     "s_fa94f0b655acea624e1150a3d68faeecba18ac25226ca443d1db50dbc38f6224": "Técnica de gancho y uppercut: sin modelar. Pasamos lección real de gancho por aplicación: omitió casi todos y los pocos registrados los contó como jabs o crosses. Preferimos decirlo a presentar cifra equivocada como correcta.",
@@ -2304,6 +2303,7 @@
     "s_fcd5878c1e17936703d1df5e429410121d6c4a2a9aaf4d102bd275ad531e3641": "Acceso a cámara de JabLab desactivado; sistema no volverá a pedir permiso. Puedes activarlo en Configuración. Sin cámara sigue funcionando reloj del asalto.",
     "s_f511900b6b82763c6e762a16dbdd40040980de0afb66e77cd4fd086a6f4a0e35": "Necesitamos cámara para seguir tu jab. Sin cámara no hay análisis; reloj del asalto sigue funcionando.",
     "s_eba9cdc48a9091867e382a678035391c66f7df6fffab7eaef6111682474e2fbe": "No se pudo abrir cámara en este dispositivo; no hay análisis. Reloj del asalto sigue funcionando.",
-    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Ocurrió problema preparando cámara; no hay análisis. Reloj del asalto sigue funcionando."
+    "s_cd8ac1e0e07cefb25f6269c0722f8268e260a14850968d4cb136d255bfc93d39": "Ocurrió problema preparando cámara; no hay análisis. Reloj del asalto sigue funcionando.",
+    "s_9b3c8e595733dcdc69729369f0c18ca36e888656e1804a9f9103b30b85970125": "El tempo se presenta en bandas (controlado / ágil / rápido), según el tiempo observado desde la extensión hasta el punto máximo, no según la velocidad en píxeles. El resumen de la sesión muestra la banda más frecuente entre los intentos completados con una observación válida del tempo."
   }
 }
