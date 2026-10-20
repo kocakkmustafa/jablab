@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:motion_account/motion_account.dart';
 import 'package:jablab_engine/jablab_engine.dart';
 
 // Bu iki içe aktarma "candidate" klasöründen ama TERK EDİLMİŞ değil: ikisi
@@ -109,6 +110,7 @@ class _JabLabAppState extends State<JabLabApp> {
         localeListResolutionCallback: AppLocalizations.resolve,
         localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
           AppLocalizations.delegate,
+          MotionAccountLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

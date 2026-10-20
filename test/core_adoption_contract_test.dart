@@ -3,7 +3,7 @@ import 'support/local_core_intake.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-const _approvedSha = '62c105567a9fdfa9d907a8f8a399494c8ae5b598';
+const _approvedSha = '8f38158e092c6c9fc60c8ff88ecef449802a259f';
 const _historicalSha = 'f13bdc93b2eae2f741bfcdb4c9270a88e5d75e5d';
 
 void main() {

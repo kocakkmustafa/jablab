@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:motion_account/motion_account.dart';
 import 'package:jablab/app/ui_language.dart';
 
 // Isolated routes use the production locale resolver and real packaged copy.
 const testSupportedLocales = AppLocalizations.supportedLocales;
 const testLocalizationDelegates = <LocalizationsDelegate<dynamic>>[
   AppLocalizations.delegate,
+  MotionAccountLocalizations.delegate,
   GlobalMaterialLocalizations.delegate,
   GlobalWidgetsLocalizations.delegate,
   GlobalCupertinoLocalizations.delegate,

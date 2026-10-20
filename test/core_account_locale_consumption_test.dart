@@ -1,0 +1,224 @@
+// Consumer locale contract for published Core 8f.
+import 'dart:io';
+import 'app_pump.dart';
+import 'localization_fixture.dart';
+import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/content_repository.dart';
+import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:jablab/app/settings_page.dart';
+import 'package:motion_account/motion_account.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+class _SignedOutLocaleAccount implements MotionAccountClient {
+  @override
+  User? get currentUser => null;
+  @override
+  Stream<AuthState> get authChanges => const Stream<AuthState>.empty();
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+void main() {
+  // Literal values from published 8f, independent of the renderer's lookup.
+  final variants = <Locale, List<String>>{
+    const Locale('tr'): [
+      "Giriş yap",
+      "Hesap oluştur",
+      "Yeni hesap oluştur",
+      "E-posta",
+    ],
+    const Locale('en'): [
+      "Sign in",
+      "Create account",
+      "Create a new account",
+      "Email",
+    ],
+    const Locale('es', '419'): [
+      "Iniciar sesión",
+      "Crear cuenta",
+      "Crear una cuenta nueva",
+      "Correo electrónico",
+    ],
+    const Locale('pt', 'BR'): [
+      "Entrar",
+      "Criar conta",
+      "Criar uma nova conta",
+      "E-mail",
+    ],
+    const Locale('de'): [
+      "Anmelden",
+      "Konto erstellen",
+      "Neues Konto erstellen",
+      "E-Mail",
+    ],
+    const Locale('fr'): [
+      "Se connecter",
+      "Créer un compte",
+      "Créer un nouveau compte",
+      "E-mail",
+    ],
+    const Locale('ja'): ["ログイン", "アカウントを作成", "新しいアカウントを作成", "メールアドレス"],
+    const Locale('ar'): [
+      "تسجيل الدخول",
+      "إنشاء حساب",
+      "إنشاء حساب جديد",
+      "البريد الإلكتروني",
+    ],
+  };
+  for (final entry in variants.entries) {
+    testWidgets(
+      'settings account route inherits ${entry.key.toLanguageTag()} into Core sign-in and registration',
+      (tester) async {
+        tester.platformDispatcher.localesTestValue = [entry.key];
+        addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+        await tester.binding.setSurfaceSize(const Size(360, 800));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.pumpWidget(
+          MaterialApp(
+            locale: entry.key,
+            supportedLocales: testSupportedLocales,
+            localizationsDelegates: testLocalizationDelegates,
+            localeListResolutionCallback: resolveTestLocales,
+            home: SettingsPage(
+              onOpenWhyNot: () {},
+              excludedCount: 1,
+              accountPageBuilder: (_) =>
+                  MotionAccountPage(account: _SignedOutLocaleAccount()),
+            ),
+          ),
+        );
+        await settleTestLocalizations(tester, expectedLocale: entry.key);
+        await tester.ensureVisible(find.byKey(SettingsPage.accountEntryKey));
+        await tester.tap(find.byKey(SettingsPage.accountEntryKey));
+        await tester.pumpAndSettle();
+        final account = find.byType(MotionAccountPage);
+        expect(account, findsOneWidget);
+        final context = tester.element(account);
+        expect(Localizations.localeOf(context), entry.key);
+        final loaded = Localizations.of<MotionAccountLocalizations>(
+          context,
+          MotionAccountLocalizations,
+        );
+        expect(
+          loaded,
+          isNotNull,
+          reason:
+              'The actual Core delegate must be loaded; of() fallback is insufficient',
+        );
+        expect(loaded!.locale, entry.key);
+        expect(
+          Directionality.of(context),
+          entry.key.languageCode == 'ar'
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+        );
+        expect(
+          find.widgetWithText(FilledButton, entry.value[0]),
+          findsOneWidget,
+        );
+        expect(find.text(entry.value[3]), findsWidgets);
+        if (entry.key.languageCode != 'en') {
+          expect(find.text('Sign in'), findsNothing);
+        }
+        await tester.ensureVisible(find.text(entry.value[2]));
+        await tester.tap(find.text(entry.value[2]));
+        await tester.pumpAndSettle();
+        expect(
+          find.widgetWithText(FilledButton, entry.value[1]),
+          findsOneWidget,
+        );
+        final email = find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField &&
+              widget.decoration?.labelText == entry.value[3],
+        );
+        expect(email, findsOneWidget);
+        final fieldContext = tester.element(email);
+        expect(Localizations.localeOf(fieldContext), entry.key);
+        expect(
+          Directionality.of(fieldContext),
+          entry.key.languageCode == 'ar'
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+        );
+        expect(find.text(entry.value[3]), findsWidgets);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump();
+      },
+    );
+  }
+  // Real production root: this fails if JabLabApp omits the Core delegate even
+  // when the standalone fixture above includes it. No external account call.
+  for (final locale in [const Locale('tr'), const Locale('ar')]) {
+    testWidgets(
+      'production JabLabApp supplies Core delegate through settings in ${locale.toLanguageTag()}',
+      (tester) async {
+        tester.platformDispatcher.localesTestValue = [locale];
+        addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+        final directory = (await tester.runAsync(
+          () => Directory.systemTemp.createTemp('jablab-core-locale-'),
+        ))!;
+        final owners = OwnerResourceRegistry();
+        addTearDown(() async {
+          await tester.pumpWidget(const SizedBox.shrink());
+          await tester.runAsync(() async {
+            await owners.retireAll();
+            await directory.delete(recursive: true);
+          });
+        });
+        await tester.runAsync(
+          () => tester.pumpWidget(
+            JabLabApp(
+              repository: ContentRepository(
+                historyDirectoryOverride: directory,
+                ownerRegistry: owners,
+              ),
+              onboarding: const OnboardingStore(seenOverride: true),
+              accountPageBuilder: (_) =>
+                  MotionAccountPage(account: _SignedOutLocaleAccount()),
+            ),
+          ),
+        );
+        await settleAppLoad(tester);
+        await tester.pumpAndSettle();
+        final rootMaterial = tester.widget<MaterialApp>(
+          find.byType(MaterialApp).first,
+        );
+        expect(
+          rootMaterial.localizationsDelegates,
+          contains(MotionAccountLocalizations.delegate),
+        );
+        await tester.tap(find.byKey(const Key('settings-button')));
+        await tester.pumpAndSettle();
+        expect(find.byType(SettingsPage), findsOneWidget);
+        await tester.ensureVisible(find.byKey(SettingsPage.accountEntryKey));
+        await tester.tap(find.byKey(SettingsPage.accountEntryKey));
+        await tester.pumpAndSettle();
+        final context = tester.element(find.byType(MotionAccountPage));
+        final loaded = Localizations.of<MotionAccountLocalizations>(
+          context,
+          MotionAccountLocalizations,
+        );
+        expect(loaded, isNotNull);
+        expect(loaded!.locale, locale);
+        expect(Localizations.localeOf(context), locale);
+        expect(
+          Directionality.of(context),
+          locale.languageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+        );
+        expect(
+          find.widgetWithText(
+            FilledButton,
+            locale.languageCode == 'tr' ? 'Giriş yap' : 'تسجيل الدخول',
+          ),
+          findsOneWidget,
+        );
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
+}
