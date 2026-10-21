@@ -25,7 +25,16 @@ import 'app_pump.dart';
 /// This does not exercise production account startup or a physical camera.
 void main() {
   const paths =
-      <({String entry, String courseReady, String firstLesson, Type page, String? subEntry, String? subReady})>[
+      <
+        ({
+          String entry,
+          String courseReady,
+          String firstLesson,
+          Type page,
+          String? subEntry,
+          String? subReady,
+        })
+      >[
         (
           entry: 'open-solo-boxing-course',
           courseReady: 'solo-course-progress',
@@ -91,107 +100,115 @@ void main() {
 
   for (final language in <String>['tr', 'en']) {
     for (final path in paths) {
-      testWidgets('${path.subEntry ?? path.entry} opens its $language lesson with camera off', (
-        tester,
-      ) async {
-        tester.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
-        tester.view.physicalSize = const Size(375, 812);
-        tester.view.devicePixelRatio = 1;
-        final owners = OwnerResourceRegistry();
-        final directory = Directory.systemTemp.createTempSync(
-          'jablab-no-camera-',
-        );
-        final nativeCalls = <String>[];
-        var legacyAccessCalls = 0;
-        final messenger = tester.binding.defaultBinaryMessenger;
-        for (final channel in channels) {
-          messenger.setMockMethodCallHandler(channel, (call) async {
-            nativeCalls.add('${channel.name}/${call.method}');
-            throw PlatformException(code: 'camera-disabled-for-test');
-          });
-        }
-        addTearDown(() async {
-          await tester.pumpWidget(const SizedBox.shrink());
-          // Root disposal owns retirement; flush its widget-test microtasks.
-          await tester.pumpAndSettle();
-          directory.deleteSync(recursive: true);
+      testWidgets(
+        '${path.subEntry ?? path.entry} opens its $language lesson with camera off',
+        (tester) async {
+          tester.platformDispatcher.localesTestValue = <Locale>[
+            Locale(language),
+          ];
+          tester.view.physicalSize = const Size(375, 812);
+          tester.view.devicePixelRatio = 1;
+          final owners = OwnerResourceRegistry();
+          final directory = Directory.systemTemp.createTempSync(
+            'jablab-no-camera-',
+          );
+          final nativeCalls = <String>[];
+          var legacyAccessCalls = 0;
+          final messenger = tester.binding.defaultBinaryMessenger;
           for (final channel in channels) {
-            messenger.setMockMethodCallHandler(channel, null);
+            messenger.setMockMethodCallHandler(channel, (call) async {
+              nativeCalls.add('${channel.name}/${call.method}');
+              throw PlatformException(code: 'camera-disabled-for-test');
+            });
           }
-          tester.platformDispatcher.clearLocalesTestValue();
-          tester.view.resetPhysicalSize();
-          tester.view.resetDevicePixelRatio();
-        });
+          addTearDown(() async {
+            await tester.pumpWidget(const SizedBox.shrink());
+            // Root disposal owns retirement; flush its widget-test microtasks.
+            await tester.pumpAndSettle();
+            directory.deleteSync(recursive: true);
+            for (final channel in channels) {
+              messenger.setMockMethodCallHandler(channel, null);
+            }
+            tester.platformDispatcher.clearLocalesTestValue();
+            tester.view.resetPhysicalSize();
+            tester.view.resetDevicePixelRatio();
+          });
 
-        Future<void> open(String key, Finder ready) async {
-          final target = find.byKey(Key(key));
-          await tester.scrollUntilVisible(
-            target,
-            400,
-            maxScrolls: 30,
-            scrollable: find.byType(Scrollable).first,
-          );
-          await tester.pumpAndSettle();
-          await tester.tap(target.hitTestable());
-          await tester.pump();
-          await settleUntil(tester, ready);
-          expect(ready, findsOneWidget);
-          await tester.pumpAndSettle();
-        }
+          Future<void> open(String key, Finder ready) async {
+            final target = find.byKey(Key(key));
+            await tester.scrollUntilVisible(
+              target,
+              400,
+              maxScrolls: 30,
+              scrollable: find.byType(Scrollable).first,
+            );
+            await tester.pumpAndSettle();
+            await tester.tap(target.hitTestable());
+            await tester.pump();
+            await settleUntil(tester, ready);
+            expect(ready, findsOneWidget);
+            await tester.pumpAndSettle();
+          }
 
-        await tester.runAsync(
-          () => tester.pumpWidget(
-            JabLabApp(
-              repository: ContentRepository(
-                historyDirectoryOverride: directory,
-                ownerRegistry: owners,
+          await tester.runAsync(
+            () => tester.pumpWidget(
+              JabLabApp(
+                repository: ContentRepository(
+                  historyDirectoryOverride: directory,
+                  ownerRegistry: owners,
+                ),
+                onboarding: const OnboardingStore(seenOverride: true),
+                beforeLessonStart: (_) async {
+                  legacyAccessCalls++;
+                  return false;
+                },
               ),
-              onboarding: const OnboardingStore(seenOverride: true),
-              beforeLessonStart: (_) async {
-                legacyAccessCalls++;
-                return false;
-              },
             ),
-          ),
-        );
-        await settleAppLoad(tester);
-        await open(path.entry, find.byKey(Key(path.courseReady)));
-        if (path.subEntry != null) {
-          await open(path.subEntry!, find.byKey(Key(path.subReady!)));
-        }
-        await open(path.firstLesson, find.byType(path.page));
-
-        if (path.page == Yang16WrittenTargetPage) {
-          // The written target can open before its unawaited preparation load.
-          // Await the real loaded argument before revealing its lazy panel;
-          // pumpAndSettle alone does not finish real bundle/Core reads.
-          final preparedTarget = find.byWidgetPredicate(
-            (widget) => widget is Yang16WrittenTargetPage &&
-                widget.target.id == 'prepare' &&
-                widget.practice?.lessonId == 'prepare',
           );
-          await settleUntil(tester, preparedTarget);
-          expect(preparedTarget, findsOneWidget);
-          final target = tester.widget<Yang16WrittenTargetPage>(preparedTarget);
-          final panel = find.byType(SelfGuidedPracticePanel);
-          await tester.scrollUntilVisible(
-            panel,
-            400,
-            maxScrolls: 30,
-            scrollable: find.byType(Scrollable).first,
-          );
-          await tester.pumpAndSettle();
-          expect(panel, findsOneWidget);
-          expect(tester.widget<SelfGuidedPracticePanel>(panel).practice,
-              same(target.practice));
-        }
+          await settleAppLoad(tester);
+          await open(path.entry, find.byKey(Key(path.courseReady)));
+          if (path.subEntry != null) {
+            await open(path.subEntry!, find.byKey(Key(path.subReady!)));
+          }
+          await open(path.firstLesson, find.byType(path.page));
 
-        expect(find.byType(path.page), findsOneWidget);
-        expect(find.byType(CircularProgressIndicator), findsNothing);
-        expect(nativeCalls, isEmpty);
-        expect(legacyAccessCalls, 0);
-        expect(tester.takeException(), isNull);
-      });
+          if (path.page == Yang16WrittenTargetPage) {
+            // The written target can open before its unawaited preparation load.
+            // Await the real loaded argument before revealing its lazy panel;
+            // pumpAndSettle alone does not finish real bundle/Core reads.
+            final preparedTarget = find.byWidgetPredicate(
+              (widget) =>
+                  widget is Yang16WrittenTargetPage &&
+                  widget.target.id == 'prepare' &&
+                  widget.practice?.lessonId == 'prepare',
+            );
+            await settleUntil(tester, preparedTarget);
+            expect(preparedTarget, findsOneWidget);
+            final target = tester.widget<Yang16WrittenTargetPage>(
+              preparedTarget,
+            );
+            final panel = find.byType(SelfGuidedPracticePanel);
+            await tester.scrollUntilVisible(
+              panel,
+              400,
+              maxScrolls: 30,
+              scrollable: find.byType(Scrollable).first,
+            );
+            await tester.pumpAndSettle();
+            expect(panel, findsOneWidget);
+            expect(
+              tester.widget<SelfGuidedPracticePanel>(panel).practice,
+              same(target.practice),
+            );
+          }
+
+          expect(find.byType(path.page), findsOneWidget);
+          expect(find.byType(CircularProgressIndicator), findsNothing);
+          expect(nativeCalls, isEmpty);
+          expect(legacyAccessCalls, 0);
+          expect(tester.takeException(), isNull);
+        },
+      );
     }
   }
 }

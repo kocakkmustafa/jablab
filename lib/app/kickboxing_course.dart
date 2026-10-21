@@ -142,9 +142,11 @@ final class KickboxingCourse {
       'S14': 'https://www.youtube.com/watch?v=bEVIlec93Ps',
       'S15': 'https://www.youtube.com/watch?v=aP-4Kjgc4Q8',
     };
-    if (sources.any((source) =>
-        observedPrimaryUrls.containsKey(source.id) &&
-        source.url.toString() != observedPrimaryUrls[source.id])) {
+    if (sources.any(
+      (source) =>
+          observedPrimaryUrls.containsKey(source.id) &&
+          source.url.toString() != observedPrimaryUrls[source.id],
+    )) {
       throw const FormatException('Wrong actual primary source binding');
     }
     for (var i = 0; i < lessons.length; i++) {

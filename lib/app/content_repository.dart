@@ -329,21 +329,29 @@ final class ContentRepository {
 
   Future<Yang16PreparationCourse> loadYang16PreparationCourse() async {
     final result = await ContentBundleLoader(
-      reader: FlutterBundleContentAssetReader(bundle: contentBundleOverride ?? rootBundle),
+      reader: FlutterBundleContentAssetReader(
+        bundle: contentBundleOverride ?? rootBundle,
+      ),
       expectedAppId: 'com.yulalab.jablab',
       currentCoreContract: currentMotionContentContract,
       manifestPath: yang16PreparationManifestAsset,
     ).load();
     if (result is ContentBlocked) throw ContentException(result.error);
     if (result is! ContentReady) {
-      throw const ContentException(ContentError(code: ContentErrorCode.capability));
+      throw const ContentException(
+        ContentError(code: ContentErrorCode.capability),
+      );
     }
     final bytes = await result.assets.read(yang16PreparationAsset);
     try {
       return Yang16PreparationCourse.fromJsonString(utf8.decode(bytes));
     } on FormatException {
-      throw const ContentException(ContentError(
-        code: ContentErrorCode.schema, contentId: 'yang16-original-preparation-json'));
+      throw const ContentException(
+        ContentError(
+          code: ContentErrorCode.schema,
+          contentId: 'yang16-original-preparation-json',
+        ),
+      );
     }
   }
 
@@ -571,7 +579,8 @@ final class ContentRepository {
     final ids = <String>{...lesson.techniques};
     for (final combinationId in lesson.combinations) {
       final matches = rules.combinations.where((c) => c.id == combinationId);
-      if (matches.length != 1) throw StateError('Unsupported lesson combination');
+      if (matches.length != 1)
+        throw StateError('Unsupported lesson combination');
       ids.addAll(matches.single.sequence);
     }
     if (!rules.techniques.map((t) => t.id).toSet().containsAll(ids)) {

@@ -57,8 +57,9 @@ void main() {
   test(
     'same-length Kickboxing tampering is rejected by Core integrity gate',
     () async {
-      final bytes = File(ContentRepository.kickboxingCourseAsset)
-          .readAsBytesSync();
+      final bytes = File(
+        ContentRepository.kickboxingCourseAsset,
+      ).readAsBytesSync();
       final changed = Uint8List.fromList(bytes);
       changed[changed.length - 1] = bytes.last == 10 ? 32 : 10;
       final repository = ContentRepository(
@@ -76,17 +77,24 @@ void main() {
   test(
     'a rebuilt manifest cannot replace the fixed reviewed Kickboxing asset',
     () async {
-      final json = jsonDecode(
-        File(ContentRepository.kickboxingCourseAsset).readAsStringSync(),
-      ) as Map<String, dynamic>;
+      final json =
+          jsonDecode(
+                File(
+                  ContentRepository.kickboxingCourseAsset,
+                ).readAsStringSync(),
+              )
+              as Map<String, dynamic>;
       // Structurally valid text replacement plus matching integrity metadata
       // must still fail the reviewed-content binding.
       json['safety']['en'] = 'Changed safety guidance';
       final bytes = Uint8List.fromList(utf8.encode(jsonEncode(json)));
-      final manifest = jsonDecode(
-        File(ContentRepository.kickboxingIntegrityManifestAsset)
-            .readAsStringSync(),
-      ) as Map<String, dynamic>;
+      final manifest =
+          jsonDecode(
+                File(
+                  ContentRepository.kickboxingIntegrityManifestAsset,
+                ).readAsStringSync(),
+              )
+              as Map<String, dynamic>;
       final asset = (manifest['assets'] as List).single as Map<String, dynamic>;
       asset['byteLength'] = bytes.length;
       asset['sha256'] = computeSha256Hex(bytes);

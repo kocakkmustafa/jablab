@@ -24,7 +24,8 @@ class SelfGuidedPracticePanel extends StatelessWidget {
         UiLanguage.text(context, en: en, tr: tr);
     String copy(PracticeCopy value) => text(value.en, value.tr);
     final available = practice.offersMovement;
-    final ended = attempt == PracticeAttempt.stopped ||
+    final ended =
+        attempt == PracticeAttempt.stopped ||
         attempt == PracticeAttempt.uncertain;
     return Card(
       key: const Key('self-guided-practice-panel'),
@@ -34,7 +35,10 @@ class SelfGuidedPracticePanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              text('Optional beginner practice', 'İsteğe bağlı başlangıç denemesi'),
+              text(
+                'Optional beginner practice',
+                'İsteğe bağlı başlangıç denemesi',
+              ),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
@@ -58,29 +62,33 @@ class SelfGuidedPracticePanel extends StatelessWidget {
                 key: const Key('self-guided-source-pending'),
               ),
             if (practice.sourceReview == PracticeSourceReview.writtenSource)
-              Text(text(
-                'This task uses written source review; no source video is claimed as watched.',
-                'Bu görev yazılı kaynak incelemesine dayanır; kaynak videosu izlenmiş sayılmaz.',
-              )),
+              Text(
+                text(
+                  'This task uses written source review; no source video is claimed as watched.',
+                  'Bu görev yazılı kaynak incelemesine dayanır; kaynak videosu izlenmiş sayılmaz.',
+                ),
+              ),
             if (practice.sourceReview == PracticeSourceReview.videoSegments)
-              Text(text(
-                'Source video sections informed this task; your own attempt is not observed.',
-                'Bu görevde kaynak video bölümlerinden yararlanıldı; senin denemen gözlemlenmiyor.',
-              )),
+              Text(
+                text(
+                  'Source video sections informed this task; your own attempt is not observed.',
+                  'Bu görevde kaynak video bölümlerinden yararlanıldı; senin denemen gözlemlenmiyor.',
+                ),
+              ),
             if (available ||
                 practice.mode == SelfGuidedPracticeMode.conceptOnly)
               Text(copy(practice.task), key: const Key('self-guided-task')),
-            Text(
-              copy(practice.observe),
-              key: const Key('self-guided-observe'),
-            ),
+            Text(copy(practice.observe), key: const Key('self-guided-observe')),
             Text(
               text('Safety and stopping', 'Sınırlar ve durma'),
               style: Theme.of(context).textTheme.titleSmall,
             ),
             Text(copy(practice.safety), key: const Key('self-guided-safety')),
             Text(
-              text('A smaller or written option', 'Daha küçük veya yazılı seçenek'),
+              text(
+                'A smaller or written option',
+                'Daha küçük veya yazılı seçenek',
+              ),
               style: Theme.of(context).textTheme.titleSmall,
             ),
             Text(
@@ -95,10 +103,13 @@ class SelfGuidedPracticePanel extends StatelessWidget {
               key: const Key('self-guided-unsaved'),
             ),
             if (ended)
-              Text(text(
-                'This movement trial has ended for this visit. Continue with the written alternative.',
-                'Bu ziyaretin hareket denemesi sona erdi. Yazılı alternatifle devam et.',
-              ), key: const Key('self-guided-ended')),
+              Text(
+                text(
+                  'This movement trial has ended for this visit. Continue with the written alternative.',
+                  'Bu ziyaretin hareket denemesi sona erdi. Yazılı alternatifle devam et.',
+                ),
+                key: const Key('self-guided-ended'),
+              ),
             RadioGroup<PracticeAttempt>(
               groupValue: attempt,
               onChanged: (value) {
@@ -112,11 +123,14 @@ class SelfGuidedPracticePanel extends StatelessWidget {
                     RadioListTile<PracticeAttempt>(
                       key: Key('self-guided-attempt-${value.name}'),
                       value: value,
-                      enabled: !ended && admitted() &&
+                      enabled:
+                          !ended &&
+                          admitted() &&
                           (available || value != PracticeAttempt.attempted),
                       title: Text(switch (value) {
                         PracticeAttempt.unrecorded => text(
-                          'Not recorded', 'Beyan edilmedi',
+                          'Not recorded',
+                          'Beyan edilmedi',
                         ),
                         PracticeAttempt.attempted => text(
                           'I tried the optional task; correctness is unverified',

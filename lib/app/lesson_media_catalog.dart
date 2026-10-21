@@ -10,7 +10,8 @@ import 'lesson_media_source_pins_editorial.dart';
 import 'solo_boxing_course.dart';
 
 /// Editorial closed QA source identity only; not a media acceptance signature.
-const jablabMediaProductionManifestSha256 = jablabEditorialSourcePinManifestSha256;
+const jablabMediaProductionManifestSha256 =
+    jablabEditorialSourcePinManifestSha256;
 const _mediaRoot = 'assets/content/media/';
 const _maxVideoBytes = 64 * 1024 * 1024;
 const _maxCaptionBytes = 1024 * 1024;

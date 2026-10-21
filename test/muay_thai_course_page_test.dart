@@ -133,13 +133,22 @@ void main() {
               await show(t, const Key('self-guided-task'));
               expect(
                 t.widget<Text>(find.byKey(const Key('self-guided-task'))).data,
-                language == 'tr' ? l.selfGuidedPractice!.task.tr : l.selfGuidedPractice!.task.en,
+                language == 'tr'
+                    ? l.selfGuidedPractice!.task.tr
+                    : l.selfGuidedPractice!.task.en,
               );
-              expect(find.byKey(const Key('muay-thai-conditional-task')), findsNothing);
+              expect(
+                find.byKey(const Key('muay-thai-conditional-task')),
+                findsNothing,
+              );
             } else {
               await show(t, const Key('muay-thai-conditional-task'));
               expect(
-                t.widget<Text>(find.byKey(const Key('muay-thai-conditional-task'))).data,
+                t
+                    .widget<Text>(
+                      find.byKey(const Key('muay-thai-conditional-task')),
+                    )
+                    .data,
                 language == 'tr' ? l.physicalTask.tr : l.physicalTask.en,
               );
               expect(find.byKey(const Key('self-guided-task')), findsNothing);

@@ -142,9 +142,11 @@ final class KarateCourse {
       'K12': 'https://www.youtube.com/watch?v=kta8JS_pXFs',
       'K13': 'https://www.youtube.com/watch?v=1uKTYj00QLM',
     };
-    if (sources.any((source) =>
-        observedPrimaryUrls.containsKey(source.id) &&
-        source.url.toString() != observedPrimaryUrls[source.id])) {
+    if (sources.any(
+      (source) =>
+          observedPrimaryUrls.containsKey(source.id) &&
+          source.url.toString() != observedPrimaryUrls[source.id],
+    )) {
       throw const FormatException('Wrong actual primary source binding');
     }
     const List<List<int>> physical = [

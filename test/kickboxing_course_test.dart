@@ -105,14 +105,22 @@ void main() {
     };
     final c = KickboxingCourse.fromJsonString(jsonEncode(fixture()));
     for (final entry in expected.entries) {
-      expect(c.sources.singleWhere((s) => s.id == entry.key).url.toString(), entry.value);
+      expect(
+        c.sources.singleWhere((s) => s.id == entry.key).url.toString(),
+        entry.value,
+      );
       rejects((m) {
-        final source = (m['sources'] as List).singleWhere((s) => s['id'] == entry.key);
+        final source = (m['sources'] as List).singleWhere(
+          (s) => s['id'] == entry.key,
+        );
         source['url'] = 'https://example.org/wrong-provider';
       });
-      rejects((m) => (m['sources'] as List).removeWhere((s) => s['id'] == entry.key));
+      rejects(
+        (m) => (m['sources'] as List).removeWhere((s) => s['id'] == entry.key),
+      );
     }
-    rejects((m) => m['sources'].add({...m['sources'].last, 'id': 'UNLISTED-PRIMARY'}));
+    rejects(
+      (m) => m['sources'].add({...m['sources'].last, 'id': 'UNLISTED-PRIMARY'}),
+    );
   });
-
 }

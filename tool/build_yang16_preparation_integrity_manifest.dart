@@ -5,7 +5,8 @@ import 'dart:typed_data';
 import 'package:motion_content/motion_content.dart';
 
 const String _coursePath = 'assets/content/yang16_preparation.v1.json';
-const String _manifestPath = 'assets/motion_content/yang16_preparation.manifest.json';
+const String _manifestPath =
+    'assets/motion_content/yang16_preparation.manifest.json';
 
 /// Generates a byte-integrity envelope for the new18originalpreparations.
 /// The empty catalog/model lists are intentional: no lesson media or trained
@@ -28,7 +29,10 @@ Future<void> main(List<String> arguments) async {
     'lessons': <Object?>[],
     'models': <Object?>[],
     'assets': <Object?>[
-      <String, String>{'id': 'yang16-original-preparation-json', 'path': _coursePath},
+      <String, String>{
+        'id': 'yang16-original-preparation-json',
+        'path': _coursePath,
+      },
     ],
   };
   final Uint8List expected = await ManifestBuilder().build(

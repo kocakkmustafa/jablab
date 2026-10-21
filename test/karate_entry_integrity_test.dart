@@ -80,16 +80,22 @@ void main() {
   test(
     'a rebuilt manifest cannot replace the fixed reviewed Karate asset',
     () async {
-      final json = jsonDecode(
-        File(ContentRepository.karateCourseAsset).readAsStringSync(),
-      ) as Map<String, dynamic>;
+      final json =
+          jsonDecode(
+                File(ContentRepository.karateCourseAsset).readAsStringSync(),
+              )
+              as Map<String, dynamic>;
       // Structurally valid text replacement plus matching integrity metadata
       // must still fail the reviewed-content binding.
       json['shared']['stop']['en'] = 'Changed safety guidance';
       final bytes = Uint8List.fromList(utf8.encode(jsonEncode(json)));
-      final manifest = jsonDecode(
-        File(ContentRepository.karateIntegrityManifestAsset).readAsStringSync(),
-      ) as Map<String, dynamic>;
+      final manifest =
+          jsonDecode(
+                File(
+                  ContentRepository.karateIntegrityManifestAsset,
+                ).readAsStringSync(),
+              )
+              as Map<String, dynamic>;
       final asset = (manifest['assets'] as List).single as Map<String, dynamic>;
       asset['byteLength'] = bytes.length;
       asset['sha256'] = computeSha256Hex(bytes);

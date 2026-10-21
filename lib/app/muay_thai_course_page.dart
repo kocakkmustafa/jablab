@@ -73,15 +73,20 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
   bool _practiceEnded = false;
   bool _foreground = true;
 
-  bool get _canReport => _foreground && widget.admitted() &&
-      _answerVisible && _correction.text.trim().isNotEmpty &&
+  bool get _canReport =>
+      _foreground &&
+      widget.admitted() &&
+      _answerVisible &&
+      _correction.text.trim().isNotEmpty &&
       _observation == _WrittenObservation.compared &&
-      widget.priorWritten() && !_reported;
+      widget.priorWritten() &&
+      !_reported;
   @override
   void initState() {
     super.initState();
     _readingVisible = widget.lesson.number != 16;
-    _foreground = WidgetsBinding.instance.lifecycleState == null ||
+    _foreground =
+        WidgetsBinding.instance.lifecycleState == null ||
         WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
     WidgetsBinding.instance.addObserver(this);
   }
@@ -232,7 +237,8 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
                 onChanged: (value) {
                   if (!practiceCurrent() ||
                       (value == PracticeAttempt.attempted &&
-                          !practice.offersMovement)) return;
+                          !practice.offersMovement))
+                    return;
                   setState(() {
                     _practiceAttempt = value;
                     if (value == PracticeAttempt.stopped ||
@@ -424,11 +430,15 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
             key: const Key('muay-thai-report-written'),
             onPressed: _canReport
                 ? () {
-                    if (!mounted || !_canReport ||
+                    if (!mounted ||
+                        !_canReport ||
                         practiceEpoch != _practiceEpoch ||
-                        !identical(l, widget.lesson)) return;
+                        !identical(l, widget.lesson))
+                      return;
                     widget.onWritten();
-                    setState(() { _reported = true; });
+                    setState(() {
+                      _reported = true;
+                    });
                   }
                 : null,
             child: Text(

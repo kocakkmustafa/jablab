@@ -280,7 +280,8 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
               onChanged: (value) {
                 if (!practiceCurrent()) return;
                 if (!practice.offersMovement &&
-                    value == PracticeAttempt.attempted) return;
+                    value == PracticeAttempt.attempted)
+                  return;
                 setState(() {
                   _practiceAttempt = value;
                   if (value == PracticeAttempt.stopped ||

@@ -72,13 +72,18 @@ class _KarateLessonPageState extends State<KarateLessonPage>
   PracticeAttempt _practiceAttempt = PracticeAttempt.unrecorded;
   int _practiceEpoch = 0;
   bool _practiceEnded = false;
-  bool _practiceForeground = WidgetsBinding.instance.lifecycleState == null ||
+  bool _practiceForeground =
+      WidgetsBinding.instance.lifecycleState == null ||
       WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
   bool get _canReport =>
-      mounted && _practiceForeground && widget.admitted() &&
-      _answerVisible && _correction.text.trim().isNotEmpty &&
+      mounted &&
+      _practiceForeground &&
+      widget.admitted() &&
+      _answerVisible &&
+      _correction.text.trim().isNotEmpty &&
       _observation == _WrittenObservation.compared &&
-      widget.priorWritten() && !_reported;
+      widget.priorWritten() &&
+      !_reported;
   @override
   void initState() {
     super.initState();
@@ -142,7 +147,8 @@ class _KarateLessonPageState extends State<KarateLessonPage>
         practiceEpoch == _practiceEpoch &&
         identical(l, widget.lesson) &&
         identical(practice, widget.lesson.selfPractice) &&
-        _practiceForeground && widget.admitted();
+        _practiceForeground &&
+        widget.admitted();
     bool practiceCurrent() =>
         visitCurrent() && _readingVisible && !_practiceEnded;
     return Scaffold(
@@ -212,7 +218,8 @@ class _KarateLessonPageState extends State<KarateLessonPage>
               onChanged: (value) {
                 if (!practiceCurrent()) return;
                 if (!practice.offersMovement &&
-                    value == PracticeAttempt.attempted) return;
+                    value == PracticeAttempt.attempted)
+                  return;
                 setState(() {
                   _practiceAttempt = value;
                   if (value == PracticeAttempt.stopped ||

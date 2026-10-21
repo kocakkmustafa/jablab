@@ -27,7 +27,8 @@ final class SelfGuidedPractice {
     : lessonId = _text(map['lessonId']),
       mode = switch (_text(map['mode'])) {
         'preparation' => SelfGuidedPracticeMode.preparation,
-        'small_range_non_contact' => SelfGuidedPracticeMode.smallRangeNonContact,
+        'small_range_non_contact' =>
+          SelfGuidedPracticeMode.smallRangeNonContact,
         'concept_only' => SelfGuidedPracticeMode.conceptOnly,
         _ => throw const FormatException('Unknown self-guided practice mode'),
       },

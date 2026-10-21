@@ -45,13 +45,19 @@ class _PreparationBundle extends CachingAssetBundle {
 
   void succeed(int index) {
     successfullyCompleted.add(index);
-    requests[index].complete(ByteData.sublistView(File(
-      ContentRepository.yang16PreparationManifestAsset,
-    ).readAsBytesSync()));
+    requests[index].complete(
+      ByteData.sublistView(
+        File(
+          ContentRepository.yang16PreparationManifestAsset,
+        ).readAsBytesSync(),
+      ),
+    );
   }
 
   void fail(int index) {
-    requests[index].completeError(StateError('Controlled preparation read failure'));
+    requests[index].completeError(
+      StateError('Controlled preparation read failure'),
+    );
   }
 
   void finishPendingAfterUnmount() {
@@ -100,16 +106,14 @@ Future<void> _until(
 // Real Core has a 5s Future.timeout for both manifest and asset reads. Current
 // Core reads each successful asset once for verification and once for decode.
 // No timer is disabled/extended; all owned futures must finish in this body.
-Future<void> _closeRoot(
-  WidgetTester tester,
-  _PreparationBundle bundle,
-) async {
+Future<void> _closeRoot(WidgetTester tester, _PreparationBundle bundle) async {
   if (bundle.closed) return;
   await tester.pumpWidget(const SizedBox.shrink());
   bundle.finishPendingAfterUnmount();
   await _until(
     tester,
-    () => bundle.preparationAssetReads == bundle.successfullyCompleted.length * 2,
+    () =>
+        bundle.preparationAssetReads == bundle.successfullyCompleted.length * 2,
     'all successful owned preparations completed validation and validated read',
   );
   await tester.pumpAndSettle();
@@ -133,7 +137,9 @@ Future<void> _show(WidgetTester tester, String key) async {
   }
   final scrollable = activeBody == null
       ? find.byType(Scrollable).first
-      : find.descendant(of: activeBody, matching: find.byType(Scrollable)).first;
+      : find
+            .descendant(of: activeBody, matching: find.byType(Scrollable))
+            .first;
   tester.state<ScrollableState>(scrollable).position.jumpTo(0);
   await tester.pump();
   if (target.evaluate().isEmpty) {
@@ -160,21 +166,27 @@ Future<_History> _root(
   _PreparationBundle bundle, {
   ValueNotifier<String?>? owner,
 }) async {
-  final directory = Directory.systemTemp.createTempSync('yang-preparation-root-');
+  final directory = Directory.systemTemp.createTempSync(
+    'yang-preparation-root-',
+  );
   final history = _History();
   addTearDown(() => directory.deleteSync(recursive: true));
   // Fallback only: every successful test body also awaits _closeRoot in finally.
   addTearDown(() => _closeRoot(tester, bundle));
-  await tester.runAsync(() => tester.pumpWidget(JabLabApp(
-    repository: ContentRepository(
-      historyDirectoryOverride: directory,
-      storeOverride: history,
-      ownerRegistry: OwnerResourceRegistry(),
-      contentBundleOverride: bundle,
+  await tester.runAsync(
+    () => tester.pumpWidget(
+      JabLabApp(
+        repository: ContentRepository(
+          historyDirectoryOverride: directory,
+          storeOverride: history,
+          ownerRegistry: OwnerResourceRegistry(),
+          contentBundleOverride: bundle,
+        ),
+        onboarding: const OnboardingStore(seenOverride: true),
+        accountUserId: owner,
+      ),
     ),
-    onboarding: const OnboardingStore(seenOverride: true),
-    accountUserId: owner,
-  )));
+  );
   await settleAppLoad(tester);
   expect(find.byType(JabLabApp), findsOneWidget);
   return history;
@@ -203,9 +215,9 @@ Future<void> _openTarget(WidgetTester tester, String id) async {
     'actual Yang written overview',
   );
   expect(
-    tester.widget<Yang16WrittenCoursePage>(
-      find.byType(Yang16WrittenCoursePage),
-    ).preparationLoader,
+    tester
+        .widget<Yang16WrittenCoursePage>(find.byType(Yang16WrittenCoursePage))
+        .preparationLoader,
     isNotNull,
   );
   await _tap(tester, 'yang16-target-$id');
@@ -216,8 +228,8 @@ Future<void> _openTarget(WidgetTester tester, String id) async {
   );
 }
 
-Yang16WrittenTargetPage _targetPage(WidgetTester tester) =>
-    tester.widget<Yang16WrittenTargetPage>(find.byType(Yang16WrittenTargetPage));
+Yang16WrittenTargetPage _targetPage(WidgetTester tester) => tester
+    .widget<Yang16WrittenTargetPage>(find.byType(Yang16WrittenTargetPage));
 
 // Inspect the supplied ListView children as well as the mounted widget tree.
 // A lazy/offscreen panel must never make a stale definition look absent.
@@ -225,8 +237,7 @@ SelfGuidedPracticePanel? _declaredPanel(WidgetTester tester) {
   final list = tester.widget<ListView>(
     find.byKey(const Key('yang16-target-body')),
   );
-  final children =
-      (list.childrenDelegate as SliverChildListDelegate).children;
+  final children = (list.childrenDelegate as SliverChildListDelegate).children;
   final panels = children.whereType<SelfGuidedPracticePanel>().toList();
   expect(panels.length, lessThanOrEqualTo(1));
   return panels.isEmpty ? null : panels.single;
@@ -291,15 +302,15 @@ Future<void> _realBoundPanel(WidgetTester tester, String id) async {
 }
 
 String _writtenProgress(WidgetTester tester) {
-  final list = tester.widget<ListView>(find.byKey(
-    const Key('yang16-course-list'),
-    skipOffstage: false,
-  ));
-  final children =
-      (list.childrenDelegate as SliverChildListDelegate).children;
-  final progress = children.singleWhere(
-    (child) => child.key == const Key('yang16-written-progress'),
-  ) as Text;
+  final list = tester.widget<ListView>(
+    find.byKey(const Key('yang16-course-list'), skipOffstage: false),
+  );
+  final children = (list.childrenDelegate as SliverChildListDelegate).children;
+  final progress =
+      children.singleWhere(
+            (child) => child.key == const Key('yang16-written-progress'),
+          )
+          as Text;
   return progress.data!;
 }
 
@@ -323,137 +334,196 @@ void main() {
     TestWidgetsFlutterBinding.instance.platformDispatcher.localesTestValue =
         const <Locale>[Locale('en')];
     addTearDown(
-      TestWidgetsFlutterBinding.instance.platformDispatcher.clearLocalesTestValue,
+      TestWidgetsFlutterBinding
+          .instance
+          .platformDispatcher
+          .clearLocalesTestValue,
     );
   });
 
-  testWidgets('real root pending preparation keeps the exact written target readable', (tester) async {
-    final bundle = _PreparationBundle();
-    final history = await _root(tester, bundle);
-    try {
-      await _openTarget(tester, 'prepare');
-      expect(bundle.requests, hasLength(1));
-      expect(bundle.requests.single.isCompleted, isFalse);
-      await _writtenReadable(tester, 'prepare');
-      _noPreparation(tester);
-      expect(history.appends, 0);
-      expect(tester.takeException(), isNull);
-    } finally {
-      await _closeRoot(tester, bundle);
-    }
-  });
+  testWidgets(
+    'real root pending preparation keeps the exact written target readable',
+    (tester) async {
+      final bundle = _PreparationBundle();
+      final history = await _root(tester, bundle);
+      try {
+        await _openTarget(tester, 'prepare');
+        expect(bundle.requests, hasLength(1));
+        expect(bundle.requests.single.isCompleted, isFalse);
+        await _writtenReadable(tester, 'prepare');
+        _noPreparation(tester);
+        expect(history.appends, 0);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await _closeRoot(tester, bundle);
+      }
+    },
+  );
 
-  testWidgets('real root preparation error keeps written reading and independent answer usable', (tester) async {
-    final bundle = _PreparationBundle();
-    final history = await _root(tester, bundle);
-    try {
-      await _openTarget(tester, 'prepare');
-      expect(bundle.requests, hasLength(1));
-      bundle.fail(0);
-      await tester.pumpAndSettle();
-      await _writtenReadable(tester, 'prepare');
-      _noPreparation(tester);
-      await _tap(tester, 'yang16-toggle-reading');
-      await _show(tester, 'yang16-original-prompt');
-      expect(
-        tester.widget<Text>(find.byKey(const Key('yang16-original-prompt'))).data,
-        yangCourse().targets.first.prompt.en,
-      );
-      await _show(tester, 'yang16-own-answer');
-      expect(
-        tester.widget<TextField>(find.byKey(const Key('yang16-own-answer'))).enabled,
-        isTrue,
-      );
-      const answer = 'My independent written reconstruction remains available.';
-      await tester.enterText(find.byKey(const Key('yang16-own-answer')), answer);
-      expect(
-        tester.widget<TextField>(find.byKey(const Key('yang16-own-answer'))).controller!.text,
-        answer,
-      );
-      tester.testTextInput.hide();
-      await tester.pump();
-      await _show(tester, 'yang16-compare-answer');
-      expect(
-        tester.widget<TextButton>(find.byKey(const Key('yang16-compare-answer'))).onPressed,
-        isNotNull,
-      );
-      expect(_targetPage(tester).practice, isNull);
-      expect(history.appends, 0);
-      expect(tester.takeException(), isNull);
-    } finally {
-      await _closeRoot(tester, bundle);
-    }
-  });
+  testWidgets(
+    'real root preparation error keeps written reading and independent answer usable',
+    (tester) async {
+      final bundle = _PreparationBundle();
+      final history = await _root(tester, bundle);
+      try {
+        await _openTarget(tester, 'prepare');
+        expect(bundle.requests, hasLength(1));
+        bundle.fail(0);
+        await tester.pumpAndSettle();
+        await _writtenReadable(tester, 'prepare');
+        _noPreparation(tester);
+        await _tap(tester, 'yang16-toggle-reading');
+        await _show(tester, 'yang16-original-prompt');
+        expect(
+          tester
+              .widget<Text>(find.byKey(const Key('yang16-original-prompt')))
+              .data,
+          yangCourse().targets.first.prompt.en,
+        );
+        await _show(tester, 'yang16-own-answer');
+        expect(
+          tester
+              .widget<TextField>(find.byKey(const Key('yang16-own-answer')))
+              .enabled,
+          isTrue,
+        );
+        const answer =
+            'My independent written reconstruction remains available.';
+        await tester.enterText(
+          find.byKey(const Key('yang16-own-answer')),
+          answer,
+        );
+        expect(
+          tester
+              .widget<TextField>(find.byKey(const Key('yang16-own-answer')))
+              .controller!
+              .text,
+          answer,
+        );
+        tester.testTextInput.hide();
+        await tester.pump();
+        await _show(tester, 'yang16-compare-answer');
+        expect(
+          tester
+              .widget<TextButton>(
+                find.byKey(const Key('yang16-compare-answer')),
+              )
+              .onPressed,
+          isNotNull,
+        );
+        expect(_targetPage(tester).practice, isNull);
+        expect(history.appends, 0);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await _closeRoot(tester, bundle);
+      }
+    },
+  );
 
-  testWidgets('real root owner retirement rejects old completion and binds a fresh different target', (tester) async {
-    final bundle = _PreparationBundle();
-    final owner = ValueNotifier<String?>('11111111-1111-4111-8111-111111111111');
-    addTearDown(owner.dispose);
-    final history = await _root(tester, bundle, owner: owner);
-    try {
-      await _openTarget(tester, 'prepare');
-      expect(bundle.requests, hasLength(1));
-      owner.value = '22222222-2222-4222-8222-222222222222';
-      await _until(
-        tester,
-        () => find.byType(Yang16WrittenCoursePage, skipOffstage: false).evaluate().isEmpty &&
-            find.byType(Yang16WrittenTargetPage, skipOffstage: false).evaluate().isEmpty &&
-            find.byType(TaiChiCoursePage, skipOffstage: false).evaluate().isEmpty &&
-            find.byKey(const Key('open-tai-chi-course')).evaluate().isNotEmpty,
-        'retired old owner routes and admitted new root',
+  testWidgets(
+    'real root owner retirement rejects old completion and binds a fresh different target',
+    (tester) async {
+      final bundle = _PreparationBundle();
+      final owner = ValueNotifier<String?>(
+        '11111111-1111-4111-8111-111111111111',
       );
-      await _openTarget(tester, 'm01');
-      expect(bundle.requests, hasLength(2));
-      await _oldPreparationFinished(tester, bundle);
-      await _writtenReadable(tester, 'm01');
-      _noPreparation(tester);
-      expect(bundle.requests[1].isCompleted, isFalse);
-      bundle.succeed(1);
-      await _until(tester, () => _targetPage(tester).practice != null, 'new owner preparation');
-      await _realBoundPanel(tester, 'm01');
-      final progressBefore = _writtenProgress(tester);
-      expect(
-        progressBefore,
-        '0/24 full written targets self-reported this visit; optional attempts do not change this count.',
-      );
-      await _tap(tester, 'self-guided-attempt-attempted');
-      await tester.pumpAndSettle();
-      final attempt = tester.widget<RadioGroup<PracticeAttempt>>(find.descendant(
-        of: find.byType(SelfGuidedPracticePanel),
-        matching: find.byType(RadioGroup<PracticeAttempt>),
-      ));
-      expect(attempt.groupValue, PracticeAttempt.attempted);
-      expect(_writtenProgress(tester), progressBefore);
-      expect(_writtenProgress(tester), contains('0/24'));
-      expect(history.appends, 0);
-      expect(tester.takeException(), isNull);
-    } finally {
-      await _closeRoot(tester, bundle);
-    }
-  });
+      addTearDown(owner.dispose);
+      final history = await _root(tester, bundle, owner: owner);
+      try {
+        await _openTarget(tester, 'prepare');
+        expect(bundle.requests, hasLength(1));
+        owner.value = '22222222-2222-4222-8222-222222222222';
+        await _until(
+          tester,
+          () =>
+              find
+                  .byType(Yang16WrittenCoursePage, skipOffstage: false)
+                  .evaluate()
+                  .isEmpty &&
+              find
+                  .byType(Yang16WrittenTargetPage, skipOffstage: false)
+                  .evaluate()
+                  .isEmpty &&
+              find
+                  .byType(TaiChiCoursePage, skipOffstage: false)
+                  .evaluate()
+                  .isEmpty &&
+              find
+                  .byKey(const Key('open-tai-chi-course'))
+                  .evaluate()
+                  .isNotEmpty,
+          'retired old owner routes and admitted new root',
+        );
+        await _openTarget(tester, 'm01');
+        expect(bundle.requests, hasLength(2));
+        await _oldPreparationFinished(tester, bundle);
+        await _writtenReadable(tester, 'm01');
+        _noPreparation(tester);
+        expect(bundle.requests[1].isCompleted, isFalse);
+        bundle.succeed(1);
+        await _until(
+          tester,
+          () => _targetPage(tester).practice != null,
+          'new owner preparation',
+        );
+        await _realBoundPanel(tester, 'm01');
+        final progressBefore = _writtenProgress(tester);
+        expect(
+          progressBefore,
+          '0/24 full written targets self-reported this visit; optional attempts do not change this count.',
+        );
+        await _tap(tester, 'self-guided-attempt-attempted');
+        await tester.pumpAndSettle();
+        final attempt = tester.widget<RadioGroup<PracticeAttempt>>(
+          find.descendant(
+            of: find.byType(SelfGuidedPracticePanel),
+            matching: find.byType(RadioGroup<PracticeAttempt>),
+          ),
+        );
+        expect(attempt.groupValue, PracticeAttempt.attempted);
+        expect(_writtenProgress(tester), progressBefore);
+        expect(_writtenProgress(tester), contains('0/24'));
+        expect(history.appends, 0);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await _closeRoot(tester, bundle);
+      }
+    },
+  );
 
-  testWidgets('real root pause invalidates pending generation and only fresh resume completion adds its panel', (tester) async {
-    final bundle = _PreparationBundle();
-    final history = await _root(tester, bundle);
-    try {
-      await _openTarget(tester, 'prepare');
-      expect(bundle.requests, hasLength(1));
-      yangPause(tester);
-      await tester.pump();
-      _noPreparation(tester);
-      yangResume(tester);
-      await _until(tester, () => bundle.requests.length == 2, 'fresh resume preparation request');
-      await _oldPreparationFinished(tester, bundle);
-      await _writtenReadable(tester, 'prepare');
-      _noPreparation(tester);
-      expect(bundle.requests[1].isCompleted, isFalse);
-      bundle.succeed(1);
-      await _until(tester, () => _targetPage(tester).practice != null, 'current resumed preparation');
-      await _realBoundPanel(tester, 'prepare');
-      expect(history.appends, 0);
-      expect(tester.takeException(), isNull);
-    } finally {
-      await _closeRoot(tester, bundle);
-    }
-  });
+  testWidgets(
+    'real root pause invalidates pending generation and only fresh resume completion adds its panel',
+    (tester) async {
+      final bundle = _PreparationBundle();
+      final history = await _root(tester, bundle);
+      try {
+        await _openTarget(tester, 'prepare');
+        expect(bundle.requests, hasLength(1));
+        yangPause(tester);
+        await tester.pump();
+        _noPreparation(tester);
+        yangResume(tester);
+        await _until(
+          tester,
+          () => bundle.requests.length == 2,
+          'fresh resume preparation request',
+        );
+        await _oldPreparationFinished(tester, bundle);
+        await _writtenReadable(tester, 'prepare');
+        _noPreparation(tester);
+        expect(bundle.requests[1].isCompleted, isFalse);
+        bundle.succeed(1);
+        await _until(
+          tester,
+          () => _targetPage(tester).practice != null,
+          'current resumed preparation',
+        );
+        await _realBoundPanel(tester, 'prepare');
+        expect(history.appends, 0);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await _closeRoot(tester, bundle);
+      }
+    },
+  );
 }

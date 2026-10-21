@@ -131,7 +131,8 @@ void main() {
               language == 'tr' ? l.teaching.tr : l.teaching.en,
             );
             final practice = l.selfPractice;
-            final showsTask = practice.offersMovement ||
+            final showsTask =
+                practice.offersMovement ||
                 practice.mode == SelfGuidedPracticeMode.conceptOnly;
             if (showsTask) {
               await show(t, const Key('self-guided-task'));
@@ -144,8 +145,14 @@ void main() {
               expect(find.byKey(const Key('self-guided-task')), findsNothing);
               await show(t, const Key('self-guided-adaptation'));
               expect(
-                t.widget<Text>(find.byKey(const Key('self-guided-adaptation'))).data,
-                language == 'tr' ? practice.adaptation.tr : practice.adaptation.en,
+                t
+                    .widget<Text>(
+                      find.byKey(const Key('self-guided-adaptation')),
+                    )
+                    .data,
+                language == 'tr'
+                    ? practice.adaptation.tr
+                    : practice.adaptation.en,
               );
             }
             await show(t, const Key('karate-written-task'));

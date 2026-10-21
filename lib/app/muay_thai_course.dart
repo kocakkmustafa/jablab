@@ -133,8 +133,10 @@ final class MuayThaiCourse {
     ].any((v) => v is! bool || v != false)) {
       throw const FormatException('Unaccepted physical readiness claim');
     }
-    if (!_same(sources.map((s) => s.id).toList(),
-        List.generate(22, (i) => 'M${i + 1}'))) {
+    if (!_same(
+      sources.map((s) => s.id).toList(),
+      List.generate(22, (i) => 'M${i + 1}'),
+    )) {
       throw const FormatException('Invalid teaching source inventory');
     }
     const observedPrimaryUrls = <String, String>{
@@ -147,9 +149,11 @@ final class MuayThaiCourse {
       'M21': 'https://www.youtube.com/watch?v=9aHd7OtU9vA',
       'M22': 'https://www.youtube.com/watch?v=1uKTYj00QLM',
     };
-    if (sources.any((source) =>
-        observedPrimaryUrls.containsKey(source.id) &&
-        source.url.toString() != observedPrimaryUrls[source.id])) {
+    if (sources.any(
+      (source) =>
+          observedPrimaryUrls.containsKey(source.id) &&
+          source.url.toString() != observedPrimaryUrls[source.id],
+    )) {
       throw const FormatException('Wrong actual primary source binding');
     }
     // Exact ordered protocol indices from the accepted source map.

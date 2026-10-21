@@ -214,9 +214,13 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
     final target = widget.target;
     final practice = widget.practice;
     final practiceEpoch = _practiceEpoch;
-    bool practiceCurrent() => _admitted && _reading && !_practiceEnded &&
+    bool practiceCurrent() =>
+        _admitted &&
+        _reading &&
+        !_practiceEnded &&
         practiceEpoch == _practiceEpoch &&
-        identical(widget.target, target) && identical(widget.practice, practice);
+        identical(widget.target, target) &&
+        identical(widget.practice, practice);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 48 + 40 * MediaQuery.textScalerOf(context).scale(1),
@@ -313,10 +317,12 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
               onChanged: (value) {
                 if (!practiceCurrent()) return;
                 if (value == PracticeAttempt.attempted &&
-                    (_practiceEnded || !practice.offersMovement)) return;
+                    (_practiceEnded || !practice.offersMovement))
+                  return;
                 setState(() {
                   _practiceAttempt = value;
-                  if (value == PracticeAttempt.stopped || value == PracticeAttempt.uncertain) {
+                  if (value == PracticeAttempt.stopped ||
+                      value == PracticeAttempt.uncertain) {
                     _practiceEnded = true;
                     _practiceEpoch++;
                   }
@@ -762,7 +768,8 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
       _preparation.value = value;
     } catch (_) {
       if (!_admitted || generation != _generation) return;
-      _preparation.value = null; // Keep written study readable; no unreviewed fallback.
+      _preparation.value =
+          null; // Keep written study readable; no unreviewed fallback.
     }
   }
 
@@ -785,33 +792,33 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
           : ValueListenableBuilder<Yang16PreparationCourse?>(
               valueListenable: _preparation,
               builder: (_, preparation, __) => Yang16WrittenTargetPage(
-              key: ValueKey(target.id),
-              practice: preparation?.forTarget(target.id),
-              course: course,
-              target: target,
-              admitted: current,
-              priorWritten: prior,
-              onWritten: () {
-                if (current() && prior()) {
-                  setState(() {
-                    _written.add(target.id);
-                  });
-                }
-              },
-              onInvalidate: () {
-                if (!current()) return;
-                setState(() {
-                  for (final later in course.targets.where(
-                    (t) => t.index >= target.index,
-                  )) {
-                    _written.remove(later.id);
+                key: ValueKey(target.id),
+                practice: preparation?.forTarget(target.id),
+                course: course,
+                target: target,
+                admitted: current,
+                priorWritten: prior,
+                onWritten: () {
+                  if (current() && prior()) {
+                    setState(() {
+                      _written.add(target.id);
+                    });
                   }
-                });
-              },
-              onReset: () {
-                if (!_retired && mounted) setState(_written.clear);
-              },
-            ),
+                },
+                onInvalidate: () {
+                  if (!current()) return;
+                  setState(() {
+                    for (final later in course.targets.where(
+                      (t) => t.index >= target.index,
+                    )) {
+                      _written.remove(later.id);
+                    }
+                  });
+                },
+                onReset: () {
+                  if (!_retired && mounted) setState(_written.clear);
+                },
+              ),
             ),
     );
     _target = route;
