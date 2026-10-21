@@ -4,6 +4,7 @@ import 'package:jablab/app/content_repository.dart';
 import 'package:jablab/app/jablab_app.dart';
 import 'package:jablab/app/onboarding_store.dart';
 import 'package:jablab/app/owner_resource_lifetime.dart';
+import 'package:jablab/app/select_page.dart';
 import 'package:jablab/app/session_store.dart';
 
 import 'app_pump.dart';
@@ -91,6 +92,10 @@ void main() {
   // gövdesi listeyi o kadar uzatıyordu ki `ensureVisible` bir SONRAKİ
   // öğeyi bulamadı — bu bir test kırılganlığıydı, uygulama hatası değil,
   // ama düzeltmek yerine ailenin zaten kanıtlı desenine geçmek daha sağlam.
+  //
+  // Yazılı kursu açık dört disiplinin kapalı katalog kartı Sayfa A'da artık
+  // listelenmez (`writtenCourseDisciplineIds`); onların giriş kartları açık
+  // kurs sayfası testlerinde ölçülür. Kalan dört kart burada genişletilir.
   for (final String id in <String>[
     'boxing',
     'kickboxing',
@@ -100,7 +105,7 @@ void main() {
     'taekwondo',
     'mma_striking',
     'wing_chun',
-  ]) {
+  ].where((String id) => !writtenCourseDisciplineIds.contains(id))) {
     testWidgets('Sayfa A — $id genişletilmiş, 375pt taşma yok', (
       WidgetTester t,
     ) async {
