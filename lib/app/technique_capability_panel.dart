@@ -38,8 +38,8 @@ class TechniqueCapabilityPanel extends StatelessWidget {
               availability.kind == TechniqueObservationKind.calibrationRequired
                   ? text('Calibration required', 'Kalibrasyon gerekli')
                   : text(
-                      'Automatic assessment is not supported for this lesson yet.',
-                      'Bu ders için otomatik hareket değerlendirmesi henüz desteklenmiyor.',
+                      'Automatic assessment is not supported for this lesson.',
+                      'Bu ders için otomatik hareket değerlendirmesi desteklenmiyor.',
                     ),
               key: const Key('technique-capability-status'),
             ),

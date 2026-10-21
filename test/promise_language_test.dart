@@ -417,6 +417,20 @@ void main() {
     //   **imkânsız**, ve bu yüzden kovalanmıyor.
     // * **Gerekçenin KALİTESİNİ**: işareti taşımak yeterli sayılıyor.
     const List<String> limitMarkers = <String>['locked', 'not open', 'closed'];
+    // The current release closes live camera lessons, including this course.
+    // Its exact scope statement is equivalent to "closed"; unrelated uses of
+    // "unavailable" or the separate written course being available are not.
+    bool statesLimitedScope(String goal) =>
+        limitMarkers.any(goal.contains) ||
+        goal.contains('live camera lessons are unavailable in this release');
+    expect(
+      statesLimitedScope('The separate solo boxing course remains available.'),
+      isFalse,
+    );
+    expect(
+      statesLimitedScope('Estimated duration is unavailable in this release.'),
+      isFalse,
+    );
     final Map<String, dynamic> lib =
         (jsonDecode(File('assets/content/library.json').readAsStringSync())
                 as Map)
@@ -435,7 +449,7 @@ void main() {
         if (locked.isEmpty) continue;
         coursesWithLocks++;
         final String goal = (course['goal'] as String? ?? '').toLowerCase();
-        if (!limitMarkers.any(goal.contains)) {
+        if (!statesLimitedScope(goal)) {
           hits.add(
             '${course['id']}: ${locked.length}/${lessons.length} ders '
             'kilitli ama hedef bunu SÖYLEMİYOR → "${course['goal']}"',

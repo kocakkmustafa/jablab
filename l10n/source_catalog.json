@@ -35529,21 +35529,6 @@
       "placeholder_types": {}
     },
     {
-      "id": "s_54c52067b0cc667bb19712b1af986c242185e775c3750f61efad4a16dae3b3f7",
-      "en": "Automatic assessment is not supported for this lesson yet.",
-      "tr": "Bu ders için otomatik hareket değerlendirmesi henüz desteklenmiyor.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/technique_capability_panel.dart",
-          "line": 40
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
       "id": "s_acd30a7450b6bda15a0cbc2be98ca5f6f14faeace086e5286c6d3487553ceb3f",
       "en": "Lesson phases",
       "tr": "Dersin aşamaları",
@@ -40425,6 +40410,21 @@
         }
       ],
       "kind": "CONTENT"
+    },
+    {
+      "id": "s_947bc56b68aad5653a47935fa1e700cdc67a3274f818779ea05e413d48ff168b",
+      "en": "Automatic assessment is not supported for this lesson.",
+      "tr": "Bu ders için otomatik hareket değerlendirmesi desteklenmiyor.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/technique_capability_panel.dart",
+          "line": 40
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
     }
   ],
   "limits": [
