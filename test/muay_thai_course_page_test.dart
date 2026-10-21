@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/muay_thai_course.dart';
 import 'package:jablab/app/muay_thai_course_page.dart';
+import 'package:jablab/app/self_guided_practice.dart';
 
 MuayThaiCourse course() => MuayThaiCourse.fromJsonString(
   File('assets/content/muay_thai_a.v1.json').readAsStringSync(),
@@ -151,7 +152,30 @@ void main() {
                     .data,
                 language == 'tr' ? l.physicalTask.tr : l.physicalTask.en,
               );
-              expect(find.byKey(const Key('self-guided-task')), findsNothing);
+              final practice = l.selfGuidedPractice;
+              if (practice != null &&
+                  practice.mode == SelfGuidedPracticeMode.conceptOnly) {
+                await show(t, const Key('self-guided-task'));
+                expect(
+                  t
+                      .widget<Text>(
+                        find.byKey(const Key('self-guided-task')),
+                      )
+                      .data,
+                  language == 'tr' ? practice.task.tr : practice.task.en,
+                );
+                await show(t, const Key('self-guided-attempt-attempted'));
+                expect(
+                  t
+                      .widget<RadioListTile<PracticeAttempt>>(
+                        find.byKey(const Key('self-guided-attempt-attempted')),
+                      )
+                      .enabled,
+                  isFalse,
+                );
+              } else {
+                expect(find.byKey(const Key('self-guided-task')), findsNothing);
+              }
             }
             await show(t, const Key('muay-thai-written-task'));
             expect(

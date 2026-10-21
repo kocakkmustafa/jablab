@@ -62,7 +62,7 @@ void main() {
       // first-release scope. Every other historical pair remains byte-hash exact.
       const changedHistoricalPointers = {
         '/content/lessons/0/teaching/3',
-        '/content/lessons/9/teaching/0',
+        '/content/lessons/9/teaching/1',
       };
       final legacyBytes = File(
         'test/fixtures/taikyoku_shodan_reviewed_text.v1.json',

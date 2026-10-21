@@ -61,7 +61,23 @@ void main() {
       expect(c.sequenceRows[8].en, contains('release the external thumb'));
       expect(c.shared['limits']!.en, contains('Wai Kru'));
       expect(c.sources[10].role, contains('cross-style'));
-      expect(c.sources[12].limit, contains('stationary rear-knee'));
+      expect(c.sources[12].id, 'M13');
+      expect(
+        c.sources[12].limit,
+        allOf(
+          contains('Partner/pad and explosive ball-of-foot source'),
+          contains('not a validated gentle solo task'),
+          contains(
+            'Do not combine its loading with the push-kick flat-foot card',
+          ),
+          contains('as a universal rule'),
+          contains(
+            'personal safety and full-method mastery were not established',
+          ),
+          contains('Tiny non-contact knee lift and slow same-track lowering'),
+          contains('original JabLab adaptations'),
+        ),
+      );
       expect(() => c.lessons.clear(), throwsUnsupportedError);
       expect(() => c.sequenceRows.clear(), throwsUnsupportedError);
       expect(() => c.shared.clear(), throwsUnsupportedError);
