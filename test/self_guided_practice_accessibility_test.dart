@@ -82,6 +82,7 @@ Future<void> _arabicSafetyStop(
   final practice = lesson.selfPractice;
   var writtenReports = 0;
   var invalidations = 0;
+  var visitResets = 0;
   await tester.pumpWidget(
     MaterialApp(
       locale: const Locale('ar'),
@@ -106,7 +107,7 @@ Future<void> _arabicSafetyStop(
         priorWritten: () => true,
         onWritten: () => writtenReports++,
         onInvalidate: () => invalidations++,
-        onReset: () {},
+        onReset: () => visitResets++,
       ),
     ),
   );
@@ -174,16 +175,33 @@ Future<void> _arabicSafetyStop(
     'Dur ve bu ziyareti temizle',
   );
   expect(tester.widget<IconButton>(topStop).tooltip, tooltip);
-  final topSemantics = tester.getSemantics(topStop).getSemanticsData();
-  expect(topSemantics.label, contains(tooltip));
+  final topStopNode = tester.getSemantics(topStop);
+  final topSemantics = topStopNode.getSemanticsData();
+  // Flutter exposes Tooltip copy through its dedicated semantics tooltip field.
+  expect(topSemantics.tooltip, tooltip);
+  expect(topSemantics.textDirection, TextDirection.rtl);
+  expect(topSemantics.flagsCollection.isButton, isTrue);
   expect(topSemantics.hasAction(SemanticsAction.tap), isTrue);
   final topRect = tester.getRect(topStop);
   expect(topRect.left, greaterThanOrEqualTo(0));
   expect(topRect.right, lessThanOrEqualTo(360));
   expect(writtenReports, 0);
   expect(invalidations, 0);
+  expect(visitResets, 0);
   expect(practice.progressEffect, 0);
   expect(practice.verifiedTechnique, isFalse);
+  tester.semantics.tap(
+    find.semantics.byPredicate((node) => identical(node, topStopNode)),
+  );
+  await tester.pumpAndSettle();
+  expect(visitResets, 1);
+  expect(
+    tester.widget<SelfGuidedPracticePanel>(panel).attempt,
+    PracticeAttempt.unrecorded,
+  );
+  expect(find.byKey(const Key('self-guided-ended')), findsNothing);
+  expect(writtenReports, 0);
+  expect(invalidations, 0);
   expect(tester.takeException(), isNull);
 }
 
