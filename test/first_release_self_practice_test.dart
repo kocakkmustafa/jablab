@@ -10,7 +10,7 @@ import 'package:jablab/app/self_guided_practice_panel.dart';
 import 'package:jablab/app/taikyoku_shodan_course.dart';
 import 'package:jablab/app/taikyoku_shodan_course_page.dart';
 
-import 'app_pump.dart';
+import 'localization_fixture.dart';
 
 // Report-only definition. Run only after the exact asset/model/panel afterimages
 // are applied and accepted by the shared SDK coordinator. No test was run here.
@@ -136,6 +136,7 @@ void main() {
         onReset: () {},
       ),
     ));
+    await settleTestLocalizations(tester, expectedLocale: const Locale('en'));
     await tester.pumpAndSettle();
     Future<Finder> reveal(String key) async {
       tester.state<ScrollableState>(find.byType(Scrollable).first).position.jumpTo(0);
@@ -233,6 +234,7 @@ void main() {
             home: page,
           ),
         );
+        await settleTestLocalizations(tester, expectedLocale: const Locale('en'));
         await tester.pumpAndSettle();
         final panelFinder = find.byType(SelfGuidedPracticePanel);
         await tester.scrollUntilVisible(
