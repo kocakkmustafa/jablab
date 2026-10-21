@@ -311,7 +311,7 @@ void main() {
     expect(find.text('Brazilian Jiu-Jitsu'), findsOneWidget);
     expect(find.text('Punch power'), findsOneWidget);
     expect(
-      find.textContaining('sensor'),
+      find.textContaining('Punch force is not measured here'),
       findsWidgets,
       reason: 'güç ölçümünün neden yapılamadığı açıkça yazılmalı',
     );
