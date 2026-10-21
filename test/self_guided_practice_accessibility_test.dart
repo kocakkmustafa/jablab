@@ -227,10 +227,7 @@ void main() {
         final lesson = course.lessons.singleWhere(
           (lesson) => lesson.id == visit.id,
         );
-        final entry = await _showKey(
-          tester,
-          'karate-lesson-' + visit.number.toString(),
-        );
+        final entry = await _showKey(tester, 'karate-lesson-${visit.number}');
         await tester.tap(entry.hitTestable());
         await tester.pumpAndSettle();
         expect(find.byType(KarateLessonPage), findsOneWidget);
@@ -259,7 +256,7 @@ void main() {
             : PracticeAttempt.skipped;
         final report = await _showKey(
           tester,
-          'self-guided-attempt-' + selected.name,
+          'self-guided-attempt-${selected.name}',
         );
         await tester.tap(report.hitTestable());
         await tester.pumpAndSettle();

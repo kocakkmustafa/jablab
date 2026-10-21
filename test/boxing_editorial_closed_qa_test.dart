@@ -1,7 +1,6 @@
 // Four source-binding/media-closed witnesses. UNRUN until exact source acceptance.
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,8 +53,9 @@ void main() {
       if (expected[offset] != changed[offset]) differences++;
       copy[offsets.first + offset] = changed[offset];
     }
-    if (differences != 1)
+    if (differences != 1) {
       throw StateError('Mutation must change exactly one byte');
+    }
     return copy;
   }
 

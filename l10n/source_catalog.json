@@ -15563,7 +15563,7 @@
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 315
+          "line": 316
         }
       ],
       "kind": "CONTENT",
@@ -26717,7 +26717,7 @@
         },
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 621
+          "line": 622
         }
       ],
       "kind": "UI",
@@ -26752,7 +26752,7 @@
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 943
+          "line": 944
         }
       ],
       "kind": "UI",
@@ -26767,15 +26767,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 266
+          "line": 267
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 269
+          "line": 270
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 291
+          "line": 292
         }
       ],
       "kind": "UI",
@@ -26790,15 +26790,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 326
+          "line": 327
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 325
+          "line": 326
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 351
+          "line": 352
         }
       ],
       "kind": "UI",
@@ -26813,15 +26813,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 398
+          "line": 399
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 397
+          "line": 398
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 423
+          "line": 424
         }
       ],
       "kind": "UI",
@@ -26836,15 +26836,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 433
+          "line": 434
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 436
+          "line": 438
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 462
+          "line": 464
         }
       ],
       "kind": "UI",
@@ -26859,15 +26859,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 630
+          "line": 631
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 633
+          "line": 635
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 659
+          "line": 661
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26875,7 +26875,7 @@
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 772
+          "line": 773
         }
       ],
       "kind": "UI",
@@ -26890,15 +26890,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 639
+          "line": 640
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 642
+          "line": 644
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 668
+          "line": 670
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26906,11 +26906,11 @@
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 787
+          "line": 788
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 875
+          "line": 876
         }
       ],
       "kind": "UI",
@@ -26925,7 +26925,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 673
+          "line": 674
         }
       ],
       "kind": "UI",
@@ -26940,15 +26940,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 706
+          "line": 707
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 694
+          "line": 696
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 723
+          "line": 725
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26967,15 +26967,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 732
+          "line": 733
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 720
+          "line": 722
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 749
+          "line": 751
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26998,7 +26998,7 @@
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 623
+          "line": 625
         }
       ],
       "kind": "UI",
@@ -27047,7 +27047,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 649
+          "line": 651
         }
       ],
       "kind": "UI",
@@ -27062,7 +27062,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 690
+          "line": 692
         }
       ],
       "kind": "UI",
@@ -29577,7 +29577,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 393
+          "line": 394
         }
       ],
       "kind": "UI",
@@ -29592,7 +29592,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 413
+          "line": 414
         }
       ],
       "kind": "UI",
@@ -29607,7 +29607,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 460
+          "line": 461
         }
       ],
       "kind": "UI",
@@ -29622,7 +29622,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 488
+          "line": 489
         }
       ],
       "kind": "UI",
@@ -29637,7 +29637,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 509
+          "line": 510
         }
       ],
       "kind": "UI",
@@ -29652,7 +29652,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 518
+          "line": 519
         }
       ],
       "kind": "UI",
@@ -29667,7 +29667,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 553
+          "line": 554
         }
       ],
       "kind": "UI",
@@ -29682,7 +29682,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 565
+          "line": 566
         }
       ],
       "kind": "UI",
@@ -29697,7 +29697,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 799
+          "line": 800
         }
       ],
       "kind": "UI",
@@ -29712,7 +29712,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 824
+          "line": 825
         }
       ],
       "kind": "UI",
@@ -29727,7 +29727,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 832
+          "line": 833
         }
       ],
       "kind": "UI",
@@ -29742,7 +29742,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 858
+          "line": 859
         }
       ],
       "kind": "UI",
@@ -29757,7 +29757,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 897
+          "line": 898
         }
       ],
       "kind": "UI",
@@ -29862,7 +29862,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 419
+          "line": 420
         }
       ],
       "kind": "UI",
@@ -29877,7 +29877,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 463
+          "line": 464
         }
       ],
       "kind": "UI",
@@ -29892,7 +29892,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 478
+          "line": 479
         }
       ],
       "kind": "UI",
@@ -29907,7 +29907,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 512
+          "line": 513
         }
       ],
       "kind": "UI",
@@ -29922,7 +29922,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 557
+          "line": 558
         }
       ],
       "kind": "UI",
@@ -29937,7 +29937,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 566
+          "line": 567
         }
       ],
       "kind": "UI",
@@ -29952,7 +29952,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 599
+          "line": 600
         }
       ],
       "kind": "UI",
@@ -29967,7 +29967,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 616
+          "line": 617
         }
       ],
       "kind": "UI",
@@ -29982,7 +29982,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 848
+          "line": 849
         }
       ],
       "kind": "UI",
@@ -30001,7 +30001,7 @@
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 887
+          "line": 888
         }
       ],
       "kind": "UI",
@@ -30016,7 +30016,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 905
+          "line": 906
         }
       ],
       "kind": "UI",
@@ -30096,15 +30096,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 299
+          "line": 300
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 302
+          "line": 303
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 324
+          "line": 325
         }
       ],
       "kind": "UI",
@@ -30119,15 +30119,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 299
+          "line": 300
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 302
+          "line": 303
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 324
+          "line": 325
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -30146,19 +30146,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 416
+          "line": 417
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 419
+          "line": 421
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 445
+          "line": 447
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 536
+          "line": 537
         }
       ],
       "kind": "UI",
@@ -30173,35 +30173,35 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 416
+          "line": 417
         },
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 719
+          "line": 720
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 419
+          "line": 421
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 707
+          "line": 709
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 445
+          "line": 447
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 736
+          "line": 738
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 536
+          "line": 537
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 843
+          "line": 844
         }
       ],
       "kind": "UI",
@@ -30216,15 +30216,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 719
+          "line": 720
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 707
+          "line": 709
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 736
+          "line": 738
         }
       ],
       "kind": "UI",
@@ -30359,7 +30359,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 333
+          "line": 334
         }
       ],
       "kind": "UI",
@@ -30374,7 +30374,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 333
+          "line": 334
         }
       ],
       "kind": "UI",
@@ -30389,7 +30389,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 366
+          "line": 367
         }
       ],
       "kind": "UI",
@@ -30404,7 +30404,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 366
+          "line": 367
         }
       ],
       "kind": "UI",
@@ -30419,7 +30419,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 772
+          "line": 773
         }
       ],
       "kind": "UI",
@@ -30434,7 +30434,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 843
+          "line": 844
         }
       ],
       "kind": "UI",
@@ -30479,7 +30479,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 334
+          "line": 335
         }
       ],
       "kind": "UI",
@@ -30494,7 +30494,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 334
+          "line": 335
         }
       ],
       "kind": "UI",
@@ -30509,7 +30509,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 363
+          "line": 364
         }
       ],
       "kind": "UI",
@@ -30524,7 +30524,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 363
+          "line": 364
         }
       ],
       "kind": "UI",
@@ -30539,7 +30539,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 393
+          "line": 394
         }
       ],
       "kind": "UI",
@@ -30554,7 +30554,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 393
+          "line": 394
         }
       ],
       "kind": "UI",
@@ -30569,7 +30569,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 499
+          "line": 500
         }
       ],
       "kind": "UI",
@@ -30584,7 +30584,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 499
+          "line": 500
         }
       ],
       "kind": "UI",
@@ -30599,7 +30599,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 530
+          "line": 531
         }
       ],
       "kind": "UI",
@@ -30614,7 +30614,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 530
+          "line": 531
         }
       ],
       "kind": "UI",
@@ -30629,7 +30629,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 860
+          "line": 861
         }
       ],
       "kind": "UI",
@@ -30644,7 +30644,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 860
+          "line": 861
         }
       ],
       "kind": "UI",
@@ -30659,7 +30659,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 923
+          "line": 924
         }
       ],
       "kind": "UI",
@@ -30674,7 +30674,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 923
+          "line": 924
         }
       ],
       "kind": "UI",
@@ -30772,15 +30772,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 374
+          "line": 375
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 373
+          "line": 374
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 399
+          "line": 400
         }
       ],
       "kind": "UI",
@@ -30795,15 +30795,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 374
+          "line": 375
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 373
+          "line": 374
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 399
+          "line": 400
         }
       ],
       "kind": "UI",
@@ -30818,15 +30818,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 374
+          "line": 375
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 373
+          "line": 374
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 399
+          "line": 400
         }
       ],
       "kind": "UI",
@@ -35678,7 +35678,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 303
+          "line": 304
         }
       ],
       "kind": "UI",
@@ -35695,7 +35695,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 312
+          "line": 313
         }
       ],
       "kind": "UI",
@@ -35710,7 +35710,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 313
+          "line": 314
         }
       ],
       "kind": "UI",
@@ -35725,7 +35725,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 314
+          "line": 315
         }
       ],
       "kind": "UI",
@@ -35740,7 +35740,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 316
+          "line": 317
         }
       ],
       "kind": "UI",
@@ -35755,7 +35755,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 317
+          "line": 318
         }
       ],
       "kind": "UI",
@@ -35772,7 +35772,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 424
+          "line": 425
         }
       ],
       "kind": "UI",
@@ -35791,7 +35791,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 434
+          "line": 435
         }
       ],
       "kind": "UI",
@@ -35810,7 +35810,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 882
+          "line": 883
         }
       ],
       "kind": "UI",
@@ -36489,7 +36489,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 243
+          "line": 244
         }
       ],
       "kind": "UI",
@@ -36506,7 +36506,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 243
+          "line": 244
         }
       ],
       "kind": "UI",
@@ -36523,7 +36523,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 343
+          "line": 344
         }
       ],
       "kind": "UI",
@@ -36538,7 +36538,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 680
+          "line": 681
         }
       ],
       "kind": "UI",
@@ -36555,7 +36555,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 688
+          "line": 689
         }
       ],
       "kind": "UI",
@@ -36572,7 +36572,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 698
+          "line": 699
         }
       ],
       "kind": "UI",
@@ -36625,11 +36625,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 342
+          "line": 343
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 368
+          "line": 369
         }
       ],
       "kind": "UI",
@@ -36644,11 +36644,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 668
+          "line": 670
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 697
+          "line": 699
         }
       ],
       "kind": "UI",
@@ -36665,11 +36665,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 676
+          "line": 678
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 705
+          "line": 707
         }
       ],
       "kind": "UI",
@@ -36686,7 +36686,7 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 686
+          "line": 688
         }
       ],
       "kind": "UI",
@@ -36701,7 +36701,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 268
+          "line": 269
         }
       ],
       "kind": "UI",
@@ -36718,7 +36718,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 268
+          "line": 269
         }
       ],
       "kind": "UI",
@@ -36735,7 +36735,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 715
+          "line": 717
         }
       ],
       "kind": "UI",
@@ -37005,7 +37005,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 806
+          "line": 807
         }
       ],
       "kind": "UI",
@@ -37022,7 +37022,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 814
+          "line": 815
         }
       ],
       "kind": "UI",
@@ -37041,7 +37041,7 @@
       "contexts": [
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 895
+          "line": 896
         }
       ],
       "kind": "UI",

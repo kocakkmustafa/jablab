@@ -618,8 +618,9 @@ void _require(bool valid, String message) {
 }
 
 Map<String, dynamic> _object(Object? value) {
-  if (value is! Map<String, dynamic>)
+  if (value is! Map<String, dynamic>) {
     throw const FormatException('Expected object');
+  }
   return value;
 }
 
@@ -629,8 +630,9 @@ List<dynamic> _array(Object? value) {
 }
 
 String _text(Object? value) {
-  if (value is! String || value.trim().isEmpty)
+  if (value is! String || value.trim().isEmpty) {
     throw const FormatException('Expected nonempty text');
+  }
   return value;
 }
 

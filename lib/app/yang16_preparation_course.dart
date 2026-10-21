@@ -43,8 +43,9 @@ final class Yang16PreparationCourse {
       'm16',
       'return',
     ];
-    if (decoded.length != expected.length)
+    if (decoded.length != expected.length) {
       throw const FormatException('Incomplete original preparation');
+    }
     for (var i = 0; i < expected.length; i++) {
       decoded[i].requireBinding(expected[i], sourceIds);
     }
@@ -55,8 +56,9 @@ final class Yang16PreparationCourse {
   factory Yang16PreparationCourse.fromJsonString(String source) {
     try {
       final value = jsonDecode(source);
-      if (value is! Map<String, dynamic>)
+      if (value is! Map<String, dynamic>) {
         throw const FormatException('Expected bank');
+      }
       return Yang16PreparationCourse._(value);
     } on FormatException {
       rethrow;

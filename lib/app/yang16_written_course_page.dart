@@ -317,8 +317,9 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
               onChanged: (value) {
                 if (!practiceCurrent()) return;
                 if (value == PracticeAttempt.attempted &&
-                    (_practiceEnded || !practice.offersMovement))
+                    (_practiceEnded || !practice.offersMovement)) {
                   return;
+                }
                 setState(() {
                   _practiceAttempt = value;
                   if (value == PracticeAttempt.stopped ||

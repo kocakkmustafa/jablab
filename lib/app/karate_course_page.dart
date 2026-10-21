@@ -218,8 +218,9 @@ class _KarateLessonPageState extends State<KarateLessonPage>
               onChanged: (value) {
                 if (!practiceCurrent()) return;
                 if (!practice.offersMovement &&
-                    value == PracticeAttempt.attempted)
+                    value == PracticeAttempt.attempted) {
                   return;
+                }
                 setState(() {
                   _practiceAttempt = value;
                   if (value == PracticeAttempt.stopped ||

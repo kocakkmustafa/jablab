@@ -237,8 +237,9 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
                 onChanged: (value) {
                   if (!practiceCurrent() ||
                       (value == PracticeAttempt.attempted &&
-                          !practice.offersMovement))
+                          !practice.offersMovement)) {
                     return;
+                  }
                   setState(() {
                     _practiceAttempt = value;
                     if (value == PracticeAttempt.stopped ||
@@ -433,8 +434,9 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
                     if (!mounted ||
                         !_canReport ||
                         practiceEpoch != _practiceEpoch ||
-                        !identical(l, widget.lesson))
+                        !identical(l, widget.lesson)) {
                       return;
+                    }
                     widget.onWritten();
                     setState(() {
                       _reported = true;

@@ -579,8 +579,9 @@ final class ContentRepository {
     final ids = <String>{...lesson.techniques};
     for (final combinationId in lesson.combinations) {
       final matches = rules.combinations.where((c) => c.id == combinationId);
-      if (matches.length != 1)
+      if (matches.length != 1) {
         throw StateError('Unsupported lesson combination');
+      }
       ids.addAll(matches.single.sequence);
     }
     if (!rules.techniques.map((t) => t.id).toSet().containsAll(ids)) {
