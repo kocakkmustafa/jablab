@@ -226,12 +226,21 @@ void main() {
             await t.pageBack();
             await t.pumpAndSettle();
           } else {
-            final bool named = find
-                .textContaining(RegExp(
-                    'locked|not open|not available|unlocks|needs the',
-                    caseSensitive: false))
-                .evaluate()
-                .isNotEmpty;
+            // Gerekçe DERS KARTININ ALT AĞACINDA aranır — disiplin kademesindeki
+            // aynı ders: ekran düzeyinde regex, komşu kurs metnine yaslanıyordu
+            // ("not available" → "unavailable" olunca üç kilitli ders gerekçesi
+            // görünürken çıkmaz sayıldı). Ürünün kilit gerekçesi
+            // `locked-why-<ders>` anahtarlı metindir (course_page.dart).
+            final Finder why = find.descendant(
+              of: card.first,
+              matching: find.byKey(
+                ValueKey<String>('locked-why-${lid.substring('lesson-'.length)}'),
+              ),
+            );
+            final bool named = why.evaluate().any(
+                  (Element e) =>
+                      ((e.widget as Text).data ?? '').trim().isNotEmpty,
+                );
             if (named) {
               namedEmpty++;
             } else {
