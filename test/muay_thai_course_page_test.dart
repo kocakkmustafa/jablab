@@ -129,15 +129,21 @@ void main() {
               t.widget<Text>(find.byKey(const Key('muay-thai-teaching'))).data,
               language == 'tr' ? l.teaching.tr : l.teaching.en,
             );
-            await show(t, const Key('muay-thai-conditional-task'));
-            expect(
-              t
-                  .widget<Text>(
-                    find.byKey(const Key('muay-thai-conditional-task')),
-                  )
-                  .data,
-              language == 'tr' ? l.physicalTask.tr : l.physicalTask.en,
-            );
+            if (l.selfGuidedPractice?.offersMovement == true) {
+              await show(t, const Key('self-guided-task'));
+              expect(
+                t.widget<Text>(find.byKey(const Key('self-guided-task'))).data,
+                language == 'tr' ? l.selfGuidedPractice!.task.tr : l.selfGuidedPractice!.task.en,
+              );
+              expect(find.byKey(const Key('muay-thai-conditional-task')), findsNothing);
+            } else {
+              await show(t, const Key('muay-thai-conditional-task'));
+              expect(
+                t.widget<Text>(find.byKey(const Key('muay-thai-conditional-task'))).data,
+                language == 'tr' ? l.physicalTask.tr : l.physicalTask.en,
+              );
+              expect(find.byKey(const Key('self-guided-task')), findsNothing);
+            }
             await show(t, const Key('muay-thai-written-task'));
             expect(
               t
@@ -156,11 +162,11 @@ void main() {
               startsWith(
                 language == 'tr'
                     ? (l.physicalPrerequisiteIds.isEmpty
-                          ? 'Yalnız yazılı görev'
-                          : 'Karşılanmamış teknik gereksinimler:')
+                          ? 'Bireysel kabul doğrulanmadı'
+                          : 'Doğrulanmamış bireysel kabul kayıtları:')
                     : (l.physicalPrerequisiteIds.isEmpty
-                          ? 'Written task only'
-                          : 'Unmet technique requirements:'),
+                          ? 'Individual acceptance is unverified'
+                          : 'Unverified individual acceptance records:'),
               ),
             );
             for (final id in l.physicalPrerequisiteIds) {
@@ -251,7 +257,7 @@ void main() {
             await t.pumpAndSettle();
             await tap(t, const Key('muay-thai-compared'));
             await tap(t, const Key('muay-thai-report-written'));
-            expect(course().physicalPracticeAvailable, isFalse);
+            expect(course().verifiedPhysicalPracticeAvailable, isFalse);
             expect(t.takeException(), isNull);
             await tapTestMaterialBack(t);
             await t.pumpAndSettle();
@@ -262,12 +268,12 @@ void main() {
           expect(
             find.textContaining(
               language == 'en'
-                  ? 'remain physically unattempted and unverified'
-                  : 'fiziksel olarak denenmedi ve doğrulanmadı',
+                  ? 'remain physically unverified'
+                  : 'fiziksel olarak doğrulanmadı',
             ),
             findsOneWidget,
           );
-          expect(course().physicalPracticeAvailable, isFalse);
+          expect(course().verifiedPhysicalPracticeAvailable, isFalse);
         } finally {
           semantics.dispose();
         }

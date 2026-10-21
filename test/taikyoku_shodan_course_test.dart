@@ -26,14 +26,37 @@ void main() {
         .having((e) => e.message, 'specific schema boundary', contains(message))));
   }
 
-  test('all616 translations match the independently accepted manuscript hashes', () {
+  test('authored text is pinned while unchanged text retains historical hashes', () {
     final asset = _fixture();
-    final pinned = jsonDecode(File('test/fixtures/taikyoku_shodan_reviewed_text.v1.json')
+    final pinned = jsonDecode(File('test/fixtures/taikyoku_shodan_authored_text.v2.json')
       .readAsStringSync()) as Map<String, dynamic>;
-    expect(pinned['reviewed_manuscript_sha256'], TaikyokuCourse.manuscriptSha256);
-    expect(pinned['reviewed_curriculum_sha256'], TaikyokuCourse.curriculumSha256);
+    expect(pinned['legacy_reviewed_manuscript_sha256'], TaikyokuCourse.manuscriptSha256);
+    expect(pinned['legacy_reviewed_curriculum_sha256'], TaikyokuCourse.curriculumSha256);
     final fields = pinned['fields'] as List;
-    expect(fields, hasLength(308));
+    expect(fields, hasLength(348));
+    // These two original teaching pairs intentionally changed under the new
+    // first-release scope. Every other historical pair remains byte-hash exact.
+    const changedHistoricalPointers = {
+      '/content/lessons/0/teaching/3',
+      '/content/lessons/9/teaching/0',
+    };
+    final legacyBytes = File('test/fixtures/taikyoku_shodan_reviewed_text.v1.json')
+        .readAsBytesSync();
+    expect(computeSha256Hex(Uint8List.fromList(legacyBytes)),
+        pinned['baseReviewedFixtureSha256']);
+    final legacy = jsonDecode(utf8.decode(legacyBytes)) as Map<String, dynamic>;
+    var retained = 0;
+    for (final field in legacy['fields'] as List) {
+      final pointer = field['pointer'] as String;
+      if (changedHistoricalPointers.contains(pointer)) continue;
+      final pair = _at(asset, pointer) as Map;
+      for (final language in ['tr', 'en']) {
+        expect(computeSha256Hex(Uint8List.fromList(utf8.encode(pair[language] as String))),
+            field[language], reason: 'unchanged historical $pointer/$language');
+      }
+      retained++;
+    }
+    expect(retained, 306);
     for (final field in fields) {
       final pair = _at(asset, field['pointer'] as String) as Map;
       expect(pair.keys.toSet(), {'tr','en'});
@@ -100,7 +123,8 @@ void main() {
 
   test('decoder rejects wrong editions and any weakened A/B distinction', () {
     rejects((m) => m['schemaVersion'] = 1.0);
-    rejects((m) => m['schemaVersion'] = 2);
+    rejects((m) => m['schemaVersion'] = 1);
+    rejects((m) => m['schemaVersion'] = 3);
     rejects((m) => m['id'] = 'jablab.huckle_kata');
     rejects((m) => m['practiceKind'] = 'physical_mastery');
     for (final key in ['manuscriptSha256','curriculumSha256','sourceMapSha256']) {

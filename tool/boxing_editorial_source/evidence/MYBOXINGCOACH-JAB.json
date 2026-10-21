@@ -1,0 +1,58 @@
+{
+  "atUtc": "2026-10-20T21:50:50.275789+00:00",
+  "sourcePage": "https://www.myboxingcoach.com/punching-how-to-throw-a-jab/",
+  "sourceUrl": "https://www.youtube.com/watch?v=CmpqqsmiP70",
+  "title": "How to Box - The Boxing Jab",
+  "publisher": "MyBoxingCoach",
+  "durationSeconds": 326.921,
+  "reviewKind": "selected_actual_visual_instants",
+  "method": "Normal IAB player paused screenshots/UIseek/frame stepping and read-only currentTime/readyState. Initial130.735999 readyState1 screenshot excluded; same130.735998 was independently re-observed readyState4 with actual extension.",
+  "continuousFullVideoWatched": false,
+  "audioReviewed": false,
+  "assetDownloadOrCopy": false,
+  "permissionBarrierBypassed": false,
+  "observations": [
+    {
+      "seconds": 130.735998,
+      "observed": "Jab extended, other hand close to face, staggered feet and small body rotation visible."
+    },
+    {
+      "seconds": 135.735998,
+      "observed": "Both fists near face again in staggered stance, opposite orientation view."
+    },
+    {
+      "seconds": 170.735998,
+      "observed": "Presenter begins common-fault explanation, one hand lowered; this is not selected as a guard model."
+    },
+    {
+      "seconds": [
+        175.735998,
+        176.935997
+      ],
+      "observed": "Both fists near face while attention is directed to lead-elbow path, captions used as location only."
+    },
+    {
+      "seconds": 196.103999,
+      "observed": "Explanation pose, not a strike endpoint; not used to infer a correct movement."
+    },
+    {
+      "seconds": 206.103999,
+      "observed": "Lead arm extended toward empty space with opposite fist near face and staggered feet; no impact."
+    }
+  ],
+  "transcriptLocatorOnly": "/var/folders/sl/xf0zx4_54fx5146nmzgf0xt00000gn/T/browser-use/exports/youtube-CmpqqsmiP70-fe3f22da-3c70-4484-b8b7-c3fe8a335b0f.txt",
+  "supportedFamilies": [
+    "lead-hand short forward path and same-path guard return as original paused preparation",
+    "opposite hand remains near guard",
+    "stationary staggered stance context"
+  ],
+  "notEstablished": [
+    "fist-thumb construction close-up",
+    "continuous full jab timing",
+    "punch speed/power/force or limb measurement",
+    "safe individual alignment",
+    "all sport footwork/rear-cross mechanics"
+  ],
+  "adaptation": "Original slow very short non-contact task does not adopt source acceleration, full extension, pressure into floor, power or opponent tactics. No hard wrist/elbow stop; open hand/written alternatives retained. Sport source corroborates DVIDS broad hand-return vocabulary without equating MCMAP and boxing.",
+  "productSourceWritten": false
+}

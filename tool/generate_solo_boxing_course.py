@@ -4016,6 +4016,144 @@ def bind_narrow_sources() -> None:
 
 bind_narrow_sources()
 
+# Original first-release clarifications are applied after the historical source
+# attribution baseline was verified. This does not change old research receipts
+# or claim that a new video/media acceptance was performed.
+FIRST_RELEASE_CLARIFICATIONS = [{'id': 'BOX-DRAFT-01',
+  'lesson_id': 'boxing.rounds.personal_plan',
+  'json_pointer': '/modules/6/lessons/4/stopSignal',
+  'before': {'en': 'Stop or revise the plan if symptoms, pain or lost balance appear.',
+             'tr': 'Belirti, ağrı veya denge kaybı olursa dur ya da planı değiştir.'},
+  'after': {'en': 'Stop the practice immediately if symptoms, pain or loss of balance appear. Rest '
+                  'instead of continuing with a changed plan. Do not resume while the symptom '
+                  'remains; seek appropriate health advice if it persists, returns or concerns '
+                  'you.',
+            'tr': 'Belirti, ağrı veya denge kaybı olursa çalışmayı hemen durdur. Planı '
+                  'değiştirerek sürdürmek yerine dinlen. Belirti sürerken yeniden başlama; '
+                  'sürerse, yinelerse veya seni endişelendirirse uygun sağlık desteği al.'}},
+ {'id': 'BOX-DRAFT-02',
+  'lesson_id': 'boxing.rounds.personal_plan',
+  'json_pointer': '/modules/6/lessons/4/steps/2',
+  'before': {'en': 'Pick a short time ceiling and a rest option. A changed plan after symptoms or '
+                   'fatigue is good judgement, not failure.',
+             'tr': 'Kısa süre üst sınırı ve dinlenme seçeneği belirle. Belirti veya yorgunlukta '
+                   'planı değiştirmek başarısızlık değil, iyi karardır.'},
+  'after': {'en': 'Pick a short time ceiling and a rest option. Stopping for a symptom is good '
+                  'judgement, not failure. If ordinary fatigue builds without a stop signal, '
+                  'finish or rest early; make any easier plan for a later comfortable attempt.',
+            'tr': 'Kısa süre üst sınırı ve dinlenme seçeneği belirle. Bir belirti nedeniyle durmak '
+                  'başarısızlık değil, iyi karardır. Durma belirtisi olmadan sıradan yorgunluk '
+                  'artarsa erken bitir veya dinlen; daha kolay planı sonraki rahat deneme için '
+                  'seç.'}},
+ {'id': 'BOX-DRAFT-03',
+  'lesson_id': 'boxing.combinations.angle_exit',
+  'json_pointer': '/modules/5/lessons/4/steps/1',
+  'before': {'en': "Keep the exit separate at first. Count 'hands home, then feet' to avoid moving "
+                   'with both hands away.',
+             'tr': "Önce çıkışı ayrı tut. İki el uzaktayken hareket etmemek için 'eller yerinde, "
+                   "sonra ayaklar' diye say."},
+  'after': {'en': 'For this paused learning drill, keep the exit separate: count “hands home, then '
+                  'feet”. This is a way to practise the parts in order, not a rule that all boxing '
+                  'footwork must wait for both hands.',
+            'tr': 'Bu duraklı öğrenme provasında çıkışı ayrı tut: “eller yerinde, sonra ayaklar” '
+                  'diye say. Bu, parçaları sırayla öğrenme yoludur; bütün boks adımlarının iki eli '
+                  'beklemesi gerektiği anlamına gelmez.'}},
+ {'id': 'BOX-DRAFT-04',
+  'lesson_id': 'boxing.combinations.angle_exit',
+  'json_pointer': '/modules/5/lessons/4/steps/2',
+  'before': {'tr': 'Kombinasyon bitmeden büyük pivotla uzaklaşmaya çalışma. Elleri geri getir, '
+                   'sonra küçük yan adım veya rahat dönüş seç.',
+             'en': 'Do not try to leave through a large pivot before finishing the combination. '
+                   'Return the hands first, then choose a small side step or comfortable turn.'},
+  'after': {'en': 'In this drill, complete the short combination, return the hands, then choose '
+                  'one small side step or comfortable turn. Keep the range small; do not force a '
+                  'large pivot.',
+            'tr': 'Bu provada kısa kombinasyonu bitir, elleri geri getir, sonra tek küçük yan adım '
+                  'veya rahat dönüş seç. Aralığı küçük tut; büyük bir pivotu zorlama.'}},
+ {'id': 'BOX-DRAFT-05',
+  'lesson_id': 'boxing.combinations.angle_exit',
+  'json_pointer': '/modules/5/lessons/4/selfChecks/0',
+  'before': {'en': 'Both hands were back before my exit began.',
+             'tr': 'Çıkış başlamadan iki elim dönmüştü.'},
+  'after': {'en': 'In this paused drill, both hands were back before my exit began.',
+            'tr': 'Bu duraklı provada çıkış başlamadan iki elim dönmüştü.'}},
+ {'id': 'BOX-DRAFT-06',
+  'lesson_id': 'boxing.footwork.diagonal',
+  'json_pointer': '/modules/1/lessons/2/practice',
+  'before': {'tr': 'Zihninde küçük bir X çiz; her kola bir kol boyu ilerle ve aralarda merkeze '
+                   'dön.\n'
+                   '\n'
+                   "Kısa odak çalışması: Küçük X'in önce ön iki kolunu, dinlendikten sonra arka "
+                   'iki kolunu dene. Her dönüşte merkezde dur; bir sonraki yönü önceden söyle. '
+                   'Bölümler arasında dinlen; süreyi rahatlığına göre uzat.\n'
+                   '\n'
+                   'Rahat olduğunda tek değişken denemesi: Küçük X kollarını farklı sırada seç, '
+                   'merkeze dönüşü koru.\n'
+                   '\n'
+                   'Sonraki pratik: Sonraki uygun oturumda kısa uygulamanın sırasını önce '
+                   'yardımsız hatırla. İleri ve geri dersini kısaca hatırla; yalnız karışan kısmı '
+                   'yeniden kontrol et.',
+             'en': 'Draw a small X mentally and travel one arm-length along each ray, returning to '
+                   'the centre between rays.\n'
+                   '\n'
+                   'Short focused practice: Try the two front rays of a small X first, then the '
+                   'two back rays after a rest. Stop at the centre on every return and name the '
+                   'next direction beforehand. Rest between sections; take longer if you need it.\n'
+                   '\n'
+                   'When comfortable, try changing just one variable: Choose the small X rays in a '
+                   'different order while keeping the return to the centre.\n'
+                   '\n'
+                   'Next practice: At the next suitable session, recall the short sequence without '
+                   'reading first. Briefly revisit Forward and back; check only the confusing part '
+                   'again.'},
+  'after': {'tr': 'Zeminde küçük bir X hayal et. Bir kol yönünde rahat, küçük bir çapraz adım at; '
+                  'diğer ayak tabanı yeniden kursun. Başka kolu seçmeden merkeze dön. Bir kol boyu '
+                  'mesafeyi tamamlama zorunluluğu yok.\n'
+                  '\n'
+                  "Kısa odak çalışması: Küçük X'in önce ön iki kolunu, dinlendikten sonra arka iki "
+                  'kolunu dene. Her dönüşte merkezde dur; bir sonraki yönü önceden söyle. Bölümler '
+                  'arasında dinlen; süreyi rahatlığına göre uzat.\n'
+                  '\n'
+                  'Rahat olduğunda tek değişken denemesi: Küçük X kollarını farklı sırada seç, '
+                  'merkeze dönüşü koru.\n'
+                  '\n'
+                  'Sonraki pratik: Sonraki uygun oturumda kısa uygulamanın sırasını önce yardımsız '
+                  'hatırla. İleri ve geri dersini kısaca hatırla; yalnız karışan kısmı yeniden '
+                  'kontrol et.',
+            'en': 'Imagine a small X on the floor. Take one comfortable small diagonal step along '
+                  'a ray, let the other foot restore your base, then return to the centre before '
+                  'choosing another ray. No arm-length distance is required.\n'
+                  '\n'
+                  'Short focused practice: Try the two front rays of a small X first, then the two '
+                  'back rays after a rest. Stop at the centre on every return and name the next '
+                  'direction beforehand. Rest between sections; take longer if you need it.\n'
+                  '\n'
+                  'When comfortable, try changing just one variable: Choose the small X rays in a '
+                  'different order while keeping the return to the centre.\n'
+                  '\n'
+                  'Next practice: At the next suitable session, recall the short sequence without '
+                  'reading first. Briefly revisit Forward and back; check only the confusing part '
+                  'again.'}}]
+
+
+def apply_first_release_clarifications() -> None:
+    baseline = (json.dumps(course, ensure_ascii=False, indent=2) + "\n").encode()
+    if hashlib.sha256(baseline).hexdigest() != "0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f":
+        raise ValueError("First-release clarification source baseline drifted")
+    lessons = {lesson["id"]: lesson for module in course["modules"] for lesson in module["lessons"]}
+    for change in FIRST_RELEASE_CLARIFICATIONS:
+        parts = change["json_pointer"].strip("/").split("/")
+        parent = course
+        for part in parts[:-1]:
+            parent = parent[int(part)] if isinstance(parent, list) else parent[part]
+        key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
+        if parent[key] != change["before"] or change["lesson_id"] not in lessons:
+            raise ValueError(f"Clarification before-image drifted: {change['id']}")
+        parent[key] = change["after"]
+
+
+apply_first_release_clarifications()
+
 
 def main() -> None:
     target = Path(__file__).resolve().parents[1] / "assets/content/solo_boxing_course.v1.json"

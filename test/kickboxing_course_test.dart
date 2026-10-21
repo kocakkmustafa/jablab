@@ -69,7 +69,7 @@ void main() {
     () {
       final c = KickboxingCourse.fromJsonString(jsonEncode(fixture()));
       expect(c.lessons, hasLength(16));
-      expect(c.physicalPracticeAvailable, isFalse);
+      expect(c.verifiedPhysicalPracticeAvailable, isFalse);
       expect(c.conventionRows, hasLength(8));
       expect(
         c.conventionRows[2].en,
@@ -95,4 +95,24 @@ void main() {
       expect(() => c.conventionRows.clear(), throwsUnsupportedError);
     },
   );
+  test('actual primary IDs retain exact URLs and reject swapped providers', () {
+    const expected = <String, String>{
+      'S11': 'https://www.youtube.com/watch?v=CmpqqsmiP70',
+      'S12': 'https://www.youtube.com/watch?v=IJIBBBQVIMw',
+      'S13': 'https://www.youtube.com/watch?v=ZE6IVZ-MQUA',
+      'S14': 'https://www.youtube.com/watch?v=bEVIlec93Ps',
+      'S15': 'https://www.youtube.com/watch?v=aP-4Kjgc4Q8',
+    };
+    final c = KickboxingCourse.fromJsonString(jsonEncode(fixture()));
+    for (final entry in expected.entries) {
+      expect(c.sources.singleWhere((s) => s.id == entry.key).url.toString(), entry.value);
+      rejects((m) {
+        final source = (m['sources'] as List).singleWhere((s) => s['id'] == entry.key);
+        source['url'] = 'https://example.org/wrong-provider';
+      });
+      rejects((m) => (m['sources'] as List).removeWhere((s) => s['id'] == entry.key));
+    }
+    rejects((m) => m['sources'].add({...m['sources'].last, 'id': 'UNLISTED-PRIMARY'}));
+  });
+
 }

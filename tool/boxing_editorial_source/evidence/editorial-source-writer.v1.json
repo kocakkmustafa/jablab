@@ -1,0 +1,1830 @@
+{
+  "schema_version": 1,
+  "source_sha": "92b55d9acb1ad368eabffaf71516a0ad0016c2ac",
+  "state": "REPORT_ONLY_DRAFT_NOT_APPLIED",
+  "changes": [
+    {
+      "id": "BOX-DRAFT-01",
+      "status": "DRAFT_ONLY_NOT_APPLIED",
+      "priority": "MEANING_SAFETY_FIRST_RELEASE",
+      "lesson_id": "boxing.rounds.personal_plan",
+      "file": "assets/content/solo_boxing_course.v1.json",
+      "lesson_line": 2540,
+      "json_pointer": "/modules/6/lessons/4/stopSignal",
+      "before": {
+        "en": "Stop or revise the plan if symptoms, pain or lost balance appear.",
+        "tr": "Belirti, ağrı veya denge kaybı olursa dur ya da planı değiştir."
+      },
+      "after": {
+        "en": "Stop the practice immediately if symptoms, pain or loss of balance appear. Rest instead of continuing with a changed plan. Do not resume while the symptom remains; seek appropriate health advice if it persists, returns or concerns you.",
+        "tr": "Belirti, ağrı veya denge kaybı olursa çalışmayı hemen durdur. Planı değiştirerek sürdürmek yerine dinlen. Belirti sürerken yeniden başlama; sürerse, yinelerse veya seni endişelendirirse uygun sağlık desteği al."
+      },
+      "reason": "Existing stopSignal offers stop OR revise while the same lesson requires immediate stop. Separate stopping from future plan adjustment without claiming individual medical clearance.",
+      "ids_version_progress_preserved": true,
+      "closure_test": {
+        "status": "PROPOSED_UNRUN",
+        "assertions": [
+          "Exact EN/TR after-text rendered on real lesson route",
+          "All39 IDs and current progress mappings preserved",
+          "Updated course bytes + asset manifest pins + integrity fixtures agree after authorized application",
+          "Written route makes0 native camera/permission/IAP calls",
+          "Self-report still does not claim physical validation"
+        ]
+      },
+      "primary_safety_support_url": "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/"
+    },
+    {
+      "id": "BOX-DRAFT-02",
+      "status": "DRAFT_ONLY_NOT_APPLIED",
+      "priority": "MEANING_SAFETY_FIRST_RELEASE",
+      "lesson_id": "boxing.rounds.personal_plan",
+      "file": "assets/content/solo_boxing_course.v1.json",
+      "lesson_line": 2540,
+      "json_pointer": "/modules/6/lessons/4/steps/2",
+      "before": {
+        "en": "Pick a short time ceiling and a rest option. A changed plan after symptoms or fatigue is good judgement, not failure.",
+        "tr": "Kısa süre üst sınırı ve dinlenme seçeneği belirle. Belirti veya yorgunlukta planı değiştirmek başarısızlık değil, iyi karardır."
+      },
+      "after": {
+        "en": "Pick a short time ceiling and a rest option. Stopping for a symptom is good judgement, not failure. If ordinary fatigue builds without a stop signal, finish or rest early; make any easier plan for a later comfortable attempt.",
+        "tr": "Kısa süre üst sınırı ve dinlenme seçeneği belirle. Bir belirti nedeniyle durmak başarısızlık değil, iyi karardır. Durma belirtisi olmadan sıradan yorgunluk artarsa erken bitir veya dinlen; daha kolay planı sonraki rahat deneme için seç."
+      },
+      "reason": "Keep the planning step consistent with immediate-stop wording; separate ordinary fatigue from warning symptoms.",
+      "ids_version_progress_preserved": true,
+      "closure_test": {
+        "status": "PROPOSED_UNRUN",
+        "assertions": [
+          "Exact EN/TR after-text rendered on real lesson route",
+          "All39 IDs and current progress mappings preserved",
+          "Updated course bytes + asset manifest pins + integrity fixtures agree after authorized application",
+          "Written route makes0 native camera/permission/IAP calls",
+          "Self-report still does not claim physical validation"
+        ]
+      },
+      "primary_safety_support_url": "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/"
+    },
+    {
+      "id": "BOX-DRAFT-03",
+      "status": "DRAFT_ONLY_NOT_APPLIED",
+      "priority": "NARROW_MEANING_CLARIFICATION",
+      "lesson_id": "boxing.combinations.angle_exit",
+      "file": "assets/content/solo_boxing_course.v1.json",
+      "lesson_line": 2166,
+      "json_pointer": "/modules/5/lessons/4/steps/1",
+      "before": {
+        "en": "Keep the exit separate at first. Count 'hands home, then feet' to avoid moving with both hands away.",
+        "tr": "Önce çıkışı ayrı tut. İki el uzaktayken hareket etmemek için 'eller yerinde, sonra ayaklar' diye say."
+      },
+      "after": {
+        "en": "For this paused learning drill, keep the exit separate: count “hands home, then feet”. This is a way to practise the parts in order, not a rule that all boxing footwork must wait for both hands.",
+        "tr": "Bu duraklı öğrenme provasında çıkışı ayrı tut: “eller yerinde, sonra ayaklar” diye say. Bu, parçaları sırayla öğrenme yoludur; bütün boks adımlarının iki eli beklemesi gerektiği anlamına gelmez."
+      },
+      "reason": "toronto_small_angle_exit source explicitly does not support a universal hands-return-before-feet rule. Label original pedagogical constraint, preserving simple noncontact drill.",
+      "ids_version_progress_preserved": true,
+      "closure_test": {
+        "status": "PROPOSED_UNRUN",
+        "assertions": [
+          "Exact EN/TR after-text rendered on real lesson route",
+          "All39 IDs and current progress mappings preserved",
+          "Updated course bytes + asset manifest pins + integrity fixtures agree after authorized application",
+          "Written route makes0 native camera/permission/IAP calls",
+          "Self-report still does not claim physical validation"
+        ]
+      }
+    },
+    {
+      "id": "BOX-DRAFT-04",
+      "status": "DRAFT_ONLY_NOT_APPLIED",
+      "priority": "NARROW_MEANING_CLARIFICATION",
+      "lesson_id": "boxing.combinations.angle_exit",
+      "file": "assets/content/solo_boxing_course.v1.json",
+      "lesson_line": 2166,
+      "json_pointer": "/modules/5/lessons/4/steps/2",
+      "before": {
+        "tr": "Kombinasyon bitmeden büyük pivotla uzaklaşmaya çalışma. Elleri geri getir, sonra küçük yan adım veya rahat dönüş seç.",
+        "en": "Do not try to leave through a large pivot before finishing the combination. Return the hands first, then choose a small side step or comfortable turn."
+      },
+      "after": {
+        "en": "In this drill, complete the short combination, return the hands, then choose one small side step or comfortable turn. Keep the range small; do not force a large pivot.",
+        "tr": "Bu provada kısa kombinasyonu bitir, elleri geri getir, sonra tek küçük yan adım veya rahat dönüş seç. Aralığı küçük tut; büyük bir pivotu zorlama."
+      },
+      "reason": "Carry the paused-drill scope through the repeated instruction.",
+      "ids_version_progress_preserved": true,
+      "closure_test": {
+        "status": "PROPOSED_UNRUN",
+        "assertions": [
+          "Exact EN/TR after-text rendered on real lesson route",
+          "All39 IDs and current progress mappings preserved",
+          "Updated course bytes + asset manifest pins + integrity fixtures agree after authorized application",
+          "Written route makes0 native camera/permission/IAP calls",
+          "Self-report still does not claim physical validation"
+        ]
+      }
+    },
+    {
+      "id": "BOX-DRAFT-05",
+      "status": "DRAFT_ONLY_NOT_APPLIED",
+      "priority": "NARROW_MEANING_CLARIFICATION",
+      "lesson_id": "boxing.combinations.angle_exit",
+      "file": "assets/content/solo_boxing_course.v1.json",
+      "lesson_line": 2166,
+      "json_pointer": "/modules/5/lessons/4/selfChecks/0",
+      "before": {
+        "en": "Both hands were back before my exit began.",
+        "tr": "Çıkış başlamadan iki elim dönmüştü."
+      },
+      "after": {
+        "en": "In this paused drill, both hands were back before my exit began.",
+        "tr": "Bu duraklı provada çıkış başlamadan iki elim dönmüştü."
+      },
+      "reason": "The self-check measures completion of this practice task, not a universal sporting rule.",
+      "ids_version_progress_preserved": true,
+      "closure_test": {
+        "status": "PROPOSED_UNRUN",
+        "assertions": [
+          "Exact EN/TR after-text rendered on real lesson route",
+          "All39 IDs and current progress mappings preserved",
+          "Updated course bytes + asset manifest pins + integrity fixtures agree after authorized application",
+          "Written route makes0 native camera/permission/IAP calls",
+          "Self-report still does not claim physical validation"
+        ]
+      }
+    },
+    {
+      "id": "BOX-DRAFT-06",
+      "status": "DRAFT_ONLY_NOT_APPLIED",
+      "priority": "LOW_CLARITY_OPTIONAL_FIRST_RELEASE",
+      "lesson_id": "boxing.footwork.diagonal",
+      "file": "assets/content/solo_boxing_course.v1.json",
+      "lesson_line": 597,
+      "json_pointer": "/modules/1/lessons/2/practice",
+      "before": {
+        "tr": "Zihninde küçük bir X çiz; her kola bir kol boyu ilerle ve aralarda merkeze dön.\n\nKısa odak çalışması: Küçük X'in önce ön iki kolunu, dinlendikten sonra arka iki kolunu dene. Her dönüşte merkezde dur; bir sonraki yönü önceden söyle. Bölümler arasında dinlen; süreyi rahatlığına göre uzat.\n\nRahat olduğunda tek değişken denemesi: Küçük X kollarını farklı sırada seç, merkeze dönüşü koru.\n\nSonraki pratik: Sonraki uygun oturumda kısa uygulamanın sırasını önce yardımsız hatırla. İleri ve geri dersini kısaca hatırla; yalnız karışan kısmı yeniden kontrol et.",
+        "en": "Draw a small X mentally and travel one arm-length along each ray, returning to the centre between rays.\n\nShort focused practice: Try the two front rays of a small X first, then the two back rays after a rest. Stop at the centre on every return and name the next direction beforehand. Rest between sections; take longer if you need it.\n\nWhen comfortable, try changing just one variable: Choose the small X rays in a different order while keeping the return to the centre.\n\nNext practice: At the next suitable session, recall the short sequence without reading first. Briefly revisit Forward and back; check only the confusing part again."
+      },
+      "after": {
+        "tr": "Zeminde küçük bir X hayal et. Bir kol yönünde rahat, küçük bir çapraz adım at; diğer ayak tabanı yeniden kursun. Başka kolu seçmeden merkeze dön. Bir kol boyu mesafeyi tamamlama zorunluluğu yok.\n\nKısa odak çalışması: Küçük X'in önce ön iki kolunu, dinlendikten sonra arka iki kolunu dene. Her dönüşte merkezde dur; bir sonraki yönü önceden söyle. Bölümler arasında dinlen; süreyi rahatlığına göre uzat.\n\nRahat olduğunda tek değişken denemesi: Küçük X kollarını farklı sırada seç, merkeze dönüşü koru.\n\nSonraki pratik: Sonraki uygun oturumda kısa uygulamanın sırasını önce yardımsız hatırla. İleri ve geri dersini kısaca hatırla; yalnız karışan kısmı yeniden kontrol et.",
+        "en": "Imagine a small X on the floor. Take one comfortable small diagonal step along a ray, let the other foot restore your base, then return to the centre before choosing another ray. No arm-length distance is required.\n\nShort focused practice: Try the two front rays of a small X first, then the two back rays after a rest. Stop at the centre on every return and name the next direction beforehand. Rest between sections; take longer if you need it.\n\nWhen comfortable, try changing just one variable: Choose the small X rays in a different order while keeping the return to the centre.\n\nNext practice: At the next suitable session, recall the short sequence without reading first. Briefly revisit Forward and back; check only the confusing part again."
+      },
+      "reason": "Remove ambiguous arm-length travel target that can conflict with repeated small-step and shrink-the-X cues. No numerical stance or personal dose is invented.",
+      "ids_version_progress_preserved": true,
+      "closure_test": {
+        "status": "PROPOSED_UNRUN",
+        "assertions": [
+          "Exact EN/TR after-text rendered on real lesson route",
+          "All39 IDs and current progress mappings preserved",
+          "Updated course bytes + asset manifest pins + integrity fixtures agree after authorized application",
+          "Written route makes0 native camera/permission/IAP calls",
+          "Self-report still does not claim physical validation"
+        ]
+      }
+    }
+  ],
+  "application_conditions": [
+    "Explicit source lease RELEASED before parent-only source edits",
+    "Root reviews parent actual visual receipts and final wording",
+    "Update byte/canonical/manuscript/integrity pins only with exact accepted content; do not set unverified physical validation flags true",
+    "Submit exact source-bound tests through existing single SDK coordinator; no historical PASS reused"
+  ],
+  "not_authorized": [
+    "build",
+    "sign",
+    "push",
+    "deploy",
+    "media redistribution",
+    "cache/path overrides",
+    "camera or sales enablement"
+  ],
+  "karate_taikyoku_package": {
+    "createdAtUtc": "2026-10-20T20:47:42.342359+00:00",
+    "sourceSha": "92b55d9acb1ad368eabffaf71516a0ad0016c2ac",
+    "state": "DRAFT_ONLY; NO_APP_EDITS; FROZEN_SOURCE_PRESERVED",
+    "common": {
+      "state": "DRAFT_ONLY_NOT_APPLIED_NOT_VISUALLY_ACCEPTED",
+      "scope": {
+        "tr": "Yetişkin başlangıç düzeyi için isteğe bağlı, temassız ve kişisel teknik doğrulaması içermeyen küçük öz çalışma. Duruş, el yolu ve yön hazırlığı geleneksel kata performansıyla aynı sonuç değildir.",
+        "en": "Optional small non-contact self-practice for adult beginners, without personal technique validation. Stance, hand-path and heading preparation do not establish a traditional kata performance."
+      },
+      "beforeStart": {
+        "tr": "Önce normal rahat hareketini ve boş, kaymaz alanı kontrol et. Ağrı veya denge belirsizliğini hareketi zorlayarak sınama. Desteği bırakmayı gerektiren görevi seçme; yazılı veya oturarak el/yön anlatımı her zaman alternatiftir.",
+        "en": "Check ordinary comfortable movement and clear non-slip space first. Do not test pain or uncertain balance by forcing a movement. Do not choose a task that requires releasing needed support; written study or seated hand/heading description remains an alternative."
+      },
+      "stop": {
+        "tr": "Ağrı, baş dönmesi, olağandışı nefes darlığı, dengesizlik, ayağın takılması veya diz/ayak burulması hissinde o denemeyi kes. Ellerini dinlendir ve yalnız rahat sıradan hareketle dur. Belirtiyi yeniden denemeyle sınama; gerektiğinde uygun sağlık veya hareket desteği al.",
+        "en": "End the attempt on pain, dizziness, unusual breathing difficulty, instability, a caught foot or a twisting sensation at the knee/foot. Rest the hands and stop using only ordinary comfortable movement. Do not test a symptom by retrying; obtain suitable health or movement support when needed."
+      },
+      "dose": {
+        "tr": "Bir küçük parça bir kez yeterlidir; tekrar zorunlu değildir. Belirti yoksa dinlendikten sonra aynı küçük parçayı yeniden seçebilirsin. Hız, hareket aralığı ve süreyi birlikte artırma; darbe, partner, hedef, sıçrama ve nefes tutma yoktur.",
+        "en": "One small part once is enough; repetition is optional. When symptom-free and rested, you may choose the same small part again. Do not increase speed, range and duration together; use no impact, partner, target, jump or breath holding."
+      },
+      "progress": {
+        "tr": "Yazılı sayaç yalnız yazılı karşılaştırmayı sayar ve mevcut ziyaret anlamını korur. Temassız deneme öz bildirimi kişisel teknik doğrulaması, ustalık veya kuşak değildir; kaydedilmeyen bir denemeyi kaydedilmiş göstermeyiz.",
+        "en": "The written counter counts written comparison only and keeps its existing per-visit meaning. A non-contact rehearsal self-report is not personal technique validation, mastery or rank; an unrecorded attempt is not presented as saved."
+      },
+      "visualReceipt": null,
+      "visualReceiptRequiredBeforeSourceIntegration": "Required for bodily-technique source claims at domain/technique-family scope; conceptual, space/stopping and written-result content may use primary text and explicitly original adaptation. Not one independent video per lesson or sentence.",
+      "expertApprovalRequired": false,
+      "contactAllowed": false,
+      "cameraAssessmentAllowed": false,
+      "physicalTechniqueValidated": false,
+      "newPersistentProgress": false
+    },
+    "recommendedNarrowSchemaAndUi": {
+      "goal": "Actual optional adult beginner non-contact self-practice teaching, distinct from verified physical performance and from written recall.",
+      "evidenceFlagsRemainUnchanged": [
+        "releaseReadiness.instructorReview=false",
+        "releaseReadiness.demonstrations=false",
+        "releaseReadiness.individualFeedback=false",
+        "Karate physicalRequirements.P0..P6=false",
+        "Taikyoku physicalRequirements[].accepted=false",
+        "Taikyoku orderedMovementContracts[].footContact/wristRotation/loading=null",
+        "sourceBindings.BClosingInwardFootOrder=null"
+      ],
+      "additiveTypedField": "A small selfPractice object: scope, instruction, observe, writtenAlternative, stopPolicy, dosePolicy, validationMeaning and sourceReviewReceipts. Add it to strict allowed-key schemas deliberately; no arbitrary keys or masteryScore. Use a new schema/manuscript revision and content/hash fixtures; retain course/lesson/movement IDs and written counters.",
+      "availabilityNaming": "Add selfPracticeAvailable and physicalTechniqueValidated as separate concepts. The old physicalPracticeAvailable getter is ambiguous: it currently returns false (Karate:184, Taikyoku:262) and is asserted by tests but not used in the two course pages. Do not silently reinterpret it as an endorsed-safety flag. Owner should rename/deprecate that app-only getter and update its small caller/test set explicitly. Any new selfPracticeAvailable=true means published instruction exists, not physical correctness accepted.",
+      "uiFlow": "Show scope/stop before instructions; each lesson exposes Setup → small action → rest/stop → one observation → optional same-small-task retry → written recall. No checkbox certifies suitability and no score rewards power/speed/depth. Existing Stop control remains reachable and existing written answer/correction gates stay.",
+      "progress": "Keep the existing per-visit written progress. Do not add persistence, delete/reset it, or count physical attempts as written completion. If an ephemeral physical note is offered, label not saved and unverified; it is optional.",
+      "karate": "Reuse physical_task for the actual instructions but label it optional non-contact self-practice. Replace globally blocked banner, future-only heading, and instructor-only hard gate; keep P0–P6 as not independently verified context, not a universal denial of all small self-practice.",
+      "taikyoku": "Add selfPractice instruction+observe per lesson and show it beside the existing objective/teaching/recall. Keep exact observed movement contracts and all nulls. Explicitly label added pauses, step–hand separation, comfortable-width bow/closing and walking arcs as beginner adaptations; do not rename them the exact recorded performance.",
+      "sourceEvidence": "Actual visual review is required for bodily-technique source claims at technique-family/kata-section scope; conceptual/space/stopping/written-result content may use appropriate primary text with original-adaptation labels. Do not invent a per-sentence or per-lesson video gate. External expert endorsement is not mandatory. Source review does not validate a particular learner or license media reuse.",
+      "noExpansion": [
+        "No Core changes",
+        "No camera or sales enablement",
+        "No new SDK/native run from this subtask",
+        "No media download/embed",
+        "No new paid course or account",
+        "No new persistent progress store"
+      ]
+    },
+    "courseCopyChanges": [
+      {
+        "courseId": "jablab.karate_a",
+        "field": "shared.physical_gate",
+        "before": {
+          "tr": "Bu öneride bütün fiziksel görevler kapalıdır. Yalnız ileride nitelikli Shotokan eğitmeni tam bu metni ve kişisel uyarlamayı incelemiş, gerekli özgün gösterimleri onaylamış ve ilgili hareketlerde gerçek kişisel gözlem/düzeltme/tekrar sağlamışsa koşullu görev düşünülebilir. P0–P6 gereksinimleri bugün karşılanmamıştır. Kutucuk, rahat hissetme veya doğru yazılı yanıt hiçbirini açmaz; tekrar denemede de aynı önkoşullar sürer.",
+          "en": "All physical tasks are unavailable in this proposal. A conditional task can be considered later only after a qualified Shotokan instructor has reviewed this exact text and personal adaptation, approved the required original demonstrations, and provided actual individual observation/correction/retest for the relevant movements. P0–P6 are unmet today. A checkbox, comfort or correct written answer unlocks none of them; the same prerequisites remain on retesting."
+        },
+        "after": {
+          "tr": "Yetişkin başlangıç düzeyi için isteğe bağlı, temassız ve kişisel teknik doğrulaması içermeyen küçük öz çalışma. Duruş, el yolu ve yön hazırlığı geleneksel kata performansıyla aynı sonuç değildir.",
+          "en": "Optional small non-contact self-practice for adult beginners, without personal technique validation. Stance, hand-path and heading preparation do not establish a traditional kata performance."
+        },
+        "reason": "User changed external-expert requirement; concrete lesson steps are supplied below, not only an eligibility label."
+      },
+      {
+        "courseId": "jablab.karate_a",
+        "field": "shared.status",
+        "before": {
+          "tr": "Özgün yazılı öneri v3; v1’deki el toparlama ve ayak sırası boşlukları açıklanmıştır. Bağımsız pedagoji incelemesi bekliyor. Fiziksel öğretim, gösterim ve kişisel geri bildirim kabulü yoktur.",
+          "en": "Original written proposal v3; the hand-recovery and foot-order gaps in v1 are made explicit. Independent pedagogy review is pending. Physical teaching, demonstration and personal feedback have not been accepted."
+        },
+        "after": {
+          "tr": "Özgün JabLab başlangıç içeriği: yazılı hatırlama ve küçük temassız öz çalışma. Kaynak görüntü incelemesinin kapsamı ayrıca kaydedilir; kişisel teknik, fiziksel doğruluk veya uzman desteği iddia edilmez.",
+          "en": "Original JabLab beginner content: written recall and small non-contact self-practice. Source viewing scope is recorded separately; no personal technique, physical correctness or expert endorsement is claimed."
+        }
+      },
+      {
+        "courseId": "jablab.karate_a",
+        "field": "shared.dose",
+        "before": {
+          "tr": "İleride uygun görülen bir görevde bir yavaş deneme yeterlidir; istersen en fazla iki ek küçük deneme arasında tamamen dur ve dinlen. Sayı hedefi veya başarı eşiği yoktur; daha azı ya da yalnız yazılı görev uygundur. Açıklık, hız ve süre birlikte artırılmaz; nefes tutulmaz veya zorla sayıya bağlanmaz.",
+          "en": "For a future suitable task, one slow attempt is enough; optionally make at most two more small attempts with a complete stop and rest between them. There is no repetition target or passing threshold; fewer attempts or written work alone is appropriate. Do not increase range, speed and duration together; do not hold the breath or force it to a count."
+        },
+        "after": {
+          "tr": "Bir küçük parça bir kez yeterlidir; tekrar zorunlu değildir. Belirti yoksa dinlendikten sonra aynı küçük parçayı yeniden seçebilirsin. Hız, hareket aralığı ve süreyi birlikte artırma; darbe, partner, hedef, sıçrama ve nefes tutma yoktur.",
+          "en": "One small part once is enough; repetition is optional. When symptom-free and rested, you may choose the same small part again. Do not increase speed, range and duration together; use no impact, partner, target, jump or breath holding."
+        }
+      },
+      {
+        "courseId": "jablab.karate_a",
+        "field": "shared.progress",
+        "before": {
+          "tr": "Seçenekleri ayrı tut: denenmedi; emin değilim; yalnız yazılı yanıtımla anahtarı karşılaştırdım; eğitmen gözledi ve kayıt var. Son seçenek bugün yoktur. Yazılı tamamlanma: “Yazılı inceleme tamamlandı; duruş, el tekniği, adım, dönüş ve dizi fiziksel olarak denenmedi veya doğrulanmadı.” Eksikleri tek tek belirt; teknik öğrenildi, kata ustalığı veya kuşak kazanıldı yazma.",
+          "en": "Keep choices separate: unattempted; uncertain; compared my written answer with the key only; instructor observed and a record exists. The last option does not exist today. Written completion reads: “Written review completed; stance, hand technique, stepping, turning and sequence physically unattempted or unverified.” List remaining components individually; do not record technique learned, kata mastery or belt earned."
+        },
+        "after": {
+          "tr": "Yazılı sayaç yalnız yazılı karşılaştırmayı sayar ve mevcut ziyaret anlamını korur. Temassız deneme öz bildirimi kişisel teknik doğrulaması, ustalık veya kuşak değildir; kaydedilmeyen bir denemeyi kaydedilmiş göstermeyiz.",
+          "en": "The written counter counts written comparison only and keeps its existing per-visit meaning. A non-contact rehearsal self-report is not personal technique validation, mastery or rank; an unrecorded attempt is not presented as saved."
+        }
+      },
+      {
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "field": "content.status",
+        "before": "ORIGINAL_FULL_WRITTEN_DRAFT_FOR_INDEPENDENT_REVIEW; NOT_INTEGRATED",
+        "after": "FIRST_RELEASE_ORIGINAL_WRITTEN_AND_NON_CONTACT_SELF_PRACTICE; SOURCE_REVIEW_RECEIPTS_REQUIRED; PHYSICAL_TECHNIQUE_NOT_VALIDATED",
+        "reason": "Existing integrated asset still says NOT_INTEGRATED. This after string is a draft for a future integrated revision, not current acceptance."
+      },
+      {
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "field": "content.reference_approval_scope",
+        "before": "Parent pedagogy reviewer approved this exact report for full written drafting; new manuscript acceptance pending",
+        "after": "Historical report approval covers the written drafting reference only. Current original beginner self-practice source-review receipts must name viewed ranges and unknowns; no instructor endorsement or personal physical validation is established."
+      }
+    ],
+    "uiCopyChanges": [
+      {
+        "file": "lib/app/karate_course_page.dart",
+        "lines": [
+          31,
+          130,
+          164,
+          287,
+          630,
+          638,
+          648,
+          658
+        ],
+        "beforeMeaning": "Written only; physical tasks unavailable until instructor review, demonstration and individual feedback. Per-visit written progress.",
+        "after": {
+          "tr": "İsteğe bağlı küçük temassız çalışma · kişisel teknik doğrulanmadı. Yazılı karşılaştırma ilerlemesi ayrı. Durma veya yazılı alternatife geçme her zaman mümkün.",
+          "en": "Optional small non-contact self-practice · personal technique not validated. Written comparison progress remains separate. Stop or switch to written study at any time."
+        }
+      },
+      {
+        "file": "lib/app/taikyoku_shodan_course_page.dart",
+        "lines": [
+          211,
+          244,
+          756,
+          764,
+          774,
+          804,
+          843
+        ],
+        "beforeMeaning": "Written only; physical kata unattempted/unverified and all six personal requirements unmet.",
+        "after": {
+          "tr": "Kaynakta gözlenen sıra ve özgün başlangıç uyarlaması ayrı gösterilir. Küçük temassız deneme isteğe bağlıdır; kişisel uygunluk, teknik doğruluk veya tam kata başarısı onaylanmaz. Yazılı sayaç yalnız yazılı karşılaştırmadır.",
+          "en": "The observed reference order and original beginner adaptation are shown separately. Small non-contact rehearsal is optional; personal suitability, technique correctness and a full kata pass are not validated. The written counter counts written comparison only."
+        }
+      }
+    ],
+    "lessonChanges": [
+      {
+        "id": "practice-ka-01",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-01",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 175
+        },
+        "target": "lessons/ka-01/physical_task",
+        "before": {
+          "tr": "Bu dersin görevi yazılıdır; bir dövüş hareketi deneme.",
+          "en": "This lesson’s task is written; do not try a combat movement."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Kihon, kata ve kumiteyi kendi sözlerinle ayır. KA-P1 başlığının yanına “özgün, altı duraklı hazırlık” yaz; Taikyoku Shodanı ayrı başlıkta tut. Bu girişte hareket denemesi gerekmez.",
+            "en": "Distinguish kihon, kata and kumite in your own words. Label KA-P1 “original six-pause preparation” and keep Taikyoku Shodan under a separate heading. No movement attempt is needed in this introduction."
+          },
+          "observe": {
+            "tr": "KA-P1’in bitmesi geleneksel kata, kuşak veya savunma yeterliği oluşturmaz.",
+            "en": "Completing KA-P1 does not establish a traditional kata, rank or defensive competence."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-01",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "KA-P1’in bitmesi geleneksel kata, kuşak veya savunma yeterliği oluşturmaz.",
+            "en": "Completing KA-P1 does not establish a traditional kata, rank or defensive competence."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-02",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-02",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 218
+        },
+        "target": "lessons/ka-02/physical_task",
+        "before": {
+          "tr": "P0 ileride karşılanırsa yalnız alanı ve rahat nötr giriş/çıkışı eğitmenle gözden geçir; şimdiki görev kâğıttadır.",
+          "en": "If P0 is met later, review only the space and comfortable neutral entry/exit with the instructor; the present task is on paper."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce ileriye ve kendi sağına bak: el ve küçük adım yollarında insan, eşya, kablo veya kaygan zemin bulunmasın. Normal rahat duruşta elleri dinlendir. Yalnız sıradan küçük bir adım atıp tam dur; yeniden başlamak zorunda değilsin. Sabit destek gerekiyorsa onu bırakmayı gerektiren ileriki el/adım görevini seçme; oturarak zemin planını çiz.",
+            "en": "Look ahead and to your own right first: keep people, objects, cables and slippery surfaces out of the hand and small-step paths. Rest your hands in an ordinary comfortable stance. Take just one ordinary small step and stop fully; another attempt is optional. If you need stable support, do not choose later hand/step tasks that require releasing it; draw the floor plan while seated."
+          },
+          "observe": {
+            "tr": "Yolun boşluğu ile kâğıttaki planın aynı şey olmadığını ve durmak için nerede yerin olduğunu söyle.",
+            "en": "Distinguish a clear actual path from a paper plan, and identify space in which to stop."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-02",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Yolun boşluğu ile kâğıttaki planın aynı şey olmadığını ve durmak için nerede yerin olduğunu söyle.",
+            "en": "Distinguish a clear actual path from a paper plan, and identify space in which to stop."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-03",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-03",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 263
+        },
+        "target": "lessons/ka-03/physical_task",
+        "before": {
+          "tr": "P0/P1 ileride karşılanırsa bir kısa yerleşme ve rahat çıkış yap; derin çömelme veya uzun sabit bekleme yoktur.",
+          "en": "If P0/P1 are met later, make one short settlement and comfortable exit; no deep squat or prolonged static hold."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Ayaklarını ayrı, rahat genişlikte bırak; dizleri kilitleme. Eller dinlensin, omuzları sıkma. Kısa bir an yerleşip normal rahat duruşa dön. Ayakları zorla paralel yapma, derine inme veya uzun bekleme hedefi koyma.",
+            "en": "Keep the feet separate at a comfortable width and avoid locking the knees. Rest the hands without tightening the shoulders. Settle briefly, then return to an ordinary comfortable stance. Do not force parallel feet, deepen the stance or set a long holding target."
+          },
+          "observe": {
+            "tr": "Bir çizgiye sıkışan ayaklar veya kilitlenen diz fark edersen denemeyi kes; görünmeyen hizayı doğru diye kaydetme.",
+            "en": "Stop the attempt if the feet narrow into one line or a knee locks; do not record unseen alignment as correct."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-03",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Bir çizgiye sıkışan ayaklar veya kilitlenen diz fark edersen denemeyi kes; görünmeyen hizayı doğru diye kaydetme.",
+            "en": "Stop the attempt if the feet narrow into one line or a knee locks; do not record unseen alignment as correct."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-04",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-04",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 310
+        },
+        "target": "lessons/ka-04/physical_task",
+        "before": {
+          "tr": "P0/P1 ileride karşılanırsa eğitmenin gözlediği bir rahat aç-kapa hazırlığı yap; sıkma, çarpma veya şınavla sınama yoktur.",
+          "en": "If P0/P1 are met later, make one comfortable open-close preparation observed by the instructor; no squeezing, impact or push-up test."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Rahat oturabilir veya ayakta durabilirsin. Açık elden dört parmağı yumuşakça kıvır; başparmak dışarıda kalsın. Bileği bükerek yumruğa biçim verme. Eli yeniden aç ve dinlendir. Önce bir eli, istersen dinlendikten sonra diğerini dene. Hiçbir yere vurma, en sert sıkışı arama veya yumruk üstünde ağırlık taşıma.",
+            "en": "Sit comfortably or stand. Gently curl four fingers from an open hand, keeping the thumb outside. Do not shape the fist by bending the wrist. Reopen and rest the hand. Try one hand first; after a rest, the other is optional. Do not strike a surface, seek a maximum squeeze or bear weight on the fist."
+          },
+          "observe": {
+            "tr": "Başparmağın içeride kalmadığını ve bileği zorlamadığını görebildiğin ölçüde anlat; rahat kapanmıyorsa açık elde kal.",
+            "en": "Describe only what you can see about the outside thumb and unforced wrist; keep the hand open if closing it is uncomfortable."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-04",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Başparmağın içeride kalmadığını ve bileği zorlamadığını görebildiğin ölçüde anlat; rahat kapanmıyorsa açık elde kal.",
+            "en": "Describe only what you can see about the outside thumb and unforced wrist; keep the hand open if closing it is uncomfortable."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-05",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-05",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 356
+        },
+        "target": "lessons/ka-05/physical_task",
+        "before": {
+          "tr": "P0–P2 ileride karşılanırsa bir ayrı el değişimi yap; keskin çekiş veya gövde savurma yoktur. Destek gerekiyorsa iki el değişimi yapılmaz.",
+          "en": "If P0–P2 are met later, make one separate hand exchange; no sharp pull or torso swing. Do not exchange both hands if support is needed."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Ellerden birini alt kaburga yanında rahat, dirseği gövdeye yakın bir hazırlığa getir. Diğer elin öne gidişini küçük tut. Bir kez yavaşça görev değiştirip elleri dinlendir. Geri dirseği arkaya çekiştirme, omzu geriye sıkma veya gövdeyi savurma. Destek elini kullanman gerekiyorsa bu iki-el görevini yapma; oturarak tek el yolunu anlat.",
+            "en": "Bring one hand comfortably beside the lower ribs with its elbow near the body. Keep the other hand’s forward travel small. Exchange the roles slowly once, then rest both hands. Do not yank the returning elbow backward, squeeze the shoulder back or swing the trunk. If a hand is needed for support, omit the two-hand task and describe one hand path while seated."
+          },
+          "observe": {
+            "tr": "Geri gelen elin kendi yanına döndüğünü söyle; bunu rakip çekme veya savunma başarısı sayma.",
+            "en": "Identify the returning hand’s own-side preparation; do not count it as pulling an opponent or successful defence."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-05",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Geri gelen elin kendi yanına döndüğünü söyle; bunu rakip çekme veya savunma başarısı sayma.",
+            "en": "Identify the returning hand’s own-side preparation; do not count it as pulling an opponent or successful defence."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-06",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-06",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 403
+        },
+        "target": "lessons/ka-06/physical_task",
+        "before": {
+          "tr": "P0–P2 ileride karşılanırsa eğitmenle bir yavaş kısa sağ, sonra bir sol hazırlık seç; hedef, son hız ve darbe yoktur.",
+          "en": "If P0–P2 are met later, select one slow short right preparation and then one left with the instructor; no target, maximum speed or impact."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Ayaklar yerinde kalsın. Yan hazırlıktan bir eli boşluğa kısa ve yavaş düz yolda götür; dirseği sona çarptırmadan yumuşak bırak. Diğer el sakin hikiteye gelir. Dur, aynı kısa yoldan geri dön ve elleri dinlendir. Dinlendikten sonra öteki tarafı ayrı dene. Hedef, darbe, tam hız, keskin kalça çevirme ve nefes tutma yoktur.",
+            "en": "Keep the feet still. Move one hand from side preparation along a short slow straight path into empty space, leaving the elbow soft rather than driving it to the end. The other hand returns calmly to hikite. Pause, return along the same short path and rest. Try the other side separately after resting. Use no target, impact, full speed, sharp hip twist or breath holding."
+          },
+          "observe": {
+            "tr": "El dönüşü önkolun rahat hareketidir; bileği bükme veya dirseği kilitleme görevi değildir.",
+            "en": "Any hand rotation is comfortable forearm movement, not a task to bend the wrist or lock the elbow."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-06",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "El dönüşü önkolun rahat hareketidir; bileği bükme veya dirseği kilitleme görevi değildir.",
+            "en": "Any hand rotation is comfortable forearm movement, not a task to bend the wrist or lock the elbow."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-07",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-07",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 452
+        },
+        "target": "lessons/ka-07/physical_task",
+        "before": {
+          "tr": "P0–P2 ileride karşılanırsa önceki küçük görevi yalnız eğitmenin seçtiği tek odağa göre gözle; yeni hareket ekleme.",
+          "en": "If P0–P2 are met later, observe the preceding small task only for one focus selected by the instructor; add no new movement."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önceki küçük el görevlerinden yalnız birini seç. Tek denemede yalnız bir soruya bak: geri gelen el kendi yanına mı geliyor? Sonra elleri dinlendir. Görmediğin bilek/diz açısını “bilinmiyor” bırak. Bir somut değişikliği yalnız belirtisiz ve dinlenmiş bir sonraki denemede aynı kısa yolda dene; hız ekleme.",
+            "en": "Choose just one earlier small hand task. Observe one question in one attempt: does the returning hand come to its own side? Then rest the hands. Leave unseen wrist or knee angles “unknown”. Try one specific change only in a later symptom-free rested attempt on the same short path; add no speed."
+          },
+          "observe": {
+            "tr": "Gözleneni, görülmeyeni ve değiştirdiğin tek şeyi ayrı yaz.",
+            "en": "Record what was observed, what was unseen and the single change separately."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-07",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Gözleneni, görülmeyeni ve değiştirdiğin tek şeyi ayrı yaz.",
+            "en": "Record what was observed, what was unseen and the single change separately."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-08",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-08",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 500
+        },
+        "target": "lessons/ka-08/physical_task",
+        "before": {
+          "tr": "P0/P1/P3 ileride karşılanırsa bir sol-ön ve ayrı bir sağ-ön küçük hazırlığı gözlet; derinlik veya sabit bekleme hedefi yoktur.",
+          "en": "If P0/P1/P3 are met later, have one left-forward and a separate right-forward small preparation observed; no depth or static-hold target."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Eller dinlenirken sol ayağı kendi sol izinde küçük öne al; ayaklar ayrı kalsın. Dur, derinlik veya yük yüzdesi hedefleme. Rahatsa sağ arka ayağı kendi sağ izinde küçük öne alıp solun hizasına koy; önüne geçirme, tam dur. Sonra sağ-ön tarafı ayrı kur. Ayak sabitken dizi veya gövdeyi burma. Çıkış için de önünde boşluk yoksa adım ekleme; yalnız yer planını çalış.",
+            "en": "With the hands resting, move the left foot a small distance forward on its own left track, keeping the feet separate. Pause without a depth or loading target. If comfortable, bring the right rear foot forward on its own right track to align beside, not beyond, the left foot, then stop fully. Set up the right-front side separately. Do not twist the knee or trunk over a fixed foot. If the exit also lacks clear space ahead, add no step; study the floor plan instead."
+          },
+          "observe": {
+            "tr": "Sol-ön çıkışta sağ arka ayak hizaya gelir; iki ayağı birleştirme veya çaprazlama.",
+            "en": "The right rear foot aligns beside the left in the left-front exit; do not join or cross the feet."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-08",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Sol-ön çıkışta sağ arka ayak hizaya gelir; iki ayağı birleştirme veya çaprazlama.",
+            "en": "The right rear foot aligns beside the left in the left-front exit; do not join or cross the feet."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-09",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-09",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 548
+        },
+        "target": "lessons/ka-09/physical_task",
+        "before": {
+          "tr": "P0/P1/P3 ileride karşılanırsa yalnız bir kısa geçiş ve nötr çıkış seç; denge belirsizliğinde başka tekrar yoktur.",
+          "en": "If P0/P1/P3 are met later, select only one short passing step and neutral exit; no additional attempt under uncertain balance."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Kısa sol-ön hazırlıkta elleri dinlendir. Sağ arka ayağı kaldırıp kendi sağ izi boyunca rahat küçük sağ-ön yere al; tam yerleş ve dur. Ayakları tek çizgide toplama veya sürükleyerek döndürme. Ayrı çıkışta arka ayağı kendi izinde öne hizala; alanı görerek sıradan küçük yürüyüşle başlangıca dön. Bir geçiş yeterlidir; denge belirsizse yeniden deneme.",
+            "en": "Rest the hands in short left-front preparation. Lift the right rear foot and place it a comfortable small distance forward on its own right track; settle and stop fully. Do not narrow the feet into one line or drag them around a turn. For the separate exit, align the rear foot forward on its own track, then use ordinary small walking steps while watching the clear path back. One transition is enough; do not retry if balance is uncertain."
+          },
+          "observe": {
+            "tr": "Öne geçen ayağın arka ayak olduğunu, diğer ayağı çaprazlamadığını ve el eklemediğini söyle.",
+            "en": "Identify the advancing rear foot, its separate track and the absence of added hand technique."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-09",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Öne geçen ayağın arka ayak olduğunu, diğer ayağı çaprazlamadığını ve el eklemediğini söyle.",
+            "en": "Identify the advancing rear foot, its separate track and the absence of added hand technique."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-10",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-10",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 596
+        },
+        "target": "lessons/ka-10/physical_task",
+        "before": {
+          "tr": "P0–P4 ilgili kayıtları ileride varsa bir adım, tam durak, aynı yan el ve çıkış yap; yumruk giderken adım kovalanmaz.",
+          "en": "If the relevant P0–P4 records exist later, make one step, complete pause, same-side hand preparation and exit; do not chase a moving punch with the step."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Sol-ön küçük hazırlıktan sağ arka ayağı kendi izinde geçir; tamamen dur. Sonra sağ eli yan hazırlıktan kısa düz yola götür, sol hikite sakin kalsın. Dur ve sağ eli aynı yoldan yanına geri getir. Eller dinlenince arka ayağı hizaya getirerek çık. Öteki tarafı ayrı çalış. Bu başlangıç uyarlamasında adım ve el ayrıdır; aynı anda hızlanmaya çalışma.",
+            "en": "From small left-front preparation, advance the right rear foot on its own track and stop completely. Then move the right hand from side preparation on a short straight path, keeping left hikite calm. Pause and return the right hand along the same path. Rest the hands and exit by aligning the rear foot beside the front. Work the other side separately. This beginner adaptation separates step and hand; do not try to accelerate them together."
+          },
+          "observe": {
+            "tr": "Sağ ayak öndeyse çalışan el sağdır; el, yerleşmeden sonra başlar.",
+            "en": "The right hand works when the right foot is forward, and starts after settling."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-10",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Sağ ayak öndeyse çalışan el sağdır; el, yerleşmeden sonra başlar.",
+            "en": "The right hand works when the right foot is forward, and starts after settling."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-11",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-11",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 647
+        },
+        "target": "lessons/ka-11/physical_task",
+        "before": {
+          "tr": "P0/P1/P2/P3/P5 ileride karşılanırsa eğitmenin seçtiği tek kısa kol yolu yap; partner, tekme, sert çekiş veya kalça çarpması yoktur.",
+          "en": "If P0/P1/P2/P3/P5 are met later, make one short arm path selected by the instructor; no partner, kick, sharp pull or hip snap."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce adım eklemeden rahat kısa ön hazırlıkta kal. Sol kolu küçük bir çapraz hazırlıktan gövdeye yakın aşağı-dış yola götür; yüze, boğaza veya bacağa vurma. Dirsek yumuşak kalsın, sağ el kendi hikitesine dönsün. Dur. Sol eli kendi sol yanından kısa yukarı-geri yolla sol alt kaburga yanına getir; tekrar sağ omuza dolaştırma. Elleri dinlendir. Sağ tarafı ayrı dene; bu yol gelen darbeyi engellediğini göstermez.",
+            "en": "Begin in comfortable short front preparation without adding a step. Move the left arm from a small crossed preparation down and outward near the body without hitting the face, throat or leg. Keep the elbow soft as the right hand returns to its own hikite. Pause. Recover the left hand by a short up-and-back path on its own left side to the lower ribs; do not loop it past the right shoulder again. Rest the hands. Try the right side separately; this path does not demonstrate blocking an incoming strike."
+          },
+          "observe": {
+            "tr": "Aşağı yol, durak ve kendi yanda toparlama üç ayrı aşamadır; sert çekiş veya kalça çarpması eklenmez.",
+            "en": "The downward path, pause and own-side recovery are separate stages; add no hard pull or hip thrust."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-11",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Aşağı yol, durak ve kendi yanda toparlama üç ayrı aşamadır; sert çekiş veya kalça çarpması eklenmez.",
+            "en": "The downward path, pause and own-side recovery are separate stages; add no hard pull or hip thrust."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-12",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-12",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 699
+        },
+        "target": "lessons/ka-12/physical_task",
+        "before": {
+          "tr": "P0/P1/P3/P6 ileride karşılanırsa eller dinlenirken tek yön değişimi ve tam durak seç; desteği bırakma gerekiyorsa görev değişir.",
+          "en": "If P0/P1/P3/P6 are met later, select one direction change and full stop with the hands resting; if it requires releasing support, change the task."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce eller dinlensin ve iki ayak rahat nötrde dursun. Kendi sağına bak, boş alanı gör. Ayakları sırayla kaldırıp küçük sıradan yürüyüş adımlarıyla sağa yönel; her yerleşmede sakinleş ve sonunda dur. Sabit taban üstünde gövdeyi burma, sıçrama veya ayakları çaprazlama. Yazılı KA-P1 sağ-sol-sağ-sol şeması ayrı bir seçilmiş örnektir; fiziksel yürüyüşünü dört adıma zorla sığdırma. Alan veya rahatlık yetmezse N→E okunu kâğıtta göster.",
+            "en": "Rest the hands and settle both feet in a comfortable neutral position first. Look to your own right and check the clear path. Lift the feet alternately in small ordinary walking steps to face right, settling at each placement and stopping at the end. Do not twist the trunk over a planted foot, jump or cross the feet. The written KA-P1 right-left-right-left pattern is a selected example; do not force your physical walking turn into four steps. If space or comfort is insufficient, show N→E on paper."
+          },
+          "observe": {
+            "tr": "Küçük yürüyüş dönüşü, geleneksel kata pivotunun veya fiziksel KA-P1 şemasının doğrulandığı anlamına gelmez.",
+            "en": "A small walking turn does not validate a traditional kata pivot or the physical KA-P1 pattern."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-12",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Küçük yürüyüş dönüşü, geleneksel kata pivotunun veya fiziksel KA-P1 şemasının doğrulandığı anlamına gelmez.",
+            "en": "A small walking turn does not validate a traditional kata pivot or the physical KA-P1 pattern."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-13",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-13",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 749
+        },
+        "target": "lessons/ka-13/physical_task",
+        "before": {
+          "tr": "Bütün ilgili P0–P6 kayıtları ileride varsa eğitmen alanları yalnız yürüyerek inceler; el dizisini ekleme.",
+          "en": "If all relevant P0–P6 records exist later, inspect the areas with the instructor through ordinary walking only; do not add the hand sequence."
+        },
+        "after": {
+          "instruction": {
+            "tr": "A–D alanlarını kâğıtta çiz; bunlar tek ayak hedefi değil beden bölgeleridir. Sonra yalnız boşluk uygunsa, eller dinlenirken başlangıçtan ilk kısa çizginin sonuna sıradan küçük adımlarla yürü ve dur. Devam veya dönüş yolunu dar odaya sıkıştırma; yerde kabartı/gevşek işaret bırakma. İki çizgi ve dönüş sığmıyorsa el dizisini eklemeden kâğıtta kal.",
+            "en": "Draw areas A–D on paper; they are body areas, not single-foot targets. Only if the actual path is clear, rest the hands and walk from the start to the end of the first short line in ordinary small steps, then stop. Do not compress the onward or return route into a small room or leave raised/loose floor markers. If both lines and the return do not fit, stay with the paper plan without adding the hand sequence."
+          },
+          "observe": {
+            "tr": "A–D konumları metre, kamera ölçümü veya herkese uygun adım uzunluğu değildir.",
+            "en": "Areas A–D are not metres, camera measurements or a universal step length."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-13",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "A–D konumları metre, kamera ölçümü veya herkese uygun adım uzunluğu değildir.",
+            "en": "Areas A–D are not metres, camera measurements or a universal step length."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-14",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-14",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 803
+        },
+        "target": "lessons/ka-14/physical_task",
+        "before": {
+          "tr": "Bütün ilgili P kayıtları ileride varsa yalnız ilk üç birimi bir kez, her aşamada durarak incelet. Dönüş eklenmez.",
+          "en": "If all relevant P records exist later, have only the first three units reviewed once, stopping at each phase. Add no turn."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce üç birimi sözle söyle. A’da eller dinlenerek dur. Sol ayağı küçük öne alıp B’de dur; sol aşağı-yol, durak ve sol kendi-yanda toparlama yap. Sağ arka ayak kendi izinde geçince C’de dur; kısa sağ düz el ve aynı-yoldan dönüş yap. Her el aşamasını ayaktan sonra kur. Burada bitir: elleri dinlendirip sol arka ayağı sağın hizasına getir. Bu ayrı çıkış dördüncü birim veya dönüş değildir.",
+            "en": "Say the three units aloud first. Pause at A with the hands resting. Step the left foot a small distance forward and pause at B; perform the left downward path, pause and left own-side recovery. Advance the right rear foot on its own track and pause at C; perform the short right straight hand path and return. Set up each hand phase after the feet. Finish here by resting the hands and aligning the left rear foot beside the right. This separate exit is not a fourth unit or turn."
+          },
+          "observe": {
+            "tr": "Sıra karışınca mevcut birimde dur; sıçrayarak, dönerek veya hız ekleyerek yakalama.",
+            "en": "Stop at the current unit when the order is lost; do not catch up by jumping, turning or adding speed."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-14",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Sıra karışınca mevcut birimde dur; sıçrayarak, dönerek veya hız ekleyerek yakalama.",
+            "en": "Stop at the current unit when the order is lost; do not catch up by jumping, turning or adding speed."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-15",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-15",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 856
+        },
+        "target": "lessons/ka-15/physical_task",
+        "before": {
+          "tr": "Bütün ilgili P0–P6 ileride gerçekten karşılanırsa eğitmen altı birimi ve çıkışı ayrı gözler. Temposu artırılmaz; kaçan birimde durulur ve yalnız yazılı sıra yeniden incelenir.",
+          "en": "If all relevant P0–P6 are actually met later, the instructor observes each of the six units and the exit separately. Do not increase tempo; stop at a lost unit and revisit the written order only."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce ilk üç birimi ayrı bitir. İkinci çizgiyi bağımsız kur: eller dinlenirken küçük yürüyüşle kendi sağına yönel ve dur; kısa sağ-ön yerleşmeden sonra sağ aşağı-yol ve kendi-yanda toparlama yap. Sol arka ayak kendi izinde geçip durduktan sonra kısa sol düz el ve dönüş yap. Elleri dinlendir; sağ arka ayağı solun hizasına getirip dur. Altı birimi ancak her parça ve tüm yol uygunsa yavaşça bağla. Dönüş yolunu görerek sıradan yürü; dar alanda A’ya tam ayak şemasını zorlamazsın. Bu yürüyüş uyarlamasını, yazılı KA-P1’in sabit ayak sırasından ayrı adlandır.",
+            "en": "Finish the first three units separately first. Set up the second line independently: with the hands resting, use a small walking turn to your own right and stop; settle into short right-front preparation before the right downward path and own-side recovery. Advance the left rear foot on its own track and stop before the short left straight hand path and return. Rest the hands, align the right rear foot beside the left and stop. Link the six units slowly only if each part and the whole path are suitable. Watch the clear path and return by ordinary walking; do not force the exact foot pattern back to A into a small space. Name this walking adaptation separately from the written KA-P1 fixed foot order."
+          },
+          "observe": {
+            "tr": "Altıncı birim durakla biter; dönüş bir yedinci teknik değildir. Sıra belirsizliği veya durma belirtisinde tam dizi tamamlandı sayılmaz.",
+            "en": "The sixth unit ends with a stop; returning is not a seventh technique. Uncertain order or a stop condition does not complete a full sequence."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-15",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Altıncı birim durakla biter; dönüş bir yedinci teknik değildir. Sıra belirsizliği veya durma belirtisinde tam dizi tamamlandı sayılmaz.",
+            "en": "The sixth unit ends with a stop; returning is not a seventh technique. Uncertain order or a stop condition does not complete a full sequence."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ka-16",
+        "courseId": "jablab.karate_a",
+        "lessonId": "ka-16",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/karate_a.v1.json",
+          "line": 913
+        },
+        "target": "lessons/ka-16/physical_task",
+        "before": {
+          "tr": "Bugün fiziksel bitirme görevi yoktur. İleride ilgili bütün P kayıtları varsa bile eğitmen her bileşeni ve eksikleri ayrı raporlar; otomatik kuşak/kata başarı sonucu yoktur.",
+          "en": "There is no physical finishing task today. Even if all relevant P records exist later, the instructor reports each component and remaining gaps separately; no automatic belt/kata success result."
+        },
+        "after": {
+          "instruction": {
+            "tr": "Bir küçük bileşeni veya altı birimin yazılı geri çağrımını seç. Yaptığın işi “yazılı”, “temassız küçük deneme”, “durdum” ya da “denemedim” diye ayır; gördüğün tek gözlemi ve açık sorunu yaz. Bu seçenekler kişisel teknik doğrulaması, kuşak veya Heian Shodan başarısı üretmez. Bir sonraki denemede hız veya derinlik eklemek zorunda değilsin.",
+            "en": "Choose one small component or written recall of the six units. Distinguish “written”, “small non-contact attempt”, “stopped” and “not attempted”; record one observation and the open question. These choices do not establish personal technique validation, rank or Heian Shodan achievement. You need not add speed or depth next time."
+          },
+          "observe": {
+            "tr": "Yazılı ilerleme sayacı yalnız yazılı karşılaştırmayı sayar; fiziksel öz bildirimi ona veya ustalık puanına çevrilmez.",
+            "en": "The written progress counter counts written comparison only; physical self-report is not converted into it or a mastery score."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ka-16",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Yazılı ilerleme sayacı yalnız yazılı karşılaştırmayı sayar; fiziksel öz bildirimi ona veya ustalık puanına çevrilmez.",
+            "en": "The written progress counter counts written comparison only; physical self-report is not converted into it or a mastery score."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-01",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-01",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 943
+        },
+        "target": "content/lessons/ts-01/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce referans açılışını metinden sırala: selam, dik duruş, sol dışarı, sağ dışarı ve kolların çaprazlanması, hazır. Bu sırayı denemek istersen alanı kontrol et; ayakları rahat genişlikte tut ve küçük, zorlamasız hareket et. Topukları birleştirmek veya derin selam zorunlu değildir; değiştirdiğin kısmı “başlangıç uyarlaması” diye ayır. Denge veya rahatlık belirsizse yalnız kâğıtta sırala. B kaydına açılış selamı ekleme.",
+            "en": "Recall the reference opening from the text first: bow, upright, left outward, right outward with crossed arms, ready. If you choose to rehearse it, check the space, keep a comfortable foot width and use small unforced movements. Joining the heels or making a deep bow is not required; label any change a “beginner adaptation”. If balance or comfort is uncertain, recall the order on paper only. Do not add an opening bow to recording B."
+          },
+          "observe": {
+            "tr": "A açılışı ile B’nin zaten-hazır başlangıcını ayrı tut; görünmeyen basınç veya kiai çıkarma.",
+            "en": "Keep A’s opening separate from B’s already-ready start; infer no unseen pressure or heard kiai."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-01",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "A açılışı ile B’nin zaten-hazır başlangıcını ayrı tut; görünmeyen basınç veya kiai çıkarma.",
+            "en": "Keep A’s opening separate from B’s already-ready start; infer no unseen pressure or heard kiai."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-02",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-02",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1051
+        },
+        "target": "content/lessons/ts-02/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce eller dinlenirken sola yönelme ve sağa yarım dönüşün yolunu küçük yürüyüşle ayrı tanı; bir ayağın üstünde gövdeyi zorla çevirme. Sonra 1–2’yi küçük aralıkta kur: sola/sol aşağı-yol, ardından aynı W yönüne sağ-ön/sağ kısa düz el. Tam dur. 2’den 3’e sağa dönüşü ayrı çalış; sağ kol karşı omuz yakınındaki küçük hazırlıktan sağ aşağı-yola gelir ve E’ye bakarsın. 4’te E’ye sol-ön/sol kısa düz el gelir. Her parça arasında dur; boks gardı ekleme.",
+            "en": "Explore the left turn and right half-turn separately with the hands resting and small walking steps; do not force the trunk around one planted foot. Then rehearse 1–2 in a small range: left turn/left downward path, then right-front/right short straight hand in the same W heading. Stop fully. Rehearse the right turn from 2 into 3 separately; the right arm folds near the opposite shoulder before the right downward path facing E. Count 4 is left-front/left short straight hand toward E. Pause between parts and add no boxing guard."
+          },
+          "observe": {
+            "tr": "3 sağ el/E; yeni bölüm önceki gerçek bitişten başlar. Yürüyüş hazırlığı referans pivotunun doğrulanması değildir.",
+            "en": "Count 3 is right hand/E; the next section starts from the preceding actual finish. A walking preparation does not validate the reference pivot."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-02",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "3 sağ el/E; yeni bölüm önceki gerçek bitişten başlar. Yürüyüş hazırlığı referans pivotunun doğrulanması değildir.",
+            "en": "Count 3 is right hand/E; the next section starts from the preceding actual finish. A walking preparation does not validate the reference pivot."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-03",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-03",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1156
+        },
+        "target": "content/lessons/ts-03/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "4’ün E’ye bakan sol-ön bitişini önce sözle belirle. Küçük yürüyüşle sola çeyrek yön değişimini ayrı çalışıp N’de dur. Sonra 5’te sol aşağı-yol; 6–8’de N yönünde sağ, sol, sağ kısa adım ve aynı-yan el sırasını çalış. Başlangıç uyarlamasında önce yerleş, sonra kısa el yolunu yap; referansın eşzamanlı zamanlamasını taklit etmeye çalışma. 8’in sağ el/N bitişinde dur, araya yeni gard veya hazırlık ekleme.",
+            "en": "Identify count 4’s left-front finish facing E aloud first. Rehearse the left quarter heading change with small walking steps separately and stop facing N. Then rehearse the left downward path at 5 followed by right, left, right small steps and same-side hand paths toward N at 6–8. In this beginner adaptation, settle before the short hand path rather than trying to copy the reference timing. Stop at count 8’s right hand/N finish; add no new guard or setup."
+          },
+          "observe": {
+            "tr": "Sıra 5 sol/N, sonra sağ–sol–sağdır; bölüm başında fazladan hazır duruş sayılmaz.",
+            "en": "The order is left/N at 5, then right–left–right; no extra ready position is counted at the boundary."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-03",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Sıra 5 sol/N, sonra sağ–sol–sağdır; bölüm başında fazladan hazır duruş sayılmaz.",
+            "en": "The order is left/N at 5, then right–left–right; no extra ready position is counted at the boundary."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-04",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-04",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1261
+        },
+        "target": "content/lessons/ts-04/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "8’den 9’a önce yalnız yönü çalış: N’den sola devam ederek W, S ve E yönlerini küçük sıradan adımlarla sırayla gör; son E’de dur. Bu uzun sola yol, kısa sağ dönüşle değiştirilmez. Alan yetmezse üç oku kâğıtta çiz; dönüşü zorlamazsın. Sonra 9’un sol aşağı-yol/E bitişini, 10’un sağ el/E bitişini, sağa yarım dönüşten sonraki 11 sağ aşağı-yol/W ve 12 sol el/W parçalarını ayrı kur. Görüntüde kırpılan ayağa temas kenarı veya yük yüzdesi atama.",
+            "en": "Study only the heading path from 8 into 9 first: continue left from N through W, S and E in small ordinary steps, then stop facing E. Do not replace this long left path with a short right turn. If the space is insufficient, draw the three arrows on paper instead of forcing the turn. Then rehearse the separate finishes: left downward path/E at 9, right hand/E at 10, right downward path/W after the right half-turn at 11, and left hand/W at 12. Assign no contact edge or loading percentage to the cropped foot."
+          },
+          "observe": {
+            "tr": "8→9 uzun sola; 9 sol/E. 9’daki kırpılma ve 12’deki örtüşme bilinmeyen ayrıntı olarak kalır.",
+            "en": "8→9 is long left and 9 is left/E. Cropping at 9 and occlusion at 12 remain unknown detail."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-04",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "8→9 uzun sola; 9 sol/E. 9’daki kırpılma ve 12’deki örtüşme bilinmeyen ayrıntı olarak kalır.",
+            "en": "8→9 is long left and 9 is left/E. Cropping at 9 and occlusion at 12 remain unknown detail."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-05",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-05",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1366
+        },
+        "target": "content/lessons/ts-05/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "12’nin sol el/W bitişinden sol çeyrek yön değişimini küçük yürüyüşle ayır ve S’de dur. 13’te sol aşağı-yol/S, sonra 14–16’da S’ye sağ–sol–sağ kısa adım ve aynı-yan el sırasını kur. Her adımın ardından yerleşip el yolunu küçük tut. 16 sağ el/S’de dur; bir sonraki dönüşü bitiş silinmeden sözle söyle. Örtülen rehber el veya bileğe ayrıntı ekleme.",
+            "en": "Separate the left quarter heading change from count 12’s left hand/W finish with small walking steps and stop facing S. Rehearse left downward path/S at 13, followed by right–left–right small steps and same-side hands toward S at 14–16. Settle after each step and keep the hand paths small. Stop at right hand/S at 16 and name the next turn without erasing that finish. Add no detail to an obscured guide hand or wrist."
+          },
+          "observe": {
+            "tr": "13 sol/S; 16 sağ/S sonraki uzun sola dönüşün gerçek başlangıcıdır.",
+            "en": "Count 13 is left/S; right/S at 16 is the actual starting boundary for the next long left turn."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-05",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "13 sol/S; 16 sağ/S sonraki uzun sola dönüşün gerçek başlangıcıdır.",
+            "en": "Count 13 is left/S; right/S at 16 is the actual starting boundary for the next long left turn."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-06",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-06",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1471
+        },
+        "target": "content/lessons/ts-06/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "16’dan 17’ye önce eller dinlenirken S’den sola devam et: E, N, W yönlerini küçük sıradan adımlarla sırayla gör ve W’de dur. Kısa sağ dönüş aynı yol değildir; yer yetmezse yalnız kâğıtta kal. 17 sol aşağı-yol/W, 18 sağ el/W, sağa yarım dönüşten sonra 19 sağ aşağı-yol/E ve 20 sol el/E parçalarını ayrı çalış. 20’de tam dur; 21. yumruk veya boks gardı ekleme.",
+            "en": "With the hands resting, study the path from 16 into 17 by continuing left from S through E, N and W in small ordinary steps, then stop facing W. A short right turn is a different path; stay on paper if space is insufficient. Rehearse the separate parts: left downward path/W at 17, right hand/W at 18, right downward path/E after the right half-turn at 19, and left hand/E at 20. Stop completely at 20; add no 21st punch or boxing guard."
+          },
+          "observe": {
+            "tr": "17 sol/W ve 20 sol/E korunur; 16→17 kol/ayak örtüşmesi yük veya pivot kanıtı değildir.",
+            "en": "Preserve left/W at 17 and left/E at 20; arm/foot overlap at 16→17 does not prove loading or a pivot edge."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-06",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "17 sol/W ve 20 sol/E korunur; 16→17 kol/ayak örtüşmesi yük veya pivot kanıtı değildir.",
+            "en": "Preserve left/W at 17 and left/E at 20; arm/foot overlap at 16→17 does not prove loading or a pivot edge."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-07",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-07",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1576
+        },
+        "target": "content/lessons/ts-07/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce 20’den sonraki A kapanış sırasını sözle kur: toparlama ve başlangıç yönüne dönme, çapraz önkollar, hazır, sol sonra sağ ayağın içeri gelişi, açık ellerle selam ve dik duruş. Ayrı küçük denemede yavaş ilerle, her aşamada dur; ayakları rahat genişlikten daha dar birleştirmek veya derin selam zorunlu değildir. Bu değişikliği başlangıç uyarlaması diye kaydet. B’nin görünmeyen ayak kapanışına bir sıra atama; kapanışa yumruk ekleme.",
+            "en": "Recall A’s order after 20 first: recovery and return toward the initial heading, crossed forearms, ready, left then right foot inward, bow with open hands and upright. In a separate small rehearsal, move slowly and pause at each stage; joining the feet narrower than comfortable or making a deep bow is not required. Label such a change a beginner adaptation. Assign no foot-closing order to B’s unseen interval, and add no punch to the closing."
+          },
+          "observe": {
+            "tr": "A’nın gözlenen kapanışı ile kişisel küçük uyarlama ve B’de bilinmeyen aralık ayrı sonuçlardır.",
+            "en": "A’s observed closing, a personal small adaptation and B’s unseen interval remain separate results."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-07",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "A’nın gözlenen kapanışı ile kişisel küçük uyarlama ve B’de bilinmeyen aralık ayrı sonuçlardır.",
+            "en": "A’s observed closing, a personal small adaptation and B’s unseen interval remain separate results."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-08",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-08",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1676
+        },
+        "target": "content/lessons/ts-08/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "Önce açılış, 1–4, 5–8, 9–12, 13–16, 17–20 ve kapanışı sözle sırala. İstersen her bölümü küçük temassız deneme olarak ayrı çalış; bölüm arası dinlenme veya durma ekleyebilirsin. Tam sırayı ancak alanın tamamı boşsa ve önceki parçaları zorlamadan yapabiliyorsan yavaşça bağlamayı seç. Birim veya yön kaybolursa dur ve metne dön; kaçırdığını hızla yakalama. Ara duraklar ve adım–el ayrılığı başlangıç uyarlamasıdır; standart kata performansı veya fiziksel başarı onayı değildir.",
+            "en": "Recall the opening, 1–4, 5–8, 9–12, 13–16, 17–20 and closing aloud first. You may rehearse each section separately as a small non-contact attempt, with rests or stops between sections. Choose to link the whole order slowly only when the entire path is clear and the earlier parts do not require forcing. If a count or heading is lost, stop and return to the text rather than catching up at speed. Added pauses and step–hand separation are beginner adaptations, not a standard kata performance or physical pass."
+          },
+          "observe": {
+            "tr": "Açılış ve kapanış sayılan 20 tekniğin dışındadır. Durulan deneme tam fiziksel kata diye sonuçlandırılmaz.",
+            "en": "Opening and closing sit outside the 20 counted techniques. A stopped attempt is not reported as a completed physical kata."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-08",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Açılış ve kapanış sayılan 20 tekniğin dışındadır. Durulan deneme tam fiziksel kata diye sonuçlandırılmaz.",
+            "en": "Opening and closing sit outside the 20 counted techniques. A stopped attempt is not reported as a completed physical kata."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-09",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-09",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1776
+        },
+        "target": "content/lessons/ts-09/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "Tek belirsiz sınır seç: örneğin 8→9 veya 16→17. Önce başlangıç yönünü, aktif tarafı ve dönüş yolunu kâğıtta söyle; anahtarla karşılaştır. Belirti yoksa ve dinlendiysen yalnız o küçük yön çalışmasında tek düzeltmeyi denemeyi seçebilirsin. Hız, derinlik ve yeni teknik ekleme. Ağrı, baş dönmesi, olağandışı nefes darlığı, dengesizlik veya takılmada o denemeyi bitir; aynı seansta yeniden sınama. Gizli bilek/rehber eli tahminle düzeltme.",
+            "en": "Choose one uncertain boundary, such as 8→9 or 16→17. Recall the initial heading, active side and turn path on paper first and compare with the answer. If symptom-free and rested, you may choose one correction in that small heading exercise alone. Add no speed, depth or new technique. End that attempt on pain, dizziness, unusual breathing difficulty, imbalance or binding; do not test it again in the same session. Do not correct a hidden wrist or guide hand by guessing."
+          },
+          "observe": {
+            "tr": "Aynı koşulda yazılı tekrar aynı soru/başlangıç/yan/yönü korur; fiziksel belirsizliği başarıya çevirmez.",
+            "en": "A same-condition written retest preserves the prompt/start/side/heading and does not convert physical uncertainty into success."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-09",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Aynı koşulda yazılı tekrar aynı soru/başlangıç/yan/yönü korur; fiziksel belirsizliği başarıya çevirmez.",
+            "en": "A same-condition written retest preserves the prompt/start/side/heading and does not convert physical uncertainty into success."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      },
+      {
+        "id": "practice-ts-10",
+        "courseId": "jablab.taikyoku_shodan_jl",
+        "lessonId": "ts-10",
+        "status": "ORIGINAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_REVIEW",
+        "sourceAnchor": {
+          "path": "assets/content/taikyoku_shodan_jl.v1.json",
+          "line": 1876
+        },
+        "target": "content/lessons/ts-10/selfPractice [new field]",
+        "before": {
+          "selfPractice": null,
+          "teachingAlreadyPresent": true
+        },
+        "after": {
+          "instruction": {
+            "tr": "Sonucu iki satıra ayır: “yazılı sırayı karşılaştırdım” ve “temassız denemeyi yaptım / durdurdum / denemedim”. İkinci satıra yalnız gerçekten gözlediğin şeyi ve açık soruyu ekle. Fiziksel kısmı boş bırakmak veya durmak yazılı çalışmanı silmez. Uygulama kişisel teknik, sağlık, kuşak veya savunma yeterliği onayı üretmez; ses incelenmediği için kiai/nefes komutları eklenmez.",
+            "en": "Separate the result into two lines: “I compared the written order” and “I attempted / stopped / did not attempt non-contact rehearsal”. Add only the observation actually made and the open question to the second line. Leaving physical practice blank or stopping does not erase written study. The app does not validate personal technique, health, rank or defensive competence; add no kiai or breathing commands because audio was not assessed."
+          },
+          "observe": {
+            "tr": "Dersin mevcut yazılı ilerleme anlamı değişmez; gerçek fiziksel kabul veya video inceleme kanıtı oluşmaz.",
+            "en": "The lesson’s existing written progress meaning stays unchanged; this creates no physical acceptance or video review evidence."
+          },
+          "stopPolicy": "common.stop",
+          "dosePolicy": "common.dose",
+          "writtenAlternative": "existing written_task/question/retest or recall, without changing answer keys",
+          "validationMeaning": "self-directed unverified attempt; not mastery or suitability acceptance",
+          "visualReceipt": null
+        },
+        "closureTest": {
+          "id": "close-ts-10",
+          "status": "PLANNED_UNRUN",
+          "content": "Render actual lesson in TR/EN and derived supported locales; instruction, one observation, common stop and written alternative remain reachable together. Preserve existing question/answer and lesson ID.",
+          "semanticCriterion": {
+            "tr": "Dersin mevcut yazılı ilerleme anlamı değişmez; gerçek fiziksel kabul veya video inceleme kanıtı oluşmaz.",
+            "en": "The lesson’s existing written progress meaning stays unchanged; this creates no physical acceptance or video review evidence."
+          },
+          "interaction": "Stop/back/blank physical self-report does not mark any physical requirement accepted, add a physical completion badge, or change the existing written counter; contact and camera stay disabled.",
+          "visualCondition": "For a bodily technique, bind the actually inspected source/range at the relevant technique-family or kata-section level. Concept, setup, stopping and written-outcome lessons may use appropriate primary text plus explicitly original safety adaptation; no separate video is required for every sentence or lesson. Do not label metadata or drafted words as viewed media.",
+          "realDeviceCondition": "Actual learner/device validation remains UNRUN and is not implied by a widget test."
+        }
+      }
+    ],
+    "additionalMeaningCorrections": [
+      {
+        "ids": [
+          "ka-02",
+          "ka-03",
+          "ka-08",
+          "ka-12",
+          "ka-13",
+          "ka-15",
+          "ka-16"
+        ],
+        "action": "Remove instructor-only universal permission wording from teaching/answer/correction/retest where it implies all self-practice remains forbidden. Retain individual uncertainty, original adaptation labels and all safety/unknown constraints. Do not change fixed written KA-P1 recall into a flexible walking sequence; name the latter separately."
+      },
+      {
+        "ids": [
+          "ts-01",
+          "ts-02",
+          "ts-03",
+          "ts-04",
+          "ts-05",
+          "ts-06",
+          "ts-07",
+          "ts-08",
+          "ts-09",
+          "ts-10"
+        ],
+        "action": "Replace global all-physical-unavailable wording where present with source-reviewed optional non-contact self-practice. Keep explicit no-endorsement, mute-audio limits, A/B distinctions, exact20 boundaries, foot-contact/loading/wrist nulls and written progress semantics."
+      }
+    ],
+    "ownerIntegrationClosure": [
+      {
+        "id": "KTS-SOURCE",
+        "check": "Record actual source viewing URLs, publisher identity, ranges, visual/audio mode, date and visible vs unknown actions. Bind only reviewed facts. Missing source access is pending, not a successful review.",
+        "status": "PENDING_PARENT"
+      },
+      {
+        "id": "KTS-CONTRACT",
+        "check": "Owner deliberately revises strict schema/manuscript pins, asset byte digests/manifests and reviewed-text fixture for authored changes. Mutating reviewed flags true or inventing null measurements is rejected.20 movement sides/headings/source samples and IDs remain exact.",
+        "status": "PLANNED_UNRUN"
+      },
+      {
+        "id": "KTS-UI",
+        "check": "Real course routes expose actionable steps, safety/stop and alternatives in TR/EN + current14 locale catalogs. Own-answer/reveal/correction/retest written flow, back/owner reset, load failure/retry and per-visit counter remain intact. Source labels are not substituted for actual instruction.",
+        "status": "PLANNED_UNRUN"
+      },
+      {
+        "id": "KTS-SEMANTIC",
+        "check": "Independent bilingual/locale review checks contact, body-relative sides, long-left vs short-right turns, source vs adaptation, unknowns, no health/mastery claim. Minor style defects may backlog, meaning or safety reversals may not.",
+        "status": "PLANNED_UNRUN"
+      },
+      {
+        "id": "KTS-RUNTIME",
+        "check": "After explicit source lease release, owner commits narrow source checkpoint and coordinator accepts an exact statics + affected course parser/page/entry plan. No previous PASS is added to a new SHA; this subtask runs none.",
+        "status": "UNRUN"
+      }
+    ],
+    "literalMeaningCorrections": [
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/shared/endpoint/tr",
+        "before": "Bu A düzeyinin sonlu hedefi: kapsamı ve durmayı anlatmak; kişiye göre incelenmiş paralel ve kısa ön duruş; iki yanda seiken/hikite ve yavaş choku-zuki hazırlığı; adım-yerleş-aynı yan oi-zuki hazırlığı; gedan-barai hazırlığı; yürüyerek sağa çeyrek dönüş; özgün KA-P1 İki çizgi dizisinin altı durağını hatırlamak, bir düzeltme ve uygun tekrar planlamak. Şimdiki sonuç yalnız yazılı incelemedir; fiziksel parçalar doğrulanmamıştır.",
+        "after": "Bu başlangıç kursunun sınırlı hedefi kapsamı ve durmayı açıklamak; rahat küçük paralel/ön hazırlık, seiken/hikite, kısa choku-zuki, adım–yerleş–aynı yan el, küçük gedan-barai yolu ve yürüyüşle yön değişimini öğrenmek; özgün altı birimli KA-P1 sırasını yazılı karşılaştırmaktır. İsteğe bağlı temassız öz çalışma yönergeleri ayrı gösterilir. Bunlar kişisel teknik veya geleneksel kata performansı kabulü değildir.",
+        "reason": "Remove written-only endpoint while retaining the finite scope and separate written counter.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/shared/endpoint/en",
+        "before": "The finite A-level endpoint is to explain scope and stopping; individually reviewed parallel and short front positions; seiken/hikite and slow choku-zuki preparation on both sides; step-settle same-side oi-zuki preparation; gedan-barai preparation; a walking right quarter-turn; and recall the six pauses of original KA-P1 Two lines, with one correction and a suitable retest. The present outcome is written review only; physical components are unverified.",
+        "after": "This beginner course has a limited endpoint: explain scope and stopping; learn comfortable small parallel/front preparation, seiken/hikite, short choku-zuki, step–settle–same-side hand, a small gedan-barai path and walking heading changes; and compare the original six-unit KA-P1 order in writing. Optional non-contact self-practice instructions are shown separately. They do not establish personal technique or traditional kata performance acceptance.",
+        "reason": "Remove written-only endpoint while retaining the finite scope and separate written counter.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/shared/equipment/tr",
+        "before": "Yazılı görev için kâğıt ve kalem yeterlidir. İleride fiziksel görev için temiz, düz, kaymayan, engel ve insan bulunmayan alan gerekir; ayak, el ve dönüş yolları için eğitmenle yeterli boşluk seçilir. Gevşek halı, kaygan çorap, yerden kabaran işaret veya hedef yoktur. Destek gerekirse sabit bir yüzey ve uygun tek el/iki ayak uyarlamasını eğitmen seçer; iki el hareketi yapmak için destek bırakılmaz. Kum torbası, makiwara, partner veya vuruş hedefi kullanılmaz.",
+        "after": "Yazılı görev için kâğıt ve kalem yeterlidir. İsteğe bağlı küçük temassız çalışma için temiz, düz, kaymayan, engel ve insan bulunmayan alanı kontrol et; ayak, el ve çıkış yollarını önceden gör. Gevşek halı, kaygan çorap ve yerden kabaran işaret kullanma. Destek gerekiyorsa onu bırakmayı gerektiren görevi seçme; oturarak yazılı veya tek-el anlatımı alternatifini kullan. Kum torbası, makiwara, partner ve vuruş hedefi yoktur.",
+        "reason": "Actionable setup and accessible alternative replace future instructor-only setup.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/shared/equipment/en",
+        "before": "Paper and a pen are sufficient for written work. Future physical tasks need a clear, level, nonslip space without obstacles or other people; choose adequate clearance for feet, hands and turns with the instructor. No loose rug, slippery socks, raised floor marker or target. If support is needed, the instructor selects a stable surface and suitable one-hand/two-feet adaptation; support is not released to perform two-hand movements. No bag, makiwara, partner or striking target is used.",
+        "after": "Paper and a pen are enough for written work. For optional small non-contact practice, check a clean, level, nonslip space without obstacles or other people and see the foot, hand and exit paths in advance. Use no loose rug, slippery socks or raised floor marker. If support is needed, do not select a task that requires releasing it; use seated written study or one-hand description instead. Use no bag, makiwara, partner or striking target.",
+        "reason": "Actionable setup and accessible alternative replace future instructor-only setup.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/1/teaching/tr",
+        "before": "Yerdeki hareket yolu el yolundan uzundur. Başlangıç, ileri iki kısa yerleşme, sağa yön değişimi ve sıradan yürüyerek dönüş için boş alan düşün. Kâğıttaki plan fiziksel alan incelemesi değildir. Destek yüzeyinin sabitliğini ve hangi hareketleri destek bırakmadan yapabileceğini eğitmen belirler. Yardım gereksinimi eksiklik puanı değildir.",
+        "after": "Yerdeki hareket yolu el yolundan uzundur. Başlangıç, ileri iki kısa yerleşme, sağa yön değişimi ve sıradan yürüyerek dönüş için boş alan düşün. Kâğıttaki plan gerçek alan incelemesi değildir: ileri ve yana bak, eşya/insan/kablo ve kaygan yeri kontrol et. Gereken desteği bırakmayı isteyen bir görevi seçme; emin değilsen yalnız yazılı veya oturarak anlatımda kal. Yardım gereksinimi eksiklik puanı değildir.",
+        "reason": "ka-02: replace mandatory instructor permission with concrete setup, support preservation and fallback.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/1/teaching/en",
+        "before": "The floor path extends beyond the hand path. Plan clear space for the start, two short forward settlements, a rightward direction change and ordinary walking return. A paper plan is not a physical space assessment. The instructor determines support stability and which movements can be done without releasing support. Needing help is not a negative score.",
+        "after": "The floor path extends beyond the hand path. Plan clear space for the start, two short forward settlements, a rightward heading change and ordinary walking return. A paper plan is not an actual space check: look ahead and sideways for objects, people, cables and slippery patches. Do not choose a task that requires releasing needed support; if uncertain, stay with written study or seated description. Needing help is not a negative score.",
+        "reason": "ka-02: replace mandatory instructor permission with concrete setup, support preservation and fallback.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/2/teaching/tr",
+        "before": "Paralel hazırlıkta iki ayak ayrı izlerde, rahat kalça genişliği çevresinde ve zorlamadan öne bakar. Dizler kilitlenmez; gövde yükselir ama bel geriye itilmez. Baş rahatça ön yönü görür, omuzlar gevşek, eller dinlenir. Tam bir standart heikō-dachi görüntüsünü zorlamak yerine kişisel inceleme gerekir. Eğitmen farklı ayak yönü seçerse uyarlamayı açıkça adlandır.",
+        "after": "Paralel hazırlıkta iki ayak ayrı izlerde, rahat kalça genişliği çevresinde ve zorlamadan öne bakar. Dizler kilitlenmez; gövde yükselir ama bel geriye itilmez. Baş rahatça ön yönü görür, omuzlar gevşek, eller dinlenir. Tam bir standart heikō-dachi görüntüsünü zorlamazsın. Kendi rahat küçük hazırlığını standart duruşun doğrulanması sayma; ayak yönünü değiştirdiysen bunu başlangıç uyarlaması diye ayır.",
+        "reason": "ka-03: comfortable unverified preparation, not mandatory outside approval.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/2/teaching/en",
+        "before": "In parallel preparation, the feet occupy separate tracks around a comfortable hip-width spacing and face forward without force. Knees are not locked; the torso is upright without pushing the lower back backward. The head looks comfortably forward, shoulders relaxed, hands resting. Personal review comes before forcing an exact standard heikō-dachi appearance. If the instructor selects another foot direction, name the adaptation explicitly.",
+        "after": "In parallel preparation, the feet occupy separate tracks around a comfortable hip-width spacing and face forward without force. Knees are not locked; the torso is upright without pushing the lower back backward. The head looks comfortably forward, shoulders relaxed, hands resting. Do not force an exact standard heikō-dachi appearance. Do not count your comfortable small preparation as a validated standard stance; label a changed foot direction a beginner adaptation.",
+        "reason": "ka-03: comfortable unverified preparation, not mandatory outside approval.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/7/teaching/tr",
+        "before": "Bu, zenkutsu-dachi için kısa hazırlıktır; tam standart duruş kabulü değildir. Paralel başlangıçtan sol ayağı kendi sol izinde rahat küçük miktar öne al; sağ ayak ayrı sağ izde geride kalır. Ön diz kendi ayağın yönüyle ilişkisini korur; içeri çökme veya sabit taban üstünde diz/gövdeyi burma. Arka diz yumuşak, topuk ve taban ilişkisi rahat, gövde sakin olsun. Evrensel açı, diz derinliği veya ağırlık yüzdesi yoktur; kişisel konum eğitmen incelemesi ister. Bu önerinin seçilmiş nötr çıkışı şudur: önce elleri yanlarda dinlendir ve dur; sol ön ayak yerini korurken sağ arka ayağı kendi sağ izinde kaldırıp küçük öne adımla sol ayağın hizasına koy, önüne geçirme. İki ayak rahat genişlikte paralel yerleşir; tam dur. Sağ-ön konumda bunun tersi: sağ ön ayak yerinde, sol arka ayak kendi sol izinde öne gelip onun hizasına yerleşir. Ayakları birleştirme, çaprazlama, sıçrama veya yüklü tabanı döndürme yoktur. Çıkış ilerideki boşluğu da kullanır; yer veya rahatlık yoksa bu şemayı fiziksel olarak deneme. Bu somut ayak sırası özgün kısa hazırlık uyarlamasıdır ve P3 incelemesi ister.",
+        "after": "Bu, zenkutsu-dachi için kısa hazırlıktır; tam standart duruş kabulü değildir. Paralel başlangıçtan sol ayağı kendi sol izinde rahat küçük miktar öne al; sağ ayak ayrı sağ izde geride kalır. Ön diz kendi ayağın yönüyle ilişkisini korur; içeri çökme veya sabit taban üstünde diz/gövdeyi burma. Arka diz yumuşak, topuk ve taban ilişkisi rahat, gövde sakin olsun. Evrensel açı, diz derinliği veya ağırlık yüzdesi yoktur; kişisel konum bu kurs tarafından doğrulanmış değildir. Bu önerinin seçilmiş nötr çıkışı şudur: önce elleri yanlarda dinlendir ve dur; sol ön ayak yerini korurken sağ arka ayağı kendi sağ izinde kaldırıp küçük öne adımla sol ayağın hizasına koy, önüne geçirme. İki ayak rahat genişlikte paralel yerleşir; tam dur. Sağ-ön konumda bunun tersi: sağ ön ayak yerinde, sol arka ayak kendi sol izinde öne gelip onun hizasına yerleşir. Ayakları birleştirme, çaprazlama, sıçrama veya yüklü tabanı döndürme yoktur. Çıkış ilerideki boşluğu da kullanır; yer veya rahatlık yoksa bu şemayı fiziksel olarak deneme. Bu somut ayak sırası özgün kısa hazırlık uyarlamasıdır; P3 kişisel fiziksel doğrulaması verilmiş değildir. İsteğe bağlı küçük görev ve durma/alternatif yönergesi ayrı gösterilir.",
+        "reason": "ka-08: retain exact rear-foot exit and unknown load/angles; no universal external-review gate.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/7/teaching/en",
+        "before": "This is shortened preparation for zenkutsu-dachi, not acceptance of the full standard stance. From the parallel start, move the left foot a comfortable small amount forward on its own left track; the right remains behind on a separate right track. The front knee retains its relationship with the foot direction; do not collapse inward or twist the knee/torso over a planted sole. Keep the rear knee soft, heel/sole relationship comfortable and torso quiet. There is no universal angle, knee depth or load percentage; the personal position needs instructor review. This proposal selects the following neutral exit: first rest the hands at the sides and stop; keep the left front foot in place, lift the right rear foot and take a small forward step on its own right track until level with the left, without passing it. Both feet settle parallel at a comfortable width; stop completely. From right-forward, reverse this: right front foot stays, left rear foot advances on its own left track until level with it. No feet-together position, crossing, jump or rotation of a loaded sole. The exit also uses space ahead; if space or comfort is missing, do not attempt this diagram physically. This explicit foot order is an original short-preparation adaptation requiring P3 review.",
+        "after": "This is shortened preparation for zenkutsu-dachi, not acceptance of the full standard stance. From the parallel start, move the left foot a comfortable small amount forward on its own left track; the right remains behind on a separate right track. The front knee retains its relationship with the foot direction; do not collapse inward or twist the knee/torso over a planted sole. Keep the rear knee soft, heel/sole relationship comfortable and torso quiet. There is no universal angle, knee depth or load percentage; the personal position is not validated by this course. This proposal selects the following neutral exit: first rest the hands at the sides and stop; keep the left front foot in place, lift the right rear foot and take a small forward step on its own right track until level with the left, without passing it. Both feet settle parallel at a comfortable width; stop completely. From right-forward, reverse this: right front foot stays, left rear foot advances on its own left track until level with it. No feet-together position, crossing, jump or rotation of a loaded sole. The exit also uses space ahead; if space or comfort is missing, do not attempt this diagram physically. This explicit foot order is an original short-preparation adaptation; no P3 personal physical validation is supplied. The optional small task and stop/alternative instructions are shown separately.",
+        "reason": "ka-08: retain exact rear-foot exit and unknown load/angles; no universal external-review gate.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/9/retest/tr",
+        "before": "Önce yalnız yazılı ayak-el eşlemesini tekrar et. Fiziksel tekrar aynı kayıtlar olmadan açılmaz.",
+        "after": "Önce yazılı ayak–el eşlemesini aynı başlangıçla yeniden çağır. İsteğe bağlı küçük temassız görevde yalnız tek parçayı, belirtisiz ve dinlenmişken yeniden seçebilirsin. Önceki denemede ağrı, takılma veya denge belirsizliği olduysa yeniden sınama. Bu tekrar P kayıtlarını veya teknik doğrulamasını açmaz.",
+        "reason": "ka-10: replace absolute prohibition on any physical retry; retain symptom stop and false validation.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/9/retest/en",
+        "before": "Retest only the written foot-hand match first. A physical retest does not open without the same records.",
+        "after": "Recall the written foot–hand match from the same start first. In optional small non-contact practice, you may choose just one part again when symptom-free and rested. Do not test it again after pain, binding or uncertain balance in the previous attempt. This retry does not accept any P record or validate technique.",
+        "reason": "ka-10: replace absolute prohibition on any physical retry; retain symptom stop and false validation.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/10/teaching/tr",
+        "before": "Bu seçilmiş hazırlığın başlangıç ve toparlama konumu iki yumruğun rahat alt-kaburga yanlarında olmasıdır; her dirsek kendi yanında gövdeye yakın, avuç rahatça yukarı yönlenir. Sol kısa ön konumda sol yumruğu rahat bükülü dirsekle göğsün önünden sağ omuz yakınına getir; yüz/boğaza dokunma. Sağ el önde küçük yumuşak hazırlığa gider. Sol önkol gövdeye yakın rahat aşağı-dış yol izleyip sol ön uyluğun üstünde boşlukta durur; bacağa vurmaz. Dirsek yumuşak ve bilek düz ilişkidedir; bu öneride bitiş avucu rahatça aşağı yaklaştırır. Sağ yumruk sağ alt-kaburga hikitesine döner. Dur. Sonra sol dirseği kendi sol yanında rahat bükerek sol yumruğu uyluk üstündeki boş bitişten gövdeye yakın kısa yukarı-geri yolla sol alt-kaburga yanına getir; önkol rahatça avucu yukarı yaklaştırır. Sağ yumruk sağ hikitede sakin kalır. Böylece iki el tanımlı başlangıç konumuna döner; sol el yüzün önünden veya tekrar sağ omuzdan dolaşmaz. Sağ-ön tarafta sağ kol sol omuz yakınına hazırlanır ve sağ uyluk üstüne iner; sol el sol hikiteye döner. Duraktan sonra sağ yumruk kendi sağ yanında aynı kısa yukarı-geri yolla sağ alt-kaburgaya döner, sol hikite kalır. Sonraki oi-zuki öncesinde iki yumruk bu yan hazırlıklarda bekler; yeni ön taraftaki el ancak ayak yerleşmesinden sonra uzar. Bu açık toparlama, küçük statik yol ve avuç/bitiş seçimi özgün uyarlamadır; P2/P5 incelemesi ister, gelen darbeyi engelleme iddiası yoktur.",
+        "after": "Bu seçilmiş hazırlığın başlangıç ve toparlama konumu iki yumruğun rahat alt-kaburga yanlarında olmasıdır; her dirsek kendi yanında gövdeye yakın, avuç rahatça yukarı yönlenir. Sol kısa ön konumda sol yumruğu rahat bükülü dirsekle göğsün önünden sağ omuz yakınına getir; yüz/boğaza dokunma. Sağ el önde küçük yumuşak hazırlığa gider. Sol önkol gövdeye yakın rahat aşağı-dış yol izleyip sol ön uyluğun üstünde boşlukta durur; bacağa vurmaz. Dirsek yumuşak ve bilek düz ilişkidedir; bu öneride bitiş avucu rahatça aşağı yaklaştırır. Sağ yumruk sağ alt-kaburga hikitesine döner. Dur. Sonra sol dirseği kendi sol yanında rahat bükerek sol yumruğu uyluk üstündeki boş bitişten gövdeye yakın kısa yukarı-geri yolla sol alt-kaburga yanına getir; önkol rahatça avucu yukarı yaklaştırır. Sağ yumruk sağ hikitede sakin kalır. Böylece iki el tanımlı başlangıç konumuna döner; sol el yüzün önünden veya tekrar sağ omuzdan dolaşmaz. Sağ-ön tarafta sağ kol sol omuz yakınına hazırlanır ve sağ uyluk üstüne iner; sol el sol hikiteye döner. Duraktan sonra sağ yumruk kendi sağ yanında aynı kısa yukarı-geri yolla sağ alt-kaburgaya döner, sol hikite kalır. Sonraki oi-zuki öncesinde iki yumruk bu yan hazırlıklarda bekler; yeni ön taraftaki el ancak ayak yerleşmesinden sonra uzar. Bu açık toparlama, küçük statik yol ve avuç/bitiş seçimi özgün uyarlamadır; P2/P5 kişisel fiziksel doğrulaması verilmiş değildir ve gelen darbeyi engelleme iddiası yoktur. İsteğe bağlı küçük temassız görev bu doğrulamalardan ayrı gösterilir.",
+        "reason": "ka-11: retain recovery/hand truth while removing universal instructor-only permission.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/10/teaching/en",
+        "before": "The selected starting and recovery position has both fists comfortably beside the lower ribs; each elbow stays near its own side of the torso and each palm points comfortably toward upward. In short left-forward position, bring the left fist across the front of the chest toward the right shoulder with a comfortably bent elbow; do not touch the face/throat. The right hand moves to a small soft forward preparation. Keeping near the torso, the left forearm follows a comfortable down-and-out path and stops in empty space above the left front thigh, without hitting the leg. Keep the elbow soft and the wrist in its straight relationship; this proposal brings the ending palm comfortably toward downward. The right fist returns to right lower-rib hikite. Pause. Then bend the left elbow comfortably at its own left side and move the left fist from the empty endpoint above the thigh on a short up-and-back path near the torso to the left lower ribs; comfortable forearm rotation brings its palm toward upward. The right stays quiet in right hikite. Both hands thus return to the defined start; the left does not circle in front of the face or via the right shoulder again. On the right-forward side, the right prepares near the left shoulder and descends above the right thigh; the left returns to left hikite. After the pause, the right fist follows the same short up-and-back path at its own right side to the right lower ribs while left hikite stays. Before the next oi-zuki, both fists wait in these side preparations; only the hand on the new forward side extends after the foot settles. This explicit recovery, small static path and palm/endpoint choice are original adaptations requiring P2/P5 review; no incoming-strike interception is claimed.",
+        "after": "The selected starting and recovery position has both fists comfortably beside the lower ribs; each elbow stays near its own side of the torso and each palm points comfortably toward upward. In short left-forward position, bring the left fist across the front of the chest toward the right shoulder with a comfortably bent elbow; do not touch the face/throat. The right hand moves to a small soft forward preparation. Keeping near the torso, the left forearm follows a comfortable down-and-out path and stops in empty space above the left front thigh, without hitting the leg. Keep the elbow soft and the wrist in its straight relationship; this proposal brings the ending palm comfortably toward downward. The right fist returns to right lower-rib hikite. Pause. Then bend the left elbow comfortably at its own left side and move the left fist from the empty endpoint above the thigh on a short up-and-back path near the torso to the left lower ribs; comfortable forearm rotation brings its palm toward upward. The right stays quiet in right hikite. Both hands thus return to the defined start; the left does not circle in front of the face or via the right shoulder again. On the right-forward side, the right prepares near the left shoulder and descends above the right thigh; the left returns to left hikite. After the pause, the right fist follows the same short up-and-back path at its own right side to the right lower ribs while left hikite stays. Before the next oi-zuki, both fists wait in these side preparations; only the hand on the new forward side extends after the foot settles. This explicit recovery, small static path and palm/endpoint choice are original adaptations with no P2/P5 personal physical validation; no incoming-strike interception is claimed. Optional small non-contact practice is shown separately from those validations.",
+        "reason": "ka-11: retain recovery/hand truth while removing universal instructor-only permission.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/11/teaching/tr",
+        "before": "Bu yön çalışması geleneksel kata pivotu değildir. Önce eller yanlarda dinlenir; kısa ön konumdan ders 8’in arka-ayak-hizaya çıkışıyla paralel nötre gel ve dur. Bu önerinin sağa çeyrek yürüyüş dönüşü dört ayak yerleştirmesidir: sağ → sol → sağ → sol. Başlangıç önü N, hedef kendi sağı E’dir. (1) Sağ ayağı kaldırıp küçük ileri-sağ yere, N ile E arasındaki ara yöne bakacak rahatlıkta koy. (2) Sol ayağı kaldırıp küçük ilerlet, sağ ayağın sol yanında ayrı izde aynı ara yöne yerleştir. (3) Sağ ayağı kaldırıp kısa kıvrılan yolun devamına, E’ye yönelen rahat yere koy. (4) Sol ayağı kaldırıp sağ ayağın sol yanında onun hizasına, E’ye yönelen paralel rahat yere koy. Her ayak yeri ayrı ve küçüktür; her yerleşmede sakinleş, sonda iki ayak yerleşince tam dur. Yönü değiştiren ayak önce kalkar; diğer taban yüklüyken onu sürükleyip burma veya gövdeyle zorla çevirme. Çaprazlama, sıçrama ve dönerek vuruş yoktur. Adım açısı/uzunluğu ve destek uygunluğu kişisel P3/P6 incelemesi ister; şemayı zorla dört adıma sığdırma, uymuyorsa yalnız yazılı kal. E’de durduktan sonra ayrı sağ-ön hazırlık sağ ayağın kendi izinde küçük öne alınmasıyla başlar. Ayrı çıkışta sola çeyrek yürüyüş gerekiyorsa aynası sol → sağ → sol → sağdır: ilk iki ayak ara sola yöne, son iki ayak hedef yöne; son sağ ayak solun sağ yanında hizaya gelir. Yarım yürüyüş dönüşü iki aynı-yön çeyrek dizisidir, sabit taban pivotu değildir. Bunlar özgün yön hazırlıklarıdır; gösterilmiş veya fiziksel kabul edilmiş değildir.",
+        "after": "Bu yön çalışması geleneksel kata pivotu değildir. Önce eller yanlarda dinlenir; kısa ön konumdan ders 8’in arka-ayak-hizaya çıkışıyla paralel nötre gel ve dur. Bu önerinin sağa çeyrek yürüyüş dönüşü dört ayak yerleştirmesidir: sağ → sol → sağ → sol. Başlangıç önü N, hedef kendi sağı E’dir. (1) Sağ ayağı kaldırıp küçük ileri-sağ yere, N ile E arasındaki ara yöne bakacak rahatlıkta koy. (2) Sol ayağı kaldırıp küçük ilerlet, sağ ayağın sol yanında ayrı izde aynı ara yöne yerleştir. (3) Sağ ayağı kaldırıp kısa kıvrılan yolun devamına, E’ye yönelen rahat yere koy. (4) Sol ayağı kaldırıp sağ ayağın sol yanında onun hizasına, E’ye yönelen paralel rahat yere koy. Her ayak yeri ayrı ve küçüktür; her yerleşmede sakinleş, sonda iki ayak yerleşince tam dur. Yönü değiştiren ayak önce kalkar; diğer taban yüklüyken onu sürükleyip burma veya gövdeyle zorla çevirme. Çaprazlama, sıçrama ve dönerek vuruş yoktur. Bu seçilmiş adım açısı/uzunluğu ve destek uygunluğu için kişisel P3/P6 doğrulaması verilmemiştir; yazılı şemayı zorla fiziksel dört adıma sığdırma. Ayrı küçük yürüyüş uyarlamasını kullanabilir veya yalnız yazılı kalabilirsin. E’de durduktan sonra ayrı sağ-ön hazırlık sağ ayağın kendi izinde küçük öne alınmasıyla başlar. Ayrı çıkışta sola çeyrek yürüyüş gerekiyorsa aynası sol → sağ → sol → sağdır: ilk iki ayak ara sola yöne, son iki ayak hedef yöne; son sağ ayak solun sağ yanında hizaya gelir. Yarım yürüyüş dönüşü iki aynı-yön çeyrek dizisidir, sabit taban pivotu değildir. Bu paragrafın sabit ayak sıraları özgün yazılı yön hazırlıklarıdır; gösterilmiş veya fiziksel kabul edilmiş değildir. Ayrı temassız görev, sıradan küçük yürüyüş uyarlamasını öğretir; ikisini aynı fiziksel performans sayma.",
+        "reason": "ka-12: preserve exact four-foot written answer; explicitly separate ordinary small walking practice.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/11/teaching/en",
+        "before": "This orientation task is not a traditional kata pivot. First rest the hands at the sides; use lesson 8’s rear-foot-to-level exit from the short front position to parallel neutral and stop. This proposal’s walking right quarter-turn has four foot placements: right → left → right → left. Initial forward is N; the target on your own right is E. (1) Lift the right foot and place it a small amount forward-right, comfortably pointing toward the intermediate direction between N and E. (2) Lift and advance the left a small amount, keeping it on a separate track to the left of the right, pointing toward the same intermediate direction. (3) Lift the right and place it farther along the short curved path, comfortably toward E. (4) Lift the left and place it level on the left side of the right, parallel and comfortably toward E. Keep each placement separate and small; settle quietly at each placement and stop completely once both feet are settled at the end. The foot changing direction lifts first; do not drag/twist the other loaded sole or force it around with the torso. No crossing, jump or turning strike. Step angles/lengths and support suitability require personal P3/P6 review; do not force the diagram into four steps, and remain written-only if it does not fit. After stopping at E, separate right-forward preparation starts by moving the right foot a small amount forward on its own track. When the separate exit needs a walking left quarter-turn, mirror it as left → right → left → right: first two placements toward the intermediate leftward direction, last two toward the target; the final right foot comes level on the right side of the left. A walking half-turn is two same-direction quarter sequences, not a planted pivot. These are original orientation preparations, with no demonstration or physical acceptance supplied.",
+        "after": "This orientation task is not a traditional kata pivot. First rest the hands at the sides; use lesson 8’s rear-foot-to-level exit from the short front position to parallel neutral and stop. This proposal’s walking right quarter-turn has four foot placements: right → left → right → left. Initial forward is N; the target on your own right is E. (1) Lift the right foot and place it a small amount forward-right, comfortably pointing toward the intermediate direction between N and E. (2) Lift and advance the left a small amount, keeping it on a separate track to the left of the right, pointing toward the same intermediate direction. (3) Lift the right and place it farther along the short curved path, comfortably toward E. (4) Lift the left and place it level on the left side of the right, parallel and comfortably toward E. Keep each placement separate and small; settle quietly at each placement and stop completely once both feet are settled at the end. The foot changing direction lifts first; do not drag/twist the other loaded sole or force it around with the torso. No crossing, jump or turning strike. No personal P3/P6 validation of these selected step angles/lengths or support suitability is supplied; do not force the written diagram into four physical steps. Use the separate small walking adaptation or stay with written study. After stopping at E, separate right-forward preparation starts by moving the right foot a small amount forward on its own track. When the separate exit needs a walking left quarter-turn, mirror it as left → right → left → right: first two placements toward the intermediate leftward direction, last two toward the target; the final right foot comes level on the right side of the left. A walking half-turn is two same-direction quarter sequences, not a planted pivot. The fixed foot orders in this paragraph are original written heading preparations, with no demonstration or physical acceptance supplied. The separate non-contact task teaches an ordinary small walking adaptation; do not count them as the same physical performance.",
+        "reason": "ka-12: preserve exact four-foot written answer; explicitly separate ordinary small walking practice.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/12/teaching/tr",
+        "before": "KA-P1 İki çizgi altı özgün çalışma birimidir. A başlangıç alanı, B ilk sol-ön yerleşme, C sağ ayağın ileri geçişinden sonraki alan, D E yönündeki sol ileri geçiş sonrası alandır. Bunlar tek ayak hedefi değil beden alanlarıdır; iki ayak ayrı izlerde kalır. C alanı arka ayağın hizaya gelişi, dört ayaklı sağ yürüyüş dönüşü ve ayrı sağ-ön hazırlığı; D alanı nötr bitiş ve dizi sonrası yürüyüş dönüşünü de kapsayacak boşluk ister. Ayrı dönüş yolu D→C batı W, C→A güney S, sonunda A’da N’dir; bu yönler başlangıçtaki N/E’ye bağlı kâğıt işaretleridir, pusula zorunluluğu değildir. Ders 15 bu çıkışın ayak sırasını verir. Bu önerinin kâğıt dönüş şeması her düz parçada sağ-sol iki ileri yerleştirme ve sağ ayağı solun hizasına getiren kapanıştır; bu küçük adımların yerlerini alanların boşluğuna göre önceden çiz, çaprazlatma. Eğitmen kişisel küçük uzunlukları ve yeterli boşluğu incelemelidir; yetersiz odada yolu sıkıştırma. Bu seçilmiş ayak sırası sığmıyorsa uydurma adım ekleyip çıkış yapma; yazılı görev ve açık uyarlama sorusu olarak bırak. Planı aynalama; bugün yalnız yazılı sırayı kullan.",
+        "after": "KA-P1 İki çizgi altı özgün çalışma birimidir. A başlangıç alanı, B ilk sol-ön yerleşme, C sağ ayağın ileri geçişinden sonraki alan, D E yönündeki sol ileri geçiş sonrası alandır. Bunlar tek ayak hedefi değil beden alanlarıdır; iki ayak ayrı izlerde kalır. C alanı arka ayağın hizaya gelişi, dört ayaklı sağ yürüyüş dönüşü ve ayrı sağ-ön hazırlığı; D alanı nötr bitiş ve dizi sonrası yürüyüş dönüşünü de kapsayacak boşluk ister. Ayrı dönüş yolu D→C batı W, C→A güney S, sonunda A’da N’dir; bu yönler başlangıçtaki N/E’ye bağlı kâğıt işaretleridir, pusula zorunluluğu değildir. Ders 15 bu çıkışın ayak sırasını verir. Bu önerinin kâğıt dönüş şeması her düz parçada sağ-sol iki ileri yerleştirme ve sağ ayağı solun hizasına getiren kapanıştır; bu küçük adımların yerlerini alanların boşluğuna göre önceden çiz, çaprazlatma. Kişisel adım uzunluğu ve yeterli boşluk bu yazılı şemadan doğrulanmaz; yetersiz odada yolu sıkıştırma. Bu seçilmiş ayak sırası sığmıyorsa uydurma adım ekleyip çıkış yapma; yazılı görev ve açık uyarlama sorusu olarak bırak. Yazılı KA-P1 planını aynalama. İsteğe bağlı fiziksel görevde yalnız boş alanı sıradan küçük yürüyüşle ayrı incele; bu, sabit KA-P1 ayak sırasının kabulü değildir.",
+        "reason": "ka-13: remove today-written-only sentence, preserve diagram vs actual-space distinction.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/12/teaching/en",
+        "before": "KA-P1 Two lines has six original practice units. A is the starting area, B the first left-forward settlement, C the area after the right foot passes forward, and D the area after the left passes forward toward E. These are body areas, not single-foot targets; both feet retain separate tracks. C needs clearance for the rear foot coming level, the four-placement walking right turn and separate right-forward preparation; D also needs space for neutral finishing and the walking turn after the sequence. The separate return route is D→C west W, C→A south S, ending at A facing N; these are paper labels relative to initial N/E, not a required compass. Lesson 15 supplies the exit’s foot order. This proposal’s paper return template uses two forward right-left placements on each straight segment and a closing right foot brought level with the left; draw these small footprints within the areas’ clearance in advance without crossing. The instructor must review personal small lengths and adequate clearance; do not compress the path into an inadequate room. If the selected foot order does not fit, do not invent extra steps for an exit; retain a written task and open adaptation question. Do not mirror the plan; today use written sequencing only.",
+        "after": "KA-P1 Two lines has six original practice units. A is the starting area, B the first left-forward settlement, C the area after the right foot passes forward, and D the area after the left passes forward toward E. These are body areas, not single-foot targets; both feet retain separate tracks. C needs clearance for the rear foot coming level, the four-placement walking right turn and separate right-forward preparation; D also needs space for neutral finishing and the walking turn after the sequence. The separate return route is D→C west W, C→A south S, ending at A facing N; these are paper labels relative to initial N/E, not a required compass. Lesson 15 supplies the exit’s foot order. This proposal’s paper return template uses two forward right-left placements on each straight segment and a closing right foot brought level with the left; draw these small footprints within the areas’ clearance in advance without crossing. This written diagram does not validate personal step lengths or clearance; do not compress the path into an inadequate room. If the selected foot order does not fit, do not invent extra steps for an exit; retain a written task and open adaptation question. Do not mirror the written KA-P1 plan. In the optional physical task, explore only the clear space separately with ordinary small walking steps; this does not accept the fixed KA-P1 foot order.",
+        "reason": "ka-13: remove today-written-only sentence, preserve diagram vs actual-space distinction.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/14/teaching/tr",
+        "before": "Dördüncü birim C’de sağ-ön konumdan başlar: önce iki eli yanlarda dinlendir; sağ ön ayak yerinde kalırken sol arka ayağı kendi sol izinde öne, sağın hizasına getir; paralel nötrde dur. Ders 12’nin sağ-sol-sağ-sol yürüyüş dönüşüyle N’den E’ye yönel, iki ayak yerleşince dur. Sağ ayağı kendi sağ izinde küçük E yönüne öne alıp ayrı sağ-ön konumda yerleş ve dur. İki yumruğu alt-kaburga yanlarına getir; sağ gedan-barai hazırlığı ve sol hikite, durak. Sağ yumruğu sağ uyluk üstündeki boş bitişten kendi sağ yanında kısa yukarı-geri yolla sağ alt-kaburgaya getir; sol hikite kalır, iki avuç rahatça yukarı yönlenir. Beşinci birim: sol arka ayak kendi sol izinde E’ye öne geçer; D’de sol-ön tamamen yerleş ve dur. Sol yumruk sol yan hazırlıktan kısa düz yola gider, sağ hikite kalır. Duraktan sonra sol yumruk aynı kısa yoldan sol alt-kaburgaya döner. Altıncı birim: iki eli yanlarda dinlendir; sol ön ayak kalırken sağ arka ayak kendi sağ izinde öne gelip solun hizasında durur. İki ayak paralel yerleşir, E’ye bakarak tam dur. KA-P1 burada biter. Ayrı sıradan yürüyüş çıkışı şöyledir: D’de sağ çeyrek dönüşü iki kez yap (her biri sağ-sol-sağ-sol); E→S→W’ye bakıp dur. W’ye doğru sağ küçük ileri, sol küçük ileri, sonra sağ ayağı solun sağ yanında hizaya getiren kapanışla C dönüş alanına gel ve dur. C’de sola çeyrek yürüyüş sol-sağ-sol-sağ ile W→S’ye yönel ve dur. S’ye doğru sağ küçük ileri, sol küçük ileri, sağı solun hizasına getiren kapanışla A alanına gel ve dur. A’da iki sağ çeyrek yürüyüşle S→W→N’ye yönel; her çeyrek sağ-sol-sağ-sol, en sonda paralel nötr ve tam durak. Her düz parçada son sağ ayak solu geçmez. Alanları/ayak yerlerini ders 13’te bu seçilmiş sıraya göre önceden çiz; alanı görerek yürü, geriye kör adım atma, yeni adım uydurma veya yüklü tabanı burma. Şema kişisel alana/rahatlığa uymuyorsa fiziksel çıkış denenmez, yazılı görev ve uyarlama sorusu açık kalır. Bu ayrı çıkış bir kata tekniği veya yedinci birim değildir; tüm hareketler bugün kapalıdır ve tam şema P3/P6 incelemesi ister.",
+        "after": "Dördüncü birim C’de sağ-ön konumdan başlar: önce iki eli yanlarda dinlendir; sağ ön ayak yerinde kalırken sol arka ayağı kendi sol izinde öne, sağın hizasına getir; paralel nötrde dur. Ders 12’nin sağ-sol-sağ-sol yürüyüş dönüşüyle N’den E’ye yönel, iki ayak yerleşince dur. Sağ ayağı kendi sağ izinde küçük E yönüne öne alıp ayrı sağ-ön konumda yerleş ve dur. İki yumruğu alt-kaburga yanlarına getir; sağ gedan-barai hazırlığı ve sol hikite, durak. Sağ yumruğu sağ uyluk üstündeki boş bitişten kendi sağ yanında kısa yukarı-geri yolla sağ alt-kaburgaya getir; sol hikite kalır, iki avuç rahatça yukarı yönlenir. Beşinci birim: sol arka ayak kendi sol izinde E’ye öne geçer; D’de sol-ön tamamen yerleş ve dur. Sol yumruk sol yan hazırlıktan kısa düz yola gider, sağ hikite kalır. Duraktan sonra sol yumruk aynı kısa yoldan sol alt-kaburgaya döner. Altıncı birim: iki eli yanlarda dinlendir; sol ön ayak kalırken sağ arka ayak kendi sağ izinde öne gelip solun hizasında durur. İki ayak paralel yerleşir, E’ye bakarak tam dur. KA-P1 burada biter. Ayrı sıradan yürüyüş çıkışı şöyledir: D’de sağ çeyrek dönüşü iki kez yap (her biri sağ-sol-sağ-sol); E→S→W’ye bakıp dur. W’ye doğru sağ küçük ileri, sol küçük ileri, sonra sağ ayağı solun sağ yanında hizaya getiren kapanışla C dönüş alanına gel ve dur. C’de sola çeyrek yürüyüş sol-sağ-sol-sağ ile W→S’ye yönel ve dur. S’ye doğru sağ küçük ileri, sol küçük ileri, sağı solun hizasına getiren kapanışla A alanına gel ve dur. A’da iki sağ çeyrek yürüyüşle S→W→N’ye yönel; her çeyrek sağ-sol-sağ-sol, en sonda paralel nötr ve tam durak. Her düz parçada son sağ ayak solu geçmez. Alanları/ayak yerlerini ders 13’te bu seçilmiş sıraya göre önceden çiz; alanı görerek yürü, geriye kör adım atma, yeni adım uydurma veya yüklü tabanı burma. Şema kişisel alana/rahatlığa uymuyorsa fiziksel çıkış denenmez, yazılı görev ve uyarlama sorusu açık kalır. Bu ayrı çıkış bir kata tekniği veya yedinci birim değildir; sabit tam şemanın P3/P6 kişisel fiziksel doğrulaması verilmiş değildir. Ayrı küçük temassız görevde ikinci çizgiyi bağımsız kurabilir ve alanı görerek sıradan yürüyüşle çıkabilirsin; bu uyarlama yazılı sabit ayak sırasıyla aynı performans sayılmaz.",
+        "reason": "ka-15: remove all-movements-unavailable claim and retain exact written route/units.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/14/teaching/en",
+        "before": "Unit four starts right-forward at C: first rest both hands at the sides; keep the right front foot in place and bring the left rear foot forward on its own left track until level with the right; stop in parallel neutral. Use lesson 12’s right-left-right-left walking turn from N to E and stop once both feet settle. Move the right foot a small amount forward toward E on its own right track, settle separately right-forward and stop. Bring both fists beside the lower ribs; right gedan-barai preparation and left hikite, then pause. From the empty endpoint above the right thigh, return the right fist on the short up-and-back path at its own right side to the right lower ribs; left hikite stays and both palms point comfortably toward upward. Unit five: the left rear foot passes forward toward E on its own left track; settle completely left-forward at D and stop. The left travels from left-side preparation on the short straight path while right hikite stays. After a pause, the left returns along the same short path to the left lower ribs. Unit six: rest both hands at the sides; the left front foot stays while the right rear foot advances on its own right track and stops level with the left. Both feet settle parallel, facing E, with a complete pause. KA-P1 ends here. The separate ordinary walking exit is: at D, take the right quarter-turn twice (each right-left-right-left), facing E→S→W, then stop. Toward W, take a small right forward placement, a small left forward placement, then close by bringing the right level on the right side of the left into the C turning area, and stop. At C, use the walking left quarter-turn left-right-left-right from W→S and stop. Toward S, take a small right forward placement, a small left forward placement, then close with the right level beside the left into area A and stop. At A, take two walking right quarters S→W→N, each right-left-right-left, ending parallel neutral with a complete pause. On each straight segment the final right foot does not pass the left. Draw areas/footprints for this selected order in lesson 13 beforehand; walk while seeing the space, with no blind backward step, invented extra step or twisting a loaded sole. If the diagram does not fit personal space/comfort, do not attempt the physical exit; retain a written task and open adaptation question. The separate exit is not a kata technique or seventh unit; every movement is unavailable today and the complete diagram needs P3/P6 review.",
+        "after": "Unit four starts right-forward at C: first rest both hands at the sides; keep the right front foot in place and bring the left rear foot forward on its own left track until level with the right; stop in parallel neutral. Use lesson 12’s right-left-right-left walking turn from N to E and stop once both feet settle. Move the right foot a small amount forward toward E on its own right track, settle separately right-forward and stop. Bring both fists beside the lower ribs; right gedan-barai preparation and left hikite, then pause. From the empty endpoint above the right thigh, return the right fist on the short up-and-back path at its own right side to the right lower ribs; left hikite stays and both palms point comfortably toward upward. Unit five: the left rear foot passes forward toward E on its own left track; settle completely left-forward at D and stop. The left travels from left-side preparation on the short straight path while right hikite stays. After a pause, the left returns along the same short path to the left lower ribs. Unit six: rest both hands at the sides; the left front foot stays while the right rear foot advances on its own right track and stops level with the left. Both feet settle parallel, facing E, with a complete pause. KA-P1 ends here. The separate ordinary walking exit is: at D, take the right quarter-turn twice (each right-left-right-left), facing E→S→W, then stop. Toward W, take a small right forward placement, a small left forward placement, then close by bringing the right level on the right side of the left into the C turning area, and stop. At C, use the walking left quarter-turn left-right-left-right from W→S and stop. Toward S, take a small right forward placement, a small left forward placement, then close with the right level beside the left into area A and stop. At A, take two walking right quarters S→W→N, each right-left-right-left, ending parallel neutral with a complete pause. On each straight segment the final right foot does not pass the left. Draw areas/footprints for this selected order in lesson 13 beforehand; walk while seeing the space, with no blind backward step, invented extra step or twisting a loaded sole. If the diagram does not fit personal space/comfort, do not attempt the physical exit; retain a written task and open adaptation question. The separate exit is not a kata technique or seventh unit; no P3/P6 personal physical validation of the complete fixed diagram is supplied. In the separate small non-contact task, you may set up the second line independently and leave by ordinary walking while seeing the path; that adaptation is not the same performance as the written fixed foot order.",
+        "reason": "ka-15: remove all-movements-unavailable claim and retain exact written route/units.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/15/teaching/tr",
+        "before": "Önce metni kapat: kapsamı, durma kuralını, el/bilek ilişkisini, sol-ön→sağ-el adım zincirini ve altı KA-P1 birimini kendi sözlerinle yaz. Sonra anahtarla karşılaştır, tek somut düzeltme ve sonraki uygun yazılı tekrarını kaydet. Geleneksel kata için seçilen okul/versiyon, tam aktarılmış sıra, geçiş gösterimi ve kişisel geri bildirim gerekir; bu kursta sağlanmamıştır. Yazılı hatırlama ve fiziksel gözlemi ayrı sonuçlandır.",
+        "after": "Önce metni kapat: kapsamı, durma kuralını, el/bilek ilişkisini, sol-ön→sağ-el adım zincirini ve altı KA-P1 birimini kendi sözlerinle yaz. Sonra anahtarla karşılaştır, tek somut düzeltme ve sonraki uygun yazılı tekrarını kaydet. Geleneksel kata performansı veya derece kabulü, seçilen okul/versiyonun aktarımı ve kişisel değerlendirmesiyle ayrı bir sonuçtur; bu kursta böyle bir kabul verilmez. İsteğe bağlı küçük temassız öz çalışma bu kabulün yerine geçmez. Yazılı hatırlama ve fiziksel gözlemi ayrı sonuçlandır.",
+        "reason": "ka-16: formal acceptance stays separate, without making outside approval a universal self-practice gate.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/15/teaching/en",
+        "before": "Hide the text first: write the scope, stop rule, hand/wrist relationship, left-forward→right-hand stepping chain and six KA-P1 units in your own words. Then consult the key and record one concrete correction plus the next suitable written retest. Named traditional kata needs a chosen school/version, complete transmitted order, transition demonstrations and individual feedback; these have not been supplied here. Conclude written recall and physical observation separately.",
+        "after": "Hide the text first: write the scope, stop rule, hand/wrist relationship, left-forward→right-hand stepping chain and six KA-P1 units in your own words. Then consult the key and record one concrete correction plus the next suitable written retest. Traditional kata performance or rank acceptance is a separate result involving the chosen school/version’s teaching and personal assessment; this course supplies no such acceptance. Optional small non-contact self-practice does not substitute for it. Conclude written recall and physical observation separately.",
+        "reason": "ka-16: formal acceptance stays separate, without making outside approval a universal self-practice gate.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/15/retest/tr",
+        "before": "Sonraki uygun yazılı oturumda yalnız yardımsız hatırla→karşılaştır→bir düzeltme döngüsünü yap. Fiziksel ya da geleneksel kata ilerlemesi yeni gerçek öğretim ve kabul gerektirir.",
+        "after": "Sonraki uygun yazılı oturumda yardımsız hatırlama→karşılaştırma→tek düzeltme döngüsünü koru. İstersen ayrı küçük temassız görev seç; yazılı sonuçtan fiziksel ilerleme veya geleneksel kata/derece kabulü çıkarma. Durma belirtisi olan denemeyi yeniden sınama.",
+        "reason": "ka-16: physical retry no longer universally requires new outside instruction; no false rank/mastery pass.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/karate_a.v1.json",
+        "jsonPointer": "/lessons/15/retest/en",
+        "before": "At the next suitable written session, use unaided recall→comparison→one correction only. Physical or traditional-kata progression requires new real instruction and acceptance.",
+        "after": "Keep unaided recall→comparison→one correction at the next suitable written session. You may choose a separate small non-contact task; infer no physical progression or traditional kata/rank acceptance from the written result. Do not test an attempt with a stop symptom again.",
+        "reason": "ka-16: physical retry no longer universally requires new outside instruction; no false rank/mastery pass.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/taikyoku_shodan_jl.v1.json",
+        "jsonPointer": "/content/lessons/0/teaching/3/tr",
+        "before": "Fiziksel denemeden önce TS-P 0–TS-P 5 kişisel koşulları değerlendirilir; hepsi bu taslakta açık ve karşılanmış sayılmaz. Rahat olmayan bir dönüşü iterek tamamlama. Koşul belirsizse yön sırasını yazılı olarak söyle veya bir zemin planında işaretle; bunu fiziksel kata diye kaydetme. Önceki paralel hazırlığı bu referansın dışa dönük uçlu hazır pozunun yerine koyma.",
+        "after": "TS-P0–TS-P5 alan, duruş, dönüş, el yolu ve durma konularının kişisel fiziksel doğrulamasını izler; bu doğrulama kayıtları karşılanmış değildir. Ayrı isteğe bağlı küçük temassız görev bu kayıtları açmaz veya kişisel uygunluğu onaylamaz. Rahat olmayan dönüşü iterek tamamlama; belirsizlikte yön sırasını yazılı söyle veya zemin planında göster. Önceki paralel hazırlık, A’nın dışa dönük uçlu hazır pozunun yerine geçti diye kaydedilmez.",
+        "reason": "ts-01: false validation records remain facts, not an all-self-practice permission switch.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/taikyoku_shodan_jl.v1.json",
+        "jsonPointer": "/content/lessons/0/teaching/3/en",
+        "before": "Before a physical attempt, assess the personal TS-P 0–TS-P 5 conditions; all remain open in this draft. Do not force an uncomfortable turn to completion. If suitability is uncertain, recall the headings in writing or point them out on a floor plan and record that as written study. Keep earlier parallel preparation distinct from this reference’s toes-out ready position.",
+        "after": "TS-P0–TS-P5 track personal physical validation of space, stance, turns, hand paths and stopping; those validation records are not accepted. The separate optional small non-contact task does not accept them or validate personal suitability. Do not force an uncomfortable turn; use written headings or a floor plan when uncertain. Do not record earlier parallel preparation as replacing A’s toes-out ready position.",
+        "reason": "ts-01: false validation records remain facts, not an all-self-practice permission switch.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/taikyoku_shodan_jl.v1.json",
+        "jsonPointer": "/content/lessons/9/teaching/1/tr",
+        "before": "Bu taslak için bu özgün öğretimin eğitmen incelemesi, JabLab demonstrasyonu ve kişisel geri bildirim kabulü verilmiş değildir. Referans videosunun gerçekten incelenmesi, bütün görünmeyen ayrıntıların veya her öğrencinin uygunluğunun doğrulandığı anlamına gelmez. Sözlü vurguyu öğretmek istenirse ses ayrıca incelenmelidir; burada sessiz gözlemden kiai veya nefes anahtarı çıkarılmadı.",
+        "after": "Bu özgün öğretim için eğitmen incelemesi, JabLab demonstrasyonu ve kişisel geri bildirim kabulü verilmiş değildir. Bu kayıtlar, ayrı yayımlanan küçük temassız öz çalışma yönergelerinin kişisel fiziksel doğrulaması olduğu anlamına gelmez ve öz çalışmanın yerine zorunlu dış onay şartı oluşturmaz. Referans videosunun gerçekten incelenmesi, bütün görünmeyen ayrıntıların veya her öğrencinin uygunluğunun doğrulandığı anlamına gelmez. Sözlü vurguyu öğretmek istenirse ses ayrıca incelenmelidir; burada sessiz gözlemden kiai veya nefes anahtarı çıkarılmadı.",
+        "reason": "ts-10: honest false facts, no mandatory external endorsement, audio/hidden-detail limits unchanged.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      },
+      {
+        "asset": "assets/content/taikyoku_shodan_jl.v1.json",
+        "jsonPointer": "/content/lessons/9/teaching/1/en",
+        "before": "This draft has no acceptance of instructor review of this original curriculum, JabLab demonstration or individual feedback. Actual inspection of a reference video does not verify every hidden detail or every learner’s suitability. Audio must be inspected separately if audible emphasis is to be taught; no kiai or breathing key was inferred from muted viewing.",
+        "after": "This original curriculum has no acceptance of instructor review, JabLab demonstration or individual feedback. These records do not make separately published small non-contact self-practice instructions personally physically validated, and do not create mandatory outside approval in place of self-practice. Actual inspection of a reference video does not verify every hidden detail or every learner’s suitability. Audio must be inspected separately if audible emphasis is to be taught; no kiai or breathing key was inferred from muted viewing.",
+        "reason": "ts-10: honest false facts, no mandatory external endorsement, audio/hidden-detail limits unchanged.",
+        "status": "LITERAL_DRAFT_NOT_APPLIED_PENDING_VISUAL_SOURCE_REVIEW",
+        "preserveWrittenQuizTruth": true
+      }
+    ],
+    "literalMeaningCorrectionsSummary": {
+      "fullStringBeforeAfterLeaves": 28,
+      "changedFields": 14,
+      "coverage": "shared endpoint/equipment; ka02/03/08/10/11/12/13/15/16; ts01/10. Other Taikyoku teaching/recall/completion fields already distinguish physical unknowns and optional attempts, so are explicitly preserved.",
+      "unchangedTruth": [
+        "all current written questions and choices/correct_choice_id remain unchanged",
+        "Karate answer_key values unchanged; notably ka11 own-side recovery and ka12 fixed written four-placement answer remain exact",
+        "Taikyoku ts02..09 observed order, active side, previous-finish boundary, long-left path, occlusion, mute-audio limits and written completion_meaning remain unchanged",
+        "false accepted/review flags and null movement measurement fields unchanged"
+      ],
+      "scope": "No blanket search/replace is proposed. Each exact full-value before is bound to a JSON pointer; owner checks source equality before applying. All additions remain pending actual visual receipt."
+    }
+  },
+  "source_generation_note": {
+    "source_generator": "tool/generate_solo_boxing_course.py",
+    "exact_fields_also_present_lines": [
+      283,
+      284,
+      821,
+      822,
+      948,
+      949
+    ],
+    "rule": "Authorized application must update canonical generator plus current generated asset coherently, not JSON alone; do not run it during freeze. Reviewed snapshot literals/repeats must be reconciled deliberately.",
+    "course_sha_dependencies": [
+      "assets/motion_content/manifest.json",
+      "assets/motion_content/jablab.source-slice.v1.json",
+      "assets/motion_content/jablab.source-projection.v1.json",
+      "lib/app/media_source_projection_pin.dart",
+      "test/fixtures/jablab_v2h_source_pins_v1.json",
+      "test/fixtures/jablab_v2k_source_pins_v1.json",
+      "tool/build_v2h_jablab_qa_fixture.py",
+      "tool/build_v2k_jablab_qa_fixture.py",
+      "test/solo_boxing_course_integrity_test.dart",
+      "test/lesson_media_source_pin_qa_test.dart",
+      "test/flutter_bundle_content_asset_reader_test.dart",
+      "test/tai_chi_entry_integrity_test.dart",
+      "test/kickboxing_entry_integrity_test.dart",
+      "test/karate_entry_integrity_test.dart",
+      "test/muay_thai_entry_integrity_test.dart",
+      "test/taikyoku_shodan_entry_integrity_test.dart",
+      "test/yang16_written_entry_integrity_test.dart"
+    ],
+    "scope_limit": "These are closed QA source identities, not installed/generated/accepted media. No new release eligibility or video rights inferred; obsolete source receipts must not be silently reused."
+  },
+  "karate_taikyoku_subreport_sha256": {
+    "karate-source/INVENTORY.json": "68bbec1f0d0f50d4a7823051e40e43ea1c77ed8d3d8acf1c7ce6b99aad6c55d4",
+    "karate-source/DRAFT-CHANGES.json": "04a8ba04ba7d6f0edd06f212c914f86f3b4cd2f16417d51eaa313fcbce085a41",
+    "karate-source/REPORT.tr.md": "c1e6531265700f28e85c6eb0e15524c8bee5cfadac34aa6aa8bc770a43fbfae4",
+    "karate-source/VIDEO-CANDIDATES.json": "86d2d8d0ec84973863c94eee3aab62dc7316d5131317e89b04c20a535add5b98",
+    "karate-source/DELIVERY-CHECK.json": "e4580c9ca98771a11e5755d12848dbdf9bba141e5d91dbf8ca1a832ea96b90b5"
+  },
+  "implementationFollowup": {
+    "state": "REPORT_ONLY_NOT_APPLIED_SDK_UNRUN",
+    "directory": "patch-draft",
+    "readme": "patch-draft/README.tr.md",
+    "ownedPatch": "patch-draft/OWNED.patch",
+    "ownedPatchSha256": "c20b335af2fdc34cde86f24c45fc53a992d436461afb7a2cce4e22205e337532",
+    "package": "patch-draft/PACKAGE.json",
+    "assetPacket": "karate-source/implementation-draft/AFTERIMAGE-PACKET.json",
+    "masterL10nInput": "patch-draft/L10N-PAIR-DELTA.json",
+    "ownedFiles": 12,
+    "newTestBodies": 7,
+    "actualExecutedBodies": 0,
+    "appWrites": 0
+  }
+}

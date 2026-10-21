@@ -1,0 +1,99 @@
+{
+  "liveLissomCourseSHA256": "be597ebcb4d9a3ae05410e2b33752b061bdc4ad1aea49896ae978733b7405a3c",
+  "memberCount": 11,
+  "members": [
+    {
+      "bytes": 2222,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/exact-data-v10/MANIFEST.json",
+      "durableSymlink": false,
+      "sha256": "21ef057ab0eadb00792ea63ef01d53eacf0991a9a297c7d6d6be0af5fc652683",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/exact-data-v10/MANIFEST.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 381,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/exact-data-v10/REPORT.md",
+      "durableSymlink": false,
+      "sha256": "c014148f9217cbbe74207f72ce5a7dac14f344dabbb244b46d0c191c548fe15e",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/exact-data-v10/REPORT.md",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 443813,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/exact-data-v10/all-263-lesson-inclusion.json",
+      "durableSymlink": false,
+      "sha256": "eef81567661128630915f7739bb035cf0407052b3951a109c911ef07c739190f",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/exact-data-v10/all-263-lesson-inclusion.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 4716981,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/exact-data-v10/gap-requirements.json",
+      "durableSymlink": false,
+      "sha256": "7c68fcacae1a20aeb419c6a04e73dbf6e51b7df9c3f87a9a0fdbfb942451323d",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/exact-data-v10/gap-requirements.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 5632,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/independent-peer/REPORT.md",
+      "durableSymlink": false,
+      "sha256": "30129bf730d5369f1cb8e4f391f4bebc62dd19bad910952af2fc6c22e91cd27a",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-independent-peer/REPORT.md",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 650,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/portfolio-v10/README.md",
+      "durableSymlink": false,
+      "sha256": "0080ab80dc889687c88c032feef0595ff973534caaaa2c43367b336a3054b7f7",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/portfolio-v10/README.md",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 3081542,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/portfolio-v10/courses-current.json",
+      "durableSymlink": false,
+      "sha256": "d680e7537b55a4e5b6ca2fc3f82e8af34e7841ee8f13cce27d7bad22401f616c",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/portfolio-v10/courses-current.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 3321944,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/portfolio-v10/current-target-contracts.json",
+      "durableSymlink": false,
+      "sha256": "f5437548d7b9d6355e4cd57bd382f3227054c23c49a026087eb3759cb16ba240",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/portfolio-v10/current-target-contracts.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 1701390,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/portfolio-v10/founder-final-test-plan.json",
+      "durableSymlink": false,
+      "sha256": "af738b35ccffae2edaaeb6f143f36e03105c742cd20f6c38bf3c72a2e10760a6",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/portfolio-v10/founder-final-test-plan.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 4080075,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/portfolio-v10/media-production-briefs-current.json",
+      "durableSymlink": false,
+      "sha256": "c06f536f8404a12f89dfe6147f99be3fba854528528c18797d7f6702c6ef2a71",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/portfolio-v10/media-production-briefs-current.json",
+      "sourceSymlink": false
+    },
+    {
+      "bytes": 2562,
+      "durablePath": "ops/tools/motion_courses/contracts/v2k/source-proof/portfolio-v10/packet-readback.json",
+      "durableSymlink": false,
+      "sha256": "a7c2a4e0260e133026fdc204ec9967398fdb3d18988a1143c9b7bff852e30d13",
+      "sourcePath": "scratch/2026-09-30-motion-pedagogy-v10-h28-source-rebind/portfolio-v10/packet-readback.json",
+      "sourceSymlink": false
+    }
+  ],
+  "sourceGapManifestSHA256": "21ef057ab0eadb00792ea63ef01d53eacf0991a9a297c7d6d6be0af5fc652683",
+  "sourcePacketReceiptSHA256": "a7c2a4e0260e133026fdc204ec9967398fdb3d18988a1143c9b7bff852e30d13",
+  "sourcePeerSHA256": "30129bf730d5369f1cb8e4f391f4bebc62dd19bad910952af2fc6c22e91cd27a",
+  "state": "BYTE_EXACT_PINNED_V10_SOURCE_PROOF_LIVE_COURSE",
+  "totalBytes": 17357192
+}

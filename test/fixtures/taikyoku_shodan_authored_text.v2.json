@@ -1,0 +1,1750 @@
+{
+  "state": "CANDIDATE_NOT_REVIEW_ACCEPTANCE_NOT_APP_TEST",
+  "provenance": "Generated from the report-only authored asset afterimage. This is a comparison candidate, not an independently accepted manuscript. Root must review the changed text and actual source receipts before pinning it as accepted.",
+  "legacy_reviewed_manuscript_sha256": "f748648bffca221f6752a4ceedea8418df389e06a0e488d039d8177e64e27d3a",
+  "legacy_reviewed_curriculum_sha256": "6c6a0608c2bd5b63d6d00157b5a0d6be17e8d29b0fc3fa154441119750dbee9c",
+  "baseReviewedFixtureSha256": "0c09fdf1acaafb3bc6d85add42375dc689f4ce8d698470b6d7902e648421b229",
+  "draftAssetSha256": "20feaf68d25d85b86b64e0192ae91c64a235f0d057a0c460fa12bf31d060b311",
+  "fields": [
+    {
+      "pointer": "/content/title",
+      "tr": "68d773f5c6571f4dbbfc793fb9c8200f190e653cdb2ce1fad9dd391ea3030a86",
+      "en": "351baef04f0c6dadd372e596ef5cf1229e97d1177c371952100884cd95d937d4"
+    },
+    {
+      "pointer": "/content/physicalRequirements/0/title",
+      "tr": "3982d9b72b52ef33fff0bfb552133bc3ccc9b415ae641413424b6c94107884a7",
+      "en": "ff2966fb7c95a1beb7ae490034863533ef5b7f28be2ecef7f527d26411feb5f5"
+    },
+    {
+      "pointer": "/content/physicalRequirements/0/detail",
+      "tr": "d8c6c3a2b098929298d4f1c3346664d2eda73c74b2aa8fbaf8c219f240cc4098",
+      "en": "075250a0228f981343213efed1164cec5d5275f08bef35800dc4b21ff1237468"
+    },
+    {
+      "pointer": "/content/physicalRequirements/1/title",
+      "tr": "2f1b67b4ab606ba3511a54452868e8c835e84beb12a271e1fb15f2941d8bd5f2",
+      "en": "37daa83bb79f882fbaaa0c1081caa0308f4f3dc9748c7cedfccfa48a42a32d9c"
+    },
+    {
+      "pointer": "/content/physicalRequirements/1/detail",
+      "tr": "2a0ebbb040e2c6ba0f177672f8fff982c74c408dce786a0e9deab0ef82ae4f4a",
+      "en": "09296d342518a373ba04aa6d6f81893dd90bbe3b59778529b3efb023ed92bc84"
+    },
+    {
+      "pointer": "/content/physicalRequirements/2/title",
+      "tr": "6428b21b6450664aa9c1427243a2067e474a5915e844845d3a06255b511239a1",
+      "en": "1eac6d64fd4039289765cfd6bfaa3fe97704a0563637cdc5665bddb8f99eab86"
+    },
+    {
+      "pointer": "/content/physicalRequirements/2/detail",
+      "tr": "41e34773978b5e01107f52b5e4ca6464a1a521108507ac189b33baff5a152ee6",
+      "en": "7edf248b71867edc2a8bfa2bc2a70558ec95f9c6a31987bf8aaae0aa56763c42"
+    },
+    {
+      "pointer": "/content/physicalRequirements/3/title",
+      "tr": "5c391c88fe435a7e466cfca1b40503dc96b45db458ed46609aa767f9bdc0b660",
+      "en": "29ef3c013bf811acce49d6f733b8a197a7ca45d3e4acaef17e74fc66c92145ff"
+    },
+    {
+      "pointer": "/content/physicalRequirements/3/detail",
+      "tr": "3262fceed142f9c678c668035a179584123c988b7da9289635f639ff23b5e286",
+      "en": "9a02721446e7844c068091dc4638d717d378f30f0f36c2b3cf0beabbb488429a"
+    },
+    {
+      "pointer": "/content/physicalRequirements/4/title",
+      "tr": "5ad07b864be82d47920a3e7bc6ecc527ad7c8d0de983241ac7913886b66d9048",
+      "en": "84f9e374c69f5598e7dc9b5a207049fdad5bb2862435322c333ac02c3a8f7d86"
+    },
+    {
+      "pointer": "/content/physicalRequirements/4/detail",
+      "tr": "6869801ac558bd448c39282f98e7d8ac2037da1a8b6a01178dc2de47a0a45b83",
+      "en": "b4e8bf8752d120a4601fed837e1d3be7be314c15242b3fbe661750b7dff1359a"
+    },
+    {
+      "pointer": "/content/physicalRequirements/5/title",
+      "tr": "66f83d9cf9278c5bd9730381d11796b528004ae8ff632569a5988be4c3a82114",
+      "en": "08c827c97d0998d537aa70efefc38d476f108b7f6ce5ed694fdf698793dae9a7"
+    },
+    {
+      "pointer": "/content/physicalRequirements/5/detail",
+      "tr": "71d40c415ba85fddd04f09fb2300a5eed69ee95621168ee1ccd248c5bb0a5644",
+      "en": "d138a1d55e466d5c3631121fa3e9500afd36efadbb23f2a379ad40bb3d3bee96"
+    },
+    {
+      "pointer": "/content/common_limits",
+      "tr": "c4062b7e1482d8173adab567c4f2ee3c54278dea68febbe0da06face5e0364c6",
+      "en": "c21d54d2e2424496753392ff5f799a91fcd373366a04de858119069e048e7f11"
+    },
+    {
+      "pointer": "/content/opening",
+      "tr": "35e42ade1641f9b29196301663bfa744951fbc614754e2ef529139d08eda5228",
+      "en": "ce11e6dbc578fbd1801693c1de4e93a7d36a4553726aab9d6faa205e9ff27794"
+    },
+    {
+      "pointer": "/content/closing",
+      "tr": "60971645d8c62492e8b755e7f2c1286d705d0cce96c8862cb5a6ec8c36dfde24",
+      "en": "3dcba106f68ab403d0b092d7f28bc4a6c1cd3e0b819b1c896b497bbc9f2e6518"
+    },
+    {
+      "pointer": "/content/movements/0/title",
+      "tr": "0d12e42427dedfc261b57b2273b7fddd3aea4d3441c86a1d792631a991c85a7d",
+      "en": "db21996d7fa0be78a295be3590576c3eb0edd859685a5fdb599b9417be53f687"
+    },
+    {
+      "pointer": "/content/movements/0/start",
+      "tr": "a769ef7711a011e3fe23c5f606aaa63b44bcc84f3031063f33a54c339fec2cda",
+      "en": "f7295a66a08f019a47989e8bbcf3b2b541ba037a9be4f3e1981238a1c503d79d"
+    },
+    {
+      "pointer": "/content/movements/0/feet",
+      "tr": "0f93ff8623d385a4b3c9653a50e07537e2a1d44a0d62f365092d2cb62991fc8c",
+      "en": "36c8f7de251f36265e9a080d2e2e9a01d7a563a3574a6a1a1470528c8f29a301"
+    },
+    {
+      "pointer": "/content/movements/0/hands",
+      "tr": "03c9d34d795b694bb57482661c196c72ca21532096bb1dc5300fc8ab6dcee5d6",
+      "en": "4fef43fe52de7912bb8a828db8dfb7f0c5597a8da9f68ddac1ff996663f18b96"
+    },
+    {
+      "pointer": "/content/movements/0/finish",
+      "tr": "6593148fb2883f57c14690e3eca6961b940ad83ebdd6fc3debde54880ca23847",
+      "en": "bf34e2201dda5a353890d6b9392fce58baf2497b4ca3b1c8799dbdea96e4e257"
+    },
+    {
+      "pointer": "/content/movements/0/next",
+      "tr": "1d93de44eb35157a33ebe8e48ffe8b176eaff34019fcbe7a8d308a979380f44d",
+      "en": "fc80fd781975f63a6d67969152b4e8afc94cfe907790f8d46bdd8e6395a1aab1"
+    },
+    {
+      "pointer": "/content/movements/0/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/1/title",
+      "tr": "5be811132a381b1dd819bafb78f73fa305e0816061e633bec580238b7416efbd",
+      "en": "13613895f35ef862926ebac986661712793784506accdc0d48413c32e0ece35d"
+    },
+    {
+      "pointer": "/content/movements/1/start",
+      "tr": "f4204fd43230d8211091e00639e82ebb4e6953e289e1094554f2e94009486023",
+      "en": "8058b1d930f29e5e69f7ccaea831f867c514f4699f98898dd0c2ea3f55da8acb"
+    },
+    {
+      "pointer": "/content/movements/1/feet",
+      "tr": "81cdc6d36af86bfbf343b35579849d211307908974f88a6eb5fb6310681c9b7a",
+      "en": "f5c097eaf2881cd8a4f36bdc71cc4408e0a1a2731e17f42d67a38b5a003f5818"
+    },
+    {
+      "pointer": "/content/movements/1/hands",
+      "tr": "c70ae2da290cc12b05d6c227a027a97e9565a5d74581da84c4013c5b727007bb",
+      "en": "22f1acff971bd96cc85d44cee41a0bcb8d5a224830055b03859a368aa48576c6"
+    },
+    {
+      "pointer": "/content/movements/1/finish",
+      "tr": "a36e45dc8706ee23aab74a65671244ff366e8203398d1cd61440685a69704451",
+      "en": "1b707fed58126dcfe15d053337fbc788aa394a0d258b5664a694c2dc091bc617"
+    },
+    {
+      "pointer": "/content/movements/1/next",
+      "tr": "7f08c9a3fbbc404f139049b2f8ba5756b4a89b34f38e8f69e453e947dad1a065",
+      "en": "e8152c3e28a14a6b45d5634708c4444d31f71bb1940a139189dc7182ff36be54"
+    },
+    {
+      "pointer": "/content/movements/1/limit",
+      "tr": "8311635dd31c03d86950da8ecf3db6215b4226b24381e532fbb1be155fd76b3a",
+      "en": "6740749909464e72364ef78d3d587504775ae9034688fc6a454cdbddd1a56108"
+    },
+    {
+      "pointer": "/content/movements/2/title",
+      "tr": "b83f604b153b81080bcfeccd42a3c07edbaa805e2cfa036d955919e9ea80a3c8",
+      "en": "2511f2212200fb3cfdbb0f4998dab2268927a1f0cc7f85190ec7ee1cdef03647"
+    },
+    {
+      "pointer": "/content/movements/2/start",
+      "tr": "7e13f863cd54ec379e48a43829054fab5093990ab4d4b2a277999aa89278b7ed",
+      "en": "cc1f72d1b658e0bcb9e77b9da829ff439538b0dc2675b872d9e619b9acc263d3"
+    },
+    {
+      "pointer": "/content/movements/2/feet",
+      "tr": "ad69a481df148ec6177a9ab4f91fda5e21ba3da935801e7e155e899434516eb7",
+      "en": "cb52e58879bcf207029693606cd07be3ae99386abd3d9dd635a48ee4bec2b3f7"
+    },
+    {
+      "pointer": "/content/movements/2/hands",
+      "tr": "fcf09c8ce29eb2794bf6eac0055ac8e8b7f91ae191f244ca756de8ea6d285083",
+      "en": "f7a139814aa5600b6f7bf932fc43057fa77606c37d85164839ca295e6a87f2af"
+    },
+    {
+      "pointer": "/content/movements/2/finish",
+      "tr": "9901d57e2430c7842fa561e491552e9fb0d961042fb3ed9d2bd38869b94ac8f2",
+      "en": "39c01d746a83554664b8cc8f4be892d955c28cd8359fb7dfab76e5331a06f513"
+    },
+    {
+      "pointer": "/content/movements/2/next",
+      "tr": "07e7a3af8dc2112e1d46732cc5f952599a112912b2666b1f9d1b1267ab862b8e",
+      "en": "54abb8b2c24e76f4ec7a763d75be1785f5c32db9db72e340bebc9114d150d08c"
+    },
+    {
+      "pointer": "/content/movements/2/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/3/title",
+      "tr": "cc4a908d3670e17a83b714f4838586c1b6d018f36a707cda4b5ff59249b31c3b",
+      "en": "3b5f3664dafa4cf33d143e73a7da09c9b17f32c7f946e52534bca09e68c5b0e4"
+    },
+    {
+      "pointer": "/content/movements/3/start",
+      "tr": "b6ffa82a4ec1146f6a211a66c2e2ee221de588a061b51db3a8e66a431ce696e2",
+      "en": "31b2a21dfd7fab436303bdf5bb1e9a82dea174cf29bed3b809e32ef963af7e4d"
+    },
+    {
+      "pointer": "/content/movements/3/feet",
+      "tr": "02ea980ae40109aef5309f3e34f72d2b51be7adb7a3d6c832833ae5cf43b8f44",
+      "en": "10a29429039689fd93be0122efa684e44cff96c80cdb7b6c636d47297be0cda2"
+    },
+    {
+      "pointer": "/content/movements/3/hands",
+      "tr": "270370a2e96434d49046e0a251e005e6c52da1b691025b7398e0854f2d492c5b",
+      "en": "a1d1bfbb4d6d1c47c558203208e5c5a76a72c97ffdabc953e21794d1d3334622"
+    },
+    {
+      "pointer": "/content/movements/3/finish",
+      "tr": "7cc492496263cdeb368bf8dac1b6f0995ee37992f360fb9f0c0bd96996041251",
+      "en": "d322af1ce74e6ff7f373001f7aab4ec6c681525c667b566374a0eea4e737e303"
+    },
+    {
+      "pointer": "/content/movements/3/next",
+      "tr": "90f48897d279399d665456abda1ad1b0abb55f5775e3836902fc0bb87774fdad",
+      "en": "1b0516ece723c6aba88f30c0cce6f4d2db7b4d4b309d04854dcab204212cb34b"
+    },
+    {
+      "pointer": "/content/movements/3/limit",
+      "tr": "74647442ed8a25e0079c812eaf66bce16d9328310d10c03e85e02df6b0686f77",
+      "en": "06e8b0e8cda93619166737e0862f269738293abcd0b9ad49013f5d4c2891874e"
+    },
+    {
+      "pointer": "/content/movements/4/title",
+      "tr": "d27fef83704131a0ff91d4727874f562d0231c2706033a2321b48659599927be",
+      "en": "626558ca3d529d9592a5173ee3d732769a932656cbe16c201224f8e4ef2557c1"
+    },
+    {
+      "pointer": "/content/movements/4/start",
+      "tr": "f6b7c772f3d4e274969d957a9c8068c42c7f1d06c4846bd085adc8707edcbc86",
+      "en": "34ab7eca0c48af3480c43e678e194426bac5fce5693310b08b25579380c6999b"
+    },
+    {
+      "pointer": "/content/movements/4/feet",
+      "tr": "fbe387f023008991889ce76aa303cb0643788a1b3ccc2ed291f7677124b048b5",
+      "en": "63cab477b6b58303ddff40e41ea2e6908fbbb2dabe39dab6f1b7cca8944c00f5"
+    },
+    {
+      "pointer": "/content/movements/4/hands",
+      "tr": "f35e2c2887b6baf707a9262efb33c9a508363102f934ef0af128a3b860e9703b",
+      "en": "c57d033981e949c492242459553c978ed06220321091543214f960cfd6238500"
+    },
+    {
+      "pointer": "/content/movements/4/finish",
+      "tr": "9ccb83e9095227aec2bcbdf66b0e8eb4e8898463c355631367917c2a25ff2d5c",
+      "en": "3a294e9d4102b29099b7575298cefe0aa410fcfc5ec5282a628205a998010832"
+    },
+    {
+      "pointer": "/content/movements/4/next",
+      "tr": "3c7a9ecd2f7680c57bcb1112b98da6d36404c698a1558d2262908f538c117fca",
+      "en": "a3c3c7580d80598bac679a7e53d1ea576ce9fd1791b69a3e1e606889d38a5b2a"
+    },
+    {
+      "pointer": "/content/movements/4/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/5/title",
+      "tr": "724f63294b02eb95b6b336f4cf6f305e4b0c447b7645e13f48b49145d7e1d1f6",
+      "en": "0d737d5b446c0fcbf98e38a168343ef1163a021bc541f7c3058c846af1752e3c"
+    },
+    {
+      "pointer": "/content/movements/5/start",
+      "tr": "48478ea16fa9facb80e5ebeb17a7a8df1c0a8e7c1ad90ca791043299aa11f571",
+      "en": "123a68b6eda8b1889e04d16aff7f5326e9b04545279eeb9b2c59cf1c95727c5a"
+    },
+    {
+      "pointer": "/content/movements/5/feet",
+      "tr": "81cdc6d36af86bfbf343b35579849d211307908974f88a6eb5fb6310681c9b7a",
+      "en": "f5c097eaf2881cd8a4f36bdc71cc4408e0a1a2731e17f42d67a38b5a003f5818"
+    },
+    {
+      "pointer": "/content/movements/5/hands",
+      "tr": "c70ae2da290cc12b05d6c227a027a97e9565a5d74581da84c4013c5b727007bb",
+      "en": "22f1acff971bd96cc85d44cee41a0bcb8d5a224830055b03859a368aa48576c6"
+    },
+    {
+      "pointer": "/content/movements/5/finish",
+      "tr": "ec1ed62a1997b820252ce67f2b2152f40f638e8b16aac31690b061795d604ff5",
+      "en": "5130a5cb1238a6fb3c3e1ca71c930cd165eeb73b85bda295cf4c07fb67e0429e"
+    },
+    {
+      "pointer": "/content/movements/5/next",
+      "tr": "b22b0e7b15c228b9fee0e3002b7e5f2c52afe8d90ab599798d67f02db5ce0498",
+      "en": "26eba824f77cb80987f93ea8bc1c2a17ec2cb941e0c1963a821be21979cb66b8"
+    },
+    {
+      "pointer": "/content/movements/5/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/6/title",
+      "tr": "bb763a4541d0a0a3f8a4be407184c1852febb24878e6fc5b4bfaae35739a133f",
+      "en": "39cd8d207ef12ec7ba9e1192a06cb4c6d6668f42b4addaca080ab6bc8a78b25b"
+    },
+    {
+      "pointer": "/content/movements/6/start",
+      "tr": "69c5732e36043c67b516923d25fcf7d3c6a3397aa4f64a0d29f816183b175e29",
+      "en": "8da1a563521097c8fb3cbb9cc06a385065a3fb4cd3ce501a84e189673ff90664"
+    },
+    {
+      "pointer": "/content/movements/6/feet",
+      "tr": "02ea980ae40109aef5309f3e34f72d2b51be7adb7a3d6c832833ae5cf43b8f44",
+      "en": "10a29429039689fd93be0122efa684e44cff96c80cdb7b6c636d47297be0cda2"
+    },
+    {
+      "pointer": "/content/movements/6/hands",
+      "tr": "270370a2e96434d49046e0a251e005e6c52da1b691025b7398e0854f2d492c5b",
+      "en": "a1d1bfbb4d6d1c47c558203208e5c5a76a72c97ffdabc953e21794d1d3334622"
+    },
+    {
+      "pointer": "/content/movements/6/finish",
+      "tr": "0337b1754c01aa9a38a1de75b9294a453c900e8b231d3b38b07be0db7cac9865",
+      "en": "947d55cce413783b324fdd36fbcffc055881a52444a46d45d7d61d985a0c9566"
+    },
+    {
+      "pointer": "/content/movements/6/next",
+      "tr": "5b9cf2d5f8fb818b701a008b1b070cfa1a5ba36409f8ff77f87f5b9b16c81f44",
+      "en": "eefeb2cbca5c5da8ba152e68605f9d3d7990f065494b6ad7950901c0781332db"
+    },
+    {
+      "pointer": "/content/movements/6/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/7/title",
+      "tr": "23d974a0845a8a9d6bb69494a5c21c8ccda379216bd8cc250bd9105a3f89c629",
+      "en": "46139ef87a5a228dba2d3dfd368ad8c9e9e603c20a7b644705acb1cbd743c1da"
+    },
+    {
+      "pointer": "/content/movements/7/start",
+      "tr": "9a2a08699d8a3dcba95ca295c4d0c0957660f2d9489b55e7ecefecc99961c03c",
+      "en": "6ad5aa51068c143aef84faf87a469330408e60fded64f5fbd44b6d3df581ccd8"
+    },
+    {
+      "pointer": "/content/movements/7/feet",
+      "tr": "81cdc6d36af86bfbf343b35579849d211307908974f88a6eb5fb6310681c9b7a",
+      "en": "f5c097eaf2881cd8a4f36bdc71cc4408e0a1a2731e17f42d67a38b5a003f5818"
+    },
+    {
+      "pointer": "/content/movements/7/hands",
+      "tr": "c70ae2da290cc12b05d6c227a027a97e9565a5d74581da84c4013c5b727007bb",
+      "en": "22f1acff971bd96cc85d44cee41a0bcb8d5a224830055b03859a368aa48576c6"
+    },
+    {
+      "pointer": "/content/movements/7/finish",
+      "tr": "ec1ed62a1997b820252ce67f2b2152f40f638e8b16aac31690b061795d604ff5",
+      "en": "5130a5cb1238a6fb3c3e1ca71c930cd165eeb73b85bda295cf4c07fb67e0429e"
+    },
+    {
+      "pointer": "/content/movements/7/next",
+      "tr": "b16ac3ac3afff325cc812dfedf007369093fa7b11e9c46c44c4754780babada5",
+      "en": "111eeefe894392f197c9c9c91d18d796057ee54bdf4c8584011c0b86d6a0715d"
+    },
+    {
+      "pointer": "/content/movements/7/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/8/title",
+      "tr": "f1f13f72613408800e01014aa9d09aedf55d756e24fc884ae79f503cfc5564fe",
+      "en": "7877c9d25ffe4fd2c9f74664cb044a41546bf52b9e11b7ede466bd6111ef8a7f"
+    },
+    {
+      "pointer": "/content/movements/8/start",
+      "tr": "fefc057e8d888d2d62951a52379aa1b6d9755054ba09ac1dd34268428e861078",
+      "en": "3616ba9461fb2eb9f4bacd7bbc0471ba08085d078d10c0fbbdf96044c5e6d3e2"
+    },
+    {
+      "pointer": "/content/movements/8/feet",
+      "tr": "377aa4d48afe5057e575ebaf55f440689659f26ec26bf7495ab22a2104abc2f0",
+      "en": "922a1adf7c9dbb2084b0c49748091d50fbe2381ace64371ceb96197621236e8c"
+    },
+    {
+      "pointer": "/content/movements/8/hands",
+      "tr": "cc54f3cea11b662f3ffa83bb59b6117c424a9980b7f9bb9897f9af659c4c2342",
+      "en": "7e8399d7d951baf8da66a105bb5ad3801a1fc75200e7f00b3eef87b831786b29"
+    },
+    {
+      "pointer": "/content/movements/8/finish",
+      "tr": "57bec116dd9e04daf9cb3853e1dd2dc7db6cfe010fd39caa11d497d7e66c655a",
+      "en": "f047741ea4cfbbd0ff1e4ceaf677ba0b5e13f3ae22f18f7ff2201c1675925bbc"
+    },
+    {
+      "pointer": "/content/movements/8/next",
+      "tr": "5d4e3d2f2331757aa967fab20f72122bf29949c9db9c41d790803d6b0b2bb08b",
+      "en": "9a015fda2a1a6dd25376de4c51b2b15c26703da95040ccbc6d597acf1002f3f0"
+    },
+    {
+      "pointer": "/content/movements/8/limit",
+      "tr": "c1399b55f1de508cb02756315726e28d463c6b3a38363e81f23e01a3b9d08902",
+      "en": "063376e4b059a87f77823d7edf5a6d31e9cf824606a5d9f5a001491e9554539a"
+    },
+    {
+      "pointer": "/content/movements/9/title",
+      "tr": "9f07fcdfed0112eba03446f3e31dbc6f3960e86678effd55c3880d3ddcf5f582",
+      "en": "07eeceb0d17eda117cd36c7c46250dcd59af69d39682e6662965417bd33a0960"
+    },
+    {
+      "pointer": "/content/movements/9/start",
+      "tr": "af9f90708d683df8e32686d2e3e82b1671167e2aceffe5918fc3635f5ad9ca32",
+      "en": "05c9e73a47478864c3c076f0719230fde21d7d678ac94f9942944ea556eecd25"
+    },
+    {
+      "pointer": "/content/movements/9/feet",
+      "tr": "afd247feca5dd929929b2e094bb1d5aa5ce151cce2cd0e3c8544ce3d4a3cd299",
+      "en": "9b31c8b3ef5daff83a90af0bc9a15d0c88e053fe6ae4d7ed35867148aad12e27"
+    },
+    {
+      "pointer": "/content/movements/9/hands",
+      "tr": "bdcb36cf6ace26b115a55e2a1fccd46400ad0ac439476574742f9c349b84d791",
+      "en": "b12ba63e487594da3de99f544f5830b08c60feb789780addcea40dcdfcca351f"
+    },
+    {
+      "pointer": "/content/movements/9/finish",
+      "tr": "32ff9631f07ddf6ca12bd5bfc8e27ce5a409f179428e24b58da936d42c6cb0f4",
+      "en": "42d2b3e02dd99f456cdf32e5d28ce31e2471ea35798d522b1abd8a2f04cf63b0"
+    },
+    {
+      "pointer": "/content/movements/9/next",
+      "tr": "9fdd56e9f0c6db30545c493b7b648f932cd99792ccf96d5bcc4cd4f83c05e727",
+      "en": "fb86ba57720a34e42623e44746c2dadf14bd9bda5cadc507c58b07a5c11f1bac"
+    },
+    {
+      "pointer": "/content/movements/9/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/10/title",
+      "tr": "2f0e3660348f9bf69a604f105b9fb56836efac1d4ef2749639af6aa8917d8482",
+      "en": "4406f196d74ed91b90a82909dbb766bc469f24b7f08fafc92ab4faeddbebb7cb"
+    },
+    {
+      "pointer": "/content/movements/10/start",
+      "tr": "a9306fccf51bbbbf76b80c9f02be76efb1635ecfd89fe08a2a410de67a87264f",
+      "en": "4de2ed91ad64ea46d4f93173e0e1da93c20579ea0147f4602e2150d5d5849e64"
+    },
+    {
+      "pointer": "/content/movements/10/feet",
+      "tr": "ad69a481df148ec6177a9ab4f91fda5e21ba3da935801e7e155e899434516eb7",
+      "en": "cb52e58879bcf207029693606cd07be3ae99386abd3d9dd635a48ee4bec2b3f7"
+    },
+    {
+      "pointer": "/content/movements/10/hands",
+      "tr": "fcf09c8ce29eb2794bf6eac0055ac8e8b7f91ae191f244ca756de8ea6d285083",
+      "en": "f7a139814aa5600b6f7bf932fc43057fa77606c37d85164839ca295e6a87f2af"
+    },
+    {
+      "pointer": "/content/movements/10/finish",
+      "tr": "26d42ecaaf6c4069799c58bf1ec25f0c9eb24091497de0a208c1635405464b24",
+      "en": "7ac39ba952edaa66dcee9c4d58fd4e0e703359de7b4e5bcc28848cf8bd894ef9"
+    },
+    {
+      "pointer": "/content/movements/10/next",
+      "tr": "ffc548ca4309237197a21fa68c13d562359db089643e217a857edb27f6f9d665",
+      "en": "0fee21ec81038bcca0649ae70d4e474f32e65763611274bdd0aba32bcdb853f2"
+    },
+    {
+      "pointer": "/content/movements/10/limit",
+      "tr": "89dff60acd113439fcdd9b5fc1bf9b6485e728a42de81892b2966bc5719eca0b",
+      "en": "cc707d5be02e846f4ba55d658fe806994ca3a5e1772d0fe1bce782da28a5c974"
+    },
+    {
+      "pointer": "/content/movements/11/title",
+      "tr": "3a5dab8b87e1e41b36eb6d801341e85b8b45052bce13a1de0622a223f9afb0be",
+      "en": "823a3cf4aaf6bf4bef51d924b80b13600d18bd0a257c47a2ecaecc95ca3cb698"
+    },
+    {
+      "pointer": "/content/movements/11/start",
+      "tr": "088be21e1174beac25e6c80028af02e9ab71a8d2329c0b4a23cf9095bb1ba490",
+      "en": "97c88fe94eb4f77c64cbdaf7f28305f74bc0e2c4687b41afcf924846ac688ce7"
+    },
+    {
+      "pointer": "/content/movements/11/feet",
+      "tr": "5f5d7c12829ae06b51e709173696dd74910fc28be9066b2b63cc0b98dc206fce",
+      "en": "eeb0929f63662295bfad2b8a2e7ab84bf07eb03ea22c9840c4a5a948a923b2f0"
+    },
+    {
+      "pointer": "/content/movements/11/hands",
+      "tr": "43ba04a05e232b80b0262914c2858b9a2829c47ab676292a53951fc5ad107f87",
+      "en": "91a5dfafe92bf5da57f8a9628e01fa260d094e51be7c8d7a490ffc8a7a10cd02"
+    },
+    {
+      "pointer": "/content/movements/11/finish",
+      "tr": "ba8297a2fbd0b16bfa4d09c76fceae9d7886fa0082af8ce0f99fb5f92982ba80",
+      "en": "8a1a9d049df4427f66a66d0655f97fb2a474c9b7c6396e87853ecabd3729ad7e"
+    },
+    {
+      "pointer": "/content/movements/11/next",
+      "tr": "07a0db2db8bda8032bf73b5820bce74d428be6f93af9ac58f0ead616ae0ccd51",
+      "en": "e88a67e576dd81c887b03717014ee9a79aa3eb6f5d70919262e68a723fcb1408"
+    },
+    {
+      "pointer": "/content/movements/11/limit",
+      "tr": "59991c4885398ca6ad1cc73151e9783ee51a7012b10b77112902134dab808633",
+      "en": "bff5b75b1a297111560e3dccd3a79ebdac700ad8237b94fec507d5c7a8621a1b"
+    },
+    {
+      "pointer": "/content/movements/12/title",
+      "tr": "8666c6de3cf7c421ba6d3ba18eff0903b58d4802747edfc8ae538bd4508916bb",
+      "en": "bf5c4a7c9a3d9b680ccb2bda746f495b8cceb7fcbc82a1cba0ea756c7f09b35c"
+    },
+    {
+      "pointer": "/content/movements/12/start",
+      "tr": "cffc8603f078ae856531c3bced4ef2c730f6cf1aaae12a1c5048ee3c076acbe1",
+      "en": "e0258f7add7df71e82c44c84935ddc4ae02922e747fb084fd275816d9fe674c0"
+    },
+    {
+      "pointer": "/content/movements/12/feet",
+      "tr": "f94104c66830d2450298d08a44f7914272b0b5bea33563601c34b5342d46a0cf",
+      "en": "1b2e94347290816acef441a1a4e15acb5c1fa408bd382af2ffd4d1e2f26a11c4"
+    },
+    {
+      "pointer": "/content/movements/12/hands",
+      "tr": "0ffef0f63266622a4d850a89c8b9e9c032e809f88f43ca2c3539ebacff31396c",
+      "en": "9ea7da6d8d935a77891e2f1b952b7b21250a37fa77299d13afc75bac2432aa3b"
+    },
+    {
+      "pointer": "/content/movements/12/finish",
+      "tr": "0d04d4d9584c1edc895eac45204aa5695d4385e1eec64d6bc14361384444b509",
+      "en": "d933eafefb4596bd3c6f3e8a5435648398b9914e529f2a2df76523931d02cc65"
+    },
+    {
+      "pointer": "/content/movements/12/next",
+      "tr": "f65869d417d2ea4b232a0ce53973601d5c9e9625566594c37f6866f7a5fd3da5",
+      "en": "d62e5d0d831f38b6c99be0aeeef8f9bde0e819076dafd65de1102a554c987006"
+    },
+    {
+      "pointer": "/content/movements/12/limit",
+      "tr": "56ec8a89b6c57b526fed8cef5a55803ca2987a63e050fc2c63ae644e54841294",
+      "en": "a07e525f25a1608ef0452df28d4afccc96bbe8a501d9a6331d591ce962c26a6e"
+    },
+    {
+      "pointer": "/content/movements/13/title",
+      "tr": "02d1ca8445396bd3b596b4fd9f830aa46b11723970da8164f31ee3be4412e946",
+      "en": "2635350ffe977b6d2ae70b22cad5377ab26b73e37fce39fa9dd2c9cf7bda8c78"
+    },
+    {
+      "pointer": "/content/movements/13/start",
+      "tr": "9ab36184bb5e87a4c510f25a9e6276d0c7d9eb51cec1f735172d1b1a5ac0a7ce",
+      "en": "ae746a735d8f5b4e0b363e48166761a69ea8430d54fa3eee5407f4017544c00f"
+    },
+    {
+      "pointer": "/content/movements/13/feet",
+      "tr": "afd247feca5dd929929b2e094bb1d5aa5ce151cce2cd0e3c8544ce3d4a3cd299",
+      "en": "9b31c8b3ef5daff83a90af0bc9a15d0c88e053fe6ae4d7ed35867148aad12e27"
+    },
+    {
+      "pointer": "/content/movements/13/hands",
+      "tr": "bdcb36cf6ace26b115a55e2a1fccd46400ad0ac439476574742f9c349b84d791",
+      "en": "b12ba63e487594da3de99f544f5830b08c60feb789780addcea40dcdfcca351f"
+    },
+    {
+      "pointer": "/content/movements/13/finish",
+      "tr": "d4f0d0824ac8ae37ff8e696090f91c3e54b7011aaff2b7f20720dd88887022b3",
+      "en": "ce4af24f7eb91b40ad59dcbd1b3ee6fb8062a8eb1385857a17633b61ea05e56e"
+    },
+    {
+      "pointer": "/content/movements/13/next",
+      "tr": "58ebf0c8498109357f778e54472843074aa23da42cb89c3a15f15367980936d5",
+      "en": "e68e37473538793dcbc2a6abc15fb176865275dacec51db6d70f7b90e95092cd"
+    },
+    {
+      "pointer": "/content/movements/13/limit",
+      "tr": "0bc264623329c89537b0b95145eaaca9f7f009df1232da40e9bc90f934a5ae99",
+      "en": "8764f59fd1b7a2f72b181e8bedb84607dce457b78d610ad8ff1a895dedeb5964"
+    },
+    {
+      "pointer": "/content/movements/14/title",
+      "tr": "3a6d8aaeda07b6e9ba1549cde9af8caf15008fefb194919937564181f615e00d",
+      "en": "64d8b0aa4bb256e4510aa04be4a53a5e42218bf1c617cd12cd60402c13839264"
+    },
+    {
+      "pointer": "/content/movements/14/start",
+      "tr": "8bf88992d4b9dc615e79e242d01a3e8ab83651b9660d38ef632fd487b1f5bd2f",
+      "en": "32256cc04c5e68bdcb278faf0c3eaf753b1e351720f095b33703fbd80b193b80"
+    },
+    {
+      "pointer": "/content/movements/14/feet",
+      "tr": "5f5d7c12829ae06b51e709173696dd74910fc28be9066b2b63cc0b98dc206fce",
+      "en": "eeb0929f63662295bfad2b8a2e7ab84bf07eb03ea22c9840c4a5a948a923b2f0"
+    },
+    {
+      "pointer": "/content/movements/14/hands",
+      "tr": "43ba04a05e232b80b0262914c2858b9a2829c47ab676292a53951fc5ad107f87",
+      "en": "91a5dfafe92bf5da57f8a9628e01fa260d094e51be7c8d7a490ffc8a7a10cd02"
+    },
+    {
+      "pointer": "/content/movements/14/finish",
+      "tr": "cc2c6f250af38c415a5053acfefc55e34b6921f3297c5c8196e6ac39def2488c",
+      "en": "10dd608854bb5cca351bebee841e3daa8ad138024d725ad1579113a4acc1c6fd"
+    },
+    {
+      "pointer": "/content/movements/14/next",
+      "tr": "ca43fe37a6fc92a15f7baf4a9987cb9bd9ba1fd739ba1ba139ab20a914f08d04",
+      "en": "990b84074c7c09d5256011eb6230bb4126f2d4eb31f0a61e4bd6aa176a57d34c"
+    },
+    {
+      "pointer": "/content/movements/14/limit",
+      "tr": "5c44d0f9d7ebc5348b9b51b12bfcf988178e0f9bfca212511d11f27f16b205b2",
+      "en": "4cd43f92bcc6da01d555462e3d0b75cfb801a0290791d9078cc915dbfed31169"
+    },
+    {
+      "pointer": "/content/movements/15/title",
+      "tr": "d839a87f520eaa1e153b82b0310d3abdccf9f1fb870b6f10a51934c197e0443d",
+      "en": "faf9bbe5fa6d44e36e4bf7ff8c816d50944cfcf0b16ddd3fda307419b75c8fb9"
+    },
+    {
+      "pointer": "/content/movements/15/start",
+      "tr": "963d540d89f37f10b5c57d68870a5bbbd5d4b986d00e8ddfcdf8d76ea36bc06e",
+      "en": "73cb5939d63ca8b442eb429615d2a2e07c7e9f67e5832967bbe1a8b0d2fee4f3"
+    },
+    {
+      "pointer": "/content/movements/15/feet",
+      "tr": "afd247feca5dd929929b2e094bb1d5aa5ce151cce2cd0e3c8544ce3d4a3cd299",
+      "en": "9b31c8b3ef5daff83a90af0bc9a15d0c88e053fe6ae4d7ed35867148aad12e27"
+    },
+    {
+      "pointer": "/content/movements/15/hands",
+      "tr": "bdcb36cf6ace26b115a55e2a1fccd46400ad0ac439476574742f9c349b84d791",
+      "en": "b12ba63e487594da3de99f544f5830b08c60feb789780addcea40dcdfcca351f"
+    },
+    {
+      "pointer": "/content/movements/15/finish",
+      "tr": "d4f0d0824ac8ae37ff8e696090f91c3e54b7011aaff2b7f20720dd88887022b3",
+      "en": "ce4af24f7eb91b40ad59dcbd1b3ee6fb8062a8eb1385857a17633b61ea05e56e"
+    },
+    {
+      "pointer": "/content/movements/15/next",
+      "tr": "2ba4f48b79b1dba31fdedb096f403fb21d48314f9aa299f001783894f9ce6035",
+      "en": "bf30804807bac6614fa07498cd17d88990d6188ebe168ff9ba082f4e2628db57"
+    },
+    {
+      "pointer": "/content/movements/15/limit",
+      "tr": "9b5356c1ce804aea964be2921609544cd4bc3b7ef6226c976a77df4a18f206d3",
+      "en": "109dafe330cc72ce87bb8769fc0c6ac7701666ba770186e19b4c47c8732b0ff5"
+    },
+    {
+      "pointer": "/content/movements/16/title",
+      "tr": "915de2d32b6d4feb9ca0e16c8690494b57f9bd7edf688ecf5d3e74174276c1d2",
+      "en": "422fa7127d80dafb579bf359591a6692dbb551d63af2f94ec7818cf327a33efe"
+    },
+    {
+      "pointer": "/content/movements/16/start",
+      "tr": "7649bdfd4c2a62d569eb27caab56c62a6ff24624976fdf88d61cd0f045236bf9",
+      "en": "0ba436a68b35e91dbc3cbb7d476e118d4a76924f3b4ad538b3d7264388921008"
+    },
+    {
+      "pointer": "/content/movements/16/feet",
+      "tr": "e86907543917fe60c4fc7578c48f0b94d7d10ad61893ab68a70b92c52257ba1d",
+      "en": "71e2e07a8bffc1528fbe9fe7f3d73cfe90f5dbcbe79f4e22f96e812be3d4aa73"
+    },
+    {
+      "pointer": "/content/movements/16/hands",
+      "tr": "8a9f071f24aee0ccb373d4e67316f46791665346a7c9ddd7f715379b82e3ac0b",
+      "en": "b79eea95d0d18f9c0622f849946a53b86756ac6b69b706fbbeb1e80349a3c4f7"
+    },
+    {
+      "pointer": "/content/movements/16/finish",
+      "tr": "6593148fb2883f57c14690e3eca6961b940ad83ebdd6fc3debde54880ca23847",
+      "en": "bf34e2201dda5a353890d6b9392fce58baf2497b4ca3b1c8799dbdea96e4e257"
+    },
+    {
+      "pointer": "/content/movements/16/next",
+      "tr": "61d3ac1b146bff461444d01131eda6f422555db00e1e448f506b8a3bbdaa3530",
+      "en": "5136cebce6cdcb6524fcf468be46ceeb328722e0f01d0169a524c683b4fa1acc"
+    },
+    {
+      "pointer": "/content/movements/16/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/17/title",
+      "tr": "1755c1ffbfabff3a372a4a09f4f5021d36a19984049197c4f37fe763e36a31ba",
+      "en": "346fc2256cac91d4e861fe593b7edea4e4bf3f4be2f3ad2a1aff48791f776467"
+    },
+    {
+      "pointer": "/content/movements/17/start",
+      "tr": "a5e7b6653ed1173bc778896c5034a934300b921878879588a5d12357dd51efba",
+      "en": "80aa9f296399756cc88406831299bb30d59f2049c105b994161309ff13bef4c9"
+    },
+    {
+      "pointer": "/content/movements/17/feet",
+      "tr": "afd247feca5dd929929b2e094bb1d5aa5ce151cce2cd0e3c8544ce3d4a3cd299",
+      "en": "9b31c8b3ef5daff83a90af0bc9a15d0c88e053fe6ae4d7ed35867148aad12e27"
+    },
+    {
+      "pointer": "/content/movements/17/hands",
+      "tr": "bdcb36cf6ace26b115a55e2a1fccd46400ad0ac439476574742f9c349b84d791",
+      "en": "b12ba63e487594da3de99f544f5830b08c60feb789780addcea40dcdfcca351f"
+    },
+    {
+      "pointer": "/content/movements/17/finish",
+      "tr": "a36e45dc8706ee23aab74a65671244ff366e8203398d1cd61440685a69704451",
+      "en": "1b707fed58126dcfe15d053337fbc788aa394a0d258b5664a694c2dc091bc617"
+    },
+    {
+      "pointer": "/content/movements/17/next",
+      "tr": "6fb264cc0885d1ccaf2e69ec2bf0421fcf8dd8fdb06874ac06074abb9f63c316",
+      "en": "906553515aa9c1c7513d56ad20485d8c1ff8820ff616bfc7cf1aa10a97494108"
+    },
+    {
+      "pointer": "/content/movements/17/limit",
+      "tr": "a1ed21927833e67a78248f882ed5d11de70feb3de656449b7e4df4569092d82d",
+      "en": "af7bd7cc5de891f8262fcb3f4023a0fbe113226791ca30ba8c8900acc388ff23"
+    },
+    {
+      "pointer": "/content/movements/18/title",
+      "tr": "5e38dedcb9be043b7197ca1e60c95d928ac8bd5c92847950cb991768f84b097f",
+      "en": "9f845caaf744860f4ac613ba71e379f94446378ee6ba1cfcbe17d101d48cfbb8"
+    },
+    {
+      "pointer": "/content/movements/18/start",
+      "tr": "4ee8f2b91848b71d4fad730b108627ab5d3ba0837274b8b9eea88dbafd88fed0",
+      "en": "b0638317b3046d5d1c6550fc3e8db0be0fcf95bc509db07a6f6043bf730e0edc"
+    },
+    {
+      "pointer": "/content/movements/18/feet",
+      "tr": "ad69a481df148ec6177a9ab4f91fda5e21ba3da935801e7e155e899434516eb7",
+      "en": "cb52e58879bcf207029693606cd07be3ae99386abd3d9dd635a48ee4bec2b3f7"
+    },
+    {
+      "pointer": "/content/movements/18/hands",
+      "tr": "fcf09c8ce29eb2794bf6eac0055ac8e8b7f91ae191f244ca756de8ea6d285083",
+      "en": "f7a139814aa5600b6f7bf932fc43057fa77606c37d85164839ca295e6a87f2af"
+    },
+    {
+      "pointer": "/content/movements/18/finish",
+      "tr": "9901d57e2430c7842fa561e491552e9fb0d961042fb3ed9d2bd38869b94ac8f2",
+      "en": "39c01d746a83554664b8cc8f4be892d955c28cd8359fb7dfab76e5331a06f513"
+    },
+    {
+      "pointer": "/content/movements/18/next",
+      "tr": "327b94a1bf99a2abb54be482cfe9e17e1e87b26d1ec259234cfa84c6d8db9dc0",
+      "en": "516e0576e93a4585a2c86006c73a0ca1e31e652070526638ed4736475b341437"
+    },
+    {
+      "pointer": "/content/movements/18/limit",
+      "tr": "d9ffd55e111d00a51286b116ff84d063db27a302ec0287a80e8fbbe9e72b79f6",
+      "en": "31d2f0d7fe3ac41972cf26cb079f1b190a754ff9a6864d0772bbf7e2a8f9b96c"
+    },
+    {
+      "pointer": "/content/movements/19/title",
+      "tr": "e9d715e0f6b4acea14920232dbddc955cd4d921f94af7a454d9ed2d625409e67",
+      "en": "8fe4b86b49fd496e675dfe05cc1e1edfeb2f59bf7e26d4cfc22be8dda304f27e"
+    },
+    {
+      "pointer": "/content/movements/19/start",
+      "tr": "f5af63430afc6ee7011635bac9deea364247b01a5a432edde1dfa4a1ade1dbcb",
+      "en": "c2d99ffef3cc41a07944206523af6571dd1cafa3227639d9c31013ddb7ed51cb"
+    },
+    {
+      "pointer": "/content/movements/19/feet",
+      "tr": "5f5d7c12829ae06b51e709173696dd74910fc28be9066b2b63cc0b98dc206fce",
+      "en": "eeb0929f63662295bfad2b8a2e7ab84bf07eb03ea22c9840c4a5a948a923b2f0"
+    },
+    {
+      "pointer": "/content/movements/19/hands",
+      "tr": "43ba04a05e232b80b0262914c2858b9a2829c47ab676292a53951fc5ad107f87",
+      "en": "91a5dfafe92bf5da57f8a9628e01fa260d094e51be7c8d7a490ffc8a7a10cd02"
+    },
+    {
+      "pointer": "/content/movements/19/finish",
+      "tr": "7cc492496263cdeb368bf8dac1b6f0995ee37992f360fb9f0c0bd96996041251",
+      "en": "d322af1ce74e6ff7f373001f7aab4ec6c681525c667b566374a0eea4e737e303"
+    },
+    {
+      "pointer": "/content/movements/19/next",
+      "tr": "c82cef6fb95a29de40538f88d368e97ddb6091245a87fa7d6575a20bec62d7fd",
+      "en": "be16aa62385f3a33fcd6eba94d5f3c811f2c0c6032273b789e22da8a3c357789"
+    },
+    {
+      "pointer": "/content/movements/19/limit",
+      "tr": "32cc098ce316682701eeb4550481aa977d66b2342fd8cecfd8a67a958fdfa57a",
+      "en": "5eb7b2ef3abff97dfb1c4d2989d79e083cb612d0a177dbd11fc5e81c1afd074d"
+    },
+    {
+      "pointer": "/content/lessons/0/title",
+      "tr": "9c12cc71a07b60ce33607b940484002344326ba785ccaa160b2e13589c64eafa",
+      "en": "6a1ed0f7c1f0a1948eaa56fb1842bee9c724a9e88fc86839a8d2945a1082ef04"
+    },
+    {
+      "pointer": "/content/lessons/0/objective",
+      "tr": "9c12e37213d6d01b20015d8aaf3a08a0e72d596a4cd602d5c20b7a9c4b4fc607",
+      "en": "8fc20314957609dbbc6fd881fa0c88c1ee75c5ec314d87a35384f3abedbd416e"
+    },
+    {
+      "pointer": "/content/lessons/0/teaching/0",
+      "tr": "41cb6e19317331b65be31cba76597b1fca4d9c0438047b4877af49684bde2c9f",
+      "en": "f289eadf079dedff670edb7682f835d42d8999a41578d3f7eff39a2839b9f8e5"
+    },
+    {
+      "pointer": "/content/lessons/0/teaching/1",
+      "tr": "35e42ade1641f9b29196301663bfa744951fbc614754e2ef529139d08eda5228",
+      "en": "ce11e6dbc578fbd1801693c1de4e93a7d36a4553726aab9d6faa205e9ff27794"
+    },
+    {
+      "pointer": "/content/lessons/0/teaching/2",
+      "tr": "c4062b7e1482d8173adab567c4f2ee3c54278dea68febbe0da06face5e0364c6",
+      "en": "c21d54d2e2424496753392ff5f799a91fcd373366a04de858119069e048e7f11"
+    },
+    {
+      "pointer": "/content/lessons/0/teaching/3",
+      "tr": "3947df68ec862f5b4bcffb718d22e8028d56416cd4c704144bdbd86c9a7310fd",
+      "en": "7ff03c7a7b04acbe0bf380a147dd95b9cc293f4b5ea413dd72e2d48611ee569c"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/0/prompt",
+      "tr": "81c3e430c0f03990cbe2b3d4b28f4723c74f2a800ff6bcb2174e540453a028d2",
+      "en": "357bc6e9edb886c7f5c946b87028def9d28dc5241d60d2582edda17a1c8d60b6"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/0/choices/0/text",
+      "tr": "5fe0e8c06018289fa422e60f25f8737053aaaaa7ab86e2fb943283e95193da2b",
+      "en": "20ca8dbb9ca2be80e6afd4eea0b8db8c5c8f462557812dafc0bcdc58d61e1a34"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/0/choices/1/text",
+      "tr": "367e00a1f4f133377a9209a77d28192a1a370aa7a47ce0c9e7c2659e04757321",
+      "en": "33f142788c5fa5835ef9a5612e7ae67d47935658c87458036dd00cef8130c2a3"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/0/choices/2/text",
+      "tr": "c07c64c19992076e944444dd30c699446b949f31a23fd6d1dbbbdf4aa6679884",
+      "en": "2281b671e0a02fb6585d1aff063ee460f94b05a127df583bb37d1dc7484c3551"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/0/explanation",
+      "tr": "c801a048d56ccd59f7b38219fdd21d975c4dabcb47185275cac8766171d85732",
+      "en": "34ba4bd6e28aabd09e89f21f6d76412265a5a1593cb8d3f9ae7e59db72af31f6"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/1/prompt",
+      "tr": "8f3ee6a77ea6eedc154609db1d84d348dc7c12b02c1ff70763d9d1be656fc218",
+      "en": "916a61101d0fd3080c845370e3199229cd61175497424339f1776fa1a15b41be"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/1/choices/0/text",
+      "tr": "6e0f5e5fe36e2c0aac75e96635be76dd7d21110b35761cd1a71fdd0cbb177cbc",
+      "en": "46e7dc83e8d2f78d73889b35a1e66e09e246b251700057de2109bb8beecfb5e0"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/1/choices/1/text",
+      "tr": "48cd3386221df571d1e478e3f7d72d1feecfa48a2e8293b701e2451be8ec07fc",
+      "en": "e8b74b30d0cbe6edfc961974452b8e56a20ea1f4fad9e6d7679b7fb4737b06b3"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/1/choices/2/text",
+      "tr": "c39a29efacd1bf1900e1397eb0f2610d8000bbfaae8ecbdee6510702ebbd3bfc",
+      "en": "edb458bd28d3f463b0a42763099b3371f436d11ceacca11e8013c6ebc86bab09"
+    },
+    {
+      "pointer": "/content/lessons/0/recall/1/explanation",
+      "tr": "02677c0770f36c6eb1ef10312d5f84a87c6978f783a38d1a60b58ac4e3b42c99",
+      "en": "1adabb3b6f4e8b6c8a36397806f45f6eb640d5f576ef2acecff3a3ef04f66b4e"
+    },
+    {
+      "pointer": "/content/lessons/0/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/0/selfPractice/task",
+      "tr": "a317f6fe8c6f8e75291a16159d1202d27d61be41c5ebef1f024c4b107ac15ac1",
+      "en": "03bec652905525f0f25eff8a2a8672f9f5019a05cff95123fd4ddc2d1057c6ae"
+    },
+    {
+      "pointer": "/content/lessons/0/selfPractice/observe",
+      "tr": "ff77cf9135d10bd5612b8b50fcd6c734eaeeff0eb796e11a1aa42b48b24143f2",
+      "en": "012598f37ac8864c3022c195677a41fc93957563346b12ffcdc691322493273a"
+    },
+    {
+      "pointer": "/content/lessons/0/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/0/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/1/title",
+      "tr": "a04b2e2946b2e5e796b48599836472f031e56843edbae52cdd9ac28b8ed4db0a",
+      "en": "79a3c854eaf329ff67ba0295adee3186aeca228ca281e735a7e82c5518f5f4b5"
+    },
+    {
+      "pointer": "/content/lessons/1/objective",
+      "tr": "13d9cbdf0a456b583e24b23b69977924672c8e27113d1cf2c19f02dc95a07351",
+      "en": "c360a010512d066f7fc4d56fb5af753a5306ffb89190c522bea95e817b0dee4c"
+    },
+    {
+      "pointer": "/content/lessons/1/teaching/0",
+      "tr": "6afbed43fdf7ca1a14c7e9ece1a740f9045d7cbabcafbf179951ab1f9c8f6186",
+      "en": "a6faafef514472b7f297e590816d6288bc95a74932b76d7706443653cab92b02"
+    },
+    {
+      "pointer": "/content/lessons/1/teaching/1",
+      "tr": "3e59f72c7daeaf983b5e5a0982da72a2a2de85aa2e3830becc2d54b26eab0816",
+      "en": "170d21738214574d2521f3425822e066d74b383245cbe8a7f059387793d4755b"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/0/prompt",
+      "tr": "8b445d2f809c428d90b849c52ae1fa6249ad370c0067eb80a642cad123fc054b",
+      "en": "95d5e952a50ee8005e6e3a43bc24cc1702147460e9e2577f5bc6d94876e9edc2"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/0/choices/0/text",
+      "tr": "5c7f0cd31fb109c8c00efb2b28fbff5e783d1293f8d8298058a0fdb8dd03a88c",
+      "en": "67ae45918ce84e9472657fb256b6b6cecce476c5d97f96c4659051dc91a08567"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/0/choices/1/text",
+      "tr": "d54be44165a286c4ae3603986757f6b95d4dbf20ead4c5523e1f74c407ceee68",
+      "en": "5ff573066f9b85c6032b0d970c807e0fd3a8328a5c8d817688570aebe03655aa"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/0/choices/2/text",
+      "tr": "f643fca5824d6f1ef365021c950dccdf28abeab6a187ab3615b3fd4ae2387809",
+      "en": "98e92fb473195cfb6807bc0397148f58e8bd12dad2c21b4e36abdb838db02d53"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/0/explanation",
+      "tr": "a13bd7a75ce5fa347fb66e12966ca9f5f30b54c8c41aa351435800115f7369b0",
+      "en": "34893f99105a44262537c6605683b6f42b58c686785b5f510eab506c4726662f"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/1/prompt",
+      "tr": "4ed8eed5865469a2160c425ae17069a65d6bb2528900b829f9d57a282c0c6bef",
+      "en": "d7e32a0697503d59236dafe68e266ea416c7ea758fc6792e4c696d2114d38c8a"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/1/choices/0/text",
+      "tr": "d0b6f96b376f0e6a3550fc3b7937f9b3f92e07943068728c6c46cdb2c1746691",
+      "en": "978fc2866e6962486de55144b65c1ac0b56c14d9fb1c203c09e94d5faf93959c"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/1/choices/1/text",
+      "tr": "23c66988c9139289380015ae77240274753c604e34d104a6ebb8e48c04414e1e",
+      "en": "71e26c221d6e61a6172ac44c18848fdcbd9e137be8e8e9bdf99d8f42d314d967"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/1/choices/2/text",
+      "tr": "d3e905168b41c32e77e04fb8e669a10ba397f996836d5c0bb0d97eaea3f14db0",
+      "en": "8efc48bfbff70ec5c1e4f00663fe768af1c43eaea89ab691831d8004a572606a"
+    },
+    {
+      "pointer": "/content/lessons/1/recall/1/explanation",
+      "tr": "6688fd223e3517e77fbf8b4560cafff387e56273d9656fce874ee89524b36ca8",
+      "en": "a692965643469381f05e727367602a8f5c90b034de167268eaa3bd72cb7240f2"
+    },
+    {
+      "pointer": "/content/lessons/1/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/1/selfPractice/task",
+      "tr": "e2ba75c3de9dc1340b4e102a2169e0c95303c7f96ba5bf3c98fcced826af927a",
+      "en": "78f999f8b26eeb29dc7dcef268f35dd0983dec5056973f0ab5a4adb3a29fa28d"
+    },
+    {
+      "pointer": "/content/lessons/1/selfPractice/observe",
+      "tr": "789012e8b66ee76c35c2366be20354431099d68147740d0231d7c433d2ff4fa5",
+      "en": "83d5541c2663e5dd50f44a2adb2a372d9079db8ec42ee5e806d9f1a35a86076c"
+    },
+    {
+      "pointer": "/content/lessons/1/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/1/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/2/title",
+      "tr": "3ba1d8919a1cb38f304ab88206aa6af02026c9bcc0ce10a1ceb0b2ec70570a24",
+      "en": "04d509d30b6d7b53cf0fed2a8e0ad8ff300b34299518089d6f9ff8fae6244905"
+    },
+    {
+      "pointer": "/content/lessons/2/objective",
+      "tr": "44bad1cb2c50d7688968015b088f7b34683f07c21f09f3666b7e0846c10af7bd",
+      "en": "045d4cc00eebf0b336bb26d182c3d16cb1b6f0d9b42d04f0c9c8d98c0d9eeba4"
+    },
+    {
+      "pointer": "/content/lessons/2/teaching/0",
+      "tr": "6afbed43fdf7ca1a14c7e9ece1a740f9045d7cbabcafbf179951ab1f9c8f6186",
+      "en": "a6faafef514472b7f297e590816d6288bc95a74932b76d7706443653cab92b02"
+    },
+    {
+      "pointer": "/content/lessons/2/teaching/1",
+      "tr": "78c6c45998121d26ed9840b0d77cb464b4315be52c1d422af3118a567237c1f9",
+      "en": "e974366792aa080e2a2509e2d403012d86ecfe896f702e4c3e073b563c64d804"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/0/prompt",
+      "tr": "0ce45d41485d14e41965e70c40ba61f6dacc1493d4f5c058df3eb658a89efa01",
+      "en": "220a800f483e542575a2b86b9754d859ea1b25aa91dc6c25fe3c5a7a4eee85e6"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/0/choices/0/text",
+      "tr": "01d9d2dbe5136bab4ac2674b3b1d9e580daf8212e0b2fe029a7e07e4105909c0",
+      "en": "2d22b8b832d7a1154d4e4b0b37529378eccab0cc15e6e6cb3bd31b3d34fc96a3"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/0/choices/1/text",
+      "tr": "6528e7639085c919b24f4966052ccdef13684b752ccdc1491305b4bcee195a99",
+      "en": "0cabf517d35c07f6ccf2857bbd14064a477e1bb025186663c2fb08a70e067cb7"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/0/choices/2/text",
+      "tr": "f643fca5824d6f1ef365021c950dccdf28abeab6a187ab3615b3fd4ae2387809",
+      "en": "98e92fb473195cfb6807bc0397148f58e8bd12dad2c21b4e36abdb838db02d53"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/0/explanation",
+      "tr": "40978263351ea5d85e09c43e774e3ffbb706b0b3ba3cb02babc6c5bc9eaf045b",
+      "en": "3e6c7118ad2ea3ca613cf4778b828bf0b322ecc359754fa5d3dd531b3076c094"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/1/prompt",
+      "tr": "4ed8eed5865469a2160c425ae17069a65d6bb2528900b829f9d57a282c0c6bef",
+      "en": "d7e32a0697503d59236dafe68e266ea416c7ea758fc6792e4c696d2114d38c8a"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/1/choices/0/text",
+      "tr": "d0b6f96b376f0e6a3550fc3b7937f9b3f92e07943068728c6c46cdb2c1746691",
+      "en": "978fc2866e6962486de55144b65c1ac0b56c14d9fb1c203c09e94d5faf93959c"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/1/choices/1/text",
+      "tr": "d3e905168b41c32e77e04fb8e669a10ba397f996836d5c0bb0d97eaea3f14db0",
+      "en": "8efc48bfbff70ec5c1e4f00663fe768af1c43eaea89ab691831d8004a572606a"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/1/choices/2/text",
+      "tr": "23c66988c9139289380015ae77240274753c604e34d104a6ebb8e48c04414e1e",
+      "en": "71e26c221d6e61a6172ac44c18848fdcbd9e137be8e8e9bdf99d8f42d314d967"
+    },
+    {
+      "pointer": "/content/lessons/2/recall/1/explanation",
+      "tr": "6688fd223e3517e77fbf8b4560cafff387e56273d9656fce874ee89524b36ca8",
+      "en": "a692965643469381f05e727367602a8f5c90b034de167268eaa3bd72cb7240f2"
+    },
+    {
+      "pointer": "/content/lessons/2/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/2/selfPractice/task",
+      "tr": "63fce1daef529ed5c4c05c0a0ac862902a1145bf2f711eee67ae2ddc068b9a41",
+      "en": "b0a8cd9c94e1c8e05c7674e7fa42e60c46500c41db45b8e5f8db1beea2b164e6"
+    },
+    {
+      "pointer": "/content/lessons/2/selfPractice/observe",
+      "tr": "ee265fb2f35a6dce2cd85fb115d44d1e50a51eeb4c110091487479b6eeeeeed6",
+      "en": "6a288fe77ea7f55dce5be668c4058711d84a8e93846cc6b19c8988f8903cbbca"
+    },
+    {
+      "pointer": "/content/lessons/2/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/2/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/3/title",
+      "tr": "a257eb24efb5b3daaf9358813e7ffd06eff5c929537c39c3c78c06f6d77b33e0",
+      "en": "fb4a1ccf9d44e0e03f0455433ad4b3cd67d2adedc8e590328262a20e841dc5f1"
+    },
+    {
+      "pointer": "/content/lessons/3/objective",
+      "tr": "67547d95b048aeea8f000fc281f6ec55a295d7112cfea880d71d439a4593e704",
+      "en": "f9642135f09c80af9c751608a762f7855d23239b64ce9e3d025dce8439c49f02"
+    },
+    {
+      "pointer": "/content/lessons/3/teaching/0",
+      "tr": "6afbed43fdf7ca1a14c7e9ece1a740f9045d7cbabcafbf179951ab1f9c8f6186",
+      "en": "a6faafef514472b7f297e590816d6288bc95a74932b76d7706443653cab92b02"
+    },
+    {
+      "pointer": "/content/lessons/3/teaching/1",
+      "tr": "55c0cd90da4e359fd05a3d102134ae20cde9736ca7de5584157083a35a017843",
+      "en": "f214b31445554fce70d2d4f55c86c322dd5592d952196d11c80f3c7d57781934"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/0/prompt",
+      "tr": "a861a109ecd2be259b5dcc36e619b46843af015573c434844c01989114b3e6f8",
+      "en": "99a91d5c4164e0c11fd3ef4f11fe985e5d45b4a8861abd3506347a2d97f2b29a"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/0/choices/0/text",
+      "tr": "d54be44165a286c4ae3603986757f6b95d4dbf20ead4c5523e1f74c407ceee68",
+      "en": "5ff573066f9b85c6032b0d970c807e0fd3a8328a5c8d817688570aebe03655aa"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/0/choices/1/text",
+      "tr": "f643fca5824d6f1ef365021c950dccdf28abeab6a187ab3615b3fd4ae2387809",
+      "en": "98e92fb473195cfb6807bc0397148f58e8bd12dad2c21b4e36abdb838db02d53"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/0/choices/2/text",
+      "tr": "5c7f0cd31fb109c8c00efb2b28fbff5e783d1293f8d8298058a0fdb8dd03a88c",
+      "en": "67ae45918ce84e9472657fb256b6b6cecce476c5d97f96c4659051dc91a08567"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/0/explanation",
+      "tr": "495c5c87e30b332e697ecff70e48871a6bb6ce5bd15b8d2431b4fff3e25e63c6",
+      "en": "7a68259923317a79d4b87ba042daaf50a444c6fcfd87e9bd491d73ae75f44ce3"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/1/prompt",
+      "tr": "4ed8eed5865469a2160c425ae17069a65d6bb2528900b829f9d57a282c0c6bef",
+      "en": "d7e32a0697503d59236dafe68e266ea416c7ea758fc6792e4c696d2114d38c8a"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/1/choices/0/text",
+      "tr": "23c66988c9139289380015ae77240274753c604e34d104a6ebb8e48c04414e1e",
+      "en": "71e26c221d6e61a6172ac44c18848fdcbd9e137be8e8e9bdf99d8f42d314d967"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/1/choices/1/text",
+      "tr": "d0b6f96b376f0e6a3550fc3b7937f9b3f92e07943068728c6c46cdb2c1746691",
+      "en": "978fc2866e6962486de55144b65c1ac0b56c14d9fb1c203c09e94d5faf93959c"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/1/choices/2/text",
+      "tr": "d3e905168b41c32e77e04fb8e669a10ba397f996836d5c0bb0d97eaea3f14db0",
+      "en": "8efc48bfbff70ec5c1e4f00663fe768af1c43eaea89ab691831d8004a572606a"
+    },
+    {
+      "pointer": "/content/lessons/3/recall/1/explanation",
+      "tr": "6688fd223e3517e77fbf8b4560cafff387e56273d9656fce874ee89524b36ca8",
+      "en": "a692965643469381f05e727367602a8f5c90b034de167268eaa3bd72cb7240f2"
+    },
+    {
+      "pointer": "/content/lessons/3/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/3/selfPractice/task",
+      "tr": "2318a66143a7f16d9e4e28e06cea88a2bdd702f941ffd6b5208f2ecbc2fd651a",
+      "en": "b74a79de90863d6b4c9357155d61ef7a1ebefbdee19e4aea4e9a547aadc10b96"
+    },
+    {
+      "pointer": "/content/lessons/3/selfPractice/observe",
+      "tr": "323a2c2b500d67594d912e41d3d38c65202681431147fe801abaf49794613269",
+      "en": "f571ac06ab6cdaba9ab4c5ea68330feea31303f9a02cb8ea7c64c527021ab8f3"
+    },
+    {
+      "pointer": "/content/lessons/3/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/3/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/4/title",
+      "tr": "7d6e69bd6cf5619364f0fa3a0529a97b9d82b88074f81989d39965c042eedea2",
+      "en": "00b57c3a66d8ebf2abbb7d0abe2110333266597cb09bcec59450dd7540ffe366"
+    },
+    {
+      "pointer": "/content/lessons/4/objective",
+      "tr": "97ba4d2ed163efba49177ddc81966166c8f14b60f15887905729a70e55216779",
+      "en": "b5173b3debbac9567a454146b817d7e03bbebcad9723c6c60ba9b537e4c19158"
+    },
+    {
+      "pointer": "/content/lessons/4/teaching/0",
+      "tr": "6afbed43fdf7ca1a14c7e9ece1a740f9045d7cbabcafbf179951ab1f9c8f6186",
+      "en": "a6faafef514472b7f297e590816d6288bc95a74932b76d7706443653cab92b02"
+    },
+    {
+      "pointer": "/content/lessons/4/teaching/1",
+      "tr": "78c6c45998121d26ed9840b0d77cb464b4315be52c1d422af3118a567237c1f9",
+      "en": "e974366792aa080e2a2509e2d403012d86ecfe896f702e4c3e073b563c64d804"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/0/prompt",
+      "tr": "94084f77a27c63687da2553ef384bba02322b1a2b96a6822c84f2a4bbf49a1f4",
+      "en": "da6887927ef3bf6a880cf793563021bde7a1073ba2abb9a970df3013ffdffc79"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/0/choices/0/text",
+      "tr": "55c2337626be6a2c87e447b0ec3fcf37331c07848be609fb749255e9ea22d32a",
+      "en": "c6802502d8e2c579ec690ac505e605424b50b8ae41c65ad78a74de16276853e3"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/0/choices/1/text",
+      "tr": "102faf47087b83c47371351e55f9564d98bae43d7e82af604323b189e030135d",
+      "en": "e82c29656a9276e7d6fd045703cf005e07eb5556fd518ac5133f7bfbe0e73d28"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/0/choices/2/text",
+      "tr": "f643fca5824d6f1ef365021c950dccdf28abeab6a187ab3615b3fd4ae2387809",
+      "en": "98e92fb473195cfb6807bc0397148f58e8bd12dad2c21b4e36abdb838db02d53"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/0/explanation",
+      "tr": "c26e0d72241deac9453f6ea359e4b14ad223feea9402b48ee938402c60ed968e",
+      "en": "7a990f2cbee30e9709f9c68a85fec73d91c2a17aa50730b0f8e6ff62a3c0a804"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/1/prompt",
+      "tr": "4ed8eed5865469a2160c425ae17069a65d6bb2528900b829f9d57a282c0c6bef",
+      "en": "d7e32a0697503d59236dafe68e266ea416c7ea758fc6792e4c696d2114d38c8a"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/1/choices/0/text",
+      "tr": "d0b6f96b376f0e6a3550fc3b7937f9b3f92e07943068728c6c46cdb2c1746691",
+      "en": "978fc2866e6962486de55144b65c1ac0b56c14d9fb1c203c09e94d5faf93959c"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/1/choices/1/text",
+      "tr": "d3e905168b41c32e77e04fb8e669a10ba397f996836d5c0bb0d97eaea3f14db0",
+      "en": "8efc48bfbff70ec5c1e4f00663fe768af1c43eaea89ab691831d8004a572606a"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/1/choices/2/text",
+      "tr": "23c66988c9139289380015ae77240274753c604e34d104a6ebb8e48c04414e1e",
+      "en": "71e26c221d6e61a6172ac44c18848fdcbd9e137be8e8e9bdf99d8f42d314d967"
+    },
+    {
+      "pointer": "/content/lessons/4/recall/1/explanation",
+      "tr": "6688fd223e3517e77fbf8b4560cafff387e56273d9656fce874ee89524b36ca8",
+      "en": "a692965643469381f05e727367602a8f5c90b034de167268eaa3bd72cb7240f2"
+    },
+    {
+      "pointer": "/content/lessons/4/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/4/selfPractice/task",
+      "tr": "5004e7c3f8d1af93ba75ea457105a86515f95a470bae994993bdc128c7a80f2a",
+      "en": "b949e70d1b779dbd67b758fd2a3c834c8628dadee19359a3b304b62596b942e0"
+    },
+    {
+      "pointer": "/content/lessons/4/selfPractice/observe",
+      "tr": "21460fd070d27898fd655d9724663d7415e87b377c2fe5010d9036903de2858d",
+      "en": "05c250b616bf9e6f58538665b43027ab4c92d939198836cde9ad323286020924"
+    },
+    {
+      "pointer": "/content/lessons/4/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/4/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/5/title",
+      "tr": "def3b0ea31228f9bf073b6f7217d1b5ca80080d85467624ef7371c180aac1aa9",
+      "en": "0b7a1698b68cb8d1e4589bc2e863b86130c76d9f66867ebebccdf8e5ef8c6dca"
+    },
+    {
+      "pointer": "/content/lessons/5/objective",
+      "tr": "c9a31508fa5c2ed6a02a0e58cb071d983e6835a7770154da821791b520e0311e",
+      "en": "337a64a437f595bee4b4a1172461f92b68c4309a713e8594676dea2179b7e48b"
+    },
+    {
+      "pointer": "/content/lessons/5/teaching/0",
+      "tr": "6afbed43fdf7ca1a14c7e9ece1a740f9045d7cbabcafbf179951ab1f9c8f6186",
+      "en": "a6faafef514472b7f297e590816d6288bc95a74932b76d7706443653cab92b02"
+    },
+    {
+      "pointer": "/content/lessons/5/teaching/1",
+      "tr": "55c0cd90da4e359fd05a3d102134ae20cde9736ca7de5584157083a35a017843",
+      "en": "f214b31445554fce70d2d4f55c86c322dd5592d952196d11c80f3c7d57781934"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/0/prompt",
+      "tr": "71df1cfc41302fb19f3a0307167a25021d25855433833bd324ed5433901abe4a",
+      "en": "4d1c5e13d1fe588609a7446935dd3ca04e5c259e4c00bc2444dbf020b52c02f2"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/0/choices/0/text",
+      "tr": "43e7ef84c133a44ba718bc368579c7fb7de1497774965be184433010cce65f97",
+      "en": "80857052fda844bd0e4dcd55e0079dfd8618da3c44d4d7d0876275ff5e0c92f9"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/0/choices/1/text",
+      "tr": "787d60982ef88682bf18f5ae6919bd02a1038b0558ab77e2c742a2a07366cf28",
+      "en": "43cf2fdfee0f2bd8996680c4cca244a5d39ca7e85077237ec87a8531bb49b49f"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/0/choices/2/text",
+      "tr": "f643fca5824d6f1ef365021c950dccdf28abeab6a187ab3615b3fd4ae2387809",
+      "en": "98e92fb473195cfb6807bc0397148f58e8bd12dad2c21b4e36abdb838db02d53"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/0/explanation",
+      "tr": "4229138bcf114deb12d2f5404a7ca66b23ece89ecbcb695393fe6696dae17b84",
+      "en": "aad39cdc5ae4a39ca3273202e8870d58dec00f1dc337af9d8a9816913b0a9a48"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/1/prompt",
+      "tr": "4ed8eed5865469a2160c425ae17069a65d6bb2528900b829f9d57a282c0c6bef",
+      "en": "d7e32a0697503d59236dafe68e266ea416c7ea758fc6792e4c696d2114d38c8a"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/1/choices/0/text",
+      "tr": "23c66988c9139289380015ae77240274753c604e34d104a6ebb8e48c04414e1e",
+      "en": "71e26c221d6e61a6172ac44c18848fdcbd9e137be8e8e9bdf99d8f42d314d967"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/1/choices/1/text",
+      "tr": "d0b6f96b376f0e6a3550fc3b7937f9b3f92e07943068728c6c46cdb2c1746691",
+      "en": "978fc2866e6962486de55144b65c1ac0b56c14d9fb1c203c09e94d5faf93959c"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/1/choices/2/text",
+      "tr": "d3e905168b41c32e77e04fb8e669a10ba397f996836d5c0bb0d97eaea3f14db0",
+      "en": "8efc48bfbff70ec5c1e4f00663fe768af1c43eaea89ab691831d8004a572606a"
+    },
+    {
+      "pointer": "/content/lessons/5/recall/1/explanation",
+      "tr": "6688fd223e3517e77fbf8b4560cafff387e56273d9656fce874ee89524b36ca8",
+      "en": "a692965643469381f05e727367602a8f5c90b034de167268eaa3bd72cb7240f2"
+    },
+    {
+      "pointer": "/content/lessons/5/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/5/selfPractice/task",
+      "tr": "70537d99a1b997dab6755c5072a67714cba4bc755279475b0edf0436506ebd77",
+      "en": "725fbb77b7450facb603849b670f540c85a5ae06bdf4aeff14e14ce4d6175f4c"
+    },
+    {
+      "pointer": "/content/lessons/5/selfPractice/observe",
+      "tr": "e9a05989ff3c112070a612cc7c7a2e8aa75fbc185ae1687949bc26f60e788293",
+      "en": "cb2626391061afbee8846e993560dfcccb2c3c31b0c1069d3c4e2345f5a84e83"
+    },
+    {
+      "pointer": "/content/lessons/5/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/5/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/6/title",
+      "tr": "5395244eb9cd21881fb2b67c64949d22b3f6a9775c5011f149c396c9542d3a65",
+      "en": "2659520118d04b0781c6a95015082117b5fa0ffe28dd6c9b052eeee9b2bfaa5b"
+    },
+    {
+      "pointer": "/content/lessons/6/objective",
+      "tr": "cbd39004de10dc73ed49656cb7d24896f3d402f21b0e19ec82c945bc2273165b",
+      "en": "4f2b6cfb0310a80b0003bfb9f4f132c2c2236bc986b8a0300c6283e3be3b129d"
+    },
+    {
+      "pointer": "/content/lessons/6/teaching/0",
+      "tr": "60971645d8c62492e8b755e7f2c1286d705d0cce96c8862cb5a6ec8c36dfde24",
+      "en": "3dcba106f68ab403d0b092d7f28bc4a6c1cd3e0b819b1c896b497bbc9f2e6518"
+    },
+    {
+      "pointer": "/content/lessons/6/teaching/1",
+      "tr": "1641520de227a016c5b2d38e021db6d2da8b448fea19b950e841f0683bfc46a7",
+      "en": "0150204a1f10efae72b1052b2811963cdad985b58762d09331b7608f7bdea390"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/0/prompt",
+      "tr": "017a2e88c4773e5f6cc76ad675559925e2a7331a8020ed268dde6a80764e98a5",
+      "en": "8fb63b55349708641124d76508acd57820cb30af197d5bd89169425d0aacb1af"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/0/choices/0/text",
+      "tr": "367e00a1f4f133377a9209a77d28192a1a370aa7a47ce0c9e7c2659e04757321",
+      "en": "33f142788c5fa5835ef9a5612e7ae67d47935658c87458036dd00cef8130c2a3"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/0/choices/1/text",
+      "tr": "5fe0e8c06018289fa422e60f25f8737053aaaaa7ab86e2fb943283e95193da2b",
+      "en": "20ca8dbb9ca2be80e6afd4eea0b8db8c5c8f462557812dafc0bcdc58d61e1a34"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/0/choices/2/text",
+      "tr": "31f46f8c600deed3225d6875fc58a8dff8a45462fa7fc0f57e84baebc6cf94d5",
+      "en": "07add4eee982f30d275bb52339a3f31d75c39305da43166f79d92149e13be4a4"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/0/explanation",
+      "tr": "a2e2114efc7c5d6984df50f78d1a9ce8623e3c425178255f60b2b15b95247b3c",
+      "en": "6340b614c25cd774be19bd5eee40ef8780ddf12420483f3f7b43bf8aebe37cf1"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/1/prompt",
+      "tr": "ae8f2e9e854a2c65a1498f018222ad1eeaec4d19220a409cde9a403c3bf58c63",
+      "en": "52b856ce50299faa9ec956aed687dc54a8186fa619af95e33c6c78a6c662239a"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/1/choices/0/text",
+      "tr": "6be961c5b0de4cc754756fd6bb08ae3e46c9661e792b2de0b0301e661998584d",
+      "en": "d9ed482e2f6e256aa783bf20874b2ab59a77cd6807bf62e1888ce4067f9d00d7"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/1/choices/1/text",
+      "tr": "8411edc2248554d0ef4c6c4e2e68c3966828d4491e5da51668fa99612f4c6be5",
+      "en": "c28d4cc1d05848204b6c5d6ff9de6f159bdd5c296aaed93cb46541cc4505ac4d"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/1/choices/2/text",
+      "tr": "29f74e02dfcb258b9ff8041e32c2f1e609270b31493524425564ad5a6a72012a",
+      "en": "fb9f0cbe7a3fc77f90f009a9f6312e7a646710bfb62478d60f500e68910356f8"
+    },
+    {
+      "pointer": "/content/lessons/6/recall/1/explanation",
+      "tr": "b624f09566cdb5edc1232dba2dcf6ba39344af828f3cab131ff69ea5cf187cfe",
+      "en": "b18e2bd3e9c511ca7ebb35d337d7f5f89c3eb1de00010d9b247fb79c03622a1a"
+    },
+    {
+      "pointer": "/content/lessons/6/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/6/selfPractice/task",
+      "tr": "570372ae83af99eb3bd18d4dd20628cde1fe28f40c8c18c4a48f2c56a203510d",
+      "en": "1f0a4c667a31e41dd0922727acaa02f6ff6c9b29a9a732d476ec7d1827752f29"
+    },
+    {
+      "pointer": "/content/lessons/6/selfPractice/observe",
+      "tr": "4fd494f70d1fe7a63a10ec0929ec917a907e4dad0ccaadb98ab8526e1a5ab178",
+      "en": "d2b8d9ddb477c4fbff6b48c8b29fccc991232f1c7f087df4ccbd7ba0a30bffbf"
+    },
+    {
+      "pointer": "/content/lessons/6/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/6/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/7/title",
+      "tr": "9838ce3e2e36b47204b47dc8789e7ffcbd4f1daf209e50ad91d272e37720d8b3",
+      "en": "dce8a44a00c637afdcacc5d0b6066ba8931dfc987d3f1b836a4bd3169ff7183b"
+    },
+    {
+      "pointer": "/content/lessons/7/objective",
+      "tr": "f309ce9af0b6a4a84c388b159db25826a73eac7b0d90b1af40d7404c4eb57495",
+      "en": "79fecdb3b4e16964a372f373922d1883329448a1ac548ec3631d3bf9a18bd789"
+    },
+    {
+      "pointer": "/content/lessons/7/teaching/0",
+      "tr": "b70b3a526fc07360ca364c71ec4e3d25790e46b7bb332db08f2078b466a0fd3e",
+      "en": "1a06a3e346f4772fe54cf1700a14173886e1445db15053cd168604e60e751811"
+    },
+    {
+      "pointer": "/content/lessons/7/teaching/1",
+      "tr": "9579f2d352b4c0a9305f67698f45418c63b23272d351fb51db466c1b87052a1c",
+      "en": "90fd7b7f9d2bd437d8e1ea1d691b6db3bbf6f7eb3bb1eed75639897c6e6897ee"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/0/prompt",
+      "tr": "c5b7b4237b9cb6499752dc89246435abcd392d7cbe86791ff0f3b3222d7bd58b",
+      "en": "925d8087de1db3fde3c452bf269f4da98a0b70deabd4276e7bb9ddf7723b0a2e"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/0/choices/0/text",
+      "tr": "e3d72e9db8d138e46a1124e272b769955eae2e3e6256a5b7e5b6a31a0f4ee495",
+      "en": "5e08ca947366866ea59ee7411db7051be3b41391cf542e5623e900f7b0747e3f"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/0/choices/1/text",
+      "tr": "cc7aa5a6d4f9dadc5cc3adc2811daaf07840104d96073756dbd03ba12bc9ed92",
+      "en": "2fabcce18033d2129b3758a080546dcf08a3950c891b55203942ddcb7971f031"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/0/choices/2/text",
+      "tr": "08e3ab972764adf61c5096e819506b8c152045539edb48af8796da7d78a3450f",
+      "en": "1349b2a57301ee3ba04bf7e0ac92fd118c61e38b62a6a4442c0f2b1a49fe180d"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/0/explanation",
+      "tr": "acc59c9eba874a4826093216ff58e8951cd8cd84c3242db0528f01aeeb36d642",
+      "en": "a54c0fbd553dfe4240d3f0a3edb4c664c6c99ed02708cead51270c44f7c763db"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/1/prompt",
+      "tr": "217e8d0b0014d1f6510912c8e5e3a81f917eefbcb06d1b803bda38b6d69e0129",
+      "en": "3c2e270b21840c77958fb601d0dca7def4ebf927f09f2672a984b1af5c0a50a4"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/1/choices/0/text",
+      "tr": "fea8c6fe62998fc6b99e5aded3fe087faf58916c1736ea9f4ac1751b4df31b6f",
+      "en": "30c09df7c953acca1eaba4cb8a3972e40720a4957bc994a17b4b1a7d6b714dd2"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/1/choices/1/text",
+      "tr": "80728b13399d28b9421ba0e3c30169fbf3afd39a37eeff7e5b6be4c014cd14f7",
+      "en": "369ef727fbb2e214b8fb41cc7a87e8312826300aacea459d5402e0f2d987a3d5"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/1/choices/2/text",
+      "tr": "80ba40b6f3efee6688beac073a17686ef9cea32251ee60a4f2b70c4fff282c7f",
+      "en": "301117503fc54b34f916f2c55664ed082cb4234b2fb7b606c216c63a7a88b941"
+    },
+    {
+      "pointer": "/content/lessons/7/recall/1/explanation",
+      "tr": "0ff197755aaf5aef6a5ca9042ec8881d5fccc64f58870eb3778f05fd044b58dd",
+      "en": "5ffe4d2afeb5358212c49866204973e3221496128eb38e239fcd099f054b1ae0"
+    },
+    {
+      "pointer": "/content/lessons/7/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/7/selfPractice/task",
+      "tr": "8a3efb119a3b210daa87824a44115986b0e6dec15c86233b0fb5be96da9fc3ed",
+      "en": "6e47f604156137988e342e1061c1c0f06d15fa0ff77fb1fd9230612352c44f5a"
+    },
+    {
+      "pointer": "/content/lessons/7/selfPractice/observe",
+      "tr": "727e444268f06065a344834732982337da312a1a6be17f4938a4a5869d274dce",
+      "en": "1dfe0b5d542af82e8db9ca8d246a3eeb09212347ea298892748cc5aeee4e8a94"
+    },
+    {
+      "pointer": "/content/lessons/7/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/7/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/8/title",
+      "tr": "fca18d5c8b78a2dccc46eeefa6e23935e74cae4da70b3ea8334cf775530ac663",
+      "en": "c989b03b5b3172b25a5c5d829336d9edf740c25d981f0148b650d3391785a67f"
+    },
+    {
+      "pointer": "/content/lessons/8/objective",
+      "tr": "251ee449fb11075d51cf6f51357cf2c9edb60829370576390c060b0779398beb",
+      "en": "35af84d6e934063f47c0e5495fb97590daf35ca99f1d0d7476262fd7fcc29622"
+    },
+    {
+      "pointer": "/content/lessons/8/teaching/0",
+      "tr": "640f13550e416518583841c269c00e9b60b7716c1c74f7232265a8a77798c646",
+      "en": "e9ee03be8b8fb211b934e5d658ce56535ff79bfddb25a77405f0718275de3163"
+    },
+    {
+      "pointer": "/content/lessons/8/teaching/1",
+      "tr": "94f773b0c670b898684b3a0e80d8bf6cb4154d82f8c00cf8b09b121a00743c7f",
+      "en": "ccc02e4de4e29d9b68fbb88673ddcbdceffeb5fbcaff5c1493627a1a53400574"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/0/prompt",
+      "tr": "a691ec3724fcf3ab916870f5737d12865d1584e4e7704c7edddd67d2ea88e2fd",
+      "en": "6d5dcd4f1ee076f754f0ca0649925ab31799691b4692a483714c2827a25b045a"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/0/choices/0/text",
+      "tr": "60c7e5ef8ac20047088d99641056a78dd139888d8cf675536f9f578bf6da0730",
+      "en": "4a60a3e62ea604a9d8be18f48397fd411739d510a587bd9449621d237dc7ad26"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/0/choices/1/text",
+      "tr": "d88d3cf2f07516a3d8600a994472e479bf4c8051a161a92e6dd19ad1534d5e12",
+      "en": "cedce26bf5f5f71beab7bda2d6f899c44fa2a9355cebaa688ce8f99d5affa552"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/0/choices/2/text",
+      "tr": "12c14f0c1021b442b73fe76e4a6c228d69d828c98ee90d24aab333d83d9aca54",
+      "en": "207cec0cf78f44916a54a2fc33e603cb5348693fd9612bdd0c3fb828c475ee5a"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/0/explanation",
+      "tr": "a0493809f5c6e35b6ef1a83fd83108c4dec521e381d4b9f0c00a1325d8ea4631",
+      "en": "06d9f9f041409e363d035a04fe960d891c4e08f1e9524aef02bfb5b064c846ca"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/1/prompt",
+      "tr": "12c7363ff2a646cd5251fe7a37c261ba7da960bad2d217951d1573612ed0b7aa",
+      "en": "9bb455b1576dd60c6c83a683e1643b9a676b637a55accea68779819fbde87e67"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/1/choices/0/text",
+      "tr": "0559f33b4c2a1ebbe4eeaa48c90820b219d121b191bf2b03db7276e1fbd5c2ef",
+      "en": "445e57617e0b72711d3bb11e6da7ceccb08e39007ed6b5fc8dadf6a5ba60c76d"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/1/choices/1/text",
+      "tr": "828251650a8d421f197ae531a566bf7223764c6f0069e6544add1eab6fe1b53b",
+      "en": "005887f49d54a7b5bfd30525853ca182b8ba2939a1889452c55f32bbbac771a9"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/1/choices/2/text",
+      "tr": "a2fec8f811733ed5fe31f1139364d0452848cf0153d4eaa37f5c6e083edfc469",
+      "en": "40f35904567fe5c54d4b8b07ba8d270db065d6e433b194cc026d7b3d26b3ca30"
+    },
+    {
+      "pointer": "/content/lessons/8/recall/1/explanation",
+      "tr": "5a59c9be2270a18428ed6c75b2df27bd91aa3537f7594685cbd5d1b1794628c3",
+      "en": "0830db75dfcec1fe45557fcd983dde0dc74a01459881404c3a6a09006ed02816"
+    },
+    {
+      "pointer": "/content/lessons/8/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/8/selfPractice/task",
+      "tr": "2f67ccfbda9f75c4ff1232cb87b0c36cb21a2ac68a88d9f4f885e912579ecfff",
+      "en": "75fcc5d1652225fd276bb2985b649e19ce2e37193231fa840581fee15f04f754"
+    },
+    {
+      "pointer": "/content/lessons/8/selfPractice/observe",
+      "tr": "10c7085484ab577a32a76b93afcec66e6d5603babd5f7311e7a356ca0e91d023",
+      "en": "3244986c056011d42045900dcc636c96d961fe80e4a213f7af56f840cf38e9d5"
+    },
+    {
+      "pointer": "/content/lessons/8/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/8/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    },
+    {
+      "pointer": "/content/lessons/9/title",
+      "tr": "84729ac8f4d4cc338d7fa16112da0ffd78d09d7d19a2eac838a92bbc9101e2d8",
+      "en": "43a9b6ef3ddad4aea5c1955a70e6132f4220c3741fd3b14b98b1de26af384b66"
+    },
+    {
+      "pointer": "/content/lessons/9/objective",
+      "tr": "7d5a76232d5825c7b366bd31ef7e17c5e55b650c12761e51aa5b0798714a43eb",
+      "en": "52c4f9ff348187af8005d9bf505d9349d161df0cfb0fc6d78dad907eb1a7e330"
+    },
+    {
+      "pointer": "/content/lessons/9/teaching/0",
+      "tr": "e2973eb1be1245e758fa4c5b95bc40873c3b322a2ef1811b3da1f47e1dab40e7",
+      "en": "7f7c54c5d2d9182163f24b220b5cedd69b0686b710f88ea07a319ac1b268bd83"
+    },
+    {
+      "pointer": "/content/lessons/9/teaching/1",
+      "tr": "9b5c78a970404b0bf5e2f39fe8351253a4762978046ad3bb646a2e9d9ccd86aa",
+      "en": "c5c6a955791926edd93614e38aaa169cce7f61b53534343407218931f1d5f7f1"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/0/prompt",
+      "tr": "ffaa213ccb4a01585e07edf73b5ef38aeb02cd3856b1a6d5240269df9a4a7c8f",
+      "en": "9f28137110116f09f1e37fda1d737415dc3c79cea1ae5c3cd3e8ebab7a5a532b"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/0/choices/0/text",
+      "tr": "e02dd54d8649e5a5c31d2a7aaa29cbe99371beb14149040d333feb35646da313",
+      "en": "d73898010f76250a8daf16e85dde42637c15a8b630c57c6e5f0d7e49ae0bc4c6"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/0/choices/1/text",
+      "tr": "4e63ae19f24a4f456fb45103547dd6aca3010fc7c21a98c5049c89e5723d3a17",
+      "en": "3c40bd3a6419acbdcbb3fac2394515bc6db81330ad6b696f6940f58de8060c69"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/0/choices/2/text",
+      "tr": "81e80099e272e42f66dfd8012c7967e3fb3d44a70dd44ab9d57cccbe9841c37b",
+      "en": "dd4e98eb06979c94cd103479eea1f1f828d43689a9dc2c525987455ecef075f8"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/0/explanation",
+      "tr": "8c03e68b141f3c5d7740f73ef379cdb0a923a8b58b9bbf84f17a4ba743aa463c",
+      "en": "520a0218a4b479ae0ac5a07cbf0eef8e3b5c944132fa657576c37991472d80b3"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/1/prompt",
+      "tr": "c359cf17cdf16a5ebdf749aa749dbb5f70a91eb31ac402ba900b5dc2d556c151",
+      "en": "8259c7cba990ff04369de83a094f863f511d4505b642bf5b0967e631442f4552"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/1/choices/0/text",
+      "tr": "d7e899a8285b5ac7f043b133285e2b1fb54093cbe502491e588049eec6480b22",
+      "en": "90bb237ac94dc7a6d64457af3f35db066a9a21c4c37c62a2524d1bf702da387b"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/1/choices/1/text",
+      "tr": "ee038aae34bde82d9f4d887f522cd02f09639f02776c27678e79065573f9d517",
+      "en": "ba2440530857a8c66271d6f51a3a575430f471a0a4c3ac99de46846db0222102"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/1/choices/2/text",
+      "tr": "64af858c04ffd48dd6772d6826af66a2be525808739e1c6fbf44db32ea7432cd",
+      "en": "8deec7bf9c2415591d61333d89d6563a6f2aa655cc9bfa999fcd74dcb970118d"
+    },
+    {
+      "pointer": "/content/lessons/9/recall/1/explanation",
+      "tr": "daa9de7e064ab0e43e803c4b61f4728c516652839217e9e31badd4fd23c87441",
+      "en": "8c155902ffec9c031c2cb4a027a3ac524269a49982e01d37dd7e6b2bcd90920f"
+    },
+    {
+      "pointer": "/content/lessons/9/completion_meaning",
+      "tr": "4f80072bf6cc901ec37b9e24e815015b587c584fd99dc3c99e745a858a23d716",
+      "en": "7effc38a25917f62fc707d72e181bf81999ceffc2c586c50199bec08d4d2b4ec"
+    },
+    {
+      "pointer": "/content/lessons/9/selfPractice/task",
+      "tr": "71b0a9aab6ca3ae23f943a18cb27f7b088d2ebb5da735533c38587ac567181c5",
+      "en": "c430b1afe6791f634a56863dcfb9efa4a1fd707ba055f43b6707cf60596cae0f"
+    },
+    {
+      "pointer": "/content/lessons/9/selfPractice/observe",
+      "tr": "e7efecea29cdd1228be12b3fff6a84a63f20f3a2201244e47357591a48741101",
+      "en": "924f387d9306c70c169de7e152612348ba4bf8a9b55b562412f4f3929eb40997"
+    },
+    {
+      "pointer": "/content/lessons/9/selfPractice/safety",
+      "tr": "fd8ba2a3f496fca971a70be2aa2dcfb9981c319acbeacc9de968588cbfb442af",
+      "en": "9c83e4de5532040bdedf85be222e713b590567e3f5de18093b69e7a20ec3426f"
+    },
+    {
+      "pointer": "/content/lessons/9/selfPractice/adaptation",
+      "tr": "23419e43704d6f38c4ced2b291e5b01e4fdda97a3cf0ae7f520f10ef80815569",
+      "en": "c71c52fc24629629d1539003b734d01776f400c4d77f9606dc981a580f1902b0"
+    }
+  ]
+}

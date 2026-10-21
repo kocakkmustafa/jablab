@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'self_guided_practice.dart';
+
 final class KickboxingCopy {
   const KickboxingCopy({required this.tr, required this.en});
   final String tr, en;
@@ -41,7 +43,10 @@ final class KickboxingLesson {
       rows = List.unmodifiable(_array(m['rows']).map(KickboxingCopy.decode)),
       prerequisiteIds = _strings(m['prerequisiteIds']),
       physicalPrerequisiteIds = _strings(m['physicalPrerequisiteIds']),
-      sourceIds = _strings(m['sourceIds']) {
+      sourceIds = _strings(m['sourceIds']),
+      selfGuidedPractice = m.containsKey('selfGuidedPractice')
+          ? SelfGuidedPractice.decode(m['selfGuidedPractice'])
+          : null {
     _keys(m, {
       'number',
       'id',
@@ -54,12 +59,15 @@ final class KickboxingLesson {
       'prerequisiteIds',
       'physicalPrerequisiteIds',
       'sourceIds',
+      if (m.containsKey('selfGuidedPractice')) 'selfGuidedPractice',
       'sourceNote',
     });
+    selfGuidedPractice?.requireBinding(id, sourceIds);
     if (sourceIds.isEmpty) {
       throw const FormatException('Missing source binding');
     }
   }
+  final SelfGuidedPractice? selfGuidedPractice;
   final int number;
   final String id;
   final KickboxingCopy title, instructions, question, correction, answer;
@@ -68,7 +76,8 @@ final class KickboxingLesson {
   final List<String> prerequisiteIds, physicalPrerequisiteIds, sourceIds;
 }
 
-/// Written source only. This schema never unlocks physical technique practice.
+/// Written progress and optional self-guided trials are separate.
+/// No instructor or individual physical acceptance is inferred.
 final class KickboxingCourse {
   KickboxingCourse._(Map<String, dynamic> m)
     : title = KickboxingCopy.decode(m['title']),
@@ -121,10 +130,22 @@ final class KickboxingCourse {
       throw const FormatException('Unaccepted physical readiness claim');
     }
     final sourceIds = sources.map((s) => s.id).toSet();
-    if (sources.length != 10 ||
-        sourceIds.length != 10 ||
-        !List.generate(10, (i) => 'S${i + 1}').every(sourceIds.contains)) {
+    if (sources.length != 15 ||
+        sourceIds.length != 15 ||
+        !List.generate(15, (i) => 'S${i + 1}').every(sourceIds.contains)) {
       throw const FormatException('Invalid teaching source inventory');
+    }
+    const observedPrimaryUrls = <String, String>{
+      'S11': 'https://www.youtube.com/watch?v=CmpqqsmiP70',
+      'S12': 'https://www.youtube.com/watch?v=IJIBBBQVIMw',
+      'S13': 'https://www.youtube.com/watch?v=ZE6IVZ-MQUA',
+      'S14': 'https://www.youtube.com/watch?v=bEVIlec93Ps',
+      'S15': 'https://www.youtube.com/watch?v=aP-4Kjgc4Q8',
+    };
+    if (sources.any((source) =>
+        observedPrimaryUrls.containsKey(source.id) &&
+        source.url.toString() != observedPrimaryUrls[source.id])) {
+      throw const FormatException('Wrong actual primary source binding');
     }
     for (var i = 0; i < lessons.length; i++) {
       final l = lessons[i];
@@ -161,7 +182,7 @@ final class KickboxingCourse {
   }
   // Repository verifies this exact transcribed asset after the Core integrity gate.
   static const String reviewedAssetSha256 =
-      '00b338d0de111ee240cdf1292611db2b8d6c3e5654800fc8967c5dfb52042fa3';
+      '33a908eadfac286345ca0cba189ff786afc31d018980956d19fcdb02fb238047';
   final KickboxingCopy title,
       common,
       safety,
@@ -171,7 +192,7 @@ final class KickboxingCourse {
   final List<KickboxingCopy> conventionRows;
   final List<KickboxingSource> sources;
   final List<KickboxingLesson> lessons;
-  bool get physicalPracticeAvailable => false;
+  bool get verifiedPhysicalPracticeAvailable => false;
 }
 
 Map<String, dynamic> _object(dynamic v) {

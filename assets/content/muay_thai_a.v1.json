@@ -9,8 +9,8 @@
   },
   "shared": {
     "status": {
-      "tr": "Özgün Muay Thai yazılı önerisi v2. V1’in sınırlı yazılı kapsamı bağımsız incelemede kabul edildi; bu ayrı teknik açıklama düzeltmesi odaklı inceleme bekliyor. Uygulamaya entegre edilmedi; fiziksel öğretim, gösterim ve bireysel geri bildirim kabulü yoktur.",
-      "en": "Original Muay Thai written proposal v2. Independent review accepted v1 at its bounded written scope; this separate technical clarification awaits focused review. It is not integrated into the app; physical teaching, demonstrations and individual feedback have not been accepted."
+      "tr": "Muay Thai A, uygulamadaki 16 derslik seçili başlangıç yoludur. Kapsam, yönleri ve hareketlerin geri dönüşünü açıklama, kendi yanıtını karşılaştırma ve belirsizliği dürüstçe kaydetmedir. Bu kurs resmî Khan programı, tüm Muay Thai eğitimi, savunma yeterliği veya fiziksel ustalık belgesi değildir. Fiziksel teknik, kişisel uygunluk ve eğitmen onayı doğrulanmış sayılmaz.",
+      "en": "Muay Thai A is a selected 16-lesson beginner path in the app. Its scope is explaining boundaries, directions and movement recoveries, comparing your own answer and honestly recording uncertainty. It is not an official Khan program, the whole of Muay Thai training, defensive competence or a certificate of physical mastery. Physical technique, individual suitability and instructor approval are not treated as verified."
     },
     "style": {
       "tr": "Çağdaş Muay Thai temellerinden seçilmiş hazırlık sözlüğü. Gard, taban ve topuk kullanımı kaynaklarda değişir. Aşağıdaki kısa, yavaş ve duraklı düzen özgün bir hazırlık uyarlamasıdır; bütün kampların ortak tekniği veya resmî Khan müfredatı değildir.",
@@ -29,28 +29,28 @@
       "en": "Written recall does not accept technique, balance or defense. MT-P1 is an original JabLab arrangement, not a traditional form, Wai Kru/Ram Muay or official examination. Round kicks, actual check timing, clinch, catches/sweeps, contact, bag/pad work, sparring, competition and self-defense are outside this outcome. The wider complete beginner Muay Thai goal remains open."
     },
     "physical_gate": {
-      "tr": "Bütün fiziksel görevler kullanılamaz. P0–P7 kayıtlarının tamamı karşılanmamıştır: kişiye uygun alan/durma, duruş/gard, adımlar, düz yumruk toparlanması, ön teep, arka diz, yatay dirsek ve bütün dizi için ilgili gerçek öğretim, kabul edilmiş gösterim ve bireysel gözlem gerekir. Yazılı ilerleme veya kutucuk bu kayıtları oluşturmaz. Belirli ücretli kurs, araç, model, unvan ya da sertifika satın alma şartı yoktur.",
-      "en": "All physical tasks are unavailable. Every P0–P7 record is unmet: the relevant real instruction, accepted demonstrations and individual observation are required for personal space/stopping, stance/guard, steps, straight-punch recovery, lead teep, rear knee, horizontal elbow and the whole sequence. Written progress or a checkbox cannot create these records. No particular paid course, tool, model, title or certificate purchase is required."
+      "tr": "Bu kurs fiziksel teknik veya kişisel uygunluğu doğrulamaz. P0–P7, eğitmen incelemesi, kabul edilmiş gösterim ve bireysel gözlem kayıtları tamamlanmış sayılmaz; yazılı beyan bunları oluşturmaz. İsteğe bağlı başlangıç denemesi yalnız ilgili dersin küçük, yavaş, temassız seçeneğidir; oturarak, iki ayak yerde veya yazılı alternatif geçerlidir. Belirli ücretli kurs, araç, model veya sertifika satın almak gerekmez.",
+      "en": "This course does not verify physical technique or individual suitability. P0–P7, instructor review, accepted demonstrations and individual observation records are not treated as complete; a written report cannot create them. An optional beginner trial is only the relevant lesson’s small, slow, non-contact option; a seated, grounded or written alternative is valid. No particular paid course, tool, model or certificate purchase is required."
     },
     "equipment": {
-      "tr": "Şimdi yalnız metin ve isteğe bağlı kâğıt/kalem kullanılır. Zemine eşya koyarak hareket yapma. F0/R0 ve F1/R1 kâğıttaki ayak yerleridir; fiziksel görev için alan, yüzey, kişiye uygun hazırlık ve bütün hareket/dönüş yolları ayrıca incelenir. Duvar, torba, pad veya başka insanı hedef seçme.",
-      "en": "Use text and optional paper/pencil only now. Do not place objects on the floor and move around them. F0/R0 and F1/R1 are paper foot locations; physical tasks need separate review of space, surface, personal preparation and every movement/recovery path. Do not select a wall, bag, pad or another person as a target."
+      "tr": "Metin ve isteğe bağlı kâğıt/kalem yeterlidir. F0/R0 ve F1/R1 kâğıttaki ayak konumlarıdır; zemine işaret veya eşya koyup çevresinde hareket etmek gerekmez. İsteğe bağlı küçük hareket için düz, kuru, kaymayan ve insan/eşya bulunmayan alan seç; yol belirsizse yazılı seçenekte kal. Duvar, torba, pad, hayvan veya başka insanı hedef seçme. Telefon okuma içindir, teknik puanı veya kamera ölçümü vermez.",
+      "en": "Text and optional paper/pencil are enough. F0/R0 and F1/R1 are paper foot locations; no floor markers or objects to move around are required. For optional small movement, choose a level, dry, nonslip space clear of people and objects; keep the written option if the path is uncertain. Target no wall, bag, pad, animal or person. The phone is for reading, not a technique score or camera measurement."
     },
     "stop": {
-      "tr": "Yazılı çalışmada belirsizlik varsa anahtarı açmadan belirsiz kısmı yaz, dur veya ara ver; ilerleme uydurma. İleride incelenmiş fiziksel çalışmada rahatsızlık, dengesizlik, takılma veya anlaşılmayan yön varsa yeni hareket eklemeden dur; incelenmiş destek/dönüş planıyla dinlenme konumuna geç ve eğitmenden açıklama iste. Havada bacak veya dönüş içindeyken ani donma, atlama ya da zorla pivot önerilmez.",
-      "en": "For written work, record the uncertain part before opening the key, stop or take a break, and do not invent progress. In future reviewed physical work, discomfort, instability, catching a foot or an unclear direction means stop adding movement; use the reviewed support/recovery plan to reach rest and ask the instructor to clarify. Abrupt freezing with a raised leg or during a turn, hopping and forced pivots are not prescribed."
+      "tr": "Yazılı çalışmada belirsiz kısmı kendi yanıtına yaz; durabilir veya ara verebilirsin, ilerleme uydurma. İsteğe bağlı küçük hareket sırasında rahatsızlık, baş dönmesi, dengesizlik, takılan ayak veya anlaşılmayan yön varsa yeni hareket ekleme ve güvenli dinlenmeye geç; zor görevi o oturumda tekrar etme. Havada bacakla veya dönüş içindeyken ani donma, atlama ve zorla pivot çalışma. Belirti sürüyorsa uygun sağlık desteği al; ciddi veya ani belirtide acil yardım iste. Bu metin tanı veya kişisel hareket izni vermez.",
+      "en": "For written work, record the uncertain part in your own answer; you may stop or take a break, and must not invent progress. During optional small movement, add no movement and reach safe rest with discomfort, dizziness, instability, a catching foot or unclear direction; do not retry the harder task that session. Do not practise abrupt freezing on a raised leg or during a turn, hopping or a forced pivot. Seek appropriate health support for continuing symptoms and urgent help for severe or sudden symptoms. This text gives no diagnosis or personal movement clearance."
     },
     "dose": {
-      "tr": "Sabit süre, tekrar, yük, yükseklik veya hız hedefi yoktur. Yazılı çalışmada bir görev ve bir düzeltme yeterli olabilir; ihtiyaç varsa ara ver. Fiziksel doz, hazırlık ve hareket aralığı ileride kişiye göre incelenir. Yorgunluğu aşmak, acıya katlanmak veya teknik hatayı hızla gizlemek hedef değildir.",
-      "en": "There is no fixed duration, repetition, load, height or speed target. One written task and one correction may be enough; take a break when needed. Physical dose, preparation and range require later personal review. Pushing through fatigue or discomfort and concealing a technique error with speed are not goals."
+      "tr": "Sabit süre, tekrar, yük, yükseklik, hız veya kuvvet hedefi yoktur. Bir yazılı görev ve bir düzeltme yeterli olabilir. İsteğe bağlı denemede en küçük rahat aralığı ve duraklamayı seç; bitirmek zorunlu değildir. Yorulmayı aşmak, rahatsızlığa dayanmak veya hatayı hızla gizlemek hedef değildir; yazılı seçeneğe dönmek geçerli bir karardır.",
+      "en": "There is no fixed duration, repetition, load, height, speed or force target. One written task and correction may be enough. In an optional trial, choose the smallest comfortable range and pauses; finishing is not required. Pushing through fatigue or discomfort and concealing an error with speed are not goals; returning to the written option is valid."
     },
     "learning_loop": {
       "tr": "Metni oku; sonra okumayı ve anahtarı gizle. Kendi yanıtını ve belirsizliğini yaz. Anahtarla karşılaştır; eşleşmeyen bir parçayı kendi sözlerinle düzelt. Belirsizlik sürüyorsa tamamlandı deme. Sonraki uygun yazılı oturumda düzeltilen parçayı yardımsız hatırla, yeniden karşılaştır ve kalan belirsizliği kaydet.",
       "en": "Read the text, then hide both reading and key. Write your own answer and uncertainty. Compare with the key and correct one mismatch in your own words. Do not report completion while uncertainty remains. At the next suitable written session, recall the corrected part unaided, compare again and record remaining uncertainty."
     },
     "progress": {
-      "tr": "Yazılı önkoşul yalnız önceki yazılı görevde kendi yanıtı, karşılaştırma ve düzeltme kaydıdır; fiziksel önkoşul ayrıdır. İleride uygulamadaki ziyaretlik öz beyan kaydedilmemiş yazılı inceleme olabilir; gerçek gözlem, teknik sertifikası, form skoru veya ustalık değildir. Şimdi uygulama ilerlemesi ve fiziksel kabul sıfırdır.",
-      "en": "A written prerequisite is only the prior written task’s own answer, comparison and correction record; physical prerequisites are separate. A future app’s per-visit self-report may represent unsaved written review; it is not actual observation, a technique certificate, form score or mastery. App progress and physical acceptance are zero now."
+      "tr": "Bu ziyaretteki yazılı inceleme beyanı, kendi yanıtını yazıp anahtarla karşılaştırdığını ve bir düzeltme veya kalan soruyu kaydettiğini belirtir. Notlar ve ziyaret sayacı kaydedilmez; ara verme, kurstan ayrılma veya hesap değişimiyle temizlenebilir. Önceki yazılı inceleme sonraki yazılı görev içindir. Denenmedi, belirsiz ve denendi ayrı ifadelerdir; hiçbiri gözlemlenmiş teknik, fiziksel uygunluk, sertifika, form puanı veya ustalık değildir.",
+      "en": "A written-review report for this visit says you wrote your own answer, compared it with the key and recorded one correction or remaining question. Notes and the visit counter are not saved and may clear on a pause, course exit or account change. A prior written review is a prerequisite for the next written task. Unattempted, uncertain and attempted are distinct reports; none is observed technique, physical suitability, certification, a form score or mastery."
     },
     "directions": {
       "tr": "Kâğıt örneği sol önde, sağ arkada ve aynı ileri yönü kullanır: F=sol ön ayak/sol el, R=sağ arka ayak/sağ el. Her ayak kendi yan rayında kalır. F0/R0 başlangıç, F1/R1 aynı küçük mesafe ilerlemiş tabandır. Sağ önde ayna örneğinde F=sağ, R=sol olur; sağ/sol yanal yönde hareket tarafındaki ayak önce gider. Fiziksel duruş seçimi baskın elden otomatik çıkarılmaz; geçiş/switch öğretilmez.",
@@ -161,19 +161,19 @@
     },
     {
       "id": "M7",
-      "title": "Evolve University: The Complete Guide To The Muay Thai Push Kick",
-      "url": "https://evolve-university.com/blog/the-complete-guide-to-the-muay-thai-push-kick/",
+      "title": "Evolve University: 9 beginner techniques — push-kick video",
+      "url": "https://evolve-university.com/blog/9-muay-thai-techniques-for-beginners-to-master-first/",
       "role": "Evolve; primary school teaching",
-      "support": "Identifies teep as a forward foot technique with a chamber/extension and stance recovery.",
-      "limit": "High knee, straight support-leg cue, hip thrust, arm swing, targets, catches and fighting claims are not adopted. Our low two-hand-guard preparation is an original variant."
+      "support": "Root visually inspected source instants showing knee preparation, rear-leg base, forward extension and re-bending. Exact instants and limits are recorded in EVOLVE-PUSH-KICK.json.",
+      "limit": "Partner/contact source, not a low non-contact demo. Audio and continuous watch were not reviewed; final landing between stills and individual suitability are not established. Low range, two-hand guard and slow return-to-track are original JabLab adaptations, not Evolve endorsement."
     },
     {
       "id": "M8",
-      "title": "Evolve: 10 Muay Thai Elbow Techniques To Add To Your Arsenal",
-      "url": "https://evolve-mma.com/blog/10-muay-thai-elbow-techniques-to-add-to-your-arsenal/",
+      "title": "Evolve University: beginner rear horizontal elbow video context",
+      "url": "https://evolve-university.com/blog/9-muay-thai-techniques-for-beginners-to-master-first/",
       "role": "Evolve; primary school teaching",
-      "support": "Horizontal elbow instruction retains the other hand by the face and recovers the working arm, with coordinated foot/hip motion.",
-      "limit": "Impact, cutting, spinning, jumping and clinch applications are excluded. Our shortened arc, hand placement and stop points need separate physical review."
+      "support": "Root inspected selected instants of pre-arc guard, a bent elbow travelling across front at a held pad, the opposite glove near the face and a later guard return. EVOLVE-REAR-ELBOW.json records exact scope.",
+      "limit": "Partner/contact source, not a validated solo method. Distance-closing step, fixed angle, shoulder-height demand, power rotation, pad/head strike and spin are excluded. Tiny stable-foot non-contact arm path and seated explanation are original JabLab adaptations. Continuous watch/audio, foot loading, physical accuracy and individual suitability were not established."
     },
     {
       "id": "M9",
@@ -209,11 +209,11 @@
     },
     {
       "id": "M13",
-      "title": "Coach Victor / Thai Boxing Institute: Muay Thai 101: Knees and Push Kicks",
-      "url": "https://thaiboxinginstitute.net/2021/01/12/muay-thai-101-knees-and-push-kicks/",
-      "role": "Thai Boxing Institute; primary instructor teaching",
-      "support": "Explicit rear-leg loading unloads the lead foot without a step; chamber, retract and settle into stance. Its rear knee uses a planted lead-foot step and stance return.",
-      "limit": "Our stationary rear-knee loading is an original reduced adaptation, not this stepped recipe. Hip thrust, arm swing, high chamber, forced toe/ankle lock, heel-to-butt, impacts and claimed mastery are excluded."
+      "title": "Evolve University: beginner push-kick and knee video context",
+      "url": "https://evolve-university.com/blog/9-muay-thai-techniques-for-beginners-to-master-first/",
+      "role": "Evolve; primary publisher visual-source context",
+      "support": "Root inspected selected public knee-video instants including preparation, a bent knee at a held pad and a later two-feet-down end-state; EVOLVE-KNEE.json records exact scope.",
+      "limit": "Partner/pad and explosive ball-of-foot source, not a validated gentle solo task. Do not combine its loading with the push-kick flat-foot card as a universal rule. Audio, continuous landing path, personal safety and full-method mastery were not established. Tiny non-contact knee lift and slow same-track lowering are original JabLab adaptations."
     },
     {
       "id": "M14",
@@ -222,6 +222,70 @@
       "role": "Warrior Collective / Damien Trainor; primary publisher/instructor teaching",
       "support": "The published conventional lead/body example exposes the ball of the foot by drawing toes upward; it explicitly distinguishes ball and flat-foot variants and stance recovery.",
       "limit": "Public article text only; embedded video unobserved. Named-instructor credentials are publisher claims. Source targets, force, snap, arm swing, tactical effectiveness, paid products and other teep variants are excluded."
+    },
+    {
+      "id": "M15",
+      "title": "How to Box - The Boxing Jab",
+      "url": "https://www.youtube.com/watch?v=CmpqqsmiP70",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M16",
+      "title": "How to Box in HD - The Right Cross/Straight Right",
+      "url": "https://www.youtube.com/watch?v=IJIBBBQVIMw",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M17",
+      "title": "How to Box - Boxing Footwork - Moving In and Out",
+      "url": "https://www.youtube.com/watch?v=ZE6IVZ-MQUA",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M18",
+      "title": "Boxing Techniques - Boxing Footwork - The Side Step",
+      "url": "https://www.youtube.com/watch?v=bEVIlec93Ps",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M19",
+      "title": "How To Throw A Muay Thai Push Kick | Evolve MMA",
+      "url": "https://www.youtube.com/watch?v=aP-4Kjgc4Q8",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M20",
+      "title": "Muay Thai | How To Throw A Knee",
+      "url": "https://www.youtube.com/watch?v=f_2BzU6eFFI",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M21",
+      "title": "Muay Thai | How To Throw A Rear Horizontal Elbow",
+      "url": "https://www.youtube.com/watch?v=9aHd7OtU9vA",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
+    },
+    {
+      "id": "M22",
+      "title": "How To Make A Proper Fist For Karate",
+      "url": "https://www.youtube.com/watch?v=1uKTYj00QLM",
+      "support": "Selected actual visual instants support only the separately authored small, paused, non-contact preparation family.",
+      "limit": "Not full continuous/audio viewing, fixed load/angle/timing, individual safety, traditional-form equivalence, endorsement or physical validation; original alternatives and stop rules remain.",
+      "role": "actual visual family reference for original beginner preparation only"
     }
   ],
   "lessons": [
@@ -265,6 +329,33 @@
       "retest": {
         "tr": "Sonraki uygun yazılı oturumda sınırları anahtarsız yeniden yaz; bir belirsizlik kalıyorsa onu koru.",
         "en": "At the next suitable written session, rewrite the limits without the key and retain any remaining uncertainty."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-01",
+        "mode": "concept_only",
+        "sourceReview": "text_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-RECEIPT-BINDING-DRAFT.v3.json#/textReviewRecords/muay_thai:mt-01",
+        "sourceIds": [
+          "M1",
+          "M2"
+        ],
+        "task": {
+          "tr": "Yumruk, tekme, diz ve dirseği isim olarak ayır; kültürel başlıkları öğren. Wai Kru veya savaş tekniği taklit etmeden bu kursun seçili başlangıç kapsamını kendi cümlelerinle söyle.",
+          "en": "Distinguish fist, kick, knee and elbow by name and learn the cultural headings. Describe this course’s selected beginner scope in your own words without imitating Wai Kru or combat technique."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Yazılı dizi tamamlanınca gerçek check, klinç ve Wai Kru kabul edilmiş olur mu?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Does completing the written sequence accept actual checks, clinch and Wai Kru?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -310,6 +401,32 @@
       "retest": {
         "tr": "Bir sonraki yazılı oturumda aynı senaryoyu yardımsız yanıtla; fiziksel görev ekleme.",
         "en": "Answer the same scenario unaided in a later written session; add no physical task."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-02",
+        "mode": "preparation",
+        "sourceReview": "text_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-RECEIPT-BINDING-DRAFT.v3.json#/textReviewRecords/muay_thai:mt-02",
+        "sourceIds": [
+          "M10"
+        ],
+        "task": {
+          "tr": "Yazılı belirsizliği kaydet, dur veya ara ver. Fiziksel bir seçenekte rahatlık ya da denge bozulursa yeni hareket ekleme; güvenli dinlenmeye geç. Bir ayağı havada tutup aniden donmayı, atlamayı veya ayağı zorla döndürmeyi çalışma.",
+          "en": "Record written uncertainty, stop or take a break. If comfort or balance changes during an optional physical task, add no movement and move to safe rest. Do not practise freezing on a raised leg, hopping or forcing a foot to turn."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Okuyucu teep dönüşünü açıklayamıyorsa daha hızlı tekrar mı yapmalı, ne kaydetmeli?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If the reader cannot explain teep recovery, should they repeat faster, and what should they record?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -324,7 +441,8 @@
       ],
       "sourceIds": [
         "M3",
-        "M9"
+        "M9",
+        "M17"
       ],
       "title": {
         "tr": "Duruşa giriş ve nötr çıkış",
@@ -357,6 +475,34 @@
       "retest": {
         "tr": "Giriş ve çıkışı okumayı gizleyerek yeniden çiz; ayağın başlangıç ve bitişini ayrı kontrol et.",
         "en": "Redraw entry and exit with reading hidden; check the foot’s start and end separately."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-03",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/MYBOXINGCOACH-FORWARD-BACKWARD.json",
+        "sourceIds": [
+          "M3",
+          "M9",
+          "M17"
+        ],
+        "task": {
+          "tr": "İki ayaklı rahat başlangıçtan bir ayağı kendi rayında çok küçük geriye yerleştir; aynı yöne bak ve dur. Sonra arka ayak kendi rayında yalnız ön ayak hizasına gelir. Sabit açı, derin duruş, çapraz adım veya switch gerekmez; gerekirse oturarak çiz.",
+          "en": "From a comfortable two-foot start, place one foot a very small distance back on its own track; face the same way and pause. Return the rear foot on its track only to lead-foot level. Require no fixed angle, deep stance, crossing or switch; draw it seated if needed."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sol öndeki örnekte çıkış, sol ayağı geriye çekmek veya sağ ayağı solun önüne geçirmek midir?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: In the left-leading example, does exit pull the left foot back or pass the right foot ahead of it?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -373,7 +519,9 @@
         "M3",
         "M9",
         "M11",
-        "M12"
+        "M12",
+        "M22",
+        "M15"
       ],
       "title": {
         "tr": "Gard, el ve görüş",
@@ -406,6 +554,37 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda açık elden kapanmaya, kendi garda ve dinlenmede yeniden açılmaya kadar sırayı anahtarsız anlat; başparmak, bilek ve görüş belirsizliğini kaydet. Biçim doğrulaması ekleme.",
         "en": "In a later written session describe open hand, closure, own guard and reopening at rest without the key; record uncertainty about thumb, wrist and vision. Add no form-validation claim."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-04",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/19",
+        "sourceIds": [
+          "M3",
+          "M9",
+          "M11",
+          "M12",
+          "M22",
+          "M15"
+        ],
+        "task": {
+          "tr": "Rahat eli aç, dört parmağı gevşekçe kıvır ve başparmağı dışta bırak; bileği düz tut. Elleri görüşü kapatmadan kendi yan gardına getir ve dinlenmeye geri indir. Sıkma, darbe veya bilek bükme ekleme; rahatsızsa açık elle yalnız yolu göster.",
+          "en": "Open a comfortable hand, loosely curl four fingers and leave the thumb outside; keep the wrist aligned. Bring hands to their own guard without blocking vision and return to rest. Add no squeezing, impact or wrist bend; if uncomfortable, trace only the path open-handed."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Başparmak önce avuca saklanıp diğer parmaklar üzerine kapanırsa bu yumruk örneği midir? Doğru kapanma/açılma sırasını yaz. Farklı avuç yönündeki bir gardı yalnız kaynak çoğunluğuyla kabul edebilir misin?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Does tucking the thumb into the palm first and closing the other fingers over it match this fist example? Write the closure/opening order. Can source majority alone accept a guard with a different palm direction?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -420,7 +599,8 @@
         "P2"
       ],
       "sourceIds": [
-        "M4"
+        "M4",
+        "M17"
       ],
       "title": {
         "tr": "Öne ve geriye ayak sırası",
@@ -453,6 +633,33 @@
       "retest": {
         "tr": "Yalnız hatalı yönün iki yerleştirmesini yazılı tekrar et; sonra tam dört yerleştirmeyi kontrol et.",
         "en": "Retest only the erroneous direction’s two placements in writing, then check the full four placements."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-05",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/MYBOXINGCOACH-FORWARD-BACKWARD.json",
+        "sourceIds": [
+          "M4",
+          "M17"
+        ],
+        "task": {
+          "tr": "Tek küçük ileri çift: ön ayak başlar, arka ayak taban aralığını geri kurar. Durduktan sonra geri çiftte arka ayak başlar. Her ayak kendi rayında kalır; yumruk, sekme veya hızlı gidip gelme ekleme. Kâğıttaki F/R okları geçerli alternatiftir.",
+          "en": "One small forward pair: lead starts and rear restores base spacing. After pausing, rear starts the backward pair. Each foot stays on its own track; add no punch, bounce or fast shuttling. Paper F/R arrows are a valid alternative."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sol önde örnek ileri gidip aynı tabana geri gelirken ayak sırası nedir?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: What is the foot order when the left-leading example advances and returns to the same base?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -468,7 +675,8 @@
       ],
       "sourceIds": [
         "M3",
-        "M9"
+        "M9",
+        "M18"
       ],
       "title": {
         "tr": "Yana gitme ve aynı yere dönme",
@@ -501,6 +709,34 @@
       "retest": {
         "tr": "Sağ önde kâğıt örneğinde de sağa ilk sağ ve sola ilk sol kuralını yardımsız açıkla.",
         "en": "Explain unaided that in a right-leading paper example rightward still starts right and leftward starts left."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-06",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/MYBOXINGCOACH-SIDE-STEP.json",
+        "sourceIds": [
+          "M3",
+          "M9",
+          "M18"
+        ],
+        "task": {
+          "tr": "Bir yana küçük çiftte gidilen taraftaki ayak başlar; diğeri aralığı geri kurar. Yüz aynı yöne bakar. Çaprazlama, daire çizme veya dönerek yön değiştirme ekleme; yer değiştirmeden kâğıtta anlatabilirsin.",
+          "en": "For a small lateral pair, the movement-side foot starts and the follower restores spacing. Face the same direction. Add no crossing, circling or turning direction change; you may explain it on paper without travel."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sol önde duruşta sağa hareketi her zaman ön sol ayak mı başlatır?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: In a left-leading stance does the left lead always start a move right?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -516,7 +752,8 @@
       ],
       "sourceIds": [
         "M5",
-        "M10"
+        "M10",
+        "M15"
       ],
       "title": {
         "tr": "Jab: uzanma ve kendi garda dönüş",
@@ -549,6 +786,34 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda sol dönüş ve sağ gardı anahtarsız hatırla; yanlış kalan parça tamamlanmış sayılmaz.",
         "en": "In a later written session recall left recovery and right guard without the key; do not count a remaining error as complete."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-07",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/MYBOXINGCOACH-JAB.json",
+        "sourceIds": [
+          "M5",
+          "M10",
+          "M15"
+        ],
+        "task": {
+          "tr": "İki ayaklı rahat tabanda ön elin kısa yolunu ve aynı yoldan gardına dönüşünü ayrı göster. Diğer el kendi gardında kalsın. Bileği bükme, dirseği sert sona itme, adım veya hedef ekleme. Açık elle yalnız yol anlatımı da seçilebilir.",
+          "en": "From a comfortable two-foot base, show a short lead-hand path and same-path guard return separately. Keep the other hand at its own guard. Add no wrist bend, hard elbow stop, step or target. You may choose an open-handed path explanation."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Jabdan sonra sol yumruğu aşağıdan daire çizerek getirmek veya sağ eli indirmek bu örneğin dönüşü müdür?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Does returning the left fist in a low circle or dropping the right hand match this example’s jab recovery?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -564,7 +829,8 @@
       ],
       "sourceIds": [
         "M5",
-        "M6"
+        "M6",
+        "M16"
       ],
       "title": {
         "tr": "Arka düz: eşgüdümlü dönüş ve çözülme",
@@ -597,6 +863,34 @@
       "retest": {
         "tr": "Dört parçanın başlangıç ve dönüşünü sonraki yazılı oturumda tekrar karşılaştır; fiziksel kabul kaydı ekleme.",
         "en": "Compare all four components’ starts and returns in a later written session; add no physical acceptance record."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-08",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/MYBOXINGCOACH-REAR-CROSS.json",
+        "sourceIds": [
+          "M5",
+          "M6",
+          "M16"
+        ],
+        "task": {
+          "tr": "Önce iki ayakta küçük topuk–diz–kalça–omuz ilişkisini kolları uzatmadan incele. Rahat eşleşme yoksa dönme; yere yapışmış ayak üstünde gövdeyi zorlama. Arka elin çok kısa yolu ayrı isteğe bağlı adımdır; rahat değilse yalnız iki ayaklı gardı veya kâğıdı kullan.",
+          "en": "First examine a small heel–knee–hip–shoulder relation on two feet without extending the arms. Do not turn without a comfortable coordinated path; never force the torso over a stuck foot. A very short rear-hand path is a separate optional step; use only a two-foot guard or paper if uncomfortable."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sağ el döner ama topuk/kalça uzanma konumunda kalırsa toparlanma tamamlanmış mıdır?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If the right hand returns but heel/hip remain in the extended position, is recovery complete?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -612,7 +906,9 @@
       ],
       "sourceIds": [
         "M5",
-        "M10"
+        "M10",
+        "M15",
+        "M16"
       ],
       "title": {
         "tr": "İki düz hazırlık arasındaki durak",
@@ -645,6 +941,35 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda iki ayrı dönüşü ve aradaki tabanı yardımsız sıralandır.",
         "en": "At the next written session, order the two separate returns and intermediate base unaided."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-09",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/24",
+        "sourceIds": [
+          "M5",
+          "M10",
+          "M15",
+          "M16"
+        ],
+        "task": {
+          "tr": "Ön el yolu→aynı gard→dur; sonra anlaşılır ve rahat küçük arka el yolu→gard→dur. Önceki dönüş belirsizse ikinci yolu kâğıtta anlat. Bu hızlı 1–2, darbe gücü veya gerçek dövüş zamanlaması değildir.",
+          "en": "Lead-hand path→same guard→pause; then a clear comfortable small rear-hand path→guard→pause. Explain the second path on paper if the preceding turn is uncertain. This is not a fast one-two, strike power or combat timing."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sol el dışarıdayken sağ el çıkarsa bu düzenin aradaki durağı korunur mu?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If the right hand starts while the left remains extended, does this arrangement retain its intermediate pause?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -661,7 +986,8 @@
       "sourceIds": [
         "M7",
         "M3",
-        "M13"
+        "M13",
+        "M19"
       ],
       "title": {
         "tr": "Ön bacağın kaldırılması ve geri konması",
@@ -694,6 +1020,35 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda yük başlangıcını, sağa aktarımı, solun kaldırılmasını ve F0’da yükün iki ayağa dönüşünü anahtarsız sırala. Destek ve geri konan ayağı ayrı adlandır; fiziksel deneme ekleme.",
         "en": "In a later written session recall initial load, transfer to right, left lift and two-foot reloading at F0 without the key. Name support and replacement feet separately; add no physical trial."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-10",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/EVOLVE-PUSH-KICK.json",
+        "sourceIds": [
+          "M7",
+          "M3",
+          "M13",
+          "M19"
+        ],
+        "task": {
+          "tr": "İki ayak yerdeyken yükün arka ayağa küçük kayışını ve tekrar iki ayağa gelişini tanımla. Ön ayağı kaldırmak zorunlu değildir. Yalnız rahat ve kararlıysa düşük bükülü diz seçilebilir; tek ayakta bekleme hedefi koyma. Belirsizlikte yerden kesmeden anlat.",
+          "en": "With both feet grounded, describe a small shift toward the rear foot and return to both feet. Lifting the lead foot is not required. A low bent knee is optional only when comfortable and steady; set no single-leg hold target. Explain without lifting if uncertain."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Ağırlık sol ön ayakta kalırken “sağ destek” yazmak sol kaldırmanın başlangıcını açıklıyor mu? Sol ayak ileri yere konabilir mi? Başlangıç yükünü, kaldırmadan önceki aktarımı ve dönüş yükünü yaz.",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Does writing “right support” while leaving weight on the left lead foot explain the start of its lift? May the left foot land farther forward? Write the initial load, transfer before lifting and recovery load."
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -711,7 +1066,8 @@
         "M7",
         "M3",
         "M13",
-        "M14"
+        "M14",
+        "M19"
       ],
       "title": {
         "tr": "Kısa ön teep hazırlığı: bük–uzan–bük–indir",
@@ -744,6 +1100,36 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda başlangıç, sağa yük aktarımı, tarak yastığı/parmak yönü, kısa uzanma ve tam dönüşü anahtarsız anlat. Her belirsizliği kaydet; doğru yazı fiziksel teep kabulü değildir.",
         "en": "In a later written session explain start, transfer to right, ball/toe direction, brief extension and complete return without the key. Record each uncertainty; correct writing does not accept a physical teep."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-11",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/EVOLVE-PUSH-KICK.json",
+        "sourceIds": [
+          "M7",
+          "M3",
+          "M13",
+          "M14",
+          "M19"
+        ],
+        "task": {
+          "tr": "Önce iki ayak yerde teep sırasını sözle veya elle anlat: hazırla→kısa aç→yeniden bük→kendi tabanına dön. İsteğe bağlı düşük, küçük ve temassız deneme JabLab’ın özgün başlangıç uyarlamasıdır; partnerli kaynak gösteriminin aynısı değildir. Hazırlık rahat ve kararlı değilse ayağı yerden kesme. Hedef, kalça itişi, kol savurma, geriye yatış veya yükseklik ekleme. Dönüşte ayağı çaprazlamadan yavaşça kendi başlangıç rayına getir; ayak şekli veya denge belirsizse bacağı uzatmadan iki ayaklı sırayı kullan.",
+          "en": "First explain the teep order verbally or with the hands on two feet: prepare→brief extend→re-bend→return to the original base. The optional low, small, non-contact trial is an original JabLab beginner adaptation, not a copy of the partnered source demonstration. Keep both feet grounded unless preparation is comfortable and steady. Add no target, hip drive, arm swing, backward lean or height. Return the foot slowly to its starting track without crossing; use the grounded sequence without leg extension if foot position or balance is uncertain."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Parmak uçlarını ileri-aşağı sivriltip uzanmış sol bacağı doğrudan yere bırakmak bu örneğe uyar mı? Sağ desteğe geçişi, tarak yastığı/parmak yönünü ve yere dönüş sırasını yaz.",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Do toes pointed forward-down and dropping the extended left leg straight to the floor match this example? Write transfer to right support, ball/toe direction and return-to-ground order."
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -760,7 +1146,8 @@
       "sourceIds": [
         "M6",
         "M3",
-        "M13"
+        "M13",
+        "M20"
       ],
       "title": {
         "tr": "Arka düz diz hazırlığı: tekmeden farklı dönüş",
@@ -793,6 +1180,35 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda ön teep/arka dizin karşıt destek aktarımını, ayrı alt-bacak evrelerini, kendi dönüş yerlerini ve iki ayağa yük dönüşünü yardımsız hatırla; fiziksel kabul işaretleme.",
         "en": "In a later written session recall unaided the opposite support transfers, distinct lower-leg phases, own return locations and two-foot reloading for lead teep/rear knee; mark no physical acceptance."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-12",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/EVOLVE-KNEE.json",
+        "sourceIds": [
+          "M6",
+          "M3",
+          "M13",
+          "M20"
+        ],
+        "task": {
+          "tr": "Diz hazırlığını teep uzatmasından ayır: diz bükülü, alt bacak katlı kalır. İlk seçenek iki ayak yerde yolu el veya kâğıtla anlatmaktır. İsteğe bağlı deneme, yalnız rahat ve kararlı destek üzerinde çok küçük bir diz kaldırmadır; ardından ayağı yavaşça kendi başlangıç rayına indir. Bu, kaynak videodaki tam diz vuruşu değildir. Partner/pad teması, hop, patlayıcı topuk yükseltme, zorlanmış parmak ucu, dışa çevirme, sabit açı veya yükseklik ekleme. Teep’in düz destek tabanı ile kaynak diz vuruşunun ön taban öğretimini evrensel bir kurala birleştirme; destek veya yön belirsizse ayağı kaldırmadan sırayı anlat ve bu denemeyi bitir.",
+          "en": "Distinguish knee preparation from teep extension: knee stays bent and lower leg folded. Start by explaining the path with hands or paper on two feet. The optional trial is only a tiny knee lift over comfortable steady support, followed by slowly lowering the foot to its starting track. This is not the full knee strike shown in the source video. Add no partner/pad contact, hop, explosive heel rise, forced toe point, outward turn, fixed angle or height. Do not combine the teep’s flat supporting base and the source knee strike’s forefoot teaching into a universal rule; if support or direction is uncertain, explain without lifting a foot and end this trial."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Ağırlık sağda kalırken sağ arka diz kaldırılıp alt bacak tekme gibi açılır ve sağ ayak solun önüne inerse bu hazırlığın başlangıcı/dönüşü açıklanmış mı? Doğru aktarımı ve arka dönüşü yaz.",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If weight remains on right while the right rear knee lifts, the lower leg extends like a kick and right lands ahead of left, does that describe this preparation’s start/return? Write the correct transfer and rear return."
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -808,7 +1224,8 @@
         "P6"
       ],
       "sourceIds": [
-        "M8"
+        "M8",
+        "M21"
       ],
       "title": {
         "tr": "Kısa yatay arka dirsek ve kendi garda dönüş",
@@ -841,6 +1258,33 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda başlangıç–yay–el/topuk toparlanması–durak sırasını anahtarsız anlat.",
         "en": "In a later written session explain start–arc–hand/heel recovery–pause without the key."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-13",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/EVOLVE-REAR-ELBOW.json",
+        "sourceIds": [
+          "M8",
+          "M21"
+        ],
+        "task": {
+          "tr": "Arka dirsek bükülü kalırken kendi yanında çok kısa yatay yolu ve geri gardı göster; diğer el rahat gardda kalır. İlk seçenek gövdeyi döndürmeden küçük kol yolu veya kâğıt çizimidir. Rahat koordinasyon yoksa pivot ekleme; başa temas, partner, spin veya kesici etki hedefleme.",
+          "en": "With the rear elbow bent, show a very short horizontal path on its own side and return to guard; keep the other hand comfortably at guard. Start with a small arm path without turning the torso, or a paper diagram. Add no pivot without comfortable coordination; aim for no head contact, partner, spin or cutting effect."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sağ dirsek geri gelir ama sağ yumruk omuzda kalır ve sol el düşerse örneğin gardı geri geldi mi?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If the right elbow returns but the right fist stays at the shoulder and the left drops, has the example’s guard been restored?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -886,6 +1330,34 @@
       "retest": {
         "tr": "Sonraki yazılı oturumda iki becerinin eksik gerçek gözlemini birer cümleyle yardımsız yaz.",
         "en": "In a later written session write each skill’s missing actual observation unaided in one sentence."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-14",
+        "mode": "concept_only",
+        "sourceReview": "text_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-RECEIPT-BINDING-DRAFT.v3.json#/textReviewRecords/muay_thai:mt-14",
+        "sourceIds": [
+          "M1",
+          "M4",
+          "M6"
+        ],
+        "task": {
+          "tr": "Check ve clinch kelimelerini anlamlarıyla ayır; partner, gerçek darbe veya tek ayaklı savunma denemesi yapma. Kaynakta görülen rakipli zamanlamayı solo yeterlilik gibi sunma. Kağıtta neden ayrı öğretim gerektiğini yaz.",
+          "en": "Distinguish the meanings of check and clinch; attempt no partner work, real strike or single-leg defensive response. Do not present opponent timing from a source as solo competence. Write on paper why these need separate instruction."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: MT-P1 anahtarını doğru yanıtlamak savunma/check veya klinç becerisini kanıtlar mı?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Does correctly answering the MT-P1 key prove defense/check or clinch skill?"
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -914,7 +1386,13 @@
         "M11",
         "M12",
         "M13",
-        "M14"
+        "M14",
+        "M17",
+        "M15",
+        "M16",
+        "M19",
+        "M20",
+        "M21"
       ],
       "title": {
         "tr": "MT-P1 Dokuz durak: özgün yazılı düzen",
@@ -947,6 +1425,47 @@
       "retest": {
         "tr": "Sonraki uygun yazılı oturumda dokuz birimi yardımsız hatırla; seçilen hatayı, el kapanma/açılmasını, karşıt destek aktarımını, teep ayak/parmak düzenini ve komşu dönüşleri yeniden karşılaştır.",
         "en": "At the next suitable written session recall all nine units unaided; compare the chosen error, hand closure/opening, opposite support transfers, teep ball/toe arrangement and adjacent recoveries again."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-15",
+        "mode": "small_range_non_contact",
+        "sourceReview": "video_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/30",
+        "sourceIds": [
+          "M4",
+          "M5",
+          "M7",
+          "M8",
+          "M10",
+          "M3",
+          "M11",
+          "M12",
+          "M13",
+          "M14",
+          "M17",
+          "M15",
+          "M16",
+          "M19",
+          "M20",
+          "M21"
+        ],
+        "task": {
+          "tr": "MT-P1 dokuz durağı önce kâğıtta sırala. İstersen yalnız iki ayaklı duruş–küçük adım–kısa el yolu–gard–geri adım bölümünü aralarda durarak göster; teep, diz ve dirseği sözle anlatmak tam geçerli alternatiftir. Bütün diziyi akıcı veya hızlı bitirme hedefi yoktur; hiçbir partner, hedef, spin veya düşme eklenmez.",
+          "en": "Order the nine MT-P1 pauses on paper first. If desired, show only the grounded stance–small step–short hand path–guard–backward step section with pauses; verbal teep, knee and elbow explanations are fully valid alternatives. Do not aim to finish the whole sequence fluidly or quickly; add no partner, target, spin or fall."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: 5’te yük solda kalır ve parmaklar ileri sivrilir; sol ileri iner. 6’da yük sağda kalır ve sağ ön olur; geri adımı sol başlatır. Aynı düzen midir? Doğru destek, ayak/parmak düzeni, dönüş tabanı ve el kapanma/açılma sırasını yaz.",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: In 5 load stays on left, toes point forward and left lands farther forward. In 6 load stays on right and right becomes lead; left starts backward. Is this the same arrangement? Write correct support, ball/toe arrangement, recovery base and hand closure/opening order."
+        },
+        "progressEffect": 0
       }
     },
     {
@@ -991,6 +1510,33 @@
       "retest": {
         "tr": "Sonraki uygun yazılı oturumda seçili parçayı yardımsız hatırla→karşılaştır→bir düzeltme döngüsüyle incele. Fiziksel veya daha geniş beceri ilerlemesi ayrı gerçek öğretim ve kabul gerektirir.",
         "en": "At the next suitable written session review the selected component through unaided recall→comparison→one correction. Physical or wider skill progression requires separate real instruction and acceptance."
+      },
+      "selfGuidedPractice": {
+        "lessonId": "mt-16",
+        "mode": "preparation",
+        "sourceReview": "text_review",
+        "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-RECEIPT-BINDING-DRAFT.v3.json#/textReviewRecords/muay_thai:mt-16",
+        "sourceIds": [
+          "M1",
+          "M10"
+        ],
+        "task": {
+          "tr": "Metin kapalıyken bir ayak sırası ve iki farklı geri dönüşü açıkla; bir belirsizlik ve bir düzeltme yaz. Aynı küçük görev veya yazılı alternatifle sonra yeniden hatırla. Denenmedi, belirsiz ve denendi ayrı kalır; Muay Thai, savunma veya fiziksel ustalık kazanıldı sonucu çıkmaz.",
+          "en": "With the text hidden, explain one foot order and two different recoveries; write one uncertainty and correction. Later recall the same small task or written alternative again. Keep unattempted, uncertain and attempted separate; infer no completion of Muay Thai, defense or physical mastery."
+        },
+        "observe": {
+          "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
+          "en": "Separate attempted, unattempted and uncertain parts. Explain direction and return in your own words; award no correctness grade to unobserved or unmeasured technique."
+        },
+        "safety": {
+          "tr": "Yalnız yetişkin başlangıç kapsamı: küçük, yavaş ve temassız. Hedefe vurma; partner, yüksek tekme, spin, sıçrama veya düşme ekleme. Ayağın takılması, rahatsızlık, baş dönmesi, dengesizlik veya belirsiz yönde yeni hareket ekleme; güvenli dinlenmeye geç ve zor görevi aynı oturumda tekrar etme.",
+          "en": "Adult beginner scope only: small, slow and non-contact. Strike no target; add no partner, high kick, spin, jump or fall. Add no movement with a catching foot, discomfort, dizziness, instability or unclear direction; reach safe rest and do not retry the harder task that session."
+        },
+        "adaptation": {
+          "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: “Muay Thai, check ve klinçi öğrendim; artık güvenle sparring yaparım” doğru sonuç mudur?",
+          "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Is “I learned Muay Thai, checks and clinch; I can now spar safely” a correct outcome?"
+        },
+        "progressEffect": 0
       }
     }
   ]

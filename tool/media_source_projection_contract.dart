@@ -142,7 +142,7 @@ Uint8List rebuildJabLabSourceProjection({
 
   _equal(
     fixture['kind'],
-    'JABLAB_V2K_CLOSED_QA_SOURCE_PINS_V1',
+    'JABLAB_EDITORIAL_CLOSED_QA_SOURCE_PINS_V1',
     'QA fixture kind',
   );
   _equal(fixture['app'], JabLabSourceProjectionPin.appId, 'QA fixture app');
@@ -392,4 +392,87 @@ void checkPinnedJabLabSourceProjection({
     qaFixtureBytes: qaFixtureBytes,
   );
   assertJabLabProjectionMatches(projectionBytes, rebuilt);
+}
+
+
+/// QA input binding only. This never accepts media, rights or physical technique.
+void checkPinnedJabLabEditorialSourceInputs({
+  required Uint8List proofBytes,
+  required Uint8List deltaBytes,
+  required Uint8List baselineSubsetBytes,
+  required Uint8List referenceBindingsBytes,
+  required Uint8List historicalProofBytes,
+  required Uint8List historicalFixtureBytes,
+  required Uint8List producerBytes,
+  required Uint8List courseBytes,
+}) {
+  _equal(sourceProjectionSha256(proofBytes), JabLabSourceProjectionPin.sourceProofSha256, 'editorial proof byte pin');
+  final proof = _jsonMap(proofBytes, 'editorial proof', canonical: true);
+  _keys(proof, {
+    'schemaVersion', 'kind', 'state', 'historicalManifestSha256',
+    'historicalCatalogSha256', 'historicalProofSha256',
+    'historicalFixtureSha256', 'baselineSubsetSha256',
+    'beforeCourseSha256', 'afterCourseSha256', 'deltaSha256',
+    'deltaPairCount', 'changedLessonIds', 'referenceBindingsSha256',
+    'producerSha256', 'progressEffect', 'releaseEligible', 'visible',
+    'mediaBytesAccepted', 'nativePlaybackAccepted', 'rightsAccepted',
+    'physicalTechniqueAccepted', 'approvedProductionTrustRoot',
+    'generatedMedia', 'qualifiedMedia',
+  }, 'editorial proof');
+  _equal(proof['schemaVersion'], 1, 'editorial proof schema');
+  _equal(proof['kind'], 'JABLAB_ORIGINAL_EDITORIAL_SOURCE_PROOF_V1', 'editorial proof kind');
+  _equal(proof['state'], 'SOURCE_TEXT_DELTA_ONLY_NOT_MEDIA_OR_PHYSICAL_ACCEPTANCE', 'editorial proof scope');
+  for (final name in [
+    'releaseEligible', 'visible', 'mediaBytesAccepted', 'nativePlaybackAccepted',
+    'rightsAccepted', 'physicalTechniqueAccepted', 'approvedProductionTrustRoot',
+  ]) {
+    _equal(proof[name], false, 'editorial proof $name');
+  }
+  for (final name in ['progressEffect', 'generatedMedia', 'qualifiedMedia']) {
+    _equal(proof[name], 0, 'editorial proof $name');
+  }
+  _equal(proof['deltaPairCount'], 6, 'editorial delta pair count');
+  _equal(proof['beforeCourseSha256'], '0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f', 'historical course pin');
+  _equal(proof['afterCourseSha256'], sourceProjectionSha256(courseBytes), 'actual current course');
+  _equal(proof['afterCourseSha256'], JabLabSourceProjectionPin.courseSha256, 'current course pin');
+  for (final (name, actual) in <(String, Uint8List)>[
+    ('deltaSha256', deltaBytes),
+    ('baselineSubsetSha256', baselineSubsetBytes),
+    ('referenceBindingsSha256', referenceBindingsBytes),
+    ('historicalProofSha256', historicalProofBytes),
+    ('historicalFixtureSha256', historicalFixtureBytes),
+    ('producerSha256', producerBytes),
+  ]) {
+    _equal(_sha(proof[name], 'editorial $name'), sourceProjectionSha256(actual), 'actual editorial $name');
+  }
+  _equal(proof['producerSha256'], JabLabSourceProjectionPin.producerSha256, 'current producer pin');
+  _equal(proof['historicalProofSha256'], 'dec615e14881b86b7676e1157f63b8bf6269026d856e59f2ee3a65d7f97e512a', 'historical proof pin');
+  _equal(proof['historicalFixtureSha256'], 'da806a35f838e8dbe6e770b0d8168bd99214f62eee5833dcfd584ee9cc035241', 'historical fixture pin');
+  final delta = _jsonMap(deltaBytes, 'editorial delta');
+  _keys(delta, {
+    'schemaVersion', 'kind', 'state', 'baselineCourseSha256', 'targetCourseSha256',
+    'changes', 'progressEffect', 'releaseEligible', 'mediaBytesAccepted',
+    'rightsAccepted', 'physicalTechniqueAccepted', 'qualifiedMedia', 'sourceWriterReceipt',
+  }, 'editorial delta');
+  _equal(delta['schemaVersion'], 1, 'editorial delta schema');
+  _equal(delta['kind'], 'JABLAB_EDITORIAL_SOURCE_DELTA_V1', 'editorial delta kind');
+  _equal(delta['baselineCourseSha256'], proof['beforeCourseSha256'], 'delta before course');
+  _equal(delta['targetCourseSha256'], proof['afterCourseSha256'], 'delta after course');
+  final changes = _objects(delta['changes'], 'editorial changes');
+  _equal(changes.length, 6, 'six actual editorial changes');
+  final baseline = _jsonMap(baselineSubsetBytes, 'editorial baseline', canonical: true);
+  _keys(baseline, {
+    'schemaVersion', 'kind', 'sourceManifestSHA256', 'sourceCatalogSHA256',
+    'sourceProofSHA256', 'courseSourceSHA256', 'lessonRecords',
+  }, 'editorial baseline');
+  _equal(baseline['schemaVersion'], 1, 'editorial baseline schema');
+  _equal(baseline['kind'], 'JABLAB_IMMUTABLE_V2K_MANIFEST_SUBSET_V1', 'editorial baseline kind');
+  _equal(baseline['sourceManifestSHA256'], proof['historicalManifestSha256'], 'baseline manifest pin');
+  _equal(baseline['sourceCatalogSHA256'], proof['historicalCatalogSha256'], 'baseline catalog pin');
+  _equal(baseline['sourceProofSHA256'], proof['historicalProofSha256'], 'baseline proof pin');
+  _equal(baseline['courseSourceSHA256'], proof['beforeCourseSha256'], 'baseline course pin');
+  final records = _objects(baseline['lessonRecords'], 'editorial baseline lessons');
+  _equal(records.length, 39, 'editorial baseline lesson count');
+  final sceneCount = records.fold<int>(0, (count, row) => count + _objects(row['scenes'], 'editorial baseline scenes').length);
+  _equal(sceneCount, 292, 'editorial baseline scene count');
 }

@@ -1,0 +1,43 @@
+{
+  "at_utc": "2026-10-20T20:39:36.759095+00:00",
+  "source_url": "https://www.dvidshub.net/video/756778/lead-hand-punch",
+  "publisher": "U.S. Marine Corps Training and Education Command",
+  "source_title": "Lead Hand Punch",
+  "VIRIN": "200619-M-RN637-023",
+  "source_kind": "MCMAP B-roll; not renamed as universal sport-boxing jab",
+  "rights_review_url": "https://www.dvidshub.net/about/copyright",
+  "rights_observed": "Page PUBLIC DOMAIN; non-endorsement/trademark/privacy restrictions remain. No new download, product bundle copy or redistribution.",
+  "existing_local_media": {
+    "path": "/Users/mustafakaankocak/Documents/Codex/2026-10-17/task-14/dvids-boxing-references/media/lead-hand-punch.mp4",
+    "bytes": 2650910,
+    "sha256": "646e6396d4c2b4181f1c11d933cc87a10e65b2491a5345c54158976e9c19cb03"
+  },
+  "inspection_method": "Actual DVIDS browser player playback followed by paused visual frame inspection using visible timeline and screenshot; currentTime/duration read from the DOM video element.",
+  "initial_navigation": "First navigation timed out; existing created tab then loaded and was inspected. No security/access denial bypass.",
+  "duration_seconds_observed": 4.337655,
+  "reviewed_visual_instants_seconds": [
+    3.266306,
+    3.588582,
+    3.736654,
+    3.963118,
+    4.337655
+  ],
+  "continuous_complete_watch_claim": false,
+  "audio_reviewed": false,
+  "title_card_observed": true,
+  "visual_observations": [
+    "Fixed front/oblique full-body view; stable staggered stance visible.",
+    "At3.266 guard hands are close to face; at3.588 front-directed arm extension is visible while the other hand stays near cheek.",
+    "At3.736 retraction is visible; at3.963 and final frame both hands return near face.",
+    "No partner or struck target is visible; no force, speed, impact, calibrated angle or anatomical-side certification is inferred."
+  ],
+  "pedagogical_use": "Support a short original lead-hand extension-and-return example, with controlled non-contact practice and return-to-guard cue; corroborate sport-specific teaching with additional sources.",
+  "not_established": [
+    "Complete39lesson boxing curriculum coverage",
+    "Sport boxing equivalence to MCMAP",
+    "Individual physical safety or correctness",
+    "Expert approval",
+    "Video/audio lecture watched end-to-end"
+  ],
+  "new_app_source_changes": 0
+}

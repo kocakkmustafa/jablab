@@ -83,11 +83,11 @@ void main() {
     final muay = await repository.loadMuayThaiCourse();
     expect([boxing.lessons.length,tai.lessons.length,kick.lessons.length,karate.lessons.length,muay.lessons.length], [39,14,16,16,16]);
     final pins = {
-      ContentRepository.soloBoxingCourseAsset:'0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f',
-      ContentRepository.taiChiCourseAsset:'c1d98507e9517daf6ccc514465ba98a44eb24a2c639a3968a6648869c372f47b',
-      ContentRepository.kickboxingCourseAsset:'00b338d0de111ee240cdf1292611db2b8d6c3e5654800fc8967c5dfb52042fa3',
-      ContentRepository.karateCourseAsset:'e9b3555f09a77eb20f5756ad4cefc647e2e32415b5f6f18bca7c80ef3b4b55b0',
-      ContentRepository.muayThaiCourseAsset:'ee16b7fe958d45c08bdcef399147a2569d33b566110f3fc4675d2971ec403531',
+      ContentRepository.soloBoxingCourseAsset:'56773912d8917e3403fb1b2fe3755cf564b10e57e4ed35f24c1df6640b2594dd',
+      ContentRepository.taiChiCourseAsset:'7aeac315bb2c6f4dc0ad6b6c21c43f04658dc3b45b263c1ce66767acec9309b8',
+      ContentRepository.kickboxingCourseAsset:'33a908eadfac286345ca0cba189ff786afc31d018980956d19fcdb02fb238047',
+      ContentRepository.karateCourseAsset:'8d1a488fad8c6b5039ffc9842698800b13a3446a7a1235742b97b2184cf913db',
+      ContentRepository.muayThaiCourseAsset:'d17e9a6fe37d12ea20fda70da3dc02aa8b0fee74c0b357207f15eb2664c6cebc',
     };
     for (final entry in pins.entries) { expect(computeSha256Hex(File(entry.key).readAsBytesSync()), entry.value); }
     expect(karate.physicalPracticeAvailable, isFalse);

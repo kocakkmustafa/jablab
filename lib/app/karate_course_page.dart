@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'karate_course.dart';
+import 'self_guided_practice.dart';
+import 'self_guided_practice_panel.dart';
 import 'taikyoku_shodan_course_page.dart';
 import 'ui_language.dart';
 
@@ -28,8 +30,8 @@ class KarateCourseEntryCard extends StatelessWidget {
       subtitle: Text(
         _label(
           context,
-          '16 written lessons · physical technique review pending',
-          '16 yazılı ders · fiziksel teknik incelemesi bekleniyor',
+          '16 lessons · written review and optional beginner tasks',
+          '16 ders · yazılı inceleme ve isteğe bağlı başlangıç görevleri',
         ),
       ),
       trailing: const Icon(Icons.arrow_forward),
@@ -67,6 +69,16 @@ class _KarateLessonPageState extends State<KarateLessonPage>
   bool _readingVisible = true;
   _WrittenObservation _observation = _WrittenObservation.unreviewed;
   bool _reported = false;
+  PracticeAttempt _practiceAttempt = PracticeAttempt.unrecorded;
+  int _practiceEpoch = 0;
+  bool _practiceEnded = false;
+  bool _practiceForeground = WidgetsBinding.instance.lifecycleState == null ||
+      WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
+  bool get _canReport =>
+      mounted && _practiceForeground && widget.admitted() &&
+      _answerVisible && _correction.text.trim().isNotEmpty &&
+      _observation == _WrittenObservation.compared &&
+      widget.priorWritten() && !_reported;
   @override
   void initState() {
     super.initState();
@@ -75,7 +87,19 @@ class _KarateLessonPageState extends State<KarateLessonPage>
   }
 
   @override
+  void didUpdateWidget(covariant KarateLessonPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.lesson, widget.lesson) ||
+        !identical(oldWidget.course, widget.course)) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+    }
+  }
+
+  @override
   void dispose() {
+    _practiceEpoch++;
     WidgetsBinding.instance.removeObserver(this);
     _ownAnswer.dispose();
     _correction.dispose();
@@ -84,24 +108,43 @@ class _KarateLessonPageState extends State<KarateLessonPage>
 
   void _reset() {
     if (!mounted) return;
+    _practiceEpoch++;
+    _practiceEnded = false;
     _ownAnswer.clear();
     _correction.clear();
     setState(() {
       _answerVisible = false;
       _observation = _WrittenObservation.unreviewed;
       _reported = false;
+      _practiceAttempt = PracticeAttempt.unrecorded;
     });
     widget.onReset();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state != AppLifecycleState.resumed) _reset();
+    _practiceForeground = state == AppLifecycleState.resumed;
+    if (state != AppLifecycleState.resumed) {
+      _reset();
+    } else {
+      _practiceEpoch++;
+      if (mounted) setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l = widget.lesson;
+    final practice = l.selfPractice;
+    final practiceEpoch = _practiceEpoch;
+    bool visitCurrent() =>
+        mounted &&
+        practiceEpoch == _practiceEpoch &&
+        identical(l, widget.lesson) &&
+        identical(practice, widget.lesson.selfPractice) &&
+        _practiceForeground && widget.admitted();
+    bool practiceCurrent() =>
+        visitCurrent() && _readingVisible && !_practiceEnded;
     return Scaffold(
       appBar: AppBar(
         title: Text(_text(context, l.title)),
@@ -127,8 +170,8 @@ class _KarateLessonPageState extends State<KarateLessonPage>
           Text(
             _label(
               context,
-              'Reading and written review only. Physical practice is unavailable; individual technique prerequisites are unmet. A checkbox cannot authorize physical practice.',
-              'Yalnız okuma ve yazılı inceleme. Bireysel teknik önkoşulları karşılanmadığından fiziksel çalışma kullanılamaz. Bir kutucuk fiziksel çalışmaya izin vermez.',
+              'Written review and published optional beginner tasks are separate. No checkbox, written answer or self-report validates personal technique or suitability.',
+              'Yazılı inceleme ve yayımlanan isteğe bağlı başlangıç görevleri ayrıdır. Kutucuk, yazılı yanıt veya öz beyan kişisel tekniği ya da uygunluğu doğrulamaz.',
             ),
             key: const Key('karate-physical-blocked'),
           ),
@@ -138,6 +181,7 @@ class _KarateLessonPageState extends State<KarateLessonPage>
             onPressed: () {
               if (widget.admitted()) {
                 setState(() {
+                  _practiceEpoch++;
                   _readingVisible = !_readingVisible;
                 });
               }
@@ -161,16 +205,23 @@ class _KarateLessonPageState extends State<KarateLessonPage>
                 child: Text(_text(context, copy)),
               ),
             Text(_text(context, l.teaching), key: const Key('karate-teaching')),
-            Text(
-              _label(
-                context,
-                'Conditional future task; unavailable in this course',
-                'Koşullu sonraki görev; bu kursta kullanılamaz',
-              ),
-            ),
-            Text(
-              _text(context, l.physicalTask),
-              key: const Key('karate-conditional-task'),
+            SelfGuidedPracticePanel(
+              practice: practice,
+              attempt: _practiceAttempt,
+              admitted: practiceCurrent,
+              onChanged: (value) {
+                if (!practiceCurrent()) return;
+                if (!practice.offersMovement &&
+                    value == PracticeAttempt.attempted) return;
+                setState(() {
+                  _practiceAttempt = value;
+                  if (value == PracticeAttempt.stopped ||
+                      value == PracticeAttempt.uncertain) {
+                    _practiceEnded = true;
+                    _practiceEpoch++;
+                  }
+                });
+              },
             ),
             if (l.number == 15)
               for (final row in widget.course.sequenceRows)
@@ -185,11 +236,11 @@ class _KarateLessonPageState extends State<KarateLessonPage>
             _label(
               context,
               l.physicalPrerequisiteIds.isEmpty
-                  ? 'Written task only; physical course requirements remain unmet.'
-                  : 'Unmet technique requirements: {value1}',
+                  ? 'Written progress and optional task reports remain separate.'
+                  : 'Unverified personal technique records: {value1}',
               l.physicalPrerequisiteIds.isEmpty
-                  ? 'Yalnız yazılı görev; kursun fiziksel gereksinimleri karşılanmamıştır.'
-                  : 'Karşılanmamış teknik gereksinimler: {value1}',
+                  ? 'Yazılı ilerleme ve isteğe bağlı görev beyanları ayrı kalır.'
+                  : 'Doğrulanmamış kişisel teknik kayıtları: {value1}',
               args: {'value1': l.physicalPrerequisiteIds.join(', ')},
             ),
             key: const Key('karate-physical-prerequisites'),
@@ -284,8 +335,8 @@ class _KarateLessonPageState extends State<KarateLessonPage>
           Text(
             _label(
               context,
-              'A retest retains every individual technique prerequisite. In this version, use written retesting; comfort alone does not authorize movement.',
-              'Tekrar bütün bireysel teknik önkoşulları korur. Bu sürümde yazılı tekrar kullan; yalnız rahatlık harekete izin vermez.',
+              'Written retesting remains separate from optional self-practice. Neither a written answer nor comfort validates technique; stop rather than retry when a stop symptom appears.',
+              'Yazılı tekrar isteğe bağlı öz çalışmadan ayrıdır. Yazılı yanıt veya rahatlık tekniği doğrulamaz; durma belirtisinde yeniden denemek yerine dur.',
             ),
           ),
           RadioGroup<_WrittenObservation>(
@@ -345,19 +396,13 @@ class _KarateLessonPageState extends State<KarateLessonPage>
             ),
           TextButton(
             key: const Key('karate-report-written'),
-            onPressed:
-                _answerVisible &&
-                    _correction.text.trim().isNotEmpty &&
-                    _observation == _WrittenObservation.compared &&
-                    widget.priorWritten() &&
-                    !_reported
+            onPressed: _canReport
                 ? () {
-                    if (widget.admitted()) {
-                      widget.onWritten();
-                      setState(() {
-                        _reported = true;
-                      });
-                    }
+                    if (!visitCurrent() || !_canReport) return;
+                    widget.onWritten();
+                    setState(() {
+                      _reported = true;
+                    });
                   }
                 : null,
             child: Text(
@@ -627,16 +672,16 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                 Text(
                   _label(
                     context,
-                    'Physical practice unavailable: instructor review, demonstrations and individual feedback are pending.',
-                    'Fiziksel çalışma kullanılamaz: eğitmen incelemesi, gösterimler ve bireysel geri bildirim bekleniyor.',
+                    'Each lesson identifies any source-reviewed optional task and a smaller or written alternative. Individual physical validation remains absent.',
+                    'Her ders kaynak incelemesine dayanan isteğe bağlı görevini ve daha küçük veya yazılı alternatifini belirtir. Kişisel fiziksel doğrulama yoktur.',
                   ),
                   key: const Key('karate-readiness'),
                 ),
                 Text(
                   _label(
                     context,
-                    '{value1}/16 written reviews reported this visit; physical components unattempted.',
-                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
+                    '{value1}/16 written reviews reported this visit; optional attempts do not change this count.',
+                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; isteğe bağlı denemeler bu sayıyı değiştirmez.',
                     args: {'value1': _written.length},
                   ),
                   key: const Key('karate-written-progress'),
@@ -645,8 +690,8 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                   Text(
                     _label(
                       context,
-                      'Written review completed by self-report this visit. Stance, hand paths, passing steps, walking turns and original KA-P1 remain physically unattempted and unverified.',
-                      'Bu ziyaretin yazılı incelemesi öz beyanla tamamlandı. Duruş, el yolları, geçiş adımları, yürüyüş dönüşleri ve özgün KA-P1 fiziksel olarak denenmedi ve doğrulanmadı.',
+                      'Written review completed by self-report this visit. Optional task reports do not establish physical completion, correct technique, a kata pass or rank.',
+                      'Bu ziyaretin yazılı incelemesi öz beyanla tamamlandı. İsteğe bağlı görev beyanları fiziksel tamamlanma, doğru teknik, kata başarısı veya derece oluşturmaz.',
                     ),
                     key: const Key('karate-written-completion'),
                   ),

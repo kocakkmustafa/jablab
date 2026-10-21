@@ -46,6 +46,8 @@ jobs:
 
       - name: JabLab app-owned source projection
         run: |
+          python3 -m unittest tool.test_boxing_editorial_closed_qa
+          python3 tool/build_boxing_editorial_closed_qa.py --check
           python3 -m unittest tool.test_media_source_projection_secure_read
           python3 tool/check_media_source_projection.py --check
 

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'kickboxing_course.dart';
 import 'ui_language.dart';
+import 'self_guided_practice.dart';
+import 'self_guided_practice_panel.dart';
 
 String _text(BuildContext context, KickboxingCopy copy) =>
     UiLanguage.text(context, en: copy.en, tr: copy.tr);
@@ -27,8 +29,8 @@ class KickboxingCourseEntryCard extends StatelessWidget {
       subtitle: Text(
         _label(
           context,
-          '16 written lessons · physical technique review pending',
-          '16 yazılı ders · fiziksel teknik incelemesi bekleniyor',
+          '16 lessons · selected beginner learning and written self-review',
+          '16 ders · seçili başlangıç bilgisi ve yazılı öz inceleme',
         ),
       ),
       trailing: const Icon(Icons.arrow_forward),
@@ -66,15 +68,48 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
   bool _readingVisible = true;
   _WrittenObservation _observation = _WrittenObservation.unreviewed;
   bool _reported = false;
+  PracticeAttempt _practiceAttempt = PracticeAttempt.unrecorded;
+  int _practiceEpoch = 0;
+  bool _practiceEnded = false;
+  bool _foreground = true;
+
+  bool get _canReport => _foreground && widget.admitted() &&
+      _answerVisible && _correction.text.trim().isNotEmpty &&
+      _observation == _WrittenObservation.compared &&
+      widget.priorWritten() && !_reported;
   @override
   void initState() {
     super.initState();
     _readingVisible = widget.lesson.number != 16;
+    _foreground = WidgetsBinding.instance.lifecycleState == null ||
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
+  void didUpdateWidget(covariant KickboxingLessonPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.lesson.id != widget.lesson.id) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+      _ownAnswer.clear();
+      _correction.clear();
+      _answerVisible = false;
+      _observation = _WrittenObservation.unreviewed;
+      _reported = false;
+      _readingVisible = widget.lesson.number != 16;
+    } else if (oldWidget.lesson.selfGuidedPractice !=
+        widget.lesson.selfGuidedPractice) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+    }
+  }
+
+  @override
   void dispose() {
+    _practiceEpoch++;
     WidgetsBinding.instance.removeObserver(this);
     _ownAnswer.dispose();
     _correction.dispose();
@@ -83,24 +118,44 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
 
   void _reset() {
     if (!mounted) return;
+    _practiceEpoch++;
     _ownAnswer.clear();
     _correction.clear();
     setState(() {
       _answerVisible = false;
       _observation = _WrittenObservation.unreviewed;
       _reported = false;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
     });
     widget.onReset();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state != AppLifecycleState.resumed) _reset();
+    _foreground = state == AppLifecycleState.resumed;
+    if (!_foreground) {
+      _reset();
+    } else if (mounted) {
+      _practiceEpoch++;
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l = widget.lesson;
+    final practice = l.selfGuidedPractice;
+    final practiceEpoch = _practiceEpoch;
+    bool practiceCurrent() =>
+        mounted &&
+        _foreground &&
+        _readingVisible &&
+        !_practiceEnded &&
+        practiceEpoch == _practiceEpoch &&
+        identical(l, widget.lesson) &&
+        identical(practice, widget.lesson.selfGuidedPractice) &&
+        widget.admitted();
     return Scaffold(
       appBar: AppBar(
         title: Text(_text(context, l.title)),
@@ -125,8 +180,8 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
           Text(
             _label(
               context,
-              'Reading and written review only. Physical practice is unavailable; individual technique prerequisites are unmet. A checkbox cannot authorize physical practice.',
-              'Yalnız okuma ve yazılı inceleme. Bireysel teknik önkoşulları karşılanmadığından fiziksel çalışma kullanılamaz. Bir kutucuk fiziksel çalışmaya izin vermez.',
+              'Written review and any optional beginner trial are separate. Your physical technique and individual suitability are not verified.',
+              'Yazılı inceleme ile varsa isteğe bağlı başlangıç denemesi ayrıdır. Fiziksel tekniğin ve kişisel uygunluğun doğrulanmaz.',
             ),
             key: const Key('kickboxing-physical-blocked'),
           ),
@@ -140,6 +195,7 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
             onPressed: () {
               if (widget.admitted()) {
                 setState(() {
+                  _practiceEpoch++;
                   _readingVisible = !_readingVisible;
                 });
               }
@@ -167,7 +223,28 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
                 ),
               ),
             if (l.sourceNote != null) Text(_text(context, l.sourceNote!)),
-            Text(_text(context, l.instructions)),
+            if (practice != null)
+              SelfGuidedPracticePanel(
+                key: ValueKey('practice-${l.id}'),
+                practice: practice,
+                attempt: _practiceAttempt,
+                admitted: practiceCurrent,
+                onChanged: (value) {
+                  if (!practiceCurrent() ||
+                      (value == PracticeAttempt.attempted &&
+                          !practice.offersMovement)) return;
+                  setState(() {
+                    _practiceAttempt = value;
+                    if (value == PracticeAttempt.stopped ||
+                        value == PracticeAttempt.uncertain) {
+                      _practiceEnded = true;
+                      _practiceEpoch++;
+                    }
+                  });
+                },
+              ),
+            if (l.selfGuidedPractice?.offersMovement != true)
+              Text(_text(context, l.instructions)),
             for (final row in l.rows)
               Card(
                 child: Padding(
@@ -258,8 +335,8 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
           Text(
             _label(
               context,
-              'A retest retains every individual technique prerequisite. In this version, use written retesting; comfort alone does not authorize movement.',
-              'Tekrar bütün bireysel teknik önkoşulları korur. Bu sürümde yazılı tekrar kullan; yalnız rahatlık harekete izin vermez.',
+              'Written retesting stays separate from any optional trial. Use the smaller or written alternative; a self-report is not a technique grade.',
+              'Yazılı tekrar varsa isteğe bağlı denemeden ayrıdır. Daha küçük veya yazılı seçeneği kullan; öz beyan teknik notu değildir.',
             ),
           ),
           RadioGroup<_WrittenObservation>(
@@ -319,19 +396,13 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
             ),
           TextButton(
             key: const Key('kickboxing-report-written'),
-            onPressed:
-                _answerVisible &&
-                    _correction.text.trim().isNotEmpty &&
-                    _observation == _WrittenObservation.compared &&
-                    widget.priorWritten() &&
-                    !_reported
+            onPressed: _canReport
                 ? () {
-                    if (widget.admitted()) {
-                      widget.onWritten();
-                      setState(() {
-                        _reported = true;
-                      });
-                    }
+                    if (!mounted || !_canReport ||
+                        practiceEpoch != _practiceEpoch ||
+                        !identical(l, widget.lesson)) return;
+                    widget.onWritten();
+                    setState(() { _reported = true; });
                   }
                 : null,
             child: Text(
@@ -586,16 +657,16 @@ class _KickboxingCoursePageState extends State<KickboxingCoursePage>
                 Text(
                   _label(
                     context,
-                    'Physical practice unavailable: instructor review, demonstrations and individual feedback are pending.',
-                    'Fiziksel çalışma kullanılamaz: eğitmen incelemesi, gösterimler ve bireysel geri bildirim bekleniyor.',
+                    'Physical technique, instructor approval and individual suitability are not verified. A self-report cannot change that.',
+                    'Fiziksel teknik, eğitmen onayı ve kişisel uygunluk doğrulanmaz. Öz beyan bunu değiştirmez.',
                   ),
                   key: const Key('kickboxing-readiness'),
                 ),
                 Text(
                   _label(
                     context,
-                    '{value1}/16 written reviews reported this visit; physical components unattempted.',
-                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
+                    '{value1}/16 written reviews reported this visit; this does not certify physical technique.',
+                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel teknik onaylanmaz.',
                     args: {'value1': _written.length},
                   ),
                   key: const Key('kickboxing-written-progress'),
@@ -604,8 +675,8 @@ class _KickboxingCoursePageState extends State<KickboxingCoursePage>
                   Text(
                     _label(
                       context,
-                      'Written review completed by self-report this visit. Stance, steps, jab, cross, low front kick and combined blocks remain physically unattempted and unverified.',
-                      'Bu ziyaretin yazılı incelemesi öz beyanla tamamlandı. Duruş, adımlar, jab, cross, alçak öne tekme ve birleşik bloklar fiziksel olarak denenmedi ve doğrulanmadı.',
+                      'Written review completed by self-report this visit. Stance, steps, jab, cross, low front kick and combined blocks remain physically unverified; optional attempts are separate self-reports.',
+                      'Bu ziyaretin yazılı incelemesi öz beyanla tamamlandı. Duruş, adımlar, jab, cross, alçak öne tekme ve birleşik bloklar fiziksel olarak doğrulanmadı; isteğe bağlı denemeler ayrı öz beyanlardır.',
                     ),
                     key: const Key('kickboxing-written-completion'),
                   ),

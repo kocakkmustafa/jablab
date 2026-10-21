@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/karate_course.dart';
 import 'package:jablab/app/karate_course_page.dart';
+import 'package:jablab/app/self_guided_practice.dart';
 
 KarateCourse course() => KarateCourse.fromJsonString(
   File('assets/content/karate_a.v1.json').readAsStringSync(),
@@ -129,15 +130,24 @@ void main() {
               t.widget<Text>(find.byKey(const Key('karate-teaching'))).data,
               language == 'tr' ? l.teaching.tr : l.teaching.en,
             );
-            await show(t, const Key('karate-conditional-task'));
-            expect(
-              t
-                  .widget<Text>(
-                    find.byKey(const Key('karate-conditional-task')),
-                  )
-                  .data,
-              language == 'tr' ? l.physicalTask.tr : l.physicalTask.en,
-            );
+            final practice = l.selfPractice;
+            final showsTask = practice.offersMovement ||
+                practice.mode == SelfGuidedPracticeMode.conceptOnly;
+            if (showsTask) {
+              await show(t, const Key('self-guided-task'));
+              expect(
+                t.widget<Text>(find.byKey(const Key('self-guided-task'))).data,
+                language == 'tr' ? practice.task.tr : practice.task.en,
+              );
+            } else {
+              await show(t, const Key('self-guided-source-pending'));
+              expect(find.byKey(const Key('self-guided-task')), findsNothing);
+              await show(t, const Key('self-guided-adaptation'));
+              expect(
+                t.widget<Text>(find.byKey(const Key('self-guided-adaptation'))).data,
+                language == 'tr' ? practice.adaptation.tr : practice.adaptation.en,
+              );
+            }
             await show(t, const Key('karate-written-task'));
             expect(
               t.widget<Text>(find.byKey(const Key('karate-written-task'))).data,
@@ -234,8 +244,8 @@ void main() {
           expect(
             find.textContaining(
               language == 'en'
-                  ? 'remain physically unattempted and unverified'
-                  : 'fiziksel olarak denenmedi ve doğrulanmadı',
+                  ? 'do not establish physical completion'
+                  : 'fiziksel tamamlanma, doğru teknik',
             ),
             findsOneWidget,
           );

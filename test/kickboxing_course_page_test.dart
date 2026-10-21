@@ -181,7 +181,7 @@ void main() {
             await t.pumpAndSettle();
             await tap(t, const Key('kickboxing-compared'));
             await tap(t, const Key('kickboxing-report-written'));
-            expect(course().physicalPracticeAvailable, isFalse);
+            expect(course().verifiedPhysicalPracticeAvailable, isFalse);
             expect(t.takeException(), isNull);
             await tapTestMaterialBack(t);
             await t.pumpAndSettle();
@@ -192,12 +192,12 @@ void main() {
           expect(
             find.textContaining(
               language == 'en'
-                  ? 'remain physically unattempted and unverified'
-                  : 'fiziksel olarak denenmedi ve doğrulanmadı',
+                  ? 'remain physically unverified'
+                  : 'fiziksel olarak doğrulanmadı',
             ),
             findsOneWidget,
           );
-          expect(course().physicalPracticeAvailable, isFalse);
+          expect(course().verifiedPhysicalPracticeAvailable, isFalse);
         } finally {
           semantics.dispose();
         }

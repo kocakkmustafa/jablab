@@ -2,6 +2,7 @@ import 'muay_thai_course.dart';
 import 'karate_course.dart';
 import 'taikyoku_shodan_course.dart';
 import 'yang16_written_course.dart';
+import 'yang16_preparation_course.dart';
 import 'kickboxing_course.dart';
 import 'tai_chi_course.dart';
 
@@ -318,6 +319,31 @@ final class ContentRepository {
           contentId: 'karate-course-json',
         ),
       );
+    }
+  }
+
+  static const String yang16PreparationManifestAsset =
+      'assets/motion_content/yang16_preparation.manifest.json';
+  static const String yang16PreparationAsset =
+      'assets/content/yang16_preparation.v1.json';
+
+  Future<Yang16PreparationCourse> loadYang16PreparationCourse() async {
+    final result = await ContentBundleLoader(
+      reader: FlutterBundleContentAssetReader(bundle: contentBundleOverride ?? rootBundle),
+      expectedAppId: 'com.yulalab.jablab',
+      currentCoreContract: currentMotionContentContract,
+      manifestPath: yang16PreparationManifestAsset,
+    ).load();
+    if (result is ContentBlocked) throw ContentException(result.error);
+    if (result is! ContentReady) {
+      throw const ContentException(ContentError(code: ContentErrorCode.capability));
+    }
+    final bytes = await result.assets.read(yang16PreparationAsset);
+    try {
+      return Yang16PreparationCourse.fromJsonString(utf8.decode(bytes));
+    } on FormatException {
+      throw const ContentException(ContentError(
+        code: ContentErrorCode.schema, contentId: 'yang16-original-preparation-json'));
     }
   }
 

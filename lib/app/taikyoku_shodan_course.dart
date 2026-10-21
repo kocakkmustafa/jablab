@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'self_guided_practice.dart';
+
 final class TaikyokuCopy {
   const TaikyokuCopy({required this.tr, required this.en});
   factory TaikyokuCopy.decode(Object? value) {
@@ -129,19 +131,23 @@ final class TaikyokuLesson {
         movementIds = _strings(m['movement_ids']),
         recall = List.unmodifiable(_array(m['recall'])
             .map((v) => TaikyokuRecall(_object(v)))),
-        completionMeaning = TaikyokuCopy.decode(m['completion_meaning']) {
-    _keys(m, {'id', 'title', 'objective', 'teaching', 'movement_ids', 'recall', 'completion_meaning'});
+        completionMeaning = TaikyokuCopy.decode(m['completion_meaning']),
+        selfPractice = SelfGuidedPractice.decode(m['selfPractice']) {
+    _keys(m, {'id', 'title', 'objective', 'teaching', 'movement_ids', 'recall', 'completion_meaning', 'selfPractice'});
   }
   final String id;
   final TaikyokuCopy title, objective, completionMeaning;
   final List<TaikyokuCopy> teaching;
   final List<String> movementIds;
   final List<TaikyokuRecall> recall;
+  final SelfGuidedPractice selfPractice;
   int get number => int.parse(id.substring(3));
   String? get previousLessonId => number == 1 ? null : _id('ts-', number - 1);
 }
 
-/// Reviewed written instruction. No flag or written result admits physical practice.
+/// Written recall and optional source-bound practice do not validate technique.
+/// Manuscript/curriculum/source-map hashes retain historical source provenance;
+/// reviewedAssetSha256 pins every byte of the current authored asset.
 final class TaikyokuCourse {
   TaikyokuCourse._(Map<String, dynamic> envelope)
       : this._content(envelope, _object(envelope['content']));
@@ -163,7 +169,7 @@ final class TaikyokuCourse {
             .map((v) => TaikyokuCountContract(_object(v)))) {
     _keys(envelope, {'schemaVersion', 'id', 'practiceKind', 'manuscriptSha256',
       'curriculumSha256', 'sourceMapSha256', 'sourceBindings', 'content', 'orderedMovementContracts'});
-    _require(_integer(envelope['schemaVersion']) == 1 &&
+    _require(_integer(envelope['schemaVersion']) == 2 &&
         envelope['id'] == 'jablab.taikyoku_shodan_jl' &&
         envelope['practiceKind'] == 'written_kata_instruction_and_recall' &&
         envelope['manuscriptSha256'] == manuscriptSha256 &&
@@ -227,6 +233,8 @@ final class TaikyokuCourse {
     const answers = ['a','c','b','b','a','c','c','a','b','c','b','a','b','c','a','c','a','b','c','b'];
     for (var i = 0; i < lessons.length; i++) {
       final lesson = lessons[i];
+      lesson.selfPractice.requireBinding(
+          lesson.id, sources.map((source) => source.id).toList());
       _require(lesson.id == _id('ts-', i + 1) && lesson.teaching.length == teachingLengths[i] &&
           _same(lesson.movementIds, [for (final n in groups[i]) _id('ts-m', n)]) &&
           lesson.recall.length == 2, 'Invalid ordered lesson contract');
@@ -248,7 +256,7 @@ final class TaikyokuCourse {
     }
   }
 
-  static const reviewedAssetSha256 = '56ba6480867e8bf3481b1e5fbe1b11b9ef21970ed362e546c389790901f94f92';
+  static const reviewedAssetSha256 = '7c498b8d582e3c9cce14f81b8cde4e81e0021b0668015e03f1d0f30c604aaacc';
   static const manuscriptSha256 = 'f748648bffca221f6752a4ceedea8418df389e06a0e488d039d8177e64e27d3a';
   static const curriculumSha256 = '6c6a0608c2bd5b63d6d00157b5a0d6be17e8d29b0fc3fa154441119750dbee9c';
   static const sourceMapSha256 = '942e3c3804bf64a81470bda1fa256c9389dd0eae42f71b40cb2973e9d7b6d4c6';
@@ -259,6 +267,10 @@ final class TaikyokuCourse {
   final List<TaikyokuMovement> movements;
   final List<TaikyokuCountContract> countContracts;
   final List<TaikyokuLesson> lessons;
+  bool get selfPracticeAvailable =>
+      lessons.any((lesson) => lesson.selfPractice.offersMovement);
+  bool get physicalTechniqueValidated => false;
+  // Compatibility value: validated physical availability remains false.
   bool get physicalPracticeAvailable => false;
   Map<String, bool> get releaseReadiness => const {
     'instructorReview': false, 'demonstrations': false, 'individualFeedback': false,

@@ -37,7 +37,7 @@ void main() {
         computeSha256Hex(
           File(ContentRepository.soloBoxingCourseAsset).readAsBytesSync(),
         ),
-        '0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f',
+        '56773912d8917e3403fb1b2fe3755cf564b10e57e4ed35f24c1df6640b2594dd',
       );
     },
   );

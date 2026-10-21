@@ -54,14 +54,14 @@ void main() {
     final karate = await repository.loadKarateCourse();
     expect(karate.lessons, hasLength(16));
     expect(computeSha256Hex(File(ContentRepository.karateCourseAsset).readAsBytesSync()),
-      'e9b3555f09a77eb20f5756ad4cefc647e2e32415b5f6f18bca7c80ef3b4b55b0');
+      '8d1a488fad8c6b5039ffc9842698800b13a3446a7a1235742b97b2184cf913db');
     final kickboxing = await repository.loadKickboxingCourse();
     expect(kickboxing.lessons, hasLength(16));
     expect(
       computeSha256Hex(
         File(ContentRepository.kickboxingCourseAsset).readAsBytesSync(),
       ),
-      '00b338d0de111ee240cdf1292611db2b8d6c3e5654800fc8967c5dfb52042fa3',
+      '33a908eadfac286345ca0cba189ff786afc31d018980956d19fcdb02fb238047',
     );
     final taiChi = await repository.loadTaiChiCourse();
     expect(taiChi.lessons, hasLength(14));
@@ -71,7 +71,7 @@ void main() {
       computeSha256Hex(
         File(ContentRepository.soloBoxingCourseAsset).readAsBytesSync(),
       ),
-      '0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f',
+      '56773912d8917e3403fb1b2fe3755cf564b10e57e4ed35f24c1df6640b2594dd',
     );
   });
 

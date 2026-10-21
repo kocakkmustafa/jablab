@@ -93,7 +93,7 @@ class SecureReadTests(unittest.TestCase):
             expected[name] = payload
         return expected
 
-    def test_wrapper_passes_only_four_opened_byte_inputs_to_dart(self) -> None:
+    def test_wrapper_passes_only_eleven_opened_editorial_byte_inputs_to_dart(self) -> None:
         expected = self._write_all_app_inputs()
         accepted = subprocess.CompletedProcess(
             args=[], returncode=0, stdout=b"PASS_PINNED_SOURCE_BYTES\n", stderr=b""
@@ -103,10 +103,11 @@ class SecureReadTests(unittest.TestCase):
         ) as run, redirect_stdout(io.StringIO()):
             check_from_app_root(self.root)
         call = run.call_args
-        self.assertEqual(call.args[0][-1], "--check-bytes")
+        self.assertEqual(call.args[0][-1], "--check-editorial-bytes")
         self.assertEqual(call.kwargs["cwd"], self.root)
         envelope = json.loads(call.kwargs["input"])
         self.assertEqual(envelope.keys(), expected.keys())
+        self.assertEqual(len(envelope), 11)
         for name, value in expected.items():
             self.assertEqual(base64.b64decode(envelope[name]), value)
 

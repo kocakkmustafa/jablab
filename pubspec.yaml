@@ -111,10 +111,13 @@ flutter:
     - assets/motion_content/karate.manifest.json
     - assets/motion_content/taikyoku_shodan_jl.manifest.json
     - assets/motion_content/yang16_written.manifest.json
+    - assets/motion_content/yang16_preparation.manifest.json
     - assets/motion_content/yang16_written.mapping.v1.json
     - assets/motion_content/muay_thai.manifest.json
     - assets/motion_content/jablab.source-slice.v1.json
     - assets/motion_content/jablab.source-projection.v1.json
+    - assets/motion_content/jablab.editorial.source-slice.v1.json
+    - assets/motion_content/jablab.editorial.source-projection.v1.json
     # PİNLİ poz modeli (§6 / M-L-01). Dosyanın KENDİSİ git'te DEĞİL — aile
     # kuralı `.task` ikililerini izlemiyor; `tool/fetch_pose_model.sh`
     # indirir/kopyalar ve SHA-256 doğrular. `model_pin_test` dosya varsa

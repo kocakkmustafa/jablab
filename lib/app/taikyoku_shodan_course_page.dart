@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'content_failure.dart';
 import 'taikyoku_shodan_course.dart';
+import 'self_guided_practice.dart';
+import 'self_guided_practice_panel.dart';
 import 'ui_language.dart';
 
 String _label(
@@ -34,8 +36,8 @@ class TaikyokuCourseEntryCard extends StatelessWidget {
       subtitle: Text(
         _label(
           context,
-          'Jason Leung reference · all 20 counts · 10 written lessons',
-          'Jason Leung referansı · 20 hareketin tamamı · 10 yazılı ders',
+          'Jason Leung reference · 20 counts · written review and optional tasks',
+          'Jason Leung referansı · 20 hareket · yazılı inceleme ve isteğe bağlı görevler',
         ),
       ),
       trailing: const Icon(Icons.arrow_forward),
@@ -74,6 +76,9 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
   bool _retesting = false;
   bool _compared = false;
   bool _reported = false;
+  PracticeAttempt _practiceAttempt = PracticeAttempt.unrecorded;
+  int _practiceEpoch = 0;
+  bool _practiceEnded = false;
   bool _foreground = _resumed();
   bool get _admitted => mounted && _foreground && widget.admitted();
   bool _filled(List<TextEditingController> values) =>
@@ -101,7 +106,19 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
   }
 
   @override
+  void didUpdateWidget(covariant TaikyokuLessonPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.lesson, widget.lesson) ||
+        !identical(oldWidget.course, widget.course)) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+    }
+  }
+
+  @override
   void dispose() {
+    _practiceEpoch++;
     WidgetsBinding.instance.removeObserver(this);
     for (final controller in [..._initial, ..._retest, _correction]) {
       controller.dispose();
@@ -123,10 +140,15 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
 
   void _reset() {
     if (!mounted) return;
+    _practiceEpoch++;
+    _practiceEnded = false;
     for (final controller in _initial) {
       controller.clear();
     }
-    setState(_clearReview);
+    setState(() {
+      _clearReview();
+      _practiceAttempt = PracticeAttempt.unrecorded;
+    });
     widget.onReset();
   }
 
@@ -171,6 +193,16 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
   @override
   Widget build(BuildContext context) {
     final lesson = widget.lesson;
+    final practice = lesson.selfPractice;
+    final practiceEpoch = _practiceEpoch;
+    bool visitCurrent() =>
+        mounted &&
+        practiceEpoch == _practiceEpoch &&
+        identical(lesson, widget.lesson) &&
+        identical(practice, widget.lesson.selfPractice) &&
+        _admitted;
+    bool practiceCurrent() =>
+        visitCurrent() && _readingVisible && !_practiceEnded;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -208,8 +240,8 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
           Text(
             _label(
               context,
-              'Reading and written recall only. Physical kata remains unattempted and unverified; individual requirements are open.',
-              'Yalnız okuma ve yazılı geri çağırma. Fiziksel kata denenmedi ve doğrulanmadı; bireysel gereksinimler açıktır.',
+              'Written recall and optional beginner adaptations are separate. Your technique, personal suitability and full kata performance are not validated.',
+              'Yazılı geri çağırma ve isteğe bağlı başlangıç uyarlamaları ayrıdır. Tekniğin, kişisel uygunluğun ve tam kata performansın doğrulanmaz.',
             ),
             key: const Key('taikyoku-physical-blocked'),
           ),
@@ -220,6 +252,7 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
               if (!_admitted) return;
               widget.onInvalidate();
               setState(() {
+                _practiceEpoch++;
                 _readingVisible = !_readingVisible;
                 for (final controller in _initial) {
                   controller.clear();
@@ -240,6 +273,24 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
             ),
           ),
           if (_readingVisible) ...[
+            SelfGuidedPracticePanel(
+              practice: practice,
+              attempt: _practiceAttempt,
+              admitted: practiceCurrent,
+              onChanged: (value) {
+                if (!practiceCurrent()) return;
+                if (!practice.offersMovement &&
+                    value == PracticeAttempt.attempted) return;
+                setState(() {
+                  _practiceAttempt = value;
+                  if (value == PracticeAttempt.stopped ||
+                      value == PracticeAttempt.uncertain) {
+                    _practiceEnded = true;
+                    _practiceEpoch++;
+                  }
+                });
+              },
+            ),
             for (var i = 0; i < lesson.teaching.length; i++)
               _copy(context, lesson.teaching[i], 'taikyoku-teaching-$i'),
             for (final movement in widget.course.movementsFor(lesson)) ...[
@@ -473,7 +524,7 @@ class _TaikyokuLessonPageState extends State<TaikyokuLessonPage>
             key: const Key('taikyoku-report-written'),
             onPressed: _canReport
                 ? () {
-                    if (!_canReport) return;
+                    if (!visitCurrent() || !_canReport) return;
                     widget.onWritten();
                     setState(() {
                       _reported = true;
@@ -753,16 +804,16 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
                 Text(
                   _label(
                     context,
-                    'Reading and written review only. All six individual requirements and physical readiness remain open.',
-                    'Yalnız okuma ve yazılı inceleme. Altı bireysel gereksinim ve fiziksel hazır olma durumu açıktır.',
+                    'Written review and optional source-reviewed beginner tasks are separate. All six individual physical validation records remain open.',
+                    'Yazılı inceleme ve kaynak incelemesine dayanan isteğe bağlı başlangıç görevleri ayrıdır. Altı kişisel fiziksel doğrulama kaydı açık kalır.',
                   ),
                   key: const Key('taikyoku-readiness'),
                 ),
                 Text(
                   _label(
                     context,
-                    '{value1}/10 written reviews reported this visit; physical kata unattempted and unverified.',
-                    'Bu ziyarette {value1}/10 yazılı inceleme beyanı; fiziksel kata denenmedi ve doğrulanmadı.',
+                    '{value1}/10 written reviews reported this visit; optional attempts do not change this count.',
+                    'Bu ziyarette {value1}/10 yazılı inceleme beyanı; isteğe bağlı denemeler bu sayıyı değiştirmez.',
                     args: {'value1': _written.length},
                   ),
                   key: const Key('taikyoku-written-progress'),

@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "id": "jablab.yang16_original_preparations.v1",
+  "sourceIds": [
+    "TC-ANGELA16",
+    "TC-PAULLAM-FIRST"
+  ],
+  "practices": [
+    {
+      "lessonId": "prepare",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/58",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Önce destek ve açık alanı kontrol et; hareket etmeden kendi sol ve sağını adlandır. Rahatsa iki ayağın zaten rahat ayrı olduğu bir başlangıç seç; videoda görünmeyen açma adımını yapmaya çalışma. Ellerini uylukların yanında rahat bırakıp doğal nefesle dinlen.",
+        "en": "Check support and clear space first; name your own left and right without moving. If comfortable, choose a start with the feet already comfortably apart; do not try an opening step unseen in the video. Rest the hands comfortably beside the thighs and breathe naturally."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m01",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/59",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak bir eli uyluktan küçük bir öne yol boyunca kaldır; alt göğsünü aşman gerekmez. Dirsek yumuşakken eli yavaşça geri alçalt ve dur; diğer eli ayrı dene. Bu yükselme–alçalma hazırlığıdır; ayaklar ve gövdeyle eşzamanlı form başlangıcı sayılmaz.",
+        "en": "While seated, lift one hand forward a small distance from the thigh; there is no need to exceed lower chest. Lower it again with a soft elbow and stop, then try the other hand separately. This prepares a rise–lower sequence and is not a simultaneous full-form beginning with the feet and trunk."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m02",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/60",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sol elin küçük rahat bir dairesini çiz ve uyluğa indir; sonra sağ eli ayrı dene. Bir el yukarıdayken ötekini alçakta tutmayı yalnız alt göğüs ile uyluk arasındaki rahat alanda dene. Yan adım seçeneği ancak ayrıca sunuluyorsa küçük yana yerleştirme alıştırmasının kısa, çaprazlamasız ayrı yerleştirmesidir; el daireleriyle aynı anda yapmak zorunlu değildir. Ayrı isteğe bağlı ayakta hazırlık: Destek ve denge güvenliyse, açık tarafta bir ayağı çok kısa yana yerleştir; iki ayağı çaprazlama. Önce dur, sonra rahat küçük yük değişimini ayrı dene. Diğer ayağı sürükleyerek toplamak, aynı genişliği tekrarlamak veya bir yana yürüyüş serisi yapmak zorunlu değildir; belirsizlikte iki el destekli sabit-ayak küçük yük değişimini seç.",
+        "en": "While seated, make a small comfortable circle with the left hand and lower it to the thigh, then try the right separately. Try one hand higher and the other lower only in a comfortable space between thigh and lower chest. A lateral-step option, when separately offered, is small lateral placement’s short noncrossing placement; it need not be simultaneous with the hand circles. Separate optional standing preparation: If support and balance are secure, place one foot a very short distance into the clear space beside you without crossing the feet. Stop before separately trying a small comfortable loading change. Dragging the other foot to gather, matching a fixed width or travelling repeatedly is not required; choose two-hand-supported fixed-foot small loading change when uncertain."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m03",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/61",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sağ parmakları zorlamadan gevşekçe bir araya getir; bileği zorla aşağı bükme. Sol avucu küçük rahat bir öne yoldan getirip geri indir; sağ elin biçimini tam kancaya benzetmek gerekmez. Yön değiştirme ayrı küçük adımlarla yön değiştirme alıştırmasıdır; görüntüde kesilen pivotla birleştirme. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
+        "en": "While seated, gather the right fingers loosely without forcing them and do not bend the wrist downward. Move the left open palm forward a small comfortable distance and lower it; the right hand need not match an exact hook. Direction change is separate small-step direction change practice; do not combine it with a pivot hidden by the cut. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m04",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/62",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sol avucu gövdenin önünde, alt göğsü aşmadan rahat dik tut; dirseği kilitleme. Sağ eli gevşek yumruk yapıp sol önkolun altında, bedenden rahat uzakta konumlandır ve ardından iki eli indir; önkola bastırma. Öndeki ayağı topuğa alma veya tek bacağa yüklenme görevi yok.",
+        "en": "While seated, hold the left palm comfortably upright in front of the trunk, no higher than lower chest and without locking the elbow. Place a relaxed right fist below the left forearm at a comfortable distance from the body, then lower both hands without pressing on the forearm. No heel placement or single-leg loading task is assigned."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m05",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/63",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sağ eli küçük öne–yukarı yoldan, en çok alt göğüs hizasına getirirken sol eli uyluğa yakın bırak; sonra dinlen. Tarafları karıştırırsan önce yalnız adlarını söyle; omzu zorlayarak baş üstüne çıkma. Bu sağ-yüksek/sol-alçak tanıma hazırlığıdır, ön topuk kaldırma veya formun duruş reçetesi değildir.",
+        "en": "While seated, bring the right hand slightly forward/up, at most to lower chest, while leaving the left near the thigh, then rest. If the sides become confusing, name them without movement first; do not force the shoulder overhead. This prepares recognition of right-higher/left-lower, not a front-heel lift or the form’s stance."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m06",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/64",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sol eli sol diz bölgesinin üzerinde küçük rahat bir yaydan aşağı/uyluğa getir; dizine bastırma. Ardından sağ avucu ayrı küçük bir öne yoldan uzatıp indir. İleri yerleştirme ancak ayrı sunulan kısa ileri yerleştirme görevidir; el sırasıyla aynı anda bağlama veya sol dizin üstüne yüklenme hedefi yok. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
+        "en": "While seated, move the left hand through a small comfortable arc above the left knee region toward the thigh without pressing on the knee. Separately move the right palm a short distance forward and lower it. Forward placement, when offered, is separate short forward placement practice; no simultaneous linking or loading over the left knee is assigned. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m07",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/65",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sol avucu küçük rahat bir mesafede önde tut; sağ eli sol önkolun altında ve biraz içeride konumlandır. Dirsekleri yumuşak bırak, iki eli dinlendir ve hangi elin önde olduğunu kendi cümlenle söyle. Ayağı topuk üzerine almak veya arkadaki ayağı toplamak bu hazırlığın parçası değildir.",
+        "en": "While seated, hold the left palm forward a small comfortable distance and place the right hand below and slightly inward from the left forearm. Keep the elbows soft, rest both hands, and name which hand is forward. Heel placement and gathering the rear foot are not part of this preparation."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m08",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/66",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sağ avucu gövdenin önünden küçük bir mesafe ileri götür ve geri al. Sol eli ayrı küçük bir içeri–aşağı yoldan uyluğa getir; büyük geriye omuz açılışı yapma. İki parçayı ayırabilirsin. Görüntüde örtülen geri adımı körlemesine deneme; bu hazırlık gerçek geri adım öğretimi değildir.",
+        "en": "While seated, move the right palm a small distance forward from the trunk and return it. Separately bring the left hand through a small inward/downward path to the thigh without a large backward shoulder opening. Keep the parts separate if needed. Do not blindly try the backward step hidden by overlap; this preparation does not teach the actual backward step."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m09",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/67",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak iki eli gevşek yumruk yapabilirsin; sol eli sağdan biraz daha yüksek, alt göğsü aşmadan tut, sonra ikisini indir. Bilekleri veya omzu zorlamadan yalnız el sırasını tanı; temas, güç ve baş hizasında vurma yok. Yön değiştirmeyi ancak ayrı küçük adımlarla yön değiştirme ile ele al; yaklaşık 90° yorumunu bedene zorunlu açı yapma. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
+        "en": "While seated, loosely close both hands if comfortable; hold the left a little higher than the right, no higher than lower chest, then lower both. Recognize the hand order without forcing wrists/shoulders, contact, power or head-level striking. Study direction change only through separate small-step direction change; the approximate 90° interpretation is not a required body angle. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m10",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/68",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sağ eli küçük rahat bir öne–yukarı yoldan getirirken sol eli kalça/uyluk yanında dinlendir; sonra sağ eli indir. Bu, tek sağ taraflı görüntüyü hatırlamaya hazırlıktır. İleri yerleştirme ayrı kısa ileri yerleştirme alıştırmasıdır; sonraki sol adımı ikinci Yele Ayırma sayma ve el yoluyla aynı anda bağlama şartı koyma. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
+        "en": "While seated, bring the right hand slightly forward/up while resting the left beside the hip/thigh, then lower the right. This prepares recall of the single right-sided appearance. Forward placement is separate short forward placement; do not count the next left step as a second Mane or require simultaneous linking. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m11",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/69",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sol eli küçük aşağı yoldan uyluğa getir. Sağ eli gevşek yumrukla küçük rahat bir ileri/aşağı yoldan uzat ve geri al; dirseği kilitleme veya hedefe vurma. Geleneksel hedef adı bir kişiye temas görevi değildir. İleri yerleştirme ayrı kısa ileri yerleştirme hazırlığıdır; yumrukla eşzamanlı güç verme yok. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
+        "en": "While seated, lower the left hand through a small path to the thigh. Extend and return a relaxed right fist along a small comfortable forward/downward path without locking the elbow or striking a target. The traditional target name assigns no contact with a person. Forward placement is separate short forward placement preparation, without simultaneous power delivery. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m12",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/70",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak bir eli alt göğüs çevresinde rahat yükseklikte, ötekini uyluğa yakın tut; sonra elleri ayrı ayrı indirip konumlarını değiştir. Başı çevirmek veya omzu baş üstüne kaldırmak gerekmez. E11’deki yaklaşık yarım dönüş bu hazırlıkta öğretilmez; yön değiştirme ancak ayrı küçük küçük adımlarla yön değiştirme parçalarıyla ele alınır. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
+        "en": "While seated, hold one hand at a comfortable height around lower chest and the other near the thigh, then lower them separately and exchange positions. No head turn or overhead shoulder lift is required. This preparation does not teach E11’s approximate half-turn; direction change uses only separate small small-step direction change parts. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m13",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/71",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak sol avucu küçük rahat bir öne yoldan getir ve dinlendir. Sonra sağ gevşek yumruğu ayrı küçük bir öne yoldan uzatıp geri al; sol avuçla önkola bastırma veya yumruğu itme. İleri yerleştirme ayrı kısa ileri yerleştirme alıştırmasıdır; görülemeyen çapraz basma veya iniş sırası bu hazırlıkla tamamlanmış sayılmaz. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
+        "en": "While seated, move the left palm forward a small comfortable distance and rest it. Then separately extend and return a relaxed right fist along a small forward path without pressing the forearm or pushing the fist with the left palm. Forward placement is separate short forward placement; unseen crossing or landing sequence remains unresolved. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m14",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/72",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak tek elle küçük öne–geri yolunu dene, sonra dinlen; öteki eli ayrı ele al. Rahatsa iki avucu birbirine bastırmadan küçük bir öne–geri sırasıyla dene ve indir; partner itişi veya güç hedefi yok. Bu özgün kol sırası, bir sağ girişin birden çok kol evresinden ayrılmasını hatırlatır; geleneksel alt teknikleri doğrulamaz.",
+        "en": "While seated, try one small forward–return hand path and rest, then work the other hand separately. If comfortable, try a small forward–return sequence with both palms without pressing them together, then lower them; use no partner push or power target. This original arm sequence recalls one right entry with multiple arm phases, without validating traditional sub-techniques."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m15",
+      "mode": "small_range_non_contact",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/73",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak iki önkolu gövdenin önüne rahatça getir; bilekleri zorlamadan kısa süre çapraz görünümde tutabilir veya yalnız bu sırayı tarif edebilirsin. Sonra elleri ayrı indir ve dinlen; sabit tutma süresi hedefi yok. Yön değiştirme ayrı küçük adımlarla yön değiştirme alıştırmasıdır; ayakları çaprazlama, görülemeyen dönüş temasını tamamlama. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
+        "en": "While seated, comfortably bring both forearms in front of the trunk; briefly make a crossed appearance without forcing the wrists, or describe the sequence only. Lower the hands separately and rest, with no hold-duration target. Direction change is separate small-step direction change; do not cross the feet or fill in unseen turning contacts. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "m16",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/74",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Oturarak elleri küçük rahat bir yoldan aç ve uyluklara doğru alçalt; önce bir eli sonra diğerini seçebilirsin. Doğal nefesle dinlen. Resmî 16 Kapanışı ayrı Normal Duruşa Dönüşten ayır; yeni adım veya ayağı zorla toplama ekleme.",
+        "en": "While seated, open the hands through a small comfortable path and lower them toward the thighs; you may work one hand before the other. Rest with natural breathing. Distinguish official 16 Closing from separate Return to Normal; add no new step or forced foot gathering."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    },
+    {
+      "lessonId": "return",
+      "mode": "preparation",
+      "sourceReview": "video_review",
+      "sourceReviewReceiptId": "curriculum-first-release-2026-10-20/video-review/FAMILY-COVERAGE-REVIEW.v3.json#/rows/75",
+      "sourceIds": [
+        "TC-ANGELA16",
+        "TC-PAULLAM-FIRST"
+      ],
+      "task": {
+        "tr": "Ellerini rahatça uylukların yanına yerleştir ve dur. Ayakta çalıştıysan desteğini koruyarak rahat son konumunda dinlen; bitirmek için iki ayağı birleştirme zorunluluğu yok. Kaynakta görünmeyen sağ/sol toplama adımı öğretilmez; denendi, atlandı veya belirsiz kaydı form ustalığı sayılmaz.",
+        "en": "Rest the hands comfortably beside the thighs and stop. If you practised standing, keep support and rest in your comfortable finishing position; finishing does not require bringing the feet together. No unseen right/left gathering step is taught; tried/skipped/uncertain reporting does not mean form mastery."
+      },
+      "observe": {
+        "tr": "Kendi taraf adlarını, el parçalarının sırasını ve durduğun noktayı anlat. Emin olmadığın temas, ayak yükü veya açı için bilinmiyor de; deneme teknik doğruluk kanıtı değildir.",
+        "en": "Describe your own side names, the hand-part order and where you stopped. Say unknown for uncertain contact, foot loading or angles; an attempt is not proof of correct technique."
+      },
+      "safety": {
+        "tr": "Yavaş, küçük ve temassız kal. Ağrı, baş dönmesi veya güvensiz dengede dur; destek erişimde değilse ayakta seçeneği deneme. Yüklü ayağı zeminde çevirme, dizi burma, nefesi tutma; belirsiz geri adım veya yarım dönüşü kopyalama.",
+        "en": "Keep it slow, small and non-contact. Stop for pain, dizziness or unsafe balance; do not try standing work without support within reach. Do not turn a loaded planted foot, twist the knee or hold your breath; copy no uncertain backward step or half-turn."
+      },
+      "adaptation": {
+        "tr": "Hareketi atlayıp kendi sol/sağını, el sırasını ve durma nedenini sözle anlatabilirsin. Başka rahat bir oturumda daha küçük seçeneğe dön; aynı oturumda fiziksel tekrar zorunlu değildir.",
+        "en": "You may skip movement and explain your own left/right, hand order and stopping reason in words. Return to a smaller option in another comfortable session; physical retry in the same session is not required."
+      },
+      "progressEffect": 0
+    }
+  ]
+}

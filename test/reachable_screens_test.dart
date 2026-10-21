@@ -498,7 +498,13 @@ void main() {
     await t.pumpAndSettle();
     visit(SoloBoxingLessonPage, 'soloLesson');
     await t.pageBack();
+    // Returning from the lesson reloads the real progress file. Give that
+    // I/O the existing bounded readiness barrier before animation settling.
+    await settleAppLoad(t);
     await t.pumpAndSettle();
+    expect(find.byType(SoloBoxingCoursePage), findsOneWidget);
+    expect(find.byKey(const Key('solo-course-progress')), findsOneWidget);
+    expect(find.byType(SoloBoxingLessonPage), findsNothing);
     await t.pageBack();
     await t.pumpAndSettle();
 

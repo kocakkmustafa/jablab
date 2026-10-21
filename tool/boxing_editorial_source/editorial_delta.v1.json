@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "kind": "JABLAB_EDITORIAL_SOURCE_DELTA_V1",
+  "state": "ORIGINAL_COPY_CORRECTIONS_ONLY_ROOT_REVIEW_REQUIRED_NOT_MEDIA_ACCEPTANCE",
+  "baselineCourseSha256": "0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f",
+  "targetCourseSha256": "56773912d8917e3403fb1b2fe3755cf564b10e57e4ed35f24c1df6640b2594dd",
+  "changes": [
+    {
+      "id": "BOX-DRAFT-01",
+      "lesson_id": "boxing.rounds.personal_plan",
+      "json_pointer": "/modules/6/lessons/4/stopSignal",
+      "before": {
+        "en": "Stop or revise the plan if symptoms, pain or lost balance appear.",
+        "tr": "Belirti, ağrı veya denge kaybı olursa dur ya da planı değiştir."
+      },
+      "after": {
+        "en": "Stop the practice immediately if symptoms, pain or loss of balance appear. Rest instead of continuing with a changed plan. Do not resume while the symptom remains; seek appropriate health advice if it persists, returns or concerns you.",
+        "tr": "Belirti, ağrı veya denge kaybı olursa çalışmayı hemen durdur. Planı değiştirerek sürdürmek yerine dinlen. Belirti sürerken yeniden başlama; sürerse, yinelerse veya seni endişelendirirse uygun sağlık desteği al."
+      },
+      "reason": "Existing stopSignal offers stop OR revise while the same lesson requires immediate stop. Separate stopping from future plan adjustment without claiming individual medical clearance.",
+      "primary_safety_support_url": "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/"
+    },
+    {
+      "id": "BOX-DRAFT-02",
+      "lesson_id": "boxing.rounds.personal_plan",
+      "json_pointer": "/modules/6/lessons/4/steps/2",
+      "before": {
+        "en": "Pick a short time ceiling and a rest option. A changed plan after symptoms or fatigue is good judgement, not failure.",
+        "tr": "Kısa süre üst sınırı ve dinlenme seçeneği belirle. Belirti veya yorgunlukta planı değiştirmek başarısızlık değil, iyi karardır."
+      },
+      "after": {
+        "en": "Pick a short time ceiling and a rest option. Stopping for a symptom is good judgement, not failure. If ordinary fatigue builds without a stop signal, finish or rest early; make any easier plan for a later comfortable attempt.",
+        "tr": "Kısa süre üst sınırı ve dinlenme seçeneği belirle. Bir belirti nedeniyle durmak başarısızlık değil, iyi karardır. Durma belirtisi olmadan sıradan yorgunluk artarsa erken bitir veya dinlen; daha kolay planı sonraki rahat deneme için seç."
+      },
+      "reason": "Keep the planning step consistent with immediate-stop wording; separate ordinary fatigue from warning symptoms.",
+      "primary_safety_support_url": "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/"
+    },
+    {
+      "id": "BOX-DRAFT-03",
+      "lesson_id": "boxing.combinations.angle_exit",
+      "json_pointer": "/modules/5/lessons/4/steps/1",
+      "before": {
+        "en": "Keep the exit separate at first. Count 'hands home, then feet' to avoid moving with both hands away.",
+        "tr": "Önce çıkışı ayrı tut. İki el uzaktayken hareket etmemek için 'eller yerinde, sonra ayaklar' diye say."
+      },
+      "after": {
+        "en": "For this paused learning drill, keep the exit separate: count “hands home, then feet”. This is a way to practise the parts in order, not a rule that all boxing footwork must wait for both hands.",
+        "tr": "Bu duraklı öğrenme provasında çıkışı ayrı tut: “eller yerinde, sonra ayaklar” diye say. Bu, parçaları sırayla öğrenme yoludur; bütün boks adımlarının iki eli beklemesi gerektiği anlamına gelmez."
+      },
+      "reason": "toronto_small_angle_exit source explicitly does not support a universal hands-return-before-feet rule. Label original pedagogical constraint, preserving simple noncontact drill."
+    },
+    {
+      "id": "BOX-DRAFT-04",
+      "lesson_id": "boxing.combinations.angle_exit",
+      "json_pointer": "/modules/5/lessons/4/steps/2",
+      "before": {
+        "tr": "Kombinasyon bitmeden büyük pivotla uzaklaşmaya çalışma. Elleri geri getir, sonra küçük yan adım veya rahat dönüş seç.",
+        "en": "Do not try to leave through a large pivot before finishing the combination. Return the hands first, then choose a small side step or comfortable turn."
+      },
+      "after": {
+        "en": "In this drill, complete the short combination, return the hands, then choose one small side step or comfortable turn. Keep the range small; do not force a large pivot.",
+        "tr": "Bu provada kısa kombinasyonu bitir, elleri geri getir, sonra tek küçük yan adım veya rahat dönüş seç. Aralığı küçük tut; büyük bir pivotu zorlama."
+      },
+      "reason": "Carry the paused-drill scope through the repeated instruction."
+    },
+    {
+      "id": "BOX-DRAFT-05",
+      "lesson_id": "boxing.combinations.angle_exit",
+      "json_pointer": "/modules/5/lessons/4/selfChecks/0",
+      "before": {
+        "en": "Both hands were back before my exit began.",
+        "tr": "Çıkış başlamadan iki elim dönmüştü."
+      },
+      "after": {
+        "en": "In this paused drill, both hands were back before my exit began.",
+        "tr": "Bu duraklı provada çıkış başlamadan iki elim dönmüştü."
+      },
+      "reason": "The self-check measures completion of this practice task, not a universal sporting rule."
+    },
+    {
+      "id": "BOX-DRAFT-06",
+      "lesson_id": "boxing.footwork.diagonal",
+      "json_pointer": "/modules/1/lessons/2/practice",
+      "before": {
+        "tr": "Zihninde küçük bir X çiz; her kola bir kol boyu ilerle ve aralarda merkeze dön.\n\nKısa odak çalışması: Küçük X'in önce ön iki kolunu, dinlendikten sonra arka iki kolunu dene. Her dönüşte merkezde dur; bir sonraki yönü önceden söyle. Bölümler arasında dinlen; süreyi rahatlığına göre uzat.\n\nRahat olduğunda tek değişken denemesi: Küçük X kollarını farklı sırada seç, merkeze dönüşü koru.\n\nSonraki pratik: Sonraki uygun oturumda kısa uygulamanın sırasını önce yardımsız hatırla. İleri ve geri dersini kısaca hatırla; yalnız karışan kısmı yeniden kontrol et.",
+        "en": "Draw a small X mentally and travel one arm-length along each ray, returning to the centre between rays.\n\nShort focused practice: Try the two front rays of a small X first, then the two back rays after a rest. Stop at the centre on every return and name the next direction beforehand. Rest between sections; take longer if you need it.\n\nWhen comfortable, try changing just one variable: Choose the small X rays in a different order while keeping the return to the centre.\n\nNext practice: At the next suitable session, recall the short sequence without reading first. Briefly revisit Forward and back; check only the confusing part again."
+      },
+      "after": {
+        "tr": "Zeminde küçük bir X hayal et. Bir kol yönünde rahat, küçük bir çapraz adım at; diğer ayak tabanı yeniden kursun. Başka kolu seçmeden merkeze dön. Bir kol boyu mesafeyi tamamlama zorunluluğu yok.\n\nKısa odak çalışması: Küçük X'in önce ön iki kolunu, dinlendikten sonra arka iki kolunu dene. Her dönüşte merkezde dur; bir sonraki yönü önceden söyle. Bölümler arasında dinlen; süreyi rahatlığına göre uzat.\n\nRahat olduğunda tek değişken denemesi: Küçük X kollarını farklı sırada seç, merkeze dönüşü koru.\n\nSonraki pratik: Sonraki uygun oturumda kısa uygulamanın sırasını önce yardımsız hatırla. İleri ve geri dersini kısaca hatırla; yalnız karışan kısmı yeniden kontrol et.",
+        "en": "Imagine a small X on the floor. Take one comfortable small diagonal step along a ray, let the other foot restore your base, then return to the centre before choosing another ray. No arm-length distance is required.\n\nShort focused practice: Try the two front rays of a small X first, then the two back rays after a rest. Stop at the centre on every return and name the next direction beforehand. Rest between sections; take longer if you need it.\n\nWhen comfortable, try changing just one variable: Choose the small X rays in a different order while keeping the return to the centre.\n\nNext practice: At the next suitable session, recall the short sequence without reading first. Briefly revisit Forward and back; check only the confusing part again."
+      },
+      "reason": "Remove ambiguous arm-length travel target that can conflict with repeated small-step and shrink-the-X cues. No numerical stance or personal dose is invented."
+    }
+  ],
+  "progressEffect": 0,
+  "releaseEligible": false,
+  "mediaBytesAccepted": false,
+  "rightsAccepted": false,
+  "physicalTechniqueAccepted": false,
+  "qualifiedMedia": 0,
+  "sourceWriterReceipt": {
+    "path": "tool/boxing_editorial_source/evidence/editorial-source-writer.v1.json",
+    "sha256": "5bcc93690652a140cff35e5434bb4abf35d05f06edab2788acc959a24e9b47ca"
+  }
+}

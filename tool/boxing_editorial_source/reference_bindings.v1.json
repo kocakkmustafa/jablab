@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "kind": "JABLAB_EDITORIAL_REFERENCE_BINDINGS_V1",
+  "references": [
+    {
+      "path": "tool/boxing_editorial_source/evidence/DVIDS-LEAD-HAND-PUNCH.json",
+      "sha256": "f7db9b197b3b324fe3ebfb6c6226cd1dff7facbca13cd215199ff2cf6c3693dc",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/DVIDS-LEAD-HAND-PUNCH.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/DVIDS-HOOK.json",
+      "sha256": "9bb78ced6cf12def5437a33123fcbb60661676561c4898dc416cbcfeb1c63ed7",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/DVIDS-HOOK.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/DVIDS-UPPERCUT.json",
+      "sha256": "3203b44512ca9c203167f2cd65b649d6f79de8b071f0d6ad4127ac492d243a4c",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/DVIDS-UPPERCUT.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/MYBOXINGCOACH-JAB.json",
+      "sha256": "04226a968ad7ace7132e447cdf4b6435f103b2a40f5fe630fb91a47f8c807cd6",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/MYBOXINGCOACH-JAB.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/MYBOXINGCOACH-REAR-CROSS.json",
+      "sha256": "2c431e9e9d470a4e92707937f1d46047c6748b45bf65bb7a87e27e09b55f0574",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/MYBOXINGCOACH-REAR-CROSS.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/MYBOXINGCOACH-FORWARD-BACKWARD.json",
+      "sha256": "86cf0b38b3e66f4d26fd9de383002fbe96fc6e3d294d0b5f14142af445395356",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/MYBOXINGCOACH-FORWARD-BACKWARD.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/MYBOXINGCOACH-SIDE-STEP.json",
+      "sha256": "878ff8e2e9ffdbe15e7eef3b30c2c1b0e844a15173afeb4087fe46dd7f1c5033",
+      "scope": "selected_actual_visual_instants",
+      "originReportPath": "video-review/MYBOXINGCOACH-SIDE-STEP.json"
+    },
+    {
+      "path": "tool/boxing_editorial_source/evidence/boxing-editorial-safety-context.tr.md",
+      "sha256": "f4686d664c0e4713ccfd61738aa980e3d053c9d036871476bc231f87aa64b359",
+      "scope": "editorial inventory and primary safety source context; not clinical clearance",
+      "originReportPath": "boxing-karate/REPORT.tr.md"
+    }
+  ],
+  "primarySafetyUrl": "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/",
+  "limits": [
+    "References identify actually inspected source reports only; not a complete video watch, audio review, own physical execution or validation.",
+    "Original6copy corrections are not six copied source exercise sequences.",
+    "No source view or owner receipt transfers video distribution rights or institutional endorsement."
+  ],
+  "releaseEligible": false,
+  "mediaBytesAccepted": false,
+  "rightsAccepted": false,
+  "physicalTechniqueAccepted": false
+}

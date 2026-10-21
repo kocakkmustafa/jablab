@@ -16,10 +16,17 @@ from typing import Callable
 
 MAX_JSON_BYTES = 2 * 1024 * 1024
 APP_INPUTS = {
-    "slice": "assets/motion_content/jablab.source-slice.v1.json",
-    "projection": "assets/motion_content/jablab.source-projection.v1.json",
+    "slice": "assets/motion_content/jablab.editorial.source-slice.v1.json",
+    "projection": "assets/motion_content/jablab.editorial.source-projection.v1.json",
     "course": "assets/content/solo_boxing_course.v1.json",
-    "fixture": "test/fixtures/jablab_v2k_source_pins_v1.json",
+    "fixture": "test/fixtures/jablab_editorial_source_pins.v1.json",
+    "proof": "tool/boxing_editorial_source/source_proof.v1.json",
+    "delta": "tool/boxing_editorial_source/editorial_delta.v1.json",
+    "baseline": "tool/boxing_editorial_source/baseline_v2k_jablab.v1.json",
+    "references": "tool/boxing_editorial_source/reference_bindings.v1.json",
+    "historicalProof": "tool/boxing_editorial_source/historical_source_proof.v1.json",
+    "historicalFixture": "test/fixtures/jablab_v2k_source_pins_v1.json",
+    "producer": "tool/build_boxing_editorial_closed_qa.py",
 }
 
 
@@ -111,7 +118,7 @@ def check_from_app_root(root: Path) -> None:
     )
     try:
         result = subprocess.run(
-            ["dart", "run", "tool/check_media_source_projection.dart", "--check-bytes"],
+            ["dart", "run", "tool/check_media_source_projection.dart", "--check-editorial-bytes"],
             input=envelope,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -134,7 +141,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.parse_args(argv)
     try:
         # "." anchors the read to the process's current directory inode.
-        # The four inputs then share the same open root descriptor.
+        # The eleven inputs then share the same open root descriptor.
         check_from_app_root(Path("."))
         return 0
     except (SourceReadError, subprocess.TimeoutExpired) as exc:

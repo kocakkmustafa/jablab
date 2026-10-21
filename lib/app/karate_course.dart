@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'self_guided_practice.dart';
+
 final class KarateCopy {
   const KarateCopy({required this.tr, required this.en});
   final String tr, en;
@@ -33,6 +35,7 @@ final class KarateLesson {
       title = KarateCopy.decode(m['title']),
       teaching = KarateCopy.decode(m['teaching']),
       physicalTask = KarateCopy.decode(m['physical_task']),
+      selfPractice = SelfGuidedPractice.decode(m['selfPractice']),
       writtenTask = KarateCopy.decode(m['written_task']),
       question = KarateCopy.decode(m['question']),
       answer = KarateCopy.decode(m['answer_key']),
@@ -47,6 +50,7 @@ final class KarateLesson {
       'title',
       'teaching',
       'physical_task',
+      'selfPractice',
       'written_task',
       'question',
       'answer_key',
@@ -56,10 +60,12 @@ final class KarateLesson {
       'physicalPrerequisiteIds',
       'sourceIds',
     });
+    selfPractice.requireBinding(id, sourceIds);
     if (sourceIds.isEmpty) {
       throw const FormatException('Missing source binding');
     }
   }
+  final SelfGuidedPractice selfPractice;
   final int number;
   final String id;
   final KarateCopy title,
@@ -73,7 +79,9 @@ final class KarateLesson {
   final List<String> prerequisiteIds, physicalPrerequisiteIds, sourceIds;
 }
 
-/// Exact written preparation; every physical requirement stays unmet.
+/// Written recall and optional source-bound self-practice are separate.
+/// Historical manuscript provenance is not the checksum of this authored asset.
+/// Every individual physical validation record stays unmet.
 final class KarateCourse {
   KarateCourse._(Map<String, dynamic> m)
     : title = KarateCopy.decode(m['title']),
@@ -100,7 +108,7 @@ final class KarateCourse {
       'sources',
       'lessons',
     });
-    if (_integer(m['schemaVersion']) != 1 ||
+    if (_integer(m['schemaVersion']) != 2 ||
         m['id'] != 'jablab.karate_a' ||
         m['practiceKind'] != 'written_kihon_sequence_preparation' ||
         m['manuscriptSha256'] !=
@@ -124,10 +132,20 @@ final class KarateCourse {
       throw const FormatException('Unaccepted physical readiness claim');
     }
     final sourceIds = sources.map((s) => s.id).toSet();
-    if (sources.length != 10 ||
-        sourceIds.length != 10 ||
-        !List.generate(10, (i) => 'K${i + 1}').every(sourceIds.contains)) {
+    if (sources.length != 13 ||
+        sourceIds.length != 13 ||
+        !List.generate(13, (i) => 'K${i + 1}').every(sourceIds.contains)) {
       throw const FormatException('Invalid teaching source inventory');
+    }
+    const observedPrimaryUrls = <String, String>{
+      'K11': 'https://www.youtube.com/watch?v=jH6bv4GDpp0',
+      'K12': 'https://www.youtube.com/watch?v=kta8JS_pXFs',
+      'K13': 'https://www.youtube.com/watch?v=1uKTYj00QLM',
+    };
+    if (sources.any((source) =>
+        observedPrimaryUrls.containsKey(source.id) &&
+        source.url.toString() != observedPrimaryUrls[source.id])) {
+      throw const FormatException('Wrong actual primary source binding');
     }
     const List<List<int>> physical = [
       [],
@@ -175,12 +193,16 @@ final class KarateCourse {
   }
   // Core verification is followed by the fixed pin for this transcription.
   static const String reviewedAssetSha256 =
-      'e9b3555f09a77eb20f5756ad4cefc647e2e32415b5f6f18bca7c80ef3b4b55b0';
+      '8d1a488fad8c6b5039ffc9842698800b13a3446a7a1235742b97b2184cf913db';
   final KarateCopy title;
   final Map<String, KarateCopy> shared;
   final List<KarateCopy> sequenceRows;
   final List<KarateSource> sources;
   final List<KarateLesson> lessons;
+  bool get selfPracticeAvailable =>
+      lessons.any((lesson) => lesson.selfPractice.offersMovement);
+  bool get physicalTechniqueValidated => false;
+  // Retained compatibility value: this means validated physical availability.
   bool get physicalPracticeAvailable => false;
 }
 

@@ -1,0 +1,64 @@
+{
+  "atUtc": "2026-10-20T22:01:09.203246+00:00",
+  "sourcePage": "https://www.myboxingcoach.com/footwork-moving-in-and-out/",
+  "sourceUrl": "https://www.youtube.com/watch?v=ZE6IVZ-MQUA",
+  "title": "How to Box - Boxing Footwork - Moving In and Out",
+  "publisher": "MyBoxingCoach",
+  "durationSeconds": 266.841,
+  "reviewKind": "selected_actual_visual_instants",
+  "method": "Normal public IAB player, paused UIseek and bounded frame stepping, currentTime/readyState read-only. First70s seek with readyState1 excluded and independently re-observed readyState4.",
+  "continuousFullVideoWatched": false,
+  "audioReviewed": false,
+  "assetDownloadOrCopy": false,
+  "permissionBarrierBypassed": false,
+  "observations": [
+    {
+      "seconds": [
+        70.0,
+        72.0,
+        72.4,
+        72.8,
+        73.4,
+        73.8
+      ],
+      "observed": "Staggered start with separated feet and both hands at guard; presenter prepares a short forward movement."
+    },
+    {
+      "seconds": [
+        74.4,
+        74.8,
+        75.4
+      ],
+      "observed": "Short forward paired displacement with feet retaining offset rather than crossing; no punch added. Precise first ground-contact milliseconds not measured from these sampled frames."
+    },
+    {
+      "seconds": [
+        85.4,
+        86.4
+      ],
+      "observed": "Presenter points to lead/front leg while explaining backward movement setup."
+    },
+    {
+      "seconds": [
+        88.0,
+        88.8
+      ],
+      "observed": "Rear foot displaced backward while front is still nearer prior location, followed by front-foot gathering toward a staggered base. No leg crossing visible in this sampled backward movement."
+    }
+  ],
+  "transcriptLocatorOnly": "/var/folders/sl/xf0zx4_54fx5146nmzgf0xt00000gn/T/browser-use/exports/youtube-ZE6IVZ-MQUA-5cd50cd8-aa40-4160-bdc3-5a7fa2695158.txt",
+  "supportedFamilies": [
+    "short forward/backward paired steps preserving staggered spacing",
+    "rear begins retreat and follower restores base context",
+    "short-distance rather than large lunge context"
+  ],
+  "adaptation": "Source teaches explosive glide and rejects slow step-and-drag for sport speed. JabLab explicitly offers original slow small foot placements separated by pauses; it does not claim sport-speed equivalence. No bounce, drive, punch, heel landing prescription, measured fixed width or speed target is transferred. Each foot stays on its own track, clear return path required, paper arrows are an alternative.",
+  "notEstablished": [
+    "lateral foot pairs",
+    "precise continuous sport first-contact timing",
+    "individual balance/joint suitability",
+    "speed/power efficacy",
+    "physical or expert validation"
+  ],
+  "productSourceWritten": false
+}

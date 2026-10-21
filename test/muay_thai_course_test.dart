@@ -12,7 +12,7 @@ void main() {
   test('actual accepted v2 fist, support, toes and nine pauses remain written only', () {
     final c=MuayThaiCourse.fromJsonString(jsonEncode(fixture()));
     expect(c.lessons,hasLength(16)); expect(c.sequenceRows,hasLength(9));
-    expect(c.sources,hasLength(14)); expect(c.physicalPracticeAvailable,isFalse);
+    expect(c.sources,hasLength(22)); expect(c.verifiedPhysicalPracticeAvailable,isFalse);
     expect(c.lessons[3].answer.en,contains('keeping the thumb outside'));
     expect(c.lessons[3].answer.en,contains('release the thumb before opening the four fingers'));
     expect(c.lessons[3].answer.tr,contains('başparmak işaret/orta parmağın dışına yatırılır'));
@@ -103,11 +103,22 @@ void main() {
   });
   test('all sixteen ordered contextual source sets match their independent inventory', () {
     const expected=<List<String>>[
-      ['M1','M2'], ['M10'], ['M3','M9'], ['M3','M9','M11','M12'],
-      ['M4'], ['M3','M9'], ['M5','M10'], ['M5','M6'], ['M5','M10'],
-      ['M7','M3','M13'], ['M7','M3','M13','M14'], ['M6','M3','M13'],
-      ['M8'], ['M1','M4','M6'],
-      ['M4','M5','M7','M8','M10','M3','M11','M12','M13','M14'], ['M1','M10'],
+      ['M1','M2'],
+      ['M10'],
+      ['M3','M9','M17'],
+      ['M3','M9','M11','M12','M22','M15'],
+      ['M4','M17'],
+      ['M3','M9','M18'],
+      ['M5','M10','M15'],
+      ['M5','M6','M16'],
+      ['M5','M10','M15','M16'],
+      ['M7','M3','M13','M19'],
+      ['M7','M3','M13','M14','M19'],
+      ['M6','M3','M13','M20'],
+      ['M8','M21'],
+      ['M1','M4','M6'],
+      ['M4','M5','M7','M8','M10','M3','M11','M12','M13','M14','M17','M15','M16','M19','M20','M21'],
+      ['M1','M10'],
     ];
     final c=MuayThaiCourse.fromJsonString(jsonEncode(fixture()));
     for(var i=0;i<16;i++) {
@@ -115,10 +126,33 @@ void main() {
       rejects((m) => m['lessons'][i]['sourceIds']=[]);
       rejects((m) => m['lessons'][i]['sourceIds']=['unknown']);
       rejects((m) => m['lessons'][i]['sourceIds']=[...expected[i],expected[i].first]);
-      final extra=List.generate(14,(n) => 'M${n+1}').firstWhere((x) => !expected[i].contains(x));
+      final extra=List.generate(22,(n) => 'M${n+1}').firstWhere((x) => !expected[i].contains(x));
       rejects((m) => m['lessons'][i]['sourceIds']=[...expected[i],extra]);
       for(final id in expected[i]) { rejects((m) => m['lessons'][i]['sourceIds']=expected[i].where((x) => x!=id).toList()); }
       if(expected[i].length>1) { rejects((m) => m['lessons'][i]['sourceIds']=expected[i].reversed.toList()); }
     }
   });
+  test('actual primary IDs retain exact URLs and reject swapped providers', () {
+    const expected = <String, String>{
+      'M15': 'https://www.youtube.com/watch?v=CmpqqsmiP70',
+      'M16': 'https://www.youtube.com/watch?v=IJIBBBQVIMw',
+      'M17': 'https://www.youtube.com/watch?v=ZE6IVZ-MQUA',
+      'M18': 'https://www.youtube.com/watch?v=bEVIlec93Ps',
+      'M19': 'https://www.youtube.com/watch?v=aP-4Kjgc4Q8',
+      'M20': 'https://www.youtube.com/watch?v=f_2BzU6eFFI',
+      'M21': 'https://www.youtube.com/watch?v=9aHd7OtU9vA',
+      'M22': 'https://www.youtube.com/watch?v=1uKTYj00QLM',
+    };
+    final c = MuayThaiCourse.fromJsonString(jsonEncode(fixture()));
+    for (final entry in expected.entries) {
+      expect(c.sources.singleWhere((s) => s.id == entry.key).url.toString(), entry.value);
+      rejects((m) {
+        final source = (m['sources'] as List).singleWhere((s) => s['id'] == entry.key);
+        source['url'] = 'https://example.org/wrong-provider';
+      });
+      rejects((m) => (m['sources'] as List).removeWhere((s) => s['id'] == entry.key));
+    }
+    rejects((m) => m['sources'].add({...m['sources'].last, 'id': 'UNLISTED-PRIMARY'}));
+  });
+
 }

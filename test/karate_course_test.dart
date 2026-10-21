@@ -17,7 +17,7 @@ void main() {
     );
   }
 
-  test('actual accepted hand-recovery and exit content is complete and written only', () {
+  test('hand-recovery and exit content keeps written truth separate from optional tasks', () {
     final c = KarateCourse.fromJsonString(jsonEncode(fixture()));
     expect(c.lessons, hasLength(16));
     expect(c.sequenceRows, hasLength(6));
@@ -34,7 +34,7 @@ void main() {
     expect(c.shared['limits']!.en, contains('not Heian Shodan'));
     expect(
       c.shared['physical_gate']!.en,
-      contains('All physical tasks are unavailable'),
+      contains('Optional small non-contact self-practice'),
     );
     expect(() => c.lessons.clear(), throwsUnsupportedError);
     expect(() => c.sequenceRows.clear(), throwsUnsupportedError);
@@ -46,7 +46,8 @@ void main() {
   });
   test('strict decoder rejects weakened physical prerequisites, readiness and source bindings', () {
     rejects((m) => m['schemaVersion'] = 1.0);
-    rejects((m) => m['schemaVersion'] = 2);
+    rejects((m) => m['schemaVersion'] = 1);
+    rejects((m) => m['schemaVersion'] = 3);
     rejects((m) => m['manuscriptSha256'] = 'unreviewed');
     rejects((m) => m['id'] = 'jablab.karate_mastery');
     rejects((m) => m['shared'].remove('physical_gate'));
@@ -134,4 +135,22 @@ void main() {
     }
     rejects((m) => m['releaseReadiness']['physicalMastery'] = false);
   });
+  test('actual primary IDs retain exact URLs and reject swapped providers', () {
+    const expected = <String, String>{
+      'K11': 'https://www.youtube.com/watch?v=jH6bv4GDpp0',
+      'K12': 'https://www.youtube.com/watch?v=kta8JS_pXFs',
+      'K13': 'https://www.youtube.com/watch?v=1uKTYj00QLM',
+    };
+    final c = KarateCourse.fromJsonString(jsonEncode(fixture()));
+    for (final entry in expected.entries) {
+      expect(c.sources.singleWhere((s) => s.id == entry.key).url.toString(), entry.value);
+      rejects((m) {
+        final source = (m['sources'] as List).singleWhere((s) => s['id'] == entry.key);
+        source['url'] = 'https://example.org/wrong-provider';
+      });
+      rejects((m) => (m['sources'] as List).removeWhere((s) => s['id'] == entry.key));
+    }
+    rejects((m) => m['sources'].add({...m['sources'].last, 'id': 'UNLISTED-PRIMARY'}));
+  });
+
 }

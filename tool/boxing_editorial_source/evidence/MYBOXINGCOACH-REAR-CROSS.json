@@ -1,0 +1,59 @@
+{
+  "atUtc": "2026-10-20T21:55:35.830995+00:00",
+  "sourcePage": "https://www.myboxingcoach.com/how-to-throw-a-right-cross/",
+  "sourceUrl": "https://www.youtube.com/watch?v=IJIBBBQVIMw",
+  "title": "How to Box in HD - The Right Cross/Straight Right",
+  "publisher": "MyBoxingCoach",
+  "durationSeconds": 288.581,
+  "reviewKind": "selected_actual_visual_instants",
+  "method": "Normal public IAB player, paused screenshots and bounded single-frame stepping. UIseek115.392 and144.24 first readyState1 screenshots excluded; same times later independently observed readyState4.",
+  "continuousFullVideoWatched": false,
+  "audioReviewed": false,
+  "assetDownloadOrCopy": false,
+  "permissionBarrierBypassed": false,
+  "observations": [
+    {
+      "seconds": 115.392,
+      "observed": "Presenter gestures at waist while demonstrating body rotation from staggered feet; no learner alignment measurement."
+    },
+    {
+      "seconds": [
+        125.392,
+        126.592,
+        127.192
+      ],
+      "observed": "Guard maintained during body-only rotation demonstration.127.192 shows rear heel visibly raised and rear knee/body changing orientation; motion blur limits exact joint tracking. No fixed pivot angle or load inferred."
+    },
+    {
+      "seconds": 144.24,
+      "observed": "Both hands near guard before strike, staggered feet."
+    },
+    {
+      "seconds": 144.839999,
+      "observed": "Rear arm moves into extension with body rotation and rear heel raised; motion blur means endpoint not used as precise elbow/wrist model."
+    },
+    {
+      "seconds": 145.239998,
+      "observed": "Hand returning near face while rear heel still raised."
+    },
+    {
+      "seconds": 145.839997,
+      "observed": "Both hands near guard with rear foot returned closer to starting orientation."
+    }
+  ],
+  "transcriptLocatorOnly": "/var/folders/sl/xf0zx4_54fx5146nmzgf0xt00000gn/T/browser-use/exports/youtube-IJIBBBQVIMw-dae06a8b-a3dd-4c9e-9bf4-924c490799f1.txt",
+  "supportedFamilies": [
+    "rear-hand forward/guard-return context",
+    "heel-knee-hip movement occurs together rather than twisting torso over rigidly fixed flat foot",
+    "small original separate hand-path preparation may be contrasted with source full sport action"
+  ],
+  "adaptation": "Source explicitly teaches explosive drive and large power rotation. JabLab does not adopt that thrust, power target, fixed clock-angle, contact, forward lunge or knee loading. Original very short slow empty-space hand path/feet-down or hand/paper explanation remains; if heel-knee-hip relationship is uncertain do not add a pivot and stop that physical attempt.",
+  "notEstablished": [
+    "continuous full-speed cycle",
+    "individual safe joint alignment",
+    "measured angle/load/speed/power",
+    "universal feet or heel rule across arts",
+    "expert/physical/medical approval"
+  ],
+  "productSourceWritten": false
+}

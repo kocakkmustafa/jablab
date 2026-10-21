@@ -46,53 +46,73 @@
   },
   {
     "path": "lib/app/karate_course.dart",
-    "line": 9,
+    "line": 11,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/karate_course_page.dart",
-    "line": 12,
+    "line": 14,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/karate_course_page.dart",
-    "line": 18,
+    "line": 20,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/kickboxing_course.dart",
-    "line": 9,
-    "type": "dynamic-pair"
-  },
-  {
-    "path": "lib/app/kickboxing_course_page.dart",
     "line": 11,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/kickboxing_course_page.dart",
-    "line": 17,
+    "line": 13,
+    "type": "dynamic-pair"
+  },
+  {
+    "path": "lib/app/kickboxing_course_page.dart",
+    "line": 19,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/muay_thai_course.dart",
-    "line": 9,
-    "type": "dynamic-pair"
-  },
-  {
-    "path": "lib/app/muay_thai_course_page.dart",
     "line": 11,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/muay_thai_course_page.dart",
-    "line": 17,
+    "line": 13,
+    "type": "dynamic-pair"
+  },
+  {
+    "path": "lib/app/muay_thai_course_page.dart",
+    "line": 19,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/select_page.dart",
     "line": 104,
     "type": "dynamic-pair"
+  },
+  {
+    "path": "lib/app/self_guided_practice.dart",
+    "line": 8,
+    "type": "dynamic-pair"
+  },
+  {
+    "path": "lib/app/self_guided_practice_panel.dart",
+    "line": 23,
+    "type": "dynamic-positional"
+  },
+  {
+    "path": "lib/app/self_guided_practice_panel.dart",
+    "line": 24,
+    "type": "dynamic-pair"
+  },
+  {
+    "path": "lib/app/self_guided_practice_panel.dart",
+    "line": 25,
+    "type": "dynamic-positional"
   },
   {
     "path": "lib/app/session_screen.dart",
@@ -156,12 +176,7 @@
   },
   {
     "path": "lib/app/taikyoku_shodan_course.dart",
-    "line": 8,
-    "type": "dynamic-pair"
-  },
-  {
-    "path": "lib/app/taikyoku_shodan_course_page.dart",
-    "line": 15,
+    "line": 10,
     "type": "dynamic-pair"
   },
   {
@@ -171,7 +186,12 @@
   },
   {
     "path": "lib/app/taikyoku_shodan_course_page.dart",
-    "line": 274,
+    "line": 19,
+    "type": "dynamic-pair"
+  },
+  {
+    "path": "lib/app/taikyoku_shodan_course_page.dart",
+    "line": 325,
     "type": "dynamic-positional"
   },
   {
@@ -221,12 +241,12 @@
   },
   {
     "path": "lib/app/yang16_written_course_page.dart",
-    "line": 16,
+    "line": 19,
     "type": "dynamic-pair"
   },
   {
     "path": "lib/app/yang16_written_course_page.dart",
-    "line": 18,
+    "line": 21,
     "type": "dynamic-pair"
   }
 ]

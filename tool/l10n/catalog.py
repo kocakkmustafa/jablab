@@ -155,7 +155,7 @@ def refresh():
                 name=t[begin-1][1]
                 pair=[]
                 if name=='StudyText' and len(args)==2:pair=args
-                elif name=='text' and p.name=='technique_capability_panel.dart' and t[begin-2][1]!='.' and len(args)==2:pair=args
+                elif name=='text' and p.name in {'technique_capability_panel.dart', 'self_guided_practice_panel.dart'} and t[begin-2][1]!='.' and len(args)==2:pair=args
                 elif name in ('_label','_text') and len(args)>=3 and args[0] and args[0][0][1]=='context':pair=args[1:3]
                 # Authored (section-id, Copy, English-label, Turkish-label) rows.
                 elif p.name=='taikyoku_shodan_course_page.dart' and len(args)==4 and decode(args[0]) in {'start','feet','hands','finish','next','limit'} and decode(args[2]) is not None and decode(args[3]) is not None:pair=args[2:4]

@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'content_failure.dart';
 import 'ui_language.dart';
 import 'yang16_written_course.dart';
+import 'yang16_preparation_course.dart';
+import 'self_guided_practice.dart';
+import 'self_guided_practice_panel.dart';
 
 String _label(
   BuildContext context,
@@ -41,8 +44,8 @@ class Yang16WrittenEntryCard extends StatelessWidget {
       subtitle: Text(
         _label(
           context,
-          'Angela Plarre presentation · 18 sections and 6 written checks · physical mechanics unavailable',
-          'Angela Plarre sunumu · 18 bölüm ve 6 yazılı yoklama · fiziksel mekanik kullanılamaz',
+          'Angela Plarre presentation · written form order only · 18 sections and 6 final targets',
+          'Angela Plarre sunumu · yalnız yazılı form sırası · 18 bölüm ve 6 son hedef',
         ),
       ),
       trailing: const Icon(Icons.arrow_forward),
@@ -61,11 +64,13 @@ class Yang16WrittenTargetPage extends StatefulWidget {
     required this.onWritten,
     required this.onInvalidate,
     required this.onReset,
+    this.practice,
   });
   final Yang16WrittenCourse course;
   final Yang16Target target;
   final bool Function() admitted, priorWritten;
   final VoidCallback onWritten, onInvalidate, onReset;
+  final SelfGuidedPractice? practice;
   @override
   State<Yang16WrittenTargetPage> createState() =>
       _Yang16WrittenTargetPageState();
@@ -82,6 +87,9 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
   bool _correcting = false, _retesting = false, _reported = false;
   bool _supplementVisible = false, _supplementKey = false;
   bool _foreground = _resumed();
+  PracticeAttempt _practiceAttempt = PracticeAttempt.unrecorded;
+  int _practiceEpoch = 0;
+  bool _practiceEnded = false;
   bool get _admitted => mounted && _foreground && widget.admitted();
   bool get _filled {
     final answer = (_retesting ? _retest : _initial).text.trim();
@@ -113,6 +121,7 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
 
   @override
   void dispose() {
+    _practiceEpoch++;
     WidgetsBinding.instance.removeObserver(this);
     for (final c in [_initial, _retest, _correction, _supplement]) {
       c.dispose();
@@ -121,6 +130,9 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
   }
 
   void _clear() {
+    _practiceEpoch++;
+    _practiceAttempt = PracticeAttempt.unrecorded;
+    _practiceEnded = false;
     for (final c in [_initial, _retest, _correction, _supplement]) {
       c.clear();
     }
@@ -144,6 +156,11 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
   @override
   void didUpdateWidget(covariant Yang16WrittenTargetPage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (oldWidget.practice != widget.practice) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+    }
     if (oldWidget.target != widget.target ||
         oldWidget.course != widget.course) {
       _clear();
@@ -195,6 +212,11 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
   @override
   Widget build(BuildContext context) {
     final target = widget.target;
+    final practice = widget.practice;
+    final practiceEpoch = _practiceEpoch;
+    bool practiceCurrent() => _admitted && _reading && !_practiceEnded &&
+        practiceEpoch == _practiceEpoch &&
+        identical(widget.target, target) && identical(widget.practice, practice);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 48 + 40 * MediaQuery.textScalerOf(context).scale(1),
@@ -234,8 +256,8 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
           Text(
             _label(
               context,
-              'Written order and self-reported reconstruction only. Physical actions, mechanics and mastery remain unavailable.',
-              'Yalnız yazılı sıra ve yeniden kurma öz beyanı. Fiziksel eylem, mekanik ve ustalık kullanıma açık değildir.',
+              'Written review and published optional beginner tasks are separate. No checkbox, written answer or self-report validates personal technique or suitability.',
+              'Yazılı inceleme ve yayımlanan isteğe bağlı başlangıç görevleri ayrıdır. Kutucuk, yazılı yanıt veya öz beyan kişisel tekniği ya da uygunluğu doğrulamaz.',
             ),
             key: const Key('yang16-physical-blocked'),
           ),
@@ -245,6 +267,9 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
                 ? () {
                     if (!_admitted) return;
                     final show = !_reading;
+                    _practiceEpoch++;
+                    _practiceAttempt = PracticeAttempt.unrecorded;
+                    _practiceEnded = false;
                     widget.onInvalidate();
                     setState(() {
                       _clear();
@@ -280,6 +305,24 @@ class _Yang16WrittenTargetPageState extends State<Yang16WrittenTargetPage>
               _copy(context, b.limit, 'yang16-${b.id}-limit'),
             ],
           ],
+          if (_reading && practice != null)
+            SelfGuidedPracticePanel(
+              practice: practice,
+              attempt: _practiceAttempt,
+              admitted: practiceCurrent,
+              onChanged: (value) {
+                if (!practiceCurrent()) return;
+                if (value == PracticeAttempt.attempted &&
+                    (_practiceEnded || !practice.offersMovement)) return;
+                setState(() {
+                  _practiceAttempt = value;
+                  if (value == PracticeAttempt.stopped || value == PracticeAttempt.uncertain) {
+                    _practiceEnded = true;
+                    _practiceEpoch++;
+                  }
+                });
+              },
+            ),
           _copy(context, widget.course.conditions, 'yang16-same-conditions'),
           Text(
             _label(
@@ -582,8 +625,10 @@ class Yang16WrittenCoursePage extends StatefulWidget {
     required this.loader,
     this.accountUserId,
     this.resourceAdmission,
+    this.preparationLoader,
   });
   final Future<Yang16WrittenCourse> Function() loader;
+  final Future<Yang16PreparationCourse> Function()? preparationLoader;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
   @override
@@ -595,6 +640,7 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     with WidgetsBindingObserver {
   final _written = <String>{};
   Yang16WrittenCourse? _course;
+  final _preparation = ValueNotifier<Yang16PreparationCourse?>(null);
   bool _failed = false, _integrityFailure = false, _retired = false;
   bool _foreground = _resumed();
   int _generation = 0;
@@ -627,7 +673,8 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.accountUserId != widget.accountUserId ||
         oldWidget.resourceAdmission != widget.resourceAdmission ||
-        oldWidget.loader != widget.loader) {
+        oldWidget.loader != widget.loader ||
+        oldWidget.preparationLoader != widget.preparationLoader) {
       oldWidget.accountUserId?.removeListener(_retire);
       oldWidget.resourceAdmission?.removeListener(_admissionChanged);
       widget.accountUserId?.addListener(_retire);
@@ -645,6 +692,9 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     } else if (!_retired && _course == null) {
       unawaited(_load());
     } else if (mounted) {
+      if (!_retired && _preparation.value == null) {
+        unawaited(_loadPreparation(_generation));
+      }
       setState(() {});
     }
   }
@@ -657,6 +707,7 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     if (_retired) return;
     _retired = true;
     _generation++;
+    _preparation.value = null;
     if (mounted) {
       setState(() {
         _course = null;
@@ -678,6 +729,8 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
   Future<void> _load() async {
     if (!_admitted) return;
     final generation = ++_generation;
+    _preparation.value = null;
+    unawaited(_loadPreparation(generation));
     setState(() {
       _course = null;
       _failed = false;
@@ -700,6 +753,19 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     }
   }
 
+  Future<void> _loadPreparation(int generation) async {
+    final loader = widget.preparationLoader;
+    if (loader == null || !_admitted) return;
+    try {
+      final value = await loader();
+      if (!_admitted || generation != _generation) return;
+      _preparation.value = value;
+    } catch (_) {
+      if (!_admitted || generation != _generation) return;
+      _preparation.value = null; // Keep written study readable; no unreviewed fallback.
+    }
+  }
+
   Future<void> _open(Yang16Target target) async {
     final course = _course;
     if (!_admitted ||
@@ -716,8 +782,11 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     route = MaterialPageRoute<void>(
       builder: (_) => !current()
           ? const SizedBox.shrink()
-          : Yang16WrittenTargetPage(
+          : ValueListenableBuilder<Yang16PreparationCourse?>(
+              valueListenable: _preparation,
+              builder: (_, preparation, __) => Yang16WrittenTargetPage(
               key: ValueKey(target.id),
+              practice: preparation?.forTarget(target.id),
               course: course,
               target: target,
               admitted: current,
@@ -743,6 +812,7 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
                 if (!_retired && mounted) setState(_written.clear);
               },
             ),
+            ),
     );
     _target = route;
     await _navigator!.push(route);
@@ -754,6 +824,7 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     _retired = true;
     _generation++;
     _written.clear();
+    _preparation.dispose();
     WidgetsBinding.instance.removeObserver(this);
     widget.accountUserId?.removeListener(_retire);
     widget.resourceAdmission?.removeListener(_admissionChanged);
@@ -816,8 +887,8 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
                 Text(
                   _label(
                     context,
-                    '{value1}/24 full written targets self-reported this visit; physical practice unavailable.',
-                    'Bu ziyarette {value1}/24 tam yazılı hedef öz beyanı; fiziksel uygulama kullanılamaz.',
+                    '{value1}/24 full written targets self-reported this visit; optional attempts do not change this count.',
+                    'Bu ziyarette {value1}/24 tam yazılı hedef öz beyanı; isteğe bağlı denemeler bu sayıyı değiştirmez.',
                     args: {'value1': _written.length},
                   ),
                   key: const Key('yang16-written-progress'),

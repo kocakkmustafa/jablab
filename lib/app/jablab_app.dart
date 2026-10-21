@@ -967,6 +967,7 @@ class _RootState extends State<_Root> {
         }
         return Yang16WrittenCoursePage(
           loader: widget.repository.loadYang16WrittenCourse,
+          preparationLoader: widget.repository.loadYang16PreparationCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
         );

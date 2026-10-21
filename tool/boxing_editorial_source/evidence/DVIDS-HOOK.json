@@ -1,0 +1,43 @@
+{
+  "at_utc": "2026-10-20T20:44:45.022093+00:00",
+  "source_url": "https://www.dvidshub.net/video/756773/hook",
+  "publisher": "U.S. Marine Corps Training and Education Command",
+  "source_title": "Hook",
+  "VIRIN": "200619-M-RN637-020",
+  "source_kind": "MCMAP B-roll; not universal sport boxing certification",
+  "rights_review_url": "https://www.dvidshub.net/about/copyright",
+  "rights_observed": "Official page PUBLIC DOMAIN; non-endorsement/trademark/privacy restrictions remain. No new download or product media copy.",
+  "existing_local_media": {
+    "path": "/Users/mustafakaankocak/Documents/Codex/2026-10-17/task-14/dvids-boxing-references/media/hook.mp4",
+    "bytes": 4755525,
+    "sha256": "55bcc5a5a1ef6c9aa9e35f7de4c48d36831293700fa7c49d5fe73b04a3d03899"
+  },
+  "inspection_method": "Actual browser Play followed by paused visual screenshots at visible timeline selections; DOM currentTime/duration read-only.",
+  "duration_seconds_observed": 5.755755,
+  "reviewed_visual_instants_seconds": [
+    3.582899,
+    3.98742,
+    4.334152,
+    4.623096,
+    5.027617
+  ],
+  "title_card_observed": true,
+  "continuous_complete_watch_claim": false,
+  "audio_reviewed": false,
+  "visual_observations": [
+    "3.582899: staggered full-body guard, both hands near face.",
+    "3.98742: one elbow bends out to side as trunk begins turning; opposite hand near cheek.",
+    "4.334152: bent striking arm crosses horizontally in front of upper body, rear foot appears to rotate/lift; no measured angle inferred.",
+    "4.623096: bent arm returns toward face.",
+    "5.027617: both hands near face, body faces camera more squarely.",
+    "Fixed front/oblique camera; no partner or target. Anatomical side, exact elbow angle, speed, force and impact are not certified."
+  ],
+  "pedagogical_use": "Original slow non-contact bent-arm arc and return cue; no loaded pivot or full-force instruction inferred from this short clip.",
+  "not_established": [
+    "All boxing lessons reviewed on video",
+    "Physical correctness or individual safety",
+    "Expert approval",
+    "Audio or continuous entire-video watch"
+  ],
+  "new_app_source_changes": 0
+}

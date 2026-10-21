@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/lesson_media_catalog.dart';
 import 'package:jablab/app/lesson_media_slot.dart';
-import 'package:jablab/app/lesson_media_source_pins_v2k.dart';
+import 'package:jablab/app/lesson_media_source_pins_editorial.dart';
 import 'package:jablab/app/solo_boxing_course.dart';
 import 'package:motion_content/motion_content.dart';
 
@@ -41,7 +41,7 @@ final class _Fixture {
     final qa =
         jsonDecode(
               File(
-                'test/fixtures/jablab_v2k_source_pins_v1.json',
+                'test/fixtures/jablab_editorial_source_pins.v1.json',
               ).readAsStringSync(),
             )
             as Map<String, dynamic>;
@@ -277,7 +277,7 @@ void main() {
       final fixture = _Fixture();
       expect(
         jablabMediaProductionManifestSha256,
-        jablabV2kSourcePinManifestSha256,
+        jablabEditorialSourcePinManifestSha256,
       );
       expect(await fixture.inspect(), isNotNull);
       for (final oldManifest in [

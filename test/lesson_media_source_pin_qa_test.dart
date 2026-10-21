@@ -4,20 +4,20 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/lesson_media_catalog.dart';
-import 'package:jablab/app/lesson_media_source_pins_v2k.dart';
+import 'package:jablab/app/lesson_media_source_pins_editorial.dart';
 import 'package:motion_content/motion_content.dart';
 
 const _fixtureSha256 =
-    'da806a35f838e8dbe6e770b0d8168bd99214f62eee5833dcfd584ee9cc035241';
+    'db35dc4c8be0ac825c64b2bf8d0b8612e213c09abd14c1a9c5e93e43b295e0c7';
 const _courseSha256 =
-    '0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f';
+    '56773912d8917e3403fb1b2fe3755cf564b10e57e4ed35f24c1df6640b2594dd';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('all 39 lessons and 292 variants bind only to v2k closed QA', () {
+  test('all 39 current editorial lessons and 292 variants remain closed QA', () {
     final fixtureBytes = File(
-      'test/fixtures/jablab_v2k_source_pins_v1.json',
+      'test/fixtures/jablab_editorial_source_pins.v1.json',
     ).readAsBytesSync();
     expect(computeSha256Hex(fixtureBytes), _fixtureSha256);
     final fixture =
@@ -38,15 +38,15 @@ void main() {
       'nativePlaybackAccepted',
     });
     expect(fixture['schemaVersion'], 1);
-    expect(fixture['kind'], 'JABLAB_V2K_CLOSED_QA_SOURCE_PINS_V1');
-    expect(fixture['sourceCatalogSHA256'], jablabV2kSourcePinCatalogSha256);
-    expect(fixture['manifestSHA256'], jablabV2kSourcePinManifestSha256);
-    expect(fixture['sourceProofSHA256'], jablabV2kSourcePinProofSha256);
+    expect(fixture['kind'], 'JABLAB_EDITORIAL_CLOSED_QA_SOURCE_PINS_V1');
+    expect(fixture['sourceCatalogSHA256'], jablabEditorialSourcePinCatalogSha256);
+    expect(fixture['manifestSHA256'], jablabEditorialSourcePinManifestSha256);
+    expect(fixture['sourceProofSHA256'], jablabEditorialSourcePinProofSha256);
     expect(fixture['app'], 'jablab');
     expect(fixture['courseSourceSHA256'], _courseSha256);
     expect(fixture['visible'], false);
-    expect(fixture['releaseEligible'], jablabV2kClosedQaReleaseEligible);
-    expect(fixture['progressEffect'], jablabV2kClosedQaProgressEffect);
+    expect(fixture['releaseEligible'], jablabEditorialClosedQaReleaseEligible);
+    expect(fixture['progressEffect'], jablabEditorialClosedQaProgressEffect);
     expect(fixture['mediaBytesAccepted'], false);
     expect(fixture['nativePlaybackAccepted'], false);
     expect(const LessonMediaCatalog.empty().isEmpty, true);
@@ -121,6 +121,6 @@ void main() {
       (lessonIds.length, sceneIds.length, stems.length, pins.length),
       (39, 292, 292, 292),
     );
-    expect(pins, jablabV2kClosedQaSourcePinHashes);
+    expect(pins, jablabEditorialClosedQaSourcePinHashes);
   });
 }

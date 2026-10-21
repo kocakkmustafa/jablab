@@ -26,7 +26,7 @@ Uint8List _field(Map<String, dynamic> envelope, String name) {
 }
 
 Future<void> main(List<String> arguments) async {
-  if (arguments.length != 1 || arguments.single != '--check-bytes') {
+  if (arguments.length != 1 || arguments.single != '--check-editorial-bytes') {
     stderr.writeln(
       'Use python3 tool/check_media_source_projection.py --check '
       'from the JabLab app root.',
@@ -42,10 +42,27 @@ Future<void> main(List<String> arguments) async {
           'projection',
           'course',
           'fixture',
+          'proof',
+          'delta',
+          'baseline',
+          'references',
+          'historicalProof',
+          'historicalFixture',
+          'producer',
         }).isNotEmpty ||
-        decoded.length != 4) {
+        decoded.length != 11) {
       throw const FormatException('source byte envelope fields changed');
     }
+    checkPinnedJabLabEditorialSourceInputs(
+      proofBytes: _field(decoded, 'proof'),
+      deltaBytes: _field(decoded, 'delta'),
+      baselineSubsetBytes: _field(decoded, 'baseline'),
+      referenceBindingsBytes: _field(decoded, 'references'),
+      historicalProofBytes: _field(decoded, 'historicalProof'),
+      historicalFixtureBytes: _field(decoded, 'historicalFixture'),
+      producerBytes: _field(decoded, 'producer'),
+      courseBytes: _field(decoded, 'course'),
+    );
     checkPinnedJabLabSourceProjection(
       sliceBytes: _field(decoded, 'slice'),
       projectionBytes: _field(decoded, 'projection'),

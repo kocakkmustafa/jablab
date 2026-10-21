@@ -1,0 +1,40 @@
+{
+  "at_utc": "2026-10-20T20:45:32.968884+00:00",
+  "source_url": "https://www.dvidshub.net/video/756817/uppercut",
+  "publisher": "U.S. Marine Corps Training and Education Command",
+  "source_title": "Uppercut",
+  "VIRIN": "200619-M-RN637-038",
+  "source_kind": "MCMAP B-roll; no sport boxing equivalence certification",
+  "rights_review_url": "https://www.dvidshub.net/about/copyright",
+  "rights_observed": "Official source PUBLIC DOMAIN; non-endorsement/trademark/privacy restrictions remain. No new download or product copy.",
+  "existing_local_media": {
+    "path": "/Users/mustafakaankocak/Documents/Codex/2026-10-17/task-14/dvids-boxing-references/media/uppercut.mp4",
+    "bytes": 4817814,
+    "sha256": "c8e40d358a8e7b7c63058bf98c88e38b36f8d88778517c93a0cdc367b199061a"
+  },
+  "inspection_method": "Actual browser Play followed by paused visual screenshots via visible timeline; read-only DOM time.",
+  "duration_seconds_observed": 5.714044,
+  "reviewed_visual_instants_seconds": [
+    3.614304,
+    4.188004,
+    4.417483,
+    4.933813
+  ],
+  "title_card_observed": true,
+  "continuous_complete_watch_claim": false,
+  "audio_reviewed": false,
+  "visual_observations": [
+    "3.614304: staggered guard, both hands by face.",
+    "4.188004 and4.417483: one bent forearm rises in front of face, trunk rotates and rear heel lifts; opposite hand remains near face.",
+    "4.933813: both hands back near face, staggered stance.",
+    "Fixed full-body front/oblique view. Exact ascent trajectory between selected frames, anatomical side, elbow angle, foot pressure, speed and impact unmeasured."
+  ],
+  "pedagogical_use": "Short original small-range upward bent-arm example with controlled return; cannot justify power, impact or forced loaded pivot.",
+  "not_established": [
+    "Full curriculum watched",
+    "Continuous entire-video or audio review",
+    "Individual physical correctness or safety",
+    "Expert signoff"
+  ],
+  "new_app_source_changes": 0
+}

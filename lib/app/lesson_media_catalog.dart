@@ -6,11 +6,11 @@ import 'package:motion_content/motion_content.dart';
 
 import 'content_repository.dart';
 import 'flutter_bundle_content_asset_reader.dart';
-import 'lesson_media_source_pins_v2k.dart';
+import 'lesson_media_source_pins_editorial.dart';
 import 'solo_boxing_course.dart';
 
-/// V2k closed QA source identity only; not a media acceptance signature.
-const jablabMediaProductionManifestSha256 = jablabV2kSourcePinManifestSha256;
+/// Editorial closed QA source identity only; not a media acceptance signature.
+const jablabMediaProductionManifestSha256 = jablabEditorialSourcePinManifestSha256;
 const _mediaRoot = 'assets/content/media/';
 const _maxVideoBytes = 64 * 1024 * 1024;
 const _maxCaptionBytes = 1024 * 1024;
@@ -259,10 +259,10 @@ bool _sourceMatches(LessonMediaSourcePin a, LessonMediaSourcePin b) =>
 /// Checks only source-row membership. The shipping catalogue remains empty;
 /// a matching pin cannot authorize media bytes, rights, release or progress.
 bool _closedQaSourceMembership(LessonMediaSourcePin pin) {
-  if (pin.manifestSha256 != jablabV2kSourcePinManifestSha256 ||
+  if (pin.manifestSha256 != jablabEditorialSourcePinManifestSha256 ||
       pin.app != 'jablab' ||
       pin.productionState != 'PREPRODUCTION_UNGENERATED' ||
-      !jablabV2kClosedQaSourcePinHashes.contains(pin.sourcePinSha256)) {
+      !jablabEditorialClosedQaSourcePinHashes.contains(pin.sourcePinSha256)) {
     return false;
   }
   final identity = <String, Object>{

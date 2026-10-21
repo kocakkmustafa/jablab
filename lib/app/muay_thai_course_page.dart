@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'muay_thai_course.dart';
 import 'ui_language.dart';
+import 'self_guided_practice.dart';
+import 'self_guided_practice_panel.dart';
 
 String _text(BuildContext context, MuayThaiCopy copy) =>
     UiLanguage.text(context, en: copy.en, tr: copy.tr);
@@ -27,8 +29,8 @@ class MuayThaiCourseEntryCard extends StatelessWidget {
       subtitle: Text(
         _label(
           context,
-          '16 written lessons · physical technique review pending',
-          '16 yazılı ders · fiziksel teknik incelemesi bekleniyor',
+          '16 lessons · selected beginner learning and written self-review',
+          '16 ders · seçili başlangıç bilgisi ve yazılı öz inceleme',
         ),
       ),
       trailing: const Icon(Icons.arrow_forward),
@@ -66,15 +68,48 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
   bool _readingVisible = true;
   _WrittenObservation _observation = _WrittenObservation.unreviewed;
   bool _reported = false;
+  PracticeAttempt _practiceAttempt = PracticeAttempt.unrecorded;
+  int _practiceEpoch = 0;
+  bool _practiceEnded = false;
+  bool _foreground = true;
+
+  bool get _canReport => _foreground && widget.admitted() &&
+      _answerVisible && _correction.text.trim().isNotEmpty &&
+      _observation == _WrittenObservation.compared &&
+      widget.priorWritten() && !_reported;
   @override
   void initState() {
     super.initState();
     _readingVisible = widget.lesson.number != 16;
+    _foreground = WidgetsBinding.instance.lifecycleState == null ||
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
+  void didUpdateWidget(covariant MuayThaiLessonPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.lesson.id != widget.lesson.id) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+      _ownAnswer.clear();
+      _correction.clear();
+      _answerVisible = false;
+      _observation = _WrittenObservation.unreviewed;
+      _reported = false;
+      _readingVisible = widget.lesson.number != 16;
+    } else if (oldWidget.lesson.selfGuidedPractice !=
+        widget.lesson.selfGuidedPractice) {
+      _practiceEpoch++;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
+    }
+  }
+
+  @override
   void dispose() {
+    _practiceEpoch++;
     WidgetsBinding.instance.removeObserver(this);
     _ownAnswer.dispose();
     _correction.dispose();
@@ -83,24 +118,44 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
 
   void _reset() {
     if (!mounted) return;
+    _practiceEpoch++;
     _ownAnswer.clear();
     _correction.clear();
     setState(() {
       _answerVisible = false;
       _observation = _WrittenObservation.unreviewed;
       _reported = false;
+      _practiceAttempt = PracticeAttempt.unrecorded;
+      _practiceEnded = false;
     });
     widget.onReset();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state != AppLifecycleState.resumed) _reset();
+    _foreground = state == AppLifecycleState.resumed;
+    if (!_foreground) {
+      _reset();
+    } else if (mounted) {
+      _practiceEpoch++;
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l = widget.lesson;
+    final practice = l.selfGuidedPractice;
+    final practiceEpoch = _practiceEpoch;
+    bool practiceCurrent() =>
+        mounted &&
+        _foreground &&
+        _readingVisible &&
+        !_practiceEnded &&
+        practiceEpoch == _practiceEpoch &&
+        identical(l, widget.lesson) &&
+        identical(practice, widget.lesson.selfGuidedPractice) &&
+        widget.admitted();
     return Scaffold(
       appBar: AppBar(
         title: Text(_text(context, l.title)),
@@ -129,8 +184,8 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
           Text(
             _label(
               context,
-              'Reading and written review only. Physical practice is unavailable; individual technique prerequisites are unmet. A checkbox cannot authorize physical practice.',
-              'Yalnız okuma ve yazılı inceleme. Bireysel teknik önkoşulları karşılanmadığından fiziksel çalışma kullanılamaz. Bir kutucuk fiziksel çalışmaya izin vermez.',
+              'Written review and any optional beginner trial are separate. Your physical technique and individual suitability are not verified.',
+              'Yazılı inceleme ile varsa isteğe bağlı başlangıç denemesi ayrıdır. Fiziksel tekniğin ve kişisel uygunluğun doğrulanmaz.',
             ),
             key: const Key('muay-thai-physical-blocked'),
           ),
@@ -140,6 +195,7 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
             onPressed: () {
               if (widget.admitted()) {
                 setState(() {
+                  _practiceEpoch++;
                   _readingVisible = !_readingVisible;
                 });
               }
@@ -158,14 +214,6 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
           ),
           if (_readingVisible) ...[
             for (final entry in widget.course.shared.entries) ...[
-              if (entry.key == 'status')
-                Text(
-                  _label(
-                    context,
-                    'Original manuscript status at drafting:',
-                    'Özgün metnin yazıldığı tarihteki durum:',
-                  ),
-                ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Text(_text(context, entry.value)),
@@ -175,17 +223,32 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
               _text(context, l.teaching),
               key: const Key('muay-thai-teaching'),
             ),
-            Text(
-              _label(
-                context,
-                'Conditional future task; unavailable in this course',
-                'Koşullu sonraki görev; bu kursta kullanılamaz',
+            if (practice != null)
+              SelfGuidedPracticePanel(
+                key: ValueKey('practice-${l.id}'),
+                practice: practice,
+                attempt: _practiceAttempt,
+                admitted: practiceCurrent,
+                onChanged: (value) {
+                  if (!practiceCurrent() ||
+                      (value == PracticeAttempt.attempted &&
+                          !practice.offersMovement)) return;
+                  setState(() {
+                    _practiceAttempt = value;
+                    if (value == PracticeAttempt.stopped ||
+                        value == PracticeAttempt.uncertain) {
+                      _practiceEnded = true;
+                      _practiceEpoch++;
+                    }
+                  });
+                },
               ),
-            ),
-            Text(
-              _text(context, l.physicalTask),
-              key: const Key('muay-thai-conditional-task'),
-            ),
+            if (l.selfGuidedPractice?.offersMovement != true) ...[
+              Text(
+                _text(context, l.physicalTask),
+                key: const Key('muay-thai-conditional-task'),
+              ),
+            ],
             if (l.number == 15)
               for (final row in widget.course.sequenceRows)
                 Card(
@@ -199,11 +262,11 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
             _label(
               context,
               l.physicalPrerequisiteIds.isEmpty
-                  ? 'Written task only; physical course requirements remain unmet.'
-                  : 'Unmet technique requirements: {value1}',
+                  ? 'Individual acceptance is unverified; optional practice is separate.'
+                  : 'Unverified individual acceptance records: {value1}',
               l.physicalPrerequisiteIds.isEmpty
-                  ? 'Yalnız yazılı görev; kursun fiziksel gereksinimleri karşılanmamıştır.'
-                  : 'Karşılanmamış teknik gereksinimler: {value1}',
+                  ? 'Bireysel kabul doğrulanmadı; isteğe bağlı deneme ayrıdır.'
+                  : 'Doğrulanmamış bireysel kabul kayıtları: {value1}',
               args: {'value1': l.physicalPrerequisiteIds.join(', ')},
             ),
             key: const Key('muay-thai-physical-prerequisites'),
@@ -298,8 +361,8 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
           Text(
             _label(
               context,
-              'A retest retains every individual technique prerequisite. In this version, use written retesting; comfort alone does not authorize movement.',
-              'Tekrar bütün bireysel teknik önkoşulları korur. Bu sürümde yazılı tekrar kullan; yalnız rahatlık harekete izin vermez.',
+              'Written retesting stays separate from any optional trial. Use the smaller or written alternative; a self-report is not a technique grade.',
+              'Yazılı tekrar varsa isteğe bağlı denemeden ayrıdır. Daha küçük veya yazılı seçeneği kullan; öz beyan teknik notu değildir.',
             ),
           ),
           RadioGroup<_WrittenObservation>(
@@ -359,19 +422,13 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
             ),
           TextButton(
             key: const Key('muay-thai-report-written'),
-            onPressed:
-                _answerVisible &&
-                    _correction.text.trim().isNotEmpty &&
-                    _observation == _WrittenObservation.compared &&
-                    widget.priorWritten() &&
-                    !_reported
+            onPressed: _canReport
                 ? () {
-                    if (widget.admitted()) {
-                      widget.onWritten();
-                      setState(() {
-                        _reported = true;
-                      });
-                    }
+                    if (!mounted || !_canReport ||
+                        practiceEpoch != _practiceEpoch ||
+                        !identical(l, widget.lesson)) return;
+                    widget.onWritten();
+                    setState(() { _reported = true; });
                   }
                 : null,
             child: Text(
@@ -614,14 +671,6 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 for (final entry in course.shared.entries) ...[
-                  if (entry.key == 'status')
-                    Text(
-                      _label(
-                        context,
-                        'Original manuscript status at drafting:',
-                        'Özgün metnin yazıldığı tarihteki durum:',
-                      ),
-                    ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(_text(context, entry.value)),
@@ -637,16 +686,16 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                 Text(
                   _label(
                     context,
-                    'Physical practice unavailable: instructor review, demonstrations and individual feedback are pending.',
-                    'Fiziksel çalışma kullanılamaz: eğitmen incelemesi, gösterimler ve bireysel geri bildirim bekleniyor.',
+                    'Physical technique, instructor approval and individual suitability are not verified. A self-report cannot change that.',
+                    'Fiziksel teknik, eğitmen onayı ve kişisel uygunluk doğrulanmaz. Öz beyan bunu değiştirmez.',
                   ),
                   key: const Key('muay-thai-readiness'),
                 ),
                 Text(
                   _label(
                     context,
-                    '{value1}/16 written reviews reported this visit; physical components unattempted.',
-                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel bileşenler denenmedi.',
+                    '{value1}/16 written reviews reported this visit; this does not certify physical technique.',
+                    'Bu ziyarette {value1}/16 yazılı inceleme beyanı; fiziksel teknik onaylanmaz.',
                     args: {'value1': _written.length},
                   ),
                   key: const Key('muay-thai-written-progress'),
@@ -655,8 +704,8 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                   Text(
                     _label(
                       context,
-                      'Written review completed by self-report this visit. Stance, guard, steps, straight punches, lead teep, rear knee, horizontal elbow and original MT-P1 remain physically unattempted and unverified.',
-                      'Bu ziyaretin yazılı incelemesi öz beyanla tamamlandı. Duruş, gard, adımlar, düz yumruklar, ön teep, arka diz, yatay dirsek ve özgün MT-P1 fiziksel olarak denenmedi ve doğrulanmadı.',
+                      'Written review completed by self-report this visit. Stance, guard, steps, straight punches, lead teep, rear knee, horizontal elbow and original MT-P1 remain physically unverified; optional attempts are separate self-reports.',
+                      'Bu ziyaretin yazılı incelemesi öz beyanla tamamlandı. Duruş, gard, adımlar, düz yumruklar, ön teep, arka diz, yatay dirsek ve özgün MT-P1 fiziksel olarak doğrulanmadı; isteğe bağlı denemeler ayrı öz beyanlardır.',
                     ),
                     key: const Key('muay-thai-written-completion'),
                   ),

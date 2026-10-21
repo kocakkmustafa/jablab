@@ -134,10 +134,10 @@ void main() {
     final Map<String, dynamic> asset =
         ((manifest['assets'] as List).single as Map).cast<String, dynamic>();
     expect(asset['path'], _coursePath);
-    expect(asset['byteLength'], 201068);
+    expect(asset['byteLength'], 202152);
     expect(
       asset['sha256'],
-      '0909b6c991fb631faeb357026475f787ae226562e261a479e0eb315095de069f',
+      '56773912d8917e3403fb1b2fe3755cf564b10e57e4ed35f24c1df6640b2594dd',
     );
   });
 

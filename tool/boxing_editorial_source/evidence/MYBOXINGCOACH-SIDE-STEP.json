@@ -1,0 +1,53 @@
+{
+  "atUtc": "2026-10-20T22:08:26.733873+00:00",
+  "sourcePage": "https://www.myboxingcoach.com/footwork-moving-side-to-side/",
+  "sourceUrl": "https://www.youtube.com/watch?v=bEVIlec93Ps",
+  "title": "Boxing Techniques - Boxing Footwork - The Side Step",
+  "publisher": "MyBoxingCoach",
+  "durationSeconds": 173.061,
+  "reviewKind": "selected_actual_visual_instants",
+  "method": "Normal public IAB paused video; UIseek/frameadvance; read-only currentTime/readyState. First69.184 and138.368 seek readyState1 not counted; both independently observed readyState4 afterward.",
+  "continuousFullVideoWatched": false,
+  "audioReviewed": false,
+  "assetDownloadOrCopy": false,
+  "permissionBarrierBypassed": false,
+  "observations": [
+    {
+      "seconds": 69.184,
+      "observed": "Staggered guard start, feet apart; video chapter labels movement left."
+    },
+    {
+      "seconds": [
+        70.184,
+        70.784
+      ],
+      "observed": "Viewer-right/performer movement-left displacement: foot in travel-side direction moves outward and follower restores separate staggered spacing. No crossing or body-turning sequence shown in these samples."
+    },
+    {
+      "seconds": 138.368,
+      "observed": "Staggered guard before opposite direction movement."
+    },
+    {
+      "seconds": 139.167998,
+      "observed": "Viewer-left/travel-side rear foot moves outward into lateral space while the other remains nearer its prior position."
+    },
+    {
+      "seconds": 140.167997,
+      "observed": "Follower gathers to a separate staggered base, face/body heading broadly retained rather than spinning."
+    }
+  ],
+  "transcriptLocatorOnly": "/var/folders/sl/xf0zx4_54fx5146nmzgf0xt00000gn/T/browser-use/exports/youtube-bEVIlec93Ps-a4c6e062-26aa-4740-bdd5-6afc6ef20dd4.txt",
+  "supportedFamilies": [
+    "small lateral pair initiated by movement-side foot, follower restores spacing",
+    "avoid crossing feet",
+    "retain heading during lateral placement"
+  ],
+  "adaptation": "Original JabLab task uses one very small slow pair with stops, no source explosive push/glide/sport-speed target, no punch, crossing, fixed width, circle or pivot. Paper direction diagram remains a valid alternative. No knee/foot load or balance capacity is measured.",
+  "notEstablished": [
+    "precise continuous sport contact timing",
+    "individual safe balance/joint alignment",
+    "speed/force or defensive effectiveness",
+    "physical/expert/medical approval"
+  ],
+  "productSourceWritten": false
+}

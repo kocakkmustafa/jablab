@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'self_guided_practice.dart';
+
 final class MuayThaiCopy {
   const MuayThaiCopy({required this.tr, required this.en});
   final String tr, en;
@@ -41,7 +43,10 @@ final class MuayThaiLesson {
       retest = MuayThaiCopy.decode(m['retest']),
       prerequisiteIds = _strings(m['prerequisiteIds']),
       physicalPrerequisiteIds = _strings(m['physicalPrerequisiteIds']),
-      sourceIds = _strings(m['sourceIds']) {
+      sourceIds = _strings(m['sourceIds']),
+      selfGuidedPractice = m.containsKey('selfGuidedPractice')
+          ? SelfGuidedPractice.decode(m['selfGuidedPractice'])
+          : null {
     _keys(m, {
       'number',
       'id',
@@ -56,11 +61,14 @@ final class MuayThaiLesson {
       'prerequisiteIds',
       'physicalPrerequisiteIds',
       'sourceIds',
+      if (m.containsKey('selfGuidedPractice')) 'selfGuidedPractice',
     });
+    selfGuidedPractice?.requireBinding(id, sourceIds);
     if (sourceIds.isEmpty) {
       throw const FormatException('Missing source binding');
     }
   }
+  final SelfGuidedPractice? selfGuidedPractice;
   final int number;
   final String id;
   final MuayThaiCopy title,
@@ -74,7 +82,8 @@ final class MuayThaiLesson {
   final List<String> prerequisiteIds, physicalPrerequisiteIds, sourceIds;
 }
 
-/// Exact written preparation; every physical requirement stays unmet.
+/// Exact written progress; individual physical acceptance stays unmet.
+/// An optional self-guided block is not a P0–P7 acceptance record.
 final class MuayThaiCourse {
   MuayThaiCourse._(Map<String, dynamic> m)
     : title = MuayThaiCopy.decode(m['title']),
@@ -125,8 +134,23 @@ final class MuayThaiCourse {
       throw const FormatException('Unaccepted physical readiness claim');
     }
     if (!_same(sources.map((s) => s.id).toList(),
-        List.generate(14, (i) => 'M${i + 1}'))) {
+        List.generate(22, (i) => 'M${i + 1}'))) {
       throw const FormatException('Invalid teaching source inventory');
+    }
+    const observedPrimaryUrls = <String, String>{
+      'M15': 'https://www.youtube.com/watch?v=CmpqqsmiP70',
+      'M16': 'https://www.youtube.com/watch?v=IJIBBBQVIMw',
+      'M17': 'https://www.youtube.com/watch?v=ZE6IVZ-MQUA',
+      'M18': 'https://www.youtube.com/watch?v=bEVIlec93Ps',
+      'M19': 'https://www.youtube.com/watch?v=aP-4Kjgc4Q8',
+      'M20': 'https://www.youtube.com/watch?v=f_2BzU6eFFI',
+      'M21': 'https://www.youtube.com/watch?v=9aHd7OtU9vA',
+      'M22': 'https://www.youtube.com/watch?v=1uKTYj00QLM',
+    };
+    if (sources.any((source) =>
+        observedPrimaryUrls.containsKey(source.id) &&
+        source.url.toString() != observedPrimaryUrls[source.id])) {
+      throw const FormatException('Wrong actual primary source binding');
     }
     // Exact ordered protocol indices from the accepted source map.
     const List<List<int>> physical = [
@@ -150,19 +174,19 @@ final class MuayThaiCourse {
     const List<List<int>> contexts = [
       [1, 2],
       [10],
-      [3, 9],
-      [3, 9, 11, 12],
-      [4],
-      [3, 9],
-      [5, 10],
-      [5, 6],
-      [5, 10],
-      [7, 3, 13],
-      [7, 3, 13, 14],
-      [6, 3, 13],
-      [8],
+      [3, 9, 17],
+      [3, 9, 11, 12, 22, 15],
+      [4, 17],
+      [3, 9, 18],
+      [5, 10, 15],
+      [5, 6, 16],
+      [5, 10, 15, 16],
+      [7, 3, 13, 19],
+      [7, 3, 13, 14, 19],
+      [6, 3, 13, 20],
+      [8, 21],
       [1, 4, 6],
-      [4, 5, 7, 8, 10, 3, 11, 12, 13, 14],
+      [4, 5, 7, 8, 10, 3, 11, 12, 13, 14, 17, 15, 16, 19, 20, 21],
       [1, 10],
     ];
     for (var i = 0; i < lessons.length; i++) {
@@ -195,13 +219,13 @@ final class MuayThaiCourse {
   }
   // Core verification is followed by the fixed pin for this transcription.
   static const String reviewedAssetSha256 =
-      'ee16b7fe958d45c08bdcef399147a2569d33b566110f3fc4675d2971ec403531';
+      'd17e9a6fe37d12ea20fda70da3dc02aa8b0fee74c0b357207f15eb2664c6cebc';
   final MuayThaiCopy title;
   final Map<String, MuayThaiCopy> shared;
   final List<MuayThaiCopy> sequenceRows;
   final List<MuayThaiSource> sources;
   final List<MuayThaiLesson> lessons;
-  bool get physicalPracticeAvailable => false;
+  bool get verifiedPhysicalPracticeAvailable => false;
 }
 
 Map<String, MuayThaiCopy> _shared(dynamic value) {
