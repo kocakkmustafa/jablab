@@ -158,9 +158,7 @@ void main() {
                 await show(t, const Key('self-guided-task'));
                 expect(
                   t
-                      .widget<Text>(
-                        find.byKey(const Key('self-guided-task')),
-                      )
+                      .widget<Text>(find.byKey(const Key('self-guided-task')))
                       .data,
                   language == 'tr' ? practice.task.tr : practice.task.en,
                 );
