@@ -317,6 +317,8 @@ void main() {
           maxScrolls: 30,
           scrollable: find.byType(Scrollable).first,
         );
+        await Scrollable.ensureVisible(tester.element(choice), alignment: 0.5);
+        await tester.pumpAndSettle();
         final beforeTerminal = tester.widget<SelfGuidedPracticePanel>(
           panelFinder,
         );

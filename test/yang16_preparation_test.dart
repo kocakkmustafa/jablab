@@ -146,9 +146,9 @@ void main() {
   testWidgets('interruption invalidates prior practice callback', (t) async {
     await mountPractice(t, practice: reviewedPrepare());
     final retained = attemptGroup(t).onChanged;
-    t.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    yangPause(t);
     await t.pump();
-    t.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    yangResume(t);
     await t.pump();
     retained(PracticeAttempt.attempted);
     await t.pump();
