@@ -264,9 +264,16 @@ void main() {
         .cast<String, dynamic>();
     int expected = 0;
     for (final dynamic d in lib['disciplines'] as List<dynamic>) {
+      // Yazılı kursu açık kapalı-katalog kartı Sayfa A'da listelenmez
+      // (select_page.dart `writtenCourseDisciplineIds`); JabLabApp dördünü
+      // de bağlar.
+      if ((d as Map)['status'] != 'live' &&
+          writtenCourseDisciplineIds.contains(d['id'])) {
+        continue;
+      }
       expected++; // disiplin kartı
       for (final dynamic c
-          in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+          in (d['courses'] as List<dynamic>? ?? const <dynamic>[])) {
         expected++; // kurs kartı
         expected +=
             ((c as Map)['lessons'] as List<dynamic>? ?? const <dynamic>[])

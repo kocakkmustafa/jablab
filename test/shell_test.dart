@@ -125,26 +125,36 @@ void main() {
     // Sayfa A zaten giriş yüzeyi — ayrı bir sekmeye geçmeye gerek yok.
     for (final String id in <String>[
       'boxing',
-      'kickboxing',
-      'tai_chi',
-      'karate',
-      'muay_thai',
       'taekwondo',
       'mma_striking',
       'wing_chun',
     ]) {
       expect(find.byKey(Key('item-$id')), findsOneWidget, reason: id);
     }
-    // 7'sinde "yakında" rozeti, Boxing'de yok.
+    // Yazılı kursu AÇIK dört disiplinin kapalı katalog kartı listelenmez;
+    // kapsam o disiplinlerin açık kurs giriş kartıyla görünür (2026-10-21:
+    // "açık değil, ders yok" notu açık kursun yanında çelişkiydi).
+    expect(writtenCourseDisciplineIds, <String>{
+      'kickboxing',
+      'tai_chi',
+      'karate',
+      'muay_thai',
+    });
+    for (final String id in writtenCourseDisciplineIds) {
+      expect(find.byKey(Key('item-$id')), findsNothing, reason: id);
+      expect(find.byKey(Key('soon-$id')), findsNothing, reason: id);
+    }
+    expect(find.byKey(const Key('open-kickboxing-course')), findsOneWidget);
+    // Kapalı kalanlarda "yakında" rozeti, Boxing'de yok.
     expect(find.byKey(const Key('soon-boxing')), findsNothing);
-    expect(find.byKey(const Key('soon-kickboxing')), findsOneWidget);
+    expect(find.byKey(const Key('soon-taekwondo')), findsOneWidget);
   });
 
   testWidgets('"yakında" disiplinde KURS GÖSTERİLMEZ', (WidgetTester t) async {
     await pumpApp(t);
     // Eskiden ayrı bir sayfaya PUSH ediyordu (ItemPage); şimdi Sayfa A'nın
     // kendi içinde satır-içi genişliyor — "az sayfa" kurucu direktifi.
-    await t.tap(find.byKey(const Key('item-tai_chi')));
+    await t.tap(find.byKey(const Key('item-taekwondo')));
     await t.pumpAndSettle();
 
     expect(find.byKey(const Key('coming-soon-note')), findsOneWidget);

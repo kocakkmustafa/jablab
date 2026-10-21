@@ -33,6 +33,19 @@ import 'ui_language.dart';
 /// "Soon" rozeti ve "Neden yok?" bağlantısı Ayarlar'ın "FREE PLAN" rozeti/
 /// "why-not-link" satırıyla BİREBİR aynı görsel kalıptan — aynı kavram iki
 /// ekranda iki farklı dil konuşmasın diye.
+/// Kütüphane kimliği → açık yazılı kursunu gösteren callback'in adı.
+///
+/// Bu dört disiplinin kamera kataloğundaki kartı `coming_soon` ve açıldığında
+/// "açık değil, arkasında ders yok" der; oysa aynı sayfada yazılı kursları
+/// AÇIK. İki çelişkili cümle yan yana kalmasın diye, yazılı kursu bağlıysa
+/// kapalı katalog kartı listelenmez (G2 anlam kusuru, 2026-10-21).
+const Set<String> writtenCourseDisciplineIds = <String>{
+  'kickboxing',
+  'tai_chi',
+  'karate',
+  'muay_thai',
+};
+
 class SelectPage extends StatefulWidget {
   const SelectPage({
     super.key,
@@ -77,6 +90,14 @@ class SelectPage extends StatefulWidget {
 
 class _SelectPageState extends State<SelectPage> {
   String? _expandedId;
+
+  /// [writtenCourseDisciplineIds] içinden yazılı kursu gerçekten bağlı olanlar.
+  Set<String> get _openWrittenCourseIds => <String>{
+    if (widget.onOpenKickboxingCourse != null) 'kickboxing',
+    if (widget.onOpenTaiChiCourse != null) 'tai_chi',
+    if (widget.onOpenKarateCourse != null) 'karate',
+    if (widget.onOpenMuayThaiCourse != null) 'muay_thai',
+  };
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -215,19 +236,25 @@ class _SelectPageState extends State<SelectPage> {
                   'muaythai': widget.onOpenMuayThaiCourse!,
               },
             ),
-            ...widget.library.items.map(
-              (ShellItem i) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: _ItemBlock(
-                  item: i,
-                  expanded: _expandedId == i.id,
-                  onTap: () => setState(
-                    () => _expandedId = _expandedId == i.id ? null : i.id,
+            ...widget.library.items
+                .where(
+                  (ShellItem i) =>
+                      i.status == ItemStatus.live ||
+                      !_openWrittenCourseIds.contains(i.id),
+                )
+                .map(
+                  (ShellItem i) => Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _ItemBlock(
+                      item: i,
+                      expanded: _expandedId == i.id,
+                      onTap: () => setState(
+                        () => _expandedId = _expandedId == i.id ? null : i.id,
+                      ),
+                      onOpenCourse: widget.onOpenCourse,
+                    ),
                   ),
-                  onOpenCourse: widget.onOpenCourse,
                 ),
-              ),
-            ),
             const SizedBox(height: 6),
             GlassPanel(
               padding: const EdgeInsets.all(16),
