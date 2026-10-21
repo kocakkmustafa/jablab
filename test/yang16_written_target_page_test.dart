@@ -15,8 +15,8 @@ void main() {
           addTearDown(t.platformDispatcher.clearLocalesTestValue);
           await t.binding.setSurfaceSize(const Size(360, 800));
           addTearDown(() => t.binding.setSurfaceSize(null));
-          final semantics = t.ensureSemantics();
           final course = yangCourse();
+          final semantics = t.ensureSemantics();
           try {
             for (final target in course.targets) {
               var reports = 0, invalidations = 0;

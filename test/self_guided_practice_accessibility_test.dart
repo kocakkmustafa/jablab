@@ -69,14 +69,36 @@ Future<void> _arabicSafetyStop(
   WidgetTester tester,
   Brightness brightness,
 ) async {
+  // These AR tests disable the framework handle; this scope owns semantics.
+  final semantics = tester.ensureSemantics();
+  var semanticsDisposed = false;
+  void disposeSemantics() {
+    if (semanticsDisposed) {
+      return;
+    }
+    semanticsDisposed = true;
+    semantics.dispose();
+  }
+
+  try {
+    // A package timeout can run teardown before the awaited body unwinds.
+    addTearDown(disposeSemantics);
+    await _assertArabicSafetyStop(tester, brightness);
+  } finally {
+    disposeSemantics();
+  }
+}
+
+Future<void> _assertArabicSafetyStop(
+  WidgetTester tester,
+  Brightness brightness,
+) async {
   tester.view.physicalSize = const Size(360, 800);
   tester.view.devicePixelRatio = 1;
   addTearDown(() {
     tester.view.resetPhysicalSize();
     tester.view.resetDevicePixelRatio();
   });
-  final semantics = tester.ensureSemantics();
-  addTearDown(semantics.dispose);
   final course = _course();
   final lesson = course.lessons.singleWhere((lesson) => lesson.id == 'ka-12');
   final practice = lesson.selfPractice;
@@ -209,11 +231,13 @@ void main() {
   testWidgets(
     'Arabic RTL light scale2.2 exposes real safety and terminal stop semantics',
     (tester) async => _arabicSafetyStop(tester, Brightness.light),
+    semanticsEnabled: false,
   );
 
   testWidgets(
     'Arabic RTL dark scale2.2 exposes real safety and terminal stop semantics',
     (tester) async => _arabicSafetyStop(tester, Brightness.dark),
+    semanticsEnabled: false,
   );
 
   testWidgets(
