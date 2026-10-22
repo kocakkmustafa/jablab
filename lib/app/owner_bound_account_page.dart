@@ -261,8 +261,10 @@ class _OwnerBoundAccountClient extends MotionAccountClient {
     _disposed = true;
     _retire();
     unawaited(
-      Future.wait<void>([_subscription.cancel(), _changes.close()])
-          .then<void>((_) {}, onError: (Object _, StackTrace __) {}),
+      Future.wait<void>([
+        _subscription.cancel(),
+        _changes.close(),
+      ]).then<void>((_) {}, onError: (Object _, StackTrace __) {}),
     );
   }
 }

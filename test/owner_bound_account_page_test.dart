@@ -19,60 +19,81 @@ const _bob = '22222222-2222-4222-8222-222222222222';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('actual runtime held refresh denies fresh delete until exact proof succeeds', (tester) async {
-    final fixture = await _fixture(tester);
-    late MotionAccountRuntime runtime;
-    late Completer<void> hold;
-    Future<Object?>? verification;
-    await tester.runAsync(() async {
-      hold = Completer<void>();
-      runtime = MotionAccountRuntime.forTesting(client: fixture.client,
-        app: MotionApp.jablab, onDeletedAccount: (_) async {});
-      await runtime.refreshIdentity();
-      await _eventTurn();
-    });
-    try {
-      expect(runtime.isCurrentSessionVerified, isTrue);
-      final owner = fixture.owners.capture(_alice);
-      await _page(tester, fixture, lifetime: owner,
-        account: runtime.account, canInitiate: () => runtime.isCurrentSessionVerified && !runtime.isPasswordRecovery);
-      final bound = tester.widget<MotionAccountPage>(find.byType(MotionAccountPage)).account;
+  testWidgets(
+    'actual runtime held refresh denies fresh delete until exact proof succeeds',
+    (tester) async {
+      final fixture = await _fixture(tester);
+      late MotionAccountRuntime runtime;
+      late Completer<void> hold;
+      Future<Object?>? verification;
       await tester.runAsync(() async {
-        fixture.userReadHold = hold;
-        fixture.userReadStarted = Completer<void>();
-        await fixture.refreshToken('alice-proof-pending');
-        verification = runtime.refreshIdentity().then<Object?>(
-          (_) => null, onError: (Object error, StackTrace _) => error);
-        await fixture.userReadStarted!.future.timeout(const Duration(seconds: 5));
-      });
-      expect(runtime.isCurrentSessionVerified, isFalse);
-      expect(fixture.owners.capture(_alice), same(owner));
-      expect(owner.isActive, isTrue);
-      await tester.runAsync(() async {
-        await expectLater(bound.deleteCommonAccount(), throwsA(isA<OwnerResourceRetiredException>()));
-      });
-      expect(fixture.deleteRequests, 0);
-      expect(fixture.cleanupCalls, 0);
-      hold.complete();
-      fixture.userReadHold = null;
-      await tester.runAsync(() async {
-        expect(await verification, isNull);
+        hold = Completer<void>();
+        runtime = MotionAccountRuntime.forTesting(
+          client: fixture.client,
+          app: MotionApp.jablab,
+          onDeletedAccount: (_) async {},
+        );
         await runtime.refreshIdentity();
+        await _eventTurn();
       });
-      expect(runtime.isCurrentSessionVerified, isTrue);
-      expect(fixture.owners.capture(_alice), same(owner));
-      await tester.runAsync(() => bound.deleteCommonAccount());
-      expect(fixture.deleteRequests, 1);
-    } finally {
-      if (!hold.isCompleted) hold.complete();
-      fixture.userReadHold = null;
-      await _unmount(tester);
-      await tester.runAsync(() async {
-        if (verification != null) await verification;
-        runtime.dispose();
-      });
-    }
-  });
+      try {
+        expect(runtime.isCurrentSessionVerified, isTrue);
+        final owner = fixture.owners.capture(_alice);
+        await _page(
+          tester,
+          fixture,
+          lifetime: owner,
+          account: runtime.account,
+          canInitiate: () =>
+              runtime.isCurrentSessionVerified && !runtime.isPasswordRecovery,
+        );
+        final bound = tester
+            .widget<MotionAccountPage>(find.byType(MotionAccountPage))
+            .account;
+        await tester.runAsync(() async {
+          fixture.userReadHold = hold;
+          fixture.userReadStarted = Completer<void>();
+          await fixture.refreshToken('alice-proof-pending');
+          verification = runtime.refreshIdentity().then<Object?>(
+            (_) => null,
+            onError: (Object error, StackTrace _) => error,
+          );
+          await fixture.userReadStarted!.future.timeout(
+            const Duration(seconds: 5),
+          );
+        });
+        expect(runtime.isCurrentSessionVerified, isFalse);
+        expect(fixture.owners.capture(_alice), same(owner));
+        expect(owner.isActive, isTrue);
+        await tester.runAsync(() async {
+          await expectLater(
+            bound.deleteCommonAccount(),
+            throwsA(isA<OwnerResourceRetiredException>()),
+          );
+        });
+        expect(fixture.deleteRequests, 0);
+        expect(fixture.cleanupCalls, 0);
+        hold.complete();
+        fixture.userReadHold = null;
+        await tester.runAsync(() async {
+          expect(await verification, isNull);
+          await runtime.refreshIdentity();
+        });
+        expect(runtime.isCurrentSessionVerified, isTrue);
+        expect(fixture.owners.capture(_alice), same(owner));
+        await tester.runAsync(() => bound.deleteCommonAccount());
+        expect(fixture.deleteRequests, 1);
+      } finally {
+        if (!hold.isCompleted) hold.complete();
+        fixture.userReadHold = null;
+        await _unmount(tester);
+        await tester.runAsync(() async {
+          if (verification != null) await verification;
+          runtime.dispose();
+        });
+      }
+    },
+  );
 
   testWidgets('actual deletion dialog cannot dispatch after A1-B-A2', (
     tester,
@@ -792,50 +813,49 @@ void main() {
     },
   );
 
-  testWidgets(
-    'same-token restored successor Auth survives verified A receipt',
-    (tester) async {
-      final fixture = await _fixture(tester, holdRemote: true);
-      final initiating = fixture.owners.capture(_alice);
-      final preserved = fixture.snapshot(exclude: _alice);
-      await _page(tester, fixture, lifetime: initiating);
-      await _openDeletion(tester);
-      await _confirm(tester, settle: false);
-      await _signal(tester, fixture.deleteEntered);
-      final initiatingSession = fixture.client.auth.currentSession;
-      await tester.runAsync(() async {
-        await fixture.owners.retire(_alice);
-        fixture.owners.activate(_alice);
-        await fixture.client.auth.setInitialSession(
-          jsonEncode(_session(_alice, 'alice-session')),
-        );
-        await _eventTurn();
-      });
-      await tester.pump();
-      final successor = fixture.owners.capture(_alice);
-      final successorSession = fixture.client.auth.currentSession;
-      expect(successor, isNot(same(initiating)));
-      expect(successorSession, isNot(same(initiatingSession)));
-      expect(successorSession?.accessToken, initiatingSession?.accessToken);
-      await tester.runAsync(() async {
-        fixture.releaseRemote();
-        await _eventTurn();
-      });
-      await _finished(tester);
-      expect(fixture.cleanupCalls, 1);
-      expect(
-        fixture.accountFiles(_alice).where((file) => file.existsSync()),
-        isEmpty,
+  testWidgets('same-token restored successor Auth survives verified A receipt', (
+    tester,
+  ) async {
+    final fixture = await _fixture(tester, holdRemote: true);
+    final initiating = fixture.owners.capture(_alice);
+    final preserved = fixture.snapshot(exclude: _alice);
+    await _page(tester, fixture, lifetime: initiating);
+    await _openDeletion(tester);
+    await _confirm(tester, settle: false);
+    await _signal(tester, fixture.deleteEntered);
+    final initiatingSession = fixture.client.auth.currentSession;
+    await tester.runAsync(() async {
+      await fixture.owners.retire(_alice);
+      fixture.owners.activate(_alice);
+      await fixture.client.auth.setInitialSession(
+        jsonEncode(_session(_alice, 'alice-session')),
       );
-      expect(fixture.snapshot(exclude: _alice), preserved);
-      expect(initiating.isActive, isFalse);
-      expect(successor.isActive, isFalse);
-      // This checks Core's final sign-out ownership. Host cleanup never selects
-      // or changes mutable Auth; a Core failure must stay visible as behavioral RED.
-      expect(fixture.client.auth.currentSession, same(successorSession));
-      expect(fixture.logoutRequests, 0);
-    },
-  );
+      await _eventTurn();
+    });
+    await tester.pump();
+    final successor = fixture.owners.capture(_alice);
+    final successorSession = fixture.client.auth.currentSession;
+    expect(successor, isNot(same(initiating)));
+    expect(successorSession, isNot(same(initiatingSession)));
+    expect(successorSession?.accessToken, initiatingSession?.accessToken);
+    await tester.runAsync(() async {
+      fixture.releaseRemote();
+      await _eventTurn();
+    });
+    await _finished(tester);
+    expect(fixture.cleanupCalls, 1);
+    expect(
+      fixture.accountFiles(_alice).where((file) => file.existsSync()),
+      isEmpty,
+    );
+    expect(fixture.snapshot(exclude: _alice), preserved);
+    expect(initiating.isActive, isFalse);
+    expect(successor.isActive, isFalse);
+    // This checks Core's final sign-out ownership. Host cleanup never selects
+    // or changes mutable Auth; a Core failure must stay visible as behavioral RED.
+    expect(fixture.client.auth.currentSession, same(successorSession));
+    expect(fixture.logoutRequests, 0);
+  });
 
   testWidgets(
     'verified A receipt fences and drains a busy replacement A epoch',
@@ -1291,7 +1311,9 @@ Future<void> _finished(WidgetTester tester) async {
   // Wait on the observable busy indicator with a real, bounded IO budget.
   final deadline = Stopwatch()..start();
   while (deadline.elapsed < const Duration(seconds: 5)) {
-    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 5)));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 5)),
+    );
     await tester.pump(const Duration(milliseconds: 20));
     if (find.byType(LinearProgressIndicator).evaluate().isEmpty) {
       await tester.pumpAndSettle();

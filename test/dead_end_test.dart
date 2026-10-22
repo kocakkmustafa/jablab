@@ -90,10 +90,14 @@ import 'app_pump.dart';
 /// mal ederdi (bu turda sabotajla ölçüldü).
 bool hasNamedReason(String id) => find
     .descendant(
-        of: find.byKey(ValueKey<String>(id)),
-        matching: find.textContaining(RegExp(
-            'not open|not in the rule set|left out|rule set',
-            caseSensitive: false)))
+      of: find.byKey(ValueKey<String>(id)),
+      matching: find.textContaining(
+        RegExp(
+          'not open|not in the rule set|left out|rule set',
+          caseSensitive: false,
+        ),
+      ),
+    )
     .evaluate()
     .isNotEmpty;
 
@@ -119,22 +123,27 @@ void main() {
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
-    expect(find.byType(SelectPage), findsOneWidget,
-        reason: 'giriş yüzeyi Sayfa A değil — yürüyüş yanlış yerden başlıyor');
+    expect(
+      find.byType(SelectPage),
+      findsOneWidget,
+      reason: 'giriş yüzeyi Sayfa A değil — yürüyüş yanlış yerden başlıyor',
+    );
 
     // ── 1. KADEME: disiplin kartları ────────────────────────────────────
-    final Finder discCards = find.byWidgetPredicate((Widget w) =>
-        w.key is ValueKey<String> &&
-        (w.key! as ValueKey<String>).value.startsWith('item-'));
+    final Finder discCards = find.byWidgetPredicate(
+      (Widget w) =>
+          w.key is ValueKey<String> &&
+          (w.key! as ValueKey<String>).value.startsWith('item-'),
+    );
     final List<String> discIds = discCards
         .evaluate()
         .map((e) => (e.widget.key! as ValueKey<String>).value)
         .toList();
     expect(discIds, isNotEmpty, reason: 'hiç disiplin kartı bulunamadı');
 
-    int reachable = 0;      // basılabilen kontrol
-    int withWork = 0;       // bastığında yapılabilir iş sunan
-    int namedEmpty = 0;     // boş AMA gerekçesi adıyla yazılı
+    int reachable = 0; // basılabilen kontrol
+    int withWork = 0; // bastığında yapılabilir iş sunan
+    int namedEmpty = 0; // boş AMA gerekçesi adıyla yazılı
     final List<String> deadEnds = <String>[];
 
     Future<bool> tapIfEnabled(Finder f) async {
@@ -152,18 +161,22 @@ void main() {
     for (final String id in discIds) {
       reachable++;
       final int before = find
-          .byWidgetPredicate((Widget w) =>
-              w.key is ValueKey<String> &&
-              (w.key! as ValueKey<String>).value.startsWith('course-'))
+          .byWidgetPredicate(
+            (Widget w) =>
+                w.key is ValueKey<String> &&
+                (w.key! as ValueKey<String>).value.startsWith('course-'),
+          )
           .evaluate()
           .length;
       if (!await tapIfEnabled(find.byKey(ValueKey<String>(id)))) {
         deadEnds.add('$id (basılamadı)');
         continue;
       }
-      final Finder courseCards = find.byWidgetPredicate((Widget w) =>
-          w.key is ValueKey<String> &&
-          (w.key! as ValueKey<String>).value.startsWith('course-'));
+      final Finder courseCards = find.byWidgetPredicate(
+        (Widget w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('course-'),
+      );
       final List<String> courseIds = courseCards
           .evaluate()
           .map((e) => (e.widget.key! as ValueKey<String>).value)
@@ -196,13 +209,19 @@ void main() {
           deadEnds.add('$cid (basılamadı)');
           continue;
         }
-        expect(find.byType(CoursePage), findsWidgets,
-            reason: '$cid: kurs kartına basıldı ama CoursePage açılmadı — '
-                'yürüyüş modeli yine yanlış olabilir');
+        expect(
+          find.byType(CoursePage),
+          findsWidgets,
+          reason:
+              '$cid: kurs kartına basıldı ama CoursePage açılmadı — '
+              'yürüyüş modeli yine yanlış olabilir',
+        );
         final List<String> lessonIds = find
-            .byWidgetPredicate((Widget w) =>
-                w.key is ValueKey<String> &&
-                (w.key! as ValueKey<String>).value.startsWith('lesson-'))
+            .byWidgetPredicate(
+              (Widget w) =>
+                  w.key is ValueKey<String> &&
+                  (w.key! as ValueKey<String>).value.startsWith('lesson-'),
+            )
             .evaluate()
             .map((e) => (e.widget.key! as ValueKey<String>).value)
             .toList();
@@ -234,13 +253,14 @@ void main() {
             final Finder why = find.descendant(
               of: card.first,
               matching: find.byKey(
-                ValueKey<String>('locked-why-${lid.substring('lesson-'.length)}'),
+                ValueKey<String>(
+                  'locked-why-${lid.substring('lesson-'.length)}',
+                ),
               ),
             );
             final bool named = why.evaluate().any(
-                  (Element e) =>
-                      ((e.widget as Text).data ?? '').trim().isNotEmpty,
-                );
+              (Element e) => ((e.widget as Text).data ?? '').trim().isNotEmpty,
+            );
             if (named) {
               namedEmpty++;
             } else {
@@ -259,9 +279,10 @@ void main() {
     // > ***Yürüyüş de eksik yürünürse yalan söyler:*** kaydırmayan bir
     // > yürüyüş "0 kusur"u YANLIŞ SEBEPLE basar. Kendi payda toplamım bunu
     // > yakalayamaz — yalnız YÜRÜDÜĞÜMÜ sayar. Referans içerikten gelmeli.
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
+    final Map<String, dynamic> lib =
+        (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
     int expected = 0;
     for (final dynamic d in lib['disciplines'] as List<dynamic>) {
       // Yazılı kursu açık kapalı-katalog kartı Sayfa A'da listelenmez
@@ -280,26 +301,39 @@ void main() {
                 .length; // ders kartları
       }
     }
-    expect(reachable, expected,
-        reason: 'YÜRÜYÜŞ EKSİK: içerikten türetilen $expected kontrol '
-            'beklenirken $reachable yürünmüş. Kaydırma/ulaşamama yüzünden '
-            'atlanan kartlar "çıkmaz yok" sonucunu YANLIŞ SEBEPLE üretir.');
+    expect(
+      reachable,
+      expected,
+      reason:
+          'YÜRÜYÜŞ EKSİK: içerikten türetilen $expected kontrol '
+          'beklenirken $reachable yürünmüş. Kaydırma/ulaşamama yüzünden '
+          'atlanan kartlar "çıkmaz yok" sonucunu YANLIŞ SEBEPLE üretir.',
+    );
 
     // ③ PAYDA + İŞLEM — ve sayaçlar BAĞIMSIZ (türetilmiyor).
     // ignore: avoid_print
-    print('  ÇIKMAZ SOKAK · varılabilir kontrol $reachable = '
-        'iş sunan $withWork + adıyla boş $namedEmpty + ÇIKMAZ '
-        '${deadEnds.length}');
-    expect(withWork + namedEmpty + deadEnds.length, reachable,
-        reason: 'payda TOPLAMIYOR — bir kontrol hiçbir kovaya girmemiş');
+    print(
+      '  ÇIKMAZ SOKAK · varılabilir kontrol $reachable = '
+      'iş sunan $withWork + adıyla boş $namedEmpty + ÇIKMAZ '
+      '${deadEnds.length}',
+    );
+    expect(
+      withWork + namedEmpty + deadEnds.length,
+      reachable,
+      reason: 'payda TOPLAMIYOR — bir kontrol hiçbir kovaya girmemiş',
+    );
 
     // ignore: avoid_print
     if (deadEnds.isNotEmpty) print('  🔴 ${deadEnds.join("\n  🔴 ")}');
 
-    expect(deadEnds, isEmpty,
-        reason: 'ÇIKMAZ SOKAK: basılıyor, bir şey sunmuyor, ve NEDEN '
-            'sunmadığını da söylemiyor. Bir yokluk adı konmuşsa cevaptır; '
-            'adı konmamışsa çıkmazdır.');
+    expect(
+      deadEnds,
+      isEmpty,
+      reason:
+          'ÇIKMAZ SOKAK: basılıyor, bir şey sunmuyor, ve NEDEN '
+          'sunmadığını da söylemiyor. Bir yokluk adı konmuşsa cevaptır; '
+          'adı konmamışsa çıkmazdır.',
+    );
   });
 
   /// 🧪 DEDEKTÖRÜN POZİTİF KONTROLÜ — DOĞRULAYICININ ALTINDAN (J-232).
@@ -317,8 +351,9 @@ void main() {
   /// 📌 Ostinato'nun vakasının TERSİ: orada **var olmayan** bir riski test
   /// etmek vakum-doğru olurdu; burada risk **gerçek ama üretimde
   /// ERİŞİLEMEZ**, ve fixture onu erişilebilir kılıyor.
-  testWidgets('🧪 DEDEKTÖR ATEŞLENİYOR — sentetik çıkmaz sokakta',
-      (WidgetTester t) async {
+  testWidgets('🧪 DEDEKTÖR ATEŞLENİYOR — sentetik çıkmaz sokakta', (
+    WidgetTester t,
+  ) async {
     const ShellLibrary synthetic = ShellLibrary(
       title: 'Sentetik',
       items: <ShellItem>[
@@ -339,66 +374,87 @@ void main() {
       exclusions: <ShellExclusion>[],
     );
 
-    await t.pumpWidget(MaterialApp(
-      home: SelectPage(
-        library: synthetic,
-        onOpenCourse: (_) {},
-        onOpenWhyNot: () {},
-        onOpenSettings: () {},
+    await t.pumpWidget(
+      MaterialApp(
+        home: SelectPage(
+          library: synthetic,
+          onOpenCourse: (_) {},
+          onOpenWhyNot: () {},
+          onOpenSettings: () {},
+        ),
       ),
-    ));
+    );
     await t.pumpAndSettle();
 
     final Finder card = find.byKey(const ValueKey<String>('item-ghost'));
-    expect(card, findsOneWidget,
-        reason: 'sentetik kart çizilmedi — fixture UI\'a ulaşmıyor, '
-            'bu kontrolün sonucu ANLAMSIZ');
+    expect(
+      card,
+      findsOneWidget,
+      reason:
+          'sentetik kart çizilmedi — fixture UI\'a ulaşmıyor, '
+          'bu kontrolün sonucu ANLAMSIZ',
+    );
     await t.tap(card.first, warnIfMissed: false);
     await t.pumpAndSettle();
 
     // Kurs YOK.
     expect(
-        find.byWidgetPredicate((Widget w) =>
+      find.byWidgetPredicate(
+        (Widget w) =>
             w.key is ValueKey<String> &&
-            (w.key! as ValueKey<String>).value.startsWith('course-')),
-        findsNothing,
-        reason: 'sentetik öğe kurs üretti — fixture yanlış kurulmuş');
+            (w.key! as ValueKey<String>).value.startsWith('course-'),
+      ),
+      findsNothing,
+      reason: 'sentetik öğe kurs üretti — fixture yanlış kurulmuş',
+    );
 
     // 🎯 ASIL İDDİA: dedektör bu kartı GEREKÇESİZ sayıyor → ÇIKMAZ.
-    expect(hasNamedReason('item-ghost'), isFalse,
-        reason: 'DEDEKTÖR ATEŞLENMİYOR: gerekçesi olmayan, kurssuz, AÇIK bir '
-            'kart "gerekçeli" sayıldı. J-230\'un "0 çıkmaz" sonucu bu '
-            'kontrol olmadan pozitif-kontrolsüzdü; bu test onu kapatıyor.');
+    expect(
+      hasNamedReason('item-ghost'),
+      isFalse,
+      reason:
+          'DEDEKTÖR ATEŞLENMİYOR: gerekçesi olmayan, kurssuz, AÇIK bir '
+          'kart "gerekçeli" sayıldı. J-230\'un "0 çıkmaz" sonucu bu '
+          'kontrol olmadan pozitif-kontrolsüzdü; bu test onu kapatıyor.',
+    );
 
     // NEGATİF İKİZ: gerekçe VARSA dedektör susmalı (aksi hâlde kapı, dürüst
     // kapalı yüzeyleri de çıkmaz sayardı — 10 meşru kova kırmızıya boyanırdı).
-    await t.pumpWidget(MaterialApp(
-      home: SelectPage(
-        library: const ShellLibrary(
-          title: 'Sentetik',
-          items: <ShellItem>[
-            ShellItem(
-              id: 'named',
-              title: 'Named',
-              status: ItemStatus.comingSoon,
-              courses: <ShellCourse>[],
-              measured: <String>[],
-              notMeasured: <String>['This discipline is not open'],
-            ),
-          ],
-          exclusions: <ShellExclusion>[],
+    await t.pumpWidget(
+      MaterialApp(
+        home: SelectPage(
+          library: const ShellLibrary(
+            title: 'Sentetik',
+            items: <ShellItem>[
+              ShellItem(
+                id: 'named',
+                title: 'Named',
+                status: ItemStatus.comingSoon,
+                courses: <ShellCourse>[],
+                measured: <String>[],
+                notMeasured: <String>['This discipline is not open'],
+              ),
+            ],
+            exclusions: <ShellExclusion>[],
+          ),
+          onOpenCourse: (_) {},
+          onOpenWhyNot: () {},
+          onOpenSettings: () {},
         ),
-        onOpenCourse: (_) {},
-        onOpenWhyNot: () {},
-        onOpenSettings: () {},
       ),
-    ));
+    );
     await t.pumpAndSettle();
-    await t.tap(find.byKey(const ValueKey<String>('item-named')).first,
-        warnIfMissed: false);
+    await t.tap(
+      find.byKey(const ValueKey<String>('item-named')).first,
+      warnIfMissed: false,
+    );
     await t.pumpAndSettle();
-    expect(hasNamedReason('item-named'), isTrue,
-        reason: 'gerekçeli bir kapalı yüzey ÇIKMAZ sayılıyor — kapı fazla '
-            'geniş, dürüst hâlleri kusur diye raporlar');
+    expect(
+      hasNamedReason('item-named'),
+      isTrue,
+      reason:
+          'gerekçeli bir kapalı yüzey ÇIKMAZ sayılıyor — kapı fazla '
+          'geniş, dürüst hâlleri kusur diye raporlar',
+    );
   });
 }
