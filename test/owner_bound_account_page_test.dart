@@ -1268,8 +1268,14 @@ Future<void> _io(WidgetTester tester, Future<void> Function() operation) async {
 }
 
 Future<void> _signal(WidgetTester tester, Completer<void> signal) async {
+  // Gates behind real fixture file IO need real time to complete; an
+  // `_eventTurn` (Duration.zero) gave them almost none, so a loaded machine
+  // could miss the gate (seen once on caf83b9, same file 35/35 on rerun).
+  // Same shape as `_finished`: each turn yields real time, then pumps.
   for (var turn = 0; turn < 30 && !signal.isCompleted; turn++) {
-    await tester.runAsync(_eventTurn);
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 20)),
+    );
     await tester.pump(const Duration(milliseconds: 20));
   }
   expect(
