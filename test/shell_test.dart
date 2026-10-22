@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
@@ -59,6 +61,7 @@ void main() {
     WidgetTester tester, {
     ContentRepository? repo,
     Future<bool> Function(BuildContext)? beforeLessonStart,
+    bool cameraLessonsAvailable = true,
   }) async {
     // Asset yükleme GERÇEK async I/O'dur; widget test'inin sanal saati onu
     // ilerletmez. runAsync olmadan içerik hiç gelmez, yükleme göstergesi
@@ -70,6 +73,7 @@ void main() {
           repository: repo ?? ContentRepository(ownerRegistry: _owners),
           onboarding: _seen,
           beforeLessonStart: beforeLessonStart,
+          cameraLessonsAvailable: cameraLessonsAvailable,
         ),
       );
     });
@@ -199,6 +203,55 @@ void main() {
           'AÇIK disiplinde dürüstlük kutusu kayboldu — J-137 kapalı '
           'disiplini kapsam dışı bıraktı, kutuyu kaldırmadı',
     );
+  });
+
+  testWidgets('camera closed: camera lessons are locked with their reason', (
+    WidgetTester t,
+  ) async {
+    // Production passes motionPaidFeaturesAvailable (false in this release).
+    expect(
+      File('lib/main.dart').readAsStringSync(),
+      contains('cameraLessonsAvailable: motionPaidFeaturesAvailable'),
+    );
+    var gateCalls = 0;
+    await pumpApp(
+      t,
+      cameraLessonsAvailable: false,
+      beforeLessonStart: (_) async {
+        gateCalls++;
+        return false;
+      },
+    );
+    await t.tap(find.byKey(const Key('item-boxing')));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('course-boxing.foundations')));
+    await t.pumpAndSettle();
+    expect(find.byType(CoursePage), findsOneWidget);
+
+    final Finder row = find.byKey(const Key('lesson-boxing.foundations.jab'));
+    expect(row, findsOneWidget);
+    expect(
+      t.widget<InkWell>(row).onTap,
+      isNull,
+      reason: 'a camera lesson must not offer a play action while closed',
+    );
+    expect(
+      find.descendant(
+        of: row,
+        matching: find.textContaining(
+          'Live camera lessons are unavailable in this release.',
+        ),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: row, matching: find.byIcon(Icons.lock_outline)),
+      findsOneWidget,
+    );
+    await t.tap(row, warnIfMissed: false);
+    await t.pumpAndSettle();
+    expect(find.byType(SessionScreen), findsNothing);
+    expect(gateCalls, 0);
   });
 
   testWidgets('canlı disiplinde kurs → ders → seans zinciri yürür', (

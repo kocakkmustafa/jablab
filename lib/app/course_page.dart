@@ -205,7 +205,9 @@ class CoursePage extends StatelessWidget {
                 historyIncomplete: historyIncomplete,
                 recorded: recorded,
                 recordedNote: recordedNote,
-                onResume: resumeLesson == null
+                // A locked lesson (e.g. camera lessons while camera coaching
+                // is closed) is shown with its reason, never resumed.
+                onResume: resumeLesson == null || resumeLesson!.isLocked
                     ? null
                     : () => onStart(resumeLesson!),
                 onRetry: onRetryHistory,

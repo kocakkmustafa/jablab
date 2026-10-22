@@ -110,6 +110,7 @@ Future<void> launchJabLab({
           accountUserId: runtime.userId,
           accountRecovery: runtime.passwordRecovery,
           accountPageBuilder: accountPage,
+          cameraLessonsAvailable: motionPaidFeaturesAvailable,
           beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
             lessonContext,
             account: runtime.account,

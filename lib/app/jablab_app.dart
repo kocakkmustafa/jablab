@@ -61,9 +61,15 @@ class JabLabApp extends StatefulWidget {
     this.accountPageBuilder,
     this.beforeLessonStart,
     this.preferences,
+    this.cameraLessonsAvailable = true,
   });
 
   final ContentRepository repository;
+
+  /// Production passes the release policy (`motionPaidFeaturesAvailable`):
+  /// while camera coaching is closed, camera lessons stay listed but locked
+  /// with their reason. Widget harnesses keep the camera path reachable.
+  final bool cameraLessonsAvailable;
 
   /// Production injects the already loaded device controller from outside
   /// MotionIdentityGate. Null uses an I/O-free widget-harness fallback.
@@ -168,6 +174,7 @@ class _JabLabAppState extends State<JabLabApp> {
                 accountRecovery: widget.accountRecovery,
                 accountPageBuilder: widget.accountPageBuilder,
                 beforeLessonStart: widget.beforeLessonStart,
+                cameraLessonsAvailable: widget.cameraLessonsAvailable,
               ),
             ),
           );
@@ -185,10 +192,12 @@ class _Root extends StatefulWidget {
     required this.accountRecovery,
     required this.accountPageBuilder,
     required this.beforeLessonStart,
+    required this.cameraLessonsAvailable,
   });
 
   final ContentRepository repository;
   final OnboardingStore onboarding;
+  final bool cameraLessonsAvailable;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? accountRecovery;
   final WidgetBuilder? accountPageBuilder;
@@ -456,7 +465,10 @@ class _RootState extends State<_Root> {
           r[0] as ({dynamic library, dynamic boxing});
       setState(() {
         _domain = content.library as Library;
-        _library = widget.repository.toShell(content.library);
+        _library = widget.repository.toShell(
+          content.library,
+          cameraLessonsAvailable: widget.cameraLessonsAvailable,
+        );
         _boxing = content.boxing as RuleSet;
         _cues = r[1] as CueBook;
       });

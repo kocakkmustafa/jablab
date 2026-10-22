@@ -128,5 +128,20 @@ String courseGoal(BuildContext context, String id, String source) =>
 String lessonTitle(BuildContext context, String id, String source) =>
     _copy(context, id, source, _lessonTitles);
 
-String? lessonLockedReason(BuildContext context, String id, String? source) =>
-    source == null ? null : _copy(context, id, source, _lockedReasons);
+/// Lock shown on legacy camera lessons while camera coaching is closed. Same
+/// reviewed EN/TR pair as the `boxing.intermediate` goal, so every packaged
+/// locale already carries it.
+const String cameraLessonsClosedReason =
+    'Live camera lessons are unavailable in this release. The separate solo boxing course remains available for written learning, practice tasks and self-report.';
+
+String? lessonLockedReason(BuildContext context, String id, String? source) {
+  if (source == null) return null;
+  if (source == cameraLessonsClosedReason) {
+    return UiLanguage.text(
+      context,
+      en: 'Live camera lessons are unavailable in this release. The separate solo boxing course remains available for written learning, practice tasks and self-report.',
+      tr: 'Bu sürümde canlı kamera dersleri kullanılamaz. Ayrı solo boks kursu yazılı öğrenme, çalışma görevleri ve öz beyan için kullanılabilir.',
+    );
+  }
+  return _copy(context, id, source, _lockedReasons);
+}

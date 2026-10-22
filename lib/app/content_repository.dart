@@ -14,6 +14,7 @@ import 'package:motion_content/motion_content.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'content_failure.dart';
+import 'course_locale.dart' show cameraLessonsClosedReason;
 import 'flutter_bundle_content_asset_reader.dart';
 import 'account_bridge.dart';
 import 'owner_resource_lifetime.dart';
@@ -724,16 +725,23 @@ final class ContentRepository {
     return (library: lib, boxing: boxing);
   }
 
-  ShellLibrary toShell(Library lib) => ShellLibrary(
-    title: lib.productName,
-    whyNotIntro: lib.whyNotIntro,
-    items: lib.disciplines.map(_item).toList(growable: false),
-    exclusions: lib.excluded
-        .map((ExcludedItem e) => ShellExclusion(e.displayName, e.reason))
-        .toList(growable: false),
-  );
+  /// [cameraLessonsAvailable] false (production while camera coaching is
+  /// closed) keeps camera lessons listed but locked with
+  /// [cameraLessonsClosedReason], instead of a play row that only reaches a
+  /// closed gate. A lesson's own content lock reason wins.
+  ShellLibrary toShell(Library lib, {bool cameraLessonsAvailable = true}) =>
+      ShellLibrary(
+        title: lib.productName,
+        whyNotIntro: lib.whyNotIntro,
+        items: lib.disciplines
+            .map((Discipline d) => _item(d, cameraLessonsAvailable))
+            .toList(growable: false),
+        exclusions: lib.excluded
+            .map((ExcludedItem e) => ShellExclusion(e.displayName, e.reason))
+            .toList(growable: false),
+      );
 
-  ShellItem _item(Discipline d) => ShellItem(
+  ShellItem _item(Discipline d, bool cameraLessonsAvailable) => ShellItem(
     id: d.id,
     title: d.displayName,
     status: d.status == DisciplineStatus.live
@@ -760,7 +768,11 @@ final class ContentRepository {
                     subtitle: l.techniques.isEmpty
                         ? ''
                         : l.techniques.join(' · '),
-                    lockedReason: l.lockedReason,
+                    lockedReason:
+                        l.lockedReason ??
+                        (!cameraLessonsAvailable && l.usesCamera
+                            ? cameraLessonsClosedReason
+                            : null),
                   ),
                 )
                 .toList(growable: false),
