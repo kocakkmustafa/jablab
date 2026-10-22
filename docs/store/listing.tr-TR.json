@@ -2,14 +2,14 @@
   "$doc": "Türkçe mağaza metni taslağı. İngilizce kaynak: listing.json. Sağlayıcıya gönderilmedi; mağaza ve cihaz kabulü açık.",
   "appStore": {
     "name": "JabLab: Gölge Boksu",
-    "subtitle": "Solo boks pratiğini geliştir",
-    "promotionalText": "Duruş ve garddan ayak çalışması, yumruk şekilleri, planlı savunma, kombinasyon ve bağımsız rauntlara temassız gölge boksu çalış.",
-    "keywords": "boks,gölge boksu,jab,cross,duruş,koruma,tek kişilik antrenman,referans"
+    "subtitle": "Solo dövüş sanatları pratiği",
+    "promotionalText": "Boks, kickboks, Muay Thai, karate ve Tai Chi için özgün yazılı başlangıç dersleri; temassız solo pratik ve kendi öz denetimin.",
+    "keywords": "boks,kickboks,muay thai,karate,kata,tai chi,gölge boksu,solo antrenman,duruş,gard"
   },
   "playStore": {
-    "shortDescription": "Solo boks dersleri, öz denetim ve ilerleme kaydı; kamera koçluğu açık değil."
+    "shortDescription": "Beş solo dövüş sanatı kursu; kamera koçluğu açık değil."
   },
-  "description": "JabLab, 8 modülde 39 özgün Türkçe ve İngilizce solo boks dersi sunar. Duruş, gard, ayak çalışması, düz ve kavisli yumruk şekilleri, planlı savunma ve kombinasyonları öğren. Rehberli çalışma ve öz denetim, kendi temassız gölge boksu rauntlarına ilerler. Bu yol sparring öğretmez veya temaslı boksa hazır olduğun hükmünü vermez.\n\nÖzgün metin derslerini oku, uygulama görevlerini takip et, kendi çalışmanı değerlendir ve cihazdaki ders kaydından devam et. Hesabın olmadan kataloğu gezebilir, isteğe bağlı ortak Motion hesabını kullanabilirsin. Hesap; e-posta, hesap kimliği ve eklediysen görünen adını kullanır; uygulamadan hesap silme isteği yapabilirsin. Kurs kayıtları cihazda mevcut konuk veya hesap kapsamında kalır. Ders bitirme ustalık belgesi değildir. Bu içerik hazırlığı sürümünde gösterim videosu bulunmaz.\n\nÇalışmanı ve tamamlamayı kendin kaydedersin. Kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı açık değildir. Kurs darbe kuvveti, yumruk hızı veya kişisel güvenliği ölçmez.",
+  "description": "JabLab, temassız solo pratik için beş dövüş sanatında özgün yazılı başlangıç kursları sunar:\n\n• Boks: 8 modülde 39 ders; duruş ve garddan ayak çalışmasına, düz ve kavisli yumruk şekillerine, planlı savunma hareketlerine, kombinasyonlara ve kendi gölge boksu rauntlarına.\n• Kickboks: duruş, gard, adımlar, jab ve cross, kontrollü ön tekme hazırlığı ve basit yumruk–tekme bağlantıları üzerine 16 ders.\n• Muay Thai: duruş, gard, ayak çalışması, düz yumruklar, teep, diz ve dirsek hazırlığı ve duraklamalı bir pratik dizisi üzerine 16 ders.\n• Karate: 16 kihon dersi (duruşlar, seiken, hikite, choku-zuki, gedan-barai) ve başlangıç katası Taikyoku Shodan üzerine 10 ders.\n• Tai Chi: 14 sabit ayaklı temel ders ve Yang Family 16 form sırasının yazılı çalışması.\n\nDersleri oku, çalışma görevlerini izle, kendini denetle ve cihazındaki ders kaydından devam et. Dersler ve arayüz 14 dilde kullanılabilir. Bu kurslar sparring veya temaslı antrenman öğretmez ve buna hazır olduğun hükmünü vermez. Hiçbir dersin tamamlanması ustalık belgelemez. Gösterim videosu yoktur.\n\nGiriş yapmadan gezinebilir, isteğe bağlı ortak Motion hesabı kullanabilirsin. Hesap e-posta adresini, hesap kimliğini ve isteğe bağlı görünen adı kullanır; hesap silme uygulama içinde mümkündür. Kurs kayıtları, geçerli misafir veya hesap kapsamında cihazda kalır.\n\nÇalışmanı ve tamamlamayı kendin kaydedersin. Kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı yoktur. Kurslar darbe gücünü, yumruk hızını, teknik doğruluğu veya kişisel güvenliği ölçmez.",
   "cameraPermissionRationale": {
     "ios": "Bu sürümde kamera koçluğu devre dışıdır. Daha sonraki bir sürümde ayrıca etkinleştirilirse JabLab, cihaz üzerinde hareket geri bildirimi vermek için kamerayı kullanır. Kamera görüntüleri ve vücut konumları yüklenmez veya kaydedilmez. Oturum geçmişi bu cihazda kalır."
   },
@@ -39,5 +39,12 @@
     "moduleCount": 8,
     "mediaIncluded": false,
     "physicalDeviceAccepted": false
+  },
+  "$fiveAreaUpdate20261022": {
+    "status": "LOCAL_DRAFT_NOT_SUBMITTED",
+    "basisSha": "595ab21342c5b2f1a1883c67cbb11993ae4fb633",
+    "why": "Store copy described only the 39-lesson boxing path; the first release ships five areas (boxing 39/8 modules, Tai Chi 14 + written Yang Family 16 sequence, kickboxing 16, karate 16 + Taikyoku Shodan 10, Muay Thai 16) and 14 locales. Counts read from assets/content at basisSha; camera coaching and sales stay closed (motionPaidFeaturesAvailable=false).",
+    "openDecision": "If the founder hides Yang16 for the first release, drop the Yang Family 16 clause.",
+    "otherLocales": "ar/de/es-419/fr/ja/pt-BR listing files still carry the older boxing-only copy and are not part of the EN/TR first submission draft."
   }
 }

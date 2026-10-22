@@ -86,7 +86,19 @@ void main() {
     final String short =
         ((listing['playStore'] as Map)['shortDescription'] as String)
             .toLowerCase();
-    expect(desc, contains('39 original english and turkish solo boxing lessons'));
+    // First release: five written beginner areas (2026-10-22), not only the
+    // 39-lesson boxing path.
+    for (final String area in <String>[
+      'boxing: 39 lessons in 8 modules',
+      'kickboxing: 16 lessons',
+      'muay thai: 16 lessons',
+      'karate: 16 kihon lessons',
+      'taikyoku shodan',
+      'tai chi: 14 fixed-foot foundation lessons',
+    ]) {
+      expect(desc, contains(area));
+    }
+    expect(desc, contains('do not teach sparring or contact training'));
     expect(desc, contains('camera coaching, automatic punch counting '
         'and subscription sales are not available'));
     expect(short, contains('camera coaching is not open'));

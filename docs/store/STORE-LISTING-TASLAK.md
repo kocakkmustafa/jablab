@@ -1,15 +1,17 @@
-# Güncel mağaza metni girişi · 17 Ekim 2026
+# Güncel mağaza metni girişi · 22 Ekim 2026
 
 Yayıma hazırlanacak TR/EN metinlerin kaynağı [listing.json](listing.json) ve
-[listing.tr-TR.json](listing.tr-TR.json) dosyalarıdır. Güncel dar kurs kapsamı
-**39 ders / 8 modül solo boks**; kurs varlık kimliği ve hashleri JSON içindeki `$` kaynak notlarındadır.
-Temassız öz kayıt; sparring, otomatik yumruk sayımı ve abonelik satışı kabulü yoktur.
+[listing.tr-TR.json](listing.tr-TR.json) dosyalarıdır (`$fiveAreaUpdate20261022`).
+İlk sürüm kapsamı **beş alan**: boks (39 ders / 8 modül), kickboks (16), Muay Thai (16),
+karate kihon (16) + Taikyoku Shodan (10), Tai Chi (14 temel + Yang Family 16 yazılı sıra);
+arayüz ve dersler 14 dilde. Temassız öz kayıt; sparring, otomatik yumruk sayımı, kamera
+koçluğu ve abonelik satışı yoktur. Reviewer notu: [release-review.json](release-review.json) `appReview`.
 
 Kurs ilerlemesi kullanıcının kendi çalışma kaydıdır; ustalık veya fiziksel öğretim
-kabulü değildir. Hesap ve destek/gizlilik metinleri güncel JSON'dan alınır.
-Yerel metin, eski ekran görüntüsü veya kaynak testi mağazada kaydedildiği, güncel
-imzalı pakette bulunduğu ya da fiziksel cihazda kabul edildiği anlamına gelmez.
-Bu bakımda mağaza paneline yazılmadı ve yükleme yapılmadı.
+kabulü değildir. ar/de/es-419/fr/ja/pt-BR listing dosyaları eski boks-yalnız metni taşır
+ve EN/TR ilk gönderim taslağının parçası değildir. Yerel metin, eski ekran görüntüsü veya
+kaynak testi mağazada kaydedildiği, güncel imzalı pakette bulunduğu ya da fiziksel cihazda
+kabul edildiği anlamına gelmez. Mağaza paneline yazılmadı ve yükleme yapılmadı.
 
 ## Tarihsel araştırma · aşağıdaki metni yayın metni olarak kullanmayın
 

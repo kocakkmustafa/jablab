@@ -7,11 +7,11 @@
     "automaticPunchCountingAvailable": false,
     "demonstrationVideoIncluded": false,
     "manualPracticeRecordIsMastery": false,
-    "policySource": "motion_account/lib/src/motion_release_policy.dart at pinned Core 62c10556"
+    "policySource": "motion_account/lib/src/motion_release_policy.dart at pinned Core 583203112c942dd38673bc43d7d05f82f4f5173d; wired in lib/main.dart (cameraLessonsAvailable: motionPaidFeaturesAvailable)"
   },
   "appReview": {
-    "en-US": "JabLab contains bundled text lessons and manual self-reported practice records. The current solo boxing path has 39 lessons in 8 modules; additional written courses are available in the catalogue. A Motion account is optional. Camera coaching, automatic punch counting and subscription sales are disabled by the current release policy. No independent movement accuracy or mastery result is claimed. Demonstration video is not included. Do not use the local CMU/DVIDS research artifacts as product or test-account evidence. Real account and physical-device acceptance must be completed on the final build before submission.",
-    "tr-TR": "JabLab paketli metin dersleri ve kişinin kendi beyan ettiği yerel çalışma kayıtlarını içerir. Solo boks yolu 8 modülde 39 derstir; katalogda ek yazılı kurslar vardır. Motion hesabı isteğe bağlıdır. Mevcut sürüm politikasında kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı kapalıdır. Bağımsız hareket doğruluğu veya ustalık sonucu iddia edilmez. Gösterim videosu yoktur. Yerel CMU/DVIDS araştırma artefaktları ürün veya test hesabı kanıtı değildir. Gönderimden önce final build üzerinde gerçek hesap ve fiziksel cihaz kabulü tamamlanmalıdır.",
+    "en-US": "JabLab contains bundled written beginner courses in five martial arts and manual self-reported practice records: boxing (39 lessons in 8 modules), kickboxing (16), Muay Thai (16), karate kihon (16) with the beginner kata Taikyoku Shodan (10), and Tai Chi (14 fixed-foot foundation lessons plus a written study of the Yang Family 16 sequence). All practice is solo and non-contact. The interface and lessons are available in 14 languages. A Motion account is optional; all courses can be opened without signing in. Camera coaching, automatic punch counting and subscription sales are disabled by the current release policy; older camera lessons are shown locked with that reason. No independent movement accuracy or mastery result is claimed. Demonstration video is not included. Real account and physical-device acceptance must be completed on the final build before submission.",
+    "tr-TR": "JabLab beş dövüş sanatında paketli yazılı başlangıç kursları ve kişinin kendi beyan ettiği çalışma kayıtlarını içerir: boks (8 modülde 39 ders), kickboks (16), Muay Thai (16), karate kihon (16) ve başlangıç katası Taikyoku Shodan (10), Tai Chi (14 sabit ayaklı temel ders ve Yang Family 16 sırasının yazılı çalışması). Bütün pratik solo ve temassızdır. Arayüz ve dersler 14 dilde kullanılabilir. Motion hesabı isteğe bağlıdır; bütün kurslar giriş yapmadan açılabilir. Mevcut sürüm politikasında kamera koçluğu, otomatik yumruk sayımı ve abonelik satışı kapalıdır; eski kamera dersleri bu gerekçeyle kilitli gösterilir. Bağımsız hareket doğruluğu veya ustalık sonucu iddia edilmez. Gösterim videosu yoktur. Gönderimden önce final build üzerinde gerçek hesap ve fiziksel cihaz kabulü tamamlanmalıdır.",
     "reviewAccount": null,
     "reviewAccountStatus": "ONLY_IF_REQUIRED_PROVIDE_THROUGH_SECURE_STORE_FLOW_NO_CREDENTIAL_IN_REPO"
   },
@@ -126,5 +126,10 @@
     "featureGraphics": "Offline EN/TR code-defined composition drafts; owner visual review pending",
     "historicalCandidates": "Hooded figure candidates/feature graphic retained historically; excluded from new packet",
     "nativeScreenshots": "Only current native captures qualify; feature graphics are not screenshots"
+  },
+  "$appReviewUpdate20261022": {
+    "basisSha": "595ab21342c5b2f1a1883c67cbb11993ae4fb633",
+    "status": "LOCAL_REVIEW_DRAFT_NOT_SUBMITTED",
+    "note": "Rewritten for the five-area first release; previous text described only the boxing path and the old Core 62c10556 policy source. CoarseLocation in privacy.appleSourceTypes is not verified against code/SDKs and needs owner review before the App Privacy form."
   }
 }
