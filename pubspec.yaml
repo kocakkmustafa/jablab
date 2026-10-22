@@ -17,7 +17,7 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_account
-      ref: d69e10786e2f1cd509b9eeadeb3ef6ea42d93b5d
+      ref: 583203112c942dd38673bc43d7d05f82f4f5173d
   jablab_engine:
     path: packages/jablab_engine
   # F-3/J-064: seans geçmişi Fitness vaadinin ("çalıştığını kaydet") VERİ
@@ -46,14 +46,14 @@ dependencies:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_core
-      ref: d69e10786e2f1cd509b9eeadeb3ef6ea42d93b5d
+      ref: 583203112c942dd38673bc43d7d05f82f4f5173d
   # Bundled course bytes use the same immutable Core revision. The app-local
   # manifest proves byte integrity only; it is not a media/model catalogue.
   motion_content:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
       path: packages/motion_content
-      ref: d69e10786e2f1cd509b9eeadeb3ef6ea42d93b5d
+      ref: 583203112c942dd38673bc43d7d05f82f4f5173d
   motion_camera:
     git:
       url: https://github.com/kocakkmustafa/motion-core.git
@@ -68,7 +68,7 @@ dependencies:
       #   f2ea161c7e974d57b114ba7773836c72be17a381 == kabul edilen ortak Core/Camera pini
       # (v0.1.0'in iOS Swift katmani 0.10.21'e karsi DERLENMIYORDU — J-071;
       #  v0.1.1 o duzeltmeyi tasiyor ve basligi COMPILED-NOT-RUN.)
-      ref: d69e10786e2f1cd509b9eeadeb3ef6ea42d93b5d
+      ref: 583203112c942dd38673bc43d7d05f82f4f5173d
   permission_handler: ^12.0.3
   # Only an explicitly accepted, bundled lesson asset may create a controller.
   # The shipping media catalogue is empty; lessons still work without video.

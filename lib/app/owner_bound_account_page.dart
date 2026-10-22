@@ -96,6 +96,11 @@ class _OwnerBoundAccountClient extends MotionAccountClient {
          supabase: delegate.supabase,
          app: delegate.app,
          emailRedirectTo: delegate.emailRedirectTo,
+         // Core 5832031: forward the deletion receipt probe and deadlines so
+         // a lost delete response is read back instead of left UNKNOWN.
+         deletionReceipt: delegate.deletionReceipt,
+         operationTimeout: delegate.operationTimeout,
+         readTimeout: delegate.readTimeout,
        ) {
     destructiveEnabled = _currentTicket;
     _subscription = delegate.authChanges.listen(
