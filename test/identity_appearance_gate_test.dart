@@ -119,6 +119,7 @@ class _Harness {
   Object? _proofError;
   int userRequests = 0;
   int unexpectedRequests = 0;
+  int ageStatusReads = 0;
   int deletionCallbacks = 0;
   int profileReads = 0;
   int directoryReads = 0;
@@ -152,6 +153,22 @@ class _Harness {
               'created_at': '2026-10-20T00:00:00Z',
               'updated_at': '2026-10-20T00:00:00Z',
             }),
+            200,
+            request: request,
+            headers: {'content-type': 'application/json'},
+          );
+        }
+        // Core 5832031 reads the signed-in account's age declaration and
+        // consent state on the account page. Synthetic adult baseline: no
+        // declaration row and no consent row (`maybeSingle` of `[]` is null).
+        if (request.method == 'GET' &&
+            (request.url.path.endsWith('/rest/v1/motion_age_declarations') ||
+                request.url.path.endsWith(
+                  '/rest/v1/motion_parental_consents',
+                ))) {
+          h.ageStatusReads++;
+          return http.Response(
+            '[]',
             200,
             request: request,
             headers: {'content-type': 'application/json'},
