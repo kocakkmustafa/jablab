@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_scope_note.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -200,6 +201,7 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Text(_text(context, course.scope)),
+                const CourseScopeNote(CourseScope.taiChi),
                 Text(_text(context, course.endpoint)),
                 Text(_text(context, course.safety)),
                 Text(

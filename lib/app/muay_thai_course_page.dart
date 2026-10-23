@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_scope_note.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -682,6 +683,7 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                   _text(context, course.title),
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
+                const CourseScopeNote(CourseScope.muayThai),
                 for (final entry in course.shared.entries) ...[
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12),

@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_scope_note.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -665,6 +666,7 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                   _text(context, course.title),
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
+                const CourseScopeNote(CourseScope.karate),
                 for (final copy in course.shared.values)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12),

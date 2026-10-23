@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_scope_note.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -250,8 +251,9 @@ class _KickboxingLessonPageState extends State<KickboxingLessonPage>
                   });
                 },
               ),
-            if (l.selfGuidedPractice?.offersMovement != true)
-              Text(_text(context, l.instructions)),
+            // The lesson's own teaching (incl. its instructor prerequisite)
+            // stays visible next to the optional self-guided panel.
+            Text(_text(context, l.instructions)),
             for (final row in l.rows)
               Card(
                 child: Padding(
@@ -656,6 +658,7 @@ class _KickboxingCoursePageState extends State<KickboxingCoursePage>
                   _text(context, course.title),
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
+                const CourseScopeNote(CourseScope.kickboxing),
                 Text(_text(context, course.common)),
                 Text(_text(context, course.conventions)),
                 for (final row in course.conventionRows)

@@ -125,7 +125,7 @@ void main() {
         ContentRepository.taiChiCourseAsset:
             '7aeac315bb2c6f4dc0ad6b6c21c43f04658dc3b45b263c1ce66767acec9309b8',
         ContentRepository.kickboxingCourseAsset:
-            '33a908eadfac286345ca0cba189ff786afc31d018980956d19fcdb02fb238047',
+            '4a4b69256a4c85b08e02d145b67475cb9c10405d8a827a25a50f678bf531bc3c',
         ContentRepository.karateCourseAsset:
             '8d1a488fad8c6b5039ffc9842698800b13a3446a7a1235742b97b2184cf913db',
         ContentRepository.muayThaiCourseAsset:

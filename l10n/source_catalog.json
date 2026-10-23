@@ -15563,7 +15563,7 @@
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 316
+          "line": 317
         }
       ],
       "kind": "CONTENT",
@@ -26595,7 +26595,7 @@
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 124
+          "line": 145
         },
         {
           "path": "lib/app/settings_page.dart",
@@ -26614,15 +26614,15 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 379
+          "line": 381
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 425
+          "line": 427
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 145
+          "line": 166
         }
       ],
       "kind": "UI",
@@ -26641,11 +26641,11 @@
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 405
+          "line": 407
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 171
+          "line": 192
         }
       ],
       "kind": "UI",
@@ -26660,7 +26660,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 435
+          "line": 437
         }
       ],
       "kind": "UI",
@@ -26675,7 +26675,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 577
+          "line": 579
         },
         {
           "path": "lib/shell_candidate/live_surface.dart",
@@ -26694,11 +26694,11 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 716
+          "line": 728
         },
         {
           "path": "lib/app/select_page.dart",
-          "line": 247
+          "line": 274
         }
       ],
       "kind": "UI",
@@ -26713,11 +26713,11 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 29
+          "line": 30
         },
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 622
+          "line": 623
         }
       ],
       "kind": "UI",
@@ -26732,19 +26732,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 160
+          "line": 161
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 170
+          "line": 171
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 170
+          "line": 171
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 219
+          "line": 220
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
@@ -26767,15 +26767,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 267
+          "line": 268
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 270
+          "line": 272
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 292
+          "line": 293
         }
       ],
       "kind": "UI",
@@ -26790,15 +26790,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 327
+          "line": 328
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 326
+          "line": 328
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 352
+          "line": 353
         }
       ],
       "kind": "UI",
@@ -26813,15 +26813,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 399
+          "line": 400
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 398
+          "line": 400
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 424
+          "line": 425
         }
       ],
       "kind": "UI",
@@ -26836,15 +26836,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 434
+          "line": 435
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 438
+          "line": 440
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 464
+          "line": 465
         }
       ],
       "kind": "UI",
@@ -26859,23 +26859,23 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 631
+          "line": 632
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 635
+          "line": 637
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 661
+          "line": 662
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 178
+          "line": 179
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 773
+          "line": 774
         }
       ],
       "kind": "UI",
@@ -26890,23 +26890,23 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 640
+          "line": 641
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 644
+          "line": 646
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 670
+          "line": 671
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 187
+          "line": 188
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 788
+          "line": 789
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
@@ -26925,7 +26925,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 674
+          "line": 676
         }
       ],
       "kind": "UI",
@@ -26940,19 +26940,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 707
+          "line": 709
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 696
+          "line": 699
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 725
+          "line": 727
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 206
+          "line": 208
         }
       ],
       "kind": "UI",
@@ -26967,19 +26967,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 733
+          "line": 735
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 722
+          "line": 725
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 751
+          "line": 753
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 236
+          "line": 238
         }
       ],
       "kind": "UI",
@@ -26994,11 +26994,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 28
+          "line": 29
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 625
+          "line": 627
         }
       ],
       "kind": "UI",
@@ -27043,11 +27043,11 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 28
+          "line": 29
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 651
+          "line": 652
         }
       ],
       "kind": "UI",
@@ -27062,7 +27062,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 692
+          "line": 694
         }
       ],
       "kind": "UI",
@@ -27362,7 +27362,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 367
+          "line": 394
         }
       ],
       "kind": "UI",
@@ -27377,7 +27377,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 434
+          "line": 461
         }
       ],
       "kind": "UI",
@@ -27392,7 +27392,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 444
+          "line": 471
         }
       ],
       "kind": "UI",
@@ -27407,7 +27407,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 511
+          "line": 538
         }
       ],
       "kind": "UI",
@@ -27422,7 +27422,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 572
+          "line": 599
         }
       ],
       "kind": "UI",
@@ -27546,7 +27546,7 @@
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 328
+          "line": 329
         }
       ],
       "kind": "UI",
@@ -27666,7 +27666,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 39
+          "line": 40
         }
       ],
       "kind": "UI",
@@ -27681,7 +27681,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 51
+          "line": 52
         }
       ],
       "kind": "UI",
@@ -27696,7 +27696,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 60
+          "line": 61
         }
       ],
       "kind": "UI",
@@ -27711,7 +27711,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 71
+          "line": 72
         }
       ],
       "kind": "UI",
@@ -27726,11 +27726,11 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 296
+          "line": 297
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 833
+          "line": 835
         }
       ],
       "kind": "UI",
@@ -27745,7 +27745,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 349
+          "line": 350
         }
       ],
       "kind": "UI",
@@ -27760,11 +27760,11 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 361
+          "line": 362
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 405
+          "line": 407
         }
       ],
       "kind": "UI",
@@ -27779,7 +27779,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 434
+          "line": 436
         }
       ],
       "kind": "UI",
@@ -27794,7 +27794,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 455
+          "line": 457
         }
       ],
       "kind": "UI",
@@ -27809,7 +27809,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 586
+          "line": 588
         }
       ],
       "kind": "UI",
@@ -27824,7 +27824,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 660
+          "line": 662
         }
       ],
       "kind": "UI",
@@ -27839,7 +27839,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 670
+          "line": 672
         }
       ],
       "kind": "UI",
@@ -27854,7 +27854,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 675
+          "line": 677
         }
       ],
       "kind": "UI",
@@ -27869,7 +27869,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 680
+          "line": 682
         }
       ],
       "kind": "UI",
@@ -27884,7 +27884,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 921
+          "line": 923
         }
       ],
       "kind": "UI",
@@ -27899,7 +27899,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 930
+          "line": 932
         }
       ],
       "kind": "UI",
@@ -27914,7 +27914,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 944
+          "line": 946
         }
       ],
       "kind": "UI",
@@ -27929,7 +27929,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 959
+          "line": 961
         }
       ],
       "kind": "UI",
@@ -27944,7 +27944,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 972
+          "line": 974
         }
       ],
       "kind": "UI",
@@ -27959,7 +27959,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 986
+          "line": 988
         }
       ],
       "kind": "UI",
@@ -27974,7 +27974,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1016
+          "line": 1018
         }
       ],
       "kind": "UI",
@@ -27989,7 +27989,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1019
+          "line": 1021
         }
       ],
       "kind": "UI",
@@ -28004,7 +28004,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1035
+          "line": 1037
         }
       ],
       "kind": "UI",
@@ -28019,7 +28019,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1060
+          "line": 1062
         }
       ],
       "kind": "UI",
@@ -28034,7 +28034,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1069
+          "line": 1071
         }
       ],
       "kind": "UI",
@@ -28049,7 +28049,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1078
+          "line": 1080
         }
       ],
       "kind": "UI",
@@ -28064,7 +28064,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1137
+          "line": 1139
         }
       ],
       "kind": "UI",
@@ -28079,7 +28079,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1200
+          "line": 1202
         }
       ],
       "kind": "UI",
@@ -29498,11 +29498,11 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 21
+          "line": 22
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 167
+          "line": 168
         }
       ],
       "kind": "UI",
@@ -29517,7 +29517,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 23
+          "line": 24
         }
       ],
       "kind": "UI",
@@ -29532,7 +29532,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 333
+          "line": 335
         }
       ],
       "kind": "UI",
@@ -29547,7 +29547,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 355
+          "line": 357
         }
       ],
       "kind": "UI",
@@ -29562,7 +29562,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 378
+          "line": 380
         }
       ],
       "kind": "UI",
@@ -29577,7 +29577,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 394
+          "line": 395
         }
       ],
       "kind": "UI",
@@ -29592,7 +29592,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 414
+          "line": 415
         }
       ],
       "kind": "UI",
@@ -29607,7 +29607,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 461
+          "line": 462
         }
       ],
       "kind": "UI",
@@ -29622,7 +29622,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 489
+          "line": 490
         }
       ],
       "kind": "UI",
@@ -29637,7 +29637,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 510
+          "line": 511
         }
       ],
       "kind": "UI",
@@ -29652,7 +29652,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 519
+          "line": 520
         }
       ],
       "kind": "UI",
@@ -29667,7 +29667,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 554
+          "line": 555
         }
       ],
       "kind": "UI",
@@ -29682,7 +29682,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 566
+          "line": 567
         }
       ],
       "kind": "UI",
@@ -29697,7 +29697,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 800
+          "line": 802
         }
       ],
       "kind": "UI",
@@ -29712,7 +29712,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 825
+          "line": 827
         }
       ],
       "kind": "UI",
@@ -29727,7 +29727,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 833
+          "line": 835
         }
       ],
       "kind": "UI",
@@ -29742,7 +29742,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 859
+          "line": 861
         }
       ],
       "kind": "UI",
@@ -29757,7 +29757,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 898
+          "line": 900
         }
       ],
       "kind": "UI",
@@ -30031,7 +30031,7 @@
       "contexts": [
         {
           "path": "lib/main.dart",
-          "line": 171
+          "line": 172
         }
       ],
       "kind": "UI",
@@ -30046,19 +30046,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 196
+          "line": 197
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 209
+          "line": 210
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 209
+          "line": 210
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 264
+          "line": 265
         }
       ],
       "kind": "UI",
@@ -30073,15 +30073,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 196
+          "line": 197
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 209
+          "line": 210
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 209
+          "line": 210
         }
       ],
       "kind": "UI",
@@ -30096,15 +30096,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 300
+          "line": 301
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 303
+          "line": 305
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 325
+          "line": 326
         }
       ],
       "kind": "UI",
@@ -30119,19 +30119,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 300
+          "line": 301
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 303
+          "line": 305
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 325
+          "line": 326
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 444
+          "line": 446
         }
       ],
       "kind": "UI",
@@ -30146,19 +30146,19 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 417
+          "line": 418
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 421
+          "line": 423
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 447
+          "line": 448
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 537
+          "line": 538
         }
       ],
       "kind": "UI",
@@ -30173,35 +30173,35 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 417
+          "line": 418
         },
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 720
+          "line": 722
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 421
+          "line": 423
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 709
+          "line": 712
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 447
+          "line": 448
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 738
+          "line": 740
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 537
+          "line": 538
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 844
+          "line": 846
         }
       ],
       "kind": "UI",
@@ -30216,15 +30216,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 720
+          "line": 722
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 709
+          "line": 712
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 738
+          "line": 740
         }
       ],
       "kind": "UI",
@@ -30269,7 +30269,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1124
+          "line": 1126
         }
       ],
       "kind": "UI",
@@ -30284,7 +30284,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1124
+          "line": 1126
         }
       ],
       "kind": "UI",
@@ -30329,7 +30329,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 444
+          "line": 446
         }
       ],
       "kind": "UI",
@@ -30344,7 +30344,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 264
+          "line": 265
         }
       ],
       "kind": "UI",
@@ -30359,7 +30359,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 334
+          "line": 335
         }
       ],
       "kind": "UI",
@@ -30374,7 +30374,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 334
+          "line": 335
         }
       ],
       "kind": "UI",
@@ -30389,7 +30389,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 367
+          "line": 368
         }
       ],
       "kind": "UI",
@@ -30404,7 +30404,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 367
+          "line": 368
         }
       ],
       "kind": "UI",
@@ -30419,7 +30419,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 773
+          "line": 774
         }
       ],
       "kind": "UI",
@@ -30434,7 +30434,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 844
+          "line": 846
         }
       ],
       "kind": "UI",
@@ -30736,7 +30736,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 321
+          "line": 323
         }
       ],
       "kind": "UI",
@@ -30755,7 +30755,7 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 528
+          "line": 530
         }
       ],
       "kind": "UI",
@@ -30772,15 +30772,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 375
+          "line": 376
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 374
+          "line": 376
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 400
+          "line": 401
         }
       ],
       "kind": "UI",
@@ -30795,15 +30795,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 375
+          "line": 376
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 374
+          "line": 376
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 400
+          "line": 401
         }
       ],
       "kind": "UI",
@@ -30818,15 +30818,15 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 375
+          "line": 376
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 374
+          "line": 376
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 400
+          "line": 401
         }
       ],
       "kind": "UI",
@@ -30886,7 +30886,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 316
+          "line": 343
         }
       ],
       "kind": "UI",
@@ -30914,7 +30914,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 490
+          "line": 517
         }
       ],
       "kind": "UI",
@@ -31225,7 +31225,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 414
+          "line": 416
         }
       ],
       "kind": "UI",
@@ -31242,7 +31242,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 523
+          "line": 525
         }
       ],
       "kind": "UI",
@@ -31260,7 +31260,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 523
+          "line": 525
         }
       ],
       "kind": "UI",
@@ -31280,7 +31280,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 885
+          "line": 887
         }
       ],
       "kind": "UI",
@@ -31299,7 +31299,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 904
+          "line": 906
         }
       ],
       "kind": "UI",
@@ -31318,7 +31318,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1099
+          "line": 1101
         }
       ],
       "kind": "UI",
@@ -31335,7 +31335,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1099
+          "line": 1101
         }
       ],
       "kind": "UI",
@@ -32484,11 +32484,11 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 470
+          "line": 472
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 604
+          "line": 606
         }
       ],
       "kind": "UI",
@@ -32503,11 +32503,11 @@
       "contexts": [
         {
           "path": "lib/app/course_page.dart",
-          "line": 476
+          "line": 478
         },
         {
           "path": "lib/app/course_page.dart",
-          "line": 610
+          "line": 612
         }
       ],
       "kind": "UI",
@@ -35433,7 +35433,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1051
+          "line": 1063
         }
       ],
       "kind": "UI",
@@ -35450,7 +35450,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1126
+          "line": 1138
         }
       ],
       "kind": "UI",
@@ -35469,7 +35469,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1144
+          "line": 1156
         }
       ],
       "kind": "UI",
@@ -35489,7 +35489,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1150
+          "line": 1162
         }
       ],
       "kind": "UI",
@@ -35644,7 +35644,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 209
+          "line": 210
         }
       ],
       "kind": "UI",
@@ -35663,7 +35663,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 304
+          "line": 305
         }
       ],
       "kind": "UI",
@@ -35680,7 +35680,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 313
+          "line": 314
         }
       ],
       "kind": "UI",
@@ -35695,7 +35695,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 314
+          "line": 315
         }
       ],
       "kind": "UI",
@@ -35710,7 +35710,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 315
+          "line": 316
         }
       ],
       "kind": "UI",
@@ -35725,7 +35725,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 317
+          "line": 318
         }
       ],
       "kind": "UI",
@@ -35740,7 +35740,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 318
+          "line": 319
         }
       ],
       "kind": "UI",
@@ -35757,7 +35757,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 425
+          "line": 426
         }
       ],
       "kind": "UI",
@@ -35776,7 +35776,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 435
+          "line": 436
         }
       ],
       "kind": "UI",
@@ -35795,7 +35795,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 883
+          "line": 885
         }
       ],
       "kind": "UI",
@@ -36053,6 +36053,10 @@
         {
           "path": "lib/app/course_locale.dart",
           "line": 44
+        },
+        {
+          "path": "lib/app/course_locale.dart",
+          "line": 140
         }
       ],
       "kind": "UI",
@@ -36084,7 +36088,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 690
+          "line": 702
         }
       ],
       "kind": "UI",
@@ -36110,7 +36114,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1091
+          "line": 1103
         }
       ],
       "kind": "UI",
@@ -36125,7 +36129,7 @@
       "contexts": [
         {
           "path": "lib/app/jablab_app.dart",
-          "line": 1102
+          "line": 1114
         }
       ],
       "kind": "UI",
@@ -36140,7 +36144,7 @@
       "contexts": [
         {
           "path": "lib/app/select_page.dart",
-          "line": 429
+          "line": 456
         }
       ],
       "kind": "UI",
@@ -36350,7 +36354,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 665
+          "line": 667
         }
       ],
       "kind": "UI",
@@ -36440,7 +36444,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 31
+          "line": 32
         }
       ],
       "kind": "UI",
@@ -36455,7 +36459,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 177
+          "line": 178
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
@@ -36474,7 +36478,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 244
+          "line": 245
         }
       ],
       "kind": "UI",
@@ -36491,7 +36495,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 244
+          "line": 245
         }
       ],
       "kind": "UI",
@@ -36508,7 +36512,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 344
+          "line": 345
         }
       ],
       "kind": "UI",
@@ -36523,7 +36527,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 681
+          "line": 683
         }
       ],
       "kind": "UI",
@@ -36540,7 +36544,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 689
+          "line": 691
         }
       ],
       "kind": "UI",
@@ -36557,7 +36561,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 699
+          "line": 701
         }
       ],
       "kind": "UI",
@@ -36572,11 +36576,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 30
+          "line": 31
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 30
+          "line": 31
         }
       ],
       "kind": "UI",
@@ -36591,11 +36595,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 186
+          "line": 187
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 190
+          "line": 191
         }
       ],
       "kind": "UI",
@@ -36610,11 +36614,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 343
+          "line": 345
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 369
+          "line": 370
         }
       ],
       "kind": "UI",
@@ -36629,11 +36633,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 670
+          "line": 673
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 699
+          "line": 701
         }
       ],
       "kind": "UI",
@@ -36650,11 +36654,11 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 678
+          "line": 681
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 707
+          "line": 709
         }
       ],
       "kind": "UI",
@@ -36671,7 +36675,7 @@
       "contexts": [
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 688
+          "line": 691
         }
       ],
       "kind": "UI",
@@ -36686,7 +36690,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 269
+          "line": 270
         }
       ],
       "kind": "UI",
@@ -36703,7 +36707,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 269
+          "line": 270
         }
       ],
       "kind": "UI",
@@ -36720,7 +36724,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 717
+          "line": 719
         }
       ],
       "kind": "UI",
@@ -36960,7 +36964,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 37
+          "line": 38
         }
       ],
       "kind": "UI",
@@ -36975,7 +36979,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 241
+          "line": 242
         }
       ],
       "kind": "UI",
@@ -36990,7 +36994,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 807
+          "line": 809
         }
       ],
       "kind": "UI",
@@ -37007,7 +37011,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 815
+          "line": 817
         }
       ],
       "kind": "UI",
@@ -37144,21 +37148,6 @@
       "kind": "CONTENT"
     },
     {
-      "id": "s_0e38e2e39ebdbed947e803a5c63fe0e0cd5b8dcb2f7c3ea6fa4c4f7e1b98adcd",
-      "en": "While seated, move the left hand through a small comfortable arc above the left knee region toward the thigh without pressing on the knee. Separately move the right palm a short distance forward and lower it. Forward placement, when offered, is separate short forward placement practice; no simultaneous linking or loading over the left knee is assigned. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned.",
-      "tr": "Oturarak sol eli sol diz bölgesinin üzerinde küçük rahat bir yaydan aşağı/uyluğa getir; dizine bastırma. Ardından sağ avucu ayrı küçük bir öne yoldan uzatıp indir. İleri yerleştirme ancak ayrı sunulan kısa ileri yerleştirme görevidir; el sırasıyla aynı anda bağlama veya sol dizin üstüne yüklenme hedefi yok. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/6/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
       "id": "s_0ebc7eb5b8ab80575d98f18385fac5caeaa9fee539d165882af102ca7b1b834b",
       "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If the right hand starts while the left remains extended, does this arrangement retain its intermediate pause?",
       "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sol el dışarıdayken sağ el çıkarsa bu düzenin aradaki durağı korunur mu?",
@@ -37185,21 +37174,6 @@
           "path": "assets/content/solo_boxing_course.v1.json",
           "pointer": "/modules/6/lessons/4/steps/2",
           "lessonId": "boxing.rounds.personal_plan"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_12407fdbc3c5fef4da20236cf1592b4d789c94801d78008ae13d30e20810bd94",
-      "en": "First show preparation and return to the same footprint with both feet grounded. Unweighting a foot or a low knee lift may be a comfortable steady option; add no hop, high knee or backward lean. If balance is uncertain, explain the order without lifting a foot.",
-      "tr": "Önce iki ayak yerdeyken hazırlık ve kendi ayak izine dönüşü göster. Bir ayağı hafifletme veya düşük diz kaldırma yalnız rahat ve kararlı seçenek olabilir; zıplama, yüksek diz veya geriye yatış ekleme. Denge belirsizse ayağı kaldırmadan sırayı anlat.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/kickboxing_a.v1.json",
-          "pointer": "/lessons/10/selfGuidedPractice/task"
         }
       ],
       "kind": "CONTENT"
@@ -37350,21 +37324,6 @@
         {
           "path": "assets/content/yang16_preparation.v1.json",
           "pointer": "/practices/1/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_22399cfc7d4c266d0983ef86f6dccf34ea2c41f63d786bc6813d725380ad052d",
-      "en": "While seated, make a small comfortable circle with the left hand and lower it to the thigh, then try the right separately. Try one hand higher and the other lower only in a comfortable space between thigh and lower chest. A lateral-step option, when separately offered, is small lateral placement’s short noncrossing placement; it need not be simultaneous with the hand circles. Separate optional standing preparation: If support and balance are secure, place one foot a very short distance into the clear space beside you without crossing the feet. Stop before separately trying a small comfortable loading change. Dragging the other foot to gather, matching a fixed width or travelling repeatedly is not required; choose two-hand-supported fixed-foot small loading change when uncertain.",
-      "tr": "Oturarak sol elin küçük rahat bir dairesini çiz ve uyluğa indir; sonra sağ eli ayrı dene. Bir el yukarıdayken ötekini alçakta tutmayı yalnız alt göğüs ile uyluk arasındaki rahat alanda dene. Yan adım seçeneği ancak ayrıca sunuluyorsa küçük yana yerleştirme alıştırmasının kısa, çaprazlamasız ayrı yerleştirmesidir; el daireleriyle aynı anda yapmak zorunlu değildir. Ayrı isteğe bağlı ayakta hazırlık: Destek ve denge güvenliyse, açık tarafta bir ayağı çok kısa yana yerleştir; iki ayağı çaprazlama. Önce dur, sonra rahat küçük yük değişimini ayrı dene. Diğer ayağı sürükleyerek toplamak, aynı genişliği tekrarlamak veya bir yana yürüyüş serisi yapmak zorunlu değildir; belirsizlikte iki el destekli sabit-ayak küçük yük değişimini seç.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/2/task"
         }
       ],
       "kind": "CONTENT"
@@ -37752,21 +37711,6 @@
       "kind": "CONTENT"
     },
     {
-      "id": "s_3a4d3db2efe456cbca598407fe1e04553b756806a7362c9ed61e3a0a50c1dc2c",
-      "en": "Plan lead-hand path→guard→two-foot pause and the kicking order as separate blocks. A two-foot preparation explanation may replace the optional low kick. Add no simultaneous punch and kick, reaching for support or speed.",
-      "tr": "Ön el yolu→gard→iki ayakta duraklama ve tekme sırasını ayrı bölümler olarak planla. İsteğe bağlı alçak tekme yerine iki ayaklı hazırlık anlatımı geçebilir. Aynı anda yumruk ve tekme, destek için uzanma veya hız ekleme.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/kickboxing_a.v1.json",
-          "pointer": "/lessons/12/selfGuidedPractice/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
       "id": "s_3bb7f3d4ef2a9c82ce5866de9800373c971ca3b69e6cbe4c8f5fce27929bd13e",
       "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: Should I punch while using hand support?",
       "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Destekliyken yumruk da atmalı mıyım?",
@@ -37913,21 +37857,6 @@
         {
           "path": "assets/content/muay_thai_a.v1.json",
           "pointer": "/lessons/8/selfGuidedPractice/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_4d7c2781cbe556bc9df1aac8d555a4fb0150de19ae0a81d5d211d46f8c7169eb",
-      "en": "While seated, loosely close both hands if comfortable; hold the left a little higher than the right, no higher than lower chest, then lower both. Recognize the hand order without forcing wrists/shoulders, contact, power or head-level striking. Study direction change only through separate small-step direction change; the approximate 90° interpretation is not a required body angle. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support.",
-      "tr": "Oturarak iki eli gevşek yumruk yapabilirsin; sol eli sağdan biraz daha yüksek, alt göğsü aşmadan tut, sonra ikisini indir. Bilekleri veya omzu zorlamadan yalnız el sırasını tanı; temas, güç ve baş hizasında vurma yok. Yön değiştirmeyi ancak ayrı küçük adımlarla yön değiştirme ile ele al; yaklaşık 90° yorumunu bedene zorunlu açı yapma. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/9/task"
         }
       ],
       "kind": "CONTENT"
@@ -38343,21 +38272,6 @@
       "kind": "CONTENT"
     },
     {
-      "id": "s_7b71d7cae6c6c8578048f2801362202ec727337f0d80347fbacc648eeeb1c02b",
-      "en": "While seated, bring the right hand slightly forward/up while resting the left beside the hip/thigh, then lower the right. This prepares recall of the single right-sided appearance. Forward placement is separate short forward placement; do not count the next left step as a second Mane or require simultaneous linking. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned.",
-      "tr": "Oturarak sağ eli küçük rahat bir öne–yukarı yoldan getirirken sol eli kalça/uyluk yanında dinlendir; sonra sağ eli indir. Bu, tek sağ taraflı görüntüyü hatırlamaya hazırlıktır. İleri yerleştirme ayrı kısa ileri yerleştirme alıştırmasıdır; sonraki sol adımı ikinci Yele Ayırma sayma ve el yoluyla aynı anda bağlama şartı koyma. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/10/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
       "id": "s_7dc16302233751e98a6f2a44b9329515bf740bba4d74e85054db4aa147311004",
       "en": "Bring one hand comfortably beside the lower ribs with its elbow near the body. Keep the other hand’s forward travel small. Exchange the roles slowly once, then rest both hands. Do not yank the returning elbow backward, squeeze the shoulder back or swing the trunk. If a hand is needed for support, omit the two-hand task and describe one hand path while seated.",
       "tr": "Ellerden birini alt kaburga yanında rahat, dirseği gövdeye yakın bir hazırlığa getir. Diğer elin öne gidişini küçük tut. Bir kez yavaşça görev değiştirip elleri dinlendir. Geri dirseği arkaya çekiştirme, omzu geriye sıkma veya gövdeyi savurma. Destek elini kullanman gerekiyorsa bu iki-el görevini yapma; oturarak tek el yolunu anlat.",
@@ -38392,36 +38306,6 @@
       "kind": "CONTENT"
     },
     {
-      "id": "s_7e8f056ccc62117af25b1f27052aee1e84cabbe01572263f393bf1096b2f8f54",
-      "en": "While seated, hold one hand at a comfortable height around lower chest and the other near the thigh, then lower them separately and exchange positions. No head turn or overhead shoulder lift is required. This preparation does not teach E11’s approximate half-turn; direction change uses only separate small small-step direction change parts. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support.",
-      "tr": "Oturarak bir eli alt göğüs çevresinde rahat yükseklikte, ötekini uyluğa yakın tut; sonra elleri ayrı ayrı indirip konumlarını değiştir. Başı çevirmek veya omzu baş üstüne kaldırmak gerekmez. E11’deki yaklaşık yarım dönüş bu hazırlıkta öğretilmez; yön değiştirme ancak ayrı küçük küçük adımlarla yön değiştirme parçalarıyla ele alınır. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/12/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_80064e4c3aa6e5f152cf6524dc52b394a2a4a9b1899dcde569d1c70a5b60ddd0",
-      "en": "While seated, move the left palm forward a small comfortable distance and rest it. Then separately extend and return a relaxed right fist along a small forward path without pressing the forearm or pushing the fist with the left palm. Forward placement is separate short forward placement; unseen crossing or landing sequence remains unresolved. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned.",
-      "tr": "Oturarak sol avucu küçük rahat bir öne yoldan getir ve dinlendir. Sonra sağ gevşek yumruğu ayrı küçük bir öne yoldan uzatıp geri al; sol avuçla önkola bastırma veya yumruğu itme. İleri yerleştirme ayrı kısa ileri yerleştirme alıştırmasıdır; görülemeyen çapraz basma veya iniş sırası bu hazırlıkla tamamlanmış sayılmaz. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/13/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
       "id": "s_80461f1f079b72e2e8305e347cadf35dd1430800c8f114ddd40004ea817ce9b0",
       "en": "You may explain the order seated or with both feet grounded without performing the movement. Return to this lesson’s written question in your own words: If the right elbow returns but the right fist stays at the shoulder and the left drops, has the example’s guard been restored?",
       "tr": "Oturarak veya iki ayağı yerde tutarak hareketi yapmadan sırayı anlatabilirsin. Bu dersin yazılı sorusuna kendi sözlerinle dön: Sağ dirsek geri gelir ama sağ yumruk omuzda kalır ve sol el düşerse örneğin gardı geri geldi mi?",
@@ -38447,36 +38331,6 @@
         {
           "path": "assets/content/muay_thai_a.v1.json",
           "pointer": "/lessons/4/selfGuidedPractice/adaptation"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_833dcfb8108fa781abcbadc1a938ca3a811e88d7be500881374e0f9b9f4c0101",
-      "en": "While seated, gather the right fingers loosely without forcing them and do not bend the wrist downward. Move the left open palm forward a small comfortable distance and lower it; the right hand need not match an exact hook. Direction change is separate small-step direction change practice; do not combine it with a pivot hidden by the cut. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support.",
-      "tr": "Oturarak sağ parmakları zorlamadan gevşekçe bir araya getir; bileği zorla aşağı bükme. Sol avucu küçük rahat bir öne yoldan getirip geri indir; sağ elin biçimini tam kancaya benzetmek gerekmez. Yön değiştirme ayrı küçük adımlarla yön değiştirme alıştırmasıdır; görüntüde kesilen pivotla birleştirme. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/3/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_83887d04ea6e026ec3e535bcd0a8bb0c9fcfb9a91bf71b076c908afd5458b89f",
-      "en": "While seated, lower the left hand through a small path to the thigh. Extend and return a relaxed right fist along a small comfortable forward/downward path without locking the elbow or striking a target. The traditional target name assigns no contact with a person. Forward placement is separate short forward placement preparation, without simultaneous power delivery. Separate optional standing preparation: If balance or support is uncertain, take no step and choose two-hand-supported fixed-foot small loading change. With support within reach and clear space in front, place one foot only a comfortably short distance forward; do not target another person’s step length, heel angle or loading percentage. Separate placement from a small transfer and do not turn the loaded rear foot. Stop at the end; no automatic backward or gathering step is assigned.",
-      "tr": "Oturarak sol eli küçük aşağı yoldan uyluğa getir. Sağ eli gevşek yumrukla küçük rahat bir ileri/aşağı yoldan uzat ve geri al; dirseği kilitleme veya hedefe vurma. Geleneksel hedef adı bir kişiye temas görevi değildir. İleri yerleştirme ayrı kısa ileri yerleştirme hazırlığıdır; yumrukla eşzamanlı güç verme yok. Ayrı isteğe bağlı ayakta hazırlık: Denge veya destek belirsizse adım atma; iki el destekli sabit-ayak küçük yük değişimini seç. Destek erişimde ve önü açıkken bir ayağı yalnız rahat çok kısa mesafeye öne yerleştir; başka bir kişinin adım uzunluğunu, topuk açısını veya yük yüzdesini hedefleme. Yerleştirmeyi ve küçük aktarımı ayrı yap; arkadaki yüklü ayağı döndürme. Sonunda dur; otomatik geri adım/toplama görevi yok.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/11/task"
         }
       ],
       "kind": "CONTENT"
@@ -39946,21 +39800,6 @@
       "kind": "CONTENT"
     },
     {
-      "id": "s_d8aacfa2abbe1d9233d63d12fb48a980e184c9a6193cf9347e021f3aa734c888",
-      "en": "Explain A–D on paper or with the hands first: prepare, briefly extend, re-bend, return to the original base. A low small non-contact option matched to the visual source review may be tried only if preparation is comfortable and steady; do not drive the knee to a hard end range. Keep both feet grounded if balance or foot position is uncertain; add no target, high kick or abrupt extension.",
-      "tr": "A–D sırasını önce kâğıtta veya elle anlat: hazırla, kısa aç, yeniden bük, kendi tabanına yerleş. Görsel kaynak incelemesiyle eşleşen düşük ve küçük temassız seçenek ancak hazırlık rahat ve kararlıysa isteğe bağlı denenir; dizi sert sona itme. Denge veya ayak şekli belirsizse iki ayak yerde kalır; hedefe vurma, yüksek tekme veya ani uzatma eklenmez.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/kickboxing_a.v1.json",
-          "pointer": "/lessons/11/selfGuidedPractice/task"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
       "id": "s_d9efd591938fd440016c8eac1ba83429caa0451425d51db8265db27cbb36261b",
       "en": "Choose one small component or written recall of the six units. Distinguish “written”, “small non-contact attempt”, “stopped” and “not attempted”; record one observation and the open question. These choices do not establish personal technique validation, rank or Heian Shodan achievement. You need not add speed or depth next time.",
       "tr": "Bir küçük bileşeni veya altı birimin yazılı geri çağrımını seç. Yaptığın işi “yazılı”, “temassız küçük deneme”, “durdum” ya da “denemedim” diye ayır; gördüğün tek gözlemi ve açık sorunu yaz. Bu seçenekler kişisel teknik doğrulaması, kuşak veya Heian Shodan başarısı üretmez. Bir sonraki denemede hız veya derinlik eklemek zorunda değilsin.",
@@ -40140,21 +39979,6 @@
         {
           "path": "assets/content/kickboxing_a.v1.json",
           "pointer": "/review"
-        }
-      ],
-      "kind": "CONTENT"
-    },
-    {
-      "id": "s_ea5e25a6e54430b5fcbb87346c0f1af7e4afbe0d78f2e482b38d45d971752d66",
-      "en": "While seated, comfortably bring both forearms in front of the trunk; briefly make a crossed appearance without forcing the wrists, or describe the sequence only. Lower the hands separately and rest, with no hold-duration target. Direction change is separate small-step direction change; do not cross the feet or fill in unseen turning contacts. Separate optional standing preparation: If support or repositioning is uncertain, use the seated option and name the direction only. If ready for the standing option, do not target a quarter- or half-turn at once; change direction through several small separate placements, stopping between them. Do not swivel a planted loaded foot, twist through the knee or compensate by twisting the waist. Do not begin if it would require reaching for support.",
-      "tr": "Oturarak iki önkolu gövdenin önüne rahatça getir; bilekleri zorlamadan kısa süre çapraz görünümde tutabilir veya yalnız bu sırayı tarif edebilirsin. Sonra elleri ayrı indir ve dinlen; sabit tutma süresi hedefi yok. Yön değiştirme ayrı küçük adımlarla yön değiştirme alıştırmasıdır; ayakları çaprazlama, görülemeyen dönüş temasını tamamlama. Ayrı isteğe bağlı ayakta hazırlık: Destek ihtiyacı veya yeniden yerleşme belirsizse oturarak yalnız yön adını söyle. Ayakta seçenek hazırsa bir anda çeyrek/yarım tur hedefleme; yönü birkaç küçük ayrı yerleştirmeyle değiştir ve her parça arasında dur. Üzerinde yük bulunan ayağı zemine yapıştırıp çevirmeye, dizden burguya veya belden dönerek telafiye çalışma. Desteğe uzanman gerekecekse yön değiştirmeyi başlatma.",
-      "placeholders": [],
-      "plural_arg": null,
-      "placeholder_types": {},
-      "contexts": [
-        {
-          "path": "assets/content/yang16_preparation.v1.json",
-          "pointer": "/practices/15/task"
         }
       ],
       "kind": "CONTENT"
@@ -40424,6 +40248,291 @@
         }
       ],
       "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_13e733b124e346b70b6e7792345f5976c4387883ef0f6e767d0a580d8fbccdba",
+      "en": "Not in this course: sparring, partner or bag work, and a built-in round timer. Time rounds with your own clock and finish with a few minutes of easy walking and breathing.",
+      "tr": "Bu kursta yok: sparring, partner veya torba çalışması ve uygulama içi raunt saati. Rauntları kendi saatinle tut; bitirirken birkaç dakika rahat yürü ve nefesini düzenle.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 20
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_55a263c59e9bb6bdf66300f01a7341c13d418217deb1b68101807ce40d66e20e",
+      "en": "Not in this course: roundhouse and side kicks, kick defence, blocking drills and timed rounds. The kick itself needs individual demonstration and feedback, which this app cannot give.",
+      "tr": "Bu kursta yok: roundhouse ve yan tekme, tekme savunması, blok çalışmaları ve süreli rauntlar. Tekmenin kendisi bu uygulamanın veremeyeceği bireysel gösterim ve geri bildirim gerektirir.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 25
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_b85442d4b944f432452e01bf1f5b2f32a90ee1d2b5313e04318a6abd8f3c1c2c",
+      "en": "Not in this course: roundhouse kicks, blocks and checks, clinch practice, pivots and angles, and timed rounds.",
+      "tr": "Bu kursta yok: roundhouse tekme, blok ve check, klinç uygulaması, pivot ve açı çalışması ve süreli rauntlar.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 30
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_1d222ec6828e6dbc59996b3c7e3632a9ac5e6d5ad96f609771307e84139c0a01",
+      "en": "This course is the first layer of kihon. Not in it: mae-geri, age-uke, soto-uke, uchi-uke, gyaku-zuki, kiba-dachi and kokutsu-dachi.",
+      "tr": "Bu kurs kihon’un ilk katmanıdır. İçinde yok: mae-geri, age-uke, soto-uke, uchi-uke, gyaku-zuki, kiba-dachi ve kokutsu-dachi.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 35
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_0bc0c5bcb95a5d5bf11953bca452db8279942010d0b7694aae34f9b1a9f33872",
+      "en": "This course covers only the beginner kata Taikyoku Shodan; other kata and partner applications are not in it.",
+      "tr": "Bu kurs yalnız başlangıç katası Taikyoku Shodan’ı kapsar; diğer katalar ve partnerli uygulamalar içinde yok.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 40
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_c130ab10777d493083e8332dfcde980b566872e1d416b9ade2e8b925f39630f8",
+      "en": "Not in this course: stepping, turning and the moving Yang Family 16 form. The written Yang 16 course describes the sequence; it does not teach its steps.",
+      "tr": "Bu kursta yok: adım çalışması, dönüş ve hareket hâlinde Yang Family 16 formu. Yazılı Yang 16 kursu sırayı anlatır; adımlarını öğretmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 45
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_62240753f49c343c019c7e487cd297e7bd128f2d0d10f2e1add68d312b08c0ee",
+      "en": "Before practice, walk slowly for a short time; finish with easy walking or seated rest.",
+      "tr": "Pratikten önce kısa süre yavaşça yürü; rahat yürüyüş veya oturarak dinlenmeyle bitir.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_scope_note.dart",
+          "line": 63
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_49ca58133a086acc186838629d10cb996fbe3f17a97aae22b5cb4f134b55c585",
+      "en": "Show preparation and return to the same footprint with both feet grounded. Keep both feet down: lifting a foot or the knee needs the individual demonstration and feedback this app cannot give. Add no hop, high knee or backward lean. If balance is uncertain, explain the order seated.",
+      "tr": "Hazırlığı ve aynı ayak izine dönüşü iki ayak yerdeyken göster. İki ayağı da yerde tut: ayak veya diz kaldırmak bu uygulamanın veremeyeceği bireysel gösterim ve geri bildirim gerektirir. Zıplama, yüksek diz veya geriye yatış ekleme. Denge belirsizse sırayı oturarak anlat.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/kickboxing_a.v1.json",
+          "pointer": "/lessons/10/selfGuidedPractice/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_18f6b66cf807489aacbd0a486448617410f4eb281b7cd17930c3209452ee476e",
+      "en": "Plan lead-hand path→guard→two-foot pause and the kicking order as separate blocks; explain the kick part with both feet grounded instead of kicking. Add no simultaneous punch and kick, reaching for support or speed.",
+      "tr": "Ön el yolu→gard→iki ayakta duraklama ve tekme sırasını ayrı bölümler olarak planla; tekme bölümünü tekme atmak yerine iki ayak yerdeyken anlat. Aynı anda yumruk ve tekme, destek için uzanma veya hız ekleme.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/kickboxing_a.v1.json",
+          "pointer": "/lessons/12/selfGuidedPractice/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_b45b33aae8ada6255395a9481caf4d6663391e6fc3c7f075f9077bbf3cff0932",
+      "en": "Explain A–D on paper or with the hands: prepare, briefly extend, re-bend, return to the original base. Keep both feet grounded; the kick itself needs the individual demonstration and feedback this app cannot give. Add no target, high kick or abrupt extension.",
+      "tr": "A–D sırasını kâğıtta veya elle anlat: hazırla, kısa aç, yeniden bük, kendi tabanına yerleş. İki ayağı da yerde tut; tekmenin kendisi bu uygulamanın veremeyeceği bireysel gösterim ve geri bildirim gerektirir. Hedefe vurma, yüksek tekme veya ani uzatma ekleme.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/kickboxing_a.v1.json",
+          "pointer": "/lessons/11/selfGuidedPractice/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_5c41b8a10ca5a907c56a46957e982522df1262a91bd51c81e57b04512aff20f8",
+      "en": "While seated, move the left hand through a small comfortable arc above the left knee region toward the thigh without pressing on the knee. Separately move the right palm a short distance forward and lower it. No forward step or loading over the left knee is assigned. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak sol eli sol diz bölgesinin üzerinde küçük rahat bir yaydan aşağı/uyluğa getir; dizine bastırma. Ardından sağ avucu ayrı küçük bir öne yoldan uzatıp indir. İleri adım veya sol dizin üstüne yüklenme görevi yok. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/6/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_c4822bf09f9c8bf3e20e36cd126df5155ff60d32ccfa9a6fc2766b2fab350a43",
+      "en": "While seated, make a small comfortable circle with the left hand and lower it to the thigh, then try the right separately. Try one hand higher and the other lower only in a comfortable space between thigh and lower chest. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak sol elin küçük rahat bir dairesini çiz ve uyluğa indir; sonra sağ eli ayrı dene. Bir el yukarıdayken ötekini alçakta tutmayı yalnız alt göğüs ile uyluk arasındaki rahat alanda dene. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/2/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_246e405cb412bdd0ad993ea6607bb98dfbac67df9536e21f6c1453544497bdad",
+      "en": "While seated, loosely close both hands if comfortable; hold the left a little higher than the right, no higher than lower chest, then lower both. Recognize the hand order without forcing wrists/shoulders, contact, power or head-level striking. Name the new direction only; the approximate 90° interpretation is not a required body angle. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak iki eli gevşek yumruk yapabilirsin; sol eli sağdan biraz daha yüksek, alt göğsü aşmadan tut, sonra ikisini indir. Bilekleri veya omzu zorlamadan yalnız el sırasını tanı; temas, güç ve baş hizasında vurma yok. Yeni yönün yalnız adını söyle; yaklaşık 90° yorumunu bedene zorunlu açı yapma. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/9/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_e808981698354c8a7c1e819445a6cabdcff7f0b589b639eac112f778003f34ce",
+      "en": "While seated, bring the right hand slightly forward/up while resting the left beside the hip/thigh, then lower the right. This prepares recall of the single right-sided appearance; do not count the next movement as a second Mane. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak sağ eli küçük rahat bir öne–yukarı yoldan getirirken sol eli kalça/uyluk yanında dinlendir; sonra sağ eli indir. Bu, tek sağ taraflı görüntüyü hatırlamaya hazırlıktır; sonraki hareketi ikinci Yele Ayırma sayma. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/10/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_9e5cf849968dcd911b697343829590bee2b3e30c0573470a11501478026d9117",
+      "en": "While seated, hold one hand at a comfortable height around lower chest and the other near the thigh, then lower them separately and exchange positions. No head turn or overhead shoulder lift is required. This preparation does not teach E11’s approximate half-turn; name the new direction only. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak bir eli alt göğüs çevresinde rahat yükseklikte, ötekini uyluğa yakın tut; sonra elleri ayrı ayrı indirip konumlarını değiştir. Başı çevirmek veya omzu baş üstüne kaldırmak gerekmez. E11’deki yaklaşık yarım dönüş bu hazırlıkta öğretilmez; yeni yönün yalnız adını söyle. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/12/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_3f683ccb07e4d2c931a4e6efe53ca238b0ec9354a60a4cc9b09c93aab8344435",
+      "en": "While seated, move the left palm forward a small comfortable distance and rest it. Then separately extend and return a relaxed right fist along a small forward path without pressing the forearm or pushing the fist with the left palm. The unseen crossing or landing sequence is not taught here. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak sol avucu küçük rahat bir öne yoldan getir ve dinlendir. Sonra sağ gevşek yumruğu ayrı küçük bir öne yoldan uzatıp geri al; sol avuçla önkola bastırma veya yumruğu itme. Görülemeyen çapraz basma veya iniş sırası burada öğretilmez. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/13/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_8f626685bba87948522bc64433306d781e79a2ffc80b72d5c41ad290a26a1dbf",
+      "en": "While seated, gather the right fingers loosely without forcing them and do not bend the wrist downward. Move the left open palm forward a small comfortable distance and lower it; the right hand need not match an exact hook. Name the new direction only; do not pivot or turn. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak sağ parmakları zorlamadan gevşekçe bir araya getir; bileği zorla aşağı bükme. Sol avucu küçük rahat bir öne yoldan getirip geri indir; sağ elin biçimini tam kancaya benzetmek gerekmez. Yeni yönün yalnız adını söyle; pivot yapma veya dönme. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/3/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_0a4aa432f873734169163c36f411d91ce3b086e9545b11de341130096b1ea66f",
+      "en": "While seated, lower the left hand through a small path to the thigh. Extend and return a relaxed right fist along a small comfortable forward/downward path without locking the elbow or striking a target. The traditional target name assigns no contact with a person, and no forward step or power delivery is assigned. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak sol eli küçük aşağı yoldan uyluğa getir. Sağ eli gevşek yumrukla küçük rahat bir ileri/aşağı yoldan uzat ve geri al; dirseği kilitleme veya hedefe vurma. Geleneksel hedef adı bir kişiye temas görevi değildir; ileri adım veya güç verme görevi yok. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/11/task"
+        }
+      ],
+      "kind": "CONTENT",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_0c4df7d7912f10675f80c4d4e04ea2c937772e2f36eaddbd6b9ab89c60a6c84f",
+      "en": "While seated, comfortably bring both forearms in front of the trunk; briefly make a crossed appearance without forcing the wrists, or describe the sequence only. Lower the hands separately and rest, with no hold-duration target. Name the new direction only; do not cross the feet or turn. Separate optional standing preparation: with support within reach, keep both feet where they are and make only a small comfortable weight shift. Stepping, foot placement and turning are not taught in this app.",
+      "tr": "Oturarak iki önkolu gövdenin önüne rahatça getir; bilekleri zorlamadan kısa süre çapraz görünümde tutabilir veya yalnız bu sırayı tarif edebilirsin. Sonra elleri ayrı indir ve dinlen; sabit tutma süresi hedefi yok. Yeni yönün yalnız adını söyle; ayakları çaprazlama veya dönme. Ayrı isteğe bağlı ayakta hazırlık: destek erişimdeyken iki ayağını yerinde tut ve yalnız küçük rahat bir yük değişimi yap. Adım, ayak yerleştirme ve dönüş bu uygulamada öğretilmez.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "assets/content/yang16_preparation.v1.json",
+          "pointer": "/practices/15/task"
+        }
+      ],
+      "kind": "CONTENT",
       "placeholder_types": {}
     }
   ],

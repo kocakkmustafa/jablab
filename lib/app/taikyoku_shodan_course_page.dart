@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_scope_note.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -796,6 +797,7 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
               padding: const EdgeInsets.all(20),
               children: [
                 _copy(context, course.title, 'taikyoku-course-title'),
+                const CourseScopeNote(CourseScope.taikyoku),
                 Text(
                   _label(
                     context,

@@ -184,7 +184,7 @@ final class KickboxingCourse {
   }
   // Repository verifies this exact transcribed asset after the Core integrity gate.
   static const String reviewedAssetSha256 =
-      '33a908eadfac286345ca0cba189ff786afc31d018980956d19fcdb02fb238047';
+      '4a4b69256a4c85b08e02d145b67475cb9c10405d8a827a25a50f678bf531bc3c';
   final KickboxingCopy title,
       common,
       safety,

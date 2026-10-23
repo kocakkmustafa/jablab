@@ -811,8 +811,8 @@
           "S15"
         ],
         "task": {
-          "tr": "Önce iki ayak yerdeyken hazırlık ve kendi ayak izine dönüşü göster. Bir ayağı hafifletme veya düşük diz kaldırma yalnız rahat ve kararlı seçenek olabilir; zıplama, yüksek diz veya geriye yatış ekleme. Denge belirsizse ayağı kaldırmadan sırayı anlat.",
-          "en": "First show preparation and return to the same footprint with both feet grounded. Unweighting a foot or a low knee lift may be a comfortable steady option; add no hop, high knee or backward lean. If balance is uncertain, explain the order without lifting a foot."
+          "tr": "Hazırlığı ve aynı ayak izine dönüşü iki ayak yerdeyken göster. İki ayağı da yerde tut: ayak veya diz kaldırmak bu uygulamanın veremeyeceği bireysel gösterim ve geri bildirim gerektirir. Zıplama, yüksek diz veya geriye yatış ekleme. Denge belirsizse sırayı oturarak anlat.",
+          "en": "Show preparation and return to the same footprint with both feet grounded. Keep both feet down: lifting a foot or the knee needs the individual demonstration and feedback this app cannot give. Add no hop, high knee or backward lean. If balance is uncertain, explain the order seated."
         },
         "observe": {
           "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
@@ -894,8 +894,8 @@
           "S15"
         ],
         "task": {
-          "tr": "A–D sırasını önce kâğıtta veya elle anlat: hazırla, kısa aç, yeniden bük, kendi tabanına yerleş. Görsel kaynak incelemesiyle eşleşen düşük ve küçük temassız seçenek ancak hazırlık rahat ve kararlıysa isteğe bağlı denenir; dizi sert sona itme. Denge veya ayak şekli belirsizse iki ayak yerde kalır; hedefe vurma, yüksek tekme veya ani uzatma eklenmez.",
-          "en": "Explain A–D on paper or with the hands first: prepare, briefly extend, re-bend, return to the original base. A low small non-contact option matched to the visual source review may be tried only if preparation is comfortable and steady; do not drive the knee to a hard end range. Keep both feet grounded if balance or foot position is uncertain; add no target, high kick or abrupt extension."
+          "tr": "A–D sırasını kâğıtta veya elle anlat: hazırla, kısa aç, yeniden bük, kendi tabanına yerleş. İki ayağı da yerde tut; tekmenin kendisi bu uygulamanın veremeyeceği bireysel gösterim ve geri bildirim gerektirir. Hedefe vurma, yüksek tekme veya ani uzatma ekleme.",
+          "en": "Explain A–D on paper or with the hands: prepare, briefly extend, re-bend, return to the original base. Keep both feet grounded; the kick itself needs the individual demonstration and feedback this app cannot give. Add no target, high kick or abrupt extension."
         },
         "observe": {
           "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",
@@ -959,8 +959,8 @@
           "S15"
         ],
         "task": {
-          "tr": "Ön el yolu→gard→iki ayakta duraklama ve tekme sırasını ayrı bölümler olarak planla. İsteğe bağlı alçak tekme yerine iki ayaklı hazırlık anlatımı geçebilir. Aynı anda yumruk ve tekme, destek için uzanma veya hız ekleme.",
-          "en": "Plan lead-hand path→guard→two-foot pause and the kicking order as separate blocks. A two-foot preparation explanation may replace the optional low kick. Add no simultaneous punch and kick, reaching for support or speed."
+          "tr": "Ön el yolu→gard→iki ayakta duraklama ve tekme sırasını ayrı bölümler olarak planla; tekme bölümünü tekme atmak yerine iki ayak yerdeyken anlat. Aynı anda yumruk ve tekme, destek için uzanma veya hız ekleme.",
+          "en": "Plan lead-hand path→guard→two-foot pause and the kicking order as separate blocks; explain the kick part with both feet grounded instead of kicking. Add no simultaneous punch and kick, reaching for support or speed."
         },
         "observe": {
           "tr": "Yaptığını, yapmadığını ve belirsiz kalan kısmı ayır. Yönü ve başlangıca dönüşü kendi sözlerinle açıkla; görünmeyen veya ölçülmeyen tekniğe doğru notu verme.",

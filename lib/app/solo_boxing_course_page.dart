@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_scope_note.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -389,6 +390,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         ),
         const SizedBox(height: 12),
         Text(_copy(context, course.goal), style: JText.of(context).bodyMuted),
+        const CourseScopeNote(CourseScope.boxing),
         const SizedBox(height: 18),
         GlassPanel(
           tier: GlassTier.observation,
