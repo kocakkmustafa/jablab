@@ -131,5 +131,60 @@
     "basisSha": "595ab21342c5b2f1a1883c67cbb11993ae4fb633",
     "status": "LOCAL_REVIEW_DRAFT_NOT_SUBMITTED",
     "note": "Rewritten for the five-area first release; previous text described only the boxing path and the old Core 62c10556 policy source. CoarseLocation stays declared (owner decision 2026-10-23): basis is account-data-safety-draft.md — IP-derived country/region/city added by the Supabase Edge and kept in user-linked operational/security logs; no GPS permission. Release prep: confirm with the Supabase retention/log-drain settings that this field is stored. Sales copy changes when the Core sales flag opens (paywall A)."
+  },
+  "subscriptionDraft20261023": {
+    "status": "LOCAL_DRAFT_NOT_SUBMITTED_SALES_SWITCH_CLOSED",
+    "decision": "Founder 2026-10-23: paywall A shared by the five Motion apps; USD base prices; 14-day free trial.",
+    "model": "First module / about the first third of every course free; remaining lessons and independent practice stage with subscription; saved progress always readable. Camera coaching stays closed.",
+    "products": [
+      {
+        "scope": "app",
+        "name": "JabLab",
+        "iosProductIds": [
+          "com.yulalab.jablab.individual.monthly",
+          "com.yulalab.jablab.individual.yearly"
+        ],
+        "playProductId": "jablab_individual",
+        "playBasePlans": [
+          "monthly",
+          "yearly"
+        ],
+        "usdBase": {
+          "monthly": "11.99",
+          "yearly": "69.99"
+        },
+        "freeTrialDays": 14
+      },
+      {
+        "scope": "motion_plus",
+        "name": "Motion+",
+        "iosProductIds": [
+          "com.yulalab.jablab.motionplus.monthly",
+          "com.yulalab.jablab.motionplus.yearly"
+        ],
+        "playProductId": "jablab_motion_plus",
+        "playBasePlans": [
+          "monthly",
+          "yearly"
+        ],
+        "usdBase": {
+          "monthly": "19.99",
+          "yearly": "129.99"
+        },
+        "freeTrialDays": 14,
+        "unlocks": "all five Motion apps"
+      }
+    ],
+    "productIdSource": "Core motion_membership_page.dart _productIds() at pin 5832031; period suffix naming must match the App Store Connect / Play Console products the owner creates (console existence is an owner input).",
+    "inAppPrices": "Never hard-coded; MotionMembershipPage shows the store's localized offers. USD base is the console price tier; other storefronts follow the store's equivalents.",
+    "appReview": {
+      "en-US": "Subscriptions (when enabled): JabLab monthly / yearly and Motion+ monthly / yearly (Motion+ also opens Ostinato, Gravita, Choreia and Lissom), each with a 14-day free trial for new subscribers. The first lessons of every course are free; the remaining lessons and the independent practice stage need a subscription; saved progress always stays readable. Purchase, restore and status are on the Membership page (Settings → Account → Membership); cancellation is in the store's subscription settings. A sandbox reviewer account will be supplied through App Store Connect, not in this repository.",
+      "tr-TR": "Abonelikler (etkinleştirildiğinde): JabLab aylık / yıllık ve Motion+ aylık / yıllık (Motion+ Ostinato, Gravita, Choreia ve Lissom'u da açar); yeni aboneler için 14 gün ücretsiz deneme. Her kursun ilk dersleri ücretsizdir; kalan dersler ve bağımsız pratik aşaması abonelik ister; kayıtlı ilerleme her zaman okunabilir kalır. Satın alma, geri yükleme ve durum Üyelik sayfasındadır (Ayarlar → Hesap → Üyelik); iptal mağazanın abonelik ayarlarındadır. Sandbox inceleme hesabı App Store Connect üzerinden verilir, bu depoda yer almaz."
+    },
+    "listingDraft": {
+      "en-US": "Subscription: the first lessons of every course are free. JabLab ($11.99/month or $69.99/year) or Motion+ ($19.99/month or $129.99/year, all five Motion apps) opens the remaining lessons and the independent practice stage, with a 14-day free trial for new subscribers. Prices are shown in your local currency in the store. Payment is charged to your store account; the subscription renews automatically unless cancelled at least 24 hours before the end of the period, and can be managed or cancelled in your store account settings.",
+      "tr-TR": "Abonelik: her kursun ilk dersleri ücretsizdir. JabLab (aylık 11,99 $ veya yıllık 69,99 $) ya da Motion+ (aylık 19,99 $ veya yıllık 129,99 $, beş Motion app'in tümü) kalan dersleri ve bağımsız pratik aşamasını açar; yeni abonelere 14 gün ücretsiz deneme. Fiyatlar mağazada yerel para biriminle gösterilir. Ödeme mağaza hesabından alınır; abonelik dönem bitiminden en az 24 saat önce iptal edilmezse otomatik yenilenir ve mağaza hesap ayarlarından yönetilip iptal edilebilir."
+    },
+    "activation": "When the Core sales switch opens: move listingDraft into listing.json/listing.tr-TR.json description, replace the 'subscription sales are not available' sentence, update store_listing_test, add Purchase History to Apple App Privacy and Play data safety."
   }
 }

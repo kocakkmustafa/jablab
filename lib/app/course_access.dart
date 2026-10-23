@@ -111,6 +111,15 @@ class PaywallSheet extends StatelessWidget {
               tr: 'Her kursun ilk dersleri ücretsizdir. JabLab veya Motion+ aboneliği kalan dersleri ve bağımsız pratik aşamasını açar. Kayıtlı ilerlemen her durumda okunabilir kalır.',
             ),
           ),
+          const SizedBox(height: 8),
+          Text(
+            UiLanguage.text(
+              context,
+              en: 'New subscribers get a 14-day free trial. Prices come from your store, and you can cancel anytime in your store’s subscription settings.',
+              tr: 'Yeni abonelere 14 gün ücretsiz deneme sunulur. Fiyatları mağazan gösterir; aboneliği mağazanın abonelik ayarlarından istediğin zaman iptal edebilirsin.',
+            ),
+            key: const Key('paywall-trial-terms'),
+          ),
           const SizedBox(height: 16),
           FilledButton(
             key: const Key('paywall-subscribe'),

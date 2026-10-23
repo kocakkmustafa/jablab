@@ -98,6 +98,7 @@ void main() {
       await t.tap(find.byKey(const Key('kickboxing-lesson-6')));
       await t.pumpAndSettle();
       expect(find.byKey(const Key('paywall-sheet')), findsOneWidget);
+      expect(find.byKey(const Key('paywall-trial-terms')), findsOneWidget);
       await t.tap(find.byKey(const Key('paywall-not-now')));
       await t.pumpAndSettle();
       expect(unlockCalls, 0);

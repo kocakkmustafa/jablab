@@ -40574,7 +40574,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 119
+          "line": 128
         }
       ],
       "kind": "UI",
@@ -40589,7 +40589,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 130
+          "line": 139
         }
       ],
       "kind": "UI",
@@ -40604,7 +40604,22 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 145
+          "line": 154
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_3dcf7f959907fb9c2deae0b4a07a55d039eae8465efe2112d71214e3f0185048",
+      "en": "New subscribers get a 14-day free trial. Prices come from your store, and you can cancel anytime in your store’s subscription settings.",
+      "tr": "Yeni abonelere 14 gün ücretsiz deneme sunulur. Fiyatları mağazan gösterir; aboneliği mağazanın abonelik ayarlarından istediğin zaman iptal edebilirsin.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/course_access.dart",
+          "line": 116
         }
       ],
       "kind": "UI",
