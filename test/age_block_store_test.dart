@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -37,6 +38,12 @@ void main() {
     expect(store.blocked, isFalse);
     await store.markBlocked();
     expect(store.blocked, isTrue, reason: 'in-memory block holds this run');
+  });
+
+  test('a directory lookup that never answers is bounded', () async {
+    final store = AgeBlockStore(directory: () => Completer<Directory>().future);
+    await store.load(timeout: const Duration(milliseconds: 50));
+    expect(store.blocked, isFalse);
   });
 
   test('production wires the durable block into the shared account page', () {

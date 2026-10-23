@@ -27,7 +27,11 @@ class AgeBlockStore {
   /// Bounded read before the first frame; any failure leaves it unblocked.
   Future<void> load({Duration timeout = const Duration(seconds: 2)}) async {
     try {
-      _blocked = await (await _file()).exists().timeout(timeout);
+      // The whole read is bounded, including the platform directory lookup:
+      // a silent path_provider channel must not hold the first frame.
+      _blocked = await Future<bool>(
+        () async => (await _file()).exists(),
+      ).timeout(timeout);
     } on Object {
       _blocked = false;
     }
