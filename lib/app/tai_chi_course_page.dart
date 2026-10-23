@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_access.dart';
 import 'course_scope_note.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
@@ -39,12 +40,16 @@ class TaiChiCoursePage extends StatefulWidget {
     required this.loader,
     this.accountUserId,
     this.resourceAdmission,
+    this.access,
     this.onOpenYang16WrittenCourse,
   });
   final Future<TaiChiCourse> Function() loader;
   final VoidCallback? onOpenYang16WrittenCourse;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
+
+  /// Shared Motion paywall (option A); null keeps every lesson open.
+  final CourseAccess? access;
   @override
   State<TaiChiCoursePage> createState() => _TaiChiCoursePageState();
 }
@@ -60,6 +65,7 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
   @override
   void initState() {
     super.initState();
+    widget.access?.entitled.addListener(_accessChanged);
     widget.accountUserId?.addListener(_retire);
     widget.resourceAdmission?.addListener(_admissionChanged);
     unawaited(_load());
@@ -132,6 +138,23 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
     }
   }
 
+  void _accessChanged() {
+    if (mounted) setState(() {});
+  }
+
+  bool _locked(int index) =>
+      !(widget.access?.allows(GatedCourse.taiChi, index) ?? true);
+
+  Future<void> _openGated(TaiChiLesson lesson, int index) async {
+    final CourseAccess? access = widget.access;
+    if (access != null &&
+        !await access.requestLesson(context, GatedCourse.taiChi, index)) {
+      return;
+    }
+    if (!mounted) return;
+    await _open(lesson);
+  }
+
   Future<void> _open(TaiChiLesson lesson) async {
     if (_retired ||
         _lesson != null ||
@@ -156,6 +179,7 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
     _generation++;
     widget.accountUserId?.removeListener(_retire);
     widget.resourceAdmission?.removeListener(_admissionChanged);
+    widget.access?.entitled.removeListener(_accessChanged);
     super.dispose();
   }
 
@@ -232,7 +256,8 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
                       '${lesson.number}. ${_text(context, lesson.title)}',
                     ),
                     subtitle: Text(_text(context, lesson.objective)),
-                    onTap: () => _open(lesson),
+                    trailing: _locked(course.lessons.indexOf(lesson)) ? const LessonLockBadge() : null,
+                    onTap: () => _openGated(lesson, course.lessons.indexOf(lesson)),
                   ),
                 Text(
                   _label(context, 'Teaching references', 'Öğretim kaynakları'),

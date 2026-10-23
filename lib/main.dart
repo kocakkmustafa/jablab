@@ -11,6 +11,7 @@ import 'app/app_preferences_store.dart';
 import 'app/design_tokens.dart';
 import 'app/account_bridge.dart';
 import 'app/age_block_store.dart';
+import 'app/course_access.dart';
 import 'app/jablab_app.dart';
 import 'app/identity_appearance_gate.dart';
 import 'app/owner_resource_lifetime.dart';
@@ -40,6 +41,11 @@ import 'app/ui_language.dart';
 /// yönü ilan ediyorsa iOS açılışta kısa bir yatay kare çizebiliyor ve
 /// Android yapılandırma değişikliğini uygulamaya taşıyor. Beyanın üçünde de
 /// aynı olması, "kilit var" cümlesinin her katmanda doğru olması demek.
+/// Camera coaching stays closed in JabLab until its own physical and device
+/// acceptance (J-007/J-011); it is separate from the shared sales switch
+/// (`motionPaidFeaturesAvailable`), which now gates only course access.
+const bool jablabCameraCoachingAvailable = false;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
@@ -108,6 +114,36 @@ Future<void> launchJabLab({
       );
     }
 
+    final CourseAccess courseAccess = CourseAccess(
+      salesOpen: motionPaidFeaturesAvailable,
+      unlock: (BuildContext lessonContext) => requireMotionPaidAccess(
+        lessonContext,
+        account: runtime.account,
+        accountPageBuilder: accountPage,
+        membershipPageBuilder: (_) =>
+            MotionMembershipPage(account: runtime.account),
+      ),
+    );
+    if (courseAccess.salesOpen) {
+      // A verified membership opens gated lessons without a tap first; an
+      // owner change closes them again until that owner is verified.
+      Future<void> refreshMembership() async {
+        final String? owner = runtime.userId.value;
+        courseAccess.entitled.value = false;
+        if (owner == null) return;
+        try {
+          final bool active = await runtime.account.hasActiveMembership();
+          if (runtime.userId.value == owner) {
+            courseAccess.entitled.value = active;
+          }
+        } on Object {
+          // Unknown never grants access; the lock stays until verified.
+        }
+      }
+
+      runtime.userId.addListener(() => unawaited(refreshMembership()));
+      unawaited(refreshMembership());
+    }
     runApp(
       JabLabIdentityAppearanceGate(
         runtime: runtime,
@@ -117,7 +153,8 @@ Future<void> launchJabLab({
           accountUserId: runtime.userId,
           accountRecovery: runtime.passwordRecovery,
           accountPageBuilder: accountPage,
-          cameraLessonsAvailable: motionPaidFeaturesAvailable,
+          cameraLessonsAvailable: jablabCameraCoachingAvailable,
+          courseAccess: courseAccess,
           beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
             lessonContext,
             account: runtime.account,

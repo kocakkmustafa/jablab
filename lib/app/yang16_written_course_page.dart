@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_access.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -632,12 +633,16 @@ class Yang16WrittenCoursePage extends StatefulWidget {
     required this.loader,
     this.accountUserId,
     this.resourceAdmission,
+    this.access,
     this.preparationLoader,
   });
   final Future<Yang16WrittenCourse> Function() loader;
   final Future<Yang16PreparationCourse> Function()? preparationLoader;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
+
+  /// Shared Motion paywall (option A); null keeps every lesson open.
+  final CourseAccess? access;
   @override
   State<Yang16WrittenCoursePage> createState() =>
       _Yang16WrittenCoursePageState();
@@ -661,6 +666,7 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
   @override
   void initState() {
     super.initState();
+    widget.access?.entitled.addListener(_accessChanged);
     WidgetsBinding.instance.addObserver(this);
     widget.accountUserId?.addListener(_retire);
     widget.resourceAdmission?.addListener(_admissionChanged);
@@ -774,6 +780,23 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     }
   }
 
+  void _accessChanged() {
+    if (mounted) setState(() {});
+  }
+
+  bool _locked(int index) =>
+      !(widget.access?.allows(GatedCourse.yang16, index) ?? true);
+
+  Future<void> _openGated(Yang16Target target, int index) async {
+    final CourseAccess? access = widget.access;
+    if (access != null &&
+        !await access.requestLesson(context, GatedCourse.yang16, index)) {
+      return;
+    }
+    if (!mounted) return;
+    await _open(target);
+  }
+
   Future<void> _open(Yang16Target target) async {
     final course = _course;
     if (!_admitted ||
@@ -836,6 +859,7 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
     WidgetsBinding.instance.removeObserver(this);
     widget.accountUserId?.removeListener(_retire);
     widget.resourceAdmission?.removeListener(_admissionChanged);
+    widget.access?.entitled.removeListener(_accessChanged);
     super.dispose();
   }
 
@@ -931,7 +955,10 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
                             : 'Oku, yeniden kur, düzelt ve aynı hedefi tekrar yanıtla',
                       ),
                     ),
-                    onTap: _admitted ? () => _open(target) : null,
+                    trailing: _locked(course.targets.indexOf(target)) ? const LessonLockBadge() : null,
+                    onTap: _admitted
+                        ? () => _openGated(target, course.targets.indexOf(target))
+                        : null,
                   ),
                 TextButton(
                   key: const Key('yang16-clear-visit'),

@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_access.dart';
 import 'course_scope_note.dart';
 import 'dart:async';
 
@@ -94,11 +95,15 @@ class SoloBoxingCoursePage extends StatefulWidget {
     required this.repository,
     this.accountUserId,
     this.resourceAdmission,
+    this.access,
   });
 
   final ContentRepository repository;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
+
+  /// Shared Motion paywall (option A); null keeps every lesson open.
+  final CourseAccess? access;
 
   @override
   State<SoloBoxingCoursePage> createState() => _SoloBoxingCoursePageState();
@@ -120,6 +125,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   @override
   void initState() {
     super.initState();
+    widget.access?.entitled.addListener(_accessChanged);
     widget.accountUserId?.addListener(_load);
     widget.resourceAdmission?.addListener(_admissionChanged);
     unawaited(_load());
@@ -152,6 +158,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
   void dispose() {
     widget.accountUserId?.removeListener(_load);
     widget.resourceAdmission?.removeListener(_admissionChanged);
+    widget.access?.entitled.removeListener(_accessChanged);
     super.dispose();
   }
 
@@ -217,6 +224,35 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
         }
       });
     }
+  }
+
+  void _accessChanged() {
+    if (mounted) setState(() {});
+  }
+
+  int _courseIndex(SoloLesson lesson) =>
+      _course?.modules
+          .expand((SoloModule m) => m.lessons)
+          .toList()
+          .indexWhere((SoloLesson l) => l.id == lesson.id) ??
+      -1;
+
+  bool _locked(SoloLesson lesson) =>
+      !(widget.access?.allows(GatedCourse.boxing, _courseIndex(lesson)) ??
+          true);
+
+  Future<void> _openGated(SoloLesson lesson) async {
+    final CourseAccess? access = widget.access;
+    if (access != null &&
+        !await access.requestLesson(
+          context,
+          GatedCourse.boxing,
+          _courseIndex(lesson),
+        )) {
+      return;
+    }
+    if (!mounted) return;
+    await _openLesson(lesson);
   }
 
   Future<void> _openLesson(SoloLesson lesson) async {
@@ -449,7 +485,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
             padding: const EdgeInsets.all(16),
             child: InkWell(
               key: const Key('solo-next-lesson'),
-              onTap: _opening ? null : () => _openLesson(next),
+              onTap: _opening ? null : () => _openGated(next),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -548,7 +584,9 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
             for (int i = 0; i < module.lessons.length; i++)
               ListTile(
                 key: Key('solo-lesson-${module.lessons[i].id}'),
-                onTap: _opening ? null : () => _openLesson(module.lessons[i]),
+                onTap: _opening
+                    ? null
+                    : () => _openGated(module.lessons[i]),
                 leading: Icon(
                   progress == null
                       ? Icons.help_outline
@@ -568,10 +606,12 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
                   _copy(context, module.lessons[i].objective),
                   style: JText.of(context).bodyMuted,
                 ),
-                trailing: Icon(
-                  Icons.chevron_right,
-                  color: JColors.of(context).observation,
-                ),
+                trailing: _locked(module.lessons[i])
+                    ? const LessonLockBadge()
+                    : Icon(
+                        Icons.chevron_right,
+                        color: JColors.of(context).observation,
+                      ),
               ),
           ],
         ),

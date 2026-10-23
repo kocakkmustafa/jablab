@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_access.dart';
 import 'course_scope_note.dart';
 import 'dart:async';
 
@@ -453,11 +454,15 @@ class KarateCoursePage extends StatefulWidget {
     required this.loader,
     this.accountUserId,
     this.resourceAdmission,
+    this.access,
     this.onOpenTaikyokuCourse,
   });
   final Future<KarateCourse> Function() loader;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
+
+  /// Shared Motion paywall (option A); null keeps every lesson open.
+  final CourseAccess? access;
   final VoidCallback? onOpenTaikyokuCourse;
   @override
   State<KarateCoursePage> createState() => _KarateCoursePageState();
@@ -476,6 +481,7 @@ class _KarateCoursePageState extends State<KarateCoursePage>
   @override
   void initState() {
     super.initState();
+    widget.access?.entitled.addListener(_accessChanged);
     WidgetsBinding.instance.addObserver(this);
     widget.accountUserId?.addListener(_retire);
     widget.resourceAdmission?.addListener(_admissionChanged);
@@ -557,6 +563,23 @@ class _KarateCoursePageState extends State<KarateCoursePage>
     }
   }
 
+  void _accessChanged() {
+    if (mounted) setState(() {});
+  }
+
+  bool _locked(int index) =>
+      !(widget.access?.allows(GatedCourse.karate, index) ?? true);
+
+  Future<void> _openGated(KarateLesson lesson, int index) async {
+    final CourseAccess? access = widget.access;
+    if (access != null &&
+        !await access.requestLesson(context, GatedCourse.karate, index)) {
+      return;
+    }
+    if (!mounted) return;
+    await _open(lesson);
+  }
+
   Future<void> _open(KarateLesson lesson) async {
     final course = _course;
     if (_retired ||
@@ -613,6 +636,7 @@ class _KarateCoursePageState extends State<KarateCoursePage>
     WidgetsBinding.instance.removeObserver(this);
     widget.accountUserId?.removeListener(_retire);
     widget.resourceAdmission?.removeListener(_admissionChanged);
+    widget.access?.entitled.removeListener(_accessChanged);
     super.dispose();
   }
 
@@ -729,7 +753,8 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                             : 'Oku ve kendi yanıtını yaz',
                       ),
                     ),
-                    onTap: () => _open(lesson),
+                    trailing: _locked(course.lessons.indexOf(lesson)) ? const LessonLockBadge() : null,
+                    onTap: () => _openGated(lesson, course.lessons.indexOf(lesson)),
                   ),
                 Text(
                   _label(context, 'Teaching references', 'Öğretim kaynakları'),

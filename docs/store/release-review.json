@@ -130,6 +130,6 @@
   "$appReviewUpdate20261022": {
     "basisSha": "595ab21342c5b2f1a1883c67cbb11993ae4fb633",
     "status": "LOCAL_REVIEW_DRAFT_NOT_SUBMITTED",
-    "note": "Rewritten for the five-area first release; previous text described only the boxing path and the old Core 62c10556 policy source. CoarseLocation in privacy.appleSourceTypes is not verified against code/SDKs and needs owner review before the App Privacy form."
+    "note": "Rewritten for the five-area first release; previous text described only the boxing path and the old Core 62c10556 policy source. CoarseLocation stays declared (owner decision 2026-10-23): basis is account-data-safety-draft.md — IP-derived country/region/city added by the Supabase Edge and kept in user-linked operational/security logs; no GPS permission. Release prep: confirm with the Supabase retention/log-drain settings that this field is stored. Sales copy changes when the Core sales flag opens (paywall A)."
   }
 }

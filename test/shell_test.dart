@@ -208,11 +208,14 @@ void main() {
   testWidgets('camera closed: camera lessons are locked with their reason', (
     WidgetTester t,
   ) async {
-    // Production passes motionPaidFeaturesAvailable (false in this release).
+    // Production keeps camera coaching on its own closed switch, separate
+    // from the shared sales switch that now gates course access.
+    final String main = File('lib/main.dart').readAsStringSync();
     expect(
-      File('lib/main.dart').readAsStringSync(),
-      contains('cameraLessonsAvailable: motionPaidFeaturesAvailable'),
+      main,
+      contains('cameraLessonsAvailable: jablabCameraCoachingAvailable'),
     );
+    expect(main, contains('const bool jablabCameraCoachingAvailable = false;'));
     var gateCalls = 0;
     await pumpApp(
       t,

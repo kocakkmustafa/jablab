@@ -1,4 +1,5 @@
 import 'muay_thai_course_page.dart';
+import 'course_access.dart';
 import 'karate_course_page.dart';
 import 'taikyoku_shodan_course_page.dart';
 import 'yang16_written_course_page.dart';
@@ -62,9 +63,13 @@ class JabLabApp extends StatefulWidget {
     this.beforeLessonStart,
     this.preferences,
     this.cameraLessonsAvailable = true,
+    this.courseAccess,
   });
 
   final ContentRepository repository;
+
+  /// Shared Motion paywall (option A). Null keeps every written lesson open.
+  final CourseAccess? courseAccess;
 
   /// Production passes the release policy (`motionPaidFeaturesAvailable`):
   /// while camera coaching is closed, camera lessons stay listed but locked
@@ -175,6 +180,7 @@ class _JabLabAppState extends State<JabLabApp> {
                 accountPageBuilder: widget.accountPageBuilder,
                 beforeLessonStart: widget.beforeLessonStart,
                 cameraLessonsAvailable: widget.cameraLessonsAvailable,
+                courseAccess: widget.courseAccess,
               ),
             ),
           );
@@ -193,11 +199,13 @@ class _Root extends StatefulWidget {
     required this.accountPageBuilder,
     required this.beforeLessonStart,
     required this.cameraLessonsAvailable,
+    required this.courseAccess,
   });
 
   final ContentRepository repository;
   final OnboardingStore onboarding;
   final bool cameraLessonsAvailable;
+  final CourseAccess? courseAccess;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? accountRecovery;
   final WidgetBuilder? accountPageBuilder;
@@ -801,6 +809,7 @@ class _RootState extends State<_Root> {
           repository: widget.repository,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
         );
       },
     );
@@ -831,6 +840,7 @@ class _RootState extends State<_Root> {
           loader: widget.repository.loadTaiChiCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
           onOpenYang16WrittenCourse: () {
             final lifecycle = WidgetsBinding.instance.lifecycleState;
             if (mounted &&
@@ -872,6 +882,7 @@ class _RootState extends State<_Root> {
           loader: widget.repository.loadKickboxingCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
         );
       },
     );
@@ -902,6 +913,7 @@ class _RootState extends State<_Root> {
           loader: widget.repository.loadKarateCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
           onOpenTaikyokuCourse: () {
             if (mounted &&
                 route.isCurrent &&
@@ -946,6 +958,7 @@ class _RootState extends State<_Root> {
           loader: widget.repository.loadTaikyokuCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
         );
       },
     );
@@ -982,6 +995,7 @@ class _RootState extends State<_Root> {
           preparationLoader: widget.repository.loadYang16PreparationCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
         );
       },
     );
@@ -1012,6 +1026,7 @@ class _RootState extends State<_Root> {
           loader: widget.repository.loadMuayThaiCourse,
           accountUserId: widget.accountUserId,
           resourceAdmission: _resourceAdmission,
+          access: widget.courseAccess,
         );
       },
     );

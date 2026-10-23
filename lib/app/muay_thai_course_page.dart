@@ -1,4 +1,5 @@
 import 'technique_capability_panel.dart';
+import 'course_access.dart';
 import 'course_scope_note.dart';
 import 'dart:async';
 
@@ -483,10 +484,14 @@ class MuayThaiCoursePage extends StatefulWidget {
     required this.loader,
     this.accountUserId,
     this.resourceAdmission,
+    this.access,
   });
   final Future<MuayThaiCourse> Function() loader;
   final ValueListenable<String?>? accountUserId;
   final ValueListenable<bool>? resourceAdmission;
+
+  /// Shared Motion paywall (option A); null keeps every lesson open.
+  final CourseAccess? access;
   @override
   State<MuayThaiCoursePage> createState() => _MuayThaiCoursePageState();
 }
@@ -504,6 +509,7 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
   @override
   void initState() {
     super.initState();
+    widget.access?.entitled.addListener(_accessChanged);
     WidgetsBinding.instance.addObserver(this);
     widget.accountUserId?.addListener(_retire);
     widget.resourceAdmission?.addListener(_admissionChanged);
@@ -585,6 +591,23 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
     }
   }
 
+  void _accessChanged() {
+    if (mounted) setState(() {});
+  }
+
+  bool _locked(int index) =>
+      !(widget.access?.allows(GatedCourse.muayThai, index) ?? true);
+
+  Future<void> _openGated(MuayThaiLesson lesson, int index) async {
+    final CourseAccess? access = widget.access;
+    if (access != null &&
+        !await access.requestLesson(context, GatedCourse.muayThai, index)) {
+      return;
+    }
+    if (!mounted) return;
+    await _open(lesson);
+  }
+
   Future<void> _open(MuayThaiLesson lesson) async {
     final course = _course;
     if (_retired ||
@@ -641,6 +664,7 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
     WidgetsBinding.instance.removeObserver(this);
     widget.accountUserId?.removeListener(_retire);
     widget.resourceAdmission?.removeListener(_admissionChanged);
+    widget.access?.entitled.removeListener(_accessChanged);
     super.dispose();
   }
 
@@ -747,7 +771,8 @@ class _MuayThaiCoursePageState extends State<MuayThaiCoursePage>
                             : 'Oku ve kendi yanıtını yaz',
                       ),
                     ),
-                    onTap: () => _open(lesson),
+                    trailing: _locked(course.lessons.indexOf(lesson)) ? const LessonLockBadge() : null,
+                    onTap: () => _openGated(lesson, course.lessons.indexOf(lesson)),
                   ),
                 Text(
                   _label(context, 'Teaching references', 'Öğretim kaynakları'),
