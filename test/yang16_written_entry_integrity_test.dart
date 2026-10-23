@@ -131,7 +131,7 @@ void main() {
         ContentRepository.muayThaiCourseAsset:
             'd17e9a6fe37d12ea20fda70da3dc02aa8b0fee74c0b357207f15eb2664c6cebc',
         ContentRepository.taikyokuCourseAsset:
-            '7c498b8d582e3c9cce14f81b8cde4e81e0021b0668015e03f1d0f30c604aaacc',
+            '81058a9e93854aecca07f97f47c6382411fe91979d5ff5bd259c82fe0812d825',
       };
       for (final entry in pins.entries) {
         expect(

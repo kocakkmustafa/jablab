@@ -467,7 +467,7 @@ final class TaikyokuCourse {
   }
 
   static const reviewedAssetSha256 =
-      '7c498b8d582e3c9cce14f81b8cde4e81e0021b0668015e03f1d0f30c604aaacc';
+      '81058a9e93854aecca07f97f47c6382411fe91979d5ff5bd259c82fe0812d825';
   static const manuscriptSha256 =
       'f748648bffca221f6752a4ceedea8418df389e06a0e488d039d8177e64e27d3a';
   static const curriculumSha256 =
