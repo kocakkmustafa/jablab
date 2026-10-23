@@ -30031,7 +30031,7 @@
       "contexts": [
         {
           "path": "lib/main.dart",
-          "line": 172
+          "line": 179
         }
       ],
       "kind": "UI",
@@ -40349,7 +40349,7 @@
       "contexts": [
         {
           "path": "lib/app/course_scope_note.dart",
-          "line": 63
+          "line": 65
         }
       ],
       "kind": "UI",
