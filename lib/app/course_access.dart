@@ -71,6 +71,8 @@ class CourseAccess {
     if (allows(course, lessonIndex)) return true;
     final bool? proceed = await showModalBottomSheet<bool>(
       context: context,
+      // Long translations and large text must still reach both buttons.
+      isScrollControlled: true,
       builder: (BuildContext sheet) => const PaywallSheet(),
     );
     if (proceed != true || !context.mounted) return false;
@@ -87,7 +89,7 @@ class PaywallSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SafeArea(
-    child: Padding(
+    child: SingleChildScrollView(
       key: const Key('paywall-sheet'),
       padding: const EdgeInsets.all(20),
       child: Column(

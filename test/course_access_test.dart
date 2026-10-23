@@ -99,6 +99,8 @@ void main() {
       await t.pumpAndSettle();
       expect(find.byKey(const Key('paywall-sheet')), findsOneWidget);
       expect(find.byKey(const Key('paywall-trial-terms')), findsOneWidget);
+      await t.ensureVisible(find.byKey(const Key('paywall-not-now')));
+      await t.pumpAndSettle();
       await t.tap(find.byKey(const Key('paywall-not-now')));
       await t.pumpAndSettle();
       expect(unlockCalls, 0);
@@ -107,6 +109,8 @@ void main() {
       // Subscribe/restore → verified membership → the lesson opens and the
       // remaining locks clear.
       await t.tap(find.byKey(const Key('kickboxing-lesson-6')));
+      await t.pumpAndSettle();
+      await t.ensureVisible(find.byKey(const Key('paywall-subscribe')));
       await t.pumpAndSettle();
       await t.tap(find.byKey(const Key('paywall-subscribe')));
       await t.pumpAndSettle();
@@ -126,6 +130,8 @@ void main() {
       await pump(t, access);
       await reveal(t, const Key('kickboxing-lesson-6'));
       await t.tap(find.byKey(const Key('kickboxing-lesson-6')));
+      await t.pumpAndSettle();
+      await t.ensureVisible(find.byKey(const Key('paywall-subscribe')));
       await t.pumpAndSettle();
       await t.tap(find.byKey(const Key('paywall-subscribe')));
       await t.pumpAndSettle();
