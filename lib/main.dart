@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,6 +10,7 @@ import 'app/app_preferences_controller.dart';
 import 'app/app_preferences_store.dart';
 import 'app/design_tokens.dart';
 import 'app/account_bridge.dart';
+import 'app/age_block_store.dart';
 import 'app/jablab_app.dart';
 import 'app/identity_appearance_gate.dart';
 import 'app/owner_resource_lifetime.dart';
@@ -67,6 +70,8 @@ Future<void> launchJabLab({
   // Outside the identity gate. Bounded read settles before any Flutter root;
   // The same controller supplies appearance to the shell and Core blocker.
   await preferences.load();
+  final AgeBlockStore ageBlock = AgeBlockStore();
+  await ageBlock.load();
   try {
     final MotionAccountRuntime runtime = await MotionAccountRuntime.initialize(
       url: url,
@@ -93,6 +98,8 @@ Future<void> launchJabLab({
         lifetime: captured,
         onRetryIdentity: runtime.refreshIdentity,
         initialPasswordRecovery: runtime.isPasswordRecovery,
+        ageBlocked: ageBlock.blocked,
+        onAgeBlocked: () => unawaited(ageBlock.markBlocked()),
         clearLocalData: captured?.accountUserId == null
             ? null
             // Core validates the initiating UUID before this callback. Its

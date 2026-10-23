@@ -17,6 +17,8 @@ class OwnerBoundAccountPage extends StatefulWidget {
     this.onRetryIdentity,
     this.clearLocalData,
     this.canInitiate,
+    this.ageBlocked = false,
+    this.onAgeBlocked,
   });
 
   final MotionAccountClient account;
@@ -26,6 +28,10 @@ class OwnerBoundAccountPage extends StatefulWidget {
   final bool initialPasswordRecovery;
   final Future<void> Function()? onRetryIdentity;
   final Future<void> Function(String userId)? clearLocalData;
+
+  /// Durable device age block for Core's 13+ / parental-consent gate.
+  final bool ageBlocked;
+  final VoidCallback? onAgeBlocked;
 
   @override
   State<OwnerBoundAccountPage> createState() => _OwnerBoundAccountPageState();
@@ -79,6 +85,8 @@ class _OwnerBoundAccountPageState extends State<OwnerBoundAccountPage> {
     clearLocalData: _bound?.destructiveEnabled == true
         ? widget.clearLocalData
         : null,
+    ageBlocked: widget.ageBlocked,
+    onAgeBlocked: widget.onAgeBlocked,
   );
 }
 
