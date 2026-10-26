@@ -100,6 +100,13 @@ void main() {
 
   test('Dart kullanıcı dizelerinde sıra jetonu YOK', () {
     final RegExp str = RegExp(r"'((?:[^'\\\n]|\\.)*)'");
+    // Muafiyet ÖLÇÜME BAĞLI (2026-10-26, JAB-03): satırın İLK öğesi olan ve
+    // `:` ile biten dize bir map ANAHTARIDIR, kullanıcı metni değil. Ölçüldü:
+    // karate/kickboks/Muay Thai parser'ları kaynak envanterini
+    // (`'K11': 'https://…'`) böyle doğruluyor; bu kimlikler hiçbir widget'ta
+    // çizilmiyor. Üçlü (`? 'x' : 'y'`) satır başında `?`/`:` taşıdığı için
+    // bu kurala girmez; map DEĞERİ olan dize yine taranır.
+    final RegExp mapKey = RegExp(r"^\s*'((?:[^'\\\n]|\\.)*)'\s*:");
     final List<String> hits = <String>[];
     for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
@@ -107,7 +114,11 @@ void main() {
       for (final String line in f.readAsStringSync().split('\n')) {
         final String t = line.trimLeft();
         if (t.startsWith('//')) continue;
+        final RegExpMatch? key = mapKey.firstMatch(line);
         for (final RegExpMatch m in str.allMatches(line)) {
+          if (key != null && m.start == key.start + key[0]!.indexOf("'")) {
+            continue;
+          }
           final String s = m.group(1)!;
           if (token.hasMatch(s)) hits.add('${f.path}: "$s"');
         }
