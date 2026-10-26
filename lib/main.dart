@@ -11,6 +11,7 @@ import 'app/app_preferences_store.dart';
 import 'app/design_tokens.dart';
 import 'app/account_bridge.dart';
 import 'app/age_block_store.dart';
+import 'app/store_subscription_link.dart';
 import 'app/course_access.dart';
 import 'app/jablab_app.dart';
 import 'app/identity_appearance_gate.dart';
@@ -109,6 +110,8 @@ Future<void> launchJabLab({
         initialPasswordRecovery: runtime.isPasswordRecovery,
         ageBlocked: ageBlock.blocked,
         onAgeBlocked: () => unawaited(ageBlock.markBlocked()),
+        onManageSubscription: () =>
+            unawaited(openStoreSubscriptionManagement()),
         clearLocalData: captured?.accountUserId == null
             ? null
             // Core validates the initiating UUID before this callback. Its

@@ -32,6 +32,8 @@ dependencies:
   # uygulamanın kendisinde (append-only JSONL, `lib/app/session_store.dart`).
   # 3. taraf DB BİLEREK YOK: sorgu ihtiyacı ölçülünce gelir.
   path_provider: ^2.1.0
+  # Store subscription management page (already resolved through Core).
+  url_launcher: ^6.3.2
   crypto: ^3.0.7
   intl: 0.20.3
   # KAMERA KÖPRÜSÜ (J-071). TAG'e pinli git-dep (M-F-154 rejimi + M-F-03):

@@ -20,6 +20,7 @@ class OwnerBoundAccountPage extends StatefulWidget {
     this.ageBlocked = false,
     this.onAgeBlocked,
     this.membershipAvailable = motionSubscriptionSalesAvailable,
+    this.onManageSubscription,
   });
 
   final MotionAccountClient account;
@@ -37,6 +38,10 @@ class OwnerBoundAccountPage extends StatefulWidget {
   /// Core R1+: the membership row and its opening status check follow the
   /// sales flag. Harnesses that exercise identity/deletion only pass false.
   final bool membershipAvailable;
+
+  /// Store subscription management; offered only while memberships are
+  /// sold. Core shows it in the signed-in panel only (not for guests).
+  final VoidCallback? onManageSubscription;
 
   @override
   State<OwnerBoundAccountPage> createState() => _OwnerBoundAccountPageState();
@@ -93,6 +98,9 @@ class _OwnerBoundAccountPageState extends State<OwnerBoundAccountPage> {
     ageBlocked: widget.ageBlocked,
     onAgeBlocked: widget.onAgeBlocked,
     membershipAvailable: widget.membershipAvailable,
+    onManageSubscription: widget.membershipAvailable
+        ? widget.onManageSubscription
+        : null,
   );
 }
 

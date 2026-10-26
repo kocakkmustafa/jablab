@@ -208,6 +208,73 @@ void main() {
     await _unmount(tester);
   });
 
+  group('store subscription management (JAB-14)', () {
+    testWidgets('signed-in member page offers the store link while selling', (
+      tester,
+    ) async {
+      final fixture = await _fixture(tester);
+      var opened = 0;
+      await _page(
+        tester,
+        fixture,
+        lifetime: fixture.owners.capture(_alice),
+        membershipAvailable: true,
+        onManageSubscription: () => opened++,
+      );
+      await tester.runAsync(_eventTurn);
+      await tester.pumpAndSettle();
+      final link = find.text('Manage store subscription');
+      await tester.scrollUntilVisible(
+        link,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(link);
+      await tester.pump();
+      expect(opened, 1);
+      expect(fixture.membershipChecks, greaterThanOrEqualTo(1));
+      await _unmount(tester);
+    });
+
+    testWidgets('closed sales hide the store link even when wired', (
+      tester,
+    ) async {
+      final fixture = await _fixture(tester);
+      await _page(
+        tester,
+        fixture,
+        lifetime: fixture.owners.capture(_alice),
+        onManageSubscription: () {},
+      );
+      expect(
+        tester
+            .widget<MotionAccountPage>(find.byType(MotionAccountPage))
+            .onManageSubscription,
+        isNull,
+      );
+      expect(find.text('Manage store subscription'), findsNothing);
+      expect(fixture.membershipChecks, 0);
+      await _unmount(tester);
+    });
+
+    testWidgets('a guest never sees the store link', (tester) async {
+      final fixture = await _fixture(tester);
+      await tester.runAsync(() async {
+        await fixture.client.auth.signOut();
+        await _eventTurn();
+      });
+      await _page(
+        tester,
+        fixture,
+        membershipAvailable: true,
+        onManageSubscription: () {},
+      );
+      expect(fixture.client.auth.currentUser, isNull);
+      expect(find.text('Manage store subscription'), findsNothing);
+      await _unmount(tester);
+    });
+  });
+
   testWidgets('normal current owner deletes exactly its four files', (
     tester,
   ) async {
@@ -1181,6 +1248,8 @@ Future<void> _page(
   MotionAccountClient? account,
   Future<void> Function()? onRetry,
   bool Function()? canInitiate,
+  bool membershipAvailable = false,
+  VoidCallback? onManageSubscription,
 }) async {
   final page = OwnerBoundAccountPage(
     account: account ?? fixture.account,
@@ -1191,8 +1260,10 @@ Future<void> _page(
     onRetryIdentity: onRetry,
     clearLocalData: (id) => fixture.clear(id),
     // Identity/deletion harness: the membership row (Core R1+ default) is
-    // covered by identity_appearance_gate_test and Core's own suite.
-    membershipAvailable: false,
+    // covered by identity_appearance_gate_test and Core's own suite; only
+    // the store-subscription tests turn it on.
+    membershipAvailable: membershipAvailable,
+    onManageSubscription: onManageSubscription,
   );
   if (find.byKey(ObjectKey(fixture.page)).evaluate().isEmpty) {
     fixture.page.value = page;
@@ -1369,6 +1440,7 @@ class _AccountFixture {
   Completer<void>? userReadHold;
   Completer<void>? userReadStarted;
   int deleteRequests = 0;
+  int membershipChecks = 0;
   int logoutRequests = 0;
   int passwordUpdates = 0;
   int cleanupCalls = 0;
@@ -1431,6 +1503,10 @@ class _AccountFixture {
     }
     if (request.url.path.endsWith('/motion_profiles')) {
       return _json({'display_name': 'Test member'});
+    }
+    if (request.url.path.endsWith('/motion-check-membership')) {
+      membershipChecks++;
+      return _json({'active': false, 'anyActive': false});
     }
     throw StateError(
       'Unexpected mocked request ${request.method} ${request.url.path}',
