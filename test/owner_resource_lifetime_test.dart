@@ -398,7 +398,9 @@ void main() {
         '${courseFileFor(directory, _bob).path}.tmp',
       );
       await bobTmp.writeAsString('B crash residue');
-      await bobCourseTmp.writeAsString('B course residue');
+      // No B course residue yet: since 2fd2405 a pending course .tmp blocks
+      // B's own next write (fail closed for review). It is placed after B's
+      // writes below, which is where A's erasure must leave it alone.
       final String guestBytes = await sessionFileFor(
         directory,
         null,
@@ -408,6 +410,11 @@ void main() {
         null,
       ).readAsString();
       final _Gate gate = _Gate();
+      // A failed expectation must not leave A's erasure draining forever and
+      // hold the test isolate open.
+      addTearDown(() {
+        if (!gate.release.isCompleted) gate.release.complete();
+      });
       final SessionStore held = await repository(
         sessionFile: (root, owner) =>
             _GatedFile(sessionFileFor(root, owner), existsGate: gate),
