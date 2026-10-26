@@ -78,13 +78,13 @@
     },
     {
       "pointer": "/content/opening",
-      "tr": "35e42ade1641f9b29196301663bfa744951fbc614754e2ef529139d08eda5228",
-      "en": "ce11e6dbc578fbd1801693c1de4e93a7d36a4553726aab9d6faa205e9ff27794"
+      "tr": "68957422a60d4a864ae19d5f2d58779cce01dd409ba2ac9d022a037189e3e4b8",
+      "en": "712c2a7b7a7cbd0c576c4876dd95ba15598a5152090c6d0af1fabe6262af71c5"
     },
     {
       "pointer": "/content/closing",
-      "tr": "60971645d8c62492e8b755e7f2c1286d705d0cce96c8862cb5a6ec8c36dfde24",
-      "en": "3dcba106f68ab403d0b092d7f28bc4a6c1cd3e0b819b1c896b497bbc9f2e6518"
+      "tr": "952f717b5928669fcb147c541e35925160ffdea5b55c531d1eb734adbe636861",
+      "en": "536864d411be067dae8c2db6dce2ed4bbf98e625501b94601532221e9b452f28"
     },
     {
       "pointer": "/content/movements/0/title",
@@ -803,8 +803,8 @@
     },
     {
       "pointer": "/content/lessons/0/teaching/1",
-      "tr": "35e42ade1641f9b29196301663bfa744951fbc614754e2ef529139d08eda5228",
-      "en": "ce11e6dbc578fbd1801693c1de4e93a7d36a4553726aab9d6faa205e9ff27794"
+      "tr": "68957422a60d4a864ae19d5f2d58779cce01dd409ba2ac9d022a037189e3e4b8",
+      "en": "712c2a7b7a7cbd0c576c4876dd95ba15598a5152090c6d0af1fabe6262af71c5"
     },
     {
       "pointer": "/content/lessons/0/teaching/2",
@@ -1378,8 +1378,8 @@
     },
     {
       "pointer": "/content/lessons/6/teaching/0",
-      "tr": "60971645d8c62492e8b755e7f2c1286d705d0cce96c8862cb5a6ec8c36dfde24",
-      "en": "3dcba106f68ab403d0b092d7f28bc4a6c1cd3e0b819b1c896b497bbc9f2e6518"
+      "tr": "952f717b5928669fcb147c541e35925160ffdea5b55c531d1eb734adbe636861",
+      "en": "536864d411be067dae8c2db6dce2ed4bbf98e625501b94601532221e9b452f28"
     },
     {
       "pointer": "/content/lessons/6/teaching/1",

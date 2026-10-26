@@ -64,6 +64,20 @@ void main() {
         '/content/lessons/0/teaching/3',
         '/content/lessons/9/teaching/1',
       };
+      // 7fce1f9 (2026-10-23 interval re-review of recording A, receipts in
+      // video-review/intervals-2026-10-23) moved three frame times into the
+      // observed hold. Only those numbers changed: putting the reviewed times
+      // back must reproduce the historical hash byte for byte.
+      const retimedHistoricalPointers = {
+        '/content/opening',
+        '/content/closing',
+        '/content/lessons/0/teaching/1',
+        '/content/lessons/6/teaching/0',
+      };
+      String reviewedTimes(String text) => text
+          .replaceAll('0:02.4', '0:03.2')
+          .replaceAll('0:43.8', '0:44.3')
+          .replaceAll('0:48.8', '0:49.6');
       final legacyBytes = File(
         'test/fixtures/taikyoku_shodan_reviewed_text.v1.json',
       ).readAsBytesSync();
@@ -78,10 +92,15 @@ void main() {
         final pointer = field['pointer'] as String;
         if (changedHistoricalPointers.contains(pointer)) continue;
         final pair = _at(asset, pointer) as Map;
+        final bool retimed = retimedHistoricalPointers.contains(pointer);
         for (final language in ['tr', 'en']) {
+          final String text = pair[language] as String;
+          if (retimed) expect(reviewedTimes(text), isNot(text));
           expect(
             computeSha256Hex(
-              Uint8List.fromList(utf8.encode(pair[language] as String)),
+              Uint8List.fromList(
+                utf8.encode(retimed ? reviewedTimes(text) : text),
+              ),
             ),
             field[language],
             reason: 'unchanged historical $pointer/$language',
