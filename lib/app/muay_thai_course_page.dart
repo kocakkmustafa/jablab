@@ -268,15 +268,12 @@ class _MuayThaiLessonPageState extends State<MuayThaiLessonPage>
                 ),
           ],
           Text(
+            // Raw unverified-record codes (P0…) meant nothing to a learner;
+            // every lesson states the same plain line.
             _label(
               context,
-              l.physicalPrerequisiteIds.isEmpty
-                  ? 'Individual acceptance is unverified; optional practice is separate.'
-                  : 'Unverified individual acceptance records: {value1}',
-              l.physicalPrerequisiteIds.isEmpty
-                  ? 'Bireysel kabul doğrulanmadı; isteğe bağlı deneme ayrıdır.'
-                  : 'Doğrulanmamış bireysel kabul kayıtları: {value1}',
-              args: {'value1': l.physicalPrerequisiteIds.join(', ')},
+              'Individual acceptance is unverified; optional practice is separate.',
+              'Bireysel kabul doğrulanmadı; isteğe bağlı deneme ayrıdır.',
             ),
             key: const Key('muay-thai-physical-prerequisites'),
           ),

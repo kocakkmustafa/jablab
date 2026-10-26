@@ -188,20 +188,15 @@ void main() {
                   find.byKey(const Key('muay-thai-physical-prerequisites')),
                 )
                 .data!;
+            // G3 F4: raw unverified-record codes are no longer shown.
             expect(
               prerequisites,
-              startsWith(
-                language == 'tr'
-                    ? (l.physicalPrerequisiteIds.isEmpty
-                          ? 'Bireysel kabul doğrulanmadı'
-                          : 'Doğrulanmamış bireysel kabul kayıtları:')
-                    : (l.physicalPrerequisiteIds.isEmpty
-                          ? 'Individual acceptance is unverified'
-                          : 'Unverified individual acceptance records:'),
-              ),
+              language == 'tr'
+                  ? 'Bireysel kabul doğrulanmadı; isteğe bağlı deneme ayrıdır.'
+                  : 'Individual acceptance is unverified; optional practice is separate.',
             );
             for (final id in l.physicalPrerequisiteIds) {
-              expect(prerequisites, contains(id));
+              expect(prerequisites, isNot(contains(id)));
             }
             if (l.number == 15) {
               t

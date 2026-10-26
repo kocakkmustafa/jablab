@@ -243,15 +243,12 @@ class _KarateLessonPageState extends State<KarateLessonPage>
                 ),
           ],
           Text(
+            // Raw unverified-record codes (P0…) meant nothing to a learner;
+            // every lesson states the same plain line.
             _label(
               context,
-              l.physicalPrerequisiteIds.isEmpty
-                  ? 'Written progress and optional task reports remain separate.'
-                  : 'Unverified personal technique records: {value1}',
-              l.physicalPrerequisiteIds.isEmpty
-                  ? 'Yazılı ilerleme ve isteğe bağlı görev beyanları ayrı kalır.'
-                  : 'Doğrulanmamış kişisel teknik kayıtları: {value1}',
-              args: {'value1': l.physicalPrerequisiteIds.join(', ')},
+              'Written progress and optional task reports remain separate.',
+              'Yazılı ilerleme ve isteğe bağlı görev beyanları ayrı kalır.',
             ),
             key: const Key('karate-physical-prerequisites'),
           ),

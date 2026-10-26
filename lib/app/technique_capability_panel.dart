@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'technique_observation.dart';
 import 'technique_task.dart';
 import 'ui_language.dart';
 
 /// The shipping panel cannot accept a replay provider or turn inference on.
 /// Lesson reading/self-report stays separate from movement acceptance.
+/// Camera assessment is closed in the first release, so every lesson states
+/// the same unsupported line; no calibration or model-readiness claim shows.
 class TechniqueCapabilityPanel extends StatelessWidget {
   const TechniqueCapabilityPanel({
     super.key,
@@ -17,10 +18,6 @@ class TechniqueCapabilityPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final task = TechniqueTasks.forLesson(courseId, lessonId);
-    final availability = TechniqueObservationSession.productionForLesson(
-      courseId,
-      lessonId,
-    ).availability;
     String text(String en, String tr) =>
         UiLanguage.text(context, en: en, tr: tr);
     return Card(
@@ -35,12 +32,10 @@ class TechniqueCapabilityPanel extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             Text(
-              availability.kind == TechniqueObservationKind.calibrationRequired
-                  ? text('Calibration required', 'Kalibrasyon gerekli')
-                  : text(
-                      'Automatic assessment is not supported for this lesson.',
-                      'Bu ders için otomatik hareket değerlendirmesi desteklenmiyor.',
-                    ),
+              text(
+                'Automatic assessment is not supported for this lesson.',
+                'Bu ders için otomatik hareket değerlendirmesi desteklenmiyor.',
+              ),
               key: const Key('technique-capability-status'),
             ),
             if (task != null) ...[
@@ -66,12 +61,6 @@ class TechniqueCapabilityPanel extends StatelessWidget {
                     )
                     .join(' → '),
                 key: const Key('technique-task-phases'),
-              ),
-              Text(
-                text(
-                  'Camera assessment awaits a calibrated model and independent review. No movement has been measured here.',
-                  'Kamera değerlendirmesi kalibre edilmiş model ve bağımsız incelemeyi bekliyor. Burada hareket ölçülmedi.',
-                ),
               ),
             ],
             Text(

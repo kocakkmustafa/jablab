@@ -10,7 +10,7 @@ import 'package:jablab/app/technique_capability_panel.dart';
 void main() {
   for (final language in ['tr', 'en']) {
     testWidgets(
-      'kb-12 $language has calibration/phase state with no measurement or completion',
+      'kb-12 $language states unsupported assessment with phases and no calibration claim',
       (t) async {
         t.platformDispatcher.localesTestValue = <Locale>[Locale(language)];
         addTearDown(t.platformDispatcher.clearLocalesTestValue);
@@ -56,11 +56,20 @@ void main() {
           find.byKey(const Key('technique-capability-panel')),
           findsOneWidget,
         );
+        // G3 F3: the first release makes no calibration/model-readiness claim.
+        expect(
+          find.text(
+            language == 'tr'
+                ? 'Bu ders için otomatik hareket değerlendirmesi desteklenmiyor.'
+                : 'Automatic assessment is not supported for this lesson.',
+          ),
+          findsOneWidget,
+        );
         expect(
           find.text(
             language == 'tr' ? 'Kalibrasyon gerekli' : 'Calibration required',
           ),
-          findsOneWidget,
+          findsNothing,
         );
         final phases = t
             .widget<Text>(find.byKey(const Key('technique-task-phases')))
@@ -72,10 +81,10 @@ void main() {
         expect(
           find.textContaining(
             language == 'tr'
-                ? 'Burada hareket ölçülmedi.'
-                : 'No movement has been measured here.',
+                ? 'Kamera değerlendirmesi'
+                : 'Camera assessment awaits',
           ),
-          findsOneWidget,
+          findsNothing,
         );
         expect(reports, 0);
         expect(t.takeException(), isNull);
