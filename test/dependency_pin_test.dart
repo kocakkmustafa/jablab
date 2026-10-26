@@ -12,23 +12,36 @@ import 'package:flutter_test/flutter_test.dart';
 /// o günü beklemeden kırar: iki `pubspec.lock`'un `motion_core` için
 /// çözdüğü `resolved-ref` birebir aynı olmalı.
 void main() {
-  test('app kökü ve jablab_engine paketi AYNI motion_core sürümünü çözüyor',
-      () {
-    final String? appRef =
-        _resolvedRef(lockForAudit('pubspec.lock'));
-    final String? engineRef = _resolvedRef(
-        lockForAudit('packages/jablab_engine/pubspec.lock'));
+  test(
+    'app kökü ve jablab_engine paketi AYNI motion_core sürümünü çözüyor',
+    () {
+      final String? appRef = _resolvedRef(lockForAudit('pubspec.lock'));
+      final String? engineRef = _resolvedRef(
+        lockForAudit('packages/jablab_engine/pubspec.lock'),
+      );
 
-    expect(appRef, isNotNull,
-        reason: 'pubspec.lock içinde motion_core.resolved-ref bulunamadı');
-    expect(engineRef, isNotNull,
-        reason: 'packages/jablab_engine/pubspec.lock içinde '
-            'motion_core.resolved-ref bulunamadı');
-    expect(appRef, engineRef,
-        reason: 'İKİ KİLİT DOSYASI FARKLI SÜRÜM ÇÖZÜYOR: app kökü $appRef, '
+      expect(
+        appRef,
+        isNotNull,
+        reason: 'pubspec.lock içinde motion_core.resolved-ref bulunamadı',
+      );
+      expect(
+        engineRef,
+        isNotNull,
+        reason:
+            'packages/jablab_engine/pubspec.lock içinde '
+            'motion_core.resolved-ref bulunamadı',
+      );
+      expect(
+        appRef,
+        engineRef,
+        reason:
+            'İKİ KİLİT DOSYASI FARKLI SÜRÜM ÇÖZÜYOR: app kökü $appRef, '
             'jablab_engine $engineRef. Pin yükseltmesi her iki kökte de '
-            '`pub get` ister (J-030) — birini atladın.');
-  });
+            '`pub get` ister (J-030) — birini atladın.',
+      );
+    },
+  );
 }
 
 /// `<indent>motion_core:` bloğundaki `resolved-ref:` değerini döner.

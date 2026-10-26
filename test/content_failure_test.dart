@@ -11,22 +11,29 @@ import 'package:motion_content/motion_content.dart';
 /// çökerse geri kalan her dürüstlük beyanı inandırıcılığını kaybeder.
 void main() {
   group('sınıflandırma tek yerde yapılır (ekran yorum yapmaz)', () {
-    test('ContentIntegrityException → integrity, ihlaller ayrıntıya taşınır',
-        () {
-      final ContentFailure f = ContentFailure.from(
-          const ContentIntegrityException(<String>['a bozuk', 'b eksik']));
-      expect(f.kind, ContentFailureKind.integrity);
-      expect(f.detail, contains('a bozuk'));
-      expect(f.detail, contains('b eksik'));
-    });
+    test(
+      'ContentIntegrityException → integrity, ihlaller ayrıntıya taşınır',
+      () {
+        final ContentFailure f = ContentFailure.from(
+          const ContentIntegrityException(<String>['a bozuk', 'b eksik']),
+        );
+        expect(f.kind, ContentFailureKind.integrity);
+        expect(f.detail, contains('a bozuk'));
+        expect(f.detail, contains('b eksik'));
+      },
+    );
 
     test('motor tarafı StateError/ArgumentError da BÜTÜNLÜK sayılır', () {
       // Replik eşlemesi, kural seti ve eklem etiketleri tutarsızlığı bu iki
       // tiple bildiriyor. Dosya OKUNDU, içeriği tutmuyor → integrity.
-      expect(ContentFailure.from(StateError('replik yok')).kind,
-          ContentFailureKind.integrity);
-      expect(ContentFailure.from(ArgumentError('eşleşmeyen anahtar')).kind,
-          ContentFailureKind.integrity);
+      expect(
+        ContentFailure.from(StateError('replik yok')).kind,
+        ContentFailureKind.integrity,
+      );
+      expect(
+        ContentFailure.from(ArgumentError('eşleşmeyen anahtar')).kind,
+        ContentFailureKind.integrity,
+      );
     });
 
     test('paket içi eksik varlık bütünlük; geçici erişim okunamazdır', () {
@@ -57,32 +64,48 @@ void main() {
       // Yanlış tarafa düşmek gerekiyorsa: "bir kez yeniden dene" demek,
       // "bu bizim içerik hatamız" demekten daha az yanlış — ikincisi
       // kullanıcıya bizim adımıza teşhis koyar.
-      expect(ContentFailure.from(const FormatException('bozuk JSON')).kind,
-          ContentFailureKind.unreadable);
-      expect(ContentFailure.from('düz bir string').kind,
-          ContentFailureKind.unreadable);
+      expect(
+        ContentFailure.from(const FormatException('bozuk JSON')).kind,
+        ContentFailureKind.unreadable,
+      );
+      expect(
+        ContentFailure.from('düz bir string').kind,
+        ContentFailureKind.unreadable,
+      );
     });
   });
 
-  Future<void> pump(WidgetTester t, ContentFailure f,
-          {Future<void> Function()? onRetry}) async =>
-      t.pumpWidget(MaterialApp(
-          home: ContentFailureScreen(failure: f, onRetry: onRetry)));
+  Future<void> pump(
+    WidgetTester t,
+    ContentFailure f, {
+    Future<void> Function()? onRetry,
+  }) async => t.pumpWidget(
+    MaterialApp(
+      home: ContentFailureScreen(failure: f, onRetry: onRetry),
+    ),
+  );
 
   const ContentFailure integrity = ContentFailure(
-      kind: ContentFailureKind.integrity, detail: 'lesson X refers to hook');
+    kind: ContentFailureKind.integrity,
+    detail: 'lesson X refers to hook',
+  );
   const ContentFailure unreadable = ContentFailure(
-      kind: ContentFailureKind.unreadable, detail: 'asset not found');
+    kind: ContentFailureKind.unreadable,
+    detail: 'asset not found',
+  );
 
-  testWidgets('BÜTÜNLÜK hatasında "Try again" SUNULMAZ', (WidgetTester t) async {
+  testWidgets('BÜTÜNLÜK hatasında "Try again" SUNULMAZ', (
+    WidgetTester t,
+  ) async {
     // Aynı asset aynı sonucu verir. Orada bir retry düğmesi, kullanıcıyı
     // boşa uğraştıran bir nezaket jesti olur.
     await pump(t, integrity, onRetry: () async {});
     expect(find.byKey(const Key('failure-retry')), findsNothing);
   });
 
-  testWidgets('OKUNAMAZ hatasında "Try again" VAR ve GERÇEKTEN çağırıyor',
-      (WidgetTester t) async {
+  testWidgets('OKUNAMAZ hatasında "Try again" VAR ve GERÇEKTEN çağırıyor', (
+    WidgetTester t,
+  ) async {
     int calls = 0;
     await pump(t, unreadable, onRetry: () async => calls++);
     await t.tap(find.byKey(const Key('failure-retry')));
@@ -115,24 +138,36 @@ void main() {
     // — `FilledButton`ı `ButtonStyleButton` diye aramak HER ZAMAN sıfır
     // döndürür ve bu test VAKUM-DOĞRU geçerdi. Ölçüldü: aşağıdaki pozitif
     // ikiz (1 bekleyen) bozuk aracı ifşa etti. Predicate şart.
-    expect(find.byWidgetPredicate((Widget w) => w is ButtonStyleButton),
-        findsNothing,
-        reason: 'bütünlük hatasında düğme çıktı — retry burada zaten '
-            'yasak (aynı asset aynı sonucu verir) ve başka her düğme bir '
-            'KAÇIŞ KAPISI olur: doğrulama süs hâline gelir (J-139)');
+    expect(
+      find.byWidgetPredicate((Widget w) => w is ButtonStyleButton),
+      findsNothing,
+      reason:
+          'bütünlük hatasında düğme çıktı — retry burada zaten '
+          'yasak (aynı asset aynı sonucu verir) ve başka her düğme bir '
+          'KAÇIŞ KAPISI olur: doğrulama süs hâline gelir (J-139)',
+    );
   });
 
-  testWidgets('OKUNAMAZ ekranında TEK düğme var ve o retry',
-      (WidgetTester t) async {
+  testWidgets('OKUNAMAZ ekranında TEK düğme var ve o retry', (
+    WidgetTester t,
+  ) async {
     await pump(t, unreadable, onRetry: () async {});
     await t.pumpAndSettle();
-    final Finder buttons =
-        find.byWidgetPredicate((Widget w) => w is ButtonStyleButton);
-    expect(buttons, findsOneWidget,
-        reason: 'okunamaz ekranında beklenen 1 düğme yok/fazla — ikinci bir '
-            'düğme ne olursa olsun bir kaçış kapısıdır (J-139)');
-    expect(find.byKey(const Key('failure-retry')), findsOneWidget,
-        reason: 'tek düğme var ama retry DEĞİL — sayı doğru, kimlik yanlış');
+    final Finder buttons = find.byWidgetPredicate(
+      (Widget w) => w is ButtonStyleButton,
+    );
+    expect(
+      buttons,
+      findsOneWidget,
+      reason:
+          'okunamaz ekranında beklenen 1 düğme yok/fazla — ikinci bir '
+          'düğme ne olursa olsun bir kaçış kapısıdır (J-139)',
+    );
+    expect(
+      find.byKey(const Key('failure-retry')),
+      findsOneWidget,
+      reason: 'tek düğme var ama retry DEĞİL — sayı doğru, kimlik yanlış',
+    );
   });
 
   testWidgets('onRetry verilmezse düğme UYDURULMAZ', (WidgetTester t) async {
@@ -140,8 +175,9 @@ void main() {
     expect(find.byKey(const Key('failure-retry')), findsNothing);
   });
 
-  testWidgets('"Yine de devam et" kaçış kapısı HİÇ YOK',
-      (WidgetTester t) async {
+  testWidgets('"Yine de devam et" kaçış kapısı HİÇ YOK', (
+    WidgetTester t,
+  ) async {
     // Doğrulamanın bloklama sebebi tam olarak kısmi/sahte bir kütüphane
     // göstermemek. Bir kaçış kapısı doğrulamayı süs hâline getirirdi.
     for (final ContentFailure f in <ContentFailure>[integrity, unreadable]) {
@@ -153,14 +189,18 @@ void main() {
         'Ignore',
         'Dismiss',
       ]) {
-        expect(find.textContaining(banned), findsNothing,
-            reason: '"$banned" bir kaçış kapısı sunuyor');
+        expect(
+          find.textContaining(banned),
+          findsNothing,
+          reason: '"$banned" bir kaçış kapısı sunuyor',
+        );
       }
     }
   });
 
-  testWidgets('geliştirici ayrıntısı GİZLENMEZ ama İKİNCİLDİR',
-      (WidgetTester t) async {
+  testWidgets('geliştirici ayrıntısı GİZLENMEZ ama İKİNCİLDİR', (
+    WidgetTester t,
+  ) async {
     await pump(t, integrity);
     // Ayrıntı ekranda VAR (sahada tek teşhis malzemesi)...
     expect(find.byKey(const Key('failure-detail-tile')), findsOneWidget);
@@ -170,19 +210,23 @@ void main() {
     await t.pumpAndSettle();
     expect(find.byKey(const Key('failure-detail')), findsOneWidget);
     expect(
-        t.widget<SelectableText>(find.byKey(const Key('failure-detail'))).data,
-        contains('lesson X refers to hook'));
+      t.widget<SelectableText>(find.byKey(const Key('failure-detail'))).data,
+      contains('lesson X refers to hook'),
+    );
   });
 
-  testWidgets('BİRİNCİL metin makine metni DEĞİL — istisna gövdesi sızmaz',
-      (WidgetTester t) async {
+  testWidgets('BİRİNCİL metin makine metni DEĞİL — istisna gövdesi sızmaz', (
+    WidgetTester t,
+  ) async {
     // Bugünkü kusur tam buydu: ekran `'$_error'` basıyordu, yani kullanıcı
     // `StateError` gövdesi görüyordu.
     await pump(t, integrity);
-    final String headline =
-        t.widget<Text>(find.byKey(const Key('failure-headline'))).data!;
-    final String body =
-        t.widget<Text>(find.byKey(const Key('failure-body'))).data!;
+    final String headline = t
+        .widget<Text>(find.byKey(const Key('failure-headline')))
+        .data!;
+    final String body = t
+        .widget<Text>(find.byKey(const Key('failure-body')))
+        .data!;
     for (final String leak in <String>[
       'StateError',
       'Exception',
@@ -195,20 +239,26 @@ void main() {
     // Ve "bir şeyler ters gitti" boşluğu da kabul değil: metin ne olduğunu
     // ve kimin hatası olduğunu SÖYLEMEK zorunda.
     expect(body.length, greaterThan(80));
-    expect(body.toLowerCase(), contains('on us'),
-        reason: 'bütünlük hatası bizim hatamız — suç kullanıcıya atılamaz');
+    expect(
+      body.toLowerCase(),
+      contains('on us'),
+      reason: 'bütünlük hatası bizim hatamız — suç kullanıcıya atılamaz',
+    );
   });
 
-  testWidgets('OKUNAMAZ metni bir yeniden deneme önerir, paket teşhisi koymaz',
-      (WidgetTester t) async {
-    await pump(t, unreadable);
-    final String body =
-        t.widget<Text>(find.byKey(const Key('failure-body'))).data!;
-    expect(body.toLowerCase(), contains('trying again'));
-    expect(body.toLowerCase(), contains('contact support'));
-    // Bu sınıfta içeriğin YANLIŞ olduğunu iddia etmiyoruz — okunamadı.
-    expect(body.toLowerCase(), isNot(contains('honesty check')));
-  });
+  testWidgets(
+    'OKUNAMAZ metni bir yeniden deneme önerir, paket teşhisi koymaz',
+    (WidgetTester t) async {
+      await pump(t, unreadable);
+      final String body = t
+          .widget<Text>(find.byKey(const Key('failure-body')))
+          .data!;
+      expect(body.toLowerCase(), contains('trying again'));
+      expect(body.toLowerCase(), contains('contact support'));
+      // Bu sınıfta içeriğin YANLIŞ olduğunu iddia etmiyoruz — okunamadı.
+      expect(body.toLowerCase(), isNot(contains('honesty check')));
+    },
+  );
 
   testWidgets('K8: hata ekranında ÇIPLAK SAYI yok', (WidgetTester t) async {
     // Kalibrasyonsuz sayı yasağı (M-F-04) bu ekranda da geçerli; bir hata

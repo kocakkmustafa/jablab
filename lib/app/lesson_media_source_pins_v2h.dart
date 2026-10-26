@@ -1,8 +1,11 @@
 // Generated closed QA source membership. No media, rights or release acceptance.
 // Source: durable v2h source_pins_v1; regenerate only after independent review.
-const jablabV2hSourcePinCatalogSha256 = '3263cdead3320a5b10f476ff30b12c5cdd13b8b5a65134dc42d791d39dc05ae2';
-const jablabV2hSourcePinManifestSha256 = '5399b0fd21bd7148de9c845ecaf288e391fef4c6e2ae98503fd9134fd39e8628';
-const jablabV2hSourcePinProofSha256 = '6185b887495965321d85d98d12abd54fad4a1198c3b2561a22fd08301e610c57';
+const jablabV2hSourcePinCatalogSha256 =
+    '3263cdead3320a5b10f476ff30b12c5cdd13b8b5a65134dc42d791d39dc05ae2';
+const jablabV2hSourcePinManifestSha256 =
+    '5399b0fd21bd7148de9c845ecaf288e391fef4c6e2ae98503fd9134fd39e8628';
+const jablabV2hSourcePinProofSha256 =
+    '6185b887495965321d85d98d12abd54fad4a1198c3b2561a22fd08301e610c57';
 const jablabV2hClosedQaReleaseEligible = false;
 const jablabV2hClosedQaProgressEffect = 0;
 const Set<String> jablabV2hClosedQaSourcePinHashes = {

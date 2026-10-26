@@ -41,47 +41,65 @@ void main() {
     required String? unavailable,
     VoidCallback? onRetry,
   }) async {
-    await t.pumpWidget(MaterialApp(
-      home: SelectPage(
-        library: library,
-        onOpenCourse: (_) {},
-        onOpenWhyNot: () {},
-        onOpenSettings: () {},
-        historyUnavailable: unavailable,
-        onRetryHistory: onRetry,
+    await t.pumpWidget(
+      MaterialApp(
+        home: SelectPage(
+          library: library,
+          onOpenCourse: (_) {},
+          onOpenWhyNot: () {},
+          onOpenSettings: () {},
+          historyUnavailable: unavailable,
+          onRetryHistory: onRetry,
+        ),
       ),
-    ));
+    );
     await t.pumpAndSettle();
   }
 
-  testWidgets('geçmiş okunamıyorsa "Try again" VAR ve GERÇEKTEN çağırıyor',
-      (WidgetTester t) async {
+  testWidgets('geçmiş okunamıyorsa "Try again" VAR ve GERÇEKTEN çağırıyor', (
+    WidgetTester t,
+  ) async {
     int calls = 0;
-    await pump(t,
-        unavailable: 'We could not read your saved sessions on this device.',
-        onRetry: () => calls++);
+    await pump(
+      t,
+      unavailable: 'We could not read your saved sessions on this device.',
+      onRetry: () => calls++,
+    );
 
     final Finder retry = find.byKey(const Key('retry-history'));
-    expect(retry, findsOneWidget,
-        reason: 'beyan ekranda ama retry yok — yorumu okuyup düğmeyi silen '
-            'tur tam bunu üretirdi (J-138)');
+    expect(
+      retry,
+      findsOneWidget,
+      reason:
+          'beyan ekranda ama retry yok — yorumu okuyup düğmeyi silen '
+          'tur tam bunu üretirdi (J-138)',
+    );
 
     await t.tap(retry);
     await t.pumpAndSettle();
-    expect(calls, 1,
-        reason: 'düğme çizildi ama geri çağırmadı — çalışmayan bir retry, '
-            'retry olmamasından kötüdür (J-079)');
+    expect(
+      calls,
+      1,
+      reason:
+          'düğme çizildi ama geri çağırmadı — çalışmayan bir retry, '
+          'retry olmamasından kötüdür (J-079)',
+    );
   });
 
-  testWidgets('NEGATİF İKİZ — beyan YOKKEN ne cümle ne düğme var',
-      (WidgetTester t) async {
+  testWidgets('NEGATİF İKİZ — beyan YOKKEN ne cümle ne düğme var', (
+    WidgetTester t,
+  ) async {
     // İkiz olmadan yukarıdaki kapı, düğmenin HER hâlde çizilmesini de
     // geçerli sayardı: retry sürekli ekranda dururdu ve kullanıcı okunacak
     // bir sorun olmadığı hâlde bir hata varmış gibi okurdu.
     await pump(t, unavailable: null, onRetry: () {});
-    expect(find.byKey(const Key('retry-history')), findsNothing,
-        reason: 'sorun yokken retry çiziliyor — düğmenin varlığı, olmayan '
-            'bir hatayı beyan eder');
+    expect(
+      find.byKey(const Key('retry-history')),
+      findsNothing,
+      reason:
+          'sorun yokken retry çiziliyor — düğmenin varlığı, olmayan '
+          'bir hatayı beyan eder',
+    );
     expect(find.textContaining('could not read'), findsNothing);
   });
 }

@@ -85,9 +85,13 @@ void main() {
 
   void expectNoOverlap(WidgetTester t, String screen) {
     final List<(String, Rect)> bs = boxes(t);
-    expect(bs.length, greaterThan(1),
-        reason: '$screen: kapı bir şey bulamadı — ekran çizilmemiş olabilir '
-            've kapı VAKUM-DOĞRU olur (aile dersi #4)');
+    expect(
+      bs.length,
+      greaterThan(1),
+      reason:
+          '$screen: kapı bir şey bulamadı — ekran çizilmemiş olabilir '
+          've kapı VAKUM-DOĞRU olur (aile dersi #4)',
+    );
     final List<String> clashes = <String>[];
     for (int i = 0; i < bs.length; i++) {
       for (int j = i + 1; j < bs.length; j++) {
@@ -103,10 +107,14 @@ void main() {
         clashes.add('${bs[i].$1} ↔ ${bs[j].$1}');
       }
     }
-    expect(clashes, isEmpty,
-        reason: '$screen: çakışan kutular — biri ötekini örtüyor ve taşma '
-            'kapısı bunu GÖREMEZ (hiçbir şey taşmıyor): '
-            '${clashes.join(" · ")}');
+    expect(
+      clashes,
+      isEmpty,
+      reason:
+          '$screen: çakışan kutular — biri ötekini örtüyor ve taşma '
+          'kapısı bunu GÖREMEZ (hiçbir şey taşmıyor): '
+          '${clashes.join(" · ")}',
+    );
   }
 
   testWidgets('Karşılama — üç perdede de çakışma YOK', (WidgetTester t) async {
@@ -115,10 +123,11 @@ void main() {
       const ContentRepository repo = ContentRepository();
       lib = repo.toShell((await repo.load()).library);
     });
-    await t.pumpWidget(MaterialApp(
-      home: OnboardingPage(
-          library: lib, onDone: () {}, onOpenWhyNot: () {}),
-    ));
+    await t.pumpWidget(
+      MaterialApp(
+        home: OnboardingPage(library: lib, onDone: () {}, onOpenWhyNot: () {}),
+      ),
+    );
     await t.pumpAndSettle();
     for (int step = 0; step < 3; step++) {
       expectNoOverlap(t, 'karşılama perde ${step + 1}');
@@ -130,8 +139,9 @@ void main() {
     }
   });
 
-  testWidgets('Sayfa A — kartlar ve rozetler çakışmıyor',
-      (WidgetTester t) async {
+  testWidgets('Sayfa A — kartlar ve rozetler çakışmıyor', (
+    WidgetTester t,
+  ) async {
     await t.runAsync(() async {
       await t.pumpWidget(const JabLabApp(onboarding: seen));
     });

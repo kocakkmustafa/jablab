@@ -109,10 +109,12 @@ void main() {
     expect(bindings, <String, Set<String>>{
       'boxing.combinations.one_two_uppercut': <String>{'killa_125_sequence'},
       'boxing.combinations.angle_exit': <String>{'toronto_small_angle_exit'},
-      'boxing.integration.two_round_rehearsal':
-          <String>{'rarebreed_beginner_round_structure'},
-      'boxing.integration.independent_round':
-          <String>{'marksman_independent_focus_reflection'},
+      'boxing.integration.two_round_rehearsal': <String>{
+        'rarebreed_beginner_round_structure',
+      },
+      'boxing.integration.independent_round': <String>{
+        'marksman_independent_focus_reflection',
+      },
     });
     for (final source in course.sources.where((s) => added.contains(s.id))) {
       expect(source.supports!.en, isNotEmpty);

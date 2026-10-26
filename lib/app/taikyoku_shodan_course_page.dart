@@ -877,9 +877,12 @@ class _TaikyokuCoursePageState extends State<TaikyokuCoursePage>
                             : 'Oku, hatırla, düzelt ve tekrar yanıtla',
                       ),
                     ),
-                    trailing: _locked(course.lessons.indexOf(lesson)) ? const LessonLockBadge() : null,
+                    trailing: _locked(course.lessons.indexOf(lesson))
+                        ? const LessonLockBadge()
+                        : null,
                     onTap: _admitted
-                        ? () => _openGated(lesson, course.lessons.indexOf(lesson))
+                        ? () =>
+                              _openGated(lesson, course.lessons.indexOf(lesson))
                         : null,
                   ),
                 ExpansionTile(

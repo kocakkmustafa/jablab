@@ -35,15 +35,18 @@ import 'package:flutter_test/flutter_test.dart';
 /// * Çalışma-zamanı ulaşılabilirliğini — motorun o kombinasyonu gerçekten
 ///   tanıyıp tanımadığını (`live_jab_path_test`in işi).
 void main() {
-  final Map<String, dynamic> lib = (jsonDecode(
-          File('assets/content/library.json').readAsStringSync()) as Map)
-      .cast<String, dynamic>();
-  final Map<String, dynamic> rules = (jsonDecode(
-          File('assets/rulesets/boxing@1.0.0.json').readAsStringSync()) as Map)
-      .cast<String, dynamic>();
-  final Map<String, dynamic> cues = (jsonDecode(
-          File('assets/content/cues.en.json').readAsStringSync()) as Map)
-      .cast<String, dynamic>();
+  final Map<String, dynamic> lib =
+      (jsonDecode(File('assets/content/library.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
+  final Map<String, dynamic> rules =
+      (jsonDecode(File('assets/rulesets/boxing@1.0.0.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
+  final Map<String, dynamic> cues =
+      (jsonDecode(File('assets/content/cues.en.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
 
   List<Map<dynamic, dynamic>> openLessons() {
     final List<Map<dynamic, dynamic>> out = <Map<dynamic, dynamic>>[];
@@ -62,12 +65,18 @@ void main() {
 
   test('KOMBİNASYON replikleri ya ULAŞILABİLİR ya BEYANLI', () {
     final List<Map<dynamic, dynamic>> lessons = openLessons();
-    expect(lessons.length, greaterThan(5),
-        reason: 'açık ders bulunamadı — kapı vakum-doğru olurdu');
+    expect(
+      lessons.length,
+      greaterThan(5),
+      reason: 'açık ders bulunamadı — kapı vakum-doğru olurdu',
+    );
 
-    final bool reachable = lessons.any((Map<dynamic, dynamic> l) =>
-        (l['usesCamera'] as bool? ?? false) &&
-        ((l['combinations'] as List<dynamic>?) ?? const <dynamic>[]).isNotEmpty);
+    final bool reachable = lessons.any(
+      (Map<dynamic, dynamic> l) =>
+          (l['usesCamera'] as bool? ?? false) &&
+          ((l['combinations'] as List<dynamic>?) ?? const <dynamic>[])
+              .isNotEmpty,
+    );
 
     final List<String> comboCues = <String>[
       for (final dynamic e in rules['errors'] as List<dynamic>)
@@ -75,24 +84,37 @@ void main() {
           e['feedbackKey'] as String,
     ];
     // VAKUM KAPISI: kombinasyon repliği hiç bulunmazsa kural boşa döner.
-    expect(comboCues.length, greaterThanOrEqualTo(2),
-        reason: 'kombinasyon repliği bulunamadı (${comboCues.length}) — '
-            'kural setinin şekli değişmiş olabilir');
+    expect(
+      comboCues.length,
+      greaterThanOrEqualTo(2),
+      reason:
+          'kombinasyon repliği bulunamadı (${comboCues.length}) — '
+          'kural setinin şekli değişmiş olabilir',
+    );
 
     if (reachable) return; // ulaşılabiliyorsa beyan gerekmez
 
-    final String declared =
-        jsonEncode((cues[r'$producers'] as Map)['technique']);
-    expect(declared, contains('awaiting-capability'),
-        reason: 'KOMBİNASYON REPLİKLERİ ULAŞILAMAZ ($comboCues) ve durum '
-            'BEYAN EDİLMEMİŞ. Hiçbir açık derste kamera+kombinasyon bir '
-            'arada yok — ve ÖLÇÜLDÜ (J-163): motorun kombinasyon durum '
-            'makinesi de YOK, yani içerik eklemek bunu çözmez. Durum '
-            '`\$producers`ta beyan edilmeli — sessizlik seçenek değil');
+    final String declared = jsonEncode(
+      (cues[r'$producers'] as Map)['technique'],
+    );
+    expect(
+      declared,
+      contains('awaiting-capability'),
+      reason:
+          'KOMBİNASYON REPLİKLERİ ULAŞILAMAZ ($comboCues) ve durum '
+          'BEYAN EDİLMEMİŞ. Hiçbir açık derste kamera+kombinasyon bir '
+          'arada yok — ve ÖLÇÜLDÜ (J-163): motorun kombinasyon durum '
+          'makinesi de YOK, yani içerik eklemek bunu çözmez. Durum '
+          '`\$producers`ta beyan edilmeli — sessizlik seçenek değil',
+    );
     for (final String cue in comboCues) {
-      expect(declared, contains(cue.split('.').last),
-          reason: '$cue beyanda ADIYLA geçmiyor — "bir şeyler ulaşılamaz" '
-              'demek, hangisinin ulaşılamaz olduğunu söylemez');
+      expect(
+        declared,
+        contains(cue.split('.').last),
+        reason:
+            '$cue beyanda ADIYLA geçmiyor — "bir şeyler ulaşılamaz" '
+            'demek, hangisinin ulaşılamaz olduğunu söylemez',
+      );
     }
   });
 
@@ -102,17 +124,26 @@ void main() {
     // koçluğu teslim edilemiyordu.
     final Map<dynamic, dynamic> boxing =
         (lib['disciplines'] as List<dynamic>).firstWhere(
-            (dynamic d) => (d as Map)['id'] == 'boxing') as Map<dynamic, dynamic>;
+              (dynamic d) => (d as Map)['id'] == 'boxing',
+            )
+            as Map<dynamic, dynamic>;
     final String blurb = (boxing['blurb'] as String).toLowerCase();
     final List<Map<dynamic, dynamic>> lessons = openLessons();
-    final bool reachable = lessons.any((Map<dynamic, dynamic> l) =>
-        (l['usesCamera'] as bool? ?? false) &&
-        ((l['combinations'] as List<dynamic>?) ?? const <dynamic>[]).isNotEmpty);
+    final bool reachable = lessons.any(
+      (Map<dynamic, dynamic> l) =>
+          (l['usesCamera'] as bool? ?? false) &&
+          ((l['combinations'] as List<dynamic>?) ?? const <dynamic>[])
+              .isNotEmpty,
+    );
     if (reachable) return;
     for (final String w in <String>['sequence', 'combination', 'combo']) {
-      expect(blurb.contains(w), isFalse,
-          reason: 'disiplin vaadi "$w" diyor ama kombinasyon koçluğu '
-              'hiçbir açık derste ULAŞILAMAZ (J-162)');
+      expect(
+        blurb.contains(w),
+        isFalse,
+        reason:
+            'disiplin vaadi "$w" diyor ama kombinasyon koçluğu '
+            'hiçbir açık derste ULAŞILAMAZ (J-162)',
+      );
     }
   });
 }

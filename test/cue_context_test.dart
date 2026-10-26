@@ -43,16 +43,18 @@ void main() {
   late Map<String, dynamic> cues;
 
   setUpAll(() {
-    cues = (jsonDecode(File('assets/content/cues.en.json').readAsStringSync())
-            as Map)
-        .cast<String, dynamic>();
+    cues =
+        (jsonDecode(File('assets/content/cues.en.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
   });
 
   /// Dönen havuzda güvenli olmayan bağlam iddiaları.
   final RegExp contextClaim = RegExp(
-      r'\b(round|set|rep)\s+(one|two|three|four|five|\d)\b'
-      r'|\b(first|second|third|final|last)\s+(round|set)\b',
-      caseSensitive: false);
+    r'\b(round|set|rep)\s+(one|two|three|four|five|\d)\b'
+    r'|\b(first|second|third|final|last)\s+(round|set)\b',
+    caseSensitive: false,
+  );
 
   List<({String key, int index, String line})> allVariants() {
     final List<({String key, int index, String line})> out =
@@ -82,23 +84,35 @@ void main() {
 
     // VAKUM MUHAFIZI — tarama gerçekten replik gördü mü? Bu olmadan bozuk
     // bir gezinme "sıfır ihlal" diye okunur ve kapı sessizce ölür.
-    expect(vars.length, greaterThan(30),
-        reason: 'yalnız ${vars.length} replik tarandı — gezinme bozuk, '
-            'bu kapının "temiz" sonucu ANLAMSIZ');
+    expect(
+      vars.length,
+      greaterThan(30),
+      reason:
+          'yalnız ${vars.length} replik tarandı — gezinme bozuk, '
+          'bu kapının "temiz" sonucu ANLAMSIZ',
+    );
 
     final List<String> bad = vars
-        .where((({String key, int index, String line}) v) =>
-            contextClaim.hasMatch(v.line))
-        .map((({String key, int index, String line}) v) =>
-            '${v.key}[${v.index}] → "${v.line}"')
+        .where(
+          (({String key, int index, String line}) v) =>
+              contextClaim.hasMatch(v.line),
+        )
+        .map(
+          (({String key, int index, String line}) v) =>
+              '${v.key}[${v.index}] → "${v.line}"',
+        )
         .toList();
 
-    expect(bad, isEmpty,
-        reason: 'bu replik(ler) bir sıra/konum iddia ediyor ama havuz '
-            'BAĞLAMSIZ dönüyor:\n  ${bad.join('\n  ')}\n\n'
-            'CueBook.say() olay başına imleci döndürür ve tur numarasını '
-            'BİLMEZ. Bağlama bağlı bir şey söylenecekse yol bunu taşımalı '
-            '({n} şablonu gibi) — metne gömülemez.');
+    expect(
+      bad,
+      isEmpty,
+      reason:
+          'bu replik(ler) bir sıra/konum iddia ediyor ama havuz '
+          'BAĞLAMSIZ dönüyor:\n  ${bad.join('\n  ')}\n\n'
+          'CueBook.say() olay başına imleci döndürür ve tur numarasını '
+          'BİLMEZ. Bağlama bağlı bir şey söylenecekse yol bunu taşımalı '
+          '({n} şablonu gibi) — metne gömülemez.',
+    );
   });
 
   test('POZİTİF KONTROL — desen bilinen kötü repliği YAKALIYOR', () {
@@ -121,7 +135,11 @@ void main() {
       'Ten seconds.',
       'Five.',
     ]) {
-      expect(contextClaim.hasMatch(ok), isFalse, reason: 'yanlış yakalama: $ok');
+      expect(
+        contextClaim.hasMatch(ok),
+        isFalse,
+        reason: 'yanlış yakalama: $ok',
+      );
     }
   });
 
@@ -138,38 +156,55 @@ void main() {
     // tam turu ADLANDIRIYOR, kullanıcının kaçıncı kez yaptığını iddia
     // etmiyor. Ayrım ölçüldü ve kasıtlı: `displayName` muaf, ANLATI değil.
     final RegExp firstTime = RegExp(
-        r"\b(welcome( back)?|first time|for the first time|getting started"
-        r"|new here|your first (session|round of|week))\b",
-        caseSensitive: false);
-    expect(firstTime.hasMatch('Welcome to JabLab'), isTrue,
-        reason: 'POZİTİF KONTROL: desen bilinen bir N=1 cümlesini '
-            'yakalamıyor — aşağıdaki temiz sonuç anlamsız olurdu');
+      r"\b(welcome( back)?|first time|for the first time|getting started"
+      r"|new here|your first (session|round of|week))\b",
+      caseSensitive: false,
+    );
+    expect(
+      firstTime.hasMatch('Welcome to JabLab'),
+      isTrue,
+      reason:
+          'POZİTİF KONTROL: desen bilinen bir N=1 cümlesini '
+          'yakalamıyor — aşağıdaki temiz sonuç anlamsız olurdu',
+    );
 
     final List<String> bad = allVariants()
-        .where((({String key, int index, String line}) v) =>
-            firstTime.hasMatch(v.line))
-        .map((({String key, int index, String line}) v) =>
-            '${v.key}[${v.index}] → "${v.line}"')
+        .where(
+          (({String key, int index, String line}) v) =>
+              firstTime.hasMatch(v.line),
+        )
+        .map(
+          (({String key, int index, String line}) v) =>
+              '${v.key}[${v.index}] → "${v.line}"',
+        )
         .toList();
-    expect(bad, isEmpty,
-        reason: 'bu replik(ler) oturumun İLKİ olduğunu varsayıyor:\n'
-            '  ${bad.join('\n  ')}\n\n'
-            'Uygulama bir dersin kaçıncı kez açıldığını hiçbir yüzeye '
-            'taşımıyor — depoda kayıt var ama anlatı onu OKUMUYOR. '
-            'Taşınmayan bir bağlam iddia edilemez (J-180 ile aynı kural, '
-            'tur yerine OTURUM ölçeğinde).');
+    expect(
+      bad,
+      isEmpty,
+      reason:
+          'bu replik(ler) oturumun İLKİ olduğunu varsayıyor:\n'
+          '  ${bad.join('\n  ')}\n\n'
+          'Uygulama bir dersin kaçıncı kez açıldığını hiçbir yüzeye '
+          'taşımıyor — depoda kayıt var ama anlatı onu OKUMUYOR. '
+          'Taşınmayan bir bağlam iddia edilemez (J-180 ile aynı kural, '
+          'tur yerine OTURUM ölçeğinde).',
+    );
   });
 
   test('TERS İKİZ — havuz BOŞALTILARAK geçilemez', () {
     // M-F-337 dersi: yalnız "ihlal yok" ölçülseydi, `round_start` havuzunu
     // tek repliğe indirmek de kapıyı geçerdi — ihlal kalmaz çünkü replik
     // kalmaz. Üstelik round-robin'in tekrar-önleme özelliği de ölürdü.
-    final Map<String, dynamic> session =
-        (cues['session'] as Map).cast<String, dynamic>();
+    final Map<String, dynamic> session = (cues['session'] as Map)
+        .cast<String, dynamic>();
     final List<dynamic> pool = session['cue.round_start'] as List<dynamic>;
-    expect(pool.length, greaterThanOrEqualTo(3),
-        reason: 'round_start havuzu ${pool.length} replike düştü — dönen '
-            'havuzun tekrar-önleme değeri varyant SAYISINDAN gelir; '
-            'ihlali silmek için havuzu daraltmak çözüm değil');
+    expect(
+      pool.length,
+      greaterThanOrEqualTo(3),
+      reason:
+          'round_start havuzu ${pool.length} replike düştü — dönen '
+          'havuzun tekrar-önleme değeri varyant SAYISINDAN gelir; '
+          'ihlali silmek için havuzu daraltmak çözüm değil',
+    );
   });
 }

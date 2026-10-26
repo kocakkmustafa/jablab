@@ -47,7 +47,9 @@ void main() {
 
     final List<dynamic> courses =
         ((lib['disciplines'] as List<dynamic>).firstWhere(
-                (dynamic d) => (d as Map)['id'] == 'boxing') as Map)['courses']
+                  (dynamic d) => (d as Map)['id'] == 'boxing',
+                )
+                as Map)['courses']
             as List<dynamic>;
 
     // (grup, anahtar) → en çok kaç kez çalıyor, hangi derste
@@ -64,10 +66,10 @@ void main() {
       for (final dynamic rawL in (rawC as Map)['lessons'] as List<dynamic>) {
         final Map<String, dynamic> l = (rawL as Map).cast<String, dynamic>();
         final String name = '${l['id']}'.split('.').last;
-        final Map<String, dynamic>? rp =
-            (l['roundPlan'] as Map?)?.cast<String, dynamic>();
-        final Map<String, dynamic>? ip =
-            (l['intervalPlan'] as Map?)?.cast<String, dynamic>();
+        final Map<String, dynamic>? rp = (l['roundPlan'] as Map?)
+            ?.cast<String, dynamic>();
+        final Map<String, dynamic>? ip = (l['intervalPlan'] as Map?)
+            ?.cast<String, dynamic>();
         if (rp != null) {
           planned++;
           final int r = rp['rounds'] as int;
@@ -91,9 +93,13 @@ void main() {
 
     // VAKUM MUHAFIZI — planlı ders bulunamazsa hiçbir replik ölçülmez ve
     // kapı "tekrar yok" diye YEŞİL kalır.
-    expect(planned, greaterThanOrEqualTo(8),
-        reason: 'yalnız $planned planlı ders bulundu — gezinme bozuk, '
-            'bu kapının sonucu anlamsız');
+    expect(
+      planned,
+      greaterThanOrEqualTo(8),
+      reason:
+          'yalnız $planned planlı ders bulundu — gezinme bozuk, '
+          'bu kapının sonucu anlamsız',
+    );
     expect(worst, isNotEmpty, reason: 'hiçbir replik eşlenmedi');
 
     final List<String> thin = <String>[];
@@ -103,21 +109,27 @@ void main() {
       final List<dynamic> variants =
           (cues[parts[0]] as Map)[parts[1]] as List<dynamic>;
       if (e.value.fires > variants.length) {
-        thin.add('${parts[0]}.${parts[1]}: ${variants.length} varyant ama '
-            '${e.value.lesson} dersinde ${e.value.fires} kez çalıyor '
-            '(${e.value.fires - variants.length} tekrar)');
+        thin.add(
+          '${parts[0]}.${parts[1]}: ${variants.length} varyant ama '
+          '${e.value.lesson} dersinde ${e.value.fires} kez çalıyor '
+          '(${e.value.fires - variants.length} tekrar)',
+        );
       }
     }
 
-    expect(thin, isEmpty,
-        reason: 'bu replikler tek oturumda kendini tekrar ediyor:\n'
-            '  ${thin.join('\n  ')}\n\n'
-            'Replik derinliği ders YAPISININ bir fonksiyonudur: daha uzun '
-            'bir ders yazan, o dersin repliklerini de uzatmış olur. '
-            'İki yol: (a) varyant ekle (b) dersi kısalt. Kelime sınırları '
-            'grup başına ayrı (`cues_test`: interval ≤5, session ≤6, '
-            'counting ≤3) ve onlar GEVŞETİLMEZ — kısa olmalarının sebebi '
-            'kullanıcının hareket hâlinde olması.');
+    expect(
+      thin,
+      isEmpty,
+      reason:
+          'bu replikler tek oturumda kendini tekrar ediyor:\n'
+          '  ${thin.join('\n  ')}\n\n'
+          'Replik derinliği ders YAPISININ bir fonksiyonudur: daha uzun '
+          'bir ders yazan, o dersin repliklerini de uzatmış olur. '
+          'İki yol: (a) varyant ekle (b) dersi kısalt. Kelime sınırları '
+          'grup başına ayrı (`cues_test`: interval ≤5, session ≤6, '
+          'counting ≤3) ve onlar GEVŞETİLMEZ — kısa olmalarının sebebi '
+          'kullanıcının hareket hâlinde olması.',
+    );
   });
 
   test('POZİTİF KONTROL — kapı, sığ bir havuzu GERÇEKTEN görüyor', () {

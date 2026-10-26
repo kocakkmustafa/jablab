@@ -17,24 +17,34 @@ import 'package:jablab_engine/jablab_engine.dart';
 /// alan değil, harita ANAHTARI — M-F-63'ün `leafKeys` taraması bunları
 /// görmüyordu.
 void main() {
-  final RuleSet boxing = RuleSet.fromJson((jsonDecode(
-              File('assets/rulesets/boxing@1.0.0.json').readAsStringSync())
-          as Map)
-      .cast<String, dynamic>());
+  final RuleSet boxing = RuleSet.fromJson(
+    (jsonDecode(File('assets/rulesets/boxing@1.0.0.json').readAsStringSync())
+            as Map)
+        .cast<String, dynamic>(),
+  );
   const ContentRepository repo = ContentRepository();
 
-  test('her coachedOnlyJoints anahtarının bir etiketi var (aksi hâlde fırlar)', () {
-    final List<String> labels = repo.coachedNotScoredLabels(boxing);
-    expect(labels.length, boxing.stanceCoachedOnlyJoints.length);
-  });
+  test(
+    'her coachedOnlyJoints anahtarının bir etiketi var (aksi hâlde fırlar)',
+    () {
+      final List<String> labels = repo.coachedNotScoredLabels(boxing);
+      expect(labels.length, boxing.stanceCoachedOnlyJoints.length);
+    },
+  );
 
-  test('REGRESYON: lead_hip/lead_thigh scoredJoints\'te — coached listesinde REAR görünür', () {
-    final List<String> labels = repo.coachedNotScoredLabels(boxing);
-    expect(labels, contains('Rear hip position'));
-    expect(labels, contains('Rear thigh placement'));
-    expect(labels, isNot(contains('Lead hip and thigh placement')),
-        reason: 'eski hardcoded metin — config\'in aktif kararıyla çelişiyordu');
-  });
+  test(
+    'REGRESYON: lead_hip/lead_thigh scoredJoints\'te — coached listesinde REAR görünür',
+    () {
+      final List<String> labels = repo.coachedNotScoredLabels(boxing);
+      expect(labels, contains('Rear hip position'));
+      expect(labels, contains('Rear thigh placement'));
+      expect(
+        labels,
+        isNot(contains('Lead hip and thigh placement')),
+        reason: 'eski hardcoded metin — config\'in aktif kararıyla çelişiyordu',
+      );
+    },
+  );
 
   test('etiketler config değiştiğinde otomatik değişir (elle kopya değil)', () {
     // stanceCoachedOnlyJoints RuleSet.fromJson'dan gelir; burada elle bir
@@ -42,7 +52,10 @@ void main() {
     // tekrar sabit bir listeye çevirirse (kolay bir "basitleştirme") kırılmak.
     expect(boxing.stanceCoachedOnlyJoints, isNotEmpty);
     expect(boxing.stanceCoachedOnlyJoints, contains('rear_hip'));
-    expect(boxing.stanceCoachedOnlyJoints, isNot(contains('lead_hip')),
-        reason: 'lead_hip scoredJoints\'te — coachedOnlyJoints\'te görünmemeli');
+    expect(
+      boxing.stanceCoachedOnlyJoints,
+      isNot(contains('lead_hip')),
+      reason: 'lead_hip scoredJoints\'te — coachedOnlyJoints\'te görünmemeli',
+    );
   });
 }

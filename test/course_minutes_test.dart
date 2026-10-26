@@ -72,13 +72,18 @@ void main() {
             .cast<String, dynamic>();
     final List<dynamic> courses =
         ((lib['disciplines'] as List<dynamic>).firstWhere(
-                    (dynamic d) => (d as Map)['id'] == 'boxing') as Map)['courses']
+                  (dynamic d) => (d as Map)['id'] == 'boxing',
+                )
+                as Map)['courses']
             as List<dynamic>;
 
     // VAKUM MUHAFIZI — kurslar gerçekten okundu mu? Boş bir liste
     // "hiç uyuşmazlık yok" diye okunur ve kapı sessizce ölür.
-    expect(courses.length, greaterThanOrEqualTo(3),
-        reason: 'yalnız ${courses.length} kurs okundu — gezinme bozuk');
+    expect(
+      courses.length,
+      greaterThanOrEqualTo(3),
+      reason: 'yalnız ${courses.length} kurs okundu — gezinme bozuk',
+    );
 
     final List<String> silent = <String>[];
     int checked = 0;
@@ -86,9 +91,10 @@ void main() {
       final Map<String, dynamic> c = (raw as Map).cast<String, dynamic>();
       final int declared = (c['estimatedMinutes'] as num?)?.toInt() ?? 0;
       final int sum = (c['lessons'] as List<dynamic>).fold<int>(
-          0,
-          (int a, dynamic l) =>
-              a + (((l as Map)['minutes'] as num?)?.toInt() ?? 0));
+        0,
+        (int a, dynamic l) =>
+            a + (((l as Map)['minutes'] as num?)?.toInt() ?? 0),
+      );
       if (declared == sum) {
         checked++;
         continue;
@@ -100,20 +106,28 @@ void main() {
       }
     }
 
-    expect(checked, greaterThan(0),
-        reason: 'HİÇBİR kurs değişmezi sağlamıyor — bu kapı bir kuralı '
-            'değil bir enkazı ölçüyor olabilir; sayıların anlamı '
-            'değiştiyse kapı da değişmeli');
+    expect(
+      checked,
+      greaterThan(0),
+      reason:
+          'HİÇBİR kurs değişmezi sağlamıyor — bu kapı bir kuralı '
+          'değil bir enkazı ölçüyor olabilir; sayıların anlamı '
+          'değiştiyse kapı da değişmeli',
+    );
 
-    expect(silent, isEmpty,
-        reason: 'kurs süresi ders toplamıyla uyuşmuyor ve SEBEBİ YAZILI '
-            'DEĞİL:\n  ${silent.join('\n  ')}\n\n'
-            'Yeni ders yazıp kursun `estimatedMinutes` alanını '
-            'güncellememek bu değişmezi SESSİZCE kırar — bu kapı tam '
-            'olarak o yüzden var (J-191: kıran bendim). İki yol: (a) '
-            'sayıyı düzelt (b) sapma kasıtlıysa `\$estimatedMinutesWhy` '
-            'ile GEREKÇESİNİ yaz. Gerekçe UYDURULMAZ: bilinmiyorsa '
-            '"bilinmiyor" yazılır.');
+    expect(
+      silent,
+      isEmpty,
+      reason:
+          'kurs süresi ders toplamıyla uyuşmuyor ve SEBEBİ YAZILI '
+          'DEĞİL:\n  ${silent.join('\n  ')}\n\n'
+          'Yeni ders yazıp kursun `estimatedMinutes` alanını '
+          'güncellememek bu değişmezi SESSİZCE kırar — bu kapı tam '
+          'olarak o yüzden var (J-191: kıran bendim). İki yol: (a) '
+          'sayıyı düzelt (b) sapma kasıtlıysa `\$estimatedMinutesWhy` '
+          'ile GEREKÇESİNİ yaz. Gerekçe UYDURULMAZ: bilinmiyorsa '
+          '"bilinmiyor" yazılır.',
+    );
   });
 
   test('POZİTİF KONTROL — kapı, sessiz bir sapmayı GERÇEKTEN görüyor', () {
@@ -128,12 +142,15 @@ void main() {
       ],
     };
     final int sum = (fake['lessons']! as List<dynamic>).fold<int>(
-        0,
-        (int a, dynamic l) =>
-            a + (((l as Map)['minutes'] as num?)?.toInt() ?? 0));
+      0,
+      (int a, dynamic l) => a + (((l as Map)['minutes'] as num?)?.toInt() ?? 0),
+    );
     expect(sum, 45);
     expect(fake['estimatedMinutes'] == sum, isFalse);
-    expect(fake[r'$estimatedMinutesWhy'], isNull,
-        reason: 'sentetik sapma gerekçesiz — kapının yakalaması gereken hâl');
+    expect(
+      fake[r'$estimatedMinutesWhy'],
+      isNull,
+      reason: 'sentetik sapma gerekçesiz — kapının yakalaması gereken hâl',
+    );
   });
 }

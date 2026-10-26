@@ -28,9 +28,10 @@ late OwnerResourceRegistry _owners;
 
 void main() {
   setUp(() => _owners = OwnerResourceRegistry());
-  final Map<String, dynamic> curriculum = (jsonDecode(
-    File('assets/content/curriculum.json').readAsStringSync(),
-  ) as Map).cast<String, dynamic>();
+  final Map<String, dynamic> curriculum =
+      (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
 
   group('POZİTİF İKİZ — kanıt VARSA mekanizma gerçek sayı üretiyor', () {
     test('gereken karşılanınca GEÇTİ', () {

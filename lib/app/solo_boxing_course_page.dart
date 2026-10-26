@@ -584,9 +584,7 @@ class _SoloBoxingCoursePageState extends State<SoloBoxingCoursePage> {
             for (int i = 0; i < module.lessons.length; i++)
               ListTile(
                 key: Key('solo-lesson-${module.lessons[i].id}'),
-                onTap: _opening
-                    ? null
-                    : () => _openGated(module.lessons[i]),
+                onTap: _opening ? null : () => _openGated(module.lessons[i]),
                 leading: Icon(
                   progress == null
                       ? Icons.help_outline

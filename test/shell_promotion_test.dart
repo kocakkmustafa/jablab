@@ -51,9 +51,13 @@ void main() {
             offenders.add('$lineNo: ${line.trim()}');
           }
         }
-        expect(offenders, isEmpty,
-            reason: 'kabuk kodunda alan sözlüğü sızıntısı:\n'
-                '${offenders.join("\n")}');
+        expect(
+          offenders,
+          isEmpty,
+          reason:
+              'kabuk kodunda alan sözlüğü sızıntısı:\n'
+              '${offenders.join("\n")}',
+        );
       });
     }
   });
@@ -89,9 +93,13 @@ void main() {
         }
       }
     }
-    expect(offenders, isEmpty,
-        reason: 'kabuk app/motor katmanına bağımlı — terfi edemez:\n'
-            '${offenders.join("\n")}');
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'kabuk app/motor katmanına bağımlı — terfi edemez:\n'
+          '${offenders.join("\n")}',
+    );
   });
 
   test('terfi engeli — yerelleştirme importları envanterle birebir', () {
@@ -102,9 +110,11 @@ void main() {
       final Set<String> imports = f
           .readAsLinesSync()
           .map((String l) => l.trim())
-          .where((String t) =>
-              t == "import '../app/ui_language.dart';" ||
-              t == "import '../app/cue_locale.dart';")
+          .where(
+            (String t) =>
+                t == "import '../app/ui_language.dart';" ||
+                t == "import '../app/cue_locale.dart';",
+          )
           .toSet();
       if (imports.isNotEmpty) found[f.uri.pathSegments.last] = imports;
     }
@@ -112,15 +122,24 @@ void main() {
   });
 
   test('terfi şartı #5 — dürüstlük değişmezleri kabukta kodlu', () {
-    final String honesty =
-        File('lib/shell_candidate/honesty_box.dart').readAsStringSync();
-    expect(honesty, contains('assert'),
-        reason: 'HonestyBox boş "ölçülmez" listesiyle çizilebiliyorsa '
-            'dürüstlük kutusu bir söz değil süstür');
+    final String honesty = File(
+      'lib/shell_candidate/honesty_box.dart',
+    ).readAsStringSync();
+    expect(
+      honesty,
+      contains('assert'),
+      reason:
+          'HonestyBox boş "ölçülmez" listesiyle çizilebiliyorsa '
+          'dürüstlük kutusu bir söz değil süstür',
+    );
 
-    final String scaffold =
-        File('lib/shell_candidate/shell_scaffold.dart').readAsStringSync();
-    expect(scaffold, contains('numericUnlocked'),
-        reason: 'K8 kilidi (M-F-04) kabukta temsil edilmiyor');
+    final String scaffold = File(
+      'lib/shell_candidate/shell_scaffold.dart',
+    ).readAsStringSync();
+    expect(
+      scaffold,
+      contains('numericUnlocked'),
+      reason: 'K8 kilidi (M-F-04) kabukta temsil edilmiyor',
+    );
   });
 }

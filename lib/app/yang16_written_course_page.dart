@@ -955,9 +955,12 @@ class _Yang16WrittenCoursePageState extends State<Yang16WrittenCoursePage>
                             : 'Oku, yeniden kur, düzelt ve aynı hedefi tekrar yanıtla',
                       ),
                     ),
-                    trailing: _locked(course.targets.indexOf(target)) ? const LessonLockBadge() : null,
+                    trailing: _locked(course.targets.indexOf(target))
+                        ? const LessonLockBadge()
+                        : null,
                     onTap: _admitted
-                        ? () => _openGated(target, course.targets.indexOf(target))
+                        ? () =>
+                              _openGated(target, course.targets.indexOf(target))
                         : null,
                   ),
                 TextButton(

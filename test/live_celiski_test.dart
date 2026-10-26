@@ -27,20 +27,24 @@ import 'package:jablab/shell_candidate/live_surface.dart' show LiveState;
 /// kapısıyla aynı biçim.
 void main() {
   Future<String> placeholderText(
-      WidgetTester t, {required bool analysisRunning}) async {
-    await t.pumpWidget(MaterialApp(
-      home: Scaffold(
-        body: SizedBox(
-          width: 375,
-          height: 500,
-          child: SkeletonPreview(
-            state: LiveState.noVerdict,
-            bucket: LiveHonestyBucket.none,
-            analysisRunning: analysisRunning,
+    WidgetTester t, {
+    required bool analysisRunning,
+  }) async {
+    await t.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 375,
+            height: 500,
+            child: SkeletonPreview(
+              state: LiveState.noVerdict,
+              bucket: LiveHonestyBucket.none,
+              analysisRunning: analysisRunning,
+            ),
           ),
         ),
       ),
-    ));
+    );
     await t.pumpAndSettle();
     return t
             .widget<Text>(find.byKey(const Key('camera-preview-placeholder')))
@@ -48,29 +52,43 @@ void main() {
         '';
   }
 
-  testWidgets('ANALİZ KOŞMUYORKEN "analysis runs" İDDİASI YOK',
-      (WidgetTester t) async {
+  testWidgets('ANALİZ KOŞMUYORKEN "analysis runs" İDDİASI YOK', (
+    WidgetTester t,
+  ) async {
     final String s = await placeholderText(t, analysisRunning: false);
-    expect(s.toLowerCase(), isNot(contains('analysis runs')),
-        reason: 'analiz koşmuyor ama ekran "analysis runs" diyor — bu cümle '
-            'kamera arızası / kamerasız ders / "getting ready" hâllerinde '
-            'YANLIŞ, ve hemen altındaki arıza cümlesiyle ÇELİŞİYOR');
+    expect(
+      s.toLowerCase(),
+      isNot(contains('analysis runs')),
+      reason:
+          'analiz koşmuyor ama ekran "analysis runs" diyor — bu cümle '
+          'kamera arızası / kamerasız ders / "getting ready" hâllerinde '
+          'YANLIŞ, ve hemen altındaki arıza cümlesiyle ÇELİŞİYOR',
+    );
     // SORUMLULUK YARISI HER HÂLDE KALIR: önizlemenin yokluğu bir TERCİH,
     // bir arıza değil. Bu yarı düşerse kullanıcı yokluğu arıza sanar.
-    expect(s.toLowerCase(), contains('on purpose'),
-        reason: 'sorumluluk üstlenen yarı düşmüş — yokluk artık bir tercih '
-            'gibi değil bir kaza gibi okunur');
+    expect(
+      s.toLowerCase(),
+      contains('on purpose'),
+      reason:
+          'sorumluluk üstlenen yarı düşmüş — yokluk artık bir tercih '
+          'gibi değil bir kaza gibi okunur',
+    );
   });
 
-  testWidgets('ANALİZ KOŞARKEN cümle TAM hâlini koruyor',
-      (WidgetTester t) async {
+  testWidgets('ANALİZ KOŞARKEN cümle TAM hâlini koruyor', (
+    WidgetTester t,
+  ) async {
     // VAKUM KORUMASI: üstteki test, cümle her hâlde boşaltılsa da geçerdi.
     // Bu test iddianın DOĞRU hâlde hâlâ söylendiğini çiviliyor — yoksa
     // "çelişkiyi sil" düzeltmesi bilgiyi de silerdi.
     final String s = await placeholderText(t, analysisRunning: true);
-    expect(s.toLowerCase(), contains('analysis runs'),
-        reason: 'analiz koşuyorken bu bilgi DÜŞMÜŞ — kullanıcı görüntü '
-            'olmadığı için analiz de yok sanar');
+    expect(
+      s.toLowerCase(),
+      contains('analysis runs'),
+      reason:
+          'analiz koşuyorken bu bilgi DÜŞMÜŞ — kullanıcı görüntü '
+          'olmadığı için analiz de yok sanar',
+    );
     expect(s.toLowerCase(), contains('on purpose'));
   });
 
@@ -80,7 +98,10 @@ void main() {
     // sınıfı, bu kez tüketici tarafında).
     final String off = await placeholderText(t, analysisRunning: false);
     final String on = await placeholderText(t, analysisRunning: true);
-    expect(off, isNot(on),
-        reason: 'iki hâl aynı cümleyi veriyor — `analysisRunning` okunmuyor');
+    expect(
+      off,
+      isNot(on),
+      reason: 'iki hâl aynı cümleyi veriyor — `analysisRunning` okunmuyor',
+    );
   });
 }

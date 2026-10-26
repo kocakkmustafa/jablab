@@ -12,7 +12,10 @@ import 'support/owned_native_fixture.dart';
 void main() {
   setUp(() {
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    binding.platformDispatcher.views.first.physicalSize = const Size(1200, 2600);
+    binding.platformDispatcher.views.first.physicalSize = const Size(
+      1200,
+      2600,
+    );
     binding.platformDispatcher.views.first.devicePixelRatio = 1;
   });
 
@@ -31,9 +34,16 @@ void main() {
     final screenKey = GlobalKey();
     var permissionCalls = 0;
     var modelCalls = 0;
-    addTearDown(() => _cleanup(tester, camera, releasePending: () {
-      if (!permission.isCompleted) permission.complete(PermissionStatus.granted);
-    }));
+    addTearDown(
+      () => _cleanup(
+        tester,
+        camera,
+        releasePending: () {
+          if (!permission.isCompleted)
+            permission.complete(PermissionStatus.granted);
+        },
+      ),
+    );
 
     await _openHarness(
       tester,
@@ -54,7 +64,11 @@ void main() {
     final state = screenKey.currentState!;
     await tester.tap(find.byKey(const Key('harness-start')));
     await tester.pump();
-    expect(permissionCalls, 1, reason: 'the injected permission must be pending');
+    expect(
+      permissionCalls,
+      1,
+      reason: 'the injected permission must be pending',
+    );
     expect(modelCalls, 0);
     expect(camera.startCalls, 0);
 
@@ -76,9 +90,15 @@ void main() {
     final navigator = GlobalKey<NavigatorState>();
     final screenKey = GlobalKey();
     var modelCalls = 0;
-    addTearDown(() => _cleanup(tester, camera, releasePending: () {
-      if (!model.isCompleted) model.complete('/test/pose.task');
-    }));
+    addTearDown(
+      () => _cleanup(
+        tester,
+        camera,
+        releasePending: () {
+          if (!model.isCompleted) model.complete('/test/pose.task');
+        },
+      ),
+    );
 
     await _openHarness(
       tester,
@@ -131,8 +151,11 @@ void main() {
     final state = screenKey.currentState!;
     await tester.tap(find.byKey(const Key('harness-start')));
     await tester.pump();
-    expect(camera.startCalls, 1,
-        reason: 'this case must reach a pending native camera start');
+    expect(
+      camera.startCalls,
+      1,
+      reason: 'this case must reach a pending native camera start',
+    );
     expect(camera.framesCalls, 0);
 
     await _popHarness(tester, navigator);
@@ -144,44 +167,45 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('normal harness start and route disposal own and release frames', (
-    tester,
-  ) async {
-    final camera = _HarnessCamera();
-    final navigator = GlobalKey<NavigatorState>();
-    final screenKey = GlobalKey();
-    addTearDown(() => _cleanup(tester, camera));
+  testWidgets(
+    'normal harness start and route disposal own and release frames',
+    (tester) async {
+      final camera = _HarnessCamera();
+      final navigator = GlobalKey<NavigatorState>();
+      final screenKey = GlobalKey();
+      addTearDown(() => _cleanup(tester, camera));
 
-    await _openHarness(
-      tester,
-      navigator,
-      CameraHarnessScreen(
-        key: screenKey,
-        controller: camera,
-        requestPermission: () async => PermissionStatus.granted,
-        modelPath: () async => '/test/pose.task',
-      ),
-    );
-    final state = screenKey.currentState!;
-    await tester.tap(find.byKey(const Key('harness-start')));
-    await tester.pumpAndSettle();
+      await _openHarness(
+        tester,
+        navigator,
+        CameraHarnessScreen(
+          key: screenKey,
+          controller: camera,
+          requestPermission: () async => PermissionStatus.granted,
+          modelPath: () async => '/test/pose.task',
+        ),
+      );
+      final state = screenKey.currentState!;
+      await tester.tap(find.byKey(const Key('harness-start')));
+      await tester.pumpAndSettle();
 
-    expect(camera.startCalls, 1);
-    expect(camera.framesCalls, 1);
-    expect(camera.listenCalls, 1);
-    expect(camera.cancelCalls, 0);
-    expect(
-      tester.widget<Text>(find.byKey(const Key('metric-session'))).data,
-      'running',
-    );
+      expect(camera.startCalls, 1);
+      expect(camera.framesCalls, 1);
+      expect(camera.listenCalls, 1);
+      expect(camera.cancelCalls, 0);
+      expect(
+        tester.widget<Text>(find.byKey(const Key('metric-session'))).data,
+        'running',
+      );
 
-    await _popHarness(tester, navigator);
-    expect(state.mounted, isFalse);
-    expect(camera.stopCalls, greaterThanOrEqualTo(1));
-    expect(camera.cancelCalls, 1);
-    expect(camera.interruptedStarts, 0);
-    expect(tester.takeException(), isNull);
-  });
+      await _popHarness(tester, navigator);
+      expect(state.mounted, isFalse);
+      expect(camera.stopCalls, greaterThanOrEqualTo(1));
+      expect(camera.cancelCalls, 1);
+      expect(camera.interruptedStarts, 0);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }
 
 Future<void> _openHarness(
@@ -189,13 +213,17 @@ Future<void> _openHarness(
   GlobalKey<NavigatorState> navigator,
   CameraHarnessScreen screen,
 ) async {
-  await tester.pumpWidget(MaterialApp(
-    navigatorKey: navigator,
-    home: const Scaffold(body: Text('Harness parent route')),
-  ));
-  unawaited(navigator.currentState!.push<void>(
-    MaterialPageRoute<void>(builder: (_) => screen),
-  ));
+  await tester.pumpWidget(
+    MaterialApp(
+      navigatorKey: navigator,
+      home: const Scaffold(body: Text('Harness parent route')),
+    ),
+  );
+  unawaited(
+    navigator.currentState!.push<void>(
+      MaterialPageRoute<void>(builder: (_) => screen),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
@@ -223,7 +251,5 @@ Future<void> _cleanup(
 
 class _HarnessCamera extends OwnedTestCamera {
   _HarnessCamera({super.holdNativeStart = false})
-    : super(
-        libraryTag: 'harness-retirement-fixture',
-      );
+    : super(libraryTag: 'harness-retirement-fixture');
 }

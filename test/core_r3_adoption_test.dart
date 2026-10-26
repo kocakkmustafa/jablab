@@ -24,36 +24,57 @@ void main() {
     final main = source('lib/main.dart');
     expect(main, contains('salesOpen: motionSubscriptionSalesAvailable'));
     expect(main, contains('salesAvailable: motionSubscriptionSalesAvailable'));
-    expect(main, contains('beforeLessonStart: (lessonContext) => '
-        'requireMotionCameraAccess('));
-    expect('requireMotionPaidAccess('.allMatches(main), hasLength(1),
-        reason: 'only the locked-lesson gate may ask for a membership');
+    expect(
+      main,
+      contains(
+        'beforeLessonStart: (lessonContext) => '
+        'requireMotionCameraAccess(',
+      ),
+    );
+    expect(
+      'requireMotionPaidAccess('.allMatches(main),
+      hasLength(1),
+      reason: 'only the locked-lesson gate may ask for a membership',
+    );
   });
 
   test('no deprecated Core flag or parameter is left in the app', () {
     for (final entity in Directory('lib').listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;
       final text = source(entity.path);
-      expect(text, isNot(contains('motionPaidFeaturesAvailable')),
-          reason: entity.path);
-      expect(text, isNot(contains('paidFeaturesAvailable:')),
-          reason: entity.path);
+      expect(
+        text,
+        isNot(contains('motionPaidFeaturesAvailable')),
+        reason: entity.path,
+      );
+      expect(
+        text,
+        isNot(contains('paidFeaturesAvailable:')),
+        reason: entity.path,
+      );
     }
   });
 
   test('Runner carries the Declared Age Range entitlement in every config', () {
-    final entitlements =
-        File('ios/Runner/Runner.entitlements').readAsStringSync();
+    final entitlements = File(
+      'ios/Runner/Runner.entitlements',
+    ).readAsStringSync();
     expect(
       entitlements,
-      matches(RegExp(r'<key>com\.apple\.developer\.declared-age-range</key>'
-          r'\s*<true/>')),
+      matches(
+        RegExp(
+          r'<key>com\.apple\.developer\.declared-age-range</key>'
+          r'\s*<true/>',
+        ),
+      ),
     );
-    final project =
-        File('ios/Runner.xcodeproj/project.pbxproj').readAsStringSync();
+    final project = File(
+      'ios/Runner.xcodeproj/project.pbxproj',
+    ).readAsStringSync();
     expect(
-      'CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'
-          .allMatches(project),
+      'CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'.allMatches(
+        project,
+      ),
       hasLength(3),
     );
   });

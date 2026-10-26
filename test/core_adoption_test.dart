@@ -58,13 +58,20 @@ Future<void> showBoxingControl(WidgetTester t, Key key) async {
 Future<void> showRecordedSummary(WidgetTester t) async {
   final summary = find.byKey(const Key('recorded-Time worked'));
   final scrollable = find.byType(Scrollable).first;
-  await t.scrollUntilVisible(summary, 250,
-    scrollable: scrollable, maxScrolls: 40);
+  await t.scrollUntilVisible(
+    summary,
+    250,
+    scrollable: scrollable,
+    maxScrolls: 40,
+  );
   await Scrollable.ensureVisible(t.element(summary), alignment: 0.5);
   await t.pumpAndSettle();
   expect(summary, findsOneWidget);
-  expect(t.getRect(scrollable).contains(t.getRect(summary).center), isTrue,
-    reason: 'Recorded summary row must be inside the actual viewport');
+  expect(
+    t.getRect(scrollable).contains(t.getRect(summary).center),
+    isTrue,
+    reason: 'Recorded summary row must be inside the actual viewport',
+  );
 }
 
 void main() {

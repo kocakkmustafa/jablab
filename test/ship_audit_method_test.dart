@@ -32,16 +32,22 @@ void main() {
       for (int i = 0; i < lines.length; i++)
         if (lines[i].startsWith('| # | katman | soru |')) i,
     ];
-    expect(starts, isNotEmpty,
-        reason: 'denetim tablosunun başlığı bulunamadı — belge yeniden '
-            'yapılandırılmış olabilir, bu kapının sonucu ANLAMSIZ olurdu');
+    expect(
+      starts,
+      isNotEmpty,
+      reason:
+          'denetim tablosunun başlığı bulunamadı — belge yeniden '
+          'yapılandırılmış olabilir, bu kapının sonucu ANLAMSIZ olurdu',
+    );
     final List<List<String>> rows = <List<String>>[];
     for (final int start in starts) {
       for (int i = start + 2; i < lines.length; i++) {
         final String l = lines[i].trim();
         if (!l.startsWith('|')) break;
-        final List<String> cells =
-            l.split('|').map((String c) => c.trim()).toList();
+        final List<String> cells = l
+            .split('|')
+            .map((String c) => c.trim())
+            .toList();
         rows.add(cells.sublist(1, cells.length - 1));
       }
     }
@@ -52,11 +58,18 @@ void main() {
     expect(doc.existsSync(), isTrue, reason: 'yöntem belgesi yok');
     final List<List<String>> rows = auditRows();
     // Vakum muhafızı: boş bir tablo, aşağıdaki her şeyi sessizce geçirirdi.
-    expect(rows.length, greaterThanOrEqualTo(15),
-        reason: 'yalnız ${rows.length} denetim kalemi okundu — ayrıştırma '
-            'bozuk ya da tablo daraldı; iki durumda da sonuç anlamsız');
-    expect(rows.first.length, 6,
-        reason: 'sütun sayısı değişmiş — kapı yanlış sütunu okuyor olabilir');
+    expect(
+      rows.length,
+      greaterThanOrEqualTo(15),
+      reason:
+          'yalnız ${rows.length} denetim kalemi okundu — ayrıştırma '
+          'bozuk ya da tablo daraldı; iki durumda da sonuç anlamsız',
+    );
+    expect(
+      rows.first.length,
+      6,
+      reason: 'sütun sayısı değişmiş — kapı yanlış sütunu okuyor olabilir',
+    );
   });
 
   test('🔒 HER KALEMİN POZİTİF KONTROLÜ VAR — kontrolsüz kalem eklenemez', () {
@@ -73,10 +86,14 @@ void main() {
         missing.add(id);
       }
     }
-    expect(missing, isEmpty,
-        reason: 'şu kalemlerin POZİTİF KONTROLÜ yazılmamış: $missing — '
-            'kontrolsüz bir kalemin ürettiği her "sıfır" doğrulanmamıştır, '
-            've bu belge tam da onu önlemek için var');
+    expect(
+      missing,
+      isEmpty,
+      reason:
+          'şu kalemlerin POZİTİF KONTROLÜ yazılmamış: $missing — '
+          'kontrolsüz bir kalemin ürettiği her "sıfır" doğrulanmamıştır, '
+          've bu belge tam da onu önlemek için var',
+    );
   });
 
   test('🔒 HER KALEM ÜÇ SINIFTAN BİRİNE ATANMIŞ', () {
@@ -86,10 +103,14 @@ void main() {
       final String cls = r[5];
       if (!known.any((String k) => cls.contains(k))) bad.add('${r[0]}: $cls');
     }
-    expect(bad, isEmpty,
-        reason: 'sınıfı tanınmayan kalem(ler): $bad — sınıflandırma '
-            'şeması hat-yereli/çekirdek/kurucu; sınıfsız bir kalem '
-            'kimin işi olduğu bilinmeden kuyrukta bekler');
+    expect(
+      bad,
+      isEmpty,
+      reason:
+          'sınıfı tanınmayan kalem(ler): $bad — sınıflandırma '
+          'şeması hat-yereli/çekirdek/kurucu; sınıfsız bir kalem '
+          'kimin işi olduğu bilinmeden kuyrukta bekler',
+    );
   });
 
   test('🔒 ŞABLON KAYNAKLI KALEMLER ADIYLA DURUYOR', () {
@@ -104,13 +125,21 @@ void main() {
       'izin metni',
       'targetSdk',
     ]) {
-      expect(src, contains(item),
-          reason: '"$item" şablon kaynaklı bir denetim kalemi ve belgeden '
-              'düşmüş — şablon satırları ayrı kalem olmazsa görünmez olur');
+      expect(
+        src,
+        contains(item),
+        reason:
+            '"$item" şablon kaynaklı bir denetim kalemi ve belgeden '
+            'düşmüş — şablon satırları ayrı kalem olmazsa görünmez olur',
+      );
     }
     // Ve yöntemin kendi sınırı yazılı kalmalı: aile taraması adımı.
-    expect(src.toLowerCase(), contains('aile'),
-        reason: 'yöntemin son adımı (aile çapraz-taraması) düşmüş — '
-            'hat-içi denetim şablon kusurlarını YAPISAL olarak göremez');
+    expect(
+      src.toLowerCase(),
+      contains('aile'),
+      reason:
+          'yöntemin son adımı (aile çapraz-taraması) düşmüş — '
+          'hat-içi denetim şablon kusurlarını YAPISAL olarak göremez',
+    );
   });
 }

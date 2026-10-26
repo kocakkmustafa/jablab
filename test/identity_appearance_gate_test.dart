@@ -178,7 +178,9 @@ class _Harness {
         // Core R1+: the account page checks membership on open while sales
         // are open. Synthetic non-member answer.
         if (request.method == 'POST' &&
-            request.url.path.endsWith('/functions/v1/motion-check-membership')) {
+            request.url.path.endsWith(
+              '/functions/v1/motion-check-membership',
+            )) {
           h.membershipReads++;
           return http.Response(
             jsonEncode({

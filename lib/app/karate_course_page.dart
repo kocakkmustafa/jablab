@@ -750,8 +750,11 @@ class _KarateCoursePageState extends State<KarateCoursePage>
                             : 'Oku ve kendi yanıtını yaz',
                       ),
                     ),
-                    trailing: _locked(course.lessons.indexOf(lesson)) ? const LessonLockBadge() : null,
-                    onTap: () => _openGated(lesson, course.lessons.indexOf(lesson)),
+                    trailing: _locked(course.lessons.indexOf(lesson))
+                        ? const LessonLockBadge()
+                        : null,
+                    onTap: () =>
+                        _openGated(lesson, course.lessons.indexOf(lesson)),
                   ),
                 Text(
                   _label(context, 'Teaching references', 'Öğretim kaynakları'),

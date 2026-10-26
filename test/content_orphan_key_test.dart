@@ -49,8 +49,9 @@ import 'package:flutter_test/flutter_test.dart';
 ///   **kusurun adı.**
 /// * **Doğruluk**: bir anahtar okunuyor diye içeriği doğru değildir.
 void main() {
-  final String parserSrc =
-      File('packages/jablab_engine/lib/src/library.dart').readAsStringSync();
+  final String parserSrc = File(
+    'packages/jablab_engine/lib/src/library.dart',
+  ).readAsStringSync();
 
   /// Bir `fromJson` gövdesinden okunan JSON anahtarlarını TÜRET.
   Set<String> parsedKeys(String cls) {
@@ -60,12 +61,15 @@ void main() {
         .map((String t) => parserSrc.indexOf(t, start + 1))
         .where((int i) => i > 0)
         .toList();
-    final String body =
-        parserSrc.substring(start, after.isEmpty ? parserSrc.length : after.reduce((int a, int b) => a < b ? a : b));
-    return RegExp(r"""[jh]\['([^']+)'\]""")
-        .allMatches(body)
-        .map((RegExpMatch m) => m.group(1)!)
-        .toSet();
+    final String body = parserSrc.substring(
+      start,
+      after.isEmpty
+          ? parserSrc.length
+          : after.reduce((int a, int b) => a < b ? a : b),
+    );
+    return RegExp(
+      r"""[jh]\['([^']+)'\]""",
+    ).allMatches(body).map((RegExpMatch m) => m.group(1)!).toSet();
   }
 
   /// PARSER DIŞI OKUYUCULAR (J-145 düzeltmesi).
@@ -87,14 +91,21 @@ void main() {
     // anahtarın bir cümlede anılması okuma DEĞİLDİR (aile dersi #6).
     final RegExp lit = RegExp(r'''\[\s*['"](\w+)['"]\s*\]''');
     for (final String dir in <String>[
-      'test', 'lib', '../../packages/jablab_engine/test',
+      'test',
+      'lib',
+      '../../packages/jablab_engine/test',
       '../../packages/jablab_engine/lib',
     ]) {
-      final Directory d = Directory(dir.startsWith('..')
-          ? dir.replaceFirst('../../', 'packages/jablab_engine/')
-              .replaceFirst('packages/jablab_engine/packages/jablab_engine/',
-                  'packages/jablab_engine/')
-          : dir);
+      final Directory d = Directory(
+        dir.startsWith('..')
+            ? dir
+                  .replaceFirst('../../', 'packages/jablab_engine/')
+                  .replaceFirst(
+                    'packages/jablab_engine/packages/jablab_engine/',
+                    'packages/jablab_engine/',
+                  )
+            : dir,
+      );
       if (!d.existsSync()) continue;
       for (final FileSystemEntity f in d.listSync(recursive: true)) {
         if (f is! File || !f.path.endsWith('.dart')) continue;
@@ -110,15 +121,21 @@ void main() {
   /// desenle değil ADLA veriliyor — desen muafiyeti, bir sonraki öksüz
   /// anahtarı da sessizce yutardı.
   const Map<String, String> rootMetadata = <String, String>{
-    'schemaVersion': 'şema sürümü — insan okuru için, kod sürüm ayrımı yapmıyor',
+    'schemaVersion':
+        'şema sürümü — insan okuru için, kod sürüm ayrımı yapmıyor',
     'language': 'dosya dili — tek dil var, seçim yapan kod yok',
   };
 
   test('library.json — parser\'ın okumadığı anahtar YOK', () {
     final Map<String, Set<String>> known = <String, Set<String>>{
       for (final String c in <String>[
-        'Library', 'Discipline', 'Course', 'Lesson',
-        'RoundPlan', 'IntervalPlan', 'ExcludedItem',
+        'Library',
+        'Discipline',
+        'Course',
+        'Lesson',
+        'RoundPlan',
+        'IntervalPlan',
+        'ExcludedItem',
       ])
         c: parsedKeys(c),
     };
@@ -127,18 +144,28 @@ void main() {
     // gövdesi yanlış kesilip TEK anahtar bile bulunmazsa maskelenmeyi
     // fark etmemek. O yüzden her set doluluk kanıtı istiyor.
     known.forEach((String c, Set<String> ks) {
-      expect(ks, isNotEmpty, reason: '$c için anahtar türetilemedi — '
-          'gövde ayrıştırması kırılmış olabilir');
+      expect(
+        ks,
+        isNotEmpty,
+        reason:
+            '$c için anahtar türetilemedi — '
+            'gövde ayrıştırması kırılmış olabilir',
+      );
     });
 
     final Set<String> otherReaders = readersOutsideParser();
-    expect(otherReaders, isNotEmpty,
-        reason: 'parser-dışı okuyucu taraması BOŞ döndü — tarama girdisini '
-            'bulamamış olabilir ve kapı fazla sıkı öter');
+    expect(
+      otherReaders,
+      isNotEmpty,
+      reason:
+          'parser-dışı okuyucu taraması BOŞ döndü — tarama girdisini '
+          'bulamamış olabilir ve kapı fazla sıkı öter',
+    );
 
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
+    final Map<String, dynamic> lib =
+        (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
 
     final List<String> orphans = <String>[];
     int visited = 0;
@@ -155,7 +182,9 @@ void main() {
         if (otherReaders.contains(key)) continue;
         if (!known[cls]!.contains(key)) {
           final String v = jsonEncode(node[key]);
-          orphans.add('$path → $cls.$key = ${v.length > 90 ? '${v.substring(0, 90)}…' : v}');
+          orphans.add(
+            '$path → $cls.$key = ${v.length > 90 ? '${v.substring(0, 90)}…' : v}',
+          );
         }
       }
     }
@@ -165,23 +194,34 @@ void main() {
       final Map<dynamic, dynamic> disc = d as Map<dynamic, dynamic>;
       final String dp = '/${disc['id']}';
       check(disc, 'Discipline', dp);
-      for (final dynamic c in (disc['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+      for (final dynamic c
+          in (disc['courses'] as List<dynamic>? ?? const <dynamic>[])) {
         final Map<dynamic, dynamic> course = c as Map<dynamic, dynamic>;
         check(course, 'Course', '$dp/${course['id']}');
-        for (final dynamic l in (course['lessons'] as List<dynamic>? ?? const <dynamic>[])) {
+        for (final dynamic l
+            in (course['lessons'] as List<dynamic>? ?? const <dynamic>[])) {
           final Map<dynamic, dynamic> lesson = l as Map<dynamic, dynamic>;
           final String lp = '$dp/${lesson['id']}';
           check(lesson, 'Lesson', lp);
           if (lesson['roundPlan'] != null) {
-            check(lesson['roundPlan'] as Map<dynamic, dynamic>, 'RoundPlan', '$lp/roundPlan');
+            check(
+              lesson['roundPlan'] as Map<dynamic, dynamic>,
+              'RoundPlan',
+              '$lp/roundPlan',
+            );
           }
           if (lesson['intervalPlan'] != null) {
-            check(lesson['intervalPlan'] as Map<dynamic, dynamic>, 'IntervalPlan', '$lp/intervalPlan');
+            check(
+              lesson['intervalPlan'] as Map<dynamic, dynamic>,
+              'IntervalPlan',
+              '$lp/intervalPlan',
+            );
           }
         }
       }
     }
-    for (final dynamic x in ((lib['whyNotIncluded'] as Map)['items'] as List<dynamic>)) {
+    for (final dynamic x
+        in ((lib['whyNotIncluded'] as Map)['items'] as List<dynamic>)) {
       final Map<dynamic, dynamic> item = x as Map<dynamic, dynamic>;
       check(item, 'ExcludedItem', '/whyNotIncluded/${item['id']}');
     }
@@ -189,14 +229,22 @@ void main() {
     // İKİNCİ VAKUM KAPISI: yürüyüş hiçbir düğüme uğramazsa liste boş kalır
     // ve kapı YEŞİL öter. Aile dersi #4 — yapıyı kaldırmak yokluk iddiasını
     // bedavaya doğru yapar.
-    expect(visited, greaterThan(20),
-        reason: 'yürüyüş $visited düğüme uğradı — ağaç şekli değişmiş olabilir '
-            've kapı hiçbir şeye bakmadan geçiyor olabilir');
+    expect(
+      visited,
+      greaterThan(20),
+      reason:
+          'yürüyüş $visited düğüme uğradı — ağaç şekli değişmiş olabilir '
+          've kapı hiçbir şeye bakmadan geçiyor olabilir',
+    );
 
-    expect(orphans, isEmpty,
-        reason: 'İÇERİK YAZILDI, ALANI YOK — parser bu anahtarları sessizce '
-            'düşürüyor; yazılan metin hiçbir yüzeye ULAŞMIYOR ve hiçbir '
-            'dürüstlük turu oraya BAKMIYOR (J-129):\n  ${orphans.join('\n  ')}');
+    expect(
+      orphans,
+      isEmpty,
+      reason:
+          'İÇERİK YAZILDI, ALANI YOK — parser bu anahtarları sessizce '
+          'düşürüyor; yazılan metin hiçbir yüzeye ULAŞMIYOR ve hiçbir '
+          'dürüstlük turu oraya BAKMIYOR (J-129):\n  ${orphans.join('\n  ')}',
+    );
   });
 
   test('NEGATİF İKİZ — bilinen bir öksüz anahtar geri gelirse kapı öter', () {
@@ -205,74 +253,100 @@ void main() {
     // Bunu ölçmek için parser'ın onları GERÇEKTEN tanımadığını doğruluyoruz —
     // yoksa "kapı öter" iddiası kanıtsız kalırdı.
     for (final String dead in <String>['blurb', 'lockedBy']) {
-      expect(lessonKeys, isNot(contains(dead)),
-          reason: 'Lesson artık `$dead` okuyorsa J-129\'un gerekçesi düştü: '
-              'ya alanı bir yüzeye bağla ya bu ikizi güncelle');
+      expect(
+        lessonKeys,
+        isNot(contains(dead)),
+        reason:
+            'Lesson artık `$dead` okuyorsa J-129\'un gerekçesi düştü: '
+            'ya alanı bir yüzeye bağla ya bu ikizi güncelle',
+      );
     }
-    expect(parsedKeys('Discipline'), isNot(contains('comingSoonInThisDiscipline')));
+    expect(
+      parsedKeys('Discipline'),
+      isNot(contains('comingSoonInThisDiscipline')),
+    );
     // Ve pozitif taraf: gerçekten okunan bir alan yanlışlıkla öksüz
     // sayılmamalı — `blurb` DISIPLIN düzeyinde okunuyor ve ekranda.
     expect(parsedKeys('Discipline'), contains('blurb'));
   });
 
-  test('TERS YÖN — parser okuyor ama içerikte HİÇ geçmeyen alan YOK (J-166)',
-      () {
-    // J-130'da ölçtüm (**sıfır ölü alan**) ve kapıya bağlamadım: *"bir alan
-    // içerikten önce eklenebilir"* dedim. Doğru-pozitif sınaması bunu
-    // yanlışladı — deponun sözleşmesi **içerik-önce** ve `library.dart`
-    // alan eklemenin **J-044'ün 17 ölü alanını** tekrarlayacağını yazıyor.
-    //
-    // ⚠️ NE ÖLÇMÜYOR: içerikte geçip de hiç KULLANILMAYAN alanı (o öksüz
-    // yön, yukarıdaki test) · alanın DOĞRU okunduğunu.
-    final Map<String, Set<String>> known = <String, Set<String>>{
-      for (final String c in <String>[
-        'Course', 'Lesson', 'RoundPlan', 'IntervalPlan', 'ExcludedItem',
-      ])
-        c: parsedKeys(c),
-    };
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
-    final Map<String, Set<String>> seen = <String, Set<String>>{};
-    void note(String cls, Map<dynamic, dynamic> node) {
-      seen.putIfAbsent(cls, () => <String>{}).addAll(node.keys
-          .cast<String>()
-          .where((String k) => !k.startsWith(r'$')));
-    }
+  test(
+    'TERS YÖN — parser okuyor ama içerikte HİÇ geçmeyen alan YOK (J-166)',
+    () {
+      // J-130'da ölçtüm (**sıfır ölü alan**) ve kapıya bağlamadım: *"bir alan
+      // içerikten önce eklenebilir"* dedim. Doğru-pozitif sınaması bunu
+      // yanlışladı — deponun sözleşmesi **içerik-önce** ve `library.dart`
+      // alan eklemenin **J-044'ün 17 ölü alanını** tekrarlayacağını yazıyor.
+      //
+      // ⚠️ NE ÖLÇMÜYOR: içerikte geçip de hiç KULLANILMAYAN alanı (o öksüz
+      // yön, yukarıdaki test) · alanın DOĞRU okunduğunu.
+      final Map<String, Set<String>> known = <String, Set<String>>{
+        for (final String c in <String>[
+          'Course',
+          'Lesson',
+          'RoundPlan',
+          'IntervalPlan',
+          'ExcludedItem',
+        ])
+          c: parsedKeys(c),
+      };
+      final Map<String, dynamic> lib =
+          (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                  as Map)
+              .cast<String, dynamic>();
+      final Map<String, Set<String>> seen = <String, Set<String>>{};
+      void note(String cls, Map<dynamic, dynamic> node) {
+        seen
+            .putIfAbsent(cls, () => <String>{})
+            .addAll(
+              node.keys.cast<String>().where((String k) => !k.startsWith(r'$')),
+            );
+      }
 
-    for (final dynamic d in lib['disciplines'] as List<dynamic>) {
-      for (final dynamic c
-          in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
-        note('Course', c as Map<dynamic, dynamic>);
-        for (final dynamic l
-            in (c['lessons'] as List<dynamic>? ?? const <dynamic>[])) {
-          final Map<dynamic, dynamic> lesson = l as Map<dynamic, dynamic>;
-          note('Lesson', lesson);
-          if (lesson['roundPlan'] != null) {
-            note('RoundPlan', lesson['roundPlan'] as Map<dynamic, dynamic>);
-          }
-          if (lesson['intervalPlan'] != null) {
-            note('IntervalPlan', lesson['intervalPlan'] as Map<dynamic, dynamic>);
+      for (final dynamic d in lib['disciplines'] as List<dynamic>) {
+        for (final dynamic c
+            in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
+          note('Course', c as Map<dynamic, dynamic>);
+          for (final dynamic l
+              in (c['lessons'] as List<dynamic>? ?? const <dynamic>[])) {
+            final Map<dynamic, dynamic> lesson = l as Map<dynamic, dynamic>;
+            note('Lesson', lesson);
+            if (lesson['roundPlan'] != null) {
+              note('RoundPlan', lesson['roundPlan'] as Map<dynamic, dynamic>);
+            }
+            if (lesson['intervalPlan'] != null) {
+              note(
+                'IntervalPlan',
+                lesson['intervalPlan'] as Map<dynamic, dynamic>,
+              );
+            }
           }
         }
       }
-    }
-    for (final dynamic x
-        in ((lib['whyNotIncluded'] as Map)['items'] as List<dynamic>)) {
-      note('ExcludedItem', x as Map<dynamic, dynamic>);
-    }
-
-    expect(seen['Lesson'], isNotEmpty,
-        reason: 'içerik taraması boş — kapı girdisini bulamamış');
-
-    final List<String> dead = <String>[];
-    known.forEach((String cls, Set<String> keys) {
-      for (final String k in keys) {
-        if (!(seen[cls] ?? const <String>{}).contains(k)) dead.add('$cls.$k');
+      for (final dynamic x
+          in ((lib['whyNotIncluded'] as Map)['items'] as List<dynamic>)) {
+        note('ExcludedItem', x as Map<dynamic, dynamic>);
       }
-    });
-    expect(dead, isEmpty,
-        reason: 'ÖLÜ ALAN: parser okuyor ama içerikte HİÇ geçmiyor — '
-            'J-044\'ün 17 ölü alanının sınıfı: $dead');
-  });
+
+      expect(
+        seen['Lesson'],
+        isNotEmpty,
+        reason: 'içerik taraması boş — kapı girdisini bulamamış',
+      );
+
+      final List<String> dead = <String>[];
+      known.forEach((String cls, Set<String> keys) {
+        for (final String k in keys) {
+          if (!(seen[cls] ?? const <String>{}).contains(k)) dead.add('$cls.$k');
+        }
+      });
+      expect(
+        dead,
+        isEmpty,
+        reason:
+            'ÖLÜ ALAN: parser okuyor ama içerikte HİÇ geçmiyor — '
+            'J-044\'ün 17 ölü alanının sınıfı: $dead',
+      );
+    },
+  );
 }

@@ -28,11 +28,11 @@ void main() {
     await t.pumpAndSettle();
   }
 
-  testWidgets('bu bir ÜRÜN ekranı olmadığını KENDİSİ söylüyor',
-      (WidgetTester t) async {
+  testWidgets('bu bir ÜRÜN ekranı olmadığını KENDİSİ söylüyor', (
+    WidgetTester t,
+  ) async {
     await pump(t);
-    final Text d =
-        t.widget<Text>(find.byKey(const Key('harness-disclaimer')));
+    final Text d = t.widget<Text>(find.byKey(const Key('harness-disclaimer')));
     // Üç iddia birden: geliştirici aracı · ön-izleme YOK · hüküm YOK.
     expect(d.data, contains('not a feature'));
     expect(d.data, contains('no preview'));
@@ -69,13 +69,17 @@ void main() {
       'clockDomain', // §7.6
       'no-person passes',
     ]) {
-      expect(find.byKey(Key('metric-$k')), findsOneWidget,
-          reason: '$k göstergesi yok — §7 kalemi ölçülemez');
+      expect(
+        find.byKey(Key('metric-$k')),
+        findsOneWidget,
+        reason: '$k göstergesi yok — §7 kalemi ölçülemez',
+      );
     }
   });
 
-  testWidgets('MODEL PİNİ ekranda ve zarf kimliğiyle kıyaslanabilir',
-      (WidgetTester t) async {
+  testWidgets('MODEL PİNİ ekranda ve zarf kimliğiyle kıyaslanabilir', (
+    WidgetTester t,
+  ) async {
     await pump(t);
     final Text pin = t.widget<Text>(find.byKey(const Key('harness-model-pin')));
     expect(pin.data, contains(PoseModelPin.modelId));
@@ -87,16 +91,19 @@ void main() {
 
   testWidgets('başlamamışken Stop KAPALI, Start açık', (WidgetTester t) async {
     await pump(t);
-    final OutlinedButton stop =
-        t.widget<OutlinedButton>(find.byKey(const Key('harness-stop')));
+    final OutlinedButton stop = t.widget<OutlinedButton>(
+      find.byKey(const Key('harness-stop')),
+    );
     expect(stop.onPressed, isNull);
-    final FilledButton start =
-        t.widget<FilledButton>(find.byKey(const Key('harness-start')));
+    final FilledButton start = t.widget<FilledButton>(
+      find.byKey(const Key('harness-start')),
+    );
     expect(start.onPressed, isNotNull);
   });
 
-  testWidgets('ÖN-İZLEME YOK — §7.8 açık kalemi gizlenmiyor',
-      (WidgetTester t) async {
+  testWidgets('ÖN-İZLEME YOK — §7.8 açık kalemi gizlenmiyor', (
+    WidgetTester t,
+  ) async {
     await pump(t);
     // Harness bir kamera görüntüsü ÇİZMİYOR. Çizse, §7.8'in blokladığı
     // "kullanıcı kendini görüyor" iddiasını dev ekranından sızdırırdı.
@@ -108,8 +115,12 @@ void main() {
     // `kDebugMode` testte true; burada sınanan şey bayrağın VARLIĞI ve
     // ekranın ona bağlı olması. Release'de girişin render edilmemesi
     // `jablab_app`taki `if (CameraHarnessScreen.isAvailable)` ile sağlanıyor.
-    expect(CameraHarnessScreen.isAvailable, isTrue,
-        reason: 'debug testte true olmalı — bayrak bağlı değilse '
-            'release derlemesinde de açık kalır');
+    expect(
+      CameraHarnessScreen.isAvailable,
+      isTrue,
+      reason:
+          'debug testte true olmalı — bayrak bağlı değilse '
+          'release derlemesinde de açık kalır',
+    );
   });
 }

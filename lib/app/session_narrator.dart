@@ -147,12 +147,14 @@ class SessionNarrator {
 /// cümleyi arka arkaya iki kez verebilir ve tam da kaçınmak istediğimiz şey
 /// bu. Tekrar körlüğü pratikte susmaya eşdeğerdir.
 class CueBook {
-  CueBook(this._lines, {Map<String, List<String>> byKey = const <String, List<String>>{}})
-      : _byKey = byKey;
+  CueBook(
+    this._lines, {
+    Map<String, List<String>> byKey = const <String, List<String>>{},
+  }) : _byKey = byKey;
 
   factory CueBook.fromJson(String source, Map<NarrationEvent, String> mapping) {
-    final Map<String, dynamic> doc =
-        (jsonDecode(source) as Map).cast<String, dynamic>();
+    final Map<String, dynamic> doc = (jsonDecode(source) as Map)
+        .cast<String, dynamic>();
     final Map<String, List<String>> flat = <String, List<String>>{};
     for (final MapEntry<String, dynamic> g in doc.entries) {
       if (g.key.startsWith(r'$') || g.value is! Map) continue;
@@ -190,8 +192,11 @@ class CueBook {
   String? sayKey(String key) {
     final List<String>? lines = _byKey[key];
     if (lines == null || lines.isEmpty) return null;
-    final int i = _keyCursor.update(key, (int v) => (v + 1) % lines.length,
-        ifAbsent: () => 0);
+    final int i = _keyCursor.update(
+      key,
+      (int v) => (v + 1) % lines.length,
+      ifAbsent: () => 0,
+    );
     return lines[i];
   }
 
@@ -203,8 +208,11 @@ class CueBook {
   String? say(NarrationEvent e, {Map<String, Object>? vars}) {
     final List<String>? lines = _lines[e];
     if (lines == null || lines.isEmpty) return null;
-    final int i = _cursor.update(e, (int v) => (v + 1) % lines.length,
-        ifAbsent: () => 0);
+    final int i = _cursor.update(
+      e,
+      (int v) => (v + 1) % lines.length,
+      ifAbsent: () => 0,
+    );
     String s = lines[i];
     if (vars != null) {
       for (final MapEntry<String, Object> v in vars.entries) {

@@ -45,9 +45,17 @@ void main() {
               .last;
           // Üretilmiş/platform ağaçları taranmaz: içlerinde pubspec
           // bulunabilir ve hiçbiri ayrı bir KOŞUM değildir.
-          if (<String>['build', '.dart_tool', 'ios', 'android', 'macos',
-                  'windows', 'linux', 'web', '.git']
-              .contains(name)) {
+          if (<String>[
+            'build',
+            '.dart_tool',
+            'ios',
+            'android',
+            'macos',
+            'windows',
+            'linux',
+            'web',
+            '.git',
+          ].contains(name)) {
             continue;
           }
           walk(f);
@@ -60,24 +68,34 @@ void main() {
     walk(Directory('.'));
     packages.sort();
 
-    expect(packages.length, 2,
-        reason: 'Dart paketi sayısı ${packages.length} (beklenen 2):\n'
-            '  ${packages.join('\n  ')}\n\n'
-            'ÜÇÜNCÜ BİR KOŞUM EKLENDİYSE: "testler yeşil" cümlesinin '
-            'kapsamı değişti. Yapılacak iki şey var — (a) yeni koşumu her '
-            'raporda KOŞ (b) bu testi ve `docs/design/KAPI-ENVANTERI.md` '
-            'koşum listesini güncelle. Bu gece bu cümlenin eksikliği '
-            'motor süitinin saatlerce kırmızı kalmasına yol açtı (J-145).');
+    expect(
+      packages.length,
+      2,
+      reason:
+          'Dart paketi sayısı ${packages.length} (beklenen 2):\n'
+          '  ${packages.join('\n  ')}\n\n'
+          'ÜÇÜNCÜ BİR KOŞUM EKLENDİYSE: "testler yeşil" cümlesinin '
+          'kapsamı değişti. Yapılacak iki şey var — (a) yeni koşumu her '
+          'raporda KOŞ (b) bu testi ve `docs/design/KAPI-ENVANTERI.md` '
+          'koşum listesini güncelle. Bu gece bu cümlenin eksikliği '
+          'motor süitinin saatlerce kırmızı kalmasına yol açtı (J-145).',
+    );
 
     // Kimlik de ölçülüyor: sayı doğru olup paketlerin YERİ değişmiş
     // olabilir ve o zaman koşum komutları sessizce yanlış yere bakar.
-    expect(packages.any((String p) => p.endsWith('./pubspec.yaml')), isTrue,
-        reason: 'app paketi bulunamadı');
     expect(
-        packages.any(
-            (String p) => p.contains('packages/jablab_engine/pubspec.yaml')),
-        isTrue,
-        reason: 'motor paketi bulunamadı — yeri değiştiyse `dart test` '
-            'komutu artık yanlış dizine bakıyor olabilir');
+      packages.any((String p) => p.endsWith('./pubspec.yaml')),
+      isTrue,
+      reason: 'app paketi bulunamadı',
+    );
+    expect(
+      packages.any(
+        (String p) => p.contains('packages/jablab_engine/pubspec.yaml'),
+      ),
+      isTrue,
+      reason:
+          'motor paketi bulunamadı — yeri değiştiyse `dart test` '
+          'komutu artık yanlış dizine bakıyor olabilir',
+    );
   });
 }

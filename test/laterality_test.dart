@@ -42,15 +42,36 @@ import 'package:flutter_test/flutter_test.dart';
 ///   asıl risk çünkü replikler orada yazılıyor.
 void main() {
   const List<String> bodyWords = <String>[
-    'hand', 'hands', 'foot', 'feet', 'arm', 'arms', 'leg', 'legs',
-    'shoulder', 'shoulders', 'hip', 'hips', 'elbow', 'elbows',
-    'knee', 'knees', 'fist', 'side', 'eye', 'ear', 'jab', 'cross', 'hook',
+    'hand',
+    'hands',
+    'foot',
+    'feet',
+    'arm',
+    'arms',
+    'leg',
+    'legs',
+    'shoulder',
+    'shoulders',
+    'hip',
+    'hips',
+    'elbow',
+    'elbows',
+    'knee',
+    'knees',
+    'fist',
+    'side',
+    'eye',
+    'ear',
+    'jab',
+    'cross',
+    'hook',
   ];
   // `left`/`right` ile vücut sözcüğü arasında en fazla bir kelime
   // (`the`, `your`) — "right hand", "right rear hand", "left elbow".
   final RegExp laterality = RegExp(
-      r'\b(left|right)\b(\s+\w+)?\s+(' + bodyWords.join('|') + r')\b',
-      caseSensitive: false);
+    r'\b(left|right)\b(\s+\w+)?\s+(' + bodyWords.join('|') + r')\b',
+    caseSensitive: false,
+  );
 
   test('içerik dosyalarında TARAF atfı yok — lead/rear kullanılıyor', () {
     final List<String> hits = <String>[];
@@ -84,15 +105,23 @@ void main() {
     }
 
     // VAKUM KAPISI: hiç dize taranmadıysa kural boşa döner.
-    expect(scanned, greaterThan(100),
-        reason: 'yalnız $scanned dize tarandı — tarama girdisini bulamamış '
-            'olabilir ve kapı hiçbir şeye bakmıyor');
+    expect(
+      scanned,
+      greaterThan(100),
+      reason:
+          'yalnız $scanned dize tarandı — tarama girdisini bulamamış '
+          'olabilir ve kapı hiçbir şeye bakmıyor',
+    );
 
-    expect(hits, isEmpty,
-        reason: 'TARAF ATFI: `left`/`right` bir vücut tarafını gösteriyor. '
-            'Southpaw duruşta arka el SOL eldir — bu bir üslup değil '
-            'DOĞRULUK hatası. `lead`/`rear` duruşa göre tanımlıdır ve her '
-            'iki duruşta da doğrudur (J-142): ${hits.join(" · ")}');
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'TARAF ATFI: `left`/`right` bir vücut tarafını gösteriyor. '
+          'Southpaw duruşta arka el SOL eldir — bu bir üslup değil '
+          'DOĞRULUK hatası. `lead`/`rear` duruşa göre tanımlıdır ve her '
+          'iki duruşta da doğrudur (J-142): ${hits.join(" · ")}',
+    );
   });
 
   test('NEGATİF İKİZ — masum `left`/`right` kullanımları hâlâ geçiyor', () {
@@ -107,9 +136,13 @@ void main() {
       'we cannot tell you whether it was the right move',
       'we simply cannot open the file right now',
     ]) {
-      expect(laterality.hasMatch(innocent), isFalse,
-          reason: 'kapı masum bir cümleyi yakaladı — fazla genişlemiş: '
-              '"$innocent"');
+      expect(
+        laterality.hasMatch(innocent),
+        isFalse,
+        reason:
+            'kapı masum bir cümleyi yakaladı — fazla genişlemiş: '
+            '"$innocent"',
+      );
     }
     // Ve gerçekten ihlal olanı YAKALIYOR (kapının çalıştığının kanıtı,
     // yoksa yukarıdaki "hepsi geçti" sonucu bir şey kanıtlamaz).
@@ -118,8 +151,11 @@ void main() {
       'Keep your left elbow in.',
       'Right order, right hand, every time.',
     ]) {
-      expect(laterality.hasMatch(violation), isTrue,
-          reason: 'kapı gerçek bir ihlali kaçırıyor: "$violation"');
+      expect(
+        laterality.hasMatch(violation),
+        isTrue,
+        reason: 'kapı gerçek bir ihlali kaçırıyor: "$violation"',
+      );
     }
   });
 }

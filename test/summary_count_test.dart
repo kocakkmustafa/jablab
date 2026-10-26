@@ -32,27 +32,37 @@ import 'app_pump.dart';
 ///   `live_jab_path_test`in işi.
 /// * Ekrandaki **yerleşimi**.
 void main() {
-  Future<void> pump(WidgetTester t, int? count) => t.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: SessionSummaryView(
-            eventCount: count,
-            bands: const <String, String>{'Stance': '—'},
-            coachedNotScored: const <String>['Rear guard hand position'],
-          ),
+  Future<void> pump(WidgetTester t, int? count) => t.pumpWidget(
+    MaterialApp(
+      home: Scaffold(
+        body: SessionSummaryView(
+          eventCount: count,
+          bands: const <String, String>{'Stance': '—'},
+          coachedNotScored: const <String>['Rear guard hand position'],
         ),
-      ));
+      ),
+    ),
+  );
 
   testWidgets('analiz KOŞMADIYSA sayı da cümle de YOK', (WidgetTester t) async {
     await pump(t, null);
-    expect(find.byKey(const Key('summary-count')), findsNothing,
-        reason: 'analiz koşmadı ama ekranda sayı var — çıplak sıfır '
-            '"hiç yapmadın" diye okunur (J-092/J-096/J-156)');
-    expect(find.text('recorded this session'), findsNothing,
-        reason: 'sayı gizlendi ama başlığı kaldı — boş bir iddia');
+    expect(
+      find.byKey(const Key('summary-count')),
+      findsNothing,
+      reason:
+          'analiz koşmadı ama ekranda sayı var — çıplak sıfır '
+          '"hiç yapmadın" diye okunur (J-092/J-096/J-156)',
+    );
+    expect(
+      find.text('recorded this session'),
+      findsNothing,
+      reason: 'sayı gizlendi ama başlığı kaldı — boş bir iddia',
+    );
   });
 
-  testWidgets('POZİTİF İKİZ — analiz KOŞTUYSA sayı GÖSTERİLİR (0 dahil)',
-      (WidgetTester t) async {
+  testWidgets('POZİTİF İKİZ — analiz KOŞTUYSA sayı GÖSTERİLİR (0 dahil)', (
+    WidgetTester t,
+  ) async {
     // İkiz olmadan kapı, sayının HER ZAMAN gizlenmesini de geçerli sayardı:
     // hiç sayı yok, dolayısıyla hiç yanlış sayı yok. Kapı bir iddiayı değil
     // **bir sessizliği** korurdu.
@@ -65,13 +75,18 @@ void main() {
 
     await pump(t, 0);
     await t.pumpAndSettle();
-    expect(find.byKey(const Key('summary-count')), findsOneWidget,
-        reason: 'ölçülmüş sıfır GİZLENMEMELİ — "ölçtük, hiç yumruk yoktu" '
-            'dürüst bir sonuçtur');
+    expect(
+      find.byKey(const Key('summary-count')),
+      findsOneWidget,
+      reason:
+          'ölçülmüş sıfır GİZLENMEMELİ — "ölçtük, hiç yumruk yoktu" '
+          'dürüst bir sonuçtur',
+    );
   });
 
-  testWidgets('⭐ ZİNCİR — kamerasız ders özetinde sayı YOK (J-156)',
-      (WidgetTester t) async {
+  testWidgets('⭐ ZİNCİR — kamerasız ders özetinde sayı YOK (J-156)', (
+    WidgetTester t,
+  ) async {
     // ## Neden widget testi YETMİYOR
     //
     // Yukarıdaki iki test `SessionSummaryView`in SÖZLEŞMESİNİ ölçüyor.
@@ -98,7 +113,8 @@ void main() {
 
     await t.runAsync(() async {
       await t.pumpWidget(
-          const JabLabApp(onboarding: OnboardingStore(seenOverride: true)));
+        const JabLabApp(onboarding: OnboardingStore(seenOverride: true)),
+      );
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
@@ -119,13 +135,20 @@ void main() {
     }
 
     // VAKUM KAPISI: gerçekten ÖZET aşamasında mıyız?
-    expect(find.byKey(const Key('summary-band-Stance')), findsOneWidget,
-        reason: 'özet aşamasına gelinmedi — kapı boşluğa bakıyor olabilir');
+    expect(
+      find.byKey(const Key('summary-band-Stance')),
+      findsOneWidget,
+      reason: 'özet aşamasına gelinmedi — kapı boşluğa bakıyor olabilir',
+    );
 
-    expect(find.byKey(const Key('summary-count')), findsNothing,
-        reason: 'KAMERASIZ derste özet SAYI gösteriyor. Analiz hiç '
-            'koşmadı; çıplak bir sayı burada ölçülmemiş bir olguyu '
-            'ölçülmüş gibi sunar (J-156)');
+    expect(
+      find.byKey(const Key('summary-count')),
+      findsNothing,
+      reason:
+          'KAMERASIZ derste özet SAYI gösteriyor. Analiz hiç '
+          'koşmadı; çıplak bir sayı burada ölçülmemiş bir olguyu '
+          'ölçülmüş gibi sunar (J-156)',
+    );
     expect(find.text('recorded this session'), findsNothing);
   });
 }

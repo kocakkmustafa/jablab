@@ -37,11 +37,12 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final RegExp token = RegExp(r'(?<![\w-])[A-Z]\d{1,2}(?![\w-])');
 
-  test('içerikte sıra jetonu YOK — `wave` dışında, o da RENDER EDİLMİYOR',
-      () {
+  test('içerikte sıra jetonu YOK — `wave` dışında, o da RENDER EDİLMİYOR', () {
     // Muafiyetin ÖLÇÜMÜ: hiçbir canlı widget `waveLabel` çizmiyor.
     final List<String> renders = <String>[];
-    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       if (f.path.contains('shell_candidate')) continue; // donmuş, ayrı borç
       // ⚠️ Kural MEKANİK olarak daraltıldı: ilk hâli `waveLabel`ı ANAN
@@ -58,10 +59,14 @@ void main() {
         if (t.contains('waveLabel')) renders.add('${f.path}: $t');
       }
     }
-    expect(renders, isEmpty,
-        reason: '`wave` yüzeye çıkıyor — muafiyetin ÖNCÜLÜ düştü. `W1`→`W4` '
-            'bir SIRA kurar ve sıra bir VAAT\'tir (J-150): '
-            '${renders.join(" · ")}');
+    expect(
+      renders,
+      isEmpty,
+      reason:
+          '`wave` yüzeye çıkıyor — muafiyetin ÖNCÜLÜ düştü. `W1`→`W4` '
+          'bir SIRA kurar ve sıra bir VAAT\'tir (J-150): '
+          '${renders.join(" · ")}',
+    );
 
     final List<String> hits = <String>[];
     int scanned = 0;
@@ -91,11 +96,18 @@ void main() {
 
       walk(jsonDecode(File('assets/content/$file').readAsStringSync()), '');
     }
-    expect(scanned, greaterThan(100),
-        reason: 'yalnız $scanned dize tarandı — kapı girdisini bulamamış');
-    expect(hits, isEmpty,
-        reason: 'SIRA JETONU kullanıcı metninde: ${hits.join(" · ")}. '
-            'Numaralandırma bir sıra kurar, sıra bir vaattir (J-165)');
+    expect(
+      scanned,
+      greaterThan(100),
+      reason: 'yalnız $scanned dize tarandı — kapı girdisini bulamamış',
+    );
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'SIRA JETONU kullanıcı metninde: ${hits.join(" · ")}. '
+          'Numaralandırma bir sıra kurar, sıra bir vaattir (J-165)',
+    );
   });
 
   test('Dart kullanıcı dizelerinde sıra jetonu YOK', () {
@@ -108,7 +120,9 @@ void main() {
     // bu kurala girmez; map DEĞERİ olan dize yine taranır.
     final RegExp mapKey = RegExp(r"^\s*'((?:[^'\\\n]|\\.)*)'\s*:");
     final List<String> hits = <String>[];
-    for (final FileSystemEntity f in Directory('lib').listSync(recursive: true)) {
+    for (final FileSystemEntity f in Directory(
+      'lib',
+    ).listSync(recursive: true)) {
       if (f is! File || !f.path.endsWith('.dart')) continue;
       if (f.path.contains('shell_candidate')) continue;
       for (final String line in f.readAsStringSync().split('\n')) {
@@ -124,7 +138,10 @@ void main() {
         }
       }
     }
-    expect(hits, isEmpty,
-        reason: 'SIRA JETONU Dart dizesinde: ${hits.join(" · ")}');
+    expect(
+      hits,
+      isEmpty,
+      reason: 'SIRA JETONU Dart dizesinde: ${hits.join(" · ")}',
+    );
   });
 }

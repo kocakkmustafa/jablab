@@ -56,22 +56,29 @@ void main() {
 
     final Map<String, Map<String, dynamic>> lessons =
         <String, Map<String, dynamic>>{};
-    for (final dynamic c in (lib['disciplines'] as List<dynamic>).firstWhere(
-        (dynamic d) => (d as Map)['id'] == 'boxing')['courses'] as List<dynamic>) {
+    for (final dynamic c
+        in (lib['disciplines'] as List<dynamic>).firstWhere(
+              (dynamic d) => (d as Map)['id'] == 'boxing',
+            )['courses']
+            as List<dynamic>) {
       for (final dynamic l in (c as Map)['lessons'] as List<dynamic>) {
         final Map<String, dynamic> m = (l as Map).cast<String, dynamic>();
         lessons['${m['id']}'] = m;
       }
     }
 
-    final Map<String, dynamic> progression =
-        (cur['progression'] as Map).cast<String, dynamic>();
+    final Map<String, dynamic> progression = (cur['progression'] as Map)
+        .cast<String, dynamic>();
 
     // VAKUM MUHAFIZI — müfredat gerçekten okundu mu? Boş bir harita
     // "ulaşılamaz kapı yok" diye okunur ve bu kayıt sessizce ölür.
-    expect(progression.length, greaterThanOrEqualTo(10),
-        reason: 'yalnız ${progression.length} ilerleme kaydı okundu — '
-            'gezinme bozuk, bu kapının sonucu anlamsız');
+    expect(
+      progression.length,
+      greaterThanOrEqualTo(10),
+      reason:
+          'yalnız ${progression.length} ilerleme kaydı okundu — '
+          'gezinme bozuk, bu kapının sonucu anlamsız',
+    );
 
     final List<String> unreachable = <String>[];
     int reachable = 0;
@@ -90,23 +97,31 @@ void main() {
     }
     unreachable.sort();
 
-    expect(reachable, greaterThan(0),
-        reason: 'HİÇBİR kapı ulaşılabilir değil — kamera hattı tamamen '
-            'kapanmış olabilir, ki bu ayrı ve daha büyük bir kusurdur');
+    expect(
+      reachable,
+      greaterThan(0),
+      reason:
+          'HİÇBİR kapı ulaşılabilir değil — kamera hattı tamamen '
+          'kapanmış olabilir, ki bu ayrı ve daha büyük bir kusurdur',
+    );
 
     final List<String> recorded =
         (cur[r'$gateReachabilityUnreachable'] as List<dynamic>).cast<String>()
           ..sort();
 
-    expect(unreachable, recorded,
-        reason: 'ULAŞILAMAZ kapı kümesi DEĞİŞTİ.\n'
-            '  ölçülen : $unreachable\n'
-            '  kayıtlı : $recorded\n\n'
-            'KÜÇÜLDÜYSE: iyi haber — bir ders kamerayı açtı ya da kapısı '
-            'düzeltildi. `\$gateReachabilityUnreachable` listesini ve '
-            '`\$gateReachability` beyanını güncelle.\n'
-            'BÜYÜDÜYSE: yeni bir KAMERASIZ ders yazıldı ve o ders '
-            'ULAŞILAMAZ bir kapı taşıyor — kullanıcı onu asla geçemez. '
-            'J-197: içerik yazmak, kapıların ULAŞILABİLİRLİĞİNİ de sınar.');
+    expect(
+      unreachable,
+      recorded,
+      reason:
+          'ULAŞILAMAZ kapı kümesi DEĞİŞTİ.\n'
+          '  ölçülen : $unreachable\n'
+          '  kayıtlı : $recorded\n\n'
+          'KÜÇÜLDÜYSE: iyi haber — bir ders kamerayı açtı ya da kapısı '
+          'düzeltildi. `\$gateReachabilityUnreachable` listesini ve '
+          '`\$gateReachability` beyanını güncelle.\n'
+          'BÜYÜDÜYSE: yeni bir KAMERASIZ ders yazıldı ve o ders '
+          'ULAŞILAMAZ bir kapı taşıyor — kullanıcı onu asla geçemez. '
+          'J-197: içerik yazmak, kapıların ULAŞILABİLİRLİĞİNİ de sınar.',
+    );
   });
 }

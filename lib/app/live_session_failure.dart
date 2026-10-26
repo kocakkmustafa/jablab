@@ -59,7 +59,8 @@ final class LivePermissionDenied extends LiveSessionFailure {
   final bool permanentlyDenied;
 
   @override
-  String get detail => 'camera permission denied '
+  String get detail =>
+      'camera permission denied '
       '(permanentlyDenied: $permanentlyDenied)';
 }
 

@@ -31,9 +31,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// * Hiç ders adı taşımayan bir hedefin doğru olup olmadığını.
 void main() {
   test('hedef, başka kursun dersini ANMIYOR', () {
-    final Map<String, dynamic> lib = (jsonDecode(
-            File('assets/content/library.json').readAsStringSync()) as Map)
-        .cast<String, dynamic>();
+    final Map<String, dynamic> lib =
+        (jsonDecode(File('assets/content/library.json').readAsStringSync())
+                as Map)
+            .cast<String, dynamic>();
 
     final List<String> offenders = <String>[];
     int goals = 0;
@@ -50,8 +51,7 @@ void main() {
         }
       }
       for (final dynamic c in courses) {
-        final String goal =
-            ((c as Map)['goal'] as String? ?? '').toLowerCase();
+        final String goal = ((c as Map)['goal'] as String? ?? '').toLowerCase();
         if (goal.isEmpty) continue;
         goals++;
         owner.forEach((String name, String home) {
@@ -64,12 +64,19 @@ void main() {
     }
 
     // VAKUM KAPISI: hedef bulunamazsa kural boşa döner.
-    expect(goals, greaterThanOrEqualTo(3),
-        reason: 'kurs hedefi bulunamadı ($goals) — kapı boşluğa bakıyor');
+    expect(
+      goals,
+      greaterThanOrEqualTo(3),
+      reason: 'kurs hedefi bulunamadı ($goals) — kapı boşluğa bakıyor',
+    );
 
-    expect(offenders, isEmpty,
-        reason: 'KURS HEDEFİ BAŞKA KURSUN DERSİNİ ANIYOR: '
-            '${offenders.join(" · ")}. Kullanıcı o konuyu bu kursta arar '
-            've bulamaz (J-164)');
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'KURS HEDEFİ BAŞKA KURSUN DERSİNİ ANIYOR: '
+          '${offenders.join(" · ")}. Kullanıcı o konuyu bu kursta arar '
+          've bulamaz (J-164)',
+    );
   });
 }

@@ -20,16 +20,22 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('main.dart portre kilidini KURUYOR', () {
     final String src = File('lib/main.dart').readAsStringSync();
-    expect(src, contains('setPreferredOrientations'),
-        reason: 'Flutter katmanındaki kilit kaldırılmış');
+    expect(
+      src,
+      contains('setPreferredOrientations'),
+      reason: 'Flutter katmanındaki kilit kaldırılmış',
+    );
     expect(src, contains('DeviceOrientation.portraitUp'));
     for (final String banned in <String>[
       'landscapeLeft',
       'landscapeRight',
       'portraitDown',
     ]) {
-      expect(src, isNot(contains(banned)),
-          reason: '$banned geri eklenmiş — kilit artık kilit değil');
+      expect(
+        src,
+        isNot(contains(banned)),
+        reason: '$banned geri eklenmiş — kilit artık kilit değil',
+      );
     }
   });
 
@@ -43,18 +49,28 @@ void main() {
       'UIInterfaceOrientationLandscapeRight',
       'UIInterfaceOrientationPortraitUpsideDown',
     ]) {
-      expect(plist, isNot(contains(banned)),
-          reason: '$banned Info.plist\'e geri gelmiş');
+      expect(
+        plist,
+        isNot(contains(banned)),
+        reason: '$banned Info.plist\'e geri gelmiş',
+      );
     }
     expect(plist, contains('UIInterfaceOrientationPortrait'));
-    expect(plist, contains('UISupportedInterfaceOrientations~ipad'),
-        reason: 'iPad anahtarı tamamen silinmiş — varsayılan dört yönü açar');
+    expect(
+      plist,
+      contains('UISupportedInterfaceOrientations~ipad'),
+      reason: 'iPad anahtarı tamamen silinmiş — varsayılan dört yönü açar',
+    );
   });
 
   test('Android manifest portreye sabitliyor', () {
-    final String manifest =
-        File('android/app/src/main/AndroidManifest.xml').readAsStringSync();
-    expect(manifest, contains('android:screenOrientation="portrait"'),
-        reason: 'Android tarafı serbest bırakılmış');
+    final String manifest = File(
+      'android/app/src/main/AndroidManifest.xml',
+    ).readAsStringSync();
+    expect(
+      manifest,
+      contains('android:screenOrientation="portrait"'),
+      reason: 'Android tarafı serbest bırakılmış',
+    );
   });
 }

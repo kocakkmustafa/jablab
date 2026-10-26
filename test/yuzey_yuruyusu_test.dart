@@ -125,16 +125,20 @@ void main() {
     // 🔴 SESSİZ BOŞ YÜZEY KAPISI — A3'ün cihazdaki karşılığı.
     // *Bir ekranda okunacak hiçbir şey yoksa, kullanıcı sessizliği
     //  "sorun yok" diye okur.*
-    expect(ss, isNotEmpty,
-        reason: '$ekran: cihazda GÖRÜNEN hiçbir metin yok. Ekrana varılıyor '
-            'ama okunacak bir şey sunmuyor — A3\'ün yasakladığı sessiz boş '
-            'yüzey, ve widget testinde varılabilir görünür.');
+    expect(
+      ss,
+      isNotEmpty,
+      reason:
+          '$ekran: cihazda GÖRÜNEN hiçbir metin yok. Ekrana varılıyor '
+          'ama okunacak bir şey sunmuyor — A3\'ün yasakladığı sessiz boş '
+          'yüzey, ve widget testinde varılabilir görünür.',
+    );
   }
 
-  testWidgets('YÜZEY yürüyüşü — her ekranda ne YAZIYOR',
-      (WidgetTester t) async {
-    final Directory tmp =
-        Directory.systemTemp.createTempSync('jablab_yuzey_');
+  testWidgets('YÜZEY yürüyüşü — her ekranda ne YAZIYOR', (
+    WidgetTester t,
+  ) async {
+    final Directory tmp = Directory.systemTemp.createTempSync('jablab_yuzey_');
     final File flagFile = File('${tmp.path}/seen.flag');
     // ③ SOĞUK AÇILIŞ — bayrak diskte YOK, karşılama gerçekten çıkacak.
     expect(flagFile.existsSync(), isFalse);
@@ -151,8 +155,11 @@ void main() {
     int perde = 0;
     while (find.byType(OnboardingPage).evaluate().isNotEmpty) {
       perde++;
-      expect(perde, lessThanOrEqualTo(8),
-          reason: 'karşılama kapanmıyor — sonsuz perde');
+      expect(
+        perde,
+        lessThanOrEqualTo(8),
+        reason: 'karşılama kapanmıyor — sonsuz perde',
+      );
       kaydet(t, 'KARŞILAMA perde $perde');
       await t.tap(find.byKey(const Key('onboarding-next')));
       await t.pump();
@@ -190,9 +197,13 @@ void main() {
     // Geri dön: yürüyüşün geri kalanı seçim ekranından devam ediyor.
     await t.pageBack();
     await t.pumpAndSettle();
-    expect(find.byType(SelectPage), findsWidgets,
-        reason: 'ayarlardan dönüşte seçim ekranı yok — yürüyüşün geri kalanı '
-            'yanlış yüzeyden devam ederdi');
+    expect(
+      find.byType(SelectPage),
+      findsWidgets,
+      reason:
+          'ayarlardan dönüşte seçim ekranı yok — yürüyüşün geri kalanı '
+          'yanlış yüzeyden devam ederdi',
+    );
 
     // 🪤 `item-boxing` SAYFA DEĞİŞTİRMİYOR — `setState` ile YERİNDE açılıyor
     // (`select_page.dart`); kurs kartları AYNI `SelectPage`'de beliriyor.
@@ -218,8 +229,11 @@ void main() {
     int asama = 0;
     while (find.byKey(const Key('advance-button')).evaluate().isNotEmpty) {
       asama++;
-      expect(asama, lessThanOrEqualTo(10),
-          reason: 'seans kapanmıyor — sonsuz aşama');
+      expect(
+        asama,
+        lessThanOrEqualTo(10),
+        reason: 'seans kapanmıyor — sonsuz aşama',
+      );
       kaydet(t, 'SEANS aşama $asama');
       await t.tap(find.byKey(const Key('advance-button')));
       await t.pumpAndSettle();
@@ -244,10 +258,12 @@ void main() {
     // > ***BİR YÖNERGE YORUMUNUN KONUMU, ONUN ANLAMIDIR*** — araya giren
     // > masum bir açıklama, çalışan bir bastırmayı sessizce silahsızlandırır.
     // ignore: avoid_print
-    print('\n════ SUNULAN YÜZEY (ağaçta; cihaz ÇİZİMİ değil) ════\n'
-        '${rapor.join('\n')}\n'
-        '════ perde $perde · aşama $asama · okunan ekran '
-        '${rapor.where((String l) => l.startsWith('──')).length} ════\n');
+    print(
+      '\n════ SUNULAN YÜZEY (ağaçta; cihaz ÇİZİMİ değil) ════\n'
+      '${rapor.join('\n')}\n'
+      '════ perde $perde · aşama $asama · okunan ekran '
+      '${rapor.where((String l) => l.startsWith('──')).length} ════\n',
+    );
 
     tmp.deleteSync(recursive: true);
   });

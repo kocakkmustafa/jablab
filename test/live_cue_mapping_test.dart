@@ -28,7 +28,8 @@ void main() {
   /// unutulamaz (`fitness_ship_audit`in içerikten-sürme deseni).
   Set<String> ruleSetCodes() {
     final Object doc = jsonDecode(
-        File('assets/rulesets/boxing@1.0.0.json').readAsStringSync());
+      File('assets/rulesets/boxing@1.0.0.json').readAsStringSync(),
+    );
     final Set<String> codes = <String>{};
     void walk(Object? o) {
       if (o is Map) {
@@ -100,10 +101,14 @@ void main() {
     // `cues.en.json` BİLEREK dışarıda: kendi anahtarlarını içerdiği için
     // her repliği kendi kendine "atıflı" yapar ve kapı vakum-doğru olurdu.
     for (final String dir in <String>[
-      'lib', 'assets/rulesets', 'assets/content', 'packages',
+      'lib',
+      'assets/rulesets',
+      'assets/content',
+      'packages',
     ]) {
-      for (final FileSystemEntity f
-          in Directory(dir).listSync(recursive: true)) {
+      for (final FileSystemEntity f in Directory(
+        dir,
+      ).listSync(recursive: true)) {
         if (f is! File) continue;
         if (f.path.endsWith('cues.en.json')) continue;
         if (!f.path.endsWith('.dart') && !f.path.endsWith('.json')) continue;
@@ -115,27 +120,40 @@ void main() {
 
     final List<String> dead = (cueKeys().difference(referenced)).toList()
       ..sort();
-    expect(dead, isEmpty,
-        reason: 'ÖLÜ REPLİK: $dead — bu anahtar(lar) `cues.en.json`da '
-            'duruyor ama hiçbir kod yolu çağırmıyor. Üç seçenekten birini '
-            'İSİMLE seç: (a) tetiğini yaz · (b) sil (yetenek yok ya da '
-            'canlı bir yol aynı şeyi zaten söylüyor) · (c) sil ve metni '
-            '`docs/design/ICERIK-ONCU-REPLIKLER.md`ye taşı (yüzeyi yok).');
+    expect(
+      dead,
+      isEmpty,
+      reason:
+          'ÖLÜ REPLİK: $dead — bu anahtar(lar) `cues.en.json`da '
+          'duruyor ama hiçbir kod yolu çağırmıyor. Üç seçenekten birini '
+          'İSİMLE seç: (a) tetiğini yaz · (b) sil (yetenek yok ya da '
+          'canlı bir yol aynı şeyi zaten söylüyor) · (c) sil ve metni '
+          '`docs/design/ICERIK-ONCU-REPLIKLER.md`ye taşı (yüzeyi yok).',
+    );
   });
 
   test('kural setindeki HER kod eşlemede var', () {
-    final Set<String> missing =
-        ruleSetCodes().difference(jabLabIssueCueMapping.keys.toSet());
-    expect(missing, isEmpty,
-        reason: 'eşlenmemiş kod(lar) $missing — bu hatalar kullanıcıya '
-            'genel cümleyle geçer, gerçek düzeltme KAYBOLUR');
+    final Set<String> missing = ruleSetCodes().difference(
+      jabLabIssueCueMapping.keys.toSet(),
+    );
+    expect(
+      missing,
+      isEmpty,
+      reason:
+          'eşlenmemiş kod(lar) $missing — bu hatalar kullanıcıya '
+          'genel cümleyle geçer, gerçek düzeltme KAYBOLUR',
+    );
   });
 
   test('eşlemedeki HER anahtar içerikte var (sarkan atıf yok)', () {
-    final Set<String> dangling =
-        jabLabIssueCueMapping.values.toSet().difference(cueKeys());
-    expect(dangling, isEmpty,
-        reason: 'içerikte olmayan replik anahtar(lar)ı: $dangling');
+    final Set<String> dangling = jabLabIssueCueMapping.values
+        .toSet()
+        .difference(cueKeys());
+    expect(
+      dangling,
+      isEmpty,
+      reason: 'içerikte olmayan replik anahtar(lar)ı: $dangling',
+    );
   });
 
   test('MEKANİK eşleme YETMİYOR — kısayolun neden reddedildiği ölçülü', () {
@@ -143,16 +161,24 @@ void main() {
     // silip toLowerCase() yazalım" derse, kaç kodun sessizce düşeceğini
     // sayıyla görsün.
     final Set<String> keys = cueKeys();
-    final List<String> wouldBreak = ruleSetCodes()
-        .where((String c) => !keys.contains('cue.${c.toLowerCase()}'))
-        .toList()
-      ..sort();
-    expect(wouldBreak.length, greaterThanOrEqualTo(7),
-        reason: 'mekanik kısayol artık tutuyorsa bu kararı yeniden gözden '
-            'geçir — ama ÖLÇEREK');
+    final List<String> wouldBreak =
+        ruleSetCodes()
+            .where((String c) => !keys.contains('cue.${c.toLowerCase()}'))
+            .toList()
+          ..sort();
+    expect(
+      wouldBreak.length,
+      greaterThanOrEqualTo(7),
+      reason:
+          'mekanik kısayol artık tutuyorsa bu kararı yeniden gözden '
+          'geçir — ama ÖLÇEREK',
+    );
     for (final String c in wouldBreak) {
-      expect(jabLabIssueCueMapping.containsKey(c), isTrue,
-          reason: '$c mekanik eşlemede düşerdi ve elle de eşlenmemiş');
+      expect(
+        jabLabIssueCueMapping.containsKey(c),
+        isTrue,
+        reason: '$c mekanik eşlemede düşerdi ve elle de eşlenmemiş',
+      );
     }
   });
 
@@ -160,12 +186,19 @@ void main() {
     // Kullanıcı yanlış bir şey yapmıyor, biz göremiyoruz. Düzeltme yuvasına
     // koymak olmayan bir hatayı düzelttirmek olurdu.
     for (final String c in jabLabVisibilityIssueCodes) {
-      expect(jabLabIssueCueMapping.containsKey(c), isTrue,
-          reason: '$c görünürlük kodu ama eşlemesi yok');
+      expect(
+        jabLabIssueCueMapping.containsKey(c),
+        isTrue,
+        reason: '$c görünürlük kodu ama eşlemesi yok',
+      );
     }
-    expect(jabLabVisibilityIssueCodes.contains('REAR_HAND_LOW'), isFalse,
-        reason: 'teknik kusuru görünürlük sınıfına düşerse kullanıcıya '
-            '"göremiyorum" denir ve gerçek düzeltme hiç verilmez');
+    expect(
+      jabLabVisibilityIssueCodes.contains('REAR_HAND_LOW'),
+      isFalse,
+      reason:
+          'teknik kusuru görünürlük sınıfına düşerse kullanıcıya '
+          '"göremiyorum" denir ve gerçek düzeltme hiç verilmez',
+    );
   });
 
   test('replik kitabı anahtarla CÜMLE döndürüyor, kodu değil', () async {
@@ -173,10 +206,16 @@ void main() {
     for (final MapEntry<String, String> e in jabLabIssueCueMapping.entries) {
       final String? line = book.sayKey(e.value);
       expect(line, isNotNull, reason: '${e.value} için cümle yok');
-      expect(line, isNot(contains(e.key)),
-          reason: 'cümle ham kodu (${e.key}) taşıyor');
-      expect(line, isNot(matches(RegExp(r'^[A-Z_]+$'))),
-          reason: 'cümle bir kod adı gibi görünüyor: "$line"');
+      expect(
+        line,
+        isNot(contains(e.key)),
+        reason: 'cümle ham kodu (${e.key}) taşıyor',
+      );
+      expect(
+        line,
+        isNot(matches(RegExp(r'^[A-Z_]+$'))),
+        reason: 'cümle bir kod adı gibi görünüyor: "$line"',
+      );
     }
   });
 
@@ -185,8 +224,11 @@ void main() {
     final CueBook book = await const ContentRepository().loadCues();
     for (final String key in jabLabIssueCueMapping.values) {
       final String line = book.sayKey(key)!;
-      expect(CueBook.unfilledPlaceholder.hasMatch(line), isFalse,
-          reason: '"$line" doldurulmamış yer tutucu taşıyor');
+      expect(
+        CueBook.unfilledPlaceholder.hasMatch(line),
+        isFalse,
+        reason: '"$line" doldurulmamış yer tutucu taşıyor',
+      );
     }
   });
 }

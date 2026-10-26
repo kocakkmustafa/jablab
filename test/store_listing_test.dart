@@ -22,9 +22,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// mağaza metnine sızan bir "coming soon" ya da bir "tested on device"
 /// iddiası hiçbir kapıdan geçmeden App Store Connect'e giderdi.
 void main() {
-  final Map<String, dynamic> listing = (jsonDecode(
-              File('docs/store/listing.json').readAsStringSync()) as Map)
-      .cast<String, dynamic>();
+  final Map<String, dynamic> listing =
+      (jsonDecode(File('docs/store/listing.json').readAsStringSync()) as Map)
+          .cast<String, dynamic>();
 
   /// AYNI regex — `promise_language_test.dart`daki tanımla birebir.
   final RegExp promise = RegExp(
@@ -60,9 +60,13 @@ void main() {
     for (final String s in userStrings(listing)) {
       if (promise.hasMatch(s)) hits.add('"$s"');
     }
-    expect(hits, isEmpty,
-        reason: 'MAĞAZA METNİNDE VAAT DİLİ: ${hits.join(" · ")}\n'
-            'Kullanıcı bunu satın almadan ÖNCE görüyor — düzeltme şansı yok.');
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'MAĞAZA METNİNDE VAAT DİLİ: ${hits.join(" · ")}\n'
+          'Kullanıcı bunu satın almadan ÖNCE görüyor — düzeltme şansı yok.',
+    );
   });
 
   test('CİHAZ-KANITI İDDİASI YOK — cihaz turu (§7.3-7.7) henüz yapılmadı', () {
@@ -75,57 +79,72 @@ void main() {
     for (final String s in userStrings(listing)) {
       if (deviceProof.hasMatch(s)) hits.add('"$s"');
     }
-    expect(hits, isEmpty,
-        reason: 'CİHAZ-KANITI İDDİASI: ${hits.join(" · ")}\n'
-            'KAMERA-KOPRUSU-CANLILIK.md §7.3-7.7 hâlâ açık — bu iddiayı '
-            'destekleyecek bir ölçüm yok.');
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'CİHAZ-KANITI İDDİASI: ${hits.join(" · ")}\n'
+          'KAMERA-KOPRUSU-CANLILIK.md §7.3-7.7 hâlâ açık — bu iddiayı '
+          'destekleyecek bir ölçüm yok.',
+    );
   });
 
-  test('ilk sürümde kamera koçluğu vaat edilmiyor; abonelik koşulları açık', () {
-    final String desc = (listing['description'] as String).toLowerCase();
-    final String short =
-        ((listing['playStore'] as Map)['shortDescription'] as String)
-            .toLowerCase();
-    // First release: five written beginner areas (2026-10-22), not only the
-    // 39-lesson boxing path.
-    for (final String area in <String>[
-      'boxing: 39 lessons in 8 modules',
-      'kickboxing: 16 lessons',
-      'muay thai: 16 lessons',
-      'karate: 16 kihon lessons',
-      'taikyoku shodan',
-      'tai chi: 14 fixed-foot foundation lessons',
-    ]) {
-      expect(desc, contains(area));
-    }
-    expect(desc, contains('do not teach sparring or contact training'));
-    expect(desc, contains('camera coaching and automatic punch counting '
-        'are not available'));
-    // Sales are open in the first release (Core R3): the listing states the
-    // free part, both plans, the 14-day trial and auto-renewal/cancellation.
-    for (final String sale in <String>[
-      'the first lessons of every course are free',
-      'jablab (\$11.99/month or \$69.99/year)',
-      'motion+ (\$19.99/month or \$129.99/year',
-      '14-day free trial',
-      'renews automatically unless cancelled at least 24 hours',
-    ]) {
-      expect(desc, contains(sale));
-    }
-    expect(desc, isNot(contains('subscription sales are not available')));
-    expect(short, contains('camera coaching is not open'));
-    expect(desc, isNot(contains('live solo shadow-boxing with')));
-    expect(desc, isNot(contains('active jablab or motion+ subscription')));
-  });
+  test(
+    'ilk sürümde kamera koçluğu vaat edilmiyor; abonelik koşulları açık',
+    () {
+      final String desc = (listing['description'] as String).toLowerCase();
+      final String short =
+          ((listing['playStore'] as Map)['shortDescription'] as String)
+              .toLowerCase();
+      // First release: five written beginner areas (2026-10-22), not only the
+      // 39-lesson boxing path.
+      for (final String area in <String>[
+        'boxing: 39 lessons in 8 modules',
+        'kickboxing: 16 lessons',
+        'muay thai: 16 lessons',
+        'karate: 16 kihon lessons',
+        'taikyoku shodan',
+        'tai chi: 14 fixed-foot foundation lessons',
+      ]) {
+        expect(desc, contains(area));
+      }
+      expect(desc, contains('do not teach sparring or contact training'));
+      expect(
+        desc,
+        contains(
+          'camera coaching and automatic punch counting '
+          'are not available',
+        ),
+      );
+      // Sales are open in the first release (Core R3): the listing states the
+      // free part, both plans, the 14-day trial and auto-renewal/cancellation.
+      for (final String sale in <String>[
+        'the first lessons of every course are free',
+        'jablab (\$11.99/month or \$69.99/year)',
+        'motion+ (\$19.99/month or \$129.99/year',
+        '14-day free trial',
+        'renews automatically unless cancelled at least 24 hours',
+      ]) {
+        expect(desc, contains(sale));
+      }
+      expect(desc, isNot(contains('subscription sales are not available')));
+      expect(short, contains('camera coaching is not open'));
+      expect(desc, isNot(contains('live solo shadow-boxing with')));
+      expect(desc, isNot(contains('active jablab or motion+ subscription')));
+    },
+  );
 
   test('kamera izin metni Info.plist ile TUTARLI', () {
-    final String plist =
-        File('ios/Runner/Info.plist').readAsStringSync();
+    final String plist = File('ios/Runner/Info.plist').readAsStringSync();
     final String storeRationale =
         (listing['cameraPermissionRationale'] as Map)['ios'] as String;
-    expect(plist, contains(storeRationale),
-        reason: 'mağaza metnindeki kamera-izin gerekçesi Info.plist\'in '
-            'NSCameraUsageDescription\'ından SAPMIŞ — ikisi birebir aynı '
-            'olmalı, kullanıcı ikisini de görüyor');
+    expect(
+      plist,
+      contains(storeRationale),
+      reason:
+          'mağaza metnindeki kamera-izin gerekçesi Info.plist\'in '
+          'NSCameraUsageDescription\'ından SAPMIŞ — ikisi birebir aynı '
+          'olmalı, kullanıcı ikisini de görüyor',
+    );
   });
 }

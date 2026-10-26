@@ -35,52 +35,59 @@ void main() {
               as Map<String, dynamic>;
       int lessons(Map<String, dynamic> m) => (m['lessons'] as List).length;
       expect(courseLessonCount, <GatedCourse, int>{
-        GatedCourse.boxing: (json('solo_boxing_course.v1.json')['modules']
-                as List)
-            .fold<int>(0, (n, m) => n + lessons(m as Map<String, dynamic>)),
+        GatedCourse.boxing:
+            (json('solo_boxing_course.v1.json')['modules'] as List).fold<int>(
+              0,
+              (n, m) => n + lessons(m as Map<String, dynamic>),
+            ),
         GatedCourse.kickboxing: lessons(json('kickboxing_a.v1.json')),
         GatedCourse.muayThai: lessons(json('muay_thai_a.v1.json')),
         GatedCourse.karate: lessons(json('karate_a.v1.json')),
         GatedCourse.taikyoku: lessons(
-          json('taikyoku_shodan_jl.v1.json')['content']
-              as Map<String, dynamic>,
+          json('taikyoku_shodan_jl.v1.json')['content'] as Map<String, dynamic>,
         ),
         GatedCourse.taiChi: lessons(json('tai_chi_course.v1.json')),
         GatedCourse.yang16: lessons(json('yang16_angela_written.v2.json')),
       });
     });
 
-    test('Y4-1: every boundary is Core isLessonUnlocked with the app count', () {
-      final access = CourseAccess(salesOpen: true, unlock: (_) async => false);
-      for (final course in GatedCourse.values) {
-        final int total = courseLessonCount[course]!;
-        for (var i = 0; i < total; i++) {
-          final bool core = isLessonUnlocked(
-            lessonIndex: i,
-            totalLessons: total,
+    test(
+      'Y4-1: every boundary is Core isLessonUnlocked with the app count',
+      () {
+        final access = CourseAccess(
+          salesOpen: true,
+          unlock: (_) async => false,
+        );
+        for (final course in GatedCourse.values) {
+          final int total = courseLessonCount[course]!;
+          for (var i = 0; i < total; i++) {
+            final bool core = isLessonUnlocked(
+              lessonIndex: i,
+              totalLessons: total,
+              firstModuleLessonCount: 0,
+              entitled: false,
+              freeLessonLimit: freeLessonCount[course],
+            );
+            expect(access.allows(course, i), core, reason: '${course.name} $i');
+            expect(core, i < freeLessonCount[course]!);
+          }
+          expect(access.allows(course, -1), isFalse);
+          expect(access.allows(course, total), isFalse);
+        }
+        // Core's own default would free more (boxing 13, kickboxing 6): the
+        // founder kept JabLab's counts, so lesson 11 of boxing stays paid.
+        expect(
+          isLessonUnlocked(
+            lessonIndex: 10,
+            totalLessons: 39,
             firstModuleLessonCount: 0,
             entitled: false,
-            freeLessonLimit: freeLessonCount[course],
-          );
-          expect(access.allows(course, i), core, reason: '${course.name} $i');
-          expect(core, i < freeLessonCount[course]!);
-        }
-        expect(access.allows(course, -1), isFalse);
-        expect(access.allows(course, total), isFalse);
-      }
-      // Core's own default would free more (boxing 13, kickboxing 6): the
-      // founder kept JabLab's counts, so lesson 11 of boxing stays paid.
-      expect(
-        isLessonUnlocked(
-          lessonIndex: 10,
-          totalLessons: 39,
-          firstModuleLessonCount: 0,
-          entitled: false,
-        ),
-        isTrue,
-      );
-      expect(access.allows(GatedCourse.boxing, 10), isFalse);
-    });
+          ),
+          isTrue,
+        );
+        expect(access.allows(GatedCourse.boxing, 10), isFalse);
+      },
+    );
 
     test('closed sales never lock a lesson', () {
       final access = CourseAccess.open();

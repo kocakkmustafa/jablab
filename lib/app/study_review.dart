@@ -26,7 +26,9 @@ class StudyReviewEntry extends StatelessWidget {
         ),
       ),
       onPressed: () => Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(builder: (_) => StudyReviewPage(openCourses: openCourses)),
+        MaterialPageRoute<void>(
+          builder: (_) => StudyReviewPage(openCourses: openCourses),
+        ),
       ),
     ),
   );
@@ -66,7 +68,13 @@ class StudyReviewPage extends StatelessWidget {
                   TextButton.icon(
                     key: Key('study-course-${area.id}'),
                     icon: const Icon(Icons.menu_book_outlined),
-                    label: Text(_text(context, 'Open existing written course', 'Mevcut yazılı kursu aç')),
+                    label: Text(
+                      _text(
+                        context,
+                        'Open existing written course',
+                        'Mevcut yazılı kursu aç',
+                      ),
+                    ),
                     onPressed: open,
                   ),
                 for (final RecallLesson lesson in area.lessons)

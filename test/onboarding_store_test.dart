@@ -26,39 +26,57 @@ void main() {
   test('seen(): yol bir DİZİN → false döner, FIRLAMAZ', () async {
     final Directory asDir = Directory('${tmp.path}/onboarding_seen');
     await asDir.create();
-    final OnboardingStore store =
-        OnboardingStore(fileOverride: File(asDir.path));
-    expect(await store.seen(), isFalse,
-        reason: 'dizin bir dosya DEĞİLDİR — "görülmemiş" doğru varsayılan '
-            '(fazla göstermeye düş, az göstermeye değil — sınıf dokümanı)');
+    final OnboardingStore store = OnboardingStore(
+      fileOverride: File(asDir.path),
+    );
+    expect(
+      await store.seen(),
+      isFalse,
+      reason:
+          'dizin bir dosya DEĞİLDİR — "görülmemiş" doğru varsayılan '
+          '(fazla göstermeye düş, az göstermeye değil — sınıf dokümanı)',
+    );
   });
 
-  test('markSeen(): yol bir DİZİN → sessizce yutulur, uygulama ÇÖKMEZ',
-      () async {
-    final Directory asDir = Directory('${tmp.path}/onboarding_seen');
-    await asDir.create();
-    final OnboardingStore store =
-        OnboardingStore(fileOverride: File(asDir.path));
-    // Fırlamamalı — sınıfın kendi gerekçesi: yazma hatasında patlamak
-    // kullanıcıyı bir bayrak yüzünden uygulamadan atmak olurdu.
-    await store.markSeen();
-    expect(await store.seen(), isFalse,
-        reason: 'yazma başarısız oldu (yol hâlâ dizin) — sonraki okuma da '
-            'dürüst kalmalı, "yazıldı" YALANI söylememeli');
-  });
+  test(
+    'markSeen(): yol bir DİZİN → sessizce yutulur, uygulama ÇÖKMEZ',
+    () async {
+      final Directory asDir = Directory('${tmp.path}/onboarding_seen');
+      await asDir.create();
+      final OnboardingStore store = OnboardingStore(
+        fileOverride: File(asDir.path),
+      );
+      // Fırlamamalı — sınıfın kendi gerekçesi: yazma hatasında patlamak
+      // kullanıcıyı bir bayrak yüzünden uygulamadan atmak olurdu.
+      await store.markSeen();
+      expect(
+        await store.seen(),
+        isFalse,
+        reason:
+            'yazma başarısız oldu (yol hâlâ dizin) — sonraki okuma da '
+            'dürüst kalmalı, "yazıldı" YALANI söylememeli',
+      );
+    },
+  );
 
-  test('POZİTİF KONTROL: gerçek dosyada seen()/markSeen() beklendiği gibi çalışır',
-      () async {
-    // Vakum koruması: yukarıdaki iki test "her zaman false" döndüren KIRIK
-    // bir uygulamayı da vakumla geçirir. Bu, mekanizmanın gerçekten
-    // çalıştığını (ateşlendiğini) kanıtlıyor.
-    final File f = File('${tmp.path}/onboarding_seen');
-    final OnboardingStore store = OnboardingStore(fileOverride: f);
-    expect(await store.seen(), isFalse, reason: 'henüz yazılmadı');
-    await store.markSeen();
-    expect(await store.seen(), isTrue,
-        reason: 'gerçek dosyada markSeen sonrası seen() true dönmüyor — '
+  test(
+    'POZİTİF KONTROL: gerçek dosyada seen()/markSeen() beklendiği gibi çalışır',
+    () async {
+      // Vakum koruması: yukarıdaki iki test "her zaman false" döndüren KIRIK
+      // bir uygulamayı da vakumla geçirir. Bu, mekanizmanın gerçekten
+      // çalıştığını (ateşlendiğini) kanıtlıyor.
+      final File f = File('${tmp.path}/onboarding_seen');
+      final OnboardingStore store = OnboardingStore(fileOverride: f);
+      expect(await store.seen(), isFalse, reason: 'henüz yazılmadı');
+      await store.markSeen();
+      expect(
+        await store.seen(),
+        isTrue,
+        reason:
+            'gerçek dosyada markSeen sonrası seen() true dönmüyor — '
             'yukarıdaki "false" sonuçları dayanıklılık değil kırıklık '
-            'olabilirdi');
-  });
+            'olabilirdi',
+      );
+    },
+  );
 }

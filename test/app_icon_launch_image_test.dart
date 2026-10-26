@@ -20,14 +20,22 @@ void main() {
   test('🔒 AppIcon Flutter STOK şablonu DEĞİL (MD5 farklı)', () {
     final List<int> bytes = File(appIconPath).readAsBytesSync();
     final String actualMd5 = md5.convert(bytes).toString();
-    expect(actualMd5, isNot(stockAppIconMd5),
-        reason: 'AppIcon hâlâ Flutter\'ın 1024×1024 stok şablonuyla '
-            'MD5-birebir — gerçek bir ikon değil, "flutter create" '
-            'varsayılanı sevk edilirdi');
+    expect(
+      actualMd5,
+      isNot(stockAppIconMd5),
+      reason:
+          'AppIcon hâlâ Flutter\'ın 1024×1024 stok şablonuyla '
+          'MD5-birebir — gerçek bir ikon değil, "flutter create" '
+          'varsayılanı sevk edilirdi',
+    );
     // POZİTİF KONTROL: dosya gerçekten okunuyor ve boyutu makul.
-    expect(bytes.length, greaterThan(1000),
-        reason: 'dosya çok küçük — okuma bozuk olabilir, yukarıdaki "farklı" '
-            'sonucu anlamsız olurdu');
+    expect(
+      bytes.length,
+      greaterThan(1000),
+      reason:
+          'dosya çok küçük — okuma bozuk olabilir, yukarıdaki "farklı" '
+          'sonucu anlamsız olurdu',
+    );
   });
 
   test('🔒 AppIcon gerçekten 1024×1024 (PNG IHDR\'den ölçülü)', () {
@@ -36,17 +44,22 @@ void main() {
     expect(size.height, 1024);
   });
 
-  test(
-      '🔒 LaunchImage üçü de GERÇEK boyutlu — 1×1 placeholder DEĞİL '
+  test('🔒 LaunchImage üçü de GERÇEK boyutlu — 1×1 placeholder DEĞİL '
       '(reçete §3: görsel rengi ölçmez, boyutu ölçer)', () {
     // storyboard <resources> bildirimi: LaunchImage 168×185pt @1x.
     const Map<String, ({int w, int h})> expected = <String, ({int w, int h})>{
-      'ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png':
-          (w: 168, h: 185),
-      'ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png':
-          (w: 336, h: 370),
-      'ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png':
-          (w: 504, h: 555),
+      'ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png': (
+        w: 168,
+        h: 185,
+      ),
+      'ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png': (
+        w: 336,
+        h: 370,
+      ),
+      'ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png': (
+        w: 504,
+        h: 555,
+      ),
     };
     for (final MapEntry<String, ({int w, int h})> e in expected.entries) {
       final _PngSize size = _readPngSize(File(e.key).readAsBytesSync());
@@ -63,9 +76,13 @@ void main() {
     final List<int> onePixelPng = _syntheticPngBytes(1, 1);
     final _PngSize size = _readPngSize(onePixelPng);
     expect(size.width, 1);
-    expect(() => expect(size.width, isNot(1)), throwsA(isA<TestFailure>()),
-        reason: '1×1 bir görüntü bu testte GEÇMELİ diye beklenirse kapı '
-            'anlamsızdır — sabotaj bunu doğruluyor');
+    expect(
+      () => expect(size.width, isNot(1)),
+      throwsA(isA<TestFailure>()),
+      reason:
+          '1×1 bir görüntü bu testte GEÇMELİ diye beklenirse kapı '
+          'anlamsızdır — sabotaj bunu doğruluyor',
+    );
   });
 }
 

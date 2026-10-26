@@ -52,9 +52,7 @@ void main() {
       'volumeAvailableCapacityKey',
       'volumeTotalCapacityKey',
     ],
-    'NSPrivacyAccessedAPICategoryActiveKeyboards': <String>[
-      'activeInputModes',
-    ],
+    'NSPrivacyAccessedAPICategoryActiveKeyboards': <String>['activeInputModes'],
     'NSPrivacyAccessedAPICategoryUserDefaults': <String>[
       'UserDefaults(',
       'UserDefaults.standard',
@@ -67,29 +65,36 @@ void main() {
         .whereType<File>()
         .where((File f) => f.path.endsWith('.swift'))
         .toList();
-    expect(swiftFiles, isNotEmpty,
-        reason: 'ios/Runner altında hiç .swift dosyası bulunamadı — '
-            'gezinme bozuk, aşağıdaki "temiz" sonucu ANLAMSIZ olurdu');
+    expect(
+      swiftFiles,
+      isNotEmpty,
+      reason:
+          'ios/Runner altında hiç .swift dosyası bulunamadı — '
+          'gezinme bozuk, aşağıdaki "temiz" sonucu ANLAMSIZ olurdu',
+    );
   });
 
-  test(
-      '🔒 SABOTAJ — dedektör sentetik bir gerekli-sebep API çağrısını '
+  test('🔒 SABOTAJ — dedektör sentetik bir gerekli-sebep API çağrısını '
       'gerçekten yakalar', () {
     // Gerçek dosyalara dokunmadan, TARAMA MANTIĞINI sentetik girdiyle sınar
     // (repo'nun her yerde kullandığı desen: önce dedektörü sına, sonra
     // temiz koda güven).
     const String fakeSource = 'let d = FileManager.default.creationDate';
     bool found = false;
-    for (final String api in requiredReasonApis['NSPrivacyAccessedAPICategoryFileTimestamp']!) {
+    for (final String api
+        in requiredReasonApis['NSPrivacyAccessedAPICategoryFileTimestamp']!) {
       if (fakeSource.contains(api)) found = true;
     }
-    expect(found, isTrue,
-        reason: 'dedektör sentetik bir ihlali YAKALAMADI — bugünkü temiz '
-            'sonucun ne kanıtladığı belirsizleşir');
+    expect(
+      found,
+      isTrue,
+      reason:
+          'dedektör sentetik bir ihlali YAKALAMADI — bugünkü temiz '
+          'sonucun ne kanıtladığı belirsizleşir',
+    );
   });
 
-  test(
-      '🔴 ios/Runner/*.swift hiçbir gerekli-sebep API\'si BEYANSIZ '
+  test('🔴 ios/Runner/*.swift hiçbir gerekli-sebep API\'si BEYANSIZ '
       'ÇAĞIRMIYOR', () {
     final List<File> swiftFiles = runnerDir
         .listSync(recursive: true)
@@ -112,19 +117,27 @@ void main() {
         }
       }
     }
-    expect(offenders, isEmpty,
-        reason: 'BEYANSIZ gerekli-sebep API çağrısı:\n'
-            '  ${offenders.join("\n  ")}\n\n'
-            'PrivacyInfo.xcprivacy NSPrivacyAccessedAPITypes\'a ilgili '
-            'kategori + gerekçe eklenmeden bu API kullanılamaz — '
-            'App Store Connect bunu ITMS-91055 ile REDDEDER (submission '
-            'anında, bu kapıdan çok daha pahalı bir yerde).');
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'BEYANSIZ gerekli-sebep API çağrısı:\n'
+          '  ${offenders.join("\n  ")}\n\n'
+          'PrivacyInfo.xcprivacy NSPrivacyAccessedAPITypes\'a ilgili '
+          'kategori + gerekçe eklenmeden bu API kullanılamaz — '
+          'App Store Connect bunu ITMS-91055 ile REDDEDER (submission '
+          'anında, bu kapıdan çok daha pahalı bir yerde).',
+    );
   });
 
   test('POZİTİF KONTROL — manifest gerçekten okunuyor', () {
     expect(manifest.existsSync(), isTrue);
-    expect(manifest.readAsStringSync(), contains('NSPrivacyAccessedAPITypes'),
-        reason: 'manifest okunamadı ya da beklenen anahtarı taşımıyor — '
-            'yukarıdaki "temiz" sonucu ANLAMSIZ olurdu');
+    expect(
+      manifest.readAsStringSync(),
+      contains('NSPrivacyAccessedAPITypes'),
+      reason:
+          'manifest okunamadı ya da beklenen anahtarı taşımıyor — '
+          'yukarıdaki "temiz" sonucu ANLAMSIZ olurdu',
+    );
   });
 }

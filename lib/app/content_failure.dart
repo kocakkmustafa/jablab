@@ -77,10 +77,14 @@ final class ContentFailure {
     // Bunlar da bütünlük sınıfıdır: dosya okunmuş, içeriği tutmuyor.
     if (error is StateError || error is ArgumentError) {
       return ContentFailure(
-          kind: ContentFailureKind.integrity, detail: error.toString());
+        kind: ContentFailureKind.integrity,
+        detail: error.toString(),
+      );
     }
     return ContentFailure(
-        kind: ContentFailureKind.unreadable, detail: error.toString());
+      kind: ContentFailureKind.unreadable,
+      detail: error.toString(),
+    );
   }
 
   final ContentFailureKind kind;

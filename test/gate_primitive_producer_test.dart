@@ -60,10 +60,12 @@ void main() {
         (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
                 as Map)
             .cast<String, dynamic>();
-    final Map<String, dynamic> rules = (jsonDecode(
-            File('assets/rulesets/boxing@1.0.0.json').readAsStringSync())
-        as Map)
-        .cast<String, dynamic>();
+    final Map<String, dynamic> rules =
+        (jsonDecode(
+                  File('assets/rulesets/boxing@1.0.0.json').readAsStringSync(),
+                )
+                as Map)
+            .cast<String, dynamic>();
 
     final Set<String> techniqueIds = (rules['techniques'] as List<dynamic>)
         .map((dynamic t) => (t as Map)['id'] as String)
@@ -74,25 +76,38 @@ void main() {
 
     // VAKUM MUHAFIZI — ruleset gerçekten okundu mu? Boş kümeler "her şey
     // üreticisiz" ya da tersini sessizce iddia eder.
-    expect(techniqueIds, isNotEmpty,
-        reason: 'ruleset teknik listesi boş okundu — bu kapının sonucu '
-            'anlamsız');
-    expect(combinationIds, isNotEmpty,
-        reason: 'ruleset kombinasyon listesi boş okundu — bu kapının '
-            'sonucu anlamsız');
+    expect(
+      techniqueIds,
+      isNotEmpty,
+      reason:
+          'ruleset teknik listesi boş okundu — bu kapının sonucu '
+          'anlamsız',
+    );
+    expect(
+      combinationIds,
+      isNotEmpty,
+      reason:
+          'ruleset kombinasyon listesi boş okundu — bu kapının '
+          'sonucu anlamsız',
+    );
 
-    final Map<String, dynamic> progression =
-        (cur['progression'] as Map).cast<String, dynamic>();
-    expect(progression.length, greaterThanOrEqualTo(10),
-        reason: 'yalnız ${progression.length} ilerleme kaydı okundu — '
-            'gezinme bozuk, bu kapının sonucu anlamsız');
+    final Map<String, dynamic> progression = (cur['progression'] as Map)
+        .cast<String, dynamic>();
+    expect(
+      progression.length,
+      greaterThanOrEqualTo(10),
+      reason:
+          'yalnız ${progression.length} ilerleme kaydı okundu — '
+          'gezinme bozuk, bu kapının sonucu anlamsız',
+    );
 
     final Set<String> missingProducer = <String>{};
     int withProducer = 0;
     for (final MapEntry<String, dynamic> e in progression.entries) {
       final Map<String, dynamic> pr = (e.value as Map).cast<String, dynamic>();
       if (pr[r'$blocked'] != null) continue;
-      for (final dynamic gRaw in (pr['gates'] as List<dynamic>? ?? const <dynamic>[])) {
+      for (final dynamic gRaw
+          in (pr['gates'] as List<dynamic>? ?? const <dynamic>[])) {
         final Map<String, dynamic> g = (gRaw as Map).cast<String, dynamic>();
         final String? event = g['event'] as String?;
         final String? combination = g['combination'] as String?;
@@ -114,28 +129,35 @@ void main() {
       }
     }
 
-    expect(withProducer, greaterThan(0),
-        reason: 'HİÇBİR event/combination primitifi üretici bulamadı — '
-            'ruleset okunuşu ya da eşleme mantığı bozulmuş olabilir, ki bu '
-            'ayrı ve daha büyük bir kusurdur');
+    expect(
+      withProducer,
+      greaterThan(0),
+      reason:
+          'HİÇBİR event/combination primitifi üretici bulamadı — '
+          'ruleset okunuşu ya da eşleme mantığı bozulmuş olabilir, ki bu '
+          'ayrı ve daha büyük bir kusurdur',
+    );
 
     final List<String> missing = missingProducer.toList()..sort();
     final List<String> recorded =
-        (cur[r'$gatePrimitivesWithoutProducer'] as List<dynamic>)
-            .cast<String>()
+        (cur[r'$gatePrimitivesWithoutProducer'] as List<dynamic>).cast<String>()
           ..sort();
 
-    expect(missing, recorded,
-        reason: 'ÜRETİCİSİZ primitif kümesi DEĞİŞTİ.\n'
-            '  ölçülen : $missing\n'
-            '  kayıtlı : $recorded\n\n'
-            'KÜÇÜLDÜYSE: iyi haber — bir primitif üretilir oldu (motora yeni '
-            'olay/faz eklendi). `\$gatePrimitivesWithoutProducer` listesini '
-            've `\$gateReachability` beyanını güncelle.\n'
-            'BÜYÜDÜYSE: yeni bir kapı, motorun tanımadığı bir olay/'
-            'kombinasyon adına bağlandı — o kapı kamera açık olsa bile asla '
-            'geçilemez. Olayı ya motora ekle ya da kapıyı isimli sebeple '
-            'kilitle.');
+    expect(
+      missing,
+      recorded,
+      reason:
+          'ÜRETİCİSİZ primitif kümesi DEĞİŞTİ.\n'
+          '  ölçülen : $missing\n'
+          '  kayıtlı : $recorded\n\n'
+          'KÜÇÜLDÜYSE: iyi haber — bir primitif üretilir oldu (motora yeni '
+          'olay/faz eklendi). `\$gatePrimitivesWithoutProducer` listesini '
+          've `\$gateReachability` beyanını güncelle.\n'
+          'BÜYÜDÜYSE: yeni bir kapı, motorun tanımadığı bir olay/'
+          'kombinasyon adına bağlandı — o kapı kamera açık olsa bile asla '
+          'geçilemez. Olayı ya motora ekle ya da kapıyı isimli sebeple '
+          'kilitle.',
+    );
   });
 }
 
@@ -171,14 +193,16 @@ void _ratioClassProducerGate() {
         (jsonDecode(File('assets/content/curriculum.json').readAsStringSync())
                 as Map)
             .cast<String, dynamic>();
-    final Map<String, dynamic> progression =
-        (cur['progression'] as Map).cast<String, dynamic>();
+    final Map<String, dynamic> progression = (cur['progression'] as Map)
+        .cast<String, dynamic>();
 
     // Sınıfın BÜYÜKLÜĞÜ de ölçülüyor: kapı sayısı değişirse beyan bayatlar.
     final List<String> ratioLessons = <String>[
       for (final MapEntry<String, dynamic> e in progression.entries)
         if (((e.value as Map)['gates'] as List<dynamic>? ?? const <dynamic>[])
-            .any((dynamic g) => (g as Map).containsKey('withValidAnalysisRatio')))
+            .any(
+              (dynamic g) => (g as Map).containsKey('withValidAnalysisRatio'),
+            ))
           e.key,
     ]..sort();
 
@@ -186,47 +210,66 @@ void _ratioClassProducerGate() {
         (cur[r'$gateRatioPrimitiveWithoutProducer'] as List<dynamic>)
             .cast<String>()
           ..sort();
-    expect(ratioLessons, declared,
-        reason: 'RATIO sınıfındaki ders kümesi DEĞİŞTİ.\n'
-            '  ölçülen : $ratioLessons\n'
-            '  kayıtlı : $declared\n\n'
-            'Kapı eklendiyse/kaldırıldıysa beyanı güncelle — bu sınıfın '
-            'üreticisi bugün YOK, yani listeye giren her ders geçilemez bir '
-            'kapı kazanır.');
+    expect(
+      ratioLessons,
+      declared,
+      reason:
+          'RATIO sınıfındaki ders kümesi DEĞİŞTİ.\n'
+          '  ölçülen : $ratioLessons\n'
+          '  kayıtlı : $declared\n\n'
+          'Kapı eklendiyse/kaldırıldıysa beyanı güncelle — bu sınıfın '
+          'üreticisi bugün YOK, yani listeye giren her ders geçilemez bir '
+          'kapı kazanır.',
+    );
 
     // ---- kaynak taraması ----
     final List<File> sources = <File>[
       ...Directory('lib').listSync(recursive: true).whereType<File>(),
-      ...Directory('packages/jablab_engine/lib')
-          .listSync(recursive: true)
-          .whereType<File>(),
+      ...Directory(
+        'packages/jablab_engine/lib',
+      ).listSync(recursive: true).whereType<File>(),
     ].where((File f) => f.path.endsWith('.dart')).toList();
-    expect(sources.length, greaterThan(20),
-        reason: 'yalnız ${sources.length} kaynak dosya tarandı — gezinme '
-            'bozuk, bu kapının sonucu anlamsız');
+    expect(
+      sources.length,
+      greaterThan(20),
+      reason:
+          'yalnız ${sources.length} kaynak dosya tarandı — gezinme '
+          'bozuk, bu kapının sonucu anlamsız',
+    );
 
     bool producedBy(String token) => sources.any((File f) {
-          for (final String line in f.readAsLinesSync()) {
-            final String t = line.trimLeft();
-            if (t.startsWith('//')) continue; // yorum ≠ üretim
-            if (line.contains(token)) return true;
-          }
-          return false;
-        });
+      for (final String line in f.readAsLinesSync()) {
+        final String t = line.trimLeft();
+        if (t.startsWith('//')) continue; // yorum ≠ üretim
+        if (line.contains(token)) return true;
+      }
+      return false;
+    });
 
     // POZİTİF KONTROL — tarama, GERÇEKTEN tüketilen bir kavramı buluyor mu?
-    expect(producedBy('usesCamera'), isTrue,
-        reason: 'tarama `usesCamera`yı bulamadı — ama o kavram üretimde '
-            'GERÇEKTEN okunuyor (content_repository/jablab_app). Tarama '
-            'bozuk; aşağıdaki "üretici yok" sonucu ANLAMSIZ olurdu');
+    expect(
+      producedBy('usesCamera'),
+      isTrue,
+      reason:
+          'tarama `usesCamera`yı bulamadı — ama o kavram üretimde '
+          'GERÇEKTEN okunuyor (content_repository/jablab_app). Tarama '
+          'bozuk; aşağıdaki "üretici yok" sonucu ANLAMSIZ olurdu',
+    );
     // NEGATİF KONTROL — her şeyi bulan bir tarama hiçbir şey ölçmez.
-    expect(producedBy('ZZQQOlmayanPrimitif'), isFalse,
-        reason: 'tarama uydurma bir dizgeyi buldu — vakum-doğru');
+    expect(
+      producedBy('ZZQQOlmayanPrimitif'),
+      isFalse,
+      reason: 'tarama uydurma bir dizgeyi buldu — vakum-doğru',
+    );
 
-    expect(producedBy('withValidAnalysisRatio'), isFalse,
-        reason: 'İYİ HABER: `withValidAnalysisRatio` artık üretim kodunda '
-            'geçiyor — bu sınıfın üreticisi yazılmış olabilir. Ölç, '
-            'doğruysa `\$gateRatioPrimitiveWithoutProducerWhy` beyanını ve '
-            'ADR-005\'i güncelle: 10 kapı geçilemezlikten çıkar.');
+    expect(
+      producedBy('withValidAnalysisRatio'),
+      isFalse,
+      reason:
+          'İYİ HABER: `withValidAnalysisRatio` artık üretim kodunda '
+          'geçiyor — bu sınıfın üreticisi yazılmış olabilir. Ölç, '
+          'doğruysa `\$gateRatioPrimitiveWithoutProducerWhy` beyanını ve '
+          'ADR-005\'i güncelle: 10 kapı geçilemezlikten çıkar.',
+    );
   });
 }

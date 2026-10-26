@@ -428,9 +428,7 @@ class _Harness {
 
 class _RecordingCamera extends OwnedTestCamera {
   _RecordingCamera({super.holdNativeStart = false})
-    : super(
-        libraryTag: 'owner-lifecycle-fixture',
-      );
+    : super(libraryTag: 'owner-lifecycle-fixture');
 }
 
 class _RecordingStore implements SessionStore {

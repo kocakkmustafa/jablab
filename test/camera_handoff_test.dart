@@ -67,32 +67,34 @@ void main() {
   }
 
   LiveJabController build(_SlowCamera cam) => LiveJabController(
-        ruleSet: rules(),
-        cues: CueBook(const <NarrationEvent, List<String>>{}),
-        camera: cam,
-        modelPath: () async => '/tmp/model.task',
-        modelId: 'test',
-        requestPermission: () async => true,
+    ruleSet: rules(),
+    cues: CueBook(const <NarrationEvent, List<String>>{}),
+    camera: cam,
+    modelPath: () async => '/tmp/model.task',
+    modelId: 'test',
+    requestPermission: () async => true,
+  );
+
+  test(
+    'POZİTİF KONTROL — sahte kamera, kapanış uçarken GERÇEKTEN reddediyor',
+    () async {
+      // Kapının kendisi ölçülüyor: aşağıdaki "devir temiz" sonucu, sahtenin
+      // hiç reddetmemesinden de doğabilirdi ve o zaman test bir şey ölçmezdi.
+      final _SlowCamera cam = _SlowCamera();
+      unawaited(cam.stop());
+      expect(cam.closing, isTrue);
+      await expectLater(
+        cam.start(modelPath: '/tmp/m', modelId: 't'),
+        throwsA(isA<StateError>()),
+        reason:
+            'sahte kamera kapanış sırasında reddetmiyor — bu testin '
+            'ölçtüğü yarış SİMÜLE EDİLEMİYOR demektir',
       );
+      await cam.settle();
+    },
+  );
 
-  test('POZİTİF KONTROL — sahte kamera, kapanış uçarken GERÇEKTEN reddediyor',
-      () async {
-    // Kapının kendisi ölçülüyor: aşağıdaki "devir temiz" sonucu, sahtenin
-    // hiç reddetmemesinden de doğabilirdi ve o zaman test bir şey ölçmezdi.
-    final _SlowCamera cam = _SlowCamera();
-    unawaited(cam.stop());
-    expect(cam.closing, isTrue);
-    await expectLater(
-      cam.start(modelPath: '/tmp/m', modelId: 't'),
-      throwsA(isA<StateError>()),
-      reason: 'sahte kamera kapanış sırasında reddetmiyor — bu testin '
-          'ölçtüğü yarış SİMÜLE EDİLEMİYOR demektir',
-    );
-    await cam.settle();
-  });
-
-  test('DERS→DERS DEVRİ: kapanış uçarken açılan ders ARIZA GÖRMÜYOR',
-      () async {
+  test('DERS→DERS DEVRİ: kapanış uçarken açılan ders ARIZA GÖRMÜYOR', () async {
     final _SlowCamera first = _SlowCamera();
     final LiveJabController a = build(first);
     expect(await a.start(), isNull, reason: 'ilk ders açılamadı');
@@ -106,12 +108,16 @@ void main() {
     final LiveJabController b = build(second);
     final LiveSessionFailure? f = await b.start();
 
-    expect(f, isNull,
-        reason: 'ikinci ders BİRİNCİ dersin kapanışı yüzünden arıza gördü: '
-            '$f\n\nKilit çalışmıyor. `LiveJabController._closing` süreç '
-            'geneli olmalı (cihazda tek kamera var) ve `stop()` onu '
-            'SENKRON yayınlamalı — `async` yapılırsa atama bir mikrotask '
-            'geç görünür ve tam o aralıkta açılan ders kilidi kaçırır.');
+    expect(
+      f,
+      isNull,
+      reason:
+          'ikinci ders BİRİNCİ dersin kapanışı yüzünden arıza gördü: '
+          '$f\n\nKilit çalışmıyor. `LiveJabController._closing` süreç '
+          'geneli olmalı (cihazda tek kamera var) ve `stop()` onu '
+          'SENKRON yayınlamalı — `async` yapılırsa atama bir mikrotask '
+          'geç görünür ve tam o aralıkta açılan ders kilidi kaçırır.',
+    );
     expect(second.startCalls, 1);
     await b.stop();
   });
@@ -129,24 +135,34 @@ void main() {
 
     expect(first.stopFinishedAt, isNotNull, reason: 'kapanış hiç bitmedi');
     expect(second.startedAt, isNotNull, reason: 'açılış hiç olmadı');
-    expect(second.startedAt! >= first.stopFinishedAt!, isTrue,
-        reason: 'açılış (${second.startedAt}) kapanıştan '
-            '(${first.stopFinishedAt}) ÖNCE koştu — kilit beklemiyor');
+    expect(
+      second.startedAt! >= first.stopFinishedAt!,
+      isTrue,
+      reason:
+          'açılış (${second.startedAt}) kapanıştan '
+          '(${first.stopFinishedAt}) ÖNCE koştu — kilit beklemiyor',
+    );
   });
 
-  test('N=1 MALİYETİ SIFIR — bekleyen kapanış yokken açılış gecikmiyor',
-      () async {
-    // Kilit doğru kurulmazsa, nadir bir kusur her açılışa gecikme olarak
-    // ödenir. Bu ölçüm o takası yasaklıyor.
-    final _SlowCamera cam = _SlowCamera();
-    final LiveJabController c = build(cam);
-    expect(cam.closing, isFalse, reason: 'ön koşul: uçan kapanış yok');
-    await c.start();
-    expect(cam.awaitedClosingBeforeStart, isFalse,
-        reason: 'ilk açılışta bile bir kapanış beklendi — kilit N=1\'e '
-            'maliyet bindiriyor');
-    await c.stop();
-  });
+  test(
+    'N=1 MALİYETİ SIFIR — bekleyen kapanış yokken açılış gecikmiyor',
+    () async {
+      // Kilit doğru kurulmazsa, nadir bir kusur her açılışa gecikme olarak
+      // ödenir. Bu ölçüm o takası yasaklıyor.
+      final _SlowCamera cam = _SlowCamera();
+      final LiveJabController c = build(cam);
+      expect(cam.closing, isFalse, reason: 'ön koşul: uçan kapanış yok');
+      await c.start();
+      expect(
+        cam.awaitedClosingBeforeStart,
+        isFalse,
+        reason:
+            'ilk açılışta bile bir kapanış beklendi — kilit N=1\'e '
+            'maliyet bindiriyor',
+      );
+      await c.stop();
+    },
+  );
 }
 
 /// Gerçek eklentinin sözleşmesini taklit eder: `stop` bitene kadar `start`

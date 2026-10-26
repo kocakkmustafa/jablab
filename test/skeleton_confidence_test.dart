@@ -30,27 +30,35 @@ import 'package:flutter_test/flutter_test.dart';
 ///   ayırt etme sorusuyla aynı sınıf: **yalnız göz.**
 void main() {
   test('belirsiz hâlde iskelet GERİ ÇEKİLİYOR — ve fark yönü doğru', () {
-    final String src =
-        File('lib/app/skeleton_overlay.dart').readAsStringSync();
+    final String src = File('lib/app/skeleton_overlay.dart').readAsStringSync();
 
     // Değerler KAYNAKTAN türetiliyor, elle yazılmıyor: sabit yazsaydım
     // painter değişince kapı sessizce yalan söylerdi.
     final RegExp expr = RegExp(
-        r'sceneAlpha\s*=\s*state\s*==\s*LiveState\.noVerdict\s*\?\s*'
-        r'([\d.]+)\s*:\s*([\d.]+)');
+      r'sceneAlpha\s*=\s*state\s*==\s*LiveState\.noVerdict\s*\?\s*'
+      r'([\d.]+)\s*:\s*([\d.]+)',
+    );
     final RegExpMatch? m = expr.firstMatch(src);
-    expect(m, isNotNull,
-        reason: 'iskelet artık belirsizliğe göre alfa AYARLAMIYOR (ya da '
-            'ifade yeniden yazıldı). "Ne gördüğümü çiziyorum" iddiasının '
-            'ölçülebilir tek parçası buydu: motor okumasını güvenilmez '
-            'ilan ederken ekran normal parlaklıkta çizmemeli (J-170)');
+    expect(
+      m,
+      isNotNull,
+      reason:
+          'iskelet artık belirsizliğe göre alfa AYARLAMIYOR (ya da '
+          'ifade yeniden yazıldı). "Ne gördüğümü çiziyorum" iddiasının '
+          'ölçülebilir tek parçası buydu: motor okumasını güvenilmez '
+          'ilan ederken ekran normal parlaklıkta çizmemeli (J-170)',
+    );
 
     final double unsure = double.parse(m!.group(1)!);
     final double clean = double.parse(m.group(2)!);
-    expect(unsure, lessThan(clean),
-        reason: 'belirsiz hâlin alfası ($unsure) temiz hâlinkinden '
-            '($clean) DÜŞÜK olmalı — aksi hâlde ekran, güvenmediği bir '
-            'okumayı güvendiğinden daha görünür çiziyor');
+    expect(
+      unsure,
+      lessThan(clean),
+      reason:
+          'belirsiz hâlin alfası ($unsure) temiz hâlinkinden '
+          '($clean) DÜŞÜK olmalı — aksi hâlde ekran, güvenmediği bir '
+          'okumayı güvendiğinden daha görünür çiziyor',
+    );
     // Fark ANLAMLI olmalı: 0.01'lik bir düşüş kuralı harfiyen tutup
     // ruhunu çiğnerdi. Eşik icat etmemek için oran kullanılıyor —
     // belirsiz hâl temizin en fazla YARISI kadar görünür olmalı... değil;

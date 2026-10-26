@@ -38,14 +38,14 @@ final class ThermalReading {
   }
 
   static ThermalTier _iosTier(String raw) => switch (raw) {
-        'nominal' => ThermalTier.nominal,
-        'fair' => ThermalTier.fair,
-        'serious' => ThermalTier.serious,
-        'critical' => ThermalTier.critical,
-        // Apple'ın gelecekte eklediği bilinmeyen bir kademe — İYİMSER
-        // tahmin etmek yerine en katı tarafa yuvarla (H-31 sınıfı).
-        _ => ThermalTier.critical,
-      };
+    'nominal' => ThermalTier.nominal,
+    'fair' => ThermalTier.fair,
+    'serious' => ThermalTier.serious,
+    'critical' => ThermalTier.critical,
+    // Apple'ın gelecekte eklediği bilinmeyen bir kademe — İYİMSER
+    // tahmin etmek yerine en katı tarafa yuvarla (H-31 sınıfı).
+    _ => ThermalTier.critical,
+  };
 
   /// Android `PowerManager.THERMAL_STATUS_*` (0-6, API 29+) yedi
   /// kademesini iOS'un dördüne indirger. Eşleme Android'in KENDİ eşik
@@ -87,15 +87,17 @@ final class ThermalReading {
 final class ThermalChannel {
   const ThermalChannel();
 
-  static const MethodChannel _channel =
-      MethodChannel('com.yulalab.jablab/thermal');
+  static const MethodChannel _channel = MethodChannel(
+    'com.yulalab.jablab/thermal',
+  );
 
   /// Bir okuma döndürür, ya da kanal yoksa/desteklenmiyorsa `null`
   /// (web/masaüstü/koşulmayan platform — beklenen, hata değil).
   Future<ThermalReading?> read() async {
     try {
-      final Object? raw =
-          await _channel.invokeMethod<Object?>('getThermalState');
+      final Object? raw = await _channel.invokeMethod<Object?>(
+        'getThermalState',
+      );
       if (raw is! Map) return null;
       return ThermalReading.fromChannelMap(raw.cast<Object?, Object?>());
     } on PlatformException {

@@ -36,14 +36,16 @@ void main() {
   /// Tam bir tanımlayıcı: `snake_case` · `SCREAMING_CASE` · `camelCase` ·
   /// `noktali.anahtar`. İnsan cümlesi bunların hiçbirine benzemez.
   final RegExp wholeIdentifier = RegExp(
-      r'^[a-z0-9]+(?:[_.][a-z0-9]+)+$|^[A-Z][A-Z0-9_]{3,}$|'
-      r'^[a-z]+(?:[A-Z][a-z0-9]+)+$');
+    r'^[a-z0-9]+(?:[_.][a-z0-9]+)+$|^[A-Z][A-Z0-9_]{3,}$|'
+    r'^[a-z]+(?:[A-Z][a-z0-9]+)+$',
+  );
 
   /// Cümlenin İÇİNE gömülü kod — `REAR_HAND_LOW` ya da `lead_forearm` gibi.
   /// Backtick içindekiler hariç: dokümantasyon değil, KULLANICI metni
   /// taranıyor ve bu depoda backtick yalnız yorumlarda geçiyor.
-  final RegExp inlineIdentifier =
-      RegExp(r'(?<![\w`])(?:[A-Z]{2,}_[A-Z_]+|[a-z]+_[a-z_]+)(?![\w`])');
+  final RegExp inlineIdentifier = RegExp(
+    r'(?<![\w`])(?:[A-Z]{2,}_[A-Z_]+|[a-z]+_[a-z_]+)(?![\w`])',
+  );
 
   /// Lissom'un bu geceki kusurunun sınıfı: metin **hem vardı hem doğruydu**,
   /// yalnız okunmuyordu. Çift tire ekranda tek uzun çizgi gibi görünüp
@@ -55,8 +57,16 @@ void main() {
   /// taramaz, ama yeni bir METİN alanı eklendiğinde de görmez — o yüzden
   /// liste burada, görünür yerde duruyor.
   const Set<String> userFacing = <String>{
-    'displayName', 'blurb', 'goal', 'reason', 'lockedReason', 'intro',
-    'productName', 'measured', 'notMeasured', 'title',
+    'displayName',
+    'blurb',
+    'goal',
+    'reason',
+    'lockedReason',
+    'intro',
+    'productName',
+    'measured',
+    'notMeasured',
+    'title',
   };
 
   List<(String, String)> scan(Object? node, String path, bool inUser) {
@@ -77,7 +87,12 @@ void main() {
       node.forEach((Object? k, Object? v) {
         if (k is String && k.startsWith(r'$')) return;
         out.addAll(
-            scan(v, '$path.$k', inUser || (k is String && userFacing.contains(k))));
+          scan(
+            v,
+            '$path.$k',
+            inUser || (k is String && userFacing.contains(k)),
+          ),
+        );
       });
     }
     return out;
@@ -85,12 +100,17 @@ void main() {
 
   test('library.json — kullanıcı alanlarında KOD BİÇİMİ yok', () {
     final List<(String, String)> hits = scan(
-        jsonDecode(File('assets/content/library.json').readAsStringSync()),
-        '',
-        false);
-    expect(hits, isEmpty,
-        reason: 'kullanıcıya kod gösteriliyor: '
-            '${hits.map((( String, String) h) => "${h.$1} ${h.$2}").join(" · ")}');
+      jsonDecode(File('assets/content/library.json').readAsStringSync()),
+      '',
+      false,
+    );
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'kullanıcıya kod gösteriliyor: '
+          '${hits.map(((String, String) h) => "${h.$1} ${h.$2}").join(" · ")}',
+    );
   });
 
   test('cues.en.json — replikler cümle, kod DEĞİL', () {

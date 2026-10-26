@@ -256,8 +256,11 @@ class _TaiChiCoursePageState extends State<TaiChiCoursePage> {
                       '${lesson.number}. ${_text(context, lesson.title)}',
                     ),
                     subtitle: Text(_text(context, lesson.objective)),
-                    trailing: _locked(course.lessons.indexOf(lesson)) ? const LessonLockBadge() : null,
-                    onTap: () => _openGated(lesson, course.lessons.indexOf(lesson)),
+                    trailing: _locked(course.lessons.indexOf(lesson))
+                        ? const LessonLockBadge()
+                        : null,
+                    onTap: () =>
+                        _openGated(lesson, course.lessons.indexOf(lesson)),
                   ),
                 Text(
                   _label(context, 'Teaching references', 'Öğretim kaynakları'),

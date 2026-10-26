@@ -1,8 +1,11 @@
 // Generated closed QA source membership. No media, rights or release acceptance.
 // Source: durable v2k source_pins_v1; review before any app cutover.
-const jablabV2kSourcePinCatalogSha256 = '791bfea8e1479307794bcf8799cf703a7a840bcd3058c1a0d7fdf065d32d8594';
-const jablabV2kSourcePinManifestSha256 = 'd887683c9a9b9bdb8d4ab7c51cdc5a5b4b4de6a918079e4cfd9cf543e9751e60';
-const jablabV2kSourcePinProofSha256 = 'dec615e14881b86b7676e1157f63b8bf6269026d856e59f2ee3a65d7f97e512a';
+const jablabV2kSourcePinCatalogSha256 =
+    '791bfea8e1479307794bcf8799cf703a7a840bcd3058c1a0d7fdf065d32d8594';
+const jablabV2kSourcePinManifestSha256 =
+    'd887683c9a9b9bdb8d4ab7c51cdc5a5b4b4de6a918079e4cfd9cf543e9751e60';
+const jablabV2kSourcePinProofSha256 =
+    'dec615e14881b86b7676e1157f63b8bf6269026d856e59f2ee3a65d7f97e512a';
 const jablabV2kClosedQaReleaseEligible = false;
 const jablabV2kClosedQaProgressEffect = 0;
 const Set<String> jablabV2kClosedQaSourcePinHashes = {

@@ -64,10 +64,12 @@ final class GatePassed extends GateVerdict {
 /// buraya düşemez: onun yeri [GateNotEvaluable].
 final class GateProgress extends GateVerdict {
   GateProgress({required this.measured, required this.required})
-      : assert(measured >= 0, 'ölçülen sayı negatif olamaz'),
-        assert(measured < required,
-            'ölçülen gerekeni karşılıyorsa hâl GatePassed olmalı — iki hâl '
-            'birbirinin yerine geçemez (doc-75/5)');
+    : assert(measured >= 0, 'ölçülen sayı negatif olamaz'),
+      assert(
+        measured < required,
+        'ölçülen gerekeni karşılıyorsa hâl GatePassed olmalı — iki hâl '
+        'birbirinin yerine geçemez (doc-75/5)',
+      );
 
   final int measured;
   final int required;
@@ -162,7 +164,9 @@ GateVerdict? evaluateEventGate(
     final int? measured = evidence.completedEvents(event);
     if (measured == null) {
       return GateNotEvaluable(
-          event: event, reason: RecordedGateEvidence.schemaGap);
+        event: event,
+        reason: RecordedGateEvidence.schemaGap,
+      );
     }
     return measured >= required
         ? GatePassed(measured: measured, required: required)

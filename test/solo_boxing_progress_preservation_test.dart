@@ -158,7 +158,9 @@ void main() {
           .cast<String, dynamic>();
 
   setUp(() {
-    owned = Directory.systemTemp.createTempSync('jablab-progress-preservation-');
+    owned = Directory.systemTemp.createTempSync(
+      'jablab-progress-preservation-',
+    );
     owners = OwnerResourceRegistry();
     owners.activate(_alice);
     owners.activate(_bob);
@@ -179,7 +181,8 @@ void main() {
       return source.substring(0, source.length ~/ 2);
     },
     'unsupported schema': (root) => jsonEncode(root..['schemaVersion'] = 999),
-    'wrong course': (root) => jsonEncode(root..['courseId'] = 'synthetic.other'),
+    'wrong course': (root) =>
+        jsonEncode(root..['courseId'] = 'synthetic.other'),
     'wrong lessons type': (root) => jsonEncode(root..['lessons'] = <Object>[]),
     'unknown state': (root) {
       final record = firstRecord(root)..['state'] = 'mastered';
@@ -217,11 +220,17 @@ void main() {
         final parserFailure = anyOf(isA<FormatException>(), isA<TypeError>());
 
         await expectLater(store().load(), throwsA(parserFailure));
-        await expectLater(_write(writer, store(), course), throwsA(parserFailure));
+        await expectLater(
+          _write(writer, store(), course),
+          throwsA(parserFailure),
+        );
 
         expect(await progress.readAsBytes(), before);
         expect(
-          await FileSystemEntity.type('${progress.path}.tmp', followLinks: false),
+          await FileSystemEntity.type(
+            '${progress.path}.tmp',
+            followLinks: false,
+          ),
           FileSystemEntityType.notFound,
         );
       });
@@ -229,21 +238,30 @@ void main() {
   }
 
   for (final writer in _Writer.values) {
-    test('${writer.name} rechecks data corrupted after a successful load', () async {
-      await progress.writeAsString(validSource(), flush: true);
-      final handle = store();
-      expect((await handle.load()).completedCount(course), 1);
-      const corrupt = '{SYNTHETIC corruption after load';
-      await progress.writeAsString(corrupt, flush: true);
+    test(
+      '${writer.name} rechecks data corrupted after a successful load',
+      () async {
+        await progress.writeAsString(validSource(), flush: true);
+        final handle = store();
+        expect((await handle.load()).completedCount(course), 1);
+        const corrupt = '{SYNTHETIC corruption after load';
+        await progress.writeAsString(corrupt, flush: true);
 
-      await expectLater(_write(writer, handle, course), throwsFormatException);
+        await expectLater(
+          _write(writer, handle, course),
+          throwsFormatException,
+        );
 
-      expect(await progress.readAsString(), corrupt);
-      expect(
-        await FileSystemEntity.type('${progress.path}.tmp', followLinks: false),
-        FileSystemEntityType.notFound,
-      );
-    });
+        expect(await progress.readAsString(), corrupt);
+        expect(
+          await FileSystemEntity.type(
+            '${progress.path}.tmp',
+            followLinks: false,
+          ),
+          FileSystemEntityType.notFound,
+        );
+      },
+    );
   }
 
   for (final kind in <_NodeKind>[
@@ -252,93 +270,114 @@ void main() {
     _NodeKind.danglingLink,
   ]) {
     for (final writer in _Writer.values) {
-      test('${writer.name} rejects a final ${kind.name} without changing it', () async {
-        // The link's valid JSON target must still be rejected as a final path.
-        final witness = await _seedNode(
-          progress.path,
-          kind,
-          contents: validSource(),
-        );
-        await expectLater(store().load(), throwsA(isA<FileSystemException>()));
-        await expectLater(
-          _write(writer, store(), course),
-          throwsA(isA<FileSystemException>()),
-        );
+      test(
+        '${writer.name} rejects a final ${kind.name} without changing it',
+        () async {
+          // The link's valid JSON target must still be rejected as a final path.
+          final witness = await _seedNode(
+            progress.path,
+            kind,
+            contents: validSource(),
+          );
+          await expectLater(
+            store().load(),
+            throwsA(isA<FileSystemException>()),
+          );
+          await expectLater(
+            _write(writer, store(), course),
+            throwsA(isA<FileSystemException>()),
+          );
 
-        await witness.expectUnchanged();
-        expect(
-          await FileSystemEntity.type('${progress.path}.tmp', followLinks: false),
-          FileSystemEntityType.notFound,
-        );
-      });
+          await witness.expectUnchanged();
+          expect(
+            await FileSystemEntity.type(
+              '${progress.path}.tmp',
+              followLinks: false,
+            ),
+            FileSystemEntityType.notFound,
+          );
+        },
+      );
     }
   }
 
   for (final kind in _NodeKind.values) {
     for (final writer in _Writer.values) {
-      test('${writer.name} preserves orphan ${kind.name} temp as unknown', () async {
-        final witness = await _seedNode(
-          '${progress.path}.tmp',
-          kind,
-          contents: validSource(),
-        );
-        // A recoverable-looking temp is not evidence of committed progress.
-        await expectLater(store().load(), throwsA(isA<FileSystemException>()));
-        await expectLater(
-          _write(writer, store(), course),
-          throwsA(isA<FileSystemException>()),
-        );
+      test(
+        '${writer.name} preserves orphan ${kind.name} temp as unknown',
+        () async {
+          final witness = await _seedNode(
+            '${progress.path}.tmp',
+            kind,
+            contents: validSource(),
+          );
+          // A recoverable-looking temp is not evidence of committed progress.
+          await expectLater(
+            store().load(),
+            throwsA(isA<FileSystemException>()),
+          );
+          await expectLater(
+            _write(writer, store(), course),
+            throwsA(isA<FileSystemException>()),
+          );
 
-        await witness.expectUnchanged();
-        expect(
-          await FileSystemEntity.type(progress.path, followLinks: false),
-          FileSystemEntityType.notFound,
-        );
-      });
+          await witness.expectUnchanged();
+          expect(
+            await FileSystemEntity.type(progress.path, followLinks: false),
+            FileSystemEntityType.notFound,
+          );
+        },
+      );
     }
   }
 
-  test('a malformed orphan temp is preserved without a false empty load', () async {
-    final witness = await _seedNode(
-      '${progress.path}.tmp',
-      _NodeKind.regularFile,
-      contents: '{SYNTHETIC uncommitted and truncated',
-    );
-    await expectLater(store().load(), throwsA(isA<FileSystemException>()));
-    await expectLater(
-      store().markViewed(course, course.lessons.first),
-      throwsA(isA<FileSystemException>()),
-    );
-    await witness.expectUnchanged();
-    expect(
-      await FileSystemEntity.type(progress.path, followLinks: false),
-      FileSystemEntityType.notFound,
-    );
-  });
+  test(
+    'a malformed orphan temp is preserved without a false empty load',
+    () async {
+      final witness = await _seedNode(
+        '${progress.path}.tmp',
+        _NodeKind.regularFile,
+        contents: '{SYNTHETIC uncommitted and truncated',
+      );
+      await expectLater(store().load(), throwsA(isA<FileSystemException>()));
+      await expectLater(
+        store().markViewed(course, course.lessons.first),
+        throwsA(isA<FileSystemException>()),
+      );
+      await witness.expectUnchanged();
+      expect(
+        await FileSystemEntity.type(progress.path, followLinks: false),
+        FileSystemEntityType.notFound,
+      );
+    },
+  );
 
   for (final kind in _NodeKind.values) {
     for (final writer in _Writer.values) {
-      test('${writer.name} cannot clobber existing ${kind.name} temp', () async {
-        final source = validSource();
-        await progress.writeAsString(source, flush: true);
-        final before = await progress.readAsBytes();
-        final witness = await _seedNode(
-          '${progress.path}.tmp',
-          kind,
-          contents: '{SYNTHETIC earlier incomplete write — korunmalı',
-        );
-        // A valid final remains readable even while a previous temp is kept.
-        expect((await store().load()).completedCount(course), 1);
+      test(
+        '${writer.name} cannot clobber existing ${kind.name} temp',
+        () async {
+          final source = validSource();
+          await progress.writeAsString(source, flush: true);
+          final before = await progress.readAsBytes();
+          final witness = await _seedNode(
+            '${progress.path}.tmp',
+            kind,
+            contents: '{SYNTHETIC earlier incomplete write — korunmalı',
+          );
+          // A valid final remains readable even while a previous temp is kept.
+          expect((await store().load()).completedCount(course), 1);
 
-        await expectLater(
-          _write(writer, store(), course),
-          throwsA(isA<FileSystemException>()),
-        );
+          await expectLater(
+            _write(writer, store(), course),
+            throwsA(isA<FileSystemException>()),
+          );
 
-        expect(await progress.readAsBytes(), before);
-        await witness.expectUnchanged();
-        expect((await store().load()).completedCount(course), 1);
-      });
+          expect(await progress.readAsBytes(), before);
+          await witness.expectUnchanged();
+          expect((await store().load()).completedCount(course), 1);
+        },
+      );
     }
   }
 
@@ -384,29 +423,38 @@ void main() {
     await handle.markPractised(course, course.lessons.first);
 
     final loaded = await store().load();
-    expect(loaded.forLesson(course.lessons.first, course.version)?.practiceCount, 3);
+    expect(
+      loaded.forLesson(course.lessons.first, course.version)?.practiceCount,
+      3,
+    );
     expect(loaded.completedCount(course), 1);
     expect(await blocked.exists(), isFalse);
   });
 
-  test('an unreadable account does not alter guest or another account', () async {
-    await store(null).markViewed(course, course.lessons.first);
-    await store(_bob).markPractised(course, course.lessons.first);
-    final guest = courseFileFor(owned, null);
-    final bob = courseFileFor(owned, _bob);
-    final guestBefore = await guest.readAsBytes();
-    final bobBefore = await bob.readAsBytes();
-    const corrupt = '{SYNTHETIC Alice-only corruption';
-    await progress.writeAsString(corrupt, flush: true);
+  test(
+    'an unreadable account does not alter guest or another account',
+    () async {
+      await store(null).markViewed(course, course.lessons.first);
+      await store(_bob).markPractised(course, course.lessons.first);
+      final guest = courseFileFor(owned, null);
+      final bob = courseFileFor(owned, _bob);
+      final guestBefore = await guest.readAsBytes();
+      final bobBefore = await bob.readAsBytes();
+      const corrupt = '{SYNTHETIC Alice-only corruption';
+      await progress.writeAsString(corrupt, flush: true);
 
-    for (final writer in _Writer.values) {
-      await expectLater(_write(writer, store(), course), throwsFormatException);
-    }
+      for (final writer in _Writer.values) {
+        await expectLater(
+          _write(writer, store(), course),
+          throwsFormatException,
+        );
+      }
 
-    expect(await progress.readAsString(), corrupt);
-    expect(await guest.readAsBytes(), guestBefore);
-    expect(await bob.readAsBytes(), bobBefore);
-    expect((await store(null).load()).records.length, 1);
-    expect((await store(_bob).load()).records.length, 1);
-  });
+      expect(await progress.readAsString(), corrupt);
+      expect(await guest.readAsBytes(), guestBefore);
+      expect(await bob.readAsBytes(), bobBefore);
+      expect((await store(null).load()).records.length, 1);
+      expect((await store(_bob).load()).records.length, 1);
+    },
+  );
 }

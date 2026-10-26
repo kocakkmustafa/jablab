@@ -34,9 +34,13 @@ void main() {
       for (int i = 0; i < 4; i++) {
         await s.tick();
       }
-      expect(s.samples, <double>[1.0, 2.0],
-          reason: 'null okuma "0" ya da "ölçülmedi" olarak SESSİZCE '
-              'birikmemeli — hiç birikmemeli');
+      expect(
+        s.samples,
+        <double>[1.0, 2.0],
+        reason:
+            'null okuma "0" ya da "ölçülmedi" olarak SESSİZCE '
+            'birikmemeli — hiç birikmemeli',
+      );
     });
 
     test('SABOTAJ — üst üste binen okuma GERÇEKTEN engellenir', () async {
@@ -50,16 +54,22 @@ void main() {
         interval: const Duration(seconds: 1),
         read: () {
           startedReads++;
-          return startedReads == 1 ? firstRead.future : Future<double?>.value(9.0);
+          return startedReads == 1
+              ? firstRead.future
+              : Future<double?>.value(9.0);
         },
       );
       final Future<void> firstTick = s.tick();
       // İlk okuma henüz BİTMEDİ (Completer tamamlanmadı) — bu sırada
       // ikinci bir tick() gelirse no-op olmalı.
       await s.tick();
-      expect(startedReads, 1,
-          reason: 'ikinci tick() ilk okuma sürerken YENİ bir okuma '
-              'başlattı — üst-üste-binme koruması ÇALIŞMIYOR');
+      expect(
+        startedReads,
+        1,
+        reason:
+            'ikinci tick() ilk okuma sürerken YENİ bir okuma '
+            'başlattı — üst-üste-binme koruması ÇALIŞMIYOR',
+      );
       firstRead.complete(1.0);
       await firstTick;
       expect(s.samples, <double>[1.0]);
@@ -68,31 +78,45 @@ void main() {
       // okuma başlatabilmeli (negatif ikiz: koruma sonsuza kadar
       // kilitlenmiş OLMAMALI).
       await s.tick();
-      expect(startedReads, 2,
-          reason: 'ilk okuma bittikten SONRA bile yeni okuma başlamıyor — '
-              'koruma kalıcı kilide dönüşmüş');
+      expect(
+        startedReads,
+        2,
+        reason:
+            'ilk okuma bittikten SONRA bile yeni okuma başlamıyor — '
+            'koruma kalıcı kilide dönüşmüş',
+      );
       expect(s.samples, <double>[1.0, 9.0]);
     });
 
-    test('start()/stop() GERÇEK bir Timer.periodic kurar ve iptal eder',
-        () async {
-      int reads = 0;
-      final PeriodicSampler<double> s = PeriodicSampler<double>(
-        interval: const Duration(milliseconds: 15),
-        read: () async => (reads++).toDouble(),
-      );
-      s.start();
-      await Future<void>.delayed(const Duration(milliseconds: 70));
-      s.stop();
-      final int countAtStop = s.samples.length;
-      expect(countAtStop, greaterThanOrEqualTo(2),
-          reason: 'zamanlayıcı 70ms içinde en az birkaç kez ateşlemedi — '
-              'start() gerçek bir Timer.periodic KURMUYOR olabilir');
-      await Future<void>.delayed(const Duration(milliseconds: 50));
-      expect(s.samples.length, countAtStop,
-          reason: 'stop() sonrası yeni örnek eklendi — zamanlayıcı '
-              'GERÇEKTEN iptal edilmemiş');
-    });
+    test(
+      'start()/stop() GERÇEK bir Timer.periodic kurar ve iptal eder',
+      () async {
+        int reads = 0;
+        final PeriodicSampler<double> s = PeriodicSampler<double>(
+          interval: const Duration(milliseconds: 15),
+          read: () async => (reads++).toDouble(),
+        );
+        s.start();
+        await Future<void>.delayed(const Duration(milliseconds: 70));
+        s.stop();
+        final int countAtStop = s.samples.length;
+        expect(
+          countAtStop,
+          greaterThanOrEqualTo(2),
+          reason:
+              'zamanlayıcı 70ms içinde en az birkaç kez ateşlemedi — '
+              'start() gerçek bir Timer.periodic KURMUYOR olabilir',
+        );
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+        expect(
+          s.samples.length,
+          countAtStop,
+          reason:
+              'stop() sonrası yeni örnek eklendi — zamanlayıcı '
+              'GERÇEKTEN iptal edilmemiş',
+        );
+      },
+    );
   });
 
   group('worstTier — en şiddetli kademe, sıraya bakmadan', () {
@@ -102,7 +126,10 @@ void main() {
 
     test('tek okuma → o okumanın kademesi', () {
       final ThermalReading r = ThermalReading(
-          tier: ThermalTier.fair, platform: 'ios', raw: 'fair');
+        tier: ThermalTier.fair,
+        platform: 'ios',
+        raw: 'fair',
+      );
       expect(worstTier(<ThermalReading>[r]), ThermalTier.fair);
     });
 
@@ -132,22 +159,31 @@ void main() {
   group('percentileToJson — Measured/Unmeasured ikisi de kapsanır', () {
     test('Measured → {measured: değer}', () {
       final PeriodicSampler<double> s = PeriodicSampler<double>(
-        interval: const Duration(seconds: 1), read: () async => null);
+        interval: const Duration(seconds: 1),
+        read: () async => null,
+      );
       s.samples.addAll(List<double>.generate(10, (int i) => i.toDouble()));
-      final Map<String, dynamic> json =
-          percentileToJson(s.percentile(0.5, minSources: 5));
+      final Map<String, dynamic> json = percentileToJson(
+        s.percentile(0.5, minSources: 5),
+      );
       expect(json['measured'], isNotNull);
-      expect(json.containsKey('reason'), isFalse,
-          reason: 'Measured sonucunda "reason" alanı bulunmamalı');
+      expect(
+        json.containsKey('reason'),
+        isFalse,
+        reason: 'Measured sonucunda "reason" alanı bulunmamalı',
+      );
     });
 
     test('Unmeasured → measured:null + reason/n/minSources TAŞINIR '
         '(sessizce 0/null\'a düşmez)', () {
       final PeriodicSampler<double> s = PeriodicSampler<double>(
-        interval: const Duration(seconds: 1), read: () async => null);
+        interval: const Duration(seconds: 1),
+        read: () async => null,
+      );
       s.samples.addAll(<double>[1.0, 2.0]); // 2 < minSources 5
-      final Map<String, dynamic> json =
-          percentileToJson(s.percentile(0.5, minSources: 5));
+      final Map<String, dynamic> json = percentileToJson(
+        s.percentile(0.5, minSources: 5),
+      );
       expect(json['measured'], isNull);
       expect(json['reason'], isA<String>());
       expect(json['n'], 2);
@@ -155,8 +191,7 @@ void main() {
     });
   });
 
-  group('ThermalReading.fromChannelMap — iOS dört kademe + bilinmeyen',
-      () {
+  group('ThermalReading.fromChannelMap — iOS dört kademe + bilinmeyen', () {
     for (final String tier in <String>[
       'nominal',
       'fair',
@@ -165,7 +200,8 @@ void main() {
     ]) {
       test('ios "$tier" → ThermalTier.$tier', () {
         final ThermalReading r = ThermalReading.fromChannelMap(
-            <Object?, Object?>{'platform': 'ios', 'raw': tier});
+          <Object?, Object?>{'platform': 'ios', 'raw': tier},
+        );
         expect(r.tier.name, tier);
         expect(r.measured, isTrue);
       });
@@ -173,8 +209,10 @@ void main() {
 
     test('ios bilinmeyen kademe adı → critical\'e yuvarlanır (İYİMSER '
         'TAHMİN YOK)', () {
-      final ThermalReading r = ThermalReading.fromChannelMap(
-          <Object?, Object?>{'platform': 'ios', 'raw': 'somethingNewApple2027AddedX'});
+      final ThermalReading r = ThermalReading.fromChannelMap(<Object?, Object?>{
+        'platform': 'ios',
+        'raw': 'somethingNewApple2027AddedX',
+      });
       expect(r.tier, ThermalTier.critical);
     });
   });
@@ -193,7 +231,8 @@ void main() {
     expected.forEach((int raw, ThermalTier tier) {
       test('android raw=$raw → ThermalTier.${tier.name}', () {
         final ThermalReading r = ThermalReading.fromChannelMap(
-            <Object?, Object?>{'platform': 'android', 'raw': raw});
+          <Object?, Object?>{'platform': 'android', 'raw': raw},
+        );
         expect(r.tier, tier);
         expect(r.measured, isTrue);
         expect(r.raw, raw, reason: 'ham değer KAYBOLMAMALI');
@@ -202,28 +241,41 @@ void main() {
 
     test('android raw=99 (öngörülemeyen üst değer) → critical (güvenlik '
         'tarafına yuvarlanır)', () {
-      final ThermalReading r = ThermalReading.fromChannelMap(
-          <Object?, Object?>{'platform': 'android', 'raw': 99});
+      final ThermalReading r = ThermalReading.fromChannelMap(<Object?, Object?>{
+        'platform': 'android',
+        'raw': 99,
+      });
       expect(r.tier, ThermalTier.critical);
     });
 
     test('android raw=null (API<29) → critical AMA measured=false — '
         'ikisi KARIŞTIRILMAZ', () {
-      final ThermalReading r = ThermalReading.fromChannelMap(
-          <Object?, Object?>{'platform': 'android', 'raw': null});
-      expect(r.tier, ThermalTier.critical,
-          reason: 'PASS/FAIL kararı için güvenli yön');
-      expect(r.measured, isFalse,
-          reason: '"gerçekten critical ölçüldü" ile "ölçülemedi" farklı '
-              'iddialar — measured bu ayrımı taşımalı');
+      final ThermalReading r = ThermalReading.fromChannelMap(<Object?, Object?>{
+        'platform': 'android',
+        'raw': null,
+      });
+      expect(
+        r.tier,
+        ThermalTier.critical,
+        reason: 'PASS/FAIL kararı için güvenli yön',
+      );
+      expect(
+        r.measured,
+        isFalse,
+        reason:
+            '"gerçekten critical ölçüldü" ile "ölçülemedi" farklı '
+            'iddialar — measured bu ayrımı taşımalı',
+      );
     });
   });
 
   test('fromChannelMap bilinmeyen platform adında PATLAR (sessizce '
       'yutmaz)', () {
     expect(
-      () => ThermalReading.fromChannelMap(
-          <Object?, Object?>{'platform': 'windows-phone', 'raw': 0}),
+      () => ThermalReading.fromChannelMap(<Object?, Object?>{
+        'platform': 'windows-phone',
+        'raw': 0,
+      }),
       throwsStateError,
     );
   });

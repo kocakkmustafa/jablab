@@ -37,12 +37,14 @@ import 'package:flutter_test/flutter_test.dart';
 /// * Referansın kendisinin düşürülmesini — o yüzden referansın varyant
 ///   sayısı ayrıca sabitleniyor.
 void main() {
-  final Map<String, dynamic> cues = (jsonDecode(
-          File('assets/content/cues.en.json').readAsStringSync()) as Map)
-      .cast<String, dynamic>();
-  final Map<String, dynamic> lib = (jsonDecode(
-          File('assets/content/library.json').readAsStringSync()) as Map)
-      .cast<String, dynamic>();
+  final Map<String, dynamic> cues =
+      (jsonDecode(File('assets/content/cues.en.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
+  final Map<String, dynamic> lib =
+      (jsonDecode(File('assets/content/library.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
 
   Map<String, int> variantCounts() {
     final Map<String, int> out = <String, int>{};
@@ -65,6 +67,7 @@ void main() {
     void bump(String key, int n) {
       if (n > (out[key] ?? 0)) out[key] = n;
     }
+
     for (final dynamic d in lib['disciplines'] as List<dynamic>) {
       for (final dynamic c
           in ((d as Map)['courses'] as List<dynamic>? ?? const <dynamic>[])) {
@@ -78,8 +81,11 @@ void main() {
           if (rp != null) {
             final int n = rp['rounds'] as int;
             for (final String k in <String>[
-              'cue.round_start', 'cue.round_end',
-              'cue.halfway', 'cue.last_ten', 'cue.last_five',
+              'cue.round_start',
+              'cue.round_end',
+              'cue.halfway',
+              'cue.last_ten',
+              'cue.last_five',
             ]) {
               bump(k, n);
             }
@@ -87,8 +93,10 @@ void main() {
           } else if (ip != null) {
             final int n = ip['bursts'] as int;
             for (final String k in <String>[
-              'cue.burst_start', 'cue.burst_end',
-              'cue.recover', 'cue.next_burst',
+              'cue.burst_start',
+              'cue.burst_end',
+              'cue.recover',
+              'cue.next_burst',
             ]) {
               bump(k, n);
             }
@@ -104,15 +112,23 @@ void main() {
     final Map<String, int> fires = maxFires();
 
     // VAKUM KAPISI: ateşlenme haritası boşsa kural boşa döner.
-    expect(fires.length, greaterThanOrEqualTo(8),
-        reason: 'ateşlenme haritası ${fires.length} kalem — plan şekli '
-            'değişmiş olabilir ve kapı hiçbir şeye bakmıyor');
+    expect(
+      fires.length,
+      greaterThanOrEqualTo(8),
+      reason:
+          'ateşlenme haritası ${fires.length} kalem — plan şekli '
+          'değişmiş olabilir ve kapı hiçbir şeye bakmıyor',
+    );
 
     // REFERANS: bugün sevk edilen ve kabul edilmiş oran.
     const String ref = 'cue.round_start';
-    expect(variants[ref], greaterThanOrEqualTo(4),
-        reason: 'referans repliğin varyantı düştü — kuralın ÇUBUĞU '
-            'düşürülerek geçilemez (J-141)');
+    expect(
+      variants[ref],
+      greaterThanOrEqualTo(4),
+      reason:
+          'referans repliğin varyantı düştü — kuralın ÇUBUĞU '
+          'düşürülerek geçilemez (J-141)',
+    );
     final double bar = fires[ref]! / variants[ref]!;
 
     final List<String> offenders = <String>[];
@@ -121,15 +137,21 @@ void main() {
       expect(v, greaterThan(0), reason: '$key ateşleniyor ama varyantı yok');
       final double rate = n / v;
       if (rate > bar + 0.001) {
-        offenders.add('$key: $n× ÷ $v varyant = ${rate.toStringAsFixed(1)}× '
-            '(referans ${bar.toStringAsFixed(1)}×)');
+        offenders.add(
+          '$key: $n× ÷ $v varyant = ${rate.toStringAsFixed(1)}× '
+          '(referans ${bar.toStringAsFixed(1)}×)',
+        );
       }
     });
 
-    expect(offenders, isEmpty,
-        reason: 'AYNI CÜMLE ÇOK TEKRAR EDİYOR. Seçici round-robin, yani '
-            'tekrar rastgele değil GARANTİLİ. En çok ateşlenen replikler en '
-            'az varyanta sahipti (J-141):\n  ${offenders.join('\n  ')}');
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'AYNI CÜMLE ÇOK TEKRAR EDİYOR. Seçici round-robin, yani '
+          'tekrar rastgele değil GARANTİLİ. En çok ateşlenen replikler en '
+          'az varyanta sahipti (J-141):\n  ${offenders.join('\n  ')}',
+    );
   });
 
   // ⚠️ UZUNLUK KURALI BURADA DEĞİL — ve olmamalı (J-145).

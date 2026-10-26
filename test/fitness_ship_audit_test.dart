@@ -67,12 +67,12 @@ void main() {
               as Map)
           .cast<String, dynamic>();
   final Library lib = Library.fromJson(libJson);
-  final Map<String, dynamic> progression =
-      (curJson['progression'] as Map).cast<String, dynamic>();
+  final Map<String, dynamic> progression = (curJson['progression'] as Map)
+      .cast<String, dynamic>();
 
   int? gateSecondsOf(String lessonId) {
-    final Map<String, dynamic>? node =
-        (progression[lessonId] as Map?)?.cast<String, dynamic>();
+    final Map<String, dynamic>? node = (progression[lessonId] as Map?)
+        ?.cast<String, dynamic>();
     for (final dynamic g in (node?['gates'] as List?) ?? const <dynamic>[]) {
       final num? m = (g as Map)['sessionMinutes'] as num?;
       if (m != null) return m.toInt() * 60;
@@ -97,7 +97,9 @@ void main() {
     }
   }
 
-  testWidgets('FITNESS-TRACK SHIP DENETİMİ — uçtan uca', (WidgetTester t) async {
+  testWidgets('FITNESS-TRACK SHIP DENETİMİ — uçtan uca', (
+    WidgetTester t,
+  ) async {
     say('═══════════════════════════════════════════════════════════════');
     say('FITNESS-TRACK SHIP DENETİMİ — KOŞUM ÇIKTISI (J-070)');
     say('Bu dosya elle yazılmadı: `test/fitness_ship_audit_test.dart`');
@@ -114,8 +116,7 @@ void main() {
     for (final ({Course course, Lesson lesson}) e in liveTimed) {
       final Lesson l = e.lesson;
       final _AuditStore store = _AuditStore();
-      final ContentRepository repo =
-          ContentRepository(storeOverride: store);
+      final ContentRepository repo = ContentRepository(storeOverride: store);
 
       // ---- 1. AÇILIŞTAN DERSE ULAŞ -------------------------------------
       // Her ders TAZE bir ağaçta koşar: `pumpWidget` aynı tipte widget'ta
@@ -124,7 +125,12 @@ void main() {
       // bulunamaz. Benzersiz `key` ağacı yeniden kurar.
       await t.runAsync(() async {
         await t.pumpWidget(
-            JabLabApp(key: ValueKey<String>(l.id), repository: repo, onboarding: _seen));
+          JabLabApp(
+            key: ValueKey<String>(l.id),
+            repository: repo,
+            onboarding: _seen,
+          ),
+        );
       });
       await settleAppLoad(t);
       await t.pumpAndSettle();
@@ -148,12 +154,16 @@ void main() {
       await t.pumpAndSettle();
 
       // ---- 2. DÖRT AŞAMA ------------------------------------------------
-      final bool teachOk =
-          find.byKey(const Key('teach-no-analysis')).evaluate().isNotEmpty;
+      final bool teachOk = find
+          .byKey(const Key('teach-no-analysis'))
+          .evaluate()
+          .isNotEmpty;
       await t.tap(find.byKey(const Key('advance-button')));
       await t.pumpAndSettle();
-      final bool rehearseOk =
-          find.byKey(const Key('rehearse-copy')).evaluate().isNotEmpty;
+      final bool rehearseOk = find
+          .byKey(const Key('rehearse-copy'))
+          .evaluate()
+          .isNotEmpty;
       await t.tap(find.byKey(const Key('advance-button')));
       await t.pump();
 
@@ -164,7 +174,7 @@ void main() {
       final String structure = ip != null
           ? '${ip.bursts}×(${ip.burstSeconds}+${ip.recoverSeconds})sn aralık'
           : '${rp!.rounds}×${rp.roundSeconds}sn tur + '
-              '${rp.rounds - 1}×${rp.restSeconds}sn dinlenme';
+                '${rp.rounds - 1}×${rp.restSeconds}sn dinlenme';
 
       final Key posKey = ip != null
           ? const Key('live-burst-position')
@@ -174,8 +184,10 @@ void main() {
           !multiSegment || find.byKey(posKey).evaluate().isNotEmpty;
 
       // Kamera yok → hüküm yuvası SUSUYOR ve sebebi yazılı olmalı.
-      final bool noVerdictDeclared =
-          find.byKey(const Key('live-no-verdict')).evaluate().isNotEmpty;
+      final bool noVerdictDeclared = find
+          .byKey(const Key('live-no-verdict'))
+          .evaluate()
+          .isNotEmpty;
 
       // Seansı SONUNA kadar koştur (sanal saat). +30sn pay: son segmentin
       // BİTİŞ tiki toplamın hemen ardından düşer; tam-toplamda durmak
@@ -192,8 +204,9 @@ void main() {
           .isNotEmpty;
 
       final int? gate = gateSecondsOf(l.id);
-      final int expectedWork =
-          ip != null ? ip.workSeconds : rp!.rounds * rp.roundSeconds;
+      final int expectedWork = ip != null
+          ? ip.workSeconds
+          : rp!.rounds * rp.roundSeconds;
 
       String recordVerdict;
       if (store.written.isEmpty) {
@@ -204,21 +217,26 @@ void main() {
         final bool workOk = r.workedSeconds == expectedWork;
         final bool gateOk = gate == null || expectedWork == gate;
         if (!workOk) {
-          failures.add('${l.id}: kaydedilen çalışma ${r.workedSeconds}sn, '
-              'beklenen ${expectedWork}sn');
+          failures.add(
+            '${l.id}: kaydedilen çalışma ${r.workedSeconds}sn, '
+            'beklenen ${expectedWork}sn',
+          );
         }
         if (!gateOk) {
           failures.add('${l.id}: çalışma ${expectedWork}sn ama kapı ${gate}sn');
         }
-        recordVerdict = '${workOk ? "✓" : "✗"} kayıt '
+        recordVerdict =
+            '${workOk ? "✓" : "✗"} kayıt '
             '${r.workedSeconds}sn çalışma · ${r.unitsCompleted}/'
             '${r.plannedUnits} segment · '
             '${r.isComplete ? "tamamlandı" : "yarıda"}';
       }
 
       if (!teachOk || !rehearseOk || !summaryOk) {
-        failures.add('${l.id}: seans aşamaları eksik '
-            '(teach=$teachOk rehearse=$rehearseOk summary=$summaryOk)');
+        failures.add(
+          '${l.id}: seans aşamaları eksik '
+          '(teach=$teachOk rehearse=$rehearseOk summary=$summaryOk)',
+        );
       }
       if (!positionShown) {
         failures.add('${l.id}: çok segmentli ders ama konum göstergesi yok');
@@ -229,15 +247,29 @@ void main() {
 
       say('── ${l.id}');
       say('   yapı        : $structure');
-      say('   toplam      : ${totalSeconds}sn (${(totalSeconds / 60).toStringAsFixed(1)} dk)');
-      say('   çalışma     : ${expectedWork}sn  ·  kapı: '
-          '${gate == null ? "(süre kapısı yok)" : "${gate}sn"}  '
-          '${gate != null && expectedWork == gate ? "✓ BİREBİR" : gate == null ? "" : "✗"}');
+      say(
+        '   toplam      : ${totalSeconds}sn (${(totalSeconds / 60).toStringAsFixed(1)} dk)',
+      );
+      say(
+        '   çalışma     : ${expectedWork}sn  ·  kapı: '
+        '${gate == null ? "(süre kapısı yok)" : "${gate}sn"}  '
+        '${gate != null && expectedWork == gate
+            ? "✓ BİREBİR"
+            : gate == null
+            ? ""
+            : "✗"}',
+      );
       say('   ulaşılabilir: ✓ kütüphane → ${e.course.id} → ders');
-      say('   4 aşama     : öğret=${teachOk ? "✓" : "✗"} '
-          'dene=${rehearseOk ? "✓" : "✗"} canlı=✓ özet=${summaryOk ? "✓" : "✗"}');
-      say('   konum       : ${multiSegment ? (positionShown ? "✓ gösteriliyor" : "✗ YOK") : "— (tek segment)"}');
-      say('   hüküm       : ${noVerdictDeclared ? "✓ SUSUYOR + sebebi yazılı" : "✗ beyan yok"}');
+      say(
+        '   4 aşama     : öğret=${teachOk ? "✓" : "✗"} '
+        'dene=${rehearseOk ? "✓" : "✗"} canlı=✓ özet=${summaryOk ? "✓" : "✗"}',
+      );
+      say(
+        '   konum       : ${multiSegment ? (positionShown ? "✓ gösteriliyor" : "✗ YOK") : "— (tek segment)"}',
+      );
+      say(
+        '   hüküm       : ${noVerdictDeclared ? "✓ SUSUYOR + sebebi yazılı" : "✗ beyan yok"}',
+      );
       say('   $recordVerdict');
       say('');
     }
@@ -245,10 +277,13 @@ void main() {
     // ---- 6. KAYDEDİLEN OLGU İLERLEME SAYFASINDA GÖRÜNÜYOR --------------
     final _AuditStore progressStore = _AuditStore();
     await t.runAsync(() async {
-      await t.pumpWidget(JabLabApp(
+      await t.pumpWidget(
+        JabLabApp(
           key: const ValueKey<String>('progress-leg'),
           onboarding: _seen,
-          repository: ContentRepository(storeOverride: progressStore)));
+          repository: ContentRepository(storeOverride: progressStore),
+        ),
+      );
     });
     await settleAppLoad(t);
     await t.pumpAndSettle();
@@ -287,10 +322,14 @@ void main() {
       pops++;
     }
 
-    final bool recordedShown =
-        find.byKey(const Key('recorded-heading')).evaluate().isNotEmpty;
-    final bool noteShown =
-        find.byKey(const Key('recorded-note')).evaluate().isNotEmpty;
+    final bool recordedShown = find
+        .byKey(const Key('recorded-heading'))
+        .evaluate()
+        .isNotEmpty;
+    final bool noteShown = find
+        .byKey(const Key('recorded-note'))
+        .evaluate()
+        .isNotEmpty;
     final bool judgementStillSilent = find.text('—').evaluate().isNotEmpty;
     if (!recordedShown) failures.add('ilerleme: kaydedilen bölüm görünmüyor');
     if (!noteShown) {
@@ -303,7 +342,9 @@ void main() {
     say('── ilerleme sayfası (seans sonrası)');
     say('   kaydedilen bölüm : ${recordedShown ? "✓ görünüyor" : "✗ YOK"}');
     say('   "kapı açılmıyor" : ${noteShown ? "✓ yazılı" : "✗ YOK"}');
-    say('   hüküm bantları   : ${judgementStillSilent ? "✓ hâlâ SUSUYOR (—)" : "✗ konuşuyor"}');
+    say(
+      '   hüküm bantları   : ${judgementStillSilent ? "✓ hâlâ SUSUYOR (—)" : "✗ konuşuyor"}',
+    );
     say('');
 
     // ---- KİLİTLİ DERSLER: sebep sınıfı --------------------------------
@@ -316,8 +357,10 @@ void main() {
 
     say('═══════════════════════════════════════════════════════════════');
     if (failures.isEmpty) {
-      say('SONUÇ: ${liveTimed.length}/${liveTimed.length} canlı süreli ders '
-          'uçtan uca YÜRÜDÜ.');
+      say(
+        'SONUÇ: ${liveTimed.length}/${liveTimed.length} canlı süreli ders '
+        'uçtan uca YÜRÜDÜ.',
+      );
       say('Her dersin çalışma süresi kendi ilerleme kapısına BİREBİR eşit;');
       say('kayıt hattı kamera OLMADAN çalışıyor; hüküm yuvası susuyor ve');
       say('sebebini söylüyor. Fitness-track için kalan TEK sınıf: KAMERA.');
@@ -329,7 +372,9 @@ void main() {
     }
     say('═══════════════════════════════════════════════════════════════');
 
-    File('docs/gates/FITNESS-SHIP-KANITI.txt').writeAsStringSync(log.toString());
+    File(
+      'docs/gates/FITNESS-SHIP-KANITI.txt',
+    ).writeAsStringSync(log.toString());
     expect(failures, isEmpty, reason: failures.join('\n'));
   });
 }
