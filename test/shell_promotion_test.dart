@@ -58,12 +58,30 @@ void main() {
     }
   });
 
+  // ⚠️ ADLANDIRILMIŞ İSTİSNA (2026-10-26, JAB-03) — liste değil, envanter.
+  // `e6cb808` (20 Ekim) 14 dil çalışma zamanını kurdu; kabuk metinleri o
+  // gün app'in kaynak-anahtarlı kataloğuna (`ui_language.dart`) ve ipucu
+  // çevirisine (`cue_locale.dart`) bağlandı. Kabuğun terfisi README'de
+  // donmuş (motion_shell çekirdekte doğmadı; JabLab bu bileşenleri artık
+  // çağırmıyor). Bu iki import TERFİ ENGELİDİR ve aşağıdaki testte adıyla
+  // sayılır: terfi turunda yerelleştirme motion_shell'den enjekte edilmeden
+  // bu dosyalar taşınamaz. Başka her app/motor importu yine kırmızıdır.
+  const Map<String, Set<String>> localizationRuntime = <String, Set<String>>{
+    'session_flow.dart': <String>{"import '../app/ui_language.dart';"},
+    'live_surface.dart': <String>{
+      "import '../app/ui_language.dart';",
+      "import '../app/cue_locale.dart';",
+    },
+  };
+
   test('terfi şartı #2 — app veya motor bağımlılığı yok', () {
     final List<String> offenders = <String>[];
     for (final File f in sources) {
+      final String name = f.uri.pathSegments.last;
       for (final String line in f.readAsLinesSync()) {
         final String t = line.trim();
         if (!t.startsWith('import ')) continue;
+        if (localizationRuntime[name]?.contains(t) ?? false) continue;
         if (t.contains('jablab_engine') ||
             t.contains("'../app/") ||
             t.contains('package:jablab/app/')) {
@@ -74,6 +92,23 @@ void main() {
     expect(offenders, isEmpty,
         reason: 'kabuk app/motor katmanına bağımlı — terfi edemez:\n'
             '${offenders.join("\n")}');
+  });
+
+  test('terfi engeli — yerelleştirme importları envanterle birebir', () {
+    // İstisna sessizce büyüyemez ya da bayatlayamaz: dosyalardaki app
+    // yerelleştirme importları tam olarak yukarıdaki envanterdir.
+    final Map<String, Set<String>> found = <String, Set<String>>{};
+    for (final File f in sources) {
+      final Set<String> imports = f
+          .readAsLinesSync()
+          .map((String l) => l.trim())
+          .where((String t) =>
+              t == "import '../app/ui_language.dart';" ||
+              t == "import '../app/cue_locale.dart';")
+          .toSet();
+      if (imports.isNotEmpty) found[f.uri.pathSegments.last] = imports;
+    }
+    expect(found, localizationRuntime);
   });
 
   test('terfi şartı #5 — dürüstlük değişmezleri kabukta kodlu', () {
