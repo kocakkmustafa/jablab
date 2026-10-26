@@ -81,7 +81,7 @@ void main() {
             'destekleyecek bir ölçüm yok.');
   });
 
-  test('ilk sürümde kamera koçluğu ve abonelik satışı vaat edilmiyor', () {
+  test('ilk sürümde kamera koçluğu vaat edilmiyor; abonelik koşulları açık', () {
     final String desc = (listing['description'] as String).toLowerCase();
     final String short =
         ((listing['playStore'] as Map)['shortDescription'] as String)
@@ -99,8 +99,20 @@ void main() {
       expect(desc, contains(area));
     }
     expect(desc, contains('do not teach sparring or contact training'));
-    expect(desc, contains('camera coaching, automatic punch counting '
-        'and subscription sales are not available'));
+    expect(desc, contains('camera coaching and automatic punch counting '
+        'are not available'));
+    // Sales are open in the first release (Core R3): the listing states the
+    // free part, both plans, the 14-day trial and auto-renewal/cancellation.
+    for (final String sale in <String>[
+      'the first lessons of every course are free',
+      'jablab (\$11.99/month or \$69.99/year)',
+      'motion+ (\$19.99/month or \$129.99/year',
+      '14-day free trial',
+      'renews automatically unless cancelled at least 24 hours',
+    ]) {
+      expect(desc, contains(sale));
+    }
+    expect(desc, isNot(contains('subscription sales are not available')));
     expect(short, contains('camera coaching is not open'));
     expect(desc, isNot(contains('live solo shadow-boxing with')));
     expect(desc, isNot(contains('active jablab or motion+ subscription')));

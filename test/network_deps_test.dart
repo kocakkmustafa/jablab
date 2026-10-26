@@ -353,8 +353,9 @@ void main() {
     }
     expect(
       manifest,
-      isNot(contains('NSPrivacyCollectedDataTypePurchaseHistory')),
-      reason: 'İlk sürümde satın alma kapalı; işlem geçmişi toplanmıyor',
+      contains('NSPrivacyCollectedDataTypePurchaseHistory'),
+      reason: 'Satış ilk sürümde açık (Core R3): satın alma kanıtı Motion '
+          'sunucusunda hesaba bağlı tutuluyor',
     );
     // POZİTİF KONTROL: dosya gerçekten okunuyor.
     expect(
