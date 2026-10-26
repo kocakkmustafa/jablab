@@ -19,6 +19,7 @@ class OwnerBoundAccountPage extends StatefulWidget {
     this.canInitiate,
     this.ageBlocked = false,
     this.onAgeBlocked,
+    this.membershipAvailable = motionSubscriptionSalesAvailable,
   });
 
   final MotionAccountClient account;
@@ -32,6 +33,10 @@ class OwnerBoundAccountPage extends StatefulWidget {
   /// Durable device age block for Core's 13+ / parental-consent gate.
   final bool ageBlocked;
   final VoidCallback? onAgeBlocked;
+
+  /// Core R1+: the membership row and its opening status check follow the
+  /// sales flag. Harnesses that exercise identity/deletion only pass false.
+  final bool membershipAvailable;
 
   @override
   State<OwnerBoundAccountPage> createState() => _OwnerBoundAccountPageState();
@@ -87,6 +92,7 @@ class _OwnerBoundAccountPageState extends State<OwnerBoundAccountPage> {
         : null,
     ageBlocked: widget.ageBlocked,
     onAgeBlocked: widget.onAgeBlocked,
+    membershipAvailable: widget.membershipAvailable,
   );
 }
 

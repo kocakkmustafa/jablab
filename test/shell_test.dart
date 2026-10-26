@@ -215,7 +215,13 @@ void main() {
       main,
       contains('cameraLessonsAvailable: jablabCameraCoachingAvailable'),
     );
-    expect(main, contains('const bool jablabCameraCoachingAvailable = false;'));
+    expect(
+      main,
+      contains(
+        'const bool jablabCameraCoachingAvailable = '
+        'motionCameraCoachingAvailable;',
+      ),
+    );
     var gateCalls = 0;
     await pumpApp(
       t,

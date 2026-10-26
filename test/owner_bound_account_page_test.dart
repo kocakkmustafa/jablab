@@ -1190,6 +1190,9 @@ Future<void> _page(
     initialPasswordRecovery: recovery,
     onRetryIdentity: onRetry,
     clearLocalData: (id) => fixture.clear(id),
+    // Identity/deletion harness: the membership row (Core R1+ default) is
+    // covered by identity_appearance_gate_test and Core's own suite.
+    membershipAvailable: false,
   );
   if (find.byKey(ObjectKey(fixture.page)).evaluate().isEmpty) {
     fixture.page.value = page;

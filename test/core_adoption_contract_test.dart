@@ -121,6 +121,7 @@ void main() {
         'motion_content': _approvedSha,
         'motion_core': _approvedSha,
         'motion_camera': _approvedSha,
+        'motion_entitlements': _approvedSha,
       });
       expect(
         _descriptorRefs(
@@ -139,6 +140,8 @@ void main() {
           'motion_core': _LockRef(_approvedSha, _approvedSha),
           'motion_camera': _LockRef(_approvedSha, _approvedSha),
           'motion_entitlements': _LockRef(_approvedSha, _approvedSha),
+          // R3: native age-signal/app-transaction plugin, same Core SHA.
+          'motion_platform_signals': _LockRef(_approvedSha, _approvedSha),
         });
         expect(_lockRefs(lockForAudit('packages/jablab_engine/pubspec.lock')), {
           'motion_core': _LockRef(_approvedSha, _approvedSha),
@@ -208,6 +211,7 @@ const _motionPackages = [
   'motion_content',
   'motion_core',
   'motion_entitlements',
+  'motion_platform_signals',
 ];
 
 bool _matchesApprovedDescriptor(Map<String, String> refs) =>

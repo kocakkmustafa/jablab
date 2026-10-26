@@ -47,6 +47,11 @@ void main() {
     'motion_entitlements':
         'Mağaza satın alma kanıtını Motion doğrulama işlevine gönderir; '
         'işlem referansı hesapla bağlı satın alma geçmişidir.',
+    'motion_platform_signals':
+        'Core R3 yerel eklentisi: StoreKit AppTransaction ve Play Age '
+        'Signals API\'sini çağırır; ağ trafiği işletim sisteminin mağaza '
+        'hizmetindedir, eklenti kendisi HTTP açmaz. Deneme kimliği '
+        'motion_entitlements üzerinden Motion sunucusuna gider.',
     'in_app_purchase':
         'Apple/Google mağaza satın alma istemcisi; ürün sorgusu ve '
         'işlem akışı cihaz mağazası ağına dayanır.',
@@ -285,6 +290,7 @@ void main() {
       'vm_service',
       'motion_account',
       'motion_entitlements',
+      'motion_platform_signals',
       'in_app_purchase',
       'in_app_purchase_android',
       'in_app_purchase_storekit',
@@ -316,7 +322,7 @@ void main() {
     });
   });
 
-  test('Motion hesap alanları beyan edildi; satış ve font CDN yok', () {
+  test('Motion hesap alanları ve satın alma geçmişi beyanlı; font CDN yok', () {
     // NEGATİF İKİZİN TERSİ (H-40): D1'den ÖNCE bu test "ürün ağa çıkmıyor
     // DENEMEZ" derdi (google_fonts gerçekten çıkıyordu). D1 sonrası olgu
     // TERSİNE DÖNDÜ — artık manifestte kalan herhangi bir "font CDN'i

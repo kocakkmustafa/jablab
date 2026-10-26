@@ -119,6 +119,7 @@ class _Harness {
   Object? _proofError;
   int userRequests = 0;
   int unexpectedRequests = 0;
+  int membershipReads = 0;
   int ageStatusReads = 0;
   int deletionCallbacks = 0;
   int profileReads = 0;
@@ -169,6 +170,22 @@ class _Harness {
           h.ageStatusReads++;
           return http.Response(
             '[]',
+            200,
+            request: request,
+            headers: {'content-type': 'application/json'},
+          );
+        }
+        // Core R1+: the account page checks membership on open while sales
+        // are open. Synthetic non-member answer.
+        if (request.method == 'POST' &&
+            request.url.path.endsWith('/functions/v1/motion-check-membership')) {
+          h.membershipReads++;
+          return http.Response(
+            jsonEncode({
+              'active': false,
+              'anyActive': false,
+              'motionPlusTrialAvailable': false,
+            }),
             200,
             request: request,
             headers: {'content-type': 'application/json'},
