@@ -41,10 +41,10 @@ import 'app/ui_language.dart';
 /// yönü ilan ediyorsa iOS açılışta kısa bir yatay kare çizebiliyor ve
 /// Android yapılandırma değişikliğini uygulamaya taşıyor. Beyanın üçünde de
 /// aynı olması, "kilit var" cümlesinin her katmanda doğru olması demek.
-/// Camera coaching stays closed in JabLab until its own physical and device
-/// acceptance (J-007/J-011); it is separate from the shared sales switch
-/// (`motionPaidFeaturesAvailable`), which now gates only course access.
-const bool jablabCameraCoachingAvailable = false;
+/// Camera coaching stays closed until its own physical and device acceptance
+/// (J-007/J-011); it follows Core's camera flag (R1 split), separate from the
+/// sales flag (`motionSubscriptionSalesAvailable`) that gates course access.
+const bool jablabCameraCoachingAvailable = motionCameraCoachingAvailable;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -118,11 +118,13 @@ Future<void> launchJabLab({
     }
 
     final CourseAccess courseAccess = CourseAccess(
-      salesOpen: motionPaidFeaturesAvailable,
+      salesOpen: motionSubscriptionSalesAvailable,
+      // The only membership gate: a locked lesson past the free part.
       unlock: (BuildContext lessonContext) => requireMotionPaidAccess(
         lessonContext,
         account: runtime.account,
         accountPageBuilder: accountPage,
+        salesAvailable: motionSubscriptionSalesAvailable,
         membershipPageBuilder: (_) =>
             MotionMembershipPage(account: runtime.account),
       ),
@@ -158,7 +160,8 @@ Future<void> launchJabLab({
           accountPageBuilder: accountPage,
           cameraLessonsAvailable: jablabCameraCoachingAvailable,
           courseAccess: courseAccess,
-          beforeLessonStart: (lessonContext) => requireMotionPaidAccess(
+          // Camera lessons only; closed with Core's camera flag.
+          beforeLessonStart: (lessonContext) => requireMotionCameraAccess(
             lessonContext,
             account: runtime.account,
             accountPageBuilder: accountPage,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:motion_entitlements/motion_entitlements.dart'
+    show isLessonUnlocked;
 
 import 'ui_language.dart';
 
@@ -31,6 +33,18 @@ const Map<GatedCourse, int> freeLessonCount = <GatedCourse, int>{
   GatedCourse.yang16: 6,
 };
 
+/// Lessons per gated course, in course order (Core `isLessonUnlocked`
+/// validates indices against it; `course_access_test` ties it to content).
+const Map<GatedCourse, int> courseLessonCount = <GatedCourse, int>{
+  GatedCourse.boxing: 39,
+  GatedCourse.kickboxing: 16,
+  GatedCourse.muayThai: 16,
+  GatedCourse.karate: 16,
+  GatedCourse.taikyoku: 10,
+  GatedCourse.taiChi: 14,
+  GatedCourse.yang16: 18,
+};
+
 /// Host-supplied access state for the course pages.
 ///
 /// While sales are closed ([salesOpen] false) every lesson stays open: a
@@ -55,8 +69,21 @@ class CourseAccess {
   /// Account → membership (purchase / restore) → verified status.
   final Future<bool> Function(BuildContext context) unlock;
 
-  bool isFree(GatedCourse course, int lessonIndex) =>
-      lessonIndex < freeLessonCount[course]!;
+  /// Core `isLessonUnlocked` for a non-member, with JabLab's approved free
+  /// counts as the override (Y4-1, founder decision 2026-10-26; Core's
+  /// max(first module, ceil(n/3)) default is not used, so the first-module
+  /// count passed is 0). An index outside the course is never free.
+  bool isFree(GatedCourse course, int lessonIndex) {
+    final int total = courseLessonCount[course]!;
+    if (lessonIndex < 0 || lessonIndex >= total) return false;
+    return isLessonUnlocked(
+      lessonIndex: lessonIndex,
+      totalLessons: total,
+      firstModuleLessonCount: 0,
+      entitled: false,
+      freeLessonLimit: freeLessonCount[course],
+    );
+  }
 
   bool allows(GatedCourse course, int lessonIndex) =>
       !salesOpen || entitled.value || isFree(course, lessonIndex);

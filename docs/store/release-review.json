@@ -7,7 +7,7 @@
     "automaticPunchCountingAvailable": false,
     "demonstrationVideoIncluded": false,
     "manualPracticeRecordIsMastery": false,
-    "policySource": "motion_account/lib/src/motion_release_policy.dart at pinned Core 583203112c942dd38673bc43d7d05f82f4f5173d; wired in lib/main.dart (cameraLessonsAvailable: motionPaidFeaturesAvailable)"
+    "policySource": "motion_account/lib/src/motion_release_policy.dart at pinned Core f43d71a375431e96c689a7a4a04fb53ff01af693; wired in lib/main.dart (cameraLessonsAvailable: jablabCameraCoachingAvailable = motionCameraCoachingAvailable; course access: motionSubscriptionSalesAvailable)"
   },
   "appReview": {
     "en-US": "JabLab contains bundled written beginner courses in five martial arts and manual self-reported practice records: boxing (39 lessons in 8 modules), kickboxing (16), Muay Thai (16), karate kihon (16) with the beginner kata Taikyoku Shodan (10), and Tai Chi (14 fixed-foot foundation lessons plus a written study of the Yang Family 16 sequence). All practice is solo and non-contact. The interface and lessons are available in 14 languages. A Motion account is optional; all courses can be opened without signing in. Camera coaching, automatic punch counting and subscription sales are disabled by the current release policy; older camera lessons are shown locked with that reason. No independent movement accuracy or mastery result is claimed. Demonstration video is not included. Real account and physical-device acceptance must be completed on the final build before submission.",

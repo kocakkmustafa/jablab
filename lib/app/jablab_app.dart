@@ -71,7 +71,7 @@ class JabLabApp extends StatefulWidget {
   /// Shared Motion paywall (option A). Null keeps every written lesson open.
   final CourseAccess? courseAccess;
 
-  /// Production passes the release policy (`motionPaidFeaturesAvailable`):
+  /// Production passes Core's camera flag (`motionCameraCoachingAvailable`):
   /// while camera coaching is closed, camera lessons stay listed but locked
   /// with their reason. Widget harnesses keep the camera path reachable.
   final bool cameraLessonsAvailable;
