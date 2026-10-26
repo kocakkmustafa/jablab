@@ -102,7 +102,14 @@ void main() {
       // sunmayız. Bu, pazarlamaya sızması en kolay iddia.
       final ExcludedItem power =
           lib.excluded.firstWhere((ExcludedItem x) => x.id == 'power_measurement');
-      expect(power.reason.toLowerCase(), contains('sensor'));
+      // 2990239 (2026-10-20) dropped the camera tempo-band promise, and with
+      // it the word "sensor": the reason now says force is not measured and
+      // no power number is produced. That is the claim this gate guards.
+      final String reason = power.reason.toLowerCase();
+      expect(reason, contains('force is not measured'));
+      expect(reason, contains('does not produce'));
+      expect(reason, contains('power number'));
+      expect(reason, isNot(contains('we show those as bands')));
 
       final Discipline boxingD = lib.live.first;
       expect(boxingD.notMeasured.join(' ').toLowerCase(),
