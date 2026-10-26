@@ -26717,7 +26717,7 @@
         },
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 647
+          "line": 644
         }
       ],
       "kind": "UI",
@@ -26752,7 +26752,7 @@
         },
         {
           "path": "lib/app/yang16_written_course_page.dart",
-          "line": 971
+          "line": 974
         }
       ],
       "kind": "UI",
@@ -26767,7 +26767,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 269
+          "line": 266
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26775,7 +26775,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 294
+          "line": 291
         }
       ],
       "kind": "UI",
@@ -26790,7 +26790,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 329
+          "line": 326
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26798,7 +26798,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 354
+          "line": 351
         }
       ],
       "kind": "UI",
@@ -26813,7 +26813,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 401
+          "line": 398
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26821,7 +26821,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 426
+          "line": 423
         }
       ],
       "kind": "UI",
@@ -26836,7 +26836,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 436
+          "line": 433
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26844,7 +26844,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 466
+          "line": 463
         }
       ],
       "kind": "UI",
@@ -26859,7 +26859,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 656
+          "line": 653
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26867,7 +26867,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 686
+          "line": 683
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26890,7 +26890,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 665
+          "line": 662
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26898,7 +26898,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 695
+          "line": 692
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26925,7 +26925,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 700
+          "line": 697
         }
       ],
       "kind": "UI",
@@ -26940,7 +26940,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 733
+          "line": 730
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -26948,7 +26948,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 751
+          "line": 748
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
@@ -26971,7 +26971,7 @@
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
-          "line": 750
+          "line": 753
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
@@ -26979,7 +26979,7 @@
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 263
+          "line": 266
         }
       ],
       "kind": "UI",
@@ -27047,7 +27047,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 676
+          "line": 673
         }
       ],
       "kind": "UI",
@@ -27062,7 +27062,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 718
+          "line": 715
         }
       ],
       "kind": "UI",
@@ -27730,7 +27730,7 @@
         },
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 875
+          "line": 873
         }
       ],
       "kind": "UI",
@@ -27809,7 +27809,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 628
+          "line": 626
         }
       ],
       "kind": "UI",
@@ -27824,7 +27824,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 702
+          "line": 700
         }
       ],
       "kind": "UI",
@@ -27839,7 +27839,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 712
+          "line": 710
         }
       ],
       "kind": "UI",
@@ -27854,7 +27854,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 717
+          "line": 715
         }
       ],
       "kind": "UI",
@@ -27869,7 +27869,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 722
+          "line": 720
         }
       ],
       "kind": "UI",
@@ -27884,7 +27884,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 963
+          "line": 961
         }
       ],
       "kind": "UI",
@@ -27899,7 +27899,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 972
+          "line": 970
         }
       ],
       "kind": "UI",
@@ -27914,7 +27914,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 986
+          "line": 984
         }
       ],
       "kind": "UI",
@@ -27929,7 +27929,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1001
+          "line": 999
         }
       ],
       "kind": "UI",
@@ -27944,7 +27944,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1014
+          "line": 1012
         }
       ],
       "kind": "UI",
@@ -27959,7 +27959,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1028
+          "line": 1026
         }
       ],
       "kind": "UI",
@@ -27974,7 +27974,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1058
+          "line": 1056
         }
       ],
       "kind": "UI",
@@ -27989,7 +27989,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1061
+          "line": 1059
         }
       ],
       "kind": "UI",
@@ -28004,7 +28004,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1077
+          "line": 1075
         }
       ],
       "kind": "UI",
@@ -28019,7 +28019,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1102
+          "line": 1100
         }
       ],
       "kind": "UI",
@@ -28034,7 +28034,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1111
+          "line": 1109
         }
       ],
       "kind": "UI",
@@ -28049,7 +28049,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1120
+          "line": 1118
         }
       ],
       "kind": "UI",
@@ -28064,7 +28064,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1179
+          "line": 1177
         }
       ],
       "kind": "UI",
@@ -28079,7 +28079,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1242
+          "line": 1240
         }
       ],
       "kind": "UI",
@@ -28109,7 +28109,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 42
+          "line": 44
         }
       ],
       "kind": "UI",
@@ -28124,7 +28124,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 48
+          "line": 50
         }
       ],
       "kind": "UI",
@@ -28139,7 +28139,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 69
+          "line": 72
         }
       ],
       "kind": "UI",
@@ -28154,7 +28154,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 122
+          "line": 130
         }
       ],
       "kind": "UI",
@@ -28169,7 +28169,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 127
+          "line": 135
         }
       ],
       "kind": "UI",
@@ -28184,7 +28184,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 128
+          "line": 136
         }
       ],
       "kind": "UI",
@@ -28199,7 +28199,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 133
+          "line": 141
         }
       ],
       "kind": "UI",
@@ -28214,7 +28214,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 137
+          "line": 145
         }
       ],
       "kind": "UI",
@@ -28229,7 +28229,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 142
+          "line": 150
         }
       ],
       "kind": "UI",
@@ -28244,7 +28244,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 147
+          "line": 155
         }
       ],
       "kind": "UI",
@@ -28259,7 +28259,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 152
+          "line": 160
         }
       ],
       "kind": "UI",
@@ -28274,7 +28274,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 181
+          "line": 189
         }
       ],
       "kind": "UI",
@@ -28289,7 +28289,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 185
+          "line": 193
         }
       ],
       "kind": "UI",
@@ -28304,7 +28304,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 211
+          "line": 219
         }
       ],
       "kind": "UI",
@@ -28319,7 +28319,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 246
+          "line": 254
         }
       ],
       "kind": "UI",
@@ -29532,7 +29532,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 360
+          "line": 363
         }
       ],
       "kind": "UI",
@@ -29547,7 +29547,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 382
+          "line": 385
         }
       ],
       "kind": "UI",
@@ -29562,7 +29562,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 405
+          "line": 408
         }
       ],
       "kind": "UI",
@@ -29742,7 +29742,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 888
+          "line": 891
         }
       ],
       "kind": "UI",
@@ -29757,7 +29757,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 927
+          "line": 930
         }
       ],
       "kind": "UI",
@@ -30031,7 +30031,7 @@
       "contexts": [
         {
           "path": "lib/main.dart",
-          "line": 216
+          "line": 222
         }
       ],
       "kind": "UI",
@@ -30096,7 +30096,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 302
+          "line": 299
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30104,7 +30104,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 327
+          "line": 324
         }
       ],
       "kind": "UI",
@@ -30119,7 +30119,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 302
+          "line": 299
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30127,11 +30127,11 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 327
+          "line": 324
         },
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 471
+          "line": 474
         }
       ],
       "kind": "UI",
@@ -30146,7 +30146,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 419
+          "line": 416
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30154,7 +30154,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 449
+          "line": 446
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
@@ -30173,11 +30173,11 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 419
+          "line": 416
         },
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 746
+          "line": 743
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30189,11 +30189,11 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 449
+          "line": 446
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 764
+          "line": 761
         },
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
@@ -30216,7 +30216,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 746
+          "line": 743
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30224,7 +30224,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 764
+          "line": 761
         }
       ],
       "kind": "UI",
@@ -30269,7 +30269,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1166
+          "line": 1164
         }
       ],
       "kind": "UI",
@@ -30284,7 +30284,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1166
+          "line": 1164
         }
       ],
       "kind": "UI",
@@ -30299,7 +30299,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 196
+          "line": 204
         }
       ],
       "kind": "UI",
@@ -30314,7 +30314,7 @@
       "contexts": [
         {
           "path": "lib/app/study_review.dart",
-          "line": 196
+          "line": 204
         }
       ],
       "kind": "UI",
@@ -30329,7 +30329,7 @@
       "contexts": [
         {
           "path": "lib/app/tai_chi_course_page.dart",
-          "line": 471
+          "line": 474
         }
       ],
       "kind": "UI",
@@ -30772,7 +30772,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 377
+          "line": 374
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30780,7 +30780,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 402
+          "line": 399
         }
       ],
       "kind": "UI",
@@ -30795,7 +30795,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 377
+          "line": 374
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30803,7 +30803,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 402
+          "line": 399
         }
       ],
       "kind": "UI",
@@ -30818,7 +30818,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 377
+          "line": 374
         },
         {
           "path": "lib/app/kickboxing_course_page.dart",
@@ -30826,7 +30826,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 402
+          "line": 399
         }
       ],
       "kind": "UI",
@@ -31280,7 +31280,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 927
+          "line": 925
         }
       ],
       "kind": "UI",
@@ -31299,7 +31299,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 946
+          "line": 944
         }
       ],
       "kind": "UI",
@@ -31318,7 +31318,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1141
+          "line": 1139
         }
       ],
       "kind": "UI",
@@ -31335,7 +31335,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 1141
+          "line": 1139
         }
       ],
       "kind": "UI",
@@ -35507,22 +35507,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 34
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_55d76707dc86022d689672c844065c4976d3bc05581aaad429ffd26ea864839b",
-      "en": "Calibration required",
-      "tr": "Kalibrasyon gerekli",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/technique_capability_panel.dart",
-          "line": 39
+          "line": 31
         }
       ],
       "kind": "UI",
@@ -35537,7 +35522,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 47
+          "line": 42
         }
       ],
       "kind": "UI",
@@ -35552,7 +35537,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 52
+          "line": 47
         }
       ],
       "kind": "UI",
@@ -35567,7 +35552,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 56
+          "line": 51
         }
       ],
       "kind": "UI",
@@ -35582,7 +35567,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 57
+          "line": 52
         }
       ],
       "kind": "UI",
@@ -35597,22 +35582,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 61
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_30e40257a8466caf163e580ca93bfabf6393ca882ffaa1acc2dba5c88043795f",
-      "en": "Camera assessment awaits a calibrated model and independent review. No movement has been measured here.",
-      "tr": "Kamera değerlendirmesi kalibre edilmiş model ve bağımsız incelemeyi bekliyor. Burada hareket ölçülmedi.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/technique_capability_panel.dart",
-          "line": 71
+          "line": 56
         }
       ],
       "kind": "UI",
@@ -35627,7 +35597,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 78
+          "line": 67
         }
       ],
       "kind": "UI",
@@ -35795,7 +35765,7 @@
       "contexts": [
         {
           "path": "lib/app/taikyoku_shodan_course_page.dart",
-          "line": 912
+          "line": 915
         }
       ],
       "kind": "UI",
@@ -36354,7 +36324,7 @@
       "contexts": [
         {
           "path": "lib/app/solo_boxing_course_page.dart",
-          "line": 707
+          "line": 705
         }
       ],
       "kind": "UI",
@@ -36478,30 +36448,11 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 246
+          "line": 248
         }
       ],
       "kind": "UI",
       "placeholder_types": {}
-    },
-    {
-      "id": "s_17e246cd6b651e0a4943c83203338daa784600cb9a70a304e29e175db7d5096b",
-      "en": "Unverified personal technique records: {value1}",
-      "tr": "Doğrulanmamış kişisel teknik kayıtları: {value1}",
-      "placeholders": [
-        "value1"
-      ],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/karate_course_page.dart",
-          "line": 246
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {
-        "value1": "String"
-      }
     },
     {
       "id": "s_b1b4a9fd6cf62751fdb52e66401af24c3dd7b823a87115248c4986ea2120231c",
@@ -36512,7 +36463,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 346
+          "line": 343
         }
       ],
       "kind": "UI",
@@ -36527,7 +36478,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 707
+          "line": 704
         }
       ],
       "kind": "UI",
@@ -36544,7 +36495,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 715
+          "line": 712
         }
       ],
       "kind": "UI",
@@ -36561,7 +36512,7 @@
       "contexts": [
         {
           "path": "lib/app/karate_course_page.dart",
-          "line": 725
+          "line": 722
         }
       ],
       "kind": "UI",
@@ -36618,7 +36569,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 371
+          "line": 368
         }
       ],
       "kind": "UI",
@@ -36637,7 +36588,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 725
+          "line": 722
         }
       ],
       "kind": "UI",
@@ -36658,7 +36609,7 @@
         },
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 733
+          "line": 730
         }
       ],
       "kind": "UI",
@@ -36690,30 +36641,11 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 271
+          "line": 273
         }
       ],
       "kind": "UI",
       "placeholder_types": {}
-    },
-    {
-      "id": "s_d1b9fc74566747911fda7f5631ca11480878a82a169a7b4c2ba3be902495e27b",
-      "en": "Unverified individual acceptance records: {value1}",
-      "tr": "Doğrulanmamış bireysel kabul kayıtları: {value1}",
-      "placeholders": [
-        "value1"
-      ],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/muay_thai_course_page.dart",
-          "line": 271
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {
-        "value1": "String"
-      }
     },
     {
       "id": "s_3f13c1d5a0370e8fd61605853ae5a0b3d62c411021c0e9c48caf359dc47f0966",
@@ -36724,7 +36656,7 @@
       "contexts": [
         {
           "path": "lib/app/muay_thai_course_page.dart",
-          "line": 743
+          "line": 740
         }
       ],
       "kind": "UI",
@@ -40244,7 +40176,7 @@
       "contexts": [
         {
           "path": "lib/app/technique_capability_panel.dart",
-          "line": 40
+          "line": 35
         }
       ],
       "kind": "UI",
@@ -40544,7 +40476,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 99
+          "line": 127
         }
       ],
       "kind": "UI",
@@ -40559,7 +40491,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 108
+          "line": 136
         }
       ],
       "kind": "UI",
@@ -40574,7 +40506,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 128
+          "line": 156
         }
       ],
       "kind": "UI",
@@ -40589,7 +40521,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 139
+          "line": 167
         }
       ],
       "kind": "UI",
@@ -40604,7 +40536,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 154
+          "line": 182
         }
       ],
       "kind": "UI",
@@ -40619,7 +40551,7 @@
       "contexts": [
         {
           "path": "lib/app/course_access.dart",
-          "line": 116
+          "line": 144
         }
       ],
       "kind": "UI",
