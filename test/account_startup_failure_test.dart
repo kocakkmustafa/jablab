@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/main.dart';
+import 'package:jablab/app/age_block_store.dart';
 import 'package:jablab/app/app_preferences.dart';
 import 'package:jablab/app/app_preferences_controller.dart';
 import 'package:jablab/app/ui_language.dart';
@@ -17,6 +18,7 @@ void main() {
         preferencesOverride: _startupPreferences(tester),
         url: '',
         publishableKey: '',
+        ageBlockOverride: _SettledAgeBlockStore(),
       );
       await tester.pump();
 
@@ -47,6 +49,7 @@ void main() {
           preferencesOverride: _startupPreferences(tester),
           url: 'invalid',
           publishableKey: 'test-key',
+          ageBlockOverride: _SettledAgeBlockStore(),
         );
         await tester.pump();
 
@@ -92,6 +95,14 @@ AppPreferencesController _startupPreferences(WidgetTester tester) {
     }
   });
   return controller;
+}
+
+// The real device read (path_provider + file IO + a real-time timeout) never
+// settles inside testWidgets' fake time; its bounds live in
+// age_block_store_test. This store is already loaded and unblocked.
+class _SettledAgeBlockStore extends AgeBlockStore {
+  @override
+  Future<void> load({Duration timeout = const Duration(seconds: 2)}) async {}
 }
 
 class _MissingStartupPreferencesStore implements AppPreferencesStore {

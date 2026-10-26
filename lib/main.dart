@@ -61,6 +61,7 @@ Future<void> launchJabLab({
   String publishableKey = const String.fromEnvironment(
     'MOTION_SUPABASE_PUBLISHABLE_KEY',
   ),
+  AgeBlockStore? ageBlockOverride,
 }) async {
   final codec = AppPreferencesCodec(
     supportedLocaleTags: AppLocalizations.supportedLocales.map(
@@ -76,7 +77,9 @@ Future<void> launchJabLab({
   // Outside the identity gate. Bounded read settles before any Flutter root;
   // The same controller supplies appearance to the shell and Core blocker.
   await preferences.load();
-  final AgeBlockStore ageBlock = AgeBlockStore();
+  // Tests inject a store whose read settles inside fake time; production
+  // reads the device file through path_provider.
+  final AgeBlockStore ageBlock = ageBlockOverride ?? AgeBlockStore();
   await ageBlock.load();
   try {
     final MotionAccountRuntime runtime = await MotionAccountRuntime.initialize(
