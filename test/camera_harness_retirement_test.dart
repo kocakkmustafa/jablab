@@ -39,8 +39,9 @@ void main() {
         tester,
         camera,
         releasePending: () {
-          if (!permission.isCompleted)
+          if (!permission.isCompleted) {
             permission.complete(PermissionStatus.granted);
+          }
         },
       ),
     );
