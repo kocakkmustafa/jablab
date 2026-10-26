@@ -347,13 +347,20 @@ void main() {
           )).markViewed(course, course.lessons.first);
         }
         final _Gate gate = _Gate();
-        final SoloCourseProgressStore held = await repository(
-          courseFile: (root, owner) =>
-              _GatedFile(courseFileFor(root, owner), existsGate: gate),
-        ).openSoloProgressStore(accountUserId: _alice);
-        final Future<void> rejected = expectLater(
-          held.load(),
-          throwsA(isA<OwnerResourceRetiredException>()),
+        final SoloCourseProgressStore held = await repository()
+            .openSoloProgressStore(accountUserId: _alice);
+        final String heldPath = courseFileFor(directory, _alice).path;
+        // The read probes the file with FileSystemEntity.type (no symlink
+        // follow, 2fd2405), not File.exists, so the gate sits on that lookup.
+        final Future<void> rejected = IOOverrides.runZoned(
+          () => expectLater(
+            held.load(),
+            throwsA(isA<OwnerResourceRetiredException>()),
+          ),
+          fseGetType: (String path, bool followLinks) async {
+            if (path == heldPath) await gate.wait();
+            return FileSystemEntity.typeSync(path, followLinks: followLinks);
+          },
         );
         await gate.entered.future;
         bool drained = false;
