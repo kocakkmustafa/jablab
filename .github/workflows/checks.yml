@@ -13,12 +13,17 @@ jobs:
     # `.github/workflows/checks.yml`sinden ADAPTE edildi, icat edilmedi —
     # üçü de aynı motion-core-pinli Flutter iskeletini paylaşıyor.
     runs-on: ubuntu-latest
+    # Bir asılı test 2026-10-23'te işi 6 saat (Actions üst sınırı) tuttu;
+    # yerel tam süit dakikalar sürüyor. Sınır Gravita ile aynı.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          # Yerel doğrulama sürümü; pinsiz "stable" 3.47.7 çekip yerelden saptı.
+          flutter-version: 3.47.5
 
       - name: Poz modeli (pinli SHA-256 doğrulamalı)
         run: tool/fetch_pose_model.sh
@@ -79,12 +84,14 @@ jobs:
   android-release-build:
     name: Android release build — kod yolu kanıtı, İMZALI YAYIN DEĞİL (JAB-P0-004)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.47.5
 
       - name: Poz modeli (pinli SHA-256 doğrulamalı)
         run: tool/fetch_pose_model.sh
@@ -113,12 +120,14 @@ jobs:
   ios-release-build:
     name: iOS release build, no-codesign (JAB-P0-004)
     runs-on: macos-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.47.5
 
       - name: Poz modeli (pinli SHA-256 doğrulamalı)
         run: tool/fetch_pose_model.sh
