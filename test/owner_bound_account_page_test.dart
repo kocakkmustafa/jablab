@@ -219,7 +219,10 @@ void main() {
         fixture,
         lifetime: fixture.owners.capture(_alice),
         membershipAvailable: true,
-        onManageSubscription: () => opened++,
+        onManageSubscription: () async {
+          opened++;
+          return true;
+        },
       );
       await tester.runAsync(_eventTurn);
       await tester.pumpAndSettle();
@@ -232,7 +235,40 @@ void main() {
       await tester.tap(link);
       await tester.pump();
       expect(opened, 1);
+      expect(
+        find.text('Could not open the store subscription page.'),
+        findsNothing,
+      );
       expect(fixture.membershipChecks, greaterThanOrEqualTo(1));
+      await _unmount(tester);
+    });
+
+    testWidgets('a store page that cannot open says so with Core text', (
+      tester,
+    ) async {
+      final fixture = await _fixture(tester);
+      await _page(
+        tester,
+        fixture,
+        lifetime: fixture.owners.capture(_alice),
+        membershipAvailable: true,
+        onManageSubscription: () async => false,
+      );
+      await tester.runAsync(_eventTurn);
+      await tester.pumpAndSettle();
+      final link = find.text('Manage store subscription');
+      await tester.scrollUntilVisible(
+        link,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(link);
+      await tester.pump();
+      await tester.pump();
+      expect(
+        find.text('Could not open the store subscription page.'),
+        findsOneWidget,
+      );
       await _unmount(tester);
     });
 
@@ -244,7 +280,7 @@ void main() {
         tester,
         fixture,
         lifetime: fixture.owners.capture(_alice),
-        onManageSubscription: () {},
+        onManageSubscription: () async => true,
       );
       expect(
         tester
@@ -267,7 +303,7 @@ void main() {
         tester,
         fixture,
         membershipAvailable: true,
-        onManageSubscription: () {},
+        onManageSubscription: () async => true,
       );
       expect(fixture.client.auth.currentUser, isNull);
       expect(find.text('Manage store subscription'), findsNothing);
@@ -1249,7 +1285,7 @@ Future<void> _page(
   Future<void> Function()? onRetry,
   bool Function()? canInitiate,
   bool membershipAvailable = false,
-  VoidCallback? onManageSubscription,
+  Future<bool> Function()? onManageSubscription,
 }) async {
   final page = OwnerBoundAccountPage(
     account: account ?? fixture.account,

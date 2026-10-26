@@ -41,7 +41,8 @@ class OwnerBoundAccountPage extends StatefulWidget {
 
   /// Store subscription management; offered only while memberships are
   /// sold. Core shows it in the signed-in panel only (not for guests).
-  final VoidCallback? onManageSubscription;
+  /// Returns false when the store page could not be opened.
+  final Future<bool> Function()? onManageSubscription;
 
   @override
   State<OwnerBoundAccountPage> createState() => _OwnerBoundAccountPageState();
@@ -85,6 +86,20 @@ class _OwnerBoundAccountPageState extends State<OwnerBoundAccountPage> {
     super.dispose();
   }
 
+  Future<void> _manageSubscription() async {
+    final bool opened = await widget.onManageSubscription!();
+    if (opened || !mounted) return;
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(
+          MotionAccountLocalizations.of(
+            context,
+          ).text(MotionAccountString.storeSubscriptionOpenFailed),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => MotionAccountPage(
     // A mounted old dialog cannot resume through a replacement client/ticket.
@@ -98,8 +113,9 @@ class _OwnerBoundAccountPageState extends State<OwnerBoundAccountPage> {
     ageBlocked: widget.ageBlocked,
     onAgeBlocked: widget.onAgeBlocked,
     membershipAvailable: widget.membershipAvailable,
-    onManageSubscription: widget.membershipAvailable
-        ? widget.onManageSubscription
+    onManageSubscription:
+        widget.membershipAvailable && widget.onManageSubscription != null
+        ? _manageSubscription
         : null,
   );
 }

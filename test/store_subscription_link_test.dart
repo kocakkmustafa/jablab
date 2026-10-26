@@ -18,23 +18,25 @@ void main() {
   });
 
   test(
-    'opening launches exactly the platform page and absorbs failure',
+    'opening launches exactly the platform page and reports failure',
     () async {
       final List<Uri> opened = <Uri>[];
-      await openStoreSubscriptionManagement(
+      final bool androidOpened = await openStoreSubscriptionManagement(
         platform: TargetPlatform.android,
         launch: (Uri uri) async {
           opened.add(uri);
           return true;
         },
       );
-      await openStoreSubscriptionManagement(
+      final bool iosOpened = await openStoreSubscriptionManagement(
         platform: TargetPlatform.iOS,
         launch: (Uri uri) async {
           opened.add(uri);
           throw StateError('no handler');
         },
       );
+      expect(androidOpened, isTrue);
+      expect(iosOpened, isFalse, reason: 'a throwing launcher reports failure');
       expect(opened, <Uri>[
         storeSubscriptionManagementUri(TargetPlatform.android),
         storeSubscriptionManagementUri(TargetPlatform.iOS),
@@ -44,7 +46,9 @@ void main() {
 
   test('production wires the store link into the account page', () {
     final String main = File('lib/main.dart').readAsStringSync();
-    expect(main, contains('onManageSubscription: () =>'));
-    expect(main, contains('openStoreSubscriptionManagement()'));
+    expect(
+      main,
+      contains('onManageSubscription: openStoreSubscriptionManagement'),
+    );
   });
 }

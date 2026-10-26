@@ -110,8 +110,7 @@ Future<void> launchJabLab({
         initialPasswordRecovery: runtime.isPasswordRecovery,
         ageBlocked: ageBlock.blocked,
         onAgeBlocked: () => unawaited(ageBlock.markBlocked()),
-        onManageSubscription: () =>
-            unawaited(openStoreSubscriptionManagement()),
+        onManageSubscription: openStoreSubscriptionManagement,
         clearLocalData: captured?.accountUserId == null
             ? null
             // Core validates the initiating UUID before this callback. Its

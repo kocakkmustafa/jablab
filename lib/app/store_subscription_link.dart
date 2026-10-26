@@ -15,9 +15,9 @@ Uri storeSubscriptionManagementUri(TargetPlatform platform) =>
       )
     : Uri.parse('https://apps.apple.com/account/subscriptions');
 
-/// Opens the store page outside the app. A failed launch is not an account
-/// error; the account page stays as it was.
-Future<void> openStoreSubscriptionManagement({
+/// Opens the store page outside the app; false when it could not be opened
+/// (the account page then says so with Core's own message).
+Future<bool> openStoreSubscriptionManagement({
   TargetPlatform? platform,
   Future<bool> Function(Uri uri)? launch,
 }) async {
@@ -25,10 +25,11 @@ Future<void> openStoreSubscriptionManagement({
     platform ?? defaultTargetPlatform,
   );
   try {
-    await (launch ??
+    return await (launch ??
         (Uri target) =>
             launchUrl(target, mode: LaunchMode.externalApplication))(uri);
   } on Object {
-    // Nothing to recover: the member can still open the store directly.
+    // The store app or a browser may be unavailable on this device.
+    return false;
   }
 }
