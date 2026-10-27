@@ -89,7 +89,8 @@ def export_packet(repo,output,config=None):
     if review['appReview']['reviewAccount'] is not None:raise ValueError('Review credentials belong in the secure store flow, not this packet')
     # Required draft fields stay explicitly pending; absence never yields ready.
     blocked=['CURRENT_SIGNED_BINARY','REAL_ACCOUNT_ACCEPTANCE','PHYSICAL_DEVICE_ACCEPTANCE','FINAL_PRIVACY_PROVIDER_READBACK','NATIVE_SCREENSHOTS','FEATURE_GRAPHIC_OWNER_REVIEW','USER_RELEASE_DECISION']
-    if not review['play']['accountDeletionWebUrl']:blocked.append('PLAY_ACCOUNT_DELETION_WEB_URL')
+    # A URL that is not live yet (pending_live) still blocks.
+    if not review['play']['accountDeletionWebUrl'] or review['play'].get('accountDeletionWebUrlStatus')!='live':blocked.append('PLAY_ACCOUNT_DELETION_WEB_URL')
     if not config:blocked.append('APPROVED_PUBLIC_CONFIG_PATH')
     blocked.extend(build_prerequisite_gates(target,(repo/'ios/Pods/Manifest.lock').is_file()))
     config_receipt=validate_public_config(config) if config else None

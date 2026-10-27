@@ -36,8 +36,9 @@
     "finalProviderPublish": false
   },
   "play": {
-    "accountDeletionWebUrl": null,
-    "accountDeletionWebUrlStatus": "REQUIRED_FUNCTIONAL_PROMINENT_EXTERNAL_REQUEST_PATH_NOT_VERIFIED",
+    "accountDeletionWebUrl": "https://yulalab.com/en/delete-account/motion",
+    "accountDeletionWebUrlStatus": "pending_live",
+    "$accountDeletionWebUrlSource": "YUL-14 (yulalab, 2026-10-27): one Motion page for all five apps, 14 locales (TR root /delete-account/motion, others /<locale>/delete-account/motion). Site release branch codex/static-public-copy-20261012 @98b907b; goes live with the YUL-09 site deploy. Set status to live only after the URL answers 200 in production.",
     "inAppDeletion": "Source includes identity-bound remote deletion and local cleanup; real account acceptance pending",
     "provisionalDataTypes": [
       {
