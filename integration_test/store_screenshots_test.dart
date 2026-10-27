@@ -166,7 +166,8 @@ void main() {
       await tap(Key('solo-check-${first.id}-$i'));
     }
     await tap(const Key('solo-mark-complete'));
-    await tester.pageBack();
+    // pageBack() looks for the English "Back" tooltip; TR says "Geri".
+    await tester.tap(find.byType(BackButton));
     await frames();
     await reveal(find.byKey(const Key('solo-course-progress')));
     await waitFor(
