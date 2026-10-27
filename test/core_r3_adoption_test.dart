@@ -38,21 +38,33 @@ void main() {
     );
   });
 
-  // Core R4 (`0d29d1b`): the teen purchase policy is per app. Until K-2
-  // decides, JabLab keeps Core's default on every membership entry, so a
-  // store-family-controls switch is a deliberate diff here, not a drift.
-  test('R4: membership entries keep the default teen purchase policy', () {
-    expect(
-      MotionTeenPurchasePolicy.values.first,
-      MotionTeenPurchasePolicy.parentalConsentRequired,
-    );
+  // Core R4 (`0d29d1b`) + K-2 (2026-10-27): all five apps leave teen
+  // purchases to the store's family controls. Every membership entry names
+  // the policy, so a missing argument cannot fall back to Core's default.
+  test('R4/K-2: every membership entry uses store family controls', () {
+    const String policy =
+        'teenPurchasePolicy: MotionTeenPurchasePolicy.storeFamilyControls';
+    final Map<String, int> expected = <String, int>{
+      // requireMotionPaidAccess, its MotionMembershipPage builder and
+      // requireMotionCameraAccess.
+      'lib/main.dart': 3,
+      // MotionAccountPage.
+      'lib/app/owner_bound_account_page.dart': 1,
+    };
     for (final entity in Directory('lib').listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      final text = source(entity.path);
       expect(
-        source(entity.path),
-        isNot(contains('teenPurchasePolicy')),
+        'teenPurchasePolicy:'.allMatches(text).length,
+        expected[entity.path] ?? 0,
         reason: entity.path,
       );
+      expect(
+        policy.allMatches(text).length,
+        expected[entity.path] ?? 0,
+        reason: entity.path,
+      );
+      expect(text, isNot(contains('parentalConsentRequired')));
     }
   });
 

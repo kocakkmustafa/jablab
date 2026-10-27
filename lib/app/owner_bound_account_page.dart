@@ -113,6 +113,7 @@ class _OwnerBoundAccountPageState extends State<OwnerBoundAccountPage> {
     ageBlocked: widget.ageBlocked,
     onAgeBlocked: widget.onAgeBlocked,
     membershipAvailable: widget.membershipAvailable,
+    teenPurchasePolicy: MotionTeenPurchasePolicy.storeFamilyControls,
     onManageSubscription:
         widget.membershipAvailable && widget.onManageSubscription != null
         ? _manageSubscription

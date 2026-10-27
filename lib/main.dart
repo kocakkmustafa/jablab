@@ -127,8 +127,13 @@ Future<void> launchJabLab({
         account: runtime.account,
         accountPageBuilder: accountPage,
         salesAvailable: motionSubscriptionSalesAvailable,
-        membershipPageBuilder: (_) =>
-            MotionMembershipPage(account: runtime.account),
+        // K-2 (2026-10-27): teen purchases follow the store's family
+        // controls on every membership entry, as in the other four apps.
+        teenPurchasePolicy: MotionTeenPurchasePolicy.storeFamilyControls,
+        membershipPageBuilder: (_) => MotionMembershipPage(
+          account: runtime.account,
+          teenPurchasePolicy: MotionTeenPurchasePolicy.storeFamilyControls,
+        ),
       ),
     );
     if (courseAccess.salesOpen) {
@@ -167,6 +172,7 @@ Future<void> launchJabLab({
             lessonContext,
             account: runtime.account,
             accountPageBuilder: accountPage,
+            teenPurchasePolicy: MotionTeenPurchasePolicy.storeFamilyControls,
           ),
         ),
       ),
