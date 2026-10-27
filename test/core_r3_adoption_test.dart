@@ -38,6 +38,24 @@ void main() {
     );
   });
 
+  // Core R4 (`0d29d1b`): the teen purchase policy is per app. Until K-2
+  // decides, JabLab keeps Core's default on every membership entry, so a
+  // store-family-controls switch is a deliberate diff here, not a drift.
+  test('R4: membership entries keep the default teen purchase policy', () {
+    expect(
+      MotionTeenPurchasePolicy.values.first,
+      MotionTeenPurchasePolicy.parentalConsentRequired,
+    );
+    for (final entity in Directory('lib').listSync(recursive: true)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      expect(
+        source(entity.path),
+        isNot(contains('teenPurchasePolicy')),
+        reason: entity.path,
+      );
+    }
+  });
+
   test('no deprecated Core flag or parameter is left in the app', () {
     for (final entity in Directory('lib').listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;

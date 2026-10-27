@@ -22,7 +22,7 @@ dependencies:
       # TAG'IN COMMIT'I — motion_camera pini ile AYNI olmak ZORUNDA
       # (pin esitligi; yukarıdaki nota bkz). == motion_camera-v0.1.2
       # ve o commit'teki motion_core surumu 0.11.0.
-      ref: f43d71a375431e96c689a7a4a04fb53ff01af693
+      ref: 0d29d1b019033f00828be741aa3e23e3923841be
 
 dev_dependencies:
   test: ^1.25.0
