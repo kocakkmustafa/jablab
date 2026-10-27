@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation of listing.json (JAB-05a draft, taken into the repo by JAB-05b after K-6 = 14 store languages, 2026-10-27): five areas, subscription terms. Not submitted or provider-accepted. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab: Latihan Solo",
+    "subtitle": "Latihan bela diri mandiri",
+    "promotionalText": "Pelajaran tertulis orisinal untuk pemula dalam tinju, kickboxing, muay thai, karate, dan tai chi, dengan latihan solo tanpa kontak dan pemeriksaan diri sendiri.",
+    "keywords": "tinju,kickboxing,muay thai,karate,kata,tai chi,shadow boxing,latihan solo,kuda-kuda"
+  },
+  "playStore": {
+    "shortDescription": "Lima kursus bela diri solo; bimbingan kamera tidak tersedia."
+  },
+  "description": "JabLab menyediakan kursus tertulis orisinal untuk pemula dalam lima bela diri, untuk latihan solo tanpa kontak:\n\n• Tinju: 39 pelajaran dalam 8 modul, mulai dari kuda-kuda dan guard hingga kerja kaki, bentuk pukulan lurus dan melengkung, gerakan bertahan yang terencana, kombinasi, dan ronde shadow boxing Anda sendiri.\n• Kickboxing: 16 pelajaran tentang kuda-kuda, guard, langkah, jab dan cross, persiapan tendangan depan yang terkendali, serta rangkaian pukulan–tendangan sederhana.\n• Muay thai: 16 pelajaran tentang kuda-kuda, guard, kerja kaki, pukulan lurus, teep, persiapan lutut dan siku, serta urutan latihan dengan jeda.\n• Karate: 16 pelajaran kihon (kuda-kuda, seiken, hikite, choku-zuki, gedan-barai) dan 10 pelajaran tentang kata pemula Taikyoku Shodan.\n• Tai chi: 14 pelajaran dasar dengan kaki tetap dan kajian tertulis urutan bentuk Yang Family 16.\n\nBaca pelajarannya, ikuti tugas latihan, periksa diri Anda, dan lanjutkan dari catatan pelajaran di perangkat. Pelajaran dan antarmuka tersedia dalam 14 bahasa. Kursus ini tidak mengajarkan sparring atau latihan kontak dan tidak menyatakan Anda siap untuk itu. Menyelesaikan pelajaran tidak membuktikan penguasaan. Video demonstrasi tidak disertakan.\n\nLangganan: pelajaran pertama setiap kursus gratis. JabLab (US$11,99/bulan atau US$69,99/tahun) atau Motion+ (US$19,99/bulan atau US$129,99/tahun, kelima aplikasi Motion) membuka pelajaran lainnya dan tahap latihan mandiri, dengan uji coba gratis 14 hari untuk pelanggan baru. Harga ditampilkan dalam mata uang lokal Anda di toko aplikasi. Pembayaran dibebankan ke akun toko Anda; langganan diperpanjang otomatis kecuali dibatalkan setidaknya 24 jam sebelum periode berakhir, dan dapat dikelola atau dibatalkan di pengaturan akun toko Anda.\n\nAnda dapat menjelajah tanpa masuk dan memakai akun Motion bersama yang opsional. Akun menggunakan alamat email, ID akun, dan nama tampilan opsional Anda; penghapusan akun tersedia di aplikasi. Catatan kursus tetap di perangkat dalam cakupan tamu atau akun saat ini.\n\nAnda mencatat latihan dan penyelesaian sendiri. Bimbingan kamera dan penghitungan pukulan otomatis tidak tersedia. Kursus ini tidak mengukur kekuatan benturan, kecepatan pukulan, ketepatan teknik, atau keselamatan pribadi.",
+  "cameraPermissionRationale": {
+    "ios": "Bimbingan kamera dinonaktifkan dalam rilis ini. Jika diaktifkan secara terpisah pada suatu rilis mendatang, JabLab menggunakan kamera untuk memberikan umpan balik gerakan di perangkat. Gambar kamera dan posisi tubuh tidak diunggah atau disimpan. Riwayat sesi tetap berada di perangkat ini."
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}

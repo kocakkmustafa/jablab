@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation of listing.json (JAB-05a draft, taken into the repo by JAB-05b after K-6 = 14 store languages, 2026-10-27): five areas, subscription terms. Not submitted or provider-accepted. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab: allenamento solo",
+    "subtitle": "Arti marziali in solitaria",
+    "promotionalText": "Lezioni scritte originali per principianti di boxe, kickboxing, muay thai, karate e tai chi, con pratica in solitaria senza contatto e autoverifiche personali.",
+    "keywords": "boxe,kickboxing,muay thai,karate,kata,tai chi,shadow boxing,allenamento solo,guardia"
+  },
+  "playStore": {
+    "shortDescription": "Cinque corsi di arti marziali in solitaria; guida con fotocamera non attiva."
+  },
+  "description": "JabLab offre corsi scritti originali per principianti in cinque arti marziali, per la pratica in solitaria senza contatto:\n\n• Boxe: 39 lezioni in 8 moduli, dalla posizione di base e dalla guardia al gioco di gambe, alle forme dei colpi dritti e circolari, ai movimenti difensivi pianificati, alle combinazioni e ai tuoi round di shadow boxing.\n• Kickboxing: 16 lezioni su posizione, guardia, spostamenti, jab e diretto, preparazione controllata del calcio frontale e semplici collegamenti pugno-calcio.\n• Muay thai: 16 lezioni su posizione, guardia, gioco di gambe, colpi dritti, teep, preparazione di ginocchiata e gomitata e una sequenza di pratica con pause.\n• Karate: 16 lezioni di kihon (posizioni, seiken, hikite, choku-zuki, gedan-barai) e 10 lezioni sul kata per principianti Taikyoku Shodan.\n• Tai chi: 14 lezioni di base a piedi fermi e uno studio scritto della sequenza della forma Yang Family 16.\n\nLeggi le lezioni, segui gli esercizi, verifica te stesso e riprendi dal registro delle lezioni sul dispositivo. Lezioni e interfaccia sono disponibili in 14 lingue. Questi corsi non insegnano lo sparring né l'allenamento con contatto e non attestano che tu sia pronto per farlo. Completare una lezione non certifica la padronanza. Non sono inclusi video dimostrativi.\n\nAbbonamento: le prime lezioni di ogni corso sono gratuite. JabLab (11,99 $ al mese o 69,99 $ all'anno) o Motion+ (19,99 $ al mese o 129,99 $ all'anno, tutte e cinque le app Motion) sblocca le lezioni rimanenti e la fase di pratica autonoma, con una prova gratuita di 14 giorni per i nuovi abbonati. I prezzi sono mostrati nello store nella tua valuta locale. Il pagamento viene addebitato sul tuo account dello store; l'abbonamento si rinnova automaticamente se non viene annullato almeno 24 ore prima della fine del periodo e può essere gestito o annullato nelle impostazioni del tuo account dello store.\n\nPuoi esplorare senza accedere e usare un account Motion condiviso facoltativo. L'account usa il tuo indirizzo email, l'ID account e un nome visualizzato facoltativo; l'eliminazione dell'account è disponibile nell'app. I registri dei corsi restano sul dispositivo, nell'ambito dell'ospite o dell'account attuale.\n\nRegistri tu la pratica e il completamento. La guida tramite fotocamera e il conteggio automatico dei pugni non sono disponibili. I corsi non misurano la forza d'impatto, la velocità dei pugni, la precisione tecnica né la sicurezza personale.",
+  "cameraPermissionRationale": {
+    "ios": "La guida tramite fotocamera è disattivata in questa versione. Se abilitata separatamente in una versione successiva, JabLab usa la fotocamera per fornire feedback sui movimenti direttamente sul dispositivo. Le immagini della fotocamera e le posizioni del corpo non vengono caricate né salvate. La cronologia delle sessioni rimane su questo dispositivo."
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}

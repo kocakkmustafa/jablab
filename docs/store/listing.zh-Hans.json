@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation of listing.json (JAB-05a draft, taken into the repo by JAB-05b after K-6 = 14 store languages, 2026-10-27): five areas, subscription terms. Not submitted or provider-accepted. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab：影子训练",
+    "subtitle": "独自练习武术",
+    "promotionalText": "原创文字入门课程，涵盖拳击、自由搏击、泰拳、空手道和太极拳，进行无接触的独自练习并自我检查。",
+    "keywords": "拳击,自由搏击,泰拳,空手道,型,太极拳,空击,独自训练,站姿,防守"
+  },
+  "playStore": {
+    "shortDescription": "五门独自练习的武术课程；摄像头指导未开放。"
+  },
+  "description": "JabLab 提供五门武术的原创文字入门课程，用于无接触的独自练习：\n\n• 拳击：8 个模块共 39 课，从站姿和防守架势到步法、直拳与弧线拳的动作形态、预先规划的防守动作、组合拳，直至你自己的空击回合。\n• 自由搏击：16 课，内容包括站姿、防守架势、步伐、刺拳与后手直拳、可控的前踢准备，以及简单的拳腿衔接。\n• 泰拳：16 课，内容包括站姿、防守架势、步法、直拳、前蹬（teep）、膝与肘的准备，以及带停顿的练习序列。\n• 空手道：16 节基本功（kihon）课（站姿、正拳、引手、直突、下段拂），以及 10 节入门型 Taikyoku Shodan（太极初段）课。\n• 太极拳：14 节定步基础课，以及杨式 16 式（Yang Family 16）动作顺序的文字学习。\n\n阅读课程、完成练习任务、自我检查，并从设备上的课程记录继续。课程和界面提供 14 种语言。这些课程不教授实战对练或有接触的训练，也不声称你已为此做好准备。完成任何一课都不代表已经掌握。不含示范视频。\n\n订阅：每门课程的前几课免费。JabLab（每月 11.99 美元或每年 69.99 美元）或 Motion+（每月 19.99 美元或每年 129.99 美元，适用于全部五款 Motion 应用）可解锁其余课程和独立练习阶段，新订阅者可享 14 天免费试用。价格在商店中以你所在地的货币显示。费用从你的商店账户扣除；除非在当期结束前至少 24 小时取消，否则订阅会自动续订，你可以在商店账户设置中管理或取消订阅。\n\n你可以不登录直接浏览，也可以使用可选的 Motion 共享账户。账户使用你的电子邮箱地址、账户 ID 和可选的显示名称；可在应用内删除账户。课程记录保存在设备上，限于当前访客或账户范围。\n\n练习和完成情况由你自己记录。摄像头指导和自动出拳计数不可用。这些课程不测量击打力量、出拳速度、技术准确性或人身安全。",
+  "cameraPermissionRationale": {
+    "ios": "本版本已停用摄像头指导。如果在后续版本中另行启用，JabLab 会使用摄像头在设备上提供动作反馈。摄像头图像和身体位置不会上传或保存。训练场次的历史记录保留在此设备上。"
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}

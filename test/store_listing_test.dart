@@ -134,7 +134,7 @@ void main() {
     },
   );
 
-  // JAB-05a (2026-10-27): yerel listing'ler EN'in çevirisidir; metni dil
+  // JAB-05a/05b (2026-10-27): yerel listing'ler EN'in çevirisidir; metni dil
   // bilmeden doğrulayamayız ama bayatlığı sayılardan yakalarız. Eski kopya
   // yalnız 39 derslik boksu anlatıyordu: 16/10/14 ve fiyatlar orada yoktu.
   group('yerel listing\'ler EN kaynağıyla AYNI olguları taşıyor', () {
@@ -156,6 +156,13 @@ void main() {
       'fr',
       'ja',
       'pt-BR',
+      // JAB-05b (K-6): the other six of the 14 store languages.
+      'hi',
+      'id',
+      'it',
+      'ko',
+      'pl',
+      'zh-Hans',
     ]) {
       test(locale, () {
         final Map<String, dynamic> local =

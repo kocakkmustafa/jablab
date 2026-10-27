@@ -1,0 +1,18 @@
+{
+  "$doc": "Local translation of listing.json (JAB-05a draft, taken into the repo by JAB-05b after K-6 = 14 store languages, 2026-10-27): five areas, subscription terms. Not submitted or provider-accepted. Human/legal/native/store review remains UNRUN.",
+  "appStore": {
+    "name": "JabLab: trening solo",
+    "subtitle": "Sztuki walki w pojedynkę",
+    "promotionalText": "Oryginalne pisemne lekcje dla początkujących z boksu, kickboxingu, muay thai, karate i tai chi – trening solo bez kontaktu i własna samokontrola.",
+    "keywords": "boks,kickboxing,muay thai,karate,kata,tai chi,walka z cieniem,trening solo,garda"
+  },
+  "playStore": {
+    "shortDescription": "Pięć kursów sztuk walki do ćwiczeń solo; bez instruktażu z kamerą."
+  },
+  "description": "JabLab oferuje oryginalne pisemne kursy dla początkujących z pięciu sztuk walki, do treningu solo bez kontaktu:\n\n• Boks: 39 lekcji w 8 modułach – od postawy i gardy przez pracę nóg, kształty ciosów prostych i sierpowych, zaplanowane ruchy obronne i kombinacje aż po własne rundy walki z cieniem.\n• Kickboxing: 16 lekcji o postawie, gardzie, krokach, jabie i krosie, kontrolowanym przygotowaniu kopnięcia frontalnego oraz prostych połączeniach cios–kopnięcie.\n• Muay thai: 16 lekcji o postawie, gardzie, pracy nóg, ciosach prostych, teepie, przygotowaniu kolana i łokcia oraz sekwencji ćwiczeń z pauzami.\n• Karate: 16 lekcji kihon (pozycje, seiken, hikite, choku-zuki, gedan-barai) i 10 lekcji o kata dla początkujących Taikyoku Shodan.\n• Tai chi: 14 lekcji podstaw z nieruchomymi stopami i pisemne opracowanie sekwencji formy Yang Family 16.\n\nCzytaj lekcje, wykonuj zadania treningowe, sprawdzaj się i kontynuuj od zapisu lekcji na urządzeniu. Lekcje i interfejs są dostępne w 14 językach. Te kursy nie uczą sparingu ani treningu kontaktowego i nie potwierdzają gotowości do nich. Ukończenie lekcji nie potwierdza mistrzostwa. Filmy demonstracyjne nie są dołączone.\n\nSubskrypcja: pierwsze lekcje każdego kursu są bezpłatne. JabLab (11,99 USD miesięcznie lub 69,99 USD rocznie) albo Motion+ (19,99 USD miesięcznie lub 129,99 USD rocznie, wszystkie pięć aplikacji Motion) odblokowuje pozostałe lekcje i etap samodzielnego treningu, z 14-dniowym bezpłatnym okresem próbnym dla nowych subskrybentów. Ceny są wyświetlane w sklepie w Twojej lokalnej walucie. Płatność jest pobierana z Twojego konta w sklepie; subskrypcja odnawia się automatycznie, jeśli nie zostanie anulowana co najmniej 24 godziny przed końcem okresu, i można nią zarządzać lub ją anulować w ustawieniach konta w sklepie.\n\nMożesz przeglądać bez logowania i korzystać z opcjonalnego wspólnego konta Motion. Konto używa Twojego adresu e-mail, identyfikatora konta i opcjonalnej nazwy wyświetlanej; usunięcie konta jest dostępne w aplikacji. Zapisy kursów pozostają na urządzeniu w zakresie bieżącego gościa lub konta.\n\nTrening i ukończenie lekcji zapisujesz samodzielnie. Instruktaż z użyciem kamery i automatyczne liczenie ciosów są niedostępne. Kursy nie mierzą siły uderzenia, szybkości ciosów, dokładności techniki ani bezpieczeństwa osobistego.",
+  "cameraPermissionRationale": {
+    "ios": "W tej wersji instruktaż z użyciem kamery jest wyłączony. Jeśli funkcja zostanie osobno włączona w późniejszej wersji, JabLab użyje kamery do przekazywania informacji zwrotnych o ruchu na urządzeniu. Obrazy z kamery i pozycje ciała nie są przesyłane ani zapisywane. Historia sesji pozostaje na tym urządzeniu."
+  },
+  "supportUrl": "https://yulalab.com/support",
+  "privacyPolicyUrl": "https://yulalab.com/privacy/motion"
+}
