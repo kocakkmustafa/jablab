@@ -181,8 +181,14 @@ void main() {
               (local['playStore'] as Map)['shortDescription'] as String,
           'description': desc,
         };
+        // Anahtar kelimeler UTF-8 bayt sayılır (tool/prepare_store_packet.py
+        // ile aynı); ar/ja/hi'de karakter sayısı 100'ün altında kalıp bayt
+        // olarak aşabiliyor.
         limits.forEach((String k, int max) {
-          expect(fields[k]!.runes.length, lessThanOrEqualTo(max), reason: k);
+          final int size = k == 'keywords'
+              ? utf8.encode(fields[k]!).length
+              : fields[k]!.runes.length;
+          expect(size, lessThanOrEqualTo(max), reason: k);
         });
 
         // Boks 39/8 modül; KB, MT, karate kihon 16 (+ Yang Family 16);
