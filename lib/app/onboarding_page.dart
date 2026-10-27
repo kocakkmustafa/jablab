@@ -158,12 +158,13 @@ class _Welcome extends StatelessWidget {
             context,
             en:
                 'Learn solo boxing through progressive lessons, practice tasks '
-                'and self-checks. No bag, gloves, account or camera is needed '
-                'for the course. Prepare a clear, non-slip space.',
+                'and self-checks. No bag, gloves or camera is needed, and the '
+                'first lessons need no account. Prepare a clear, non-slip space.',
             tr:
                 'Solo boksu sıralı dersler, çalışma görevleri ve öz '
-                'denetimlerle öğren. Kurs için kum torbası, eldiven, hesap '
-                'veya kamera gerekmez. Açık, kaymaz bir alan hazırla.',
+                'denetimlerle öğren. Kum torbası, eldiven veya kamera gerekmez; '
+                'ilk dersler için hesap da gerekmez. Açık, kaymaz bir alan '
+                'hazırla.',
           ),
           style: JText.of(context).body,
         ),

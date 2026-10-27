@@ -1630,7 +1630,6 @@
     "s_5003a4a7abb94c047df21e7dc180d54826af31fa95da5787bf779fd284bf7d35": "Rozpocznij",
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "NAROŻNIK",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "Boks, który możesz\nćwiczyć samodzielnie.",
-    "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Ucz się boksu solo przez kolejne lekcje, zadania i samosprawdzenia. Kurs nie wymaga worka, rękawic, konta ani kamery. Przygotuj wolną, nieśliską przestrzeń.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "ZANIM ZACZNIESZ",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Czego to\nnie potrafi.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "Kurs używa twojego własnego zapisu ćwiczeń. Nie ocenia automatycznie techniki ciosu, szybkości, siły uderzenia ani opanowania. Ćwicz bez kontaktu i partnera sparingowego.",
@@ -2480,6 +2479,7 @@
     "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "Postęp kursu pozostaje na tym urządzeniu i odzwierciedla twój własny zapis ćwiczeń. Pierwsze lekcje każdego kursu są bezpłatne; sesje kamery na żywo są zamknięte w tym wydaniu. Kurs nie rejestruje wideo.",
     "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "Cały kurs boksu solo działa bez uprawnienia kamery. Sesje kamery na żywo są zamknięte w tym wydaniu.",
     "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Ćwicz bezpłatne lekcje bez konta i kamery. Postęp pozostaje na tym urządzeniu i odzwierciedla twój własny zapis ćwiczeń. Konto Motion jest potrzebne tylko do członkostwa. Sesje kamery na żywo są zamknięte w tym wydaniu.",
-    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Pierwsze lekcje każdego kursu są bezpłatne. Członkostwo JabLab lub Motion+ otwiera pozostałe lekcje, z 14-dniowym bezpłatnym okresem próbnym dla nowych subskrybentów. Ceny i zakup są w koncie Motion."
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Pierwsze lekcje każdego kursu są bezpłatne. Członkostwo JabLab lub Motion+ otwiera pozostałe lekcje, z 14-dniowym bezpłatnym okresem próbnym dla nowych subskrybentów. Ceny i zakup są w koncie Motion.",
+    "s_45febe5136bd8967b90101e18f8305ec000e3cf9914fd22d3941a33c1db49224": "Ucz się boksu solo przez kolejne lekcje, zadania i samosprawdzenia. Nie potrzebujesz worka, rękawic ani kamery, a pierwsze lekcje nie wymagają konta. Przygotuj wolną, nieśliską przestrzeń."
   }
 }

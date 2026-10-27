@@ -399,6 +399,9 @@ void main() {
         'subscription sales',
         'sales are closed',
         'abonelik satışı',
+        // Üyelik hesap ister; "kurs için hesap gerekmez" artık yanlış.
+        'account or camera is needed',
+        'hesap veya kamera gerekmez',
       ]) {
         expect(
           texts.any((s) => s.contains(stale)),

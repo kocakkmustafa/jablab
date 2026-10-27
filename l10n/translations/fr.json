@@ -1630,7 +1630,6 @@
     "s_5003a4a7abb94c047df21e7dc180d54826af31fa95da5787bf779fd284bf7d35": "Commencer",
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "LE COIN",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "La boxe à pratiquer en solo.",
-    "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Apprenez la boxe solo par leçons progressives, tâches et autovérifications. Ni sac, gants, compte ou caméra nécessaires au cours. Préparez un espace dégagé et non glissant.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "AVANT DE COMMENCER",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Ce que cela ne peut pas faire.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "Le cours utilise votre propre pratique déclarée. Il ne note pas automatiquement technique, vitesse, force d’impact ou maîtrise. Pratiquez sans contact ni partenaire de sparring.",
@@ -2474,6 +2473,7 @@
     "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "La progression reste sur cet appareil et reflète votre propre pratique déclarée. Les premières leçons de chaque cours sont gratuites ; les séances caméra en direct sont fermées dans cette version. Le cours ne capture aucune vidéo.",
     "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "Tout le cours solo fonctionne sans autorisation caméra. Les séances caméra en direct sont fermées dans cette version.",
     "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Pratiquez les leçons gratuites sans compte ni caméra. La progression reste sur cet appareil et reflète votre propre pratique déclarée. Un compte Motion n’est requis que pour un abonnement. Les séances caméra en direct sont fermées dans cette version.",
-    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Les premières leçons de chaque cours sont gratuites. Un abonnement JabLab ou Motion+ ouvre les autres leçons, avec 14 jours d’essai gratuit pour les nouveaux abonnés. Les prix et l’achat se trouvent dans le compte Motion."
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Les premières leçons de chaque cours sont gratuites. Un abonnement JabLab ou Motion+ ouvre les autres leçons, avec 14 jours d’essai gratuit pour les nouveaux abonnés. Les prix et l’achat se trouvent dans le compte Motion.",
+    "s_45febe5136bd8967b90101e18f8305ec000e3cf9914fd22d3941a33c1db49224": "Apprenez la boxe solo par leçons progressives, tâches et autovérifications. Ni sac, gants ni caméra nécessaires ; les premières leçons ne demandent aucun compte. Préparez un espace dégagé et non glissant."
   }
 }

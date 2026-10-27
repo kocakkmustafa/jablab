@@ -1630,7 +1630,6 @@
     "s_5003a4a7abb94c047df21e7dc180d54826af31fa95da5787bf779fd284bf7d35": "Mulai",
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "SUDUT RING",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "Latihan tinju\nyang dapat kamu lakukan sendiri.",
-    "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Pelajari tinju solo melalui pelajaran bertahap, tugas latihan, dan pemeriksaan diri. Kursus tidak memerlukan samsak, sarung tinju, akun, atau kamera. Siapkan ruang lapang yang tidak licin.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "SEBELUM MULAI",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Batas kemampuan\nkursus ini.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "Kursus menggunakan catatan latihanmu sendiri. Tidak otomatis menilai teknik pukulan, kecepatan, gaya benturan, atau penguasaan. Berlatih tanpa kontak atau pasangan sparring.",
@@ -2462,6 +2461,7 @@
     "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "Kemajuan kursus tetap di perangkat ini dan mencerminkan catatan latihanmu sendiri. Pelajaran pertama setiap kursus gratis; sesi kamera langsung ditutup dalam rilis ini. Kursus tidak merekam video.",
     "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "Seluruh kursus tinju solo berfungsi tanpa izin kamera. Sesi kamera langsung ditutup dalam rilis ini.",
     "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Latih pelajaran gratis tanpa akun atau kamera. Kemajuan kursus tetap di perangkat ini dan mencerminkan catatan latihanmu sendiri. Akun Motion hanya diperlukan untuk keanggotaan. Sesi kamera langsung ditutup dalam rilis ini.",
-    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Pelajaran pertama setiap kursus gratis. Keanggotaan JabLab atau Motion+ membuka pelajaran lainnya, dengan uji coba gratis 14 hari untuk pelanggan baru. Harga dan pembelian ada di Akun Motion."
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Pelajaran pertama setiap kursus gratis. Keanggotaan JabLab atau Motion+ membuka pelajaran lainnya, dengan uji coba gratis 14 hari untuk pelanggan baru. Harga dan pembelian ada di Akun Motion.",
+    "s_45febe5136bd8967b90101e18f8305ec000e3cf9914fd22d3941a33c1db49224": "Pelajari tinju solo melalui pelajaran bertahap, tugas latihan, dan pemeriksaan diri. Tidak memerlukan samsak, sarung tinju, atau kamera, dan pelajaran pertama tidak memerlukan akun. Siapkan ruang lapang yang tidak licin."
   }
 }

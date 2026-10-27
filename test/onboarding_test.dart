@@ -131,8 +131,8 @@ void main() {
       expect(
         find.textContaining(
           language == 'tr'
-              ? 'veya kamera gerekmez'
-              : 'No bag, gloves, account or camera is needed',
+              ? 'ilk dersler için hesap da gerekmez'
+              : 'the first lessons need no account',
         ),
         findsOneWidget,
       );

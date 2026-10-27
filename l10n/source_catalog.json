@@ -27129,21 +27129,6 @@
       "placeholder_types": {}
     },
     {
-      "id": "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9",
-      "en": "Learn solo boxing through progressive lessons, practice tasks and self-checks. No bag, gloves, account or camera is needed for the course. Prepare a clear, non-slip space.",
-      "tr": "Solo boksu sıralı dersler, çalışma görevleri ve öz denetimlerle öğren. Kurs için kum torbası, eldiven, hesap veya kamera gerekmez. Açık, kaymaz bir alan hazırla.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/onboarding_page.dart",
-          "line": 157
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
       "id": "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1",
       "en": "BEFORE YOU START",
       "tr": "BAŞLAMADAN ÖNCE",
@@ -27152,7 +27137,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 212
+          "line": 213
         }
       ],
       "kind": "UI",
@@ -27167,7 +27152,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 221
+          "line": 222
         }
       ],
       "kind": "UI",
@@ -27182,7 +27167,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 230
+          "line": 231
         }
       ],
       "kind": "UI",
@@ -27197,7 +27182,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 250
+          "line": 251
         }
       ],
       "kind": "UI",
@@ -27212,7 +27197,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 287
+          "line": 288
         }
       ],
       "kind": "UI",
@@ -27227,7 +27212,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 312
+          "line": 313
         }
       ],
       "kind": "UI",
@@ -27242,7 +27227,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 347
+          "line": 348
         }
       ],
       "kind": "UI",
@@ -27257,7 +27242,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 352
+          "line": 353
         }
       ],
       "kind": "UI",
@@ -27272,7 +27257,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 365
+          "line": 366
         }
       ],
       "kind": "UI",
@@ -27287,7 +27272,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 373
+          "line": 374
         }
       ],
       "kind": "UI",
@@ -27302,7 +27287,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 381
+          "line": 382
         }
       ],
       "kind": "UI",
@@ -27317,7 +27302,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 393
+          "line": 394
         }
       ],
       "kind": "UI",
@@ -30783,7 +30768,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 262
+          "line": 263
         }
       ],
       "kind": "UI",
@@ -40506,7 +40491,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 172
+          "line": 173
         }
       ],
       "kind": "UI",
@@ -40521,7 +40506,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 406
+          "line": 407
         }
       ],
       "kind": "UI",
@@ -40552,6 +40537,21 @@
         {
           "path": "lib/app/settings_page.dart",
           "line": 326
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_45febe5136bd8967b90101e18f8305ec000e3cf9914fd22d3941a33c1db49224",
+      "en": "Learn solo boxing through progressive lessons, practice tasks and self-checks. No bag, gloves or camera is needed, and the first lessons need no account. Prepare a clear, non-slip space.",
+      "tr": "Solo boksu sıralı dersler, çalışma görevleri ve öz denetimlerle öğren. Kum torbası, eldiven veya kamera gerekmez; ilk dersler için hesap da gerekmez. Açık, kaymaz bir alan hazırla.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/onboarding_page.dart",
+          "line": 157
         }
       ],
       "kind": "UI",

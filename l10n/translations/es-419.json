@@ -1630,7 +1630,6 @@
     "s_5003a4a7abb94c047df21e7dc180d54826af31fa95da5787bf779fd284bf7d35": "Comenzar",
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "LA ESQUINA",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "Boxeo para practicar\nen solitario.",
-    "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Aprende boxeo en solitario con lecciones progresivas, tareas y autocontroles. No necesitas saco, guantes, cuenta ni cámara para el curso. Prepara un espacio despejado y antideslizante.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "ANTES DE EMPEZAR",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Lo que esto\nno puede hacer.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "El curso usa tu registro personal de práctica. No califica automáticamente técnica, velocidad, fuerza de impacto ni dominio. Practica sin contacto ni compañero de sparring.",
@@ -2474,6 +2473,7 @@
     "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "El progreso queda en este dispositivo y refleja tu registro personal. Las primeras lecciones de cada curso son gratis; las sesiones en vivo con cámara están cerradas en esta versión. El curso no captura video.",
     "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "Todo el curso de boxeo en solitario funciona sin permiso de cámara. Las sesiones en vivo con cámara están cerradas en esta versión.",
     "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Puedes practicar las lecciones gratis sin cuenta ni cámara. El progreso del curso permanece en este dispositivo y refleja tu propio registro de práctica. La cuenta Motion solo se necesita para una membresía. Las sesiones en vivo con cámara están cerradas en esta versión.",
-    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Las primeras lecciones de cada curso son gratis. Una membresía de JabLab o Motion+ abre las lecciones restantes, con 14 días de prueba gratis para nuevos suscriptores. Los precios y la compra están en la cuenta Motion."
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Las primeras lecciones de cada curso son gratis. Una membresía de JabLab o Motion+ abre las lecciones restantes, con 14 días de prueba gratis para nuevos suscriptores. Los precios y la compra están en la cuenta Motion.",
+    "s_45febe5136bd8967b90101e18f8305ec000e3cf9914fd22d3941a33c1db49224": "Aprende boxeo en solitario con lecciones progresivas, tareas y autocontroles. No necesitas saco, guantes ni cámara, y las primeras lecciones no requieren cuenta. Prepara un espacio despejado y antideslizante."
   }
 }
