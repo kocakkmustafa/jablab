@@ -27144,21 +27144,6 @@
       "placeholder_types": {}
     },
     {
-      "id": "s_c48bc79ecc63afce23f4e9aff7ca09d831f12ad97b30d828b8c71c110a09cf98",
-      "en": "Course progress stays on this device and reflects your own practice record. Live camera sessions and subscription sales are closed in this release. The course does not capture video.",
-      "tr": "Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydını gösterir. Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır. Kurs video yakalamaz.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/onboarding_page.dart",
-          "line": 172
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
       "id": "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1",
       "en": "BEFORE YOU START",
       "tr": "BAŞLAMADAN ÖNCE",
@@ -27167,7 +27152,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 211
+          "line": 212
         }
       ],
       "kind": "UI",
@@ -27182,7 +27167,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 220
+          "line": 221
         }
       ],
       "kind": "UI",
@@ -27197,7 +27182,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 229
+          "line": 230
         }
       ],
       "kind": "UI",
@@ -27212,7 +27197,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 249
+          "line": 250
         }
       ],
       "kind": "UI",
@@ -27227,7 +27212,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 286
+          "line": 287
         }
       ],
       "kind": "UI",
@@ -27242,7 +27227,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 311
+          "line": 312
         }
       ],
       "kind": "UI",
@@ -27257,7 +27242,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 346
+          "line": 347
         }
       ],
       "kind": "UI",
@@ -27272,7 +27257,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 351
+          "line": 352
         }
       ],
       "kind": "UI",
@@ -27287,7 +27272,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 364
+          "line": 365
         }
       ],
       "kind": "UI",
@@ -27302,7 +27287,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 372
+          "line": 373
         }
       ],
       "kind": "UI",
@@ -27317,7 +27302,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 380
+          "line": 381
         }
       ],
       "kind": "UI",
@@ -27332,22 +27317,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 392
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_81ff2fbeaca157f56cdc992e6a81ccc9485afc2d0d33a92a7c1f62a4975b2c14",
-      "en": "The whole solo boxing course works without camera permission. Live camera sessions and subscription sales are closed in this release.",
-      "tr": "Solo boks kursunun tamamı kamera izni olmadan çalışır. Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/onboarding_page.dart",
-          "line": 405
+          "line": 393
         }
       ],
       "kind": "UI",
@@ -27553,21 +27523,6 @@
       "placeholder_types": {}
     },
     {
-      "id": "s_b9a36c702611c14a24c5a82c51d04f72b23504b6f4c1da407169bf749b43745c",
-      "en": "Practise the solo boxing course without an account or camera. Course progress stays on this device and reflects your own practice record. A Motion account is optional. Live camera sessions and subscription sales are closed in this release.",
-      "tr": "Solo boks kursunu hesap veya kamera olmadan çalışabilirsiniz. Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydınızı gösterir. Motion hesabı isteğe bağlıdır. Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/settings_page.dart",
-          "line": 255
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
       "id": "s_be239f8616176937a76dbc5fb4bca31a557687811227e8d16cdba3d605086f52",
       "en": "Account sign-in is not connected. Session history stays on this device.",
       "tr": "Hesap girişi bağlı değil. Seans geçmişi bu cihazda kalır.",
@@ -27622,21 +27577,6 @@
         {
           "path": "lib/app/settings_page.dart",
           "line": 317
-        }
-      ],
-      "kind": "UI",
-      "placeholder_types": {}
-    },
-    {
-      "id": "s_f38214e5422ffae3ce203aea63833fcd5a745fc69e8657eed06bc1b348ad7787",
-      "en": "Subscription sales are closed in this release. No purchase is needed for the course.",
-      "tr": "Bu sürümde abonelik satışı kapalıdır. Kurs için satın alma gerekmez.",
-      "placeholders": [],
-      "plural_arg": null,
-      "contexts": [
-        {
-          "path": "lib/app/settings_page.dart",
-          "line": 326
         }
       ],
       "kind": "UI",
@@ -30031,7 +29971,7 @@
       "contexts": [
         {
           "path": "lib/main.dart",
-          "line": 224
+          "line": 230
         }
       ],
       "kind": "UI",
@@ -30843,7 +30783,7 @@
       "contexts": [
         {
           "path": "lib/app/onboarding_page.dart",
-          "line": 261
+          "line": 262
         }
       ],
       "kind": "UI",
@@ -40552,6 +40492,66 @@
         {
           "path": "lib/app/course_access.dart",
           "line": 144
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1",
+      "en": "Course progress stays on this device and reflects your own practice record. The first lessons of every course are free; live camera sessions are closed in this release. The course does not capture video.",
+      "tr": "Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydını gösterir. Her kursun ilk dersleri ücretsizdir; bu sürümde canlı kamera seansları kapalıdır. Kurs video yakalamaz.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/onboarding_page.dart",
+          "line": 172
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927",
+      "en": "The whole solo boxing course works without camera permission. Live camera sessions are closed in this release.",
+      "tr": "Solo boks kursunun tamamı kamera izni olmadan çalışır. Bu sürümde canlı kamera seansları kapalıdır.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/onboarding_page.dart",
+          "line": 406
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27",
+      "en": "Practise the free lessons without an account or camera. Course progress stays on this device and reflects your own practice record. A Motion account is needed only for a membership. Live camera sessions are closed in this release.",
+      "tr": "Ücretsiz dersleri hesap veya kamera olmadan çalışabilirsiniz. Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydınızı gösterir. Motion hesabı yalnızca üyelik için gerekir. Bu sürümde canlı kamera seansları kapalıdır.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/settings_page.dart",
+          "line": 255
+        }
+      ],
+      "kind": "UI",
+      "placeholder_types": {}
+    },
+    {
+      "id": "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9",
+      "en": "The first lessons of every course are free. A JabLab or Motion+ membership opens the remaining lessons, with a 14-day free trial for new subscribers. Prices and purchase are in Motion account.",
+      "tr": "Her kursun ilk dersleri ücretsizdir. Kalan dersleri JabLab veya Motion+ üyeliği açar; yeni aboneler için 14 gün ücretsiz deneme vardır. Fiyatlar ve satın alma Motion hesabındadır.",
+      "placeholders": [],
+      "plural_arg": null,
+      "contexts": [
+        {
+          "path": "lib/app/settings_page.dart",
+          "line": 326
         }
       ],
       "kind": "UI",

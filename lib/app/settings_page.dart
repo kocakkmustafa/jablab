@@ -254,8 +254,8 @@ class SettingsPage extends StatelessWidget {
                     Text(
                       UiLanguage.text(
                         context,
-                        en: 'Practise the solo boxing course without an account or camera. Course progress stays on this device and reflects your own practice record. A Motion account is optional. Live camera sessions and subscription sales are closed in this release.',
-                        tr: 'Solo boks kursunu hesap veya kamera olmadan çalışabilirsiniz. Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydınızı gösterir. Motion hesabı isteğe bağlıdır. Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.',
+                        en: 'Practise the free lessons without an account or camera. Course progress stays on this device and reflects your own practice record. A Motion account is needed only for a membership. Live camera sessions are closed in this release.',
+                        tr: 'Ücretsiz dersleri hesap veya kamera olmadan çalışabilirsiniz. Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydınızı gösterir. Motion hesabı yalnızca üyelik için gerekir. Bu sürümde canlı kamera seansları kapalıdır.',
                       ),
                       style: text.body.copyWith(
                         fontSize: 14,
@@ -325,8 +325,8 @@ class SettingsPage extends StatelessWidget {
                                 Text(
                                   UiLanguage.text(
                                     context,
-                                    en: 'Subscription sales are closed in this release. No purchase is needed for the course.',
-                                    tr: 'Bu sürümde abonelik satışı kapalıdır. Kurs için satın alma gerekmez.',
+                                    en: 'The first lessons of every course are free. A JabLab or Motion+ membership opens the remaining lessons, with a 14-day free trial for new subscribers. Prices and purchase are in Motion account.',
+                                    tr: 'Her kursun ilk dersleri ücretsizdir. Kalan dersleri JabLab veya Motion+ üyeliği açar; yeni aboneler için 14 gün ücretsiz deneme vardır. Fiyatlar ve satın alma Motion hesabındadır.',
                                   ),
                                   key: const Key('store-prices-in-account'),
                                   style: text.mono.copyWith(

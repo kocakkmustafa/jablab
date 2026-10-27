@@ -335,16 +335,23 @@ void main() {
     );
   });
 
-  test('KAPALI SATIŞ mağaza fiyatı mevcutmuş gibi sunulmuyor (J-136)', () {
+  // JAB-10b (2026-10-27): satış Core R3'ten beri açık; ayarlar ücretsiz
+  // kısmı ve satın almanın yerini söyler, fiyatı mağaza verir (J-136).
+  test('AÇIK SATIŞ: ücretsiz kısım söyleniyor, fiyat uydurulmuyor (J-136)', () {
     final String settings = File(
       'lib/app/settings_page.dart',
     ).readAsStringSync();
     expect(
       settings,
       contains(
-        'Subscription sales are closed in this release. No purchase is needed for the course.',
+        'The first lessons of every course are free. A JabLab or Motion+ membership opens the remaining lessons, with a 14-day free trial for new subscribers. Prices and purchase are in Motion account.',
       ),
-      reason: 'kapalı satış ve kursun satın alma gerektirmemesi belirtilmeli',
+      reason: 'ücretsiz kısım, üyelik ve satın almanın yeri belirtilmeli',
+    );
+    expect(
+      settings,
+      isNot(matches(RegExp(r'[0-9][.,]99'))),
+      reason: 'fiyat mağazadan gelir; ayarlarda sabit fiyat yazılmaz',
     );
     expect(
       settings,
@@ -376,16 +383,30 @@ void main() {
     final String src = File('lib/app/settings_page.dart').readAsStringSync();
     expect(
       src,
-      contains('Practise the solo boxing course without an account or camera'),
+      contains('Practise the free lessons without an account or camera'),
       reason: 'bugünkü misafir kurs kapsamı eksik',
     );
     expect(
       src,
-      contains(
-        'Live camera sessions and subscription sales are closed in this release',
-      ),
+      contains('Live camera sessions are closed in this release'),
       reason: 'kapalı canlı seans üyelikle erişilebilir gösterilmemeli',
     );
+    // Satış açıkken "satış kapalı" beyanı hiçbir yüzeyde kalmamalı.
+    for (final entity in Directory('lib').listSync(recursive: true)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      final List<String> texts = dartStrings(entity.readAsStringSync());
+      for (final String stale in <String>[
+        'subscription sales',
+        'sales are closed',
+        'abonelik satışı',
+      ]) {
+        expect(
+          texts.any((s) => s.contains(stale)),
+          isFalse,
+          reason: '${entity.path}: $stale',
+        );
+      }
+    }
   });
 
   test('KİLİTLİ ders içeren KURSUN hedefi bunu söylüyor (J-132)', () {

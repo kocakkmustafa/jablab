@@ -1631,7 +1631,6 @@
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "DIE ECKE",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "Boxtraining,\ndas du allein machen kannst.",
     "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Lerne Solo-Boxen mit aufbauenden Lektionen, Übungsaufgaben und Selbstprüfungen. Kurs braucht weder Sandsack, Handschuhe, Konto noch Kamera. Freien rutschfesten Raum vorbereiten.",
-    "s_c48bc79ecc63afce23f4e9aff7ca09d831f12ad97b30d828b8c71c110a09cf98": "Kursfortschritt bleibt auf diesem Gerät und spiegelt eigenen Übungsvermerk wider. Live-Kamerasitzungen und Aboverkauf sind in dieser Version geschlossen. Kurs nimmt kein Video auf.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "VOR DEM START",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Was dies\nnicht kann.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "Kurs nutzt eigenen Übungsvermerk. Er bewertet Schlagtechnik, Tempo, Aufprallkraft oder Beherrschung nicht automatisch. Übe kontaktlos und ohne Sparringspartner.",
@@ -1644,7 +1643,6 @@
     "s_187618259b95fa68b1c3c427a4d641abfe22cfbf35a8ff4e503f961dec59c5ca": "Telefon zum Lesen ohne Festhalten aufstellen.",
     "s_d310d04fbccf71d2acd3d7988199a7754715510772770399f8972f7daf4b3ee0": "Kontrolliert und kontaktlos bewegen. Bei Schmerzen stoppen.",
     "s_43e6aeaf91c4577869cdd615eeb06fa398bf3b4135484006d0785afabe53e23d": "KEINE KAMERA NÖTIG",
-    "s_81ff2fbeaca157f56cdc992e6a81ccc9485afc2d0d33a92a7c1f62a4975b2c14": "Gesamter Solo-Boxkurs funktioniert ohne Kameraberechtigung. Live-Kamerasitzungen und Aboverkauf sind in dieser Version geschlossen.",
     "s_5a07edd9b04bd2e69d7bdc863172c1dad7037a414c0e7836cfc76bf2cd9a27ae": "Nicht offen. Wir listen es für Überblick über gesamten App-Umfang — hinter dieser Seite liegen keine Platzhalterlektionen.",
     "s_a6c5baf306185937f4d537559aca6142254d4df27ae66a9ce480ae646e9a6eff": "Was es nicht misst",
     "s_e20b348c74d4ba2511097c1790f9b929311809d92583d2f1a6340730d18bbf83": "Kurse",
@@ -1658,12 +1656,10 @@
     "s_06519a6f725c123b21f17fbfb8f27602c2941d0c0fdd9dc49761924a06682c54": "ZUGANG",
     "s_4c7d465d9ebdc8a0c2177d935681f1e67a03a65f784a1ed6f7ad63a4056f3b1a": "KURS",
     "s_89aa7829176bb0c23dd3d8be4e6e7ec6e78cfadd0ee290eb71589dbcec5d05f3": "Solo-Boxkurs",
-    "s_b9a36c702611c14a24c5a82c51d04f72b23504b6f4c1da407169bf749b43745c": "Übe Solo-Boxkurs ohne Konto oder Kamera. Kursfortschritt bleibt auf diesem Gerät und spiegelt eigenen Übungsvermerk. Motion-Konto optional. Live-Kamerasitzungen und Aboverkauf in dieser Version geschlossen.",
     "s_be239f8616176937a76dbc5fb4bca31a557687811227e8d16cdba3d605086f52": "Kontoanmeldung nicht verbunden. Sitzungsverlauf bleibt auf diesem Gerät.",
     "s_2f0093a51a1f27ec347fdc117b9a678d9daa25a0acd393f12375c8267dd46351": "Motion-Konto",
     "s_662757980ca522ac5a87eca20805c40f4147d4208c73a0a148321474805348f4": "Lektionen ohne Anmeldung ansehen. Vorhandener Gastverlauf bleibt auf diesem Gerät und wandert nicht in ein Konto.",
     "s_d6a9b9420c75113b9e2e505c7e1bef80052b5c8f1c6ba9b3be64a20b1e40bd73": "ABONNEMENTS",
-    "s_f38214e5422ffae3ce203aea63833fcd5a745fc69e8657eed06bc1b348ad7787": "Aboverkauf in dieser Version geschlossen. Kein Kauf für Kurs nötig.",
     "s_809d35239c14ad3ad5d8b0338da9e6844d7ea28af95132eefd81a3cdbb041b5e": "Was wir nicht tun und warum",
     "s_a7017f85902777d4d83454a0262af08920520b8d9038bc9e69b97afc58d62473": "SOLO-BOXPFAD",
     "s_a00d1f47e3cbd7b52ad031c574422849560c42759046c7b3be819eebe2ed1c07": "39 Lektionen · vom Stand zur eigenen Runde",
@@ -2468,6 +2464,10 @@
     "s_fab241935a7dfb6a075f3f4e85b10cd987343dcc84c19def18d8e5760cfd78d8": "Im Abo enthalten",
     "s_3dcf7f959907fb9c2deae0b4a07a55d039eae8465efe2112d71214e3f0185048": "Neue Abonnenten erhalten eine 14-tägige kostenlose Testphase. Die Preise zeigt dein Store an, und du kannst jederzeit in den Abo-Einstellungen deines Stores kündigen.",
     "s_c9e7b5b9c6b1748357ee88dab06b8b9b50b0ff0ffadf2e705ff443c26a6319a4": "N ist anfängliche Bereitschaftsrichtung; E anfangs rechts, W anfangs links, S hinten. Keine Bildschirmseiten. In Aufnahme A hat Verbeugung bei 0:02.4 nahe Fersen, auswärts gerichtete Zehen und offene Hände neben Oberschenkeln; Lehrkraft bei 0:04.3 aufrecht. Zum Öffnen in Bereitschaft bewegt sich bei 0:05.3 zuerst links nach außen, dann rechts nach außen, während Unterarme bei 0:06.4 vorn kreuzen. Bei 0:07.5–0:12.0 Füße getrennt, Zehen außen, geschlossene Fäuste tief vor Oberschenkeln. Folge: verbeugen–aufrichten–links außen–rechts außen mit gekreuzten Armen–Bereitschaft. Direkt Zählzeit 1 anschließen; keine Boxdeckung. Fußbreite, Druck und geeignete persönliche Standtiefe wurden nicht gemessen. B beginnt schon bereit; keine Anfangsverbeugung zuschreiben.",
-    "s_85ca135d9c70e3245da35a9e1f41dfd723b63d2862b2fe5d34fbafb5aba1f9c5": "Beginne bei As Abschluss mit linkem Schlag/links vorn bei 0:41.6. Bei 0:43.2 geht links nach innen, linker Arm faltet hoch, Oberkörper kehrt zur Ausgangsrichtung. Bei 0:43.8 Unterarme gekreuzt, Anfangsrichtung wiederhergestellt; Bereitschaft bei 0:45.3. Einzelbildprüfung 0:46.3–0:46.8 zeigt zuerst linken Fuß nach innen, dann rechten dazu, während Hände neben Oberschenkeln öffnen. Verbeugung 0:48.8, aufrecht 0:50.1. Schlussfolge: mit linkem Fuß zurückfinden und Anfangsrichtung herstellen–Arme kreuzen–Bereitschaft–links innen–rechts dazu–Hände offen–verbeugen–aufrecht. Diese A-Fußfolge gilt nicht für Bs ungesehenes Intervall. Wegdistanz, Sohlenkontakt und exakte Rückkehr zum Ausgangsbodenpunkt wurden nicht gemessen. Kein 21. Schlag oder dazwischenliegende Boxdeckung."
+    "s_85ca135d9c70e3245da35a9e1f41dfd723b63d2862b2fe5d34fbafb5aba1f9c5": "Beginne bei As Abschluss mit linkem Schlag/links vorn bei 0:41.6. Bei 0:43.2 geht links nach innen, linker Arm faltet hoch, Oberkörper kehrt zur Ausgangsrichtung. Bei 0:43.8 Unterarme gekreuzt, Anfangsrichtung wiederhergestellt; Bereitschaft bei 0:45.3. Einzelbildprüfung 0:46.3–0:46.8 zeigt zuerst linken Fuß nach innen, dann rechten dazu, während Hände neben Oberschenkeln öffnen. Verbeugung 0:48.8, aufrecht 0:50.1. Schlussfolge: mit linkem Fuß zurückfinden und Anfangsrichtung herstellen–Arme kreuzen–Bereitschaft–links innen–rechts dazu–Hände offen–verbeugen–aufrecht. Diese A-Fußfolge gilt nicht für Bs ungesehenes Intervall. Wegdistanz, Sohlenkontakt und exakte Rückkehr zum Ausgangsbodenpunkt wurden nicht gemessen. Kein 21. Schlag oder dazwischenliegende Boxdeckung.",
+    "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "Kursfortschritt bleibt auf diesem Gerät und spiegelt eigenen Übungsvermerk wider. Die ersten Lektionen jedes Kurses sind kostenlos; Live-Kamerasitzungen sind in dieser Version geschlossen. Kurs nimmt kein Video auf.",
+    "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "Gesamter Solo-Boxkurs funktioniert ohne Kameraberechtigung. Live-Kamerasitzungen sind in dieser Version geschlossen.",
+    "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Übe die kostenlosen Lektionen ohne Konto oder Kamera. Kursfortschritt bleibt auf diesem Gerät und spiegelt eigenen Übungsvermerk. Ein Motion-Konto ist nur für eine Mitgliedschaft nötig. Live-Kamerasitzungen sind in dieser Version geschlossen.",
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Die ersten Lektionen jedes Kurses sind kostenlos. Eine JabLab- oder Motion+-Mitgliedschaft öffnet die übrigen Lektionen, mit 14 Tagen kostenloser Testphase für neue Abonnenten. Preise und Kauf findest du im Motion-Konto."
   }
 }

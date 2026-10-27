@@ -1631,7 +1631,6 @@
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "L’ANGOLO",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "Pugilato da praticare\nda soli.",
     "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Impara il pugilato in solitaria con lezioni progressive, attività di pratica e autoverifiche. Per il corso non servono sacco, guantoni, account o videocamera. Prepara uno spazio sgombro e non scivoloso.",
-    "s_c48bc79ecc63afce23f4e9aff7ca09d831f12ad97b30d828b8c71c110a09cf98": "I progressi del corso restano su questo dispositivo e riflettono il tuo resoconto di pratica. Le sessioni con videocamera dal vivo e le vendite di abbonamenti sono chiuse in questa versione. Il corso non acquisisce video.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "PRIMA DI INIZIARE",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Che cosa\nnon può fare.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "Il corso usa il tuo resoconto di pratica. Non valuta automaticamente tecnica dei pugni, velocità, forza d’impatto o padronanza. Esercitati senza contatto e senza un compagno di sparring.",
@@ -1644,7 +1643,6 @@
     "s_187618259b95fa68b1c3c427a4d641abfe22cfbf35a8ff4e503f961dec59c5ca": "Posiziona il telefono dove puoi leggere la lezione senza tenerlo in mano.",
     "s_d310d04fbccf71d2acd3d7988199a7754715510772770399f8972f7daf4b3ee0": "Esegui movimenti controllati senza contatto. Fermati se senti dolore.",
     "s_43e6aeaf91c4577869cdd615eeb06fa398bf3b4135484006d0785afabe53e23d": "LA VIDEOCAMERA NON SERVE",
-    "s_81ff2fbeaca157f56cdc992e6a81ccc9485afc2d0d33a92a7c1f62a4975b2c14": "L’intero corso di pugilato in solitaria funziona senza il permesso per la videocamera. Le sessioni con videocamera dal vivo e le vendite di abbonamenti sono chiuse in questa versione.",
     "s_5a07edd9b04bd2e69d7bdc863172c1dad7037a414c0e7836cfc76bf2cd9a27ae": "Non aperto. Lo elenchiamo perché tu possa vedere l’intero ambito coperto dall’app: dietro questa pagina non ci sono lezioni provvisorie.",
     "s_a6c5baf306185937f4d537559aca6142254d4df27ae66a9ce480ae646e9a6eff": "Che cosa non misura",
     "s_e20b348c74d4ba2511097c1790f9b929311809d92583d2f1a6340730d18bbf83": "Corsi",
@@ -1658,12 +1656,10 @@
     "s_06519a6f725c123b21f17fbfb8f27602c2941d0c0fdd9dc49761924a06682c54": "ACCESSO",
     "s_4c7d465d9ebdc8a0c2177d935681f1e67a03a65f784a1ed6f7ad63a4056f3b1a": "CORSO",
     "s_89aa7829176bb0c23dd3d8be4e6e7ec6e78cfadd0ee290eb71589dbcec5d05f3": "Corso di pugilato in solitaria",
-    "s_b9a36c702611c14a24c5a82c51d04f72b23504b6f4c1da407169bf749b43745c": "Esercitati nel corso di pugilato in solitaria senza account o videocamera. I progressi del corso restano su questo dispositivo e riflettono il tuo resoconto di pratica. Un account Motion è facoltativo. Le sessioni con videocamera dal vivo e le vendite di abbonamenti sono chiuse in questa versione.",
     "s_be239f8616176937a76dbc5fb4bca31a557687811227e8d16cdba3d605086f52": "L’accesso all’account non è collegato. La cronologia delle sessioni resta su questo dispositivo.",
     "s_2f0093a51a1f27ec347fdc117b9a678d9daa25a0acd393f12375c8267dd46351": "Account Motion",
     "s_662757980ca522ac5a87eca20805c40f4147d4208c73a0a148321474805348f4": "Consulta le lezioni senza accedere. La cronologia esistente come ospite resta su questo dispositivo e non viene trasferita in un account.",
     "s_d6a9b9420c75113b9e2e505c7e1bef80052b5c8f1c6ba9b3be64a20b1e40bd73": "ABBONAMENTI",
-    "s_f38214e5422ffae3ce203aea63833fcd5a745fc69e8657eed06bc1b348ad7787": "Le vendite di abbonamenti sono chiuse in questa versione. Per il corso non è richiesto alcun acquisto.",
     "s_809d35239c14ad3ad5d8b0338da9e6844d7ea28af95132eefd81a3cdbb041b5e": "Che cosa non facciamo e perché",
     "s_a7017f85902777d4d83454a0262af08920520b8d9038bc9e69b97afc58d62473": "PERCORSO DI PUGILATO IN SOLITARIA",
     "s_a00d1f47e3cbd7b52ad031c574422849560c42759046c7b3be819eebe2ed1c07": "39 lezioni · dalla posizione al tuo round",
@@ -2474,6 +2470,10 @@
     "s_fab241935a7dfb6a075f3f4e85b10cd987343dcc84c19def18d8e5760cfd78d8": "Incluso nell’abbonamento",
     "s_3dcf7f959907fb9c2deae0b4a07a55d039eae8465efe2112d71214e3f0185048": "I nuovi abbonati ricevono una prova gratuita di 14 giorni. I prezzi sono indicati dal tuo store e puoi annullare in qualsiasi momento nelle impostazioni degli abbonamenti dello store.",
     "s_c9e7b5b9c6b1748357ee88dab06b8b9b50b0ff0ffadf2e705ff443c26a6319a4": "N è orientamento iniziale pronto; E tua destra iniziale, W tua sinistra e S dietro. Non lati dello schermo. In A inchino a 0:02.4 con talloni vicini, punte fuori, mani aperte alle cosce; istruttore eretto a 0:04.3. Apertura: sinistro fuori prima a 0:05.3, poi destro fuori con avambracci incrociati davanti a 0:06.4. A 0:07.5–0:12.0 piedi separati, punte fuori e pugni chiusi bassi davanti alle cosce. Ordine: inchino–eretto–sinistro fuori–destro fuori con braccia incrociate–pronto. Continua direttamente al conteggio 1, nessuna guardia di boxe. Larghezza, pressione e profondità personale adatta non misurate. B è già pronto; non attribuirgli inchino iniziale.",
-    "s_85ca135d9c70e3245da35a9e1f41dfd723b63d2862b2fe5d34fbafb5aba1f9c5": "Parti dalla fine pugno sinistro/sinistro avanti di A a 0:41.6. A 0:43.2 sinistro dentro e braccio sinistro ripiegato alto mentre il busto torna all'orientamento iniziale. A 0:43.8 avambracci incrociati e orientamento ripristinato; pronto a 0:45.3. Fotogrammi 0:46.3–0:46.8: prima sinistro chiude dentro, poi destro raggiunge mentre mani si aprono alle cosce. Inchino 0:48.8 ed eretto 0:50.1. Chiusura: recupero col sinistro e orientamento iniziale–incrocio braccia–pronto–sinistro dentro–destro raggiunge–mani aperte–inchino–eretto. Ordine specifico A non attribuito all'intervallo invisibile B. Distanza, contatto pianta e ritorno esatto al punto iniziale non misurati. Niente 21° pugno o guardia di boxe intermedia."
+    "s_85ca135d9c70e3245da35a9e1f41dfd723b63d2862b2fe5d34fbafb5aba1f9c5": "Parti dalla fine pugno sinistro/sinistro avanti di A a 0:41.6. A 0:43.2 sinistro dentro e braccio sinistro ripiegato alto mentre il busto torna all'orientamento iniziale. A 0:43.8 avambracci incrociati e orientamento ripristinato; pronto a 0:45.3. Fotogrammi 0:46.3–0:46.8: prima sinistro chiude dentro, poi destro raggiunge mentre mani si aprono alle cosce. Inchino 0:48.8 ed eretto 0:50.1. Chiusura: recupero col sinistro e orientamento iniziale–incrocio braccia–pronto–sinistro dentro–destro raggiunge–mani aperte–inchino–eretto. Ordine specifico A non attribuito all'intervallo invisibile B. Distanza, contatto pianta e ritorno esatto al punto iniziale non misurati. Niente 21° pugno o guardia di boxe intermedia.",
+    "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "I progressi del corso restano su questo dispositivo e riflettono il tuo resoconto di pratica. Le prime lezioni di ogni corso sono gratuite; le sessioni con videocamera dal vivo sono chiuse in questa versione. Il corso non acquisisce video.",
+    "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "L’intero corso di pugilato in solitaria funziona senza il permesso per la videocamera. Le sessioni con videocamera dal vivo sono chiuse in questa versione.",
+    "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Esercitati nelle lezioni gratuite senza account o videocamera. I progressi del corso restano su questo dispositivo e riflettono il tuo resoconto di pratica. Un account Motion serve solo per l’abbonamento. Le sessioni con videocamera dal vivo sono chiuse in questa versione.",
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Le prime lezioni di ogni corso sono gratuite. Un abbonamento JabLab o Motion+ sblocca le lezioni restanti, con 14 giorni di prova gratuita per i nuovi abbonati. Prezzi e acquisto sono nell’account Motion."
   }
 }

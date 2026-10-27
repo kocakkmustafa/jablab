@@ -1631,7 +1631,6 @@
     "s_884945c4922e49d6e68c4191bf859999f09869eca3cf17f7a1674e7488bdbff1": "LA ESQUINA",
     "s_edb47e36330c77d88e1e7ab4ef9708c434615222acb3d32a87ba69b34dce579b": "Boxeo para practicar\nen solitario.",
     "s_17852c6ff1e37bdf64777fa258a76903d0b6e57c36d567f795634bcaff73c5b9": "Aprende boxeo en solitario con lecciones progresivas, tareas y autocontroles. No necesitas saco, guantes, cuenta ni cámara para el curso. Prepara un espacio despejado y antideslizante.",
-    "s_c48bc79ecc63afce23f4e9aff7ca09d831f12ad97b30d828b8c71c110a09cf98": "El progreso queda en este dispositivo y refleja tu registro personal. Las sesiones en vivo con cámara y la venta de suscripciones están cerradas en esta versión. El curso no captura video.",
     "s_82655c0c51cd5bd8b479a1139c31abf049fa738e738d31e6652275cc4c4211a1": "ANTES DE EMPEZAR",
     "s_d4de331893669a9d30c4f79c1b979959b6a9e5c4ee7b2005683b9bdf1d1ec261": "Lo que esto\nno puede hacer.",
     "s_4a25de0fbc58f1bad8c3ae0fdaad50da4fc843055ea2af8ad27fd89789002627": "El curso usa tu registro personal de práctica. No califica automáticamente técnica, velocidad, fuerza de impacto ni dominio. Practica sin contacto ni compañero de sparring.",
@@ -1644,7 +1643,6 @@
     "s_187618259b95fa68b1c3c427a4d641abfe22cfbf35a8ff4e503f961dec59c5ca": "Coloca teléfono donde puedas leer sin sostenerlo.",
     "s_d310d04fbccf71d2acd3d7988199a7754715510772770399f8972f7daf4b3ee0": "Practica movimientos controlados sin contacto. Detente si duele.",
     "s_43e6aeaf91c4577869cdd615eeb06fa398bf3b4135484006d0785afabe53e23d": "NO NECESITAS CÁMARA",
-    "s_81ff2fbeaca157f56cdc992e6a81ccc9485afc2d0d33a92a7c1f62a4975b2c14": "Todo el curso de boxeo en solitario funciona sin permiso de cámara. Las sesiones en vivo con cámara y la venta de suscripciones están cerradas en esta versión.",
     "s_5a07edd9b04bd2e69d7bdc863172c1dad7037a414c0e7836cfc76bf2cd9a27ae": "No abierto. Lo incluimos para mostrar todo el alcance de la aplicación; no hay lecciones de relleno detrás de esta página.",
     "s_a6c5baf306185937f4d537559aca6142254d4df27ae66a9ce480ae646e9a6eff": "Qué no mide",
     "s_e20b348c74d4ba2511097c1790f9b929311809d92583d2f1a6340730d18bbf83": "Cursos",
@@ -1658,12 +1656,10 @@
     "s_06519a6f725c123b21f17fbfb8f27602c2941d0c0fdd9dc49761924a06682c54": "ACCESO",
     "s_4c7d465d9ebdc8a0c2177d935681f1e67a03a65f784a1ed6f7ad63a4056f3b1a": "CURSO",
     "s_89aa7829176bb0c23dd3d8be4e6e7ec6e78cfadd0ee290eb71589dbcec5d05f3": "Curso de boxeo en solitario",
-    "s_b9a36c702611c14a24c5a82c51d04f72b23504b6f4c1da407169bf749b43745c": "Puedes practicar el curso de boxeo en solitario sin cuenta ni cámara. El progreso del curso permanece en este dispositivo y refleja tu propio registro de práctica. La cuenta Motion es opcional. Las sesiones en vivo con cámara y la venta de suscripciones están cerradas en esta versión.",
     "s_be239f8616176937a76dbc5fb4bca31a557687811227e8d16cdba3d605086f52": "Inicio de sesión sin conectar. Historial queda en este dispositivo.",
     "s_2f0093a51a1f27ec347fdc117b9a678d9daa25a0acd393f12375c8267dd46351": "Cuenta Motion",
     "s_662757980ca522ac5a87eca20805c40f4147d4208c73a0a148321474805348f4": "Explora las lecciones sin iniciar sesión. El historial de invitado existente permanece en este dispositivo y no se transfiere a una cuenta.",
     "s_d6a9b9420c75113b9e2e505c7e1bef80052b5c8f1c6ba9b3be64a20b1e40bd73": "SUSCRIPCIONES",
-    "s_f38214e5422ffae3ce203aea63833fcd5a745fc69e8657eed06bc1b348ad7787": "Venta de suscripciones cerrada en esta versión. El curso no requiere comprar.",
     "s_809d35239c14ad3ad5d8b0338da9e6844d7ea28af95132eefd81a3cdbb041b5e": "Qué no hacemos y por qué",
     "s_a7017f85902777d4d83454a0262af08920520b8d9038bc9e69b97afc58d62473": "RUTA DE BOXEO EN SOLITARIO",
     "s_a00d1f47e3cbd7b52ad031c574422849560c42759046c7b3be819eebe2ed1c07": "39 lecciones · de postura a tu propio asalto",
@@ -2474,6 +2470,10 @@
     "s_fab241935a7dfb6a075f3f4e85b10cd987343dcc84c19def18d8e5760cfd78d8": "Incluido con la suscripción",
     "s_3dcf7f959907fb9c2deae0b4a07a55d039eae8465efe2112d71214e3f0185048": "Los nuevos suscriptores obtienen una prueba gratuita de 14 días. Los precios los muestra tu tienda y puedes cancelar cuando quieras en la configuración de suscripciones de tu tienda.",
     "s_c9e7b5b9c6b1748357ee88dab06b8b9b50b0ff0ffadf2e705ff443c26a6319a4": "N es orientación inicial de preparación; E tu derecha inicial, W izquierda inicial y S detrás. No son lados de pantalla. En grabación A, saludo de 0:02.4 tiene talones cercanos entre sí, puntas afuera y manos abiertas junto a muslos; instructor erguido en 0:04.3. Para abrir a preparación, izquierdo sale primero en 0:05.3 y derecho sale mientras antebrazos cruzan delante en 0:06.4. En 0:07.5–0:12.0 pies separados, puntas afuera y puños cerrados bajos delante de muslos. Aprende orden: saludo–erguido–izquierdo afuera–derecho afuera con brazos cruzados–preparación. Sigue directo a cuenta 1; sin guardia de boxeo. No se midieron anchura, presión ni profundidad personal adecuada. B ya empieza preparado; no le atribuyas saludo inicial.",
-    "s_85ca135d9c70e3245da35a9e1f41dfd723b63d2862b2fe5d34fbafb5aba1f9c5": "Inicia desde final de puño izquierdo/postura frontal izquierda de A en 0:41.6. En 0:43.2 izquierdo entra y brazo izquierdo se pliega alto mientras torso vuelve a orientación inicial. En 0:43.8 antebrazos cruzados y orientación inicial restaurada; preparación sigue en 0:45.3. Avance cuadro a cuadro en 0:46.3–0:46.8 muestra izquierdo cerrando primero y derecho uniéndose mientras manos abren junto a muslos. Saludo en 0:48.8 y erguido en 0:50.1. Aprende cierre: recuperar con izquierdo y restaurar orientación inicial–cruzar brazos–preparación–izquierdo adentro–derecho se une–manos abiertas–saludo–erguido. Orden de A no se asigna al intervalo no visto de B. No se midieron distancia, contacto de planta ni regreso exacto al punto original. Sin puño 21 ni guardia intermedia de boxeo."
+    "s_85ca135d9c70e3245da35a9e1f41dfd723b63d2862b2fe5d34fbafb5aba1f9c5": "Inicia desde final de puño izquierdo/postura frontal izquierda de A en 0:41.6. En 0:43.2 izquierdo entra y brazo izquierdo se pliega alto mientras torso vuelve a orientación inicial. En 0:43.8 antebrazos cruzados y orientación inicial restaurada; preparación sigue en 0:45.3. Avance cuadro a cuadro en 0:46.3–0:46.8 muestra izquierdo cerrando primero y derecho uniéndose mientras manos abren junto a muslos. Saludo en 0:48.8 y erguido en 0:50.1. Aprende cierre: recuperar con izquierdo y restaurar orientación inicial–cruzar brazos–preparación–izquierdo adentro–derecho se une–manos abiertas–saludo–erguido. Orden de A no se asigna al intervalo no visto de B. No se midieron distancia, contacto de planta ni regreso exacto al punto original. Sin puño 21 ni guardia intermedia de boxeo.",
+    "s_78b50b20beb810d13bae90e7e13da6a6d7d9b42077d0dc7974bd9835a88b20a1": "El progreso queda en este dispositivo y refleja tu registro personal. Las primeras lecciones de cada curso son gratis; las sesiones en vivo con cámara están cerradas en esta versión. El curso no captura video.",
+    "s_53b8f03430fb24d9d188db8b1edd3356730e07671901368fae1c871a1f4bc927": "Todo el curso de boxeo en solitario funciona sin permiso de cámara. Las sesiones en vivo con cámara están cerradas en esta versión.",
+    "s_d66aa300926c5d463df705c81397f4f4736ea086258bfbd107411e9aea3cae27": "Puedes practicar las lecciones gratis sin cuenta ni cámara. El progreso del curso permanece en este dispositivo y refleja tu propio registro de práctica. La cuenta Motion solo se necesita para una membresía. Las sesiones en vivo con cámara están cerradas en esta versión.",
+    "s_e460a9daf68ad39f6053937149220c678c6ccac9af77ab1df6836b359f18acd9": "Las primeras lecciones de cada curso son gratis. Una membresía de JabLab o Motion+ abre las lecciones restantes, con 14 días de prueba gratis para nuevos suscriptores. Los precios y la compra están en la cuenta Motion."
   }
 }

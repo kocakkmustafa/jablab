@@ -139,8 +139,8 @@ void main() {
       expect(
         find.textContaining(
           language == 'tr'
-              ? 'canlı kamera seansları ve abonelik satışı kapalıdır'
-              : 'Live camera sessions and subscription sales are closed',
+              ? 'canlı kamera seansları kapalıdır'
+              : 'live camera sessions are closed',
         ),
         findsOneWidget,
       );

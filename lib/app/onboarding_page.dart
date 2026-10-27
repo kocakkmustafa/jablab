@@ -173,12 +173,13 @@ class _Welcome extends StatelessWidget {
             context,
             en:
                 'Course progress stays on this device and reflects your own '
-                'practice record. Live camera sessions and subscription sales '
-                'are closed in this release. The course does not capture video.',
+                'practice record. The first lessons of every course are free; '
+                'live camera sessions are closed in this release. The course '
+                'does not capture video.',
             tr:
                 'Kurs ilerlemesi bu cihazda kalır ve kendi çalışma kaydını '
-                'gösterir. Bu sürümde canlı kamera seansları ve abonelik '
-                'satışı kapalıdır. Kurs video yakalamaz.',
+                'gösterir. Her kursun ilk dersleri ücretsizdir; bu sürümde '
+                'canlı kamera seansları kapalıdır. Kurs video yakalamaz.',
           ),
           style: JText.of(context).bodyMuted,
         ),
@@ -406,11 +407,11 @@ class _Setup extends StatelessWidget {
                   context,
                   en:
                       'The whole solo boxing course works without camera '
-                      'permission. Live camera sessions and subscription '
-                      'sales are closed in this release.',
+                      'permission. Live camera sessions are closed in this '
+                      'release.',
                   tr:
                       'Solo boks kursunun tamamı kamera izni olmadan çalışır. '
-                      'Bu sürümde canlı kamera seansları ve abonelik satışı kapalıdır.',
+                      'Bu sürümde canlı kamera seansları kapalıdır.',
                 ),
                 key: const Key('onboarding-permission-note'),
                 style: JText.of(context).body,

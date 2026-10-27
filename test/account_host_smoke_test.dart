@@ -42,9 +42,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.textContaining(
-        'Live camera sessions and subscription sales are closed',
-      ),
+      find.textContaining('Live camera sessions are closed'),
       findsOneWidget,
     );
     await tester.tap(find.byKey(SettingsPage.accountEntryKey));
@@ -57,7 +55,7 @@ void main() {
   });
 
   for (final locale in ['en', 'tr']) {
-    testWidgets('settings explains course and closed sales in $locale', (
+    testWidgets('settings explains course and free lessons in $locale', (
       tester,
     ) async {
       tester.platformDispatcher.localesTestValue = <Locale>[Locale(locale)];
@@ -79,24 +77,24 @@ void main() {
       expect(
         find.textContaining(
           locale == 'tr'
-              ? 'Solo boks kursunu hesap veya kamera olmadan'
-              : 'Practise the solo boxing course without an account or camera',
+              ? 'Ücretsiz dersleri hesap veya kamera olmadan'
+              : 'Practise the free lessons without an account or camera',
         ),
         findsOneWidget,
       );
       expect(
         find.textContaining(
           locale == 'tr'
-              ? 'canlı kamera seansları ve abonelik satışı kapalıdır'
-              : 'Live camera sessions and subscription sales are closed',
+              ? 'canlı kamera seansları kapalıdır'
+              : 'Live camera sessions are closed',
         ),
         findsOneWidget,
       );
       expect(
         find.textContaining(
           locale == 'tr'
-              ? 'Kurs için satın alma gerekmez'
-              : 'No purchase is needed for the course',
+              ? 'Her kursun ilk dersleri ücretsizdir'
+              : 'The first lessons of every course are free',
         ),
         findsOneWidget,
       );
