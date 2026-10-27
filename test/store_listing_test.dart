@@ -134,6 +134,90 @@ void main() {
     },
   );
 
+  // JAB-05a (2026-10-27): yerel listing'ler EN'in çevirisidir; metni dil
+  // bilmeden doğrulayamayız ama bayatlığı sayılardan yakalarız. Eski kopya
+  // yalnız 39 derslik boksu anlatıyordu: 16/10/14 ve fiyatlar orada yoktu.
+  group('yerel listing\'ler EN kaynağıyla AYNI olguları taşıyor', () {
+    const Map<String, int> limits = <String, int>{
+      'name': 30,
+      'subtitle': 30,
+      'promotionalText': 170,
+      'keywords': 100,
+      'shortDescription': 80,
+      'description': 4000,
+    };
+    int count(String text, String number) =>
+        RegExp('(?<![0-9])$number(?![0-9])').allMatches(text).length;
+
+    for (final String locale in <String>[
+      'ar',
+      'de',
+      'es-419',
+      'fr',
+      'ja',
+      'pt-BR',
+    ]) {
+      test(locale, () {
+        final Map<String, dynamic> local =
+            (jsonDecode(
+                      File(
+                        'docs/store/listing.$locale.json',
+                      ).readAsStringSync(),
+                    )
+                    as Map)
+                .cast<String, dynamic>();
+        final Map<String, dynamic> app = (local['appStore'] as Map)
+            .cast<String, dynamic>();
+        final String desc = local['description'] as String;
+        final Map<String, String> fields = <String, String>{
+          for (final String k in <String>[
+            'name',
+            'subtitle',
+            'promotionalText',
+            'keywords',
+          ])
+            k: app[k] as String,
+          'shortDescription':
+              (local['playStore'] as Map)['shortDescription'] as String,
+          'description': desc,
+        };
+        limits.forEach((String k, int max) {
+          expect(fields[k]!.runes.length, lessThanOrEqualTo(max), reason: k);
+        });
+
+        // Boks 39/8 modül; KB, MT, karate kihon 16 (+ Yang Family 16);
+        // Taikyoku 10; Tai Chi 14 (+ 14 dil, 14 gün).
+        expect(count(desc, '39'), greaterThanOrEqualTo(1));
+        expect(count(desc, '8'), greaterThanOrEqualTo(1));
+        expect(count(desc, '16'), greaterThanOrEqualTo(4));
+        expect(count(desc, '10'), greaterThanOrEqualTo(1));
+        expect(count(desc, '14'), greaterThanOrEqualTo(3));
+        for (final String price in <String>['11', '69', '19', '129']) {
+          expect(
+            desc,
+            matches(RegExp('(?<![0-9])$price[.,]99')),
+            reason: price,
+          );
+        }
+        expect(desc, contains('Motion+'));
+        expect(count(desc, '24'), greaterThanOrEqualTo(1));
+
+        final String strings = File(
+          'ios/Runner/$locale.lproj/InfoPlist.strings',
+        ).readAsStringSync();
+        expect(
+          strings,
+          contains(
+            '"NSCameraUsageDescription" = '
+            '"${(local['cameraPermissionRationale'] as Map)['ios']}"',
+          ),
+        );
+        expect(local['supportUrl'], listing['supportUrl']);
+        expect(local['privacyPolicyUrl'], listing['privacyPolicyUrl']);
+      });
+    }
+  });
+
   test('kamera izin metni Info.plist ile TUTARLI', () {
     final String plist = File('ios/Runner/Info.plist').readAsStringSync();
     final String storeRationale =
