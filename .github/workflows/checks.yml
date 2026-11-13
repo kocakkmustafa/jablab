@@ -44,7 +44,7 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${MOTION_CORE_RO_TOKEN}@github.com/kocakkmustafa/motion-core.git".insteadOf "https://github.com/kocakkmustafa/motion-core.git"
 
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
 
       - name: Solo boks kurs manifesti kaynakla aynı mı
         run: dart run tool/build_solo_boxing_integrity_manifest.dart --check
@@ -104,7 +104,7 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${MOTION_CORE_RO_TOKEN}@github.com/kocakkmustafa/motion-core.git".insteadOf "https://github.com/kocakkmustafa/motion-core.git"
 
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
 
       - name: Android release build — imzasız, KOD YOLU kanıtı
         # Gerçek keystore kurucuda (~/.secrets/yula/), CI'da YOK.
@@ -139,7 +139,7 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${MOTION_CORE_RO_TOKEN}@github.com/kocakkmustafa/motion-core.git".insteadOf "https://github.com/kocakkmustafa/motion-core.git"
 
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
 
       - name: iOS release build, imzasız
         # `--no-codesign`: CI runner'ında imzalama sertifikası yok ve
