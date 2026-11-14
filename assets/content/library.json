@@ -84,7 +84,7 @@
               ],
               "minutes": 12,
               "usesCamera": true,
-              "$cameraBasis": "Bu ders KAMERA hattini acar (J-096): teknik listesi tam olarak ['jab'] ve jab modellenmis TEK teknik. Kanca/uppercut modellenmedigi icin kombinasyon dersleri kamerayi ACMAZ - acsalardi kullanici izin verir, pil yanar ve sayim yanlis cikardi."
+              "$cameraBasis": "Bu ders KAMERA hattini acar (J-096): teknik listesi tam olarak ['jab'] ve jab modellenmis TEK teknik. Kanca/uppercut modellenmedigi icin kombinasyon dersleri kamerayi ACMAZ - acsalardi kullanici izin verir, pil yanar ve sayim yanlis cikardi. NOT (JAB-P1-04): kilitli (status:locked) kombinasyon dersleri usesCamera'yi yalniz 'kamera-olcum dersi' beyani olarak tasir; kilit acilana kadar kamera acilmaz, izin istenmez; kilit kanca modellenmeden acilmaz."
             },
             {
               "id": "boxing.foundations.guard",
@@ -415,7 +415,7 @@
               "status": "locked",
               "lockedBy": "technique-unmodelled",
               "usesCamera": true,
-              "$cameraBasis": "JAB-P1-04: bu ders kamera/hareket olcumu dersidir (kilit nedeni olcumun kendisini anlatir; yazili/oz-beyan icerigi yok). Kamera kapaliyken listelenmez (JAB-P1-03 kurali).",
+              "$cameraBasis": "JAB-P1-04: bu ders kamera/hareket olcumu dersidir (kilit nedeni olcumun kendisini anlatir; yazili/oz-beyan icerigi yok). Kamera kapaliyken listelenmez (JAB-P1-03 kurali). Dersler kilitli: usesCamera yalniz olcum-dersi beyanidir, kilit acilana kadar kamera acilmaz/izin istenmez (bkz. boxing.foundations.jab $cameraBasis notu).",
               "focus": "combination",
               "minutes": 14,
               "techniques": [
@@ -434,7 +434,7 @@
               "status": "locked",
               "lockedBy": "no-opponent",
               "usesCamera": true,
-              "$cameraBasis": "JAB-P1-04: bu ders kamera/hareket olcumu dersidir (kilit nedeni olcumun kendisini anlatir; yazili/oz-beyan icerigi yok). Kamera kapaliyken listelenmez (JAB-P1-03 kurali).",
+              "$cameraBasis": "JAB-P1-04: bu ders kamera/hareket olcumu dersidir (kilit nedeni olcumun kendisini anlatir; yazili/oz-beyan icerigi yok). Kamera kapaliyken listelenmez (JAB-P1-03 kurali). Dersler kilitli: usesCamera yalniz olcum-dersi beyanidir, kilit acilana kadar kamera acilmaz/izin istenmez (bkz. boxing.foundations.jab $cameraBasis notu).",
               "focus": "defence",
               "minutes": 14,
               "$lockedWhy": "Savunma sonrasi cevap, bir SALDIRIYA cevaptir. Golge calismasinda saldiri yok; olcebilecegimiz sey yalnizca kullanicinin kendi kendine yaptigi hareket sirasi olurdu. Bunu 'savunma refleksi' diye sunmak yalan olur.",
@@ -448,7 +448,7 @@
               "status": "locked",
               "lockedBy": "missing-reference",
               "usesCamera": true,
-              "$cameraBasis": "JAB-P1-04: bu ders kamera/hareket olcumu dersidir (kilit nedeni olcumun kendisini anlatir; yazili/oz-beyan icerigi yok). Kamera kapaliyken listelenmez (JAB-P1-03 kurali).",
+              "$cameraBasis": "JAB-P1-04: bu ders kamera/hareket olcumu dersidir (kilit nedeni olcumun kendisini anlatir; yazili/oz-beyan icerigi yok). Kamera kapaliyken listelenmez (JAB-P1-03 kurali). Dersler kilitli: usesCamera yalniz olcum-dersi beyanidir, kilit acilana kadar kamera acilmaz/izin istenmez (bkz. boxing.foundations.jab $cameraBasis notu).",
               "focus": "footwork",
               "minutes": 15,
               "$lockedWhy": "Adim kalitesi icin referans YOK: uc bagimsiz egitmenden footwork take'i toplanmadi (M-C-04). FEET_CROSSED tespit edilebiliyor ama 'iyi adim' olculemez — hata yakalamak ile beceri puanlamak ayni sey degil.",
