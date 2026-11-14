@@ -52,7 +52,7 @@ class ReleasePreparationTests(unittest.TestCase):
    with self.assertRaises(ValueError):privacy_rows(p)
  def native_fixture(self):
   (self.root/'android/app/src/main').mkdir(parents=True);(self.root/'ios/Runner').mkdir(parents=True);(self.root/'ios/Runner.xcodeproj').mkdir(parents=True)
-  (self.root/'android/app/src/main/AndroidManifest.xml').write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android"><uses-permission android:name="android.permission.INTERNET"/><uses-permission android:name="android.permission.CAMERA"/><application android:label="JabLab"><activity><intent-filter><data android:scheme="com.yulalab.jablab" android:host="auth" android:path="/callback"/></intent-filter></activity></application></manifest>')
+  (self.root/'android/app/src/main/AndroidManifest.xml').write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android"><uses-permission android:name="android.permission.INTERNET"/><application android:label="JabLab"><activity><intent-filter><data android:scheme="com.yulalab.jablab" android:host="auth" android:path="/callback"/></intent-filter></activity></application></manifest>')
   (self.root/'ios/Runner/Info.plist').write_bytes(plistlib.dumps({'CFBundleDisplayName':'JabLab'}));(self.root/'ios/Runner.xcodeproj/project.pbxproj').write_text('TARGETED_DEVICE_FAMILY = 1;')
  def test_native_identity_and_exact_source_permissions(self):
   self.native_fixture();r=native_identity(self.root);self.assertEqual(r['deviceFamily'],'iPhone only');self.assertFalse(r['mergedBinaryPermissionsVerified'])
