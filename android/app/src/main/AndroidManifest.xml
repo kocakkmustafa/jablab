@@ -1,15 +1,14 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- KAMERA KÖPRÜSÜ (J-072). Plugin izni KENDİ İSTEMEZ: isimli hata
-         (camera-permission-denied) döndürür ve izin UX'ini app'e bırakır
-         (sözleşme §1 katman sınırı). Beyan olmadan köprü hiç başlamaz. -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- Kamera OLMAYAN cihaz kurulumu ENGELLENMEZ: Fitness hattı (süre,
-         kayıt, sesli anlatı) kamerasız TAM çalışıyor ve kanıtlı
-         (docs/gates/FITNESS-SHIP-KANITI.txt). `required="true"` yazmak
-         çalışan bir ürünü kullanamayacak cihazlara kapatmak olurdu. -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <!-- Kamera özelliği KAPALI (jablabCameraCoachingAvailable=false): uygulama
+         CAMERA izni istemez. motion_camera eklentisi kendi bildiriminde CAMERA
+         ve kamera uses-feature satırlarını ekler; `tools:node="remove"` bunları
+         BİRLEŞİK bildirimden çıkarır. Kamera açılırken geri ekleme:
+         docs/camera/ANDROID-CAMERA-IZNI.tr.md -->
+    <uses-permission android:name="android.permission.CAMERA" tools:node="remove" />
+    <uses-feature android:name="android.hardware.camera" tools:node="remove" />
+    <uses-feature android:name="android.hardware.camera.autofocus" tools:node="remove" />
     <application
         android:label="JabLab"
         android:name="${applicationName}"

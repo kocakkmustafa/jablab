@@ -52,12 +52,22 @@ class ReleasePreparationTests(unittest.TestCase):
    with self.assertRaises(ValueError):privacy_rows(p)
  def native_fixture(self):
   (self.root/'android/app/src/main').mkdir(parents=True);(self.root/'ios/Runner').mkdir(parents=True);(self.root/'ios/Runner.xcodeproj').mkdir(parents=True)
-  (self.root/'android/app/src/main/AndroidManifest.xml').write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android"><uses-permission android:name="android.permission.INTERNET"/><uses-permission android:name="android.permission.CAMERA"/><application android:label="JabLab"><activity><intent-filter><data android:scheme="com.yulalab.jablab" android:host="auth" android:path="/callback"/></intent-filter></activity></application></manifest>')
+  (self.root/'android/app/src/main/AndroidManifest.xml').write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android"><uses-permission android:name="android.permission.INTERNET"/><application android:label="JabLab"><activity><intent-filter><data android:scheme="com.yulalab.jablab" android:host="auth" android:path="/callback"/></intent-filter></activity></application></manifest>')
   (self.root/'ios/Runner/Info.plist').write_bytes(plistlib.dumps({'CFBundleDisplayName':'JabLab'}));(self.root/'ios/Runner.xcodeproj/project.pbxproj').write_text('TARGETED_DEVICE_FAMILY = 1;')
  def test_native_identity_and_exact_source_permissions(self):
   self.native_fixture();r=native_identity(self.root);self.assertEqual(r['deviceFamily'],'iPhone only');self.assertFalse(r['mergedBinaryPermissionsVerified'])
   p=self.root/'android/app/src/main/AndroidManifest.xml';p.write_text(p.read_text().replace('android:label="JabLab"','android:label="wrong"'))
   with self.assertRaises(ValueError):native_identity(self.root)
+ def test_native_identity_ignores_tools_node_remove_permissions(self):
+  self.native_fixture();p=self.root/'android/app/src/main/AndroidManifest.xml'
+  t=p.read_text().replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">','<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">').replace('</manifest>','')
+  t=t.replace('<application','<uses-permission android:name="android.permission.CAMERA" tools:node="remove"/><application')+'</manifest>'
+  p.write_text(t);self.assertEqual(native_identity(self.root)['androidSourcePermissions'],['android.permission.INTERNET'])
+  p.write_text(t.replace(' tools:node="remove"',''))
+  with self.assertRaises(ValueError):native_identity(self.root)
+ def test_native_identity_accepts_real_repo_manifest(self):
+  repo=Path(__file__).resolve().parent.parent
+  self.assertEqual(native_identity(repo)['androidSourcePermissions'],['android.permission.INTERNET'])
  def test_permission_callback_and_device_family_changes_fail_closed(self):
   self.native_fixture();p=self.root/'android/app/src/main/AndroidManifest.xml';original=p.read_text()
   for altered in [original.replace('/callback','/other'),original.replace('</manifest>','<uses-permission android:name="android.permission.RECORD_AUDIO"/></manifest>')]:
