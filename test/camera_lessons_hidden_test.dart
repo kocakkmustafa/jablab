@@ -1,10 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jablab/app/content_repository.dart';
+import 'package:jablab/app/course_page.dart';
+import 'package:jablab/app/jablab_app.dart';
+import 'package:jablab/app/onboarding_store.dart';
+import 'package:jablab/app/owner_resource_lifetime.dart';
+import 'package:jablab/app/select_page.dart';
+import 'package:jablab/app/session_store.dart';
 import 'package:jablab/shell_candidate/shell_models.dart';
 import 'package:jablab_engine/jablab_engine.dart';
+
+import 'app_pump.dart';
 
 /// JAB-P1-03 (FARKLILASMA-4.3a G5): kamera koçluğu KAPALIYKEN `usesCamera`
 /// dersleri kütüphane listesinde görünmez; bayrak açıkken bugünkü davranış.
@@ -84,25 +93,21 @@ void main() {
       final int closedTotal = shellLessons(closed).length;
       expect(openTotal - closedTotal, cameraIds.length);
 
-      // Kurs başına "x ders" sayacı = kapalı listedeki gerçek ders sayısı =
-      // açık sayı eksi o kursun kamera dersleri.
-      final Map<String, int> openPer = <String, int>{
+      // Kurs başına "x ders" sayacı: kapalı listedeki her kursun ders sayısı =
+      // kaynaktaki ders sayısı − o kursun kamera dersleri; boş kurs kalmaz.
+      final Map<String, int> expected = <String, int>{
         for (final ShellCourse c in open.items.expand(
           (ShellItem i) => i.courses,
         ))
-          c.id: c.lessons.length,
+          c.id: c.lessons
+              .where((ShellLesson l) => !cameraIds.contains(l.id))
+              .length,
       };
       for (final ShellCourse c in closed.items.expand(
         (ShellItem i) => i.courses,
       )) {
-        final int hiddenInCourse = c.lessons.isEmpty
-            ? 0
-            : openPer[c.id]! - c.lessons.length;
-        expect(
-          c.lessons.where((ShellLesson l) => cameraIds.contains(l.id)),
-          isEmpty,
-        );
-        expect(hiddenInCourse, greaterThanOrEqualTo(0));
+        expect(c.lessons.length, expected[c.id], reason: c.id);
+        expect(c.lessons, isNotEmpty, reason: '${c.id} boş kurs listelenmez');
       }
       // Hiçbir kapalı-liste dersi kamera nedeniyle kilitli görünmüyor.
       expect(
@@ -115,17 +120,95 @@ void main() {
     },
   );
 
-  test('gizli dersin kaydı (son ders) kalan listeyi bozmaz', () {
+  test('kurs sayacı: yalnız görünen dersi olan kurslar sayılır', () {
+    final ShellLibrary open = repo.toShell(
+      library,
+      cameraLessonsAvailable: true,
+    );
     final ShellLibrary closed = repo.toShell(
       library,
       cameraLessonsAvailable: false,
     );
-    final Set<String> visible = shellLessons(
-      closed,
-    ).map((ShellLesson l) => l.id).toSet();
-    // "Kaldığın yer" gizli dersi bulamaz → eşleşme yok, çökme yok.
-    final String hidden = cameraIds.first;
-    expect(visible.contains(hidden), isFalse);
-    expect(visible.length, allIds.length - cameraIds.length);
+    for (final ShellItem i in closed.items) {
+      final ShellItem o = open.items.firstWhere((ShellItem x) => x.id == i.id);
+      final int expectedCourses = o.courses
+          .where(
+            (ShellCourse c) =>
+                c.lessons.any((ShellLesson l) => !cameraIds.contains(l.id)),
+          )
+          .length;
+      expect(i.courses.length, expectedCourses, reason: i.id);
+    }
+    // Tamamen kamera dersi olan kurslar var (footwork, conditioning).
+    final Set<String> openIds = open.items
+        .expand((ShellItem i) => i.courses)
+        .map((ShellCourse c) => c.id)
+        .toSet();
+    final Set<String> closedIds = closed.items
+        .expand((ShellItem i) => i.courses)
+        .map((ShellCourse c) => c.id)
+        .toSet();
+    expect(openIds.difference(closedIds), isNotEmpty);
   });
+
+  for (final bool cameraOn in <bool>[true, false]) {
+    testWidgets(
+      'kaldığın yer: gizli (kamera) ders kayıtlıyken kamera=$cameraOn',
+      (WidgetTester t) async {
+        final _Store store = _Store(cameraIds.first);
+        await t.runAsync(() async {
+          await t.pumpWidget(
+            JabLabApp(
+              key: ValueKey<Object>('$cameraOn'),
+              onboarding: const OnboardingStore(seenOverride: true),
+              repository: ContentRepository(
+                storeOverride: store,
+                ownerRegistry: OwnerResourceRegistry(),
+              ),
+              cameraLessonsAvailable: cameraOn,
+            ),
+          );
+        });
+        await settleAppLoad(t);
+        await t.pumpAndSettle();
+        expect(t.takeException(), isNull);
+        if (cameraOn) {
+          // Bugünkü davranış: kayıtlı ders kurs sayfasına iner.
+          expect(find.byType(CoursePage), findsOneWidget);
+          expect(
+            t.widget<CoursePage>(find.byType(CoursePage)).resumeLesson?.id,
+            cameraIds.first,
+          );
+        } else {
+          // Ders listede yok → kurs bulunamaz → Sayfa A, çökme yok.
+          expect(find.byType(CoursePage), findsNothing);
+          expect(find.byType(SelectPage), findsOneWidget);
+        }
+      },
+    );
+  }
+}
+
+class _Store implements SessionStore {
+  _Store(String lessonId)
+    : _records = <SessionRecord>[
+        SessionRecord(
+          lessonId: lessonId,
+          completedAt: DateTime.utc(2026, 8, 4),
+          workedSeconds: 540,
+          unitsCompleted: 3,
+          plannedUnits: 3,
+          unitLabel: 'round',
+          lessonClass: 'unscored',
+        ),
+      ];
+  final List<SessionRecord> _records;
+  @override
+  Future<void> append(SessionRecord record) async => _records.add(record);
+  @override
+  Future<List<SessionRecord>> recent({int? limit}) async => _records;
+  @override
+  Future<int> unreadableRecords() async => 0;
+  @override
+  Future<int> workedSecondsFor(String lessonId) async => 0;
 }

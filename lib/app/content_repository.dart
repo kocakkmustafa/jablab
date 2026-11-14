@@ -750,7 +750,15 @@ final class ContentRepository {
     blurb: d.blurb,
     measured: d.measured,
     notMeasured: d.notMeasured,
+    // A course whose lessons are all camera lessons has nothing left to show
+    // while camera coaching is closed, so it is dropped here: the course
+    // counter on the select page then matches what the user can open.
     courses: d.courses
+        .where(
+          (Course c) =>
+              cameraLessonsAvailable ||
+              c.lessons.any((Lesson l) => !l.usesCamera),
+        )
         .map(
           (Course c) => ShellCourse(
             id: c.id,
