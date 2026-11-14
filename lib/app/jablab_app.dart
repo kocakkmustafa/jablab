@@ -72,8 +72,9 @@ class JabLabApp extends StatefulWidget {
   final CourseAccess? courseAccess;
 
   /// Production passes Core's camera flag (`motionCameraCoachingAvailable`):
-  /// while camera coaching is closed, camera lessons stay listed but locked
-  /// with their reason. Widget harnesses keep the camera path reachable.
+  /// while camera coaching is closed, camera lessons (and courses made only of
+  /// them) are left out of the library. Widget harnesses keep the camera path
+  /// reachable.
   final bool cameraLessonsAvailable;
 
   /// Production injects the already loaded device controller from outside
