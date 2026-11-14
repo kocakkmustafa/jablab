@@ -59,7 +59,7 @@ def native_identity(repo):
     manifest=ET.fromstring((repo/'android/app/src/main/AndroidManifest.xml').read_text())
     application=manifest.find('application')
     if application is None or application.get(android+'label')!='JabLab':raise ValueError('Android display name mismatch')
-    permissions={p.get(android+'name') for p in manifest.findall('uses-permission')}
+    tools='{http://schemas.android.com/tools}';permissions={p.get(android+'name') for p in manifest.findall('uses-permission') if p.get(tools+'node')!='remove'}
     if permissions!={'android.permission.INTERNET'}:raise ValueError('Unexpected Android source permissions')
     callbacks=[d for d in manifest.findall('.//data') if d.get(android+'scheme')=='com.yulalab.jablab']
     if len(callbacks)!=1 or callbacks[0].get(android+'host')!='auth' or callbacks[0].get(android+'path')!='/callback':raise ValueError('Exact account callback missing')

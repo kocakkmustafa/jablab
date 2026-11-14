@@ -20,7 +20,7 @@ Koruma testi: `test/android_manifest_camera_off_test.dart`.
 
    `required="false"`: kamerasız cihaz kurulumu engellenmez (Fitness hattı kamerasız çalışır).
 2. `test/android_manifest_camera_off_test.dart` dosyasını kamera açık sözleşmesine göre güncelle (CAMERA artık beklenir).
-3. `tool/prepare_store_packet.py` `native_identity` izin kümesi `{INTERNET, CAMERA}` bekler; kamera kapalıyken `{INTERNET}` olmalı, açılınca geri `{INTERNET, CAMERA}`.
+3. `tool/prepare_store_packet.py` `native_identity` izinleri `uses-permission` etiketlerinden toplar ve `tools:node="remove"` taşıyanları saymaz; kamera kapalıyken beklenen küme `{INTERNET}`. Kamera açılınca beklenen küme `{INTERNET, CAMERA}` olur: koddaki beklenen kümeyi güncelle (remove süzmesi kalabilir, zararsız) ve `tool/test_release_preflight.py` fixture/testlerini uyumla.
 4. Play Data Safety ve App Review notunu kamera açık hâline göre güncelle.
 
 ## iOS

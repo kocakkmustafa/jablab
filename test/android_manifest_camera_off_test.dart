@@ -40,6 +40,23 @@ void main() {
     );
   });
 
+  test('iki uses-feature (camera, camera.autofocus) için remove var', () {
+    for (final String name in <String>[
+      'android.hardware.camera',
+      'android.hardware.camera.autofocus',
+    ]) {
+      final List<String> match = tags
+          .where(
+            (t) =>
+                t.startsWith('<uses-feature') &&
+                t.contains('android:name="$name"'),
+          )
+          .toList();
+      expect(match, hasLength(1), reason: name);
+      expect(match.single, contains('tools:node="remove"'), reason: name);
+    }
+  });
+
   test('tools ad alanı bildirildi', () {
     expect(
       live,
