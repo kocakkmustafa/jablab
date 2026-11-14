@@ -14,7 +14,6 @@ import 'package:motion_content/motion_content.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'content_failure.dart';
-import 'course_locale.dart' show cameraLessonsClosedReason;
 import 'flutter_bundle_content_asset_reader.dart';
 import 'account_bridge.dart';
 import 'owner_resource_lifetime.dart';
@@ -726,9 +725,9 @@ final class ContentRepository {
   }
 
   /// [cameraLessonsAvailable] false (production while camera coaching is
-  /// closed) keeps camera lessons listed but locked with
-  /// [cameraLessonsClosedReason], instead of a play row that only reaches a
-  /// closed gate. A lesson's own content lock reason wins.
+  /// closed) leaves `usesCamera` lessons out of the list entirely (JAB-P1-03),
+  /// so lesson counts and course totals only describe lessons the user can
+  /// open. A lesson's own content lock reason still applies to the rest.
   ShellLibrary toShell(Library lib, {bool cameraLessonsAvailable = true}) =>
       ShellLibrary(
         title: lib.productName,
@@ -760,6 +759,7 @@ final class ContentRepository {
             level: c.level,
             minutes: c.estimatedMinutes,
             lessons: c.lessons
+                .where((Lesson l) => cameraLessonsAvailable || !l.usesCamera)
                 .map(
                   (Lesson l) => ShellLesson(
                     id: l.id,
@@ -768,11 +768,7 @@ final class ContentRepository {
                     subtitle: l.techniques.isEmpty
                         ? ''
                         : l.techniques.join(' · '),
-                    lockedReason:
-                        l.lockedReason ??
-                        (!cameraLessonsAvailable && l.usesCamera
-                            ? cameraLessonsClosedReason
-                            : null),
+                    lockedReason: l.lockedReason,
                   ),
                 )
                 .toList(growable: false),

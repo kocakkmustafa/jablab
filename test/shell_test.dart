@@ -205,7 +205,7 @@ void main() {
     );
   });
 
-  testWidgets('camera closed: camera lessons are locked with their reason', (
+  testWidgets('camera closed: camera lessons are hidden from the library', (
     WidgetTester t,
   ) async {
     // Production keeps camera coaching on its own closed switch, separate
@@ -237,28 +237,12 @@ void main() {
     await t.pumpAndSettle();
     expect(find.byType(CoursePage), findsOneWidget);
 
-    final Finder row = find.byKey(const Key('lesson-boxing.foundations.jab'));
-    expect(row, findsOneWidget);
+    // JAB-P1-03: kamera dersleri kapalıyken listede HİÇ görünmez.
     expect(
-      t.widget<InkWell>(row).onTap,
-      isNull,
-      reason: 'a camera lesson must not offer a play action while closed',
+      find.byKey(const Key('lesson-boxing.foundations.jab')),
+      findsNothing,
+      reason: 'a camera lesson must not be listed while camera is closed',
     );
-    expect(
-      find.descendant(
-        of: row,
-        matching: find.textContaining(
-          'Live camera lessons are unavailable in this release.',
-        ),
-      ),
-      findsOneWidget,
-    );
-    expect(
-      find.descendant(of: row, matching: find.byIcon(Icons.lock_outline)),
-      findsOneWidget,
-    );
-    await t.tap(row, warnIfMissed: false);
-    await t.pumpAndSettle();
     expect(find.byType(SessionScreen), findsNothing);
     expect(gateCalls, 0);
   });
