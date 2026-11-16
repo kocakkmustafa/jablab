@@ -51,3 +51,7 @@ Bu karar `motion-core` `M-F-77`'nin beş kurucu-kapılı kaleminden (harcama · 
 - İki NAMED açık kalem devam ediyor (`stanceHold`, `setupCheckPassed` üreticisi yok) — kapatılmadı, gizlenmedi.
 - `one_two`'nun `COMBINATION_END` sorusu (J-162/163) hâlâ açık, ayrı iş.
 - Cihaz turu (§7.3-7.7) hâlâ kurucu-manuel — bu ADR onu ne yerine geçiriyor ne erteliyor, yalnız kapsamını (3→15 ders) büyütüyor.
+
+## Ek — 2026-11-15 (JAB-P1-04)
+
+Kilit nedeni ölçümün kendisi olan kilitli dersler (progression girişi yok: `boxing.intermediate.combinations`, `counter`, `footwork_combo`) de `usesCamera: true` taşır. Bu yalnız "kamera-ölçüm dersi" beyanıdır: ders kilitli olduğundan kamera açılmaz, izin istenmez; kamera bayrağı kapalıyken JAB-P1-03 kuralıyla listelenmez. Kapı-türevi ölçüt (yukarıda) değişmedi.

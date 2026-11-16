@@ -55,7 +55,7 @@ sözcüğü; ürün dilinde ancak o mekanizma varsa yeri var).
 | **Karşılama ③** | *"İzin vermezsen conditioning turları yine çalışır"* | `SessionScreen.liveJab` nullable ve kamerasız ders TAM koşuyor — `session_rounds_test` saati sürerek ölçüyor |
 | **Disiplin kartları** | *"This discipline is not open"* + isimli teknik gerekçe | 7/7 gerekçe kod-gerçeğine bağlı; kapı her kapalı disiplinin engel sözcüğü taşımasını zorluyor (J-112) |
 | **Kapsam-dışı (12)** | *"bir kamera bunu göremez"* | Her biri kamera fiziğine ya da ölçüm yokluğuna bağlı; *Slipping and rolling* ayrı sınıf: **görüyoruz ama puanlayamıyoruz** |
-| **Kilitli 3 ders** | *"şu ölçüm yok, o yüzden puanlamıyoruz"* | `combinations` gerçek kanca dersiyle ÖLÇÜLDÜ (6 tamamlanma/0 kesilme); `footwork_combo` referans boşluğunu adıyla söylüyor (M-C-04) |
+| **Kilitli 3 ders** | *"şu ölçüm yok, o yüzden puanlamıyoruz"* | `combinations` gerçek kanca dersiyle ÖLÇÜLDÜ (6 tamamlanma/0 kesilme); `footwork_combo` referans boşluğunu adıyla söylüyor (M-C-04); JAB-P1-04: üçü `usesCamera` taşır, kamera bayrağı kapalıyken listelenmez |
 | **Öğretme aşaması (14 ders)** | ders anlatımı + ürünün sınırları | Metinler ürünün ölçülmüş sınırlarını tekrarlıyor ve **üçü teste bağlı** — sınır değişirse metin kırılır (J-118) |
 | **Canlı — 11 dürüst hâl** | *"seni göremiyorum" / "okumam bozuk"* | J-103 iki dalı ayırdı; J-110 sorumluluk eksenini görsele taşıdı; üç kovanın kontrastı WCAG 1.4.11'i geçiyor (J-114/116/117) |
 | **Özet — bantlar `—`** | *"ölçüyoruz ama puanlayamıyoruz"* | K8: kalibrasyon kapısı geçilmedi; `numericScoresUnlocked=false` config'te |

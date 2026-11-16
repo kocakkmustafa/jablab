@@ -57,8 +57,39 @@ void main() {
     walk(raw);
   });
 
-  test('kaynak sayım: library.json 17 usesCamera dersi taşıyor', () {
-    expect(cameraIds.length, 17);
+  test('kaynak sayım: library.json 20 usesCamera dersi taşıyor', () {
+    expect(cameraIds.length, 20);
+  });
+
+  // JAB-P1-04: boxing.intermediate'in üç "kilitli" dersi kamera/hareket
+  // ölçümü dersidir (kilit nedenleri kamera ölçümünü anlatır); bayrak kapalıyken
+  // kilitli rozetiyle listelenmemeli.
+  const List<String> lockedMeasurementIds = <String>[
+    'boxing.intermediate.combinations',
+    'boxing.intermediate.counter',
+    'boxing.intermediate.footwork_combo',
+  ];
+
+  test('kilitli ölçüm dersleri usesCamera işaretli', () {
+    expect(cameraIds.containsAll(lockedMeasurementIds), isTrue);
+  });
+
+  test('bayrak KAPALI: kilitli ölçüm dersleri ve kurs listede YOK, AÇIK: VAR', () {
+    final Set<String> closed = shellLessons(
+      repo.toShell(library, cameraLessonsAvailable: false),
+    ).map((ShellLesson l) => l.id).toSet();
+    final Set<String> open = shellLessons(
+      repo.toShell(library, cameraLessonsAvailable: true),
+    ).map((ShellLesson l) => l.id).toSet();
+    expect(closed.intersection(lockedMeasurementIds.toSet()), isEmpty);
+    expect(open.containsAll(lockedMeasurementIds), isTrue);
+    final Set<String> closedCourses = repo
+        .toShell(library, cameraLessonsAvailable: false)
+        .items
+        .expand((ShellItem i) => i.courses)
+        .map((ShellCourse c) => c.id)
+        .toSet();
+    expect(closedCourses, isNot(contains('boxing.intermediate')));
   });
 
   test('bayrak KAPALI: usesCamera dersleri listede YOK', () {
@@ -67,7 +98,7 @@ void main() {
       s,
     ).map((ShellLesson l) => l.id).toSet();
     expect(ids.intersection(cameraIds), isEmpty);
-    expect(cameraIds.length, 17);
+    expect(cameraIds.length, 20);
   });
 
   test('bayrak AÇIK: usesCamera dersleri listede VAR (bugünkü davranış)', () {
